@@ -4,7 +4,7 @@
 
 label start:
 
-    #Pedir Nombre
+    #Funcion para pedir el Nombre
     call choose_name
 
 
@@ -87,7 +87,6 @@ label start:
     #Animacion beso
     show bg_intro_suenio_beso at beso_micro
     ""
-    ""
 
 
     #Unos hermoso sueño mas tarde
@@ -106,16 +105,37 @@ label start:
     ""
     
 
-    #Despertando
+    #Despertando Asustado
     scene bg_intro_micro_noche 
     show mc_intro_micro_noche oasustado basustado with hpunch
     mc "AHHHHHH.... Fue una pesadilla"
     piensa "Espero poder seguir durmiendo despues de esto"
     ""
-    ""
-    #Hacer la parte que el personaje se despierta y esta en el medio de la nada con el bondi franado porque pincho
 
 
+    #Siguiente dia mensaje 
+    scene black with fade 
+    show text Text("Al dia siguiente", size=50, color="#FFFFFF", outlines=[(2, "#000000", 0, 0)]) at truecenter
+    pause (2.0)
+    hide text with dissolve
+
+
+    #Comienzo del dia
+    scene bg_intro_micro_dia with dissolve
+    show mc_intro_micro_dia ojoscerrados bocabase at mc_intro_micro_noche_transform 
+    terminal_micros "Señores pasajero estaremos momentaneamente denetinidos por el cambio de un neumatico"
+    show mc_intro_micro_dia ojosaburrido
+    terminal_micros "Aquellos que quieran bajar por un momento informen al personal del omnibus"
+    show mc_intro_micro_dia bocabostezo #Esta parte anda bien
+    pause(0.5)
+    show mc_intro_micro_dia ojosbostezo bocabostezog #Esta parte anda bien
+    pause(0.5)
+    show mc_intro_micro_dia ojosaburrido bocabostezo #Esta parte anda bien
+    pause(0.5)
+    show mc_intro_micro_dia ojosaburrido bocaaburrido #Esta parte anda bien
+    piensa "Este viaje es eterno..."
+    show mc_intro_micro_dia bocabase #Esta parte anda bien
+    
     #En este punto quiero que comience la interaccion entre el mc y la azafata 
     call azafata_intro_interaccion
     jump intro_post_azafata
@@ -125,11 +145,13 @@ label start:
 label azafata_intro_interaccion:
 
     show azafata intro_base at azafata_entrar with dissolve
+
     azafata "Buen día señor, estamos esperando que se haga el recambio de un neumático por un desperfecto."
-    azafata "Vamos a estar demorados un momento.{p}¿Puedo ayudarlo en algo?"
-
+    show mc_intro_micro_dia ojosmirando bocabase #Esta parte anda bien
+    azafata "Vamos a estar demorados un momento ¿Puedo ayudarlo en algo?"
+    show mc_intro_micro_dia ojosmirando bocahablando #la boca base queda y la boca hablando se pega encima
     mc "Sí... hace un poco de calor, ¿podrías subir el aire acondicionado?"
-
+    show mc_intro_micro_dia ojosmirando bocabase
     azafata "Sí, no hay problema."
 
     show azafata intro_base at azafata_vuelta
@@ -138,14 +160,18 @@ label azafata_intro_interaccion:
     pause 1.0
     hide azafata intro_base
 
-    mc "Al menos la atención es buena..."
+    show mc_intro_micro_dia ojosbase #Esta parte anda bien
+    piensa "Al menos la atención es buena..."
 
     # Vuelve a entrar
     show azafata intro_l1 at azafata_entrar
     azafata "Disculpe la demora."
+    show mc_intro_micro_dia ojosmirando #Esta parte anda bien
     piensa "¿Tiene levantada la pollera?"
+    show mc_intro_micro_dia bocahablando #la boca base queda y la boca hablando se pega encima
     mc "No hay problema."
-    azafata "El panel está algo alto y me cuesta alcanzarlo."
+    show mc_intro_micro_dia bocabase #Esta parte anda bien
+    azafata "Es que el panel está algo alto y me cuesta alcanzarlo"
     piensa "Quizás fue por eso..."
     azafata "¿Le parece que así está bien? ¿O quiere que lo baje un poco más?"
 
@@ -174,14 +200,22 @@ label azafata_vuelve:
     pause 1.0
     hide azafata intro_l1
 
+    show mc_intro_micro_dia ojosbase #Esta parte anda bien
+
     # Segunda vuelta
     show azafata intro_l2 at azafata_entrar
 
     azafata "Listo, señor."
+    show mc_intro_micro_dia ojosmirando #Esta parte anda bien
     piensa "Ok... volvió a pasar."
+    show mc_intro_micro_dia ojoscerrados #Esta parte anda bien
+    ""
+    show mc_intro_micro_dia ojosmirando #Esta parte anda bien
     piensa "La temperatura está bien, pero podría pedirle que lo baje más..."
+    show mc_intro_micro_dia ojoscerrados #Esta parte anda bien
+    ""
+    show mc_intro_micro_dia ojosmirando #Esta parte anda bien
     piensa "Aunque me da un poco de miedo que se dé cuenta y se moleste."
-    
     azafata "¿Así está mejor o lo bajo más todavía?"
 
     menu:
@@ -209,18 +243,34 @@ label azafata_final:
     hide azafata intro_l2
 
     # Tercer regreso
+    show mc_intro_micro_dia ojoscerrados #Esta parte anda bien
+    pause(0.5)
+    show mc_intro_micro_dia ojosbase #Esta parte anda bien
     show azafata intro_l3 at azafata_entrar
 
     azafata "Señor, ya está en lo más bajo que se puede poner. Espero que esté bien así."
+    show mc_intro_micro_dia ojosmirando bocahablando #la boca base queda y la boca hablando se pega encima
     mc "Sí, así está perfecto."
+    show mc_intro_micro_dia bocabase #Esta parte anda bien
     azafata "¿Hay algo más con lo que lo pueda ayudar?"
+    show mc_intro_micro_dia ojoscerrados #Esta parte anda bien
+    pause(0.5)
+    show mc_intro_micro_dia ojosmirando #Esta parte anda bien
     piensa "Me gustaría disfrutar la vista un poco más... tengo que decir algo."
+    show mc_intro_micro_dia bocahablando #la boca base queda y la boca hablando se pega encima
     mc "¿Cuánto falta para llegar?"
+    show mc_intro_micro_dia bocabase #Esta parte anda bien
     azafata "¿Hasta dónde va usted?"
+    show mc_intro_micro_dia bocahablando #la boca base queda y la boca hablando se pega encima
     mc "Hasta Japitown."
+    show mc_intro_micro_dia ojoscerrados bocabase #Esta parte anda bien
+    pause(0.5)
+    show mc_intro_micro_dia ojosmirando #Esta parte anda bien
     azafata "Es la última parada, estaremos llegando a las 18 hs, quizás un poco más por este desperfecto."
     azafata "¿Sigue teniendo calor, señor? Su cara está toda roja."
+    show mc_intro_micro_dia bocahablando #la boca base queda y la boca hablando se pega encima
     mc "Ahora me está dando calor de nuevo."
+    show mc_intro_micro_dia bocabase #Esta parte anda bien
     azafata "Jajaja, usted es muy raro, incluso ya está haciendo mucho frío, tengo las piernas congeladas."
 
     show azafata intro_l3 with hpunch
@@ -233,25 +283,28 @@ label azafata_final:
     show azafata intro_l3 at azafata_salir
     vozoff "Se retira sonrojada."
     
-    show text "Azafata recordará esto..." at remember_text_anim style "remember_text"
-    with dissolve
+    show expression Text("La Azafata recordará esto...", size=48, color="#f64f56", outlines=[(6, "#000000", 0, 0)], xalign=0.5, yalign=0.5) at remember_text_anim with dissolve
     pause 2.0
     hide text with dissolve
 
 
 
-
     $ azafata_recordara = True
 
-    return  # ✅ fin correcto de toda la interacción
+    return  
 
 
 # --- Continúa la historia ---
 label intro_post_azafata:
     # Acá sigue tu siguiente parte de la intro
-    scene bg_intro_micro_noche with fade_white
-    piensa "Bueno... parece que el viaje recién empieza."
-    ""
+    scene bg_intro_cartel_japitown with fade
+    
+    show text Text("La tarde paso sin mucho mas y fui ignorado por la azafata todo el resto del viaje", size=50, color="#FFFFFF", outlines=[(2, "#000000", 0, 0)]) at truecenter
+    pause (2.0)
+    hide text with dissolve
+
+
+
 
     return
 

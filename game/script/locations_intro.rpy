@@ -20,3 +20,6 @@ image bg_intro_suenio_beso = "images/intro/backgrounds/bg_intro_sueño_beso.png"
 #Fondo noticiero sueño
 image bg_intro_noticiero = "images/intro/backgrounds/bg_intro_noticiero.png"
 
+#Fondo noticiero sueño
+image bg_intro_cartel_japitown = "images/intro/backgrounds/bg_intro_cartel_japitown.png"
+
