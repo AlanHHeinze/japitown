@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(python -c \":*)",
+      "Bash(python3 -c \":*)",
+      "Bash(ls -t /c/Users/Alan/OneDrive/Desktop/Japitown/posicionamiento_sesion_*.txt)"
+    ]
+  }
+}
