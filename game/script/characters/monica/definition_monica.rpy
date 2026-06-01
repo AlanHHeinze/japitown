@@ -45,28 +45,48 @@ init python:
     def obtener_sprite_rutina_monica():
         """
         Obtiene el sprite actual de Mónica según el día y horario actual.
-        Prioridad: 1) Sprite idle del skin activo, 2) Rutina visual base
-        Retorna None si no hay sprite definido para la rutina actual.
+        Prioridad: 0) Pasillo, 1) Skin activo (quest/evento), 2) Rutina especial, 3) Rutina base
         """
+        # Prioridad 0: Sprite de pasillo (door access)
+        npc_m = obtener_npc("monica")
+        if npc_m and npc_m.locacion_actual == "casa_pasilloabajo":
+            return "images/characters/casa/idle/idle_monica_casa_pasillo_fuera_rutinabase_grupobase_skinbase.png"
+
         if hasattr(store, 'dia_semana_actual') and hasattr(store, 'horario_actual'):
-            # Prioridad 1: Verificar sprite del skin activo basado en grupo de rutina
+            # Prioridad 1: Sprite del skin activo (quest/evento)
             sprite_skin = obtener_sprite_idle_rutina("monica")
             if sprite_skin:
                 return sprite_skin
-            
-            # Prioridad 2: Rutina visual base
+
+            # Prioridad 2: Rutina especial activa
+            visual_esp = obtener_visual_npc_rutina_especial("monica")
+            if visual_esp:
+                return visual_esp[0]
+
+            # Prioridad 3: Rutina visual base
             clave = (store.dia_semana_actual, store.horario_actual)
             datos = monica_rutinas_visuales.get(clave)
             if datos:
                 return datos.get("sprite")
         return None
-    
+
     def obtener_posicion_rutina_monica():
         """
         Obtiene la posición actual de Mónica según el día y horario actual.
-        Retorna None si no hay posición definida para la rutina actual.
+        Prioridad: 0) Pasillo, 1) Rutina especial, 2) Rutina base
         """
+        # Prioridad 0: NPC en pasillo → posición fija
+        npc_m = obtener_npc("monica")
+        if npc_m and npc_m.locacion_actual == "casa_pasilloabajo":
+            return (284, 1013)
+
         if hasattr(store, 'dia_semana_actual') and hasattr(store, 'horario_actual'):
+            # Prioridad 1: Rutina especial activa
+            visual_esp = obtener_visual_npc_rutina_especial("monica")
+            if visual_esp:
+                return visual_esp[1]
+
+            # Prioridad 2: Rutina visual base
             clave = (store.dia_semana_actual, store.horario_actual)
             datos = monica_rutinas_visuales.get(clave)
             if datos:
@@ -143,7 +163,7 @@ init python:
         establecer_rutina_visual_monica(
             [0, 1, 2, 3, 4, 6], 1,
             "images/characters/casa/idle/idle_monica_casa_living_tarde_rutinabase_grupobase_skinbase.png",
-            (1038, 1008)  # Posición personalizable
+            (1299, 1067)  # Posición personalizable
         )
         
         # Lunes a Viernes + Domingo (0-4, 6) - Noche en H. Mónica
@@ -164,7 +184,7 @@ init python:
         establecer_rutina_visual_monica(
             5, 0,
             "images/characters/casa/idle/idle_monica_casa_living_mañana_rutinabase_grupobase_skinbase.png",
-            (628, 1058)  # Posición personalizable
+            (1299, 1065)  # Posición personalizable
         )
         
         # Sábado (5) - Tarde en Patio
@@ -182,11 +202,35 @@ init python:
         )
         
         # =====================================================================
+        # RUTINAS ESPECIALES
+        # =====================================================================
+
+        monica.agregar_rutina_especial(RutinaEspecial(
+            id="monica_salida",
+            locacion="fuera",
+            sprite=None,
+            posicion=None,
+            probabilidad=0.20,
+            horarios=[0, 1, 2],
+            nombre="Monica salió de la casa"
+        ))
+
+        monica.agregar_rutina_especial(RutinaEspecial(
+            id="monica_ducha",
+            locacion="casa_baniomonica",
+            sprite=None,
+            posicion=None,
+            probabilidad=0.25,
+            horarios=[0],
+            nombre="Monica en la ducha"
+        ))
+
+        # =====================================================================
         # REGISTRAR EN EL SISTEMA
         # =====================================================================
-        
+
         sistema_npcs.registrar_npc(monica)
-        
+
         return monica
 
 ################################################################################

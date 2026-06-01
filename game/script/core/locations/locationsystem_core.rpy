@@ -11,7 +11,7 @@ init python:
         Representa un área interactiva en una locación.
         Puede ser de tipo MOVE (cambio de locación) o ACTION (acción sin movimiento)
         """
-        def __init__(self, id, tipo, x, y, w, h, destino=None, accion=None, label=None, condicion=None, nombre=""):
+        def __init__(self, id, tipo, x, y, w, h, destino=None, accion=None, label=None, condicion=None, nombre="", label_offset_y=0):
             self.id = id
             self.tipo = tipo  # "MOVE" o "ACTION"
             self.x = x
@@ -23,6 +23,7 @@ init python:
             self.label = label  # Label a llamar (alternativa a accion)
             self.condicion = condicion  # Función que retorna True/False para habilitar
             self.nombre = nombre  # Nombre descriptivo del hotspot
+            self.label_offset_y = label_offset_y  # Desplazamiento vertical del label fijo
         
         def esta_habilitado(self):
             """Verifica si el hotspot está habilitado según su condición"""
@@ -174,6 +175,7 @@ init python:
             # 2. Ejecutar lógica de salida de locación actual
             if self.locacion_actual:
                 self.locacion_actual.on_exit()
+                retornar_npcs_pasillo_al_salir(self.locacion_actual.id)
             
             # 3. Cambiar locación activa
             self.locacion_anterior = self.locacion_actual

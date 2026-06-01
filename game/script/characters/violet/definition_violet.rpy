@@ -46,28 +46,54 @@ init python:
     def obtener_sprite_rutina_violet():
         """
         Obtiene el sprite actual de Violet según el día y horario actual.
-        Prioridad: 1) Sprite idle del skin activo, 2) Rutina visual base
-        Retorna None si no hay sprite definido para la rutina actual.
+        Prioridad: 0) Pasillo, 1) Skin activo (quest/evento), 2) Rutina especial, 3) Rutina base
         """
+        # Prioridad 0: Sprite de pasillo (door access) — respeta el grupo de skin activo
+        npc_v = obtener_npc("violet")
+        if npc_v and npc_v.locacion_actual == "casa_pasilloarriba":
+            grupo = obtener_grupo_rutina_actual("violet")
+            if grupo == "pijama":
+                return "images/characters/casa/idle/idle_violet_casa_pasillo_fuera_rutinabase_grupopijama_skinbase.png"
+            return "images/characters/casa/idle/idle_violet_casa_pasillo_fuera_rutinabase_grupobase_skinbase.png"
+
         if hasattr(store, 'dia_semana_actual') and hasattr(store, 'horario_actual'):
-            # Prioridad 1: Verificar sprite del skin activo basado en grupo de rutina
+            # Prioridad 1: Sprite del skin activo (quest/evento)
             sprite_skin = obtener_sprite_idle_rutina("violet")
             if sprite_skin:
                 return sprite_skin
-            
-            # Prioridad 2: Rutina visual base
+
+            # Prioridad 2: Rutina especial activa
+            visual_esp = obtener_visual_npc_rutina_especial("violet")
+            if visual_esp:
+                return visual_esp[0]
+
+            # Prioridad 3: Rutina visual base
             clave = (store.dia_semana_actual, store.horario_actual)
             datos = violet_rutinas_visuales.get(clave)
             if datos:
                 return datos.get("sprite")
         return None
-    
+
     def obtener_posicion_rutina_violet():
         """
         Obtiene la posición actual de Violet según el día y horario actual.
-        Retorna None si no hay posición definida para la rutina actual.
+        Prioridad: 0) Pasillo, 1) Rutina especial, 2) Rutina base
         """
+        # Prioridad 0: NPC en pasillo → posición fija según skin
+        npc_v = obtener_npc("violet")
+        if npc_v and npc_v.locacion_actual == "casa_pasilloarriba":
+            grupo = obtener_grupo_rutina_actual("violet")
+            if grupo == "pijama":
+                return (671, 793)
+            return (663, 804)
+
         if hasattr(store, 'dia_semana_actual') and hasattr(store, 'horario_actual'):
+            # Prioridad 1: Rutina especial activa
+            visual_esp = obtener_visual_npc_rutina_especial("violet")
+            if visual_esp:
+                return visual_esp[1]
+
+            # Prioridad 2: Rutina visual base
             clave = (store.dia_semana_actual, store.horario_actual)
             datos = violet_rutinas_visuales.get(clave)
             if datos:
@@ -172,22 +198,46 @@ init python:
         establecer_rutina_visual_violet(
             5, 1,
             "images/characters/casa/idle/idle_violet_casa_living_tarde_rutinabase_grupobase_skinbase.png",
-            (648, 816)  # Posición personalizable
+            (549, 991)  # Posición personalizable
         )
-        
+
         # Domingo (6) - Noche en Living
         establecer_rutina_visual_violet(
             6, 2,
             "images/characters/casa/idle/idle_violet_casa_living_noche_rutinabase_grupobase_skinbase.png",
-            (648, 994)  # Posición personalizable
+            (689, 808)  # Posición personalizable
         )
         
         # =====================================================================
+        # RUTINAS ESPECIALES
+        # =====================================================================
+
+        violet.agregar_rutina_especial(RutinaEspecial(
+            id="violet_salida",
+            locacion="fuera",
+            sprite=None,
+            posicion=None,
+            probabilidad=0.20,
+            horarios=[1, 2],
+            nombre="Violet salió de la casa"
+        ))
+
+        violet.agregar_rutina_especial(RutinaEspecial(
+            id="violet_ducha",
+            locacion="casa_banioarriba",
+            sprite=None,
+            posicion=None,
+            probabilidad=0.25,
+            horarios=[1, 2],
+            nombre="Violet en la ducha"
+        ))
+
+        # =====================================================================
         # REGISTRAR EN EL SISTEMA
         # =====================================================================
-        
+
         sistema_npcs.registrar_npc(violet)
-        
+
         return violet
 
 ################################################################################

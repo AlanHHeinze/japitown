@@ -1,4 +1,11 @@
 
+################################################################################
+## FLAG DE MODO DESARROLLO
+## True  = herramientas de dev disponibles (debug panel, tecla P, etc.)
+## False = todo el sistema dev desactivado (versión jugable final)
+################################################################################
+define MODO_DEV = True
+
 default mc_name = ""
 define mc = Character("[mc_name]", color="#56b6c2")
 
@@ -74,17 +81,10 @@ screen name_input_screen(nombre_previo=u"", error_msg=u""):
 
             null height 6
 
-            hbox:
+            textbutton _("Confirmar"):
+                style "name_input_button"
                 xalign 0.5
-                spacing 50
-
-                textbutton _("Confirmar"):
-                    style "name_input_button"
-                    action Return(name)
-
-                textbutton _("Cancelar"):
-                    style "name_input_button"
-                    action Return(mc_name)
+                action Return(name)
 
 
 style name_input_frame is confirm_frame:

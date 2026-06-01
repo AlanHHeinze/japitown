@@ -147,7 +147,7 @@ screen panel_pistas():
                                                 $ _qmsg_sub = renpy.substitute(_qmsg_txt)
                                                 text "[_qmsg_sub]" size 13 color "#cccccc"
 
-                                                if mostrar_debug_hud:
+                                                if MODO_DEV and mostrar_debug_hud:
                                                     $ _etapa_nombres = {1:"Inicialización",2:"Espera",3:"Condiciones",4:"Rutina",5:"Listo",6:"Validación",7:"Desarrollo",8:"Memorias",9:"Finalización"}
                                                     $ _etapa_txt = "Etapa {}: {}".format(_npc_quest.etapa_actual, _etapa_nombres.get(_npc_quest.etapa_actual, "?"))
                                                     text "[[" + _etapa_txt + "]]" size 11 color "#888888"
@@ -220,7 +220,7 @@ screen panel_pistas():
                                                         text "🔒" size 12
                                                         text renpy.translate_string(_ev.condicion_cierre_texto) size 12 color "#FF9800" italic True
 
-                                                if mostrar_debug_hud:
+                                                if MODO_DEV and mostrar_debug_hud:
                                                     $ _ev_estado = _ev.estado
                                                     text "[[Estado: [_ev_estado]]" size 11 color "#888888"
 
