@@ -35,6 +35,7 @@ init 10 python:
             grupo="entrenamiento",
             descripcion="Jasmine en ropa casual cuando va al gym.",
             condicion_desbloqueo=None,  # Siempre desbloqueado
+            sprite_idle="images/characters/casa/idle/idle_jasmine_casa_gym_tarde_rutinabase_grupobase_skinbase.png",
             sprite_menu="images/characters/casa/menu/jasmine_menu_entrenamiento_base.png"
         )
         sistema_skins.registrar_skin(skin_entrenamiento_base)
@@ -51,7 +52,7 @@ init 10 python:
             grupo="entrenamiento",
             descripcion="Jasmine viste su ropa de gym cuando entrena.",
             condicion_desbloqueo=condicion_desbloqueo_deportiva,
-            sprite_idle="images/characters/casa/idle/idle_jasmine_casa_gym_tarde_rutinabae_grupoentrenamiento_skinropadeportiva.png",
+            sprite_idle="images/characters/casa/idle/idle_jasmine_casa_gym_tarde_rutinabase_grupoentrenamiento_skinropadeportiva.png",
             sprite_menu="images/characters/casa/menu/jasmine_menu_entrenamiento_deportiva.png"
         )
         sistema_skins.registrar_skin(skin_entrenamiento_deportiva)

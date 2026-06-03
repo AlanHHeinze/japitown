@@ -116,9 +116,9 @@ init python:
         
         # Sincronizar el objeto NPC con las variables guardables
         # Las variables default ya tienen los valores        # Cargar estado guardado
-        jasmine.estado["amor"] = store.jasmine_amor
-        jasmine.estado["deseo"] = store.jasmine_deseo
-        jasmine.estado["progreso"] = store.jasmine_progreso
+        jasmine.estado["amor"] = min(100, max(0, store.jasmine_amor))
+        jasmine.estado["deseo"] = min(100, max(0, store.jasmine_deseo))
+        jasmine.estado["progreso"] = max(0, store.jasmine_progreso)
         jasmine.estado["conocido"] = True
         
         # =====================================================================
@@ -163,10 +163,10 @@ init python:
             (1675, 921)  # Posición personalizable
         )
 
-        # Lunes a Viernes (0-4) - Tarde en Gym (con ropa deportiva)
+        # Lunes a Viernes (0-4) - Tarde en Gym (fallback: ropa casual)
         establecer_rutina_visual_jasmine(
             [0, 1, 2, 3, 4], 1,
-            "images/characters/casa/idle/idle_jasmine_casa_gym_tarde_rutinabase_grupoentrenamiento_skinropadeportiva.png",
+            "images/characters/casa/idle/idle_jasmine_casa_gym_tarde_rutinabase_grupobase_skinbase.png",
             (1005, 1080)  # Posición personalizable
         )
 
@@ -228,6 +228,24 @@ init python:
             horarios=[2],
             nombre="Jasmine en la ducha"
         ))
+
+        # =====================================================================
+        # DESBLOQUEOS DE RELACIÓN
+        # =====================================================================
+
+        # Amor
+        jasmine.agregar_desbloqueo("amor", 10, "💬", "Conversación Diaria",
+            "Podés hablar con Jasmine todos los días.")
+        jasmine.agregar_desbloqueo("amor", 30, "🚪", "Ingreso Habitación",
+            "Jasmine te deja entrar a su cuarto durante el día.")
+
+        # Deseo
+        jasmine.agregar_desbloqueo("deseo", 10, "👗", "Ropa Deportiva",
+            "Jasmine usa ropa deportiva cuando va al gym.")
+        jasmine.agregar_desbloqueo("deseo", 40, "😘", "???",
+            "")
+        jasmine.agregar_desbloqueo("deseo", 60, "🌙", "Ingreso Nocturno",
+            "Podés entrar a la habitación de Jasmine de noche.")
 
         # =====================================================================
         # REGISTRAR EN EL SISTEMA

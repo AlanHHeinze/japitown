@@ -73,6 +73,29 @@ screen menu_cheats():
                                         style "cheat_button"
                                         xalign 1.0
 
+                        # Toggle de botones de movimiento visibles
+                        frame:
+                            xfill True
+                            background "#1e1e3aCC"
+                            padding (12, 10)
+
+                            hbox:
+                                spacing 10
+                                yalign 0.5
+                                xfill True
+                                text "Botones de movimiento:" size 13 color "#ffffff" bold True yalign 0.5
+
+                                if getattr(persistent, "hotspots_visibles", True):
+                                    textbutton "ON":
+                                        action ToggleField(persistent, "hotspots_visibles", True, False)
+                                        style "cheat_button"
+                                        xalign 1.0
+                                else:
+                                    textbutton "OFF":
+                                        action ToggleField(persistent, "hotspots_visibles", True, False)
+                                        style "cheat_button"
+                                        xalign 1.0
+
                         # Separador NPCs
                         text "NPC STATS" size 12 color "#4FC3F7" bold True
 

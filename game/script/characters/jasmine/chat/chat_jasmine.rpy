@@ -68,6 +68,7 @@ init 6 python:
         trigger_id="jasmine_questprincipal_0",
         momento_locacion="casa_hjasmine",
         momento_horario=3,
+        prioritario=True,
         tabla_recompensas=TablaRecompensas({
             "amor": [
                 RangoRecompensa(1, 5, {"tipo": "amor", "valor": 1}),

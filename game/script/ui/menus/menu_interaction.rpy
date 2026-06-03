@@ -156,7 +156,7 @@ screen menu_interaccion_npc_completo(npc, opciones_extra=None):
                                 action [Hide("menu_interaccion_npc_completo"),
                                         Return(("opcion_especial", opcion.get("label", "game_loop")))]
 
-                                text opcion.get("texto", "Opción") size 18 color "#ffffff"
+                                text (opcion.get("texto", "Opción") + " (Quest)") size 18 color "#ffffff"
             
             null height 10
             

@@ -32,6 +32,9 @@ image monica_quest_0_monica_perfume_brazocostado = "images/quest/monica/quest 0/
 image monica_quest_0_monica_perfume_carafeliz = "images/quest/monica/quest 0/monica_quest_0_monica_perfume_carafeliz.png"
 image monica_quest_0_monica_perfume_mirando = "images/quest/monica/quest 0/monica_quest_0_monica_perfume_mirando.png"
 
+# Ruta elegida en el menu de dialogo (para evitar exploit de rollback)
+default _ruta_mq0 = ""
+
 # =============================================================================
 # QUEST 0 - Bienvenido a casa (Mónica)
 # =============================================================================
@@ -190,7 +193,7 @@ label quest_monica_0_opcion_familia:
     monica "Sabes que siempre voy a estar para vos."
     show monica_parada b_none
     
-    $ obtener_npc("monica").modificar_stat1(5)
+    $ _ruta_mq0 = "familia"
 
     jump quest_monica_0_cierre
 
@@ -244,7 +247,7 @@ label quest_monica_0_opcion_cercania:
     monica "Voy a dar todo de mi para que podamos tener esa relacion que esperas."
     show monica_parada b_none
     
-    $ obtener_npc("monica").modificar_stat2(5)
+    $ _ruta_mq0 = "cercania"
 
     jump quest_monica_0_cierre
 
@@ -284,7 +287,8 @@ label quest_monica_0_opcion_independencia:
     show monica_parada b_hablando
     monica "Cuentas con mi apoyo para convertirte en un hombre"
     show monica_parada b_none
-    
+
+    $ _ruta_mq0 = "independencia"
     jump quest_monica_0_cierre
 
 
@@ -501,12 +505,18 @@ label quest_monica_0_cierre:
     monica_pensando "Hace mucho no me reía así"
     hide monica_quest_0_monica_carcajada with fade
     
+    # Evaluar ruta elegida y aplicar stats
+    if _ruta_mq0 == "familia":
+        $ obtener_npc("monica").modificar_stat1(5)
+    elif _ruta_mq0 == "cercania":
+        $ obtener_npc("monica").modificar_stat2(5)
+
     # Avanzar horario
     $ avanzar_horario()
-    
+
     # Guardar día de completación para el evento 1
     $ store.monica_quest_0_dia_completada = getattr(store, 'dias_totales', 1)
-    
+
     # Completar quest
     $ completar_quest_actual("monica")
     $ activar_estado_especial_npc("monica", "monica_feliz")

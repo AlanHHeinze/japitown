@@ -34,7 +34,7 @@ init python:
         """
         
         def __init__(self, texto, respuesta_npc, puntos=None, foto_respuesta=None,
-                     condicion=None, saltar_a_paso=None):
+                condicion=None, saltar_a_paso=None):
             """
             Args:
                 texto: Texto que envía el jugador
@@ -90,8 +90,8 @@ init python:
                 min_puntos: Mínimo de puntos (inclusive)
                 max_puntos: Máximo de puntos (inclusive)
                 recompensa: Dict con tipo y valor
-                    Tipos: "relacion", "afinidad", "stat", "item", "foto", "dinero"
-                    Ej: {"tipo": "relacion", "valor": 3}
+                    Tipos: "amor", "deseo", "stat", "item", "foto", "dinero"
+                    Ej: {"tipo": "amor", "valor": 3}
                     Ej: {"tipo": "foto", "valor": "images/fotos/jasmine_01.png", "descripcion": "Selfie de Jasmine"}
                     Ej: {"tipo": "item", "valor": "regalo_jasmine", "cantidad": 1}
             """
@@ -154,14 +154,16 @@ init python:
         """
         
         def __init__(self, id, npc_id, mensaje_inicial, pasos,
-                     trigger_id=None, foto_inicial=None, tabla_recompensas=None,
-                     horario_respuesta=None,
-                     momento_locacion=None, momento_horario=None):
+                trigger_id=None, foto_inicial=None, tabla_recompensas=None,
+                horario_respuesta=None,
+                momento_locacion=None, momento_horario=None,
+                condicion_entrega=None, accion_al_completar=None,
+                prioritario=False):
             """
             Args:
                 id: ID único del grupo
                 npc_id: ID del NPC que envía el mensaje
-                mensaje_inicial: Primer mensaje del NPC
+                mensaje_inicial: Primer mensaje del NPC (None o "" = no muestra mensaje inicial)
                 pasos: Lista de PasoConversacion
                 trigger_id: ID del trigger que lo dispara (quest_id o event_id)
                 foto_inicial: Foto adjunta al primer mensaje (o None)
@@ -169,6 +171,8 @@ init python:
                 horario_respuesta: Lista de horarios válidos [0,1,2] o None (siempre)
                 momento_locacion: Locacion donde debe estar el NPC emisor para enviar (o None)
                 momento_horario: Horario requerido para enviar: 0-3 (o None)
+                condicion_entrega: Callable () -> bool extra para entrega (ej: horario laboral)
+                accion_al_completar: Callable () -> None que se ejecuta al finalizar el grupo
             """
             self.id = id
             self.npc_id = npc_id
@@ -182,6 +186,9 @@ init python:
             # Condiciones de entrega
             self.momento_locacion = momento_locacion
             self.momento_horario = momento_horario
+            self.condicion_entrega = condicion_entrega
+            self.accion_al_completar = accion_al_completar
+            self.prioritario = prioritario
 
             # Estado: pendiente / espera / en_curso / completado
             self.estado = "pendiente"
@@ -191,7 +198,9 @@ init python:
 
         def tiene_condiciones_entrega(self):
             """Retorna True si este grupo tiene condiciones de entrega configuradas."""
-            return self.momento_locacion is not None or self.momento_horario is not None
+            return (self.momento_locacion is not None
+                    or self.momento_horario is not None
+                    or self.condicion_entrega is not None)
         
         def acumular_puntos(self, puntos):
             """
@@ -230,21 +239,27 @@ init python:
         
         def finalizar(self):
             """
-            Finaliza la conversación: calcula y aplica recompensas.
-            
+            Finaliza la conversación: calcula recompensas y ejecuta accion_al_completar.
+
             Returns:
                 Lista de recompensas otorgadas
             """
             self.estado = "completado"
-            
+
             if self.tabla_recompensas:
                 self.recompensas_otorgadas = self.tabla_recompensas.calcular_recompensas(
                     self.puntos_acumulados
                 )
-                # Aplicar recompensas
                 for item in self.recompensas_otorgadas:
                     self._aplicar_recompensa(item["recompensa"])
-            
+
+            if self.accion_al_completar:
+                try:
+                    self.accion_al_completar()
+                except Exception as _e:
+                    if renpy.config.developer:
+                        print("[MsgSys] Error en accion_al_completar de {}: {}".format(self.id, _e))
+
             return self.recompensas_otorgadas
         
         def _aplicar_recompensa(self, recompensa):
@@ -262,12 +277,12 @@ init python:
                 if npc:
                     npc.modificar_stat2(valor)
 
-            elif tipo == "relacion":
+            elif tipo == "amor":
                 npc = obtener_npc(self.npc_id)
                 if npc:
                     npc.modificar_stat1(valor)
 
-            elif tipo == "afinidad":
+            elif tipo == "deseo":
                 npc = obtener_npc(self.npc_id)
                 if npc:
                     npc.modificar_stat2(valor)
@@ -286,6 +301,8 @@ init python:
                 inventario = getattr(store, "inventario", {})
                 inventario[item_id] = inventario.get(item_id, 0) + cantidad
                 store.inventario = inventario
+                if hasattr(store, 'notificar_item_obtenido'):
+                    notificar_item_obtenido(item_id)
             
             elif tipo == "dinero":
                 store.dinero = getattr(store, "dinero", 0) + valor
@@ -440,12 +457,13 @@ init python:
             self.inicializar_chat(target_npc)
             chat = self.chats[target_npc]
 
-            # Agregar mensaje inicial al historial
-            chat.agregar_mensaje(
-                target_npc,
-                grupo.mensaje_inicial,
-                grupo.foto_inicial
-            )
+            # Agregar mensaje inicial al historial (omitir si está vacío — el jugador inicia)
+            if grupo.mensaje_inicial:
+                chat.agregar_mensaje(
+                    target_npc,
+                    grupo.mensaje_inicial,
+                    grupo.foto_inicial
+                )
 
             # Si la foto inicial existe, agregarla a la galería
             if grupo.foto_inicial:
@@ -467,8 +485,8 @@ init python:
 
         def _intentar_entrega(self, grupo):
             """
-            Verifica las 3 condiciones de entrega para un grupo en espera.
-            Si se cumplen todas, entrega el grupo.
+            Verifica las condiciones de entrega para un grupo en espera.
+            Soporta NPCs normales y contactos especiales (sin NPC en sistema_npcs).
 
             Returns:
                 True si fue entregado, False si sigue en espera.
@@ -478,32 +496,38 @@ init python:
 
             target_npc = grupo.npc_id
 
-            # Condicion 3: Bloqueo global de mensajes
             if mensajes_estan_bloqueados():
                 return False
 
-            # Condicion 1: Momento (locacion + horario del NPC emisor)
+            # Condición personalizada (horario laboral, saldo, etc.)
+            if grupo.condicion_entrega is not None:
+                try:
+                    if not grupo.condicion_entrega():
+                        return False
+                except Exception:
+                    return False
+
             npc = obtener_npc(target_npc)
-            if not npc:
-                return False
+            if npc:
+                # NPC real: verificar locación, horario y co-locación con el MC
+                if grupo.momento_locacion is not None:
+                    if npc.locacion_actual != grupo.momento_locacion:
+                        return False
+                if grupo.momento_horario is not None:
+                    if getattr(store, 'horario_actual', 0) != grupo.momento_horario:
+                        return False
+                if npc.locacion_actual:
+                    loc_mc = None
+                    if hasattr(store, 'sistema_locaciones') and store.sistema_locaciones.locacion_actual:
+                        loc_mc = store.sistema_locaciones.locacion_actual.id
+                    if loc_mc and npc.locacion_actual == loc_mc:
+                        return False
+            else:
+                # Contacto especial (sin NPC): solo se verifica momento_horario
+                if grupo.momento_horario is not None:
+                    if getattr(store, 'horario_actual', 0) != grupo.momento_horario:
+                        return False
 
-            if grupo.momento_locacion is not None:
-                if npc.locacion_actual != grupo.momento_locacion:
-                    return False
-
-            if grupo.momento_horario is not None:
-                if getattr(store, 'horario_actual', 0) != grupo.momento_horario:
-                    return False
-
-            # Condicion 2: NPC emisor NO comparte locacion con el MC
-            if npc.locacion_actual:
-                loc_mc = None
-                if hasattr(store, 'sistema_locaciones') and store.sistema_locaciones.locacion_actual:
-                    loc_mc = store.sistema_locaciones.locacion_actual.id
-                if loc_mc and npc.locacion_actual == loc_mc:
-                    return False
-
-            # Todas las condiciones cumplidas: entregar
             self._entregar_grupo(grupo, target_npc)
             return True
 
@@ -520,6 +544,41 @@ init python:
 
             for grupo in list(self._grupos_en_espera):
                 self._intentar_entrega(grupo)
+
+        def verificar_mensajes_horarios_omitidos(self, horario_desde):
+            """
+            Al dormir, simula los horarios omitidos para entregar mensajes que
+            debían llegar esa noche. Debe llamarse DESPUÉS de actualizar_quests()
+            (para que los grupos ya estén en espera) y con horario ya en 0.
+
+            horario_desde: horario en el que el jugador se durmió (0-3)
+            """
+            if not hasattr(self, '_grupos_en_espera') or not self._grupos_en_espera:
+                return
+            if mensajes_estan_bloqueados():
+                return
+
+            # Horarios omitidos: los posteriores al horario en que durmió hasta trasnoche
+            horarios_omitidos = list(range(horario_desde + 1, 4))
+            if not horarios_omitidos:
+                return
+
+            horario_original = store.horario_actual
+            try:
+                for horario in horarios_omitidos:
+                    if not self._grupos_en_espera:
+                        break
+                    store.horario_actual = horario
+                    # Actualizar posiciones de NPCs para este horario simulado
+                    if hasattr(store, 'actualizar_rutinas_npcs'):
+                        store.actualizar_rutinas_npcs()
+                    for grupo in list(self._grupos_en_espera):
+                        self._intentar_entrega(grupo)
+            finally:
+                store.horario_actual = horario_original
+                # Restaurar posiciones de NPCs al horario real (mañana)
+                if hasattr(store, 'actualizar_rutinas_npcs'):
+                    store.actualizar_rutinas_npcs()
         
         def seleccionar_grupo(self, npc_id, grupo_id):
             """
@@ -551,8 +610,9 @@ init python:
             # Si el primer paso tiene mensaje_npc, agregarlo al historial
             paso = grupo.obtener_paso_actual()
             if paso and paso.mensaje_npc:
-                chat.agregar_mensaje(npc_id, paso.mensaje_npc)
-            
+                msg_npc = paso.mensaje_npc() if callable(paso.mensaje_npc) else paso.mensaje_npc
+                chat.agregar_mensaje(npc_id, msg_npc)
+
             return True
         
         def responder(self, npc_id, opcion_idx):
@@ -579,8 +639,9 @@ init python:
             
             opcion = paso.opciones_jugador[opcion_idx]
             
-            # Agregar mensaje del jugador al historial
-            chat.agregar_mensaje("jugador", opcion.texto)
+            # Agregar mensaje del jugador al historial (texto puede ser callable)
+            texto_jugador = opcion.texto() if callable(opcion.texto) else opcion.texto
+            chat.agregar_mensaje("jugador", texto_jugador)
             
             # Acumular puntos
             grupo.acumular_puntos(opcion.puntos)
@@ -617,10 +678,11 @@ init python:
             hay_mas = grupo.avanzar_paso(opcion.saltar_a_paso)
             
             if hay_mas:
-                # Hay más pasos, preparar el siguiente
+                # Hay más pasos, preparar el siguiente (mensaje_npc puede ser callable)
                 siguiente_paso = grupo.obtener_paso_actual()
                 if siguiente_paso and siguiente_paso.mensaje_npc:
-                    resultado["mensaje_siguiente"] = siguiente_paso.mensaje_npc
+                    msg_sig = siguiente_paso.mensaje_npc() if callable(siguiente_paso.mensaje_npc) else siguiente_paso.mensaje_npc
+                    resultado["mensaje_siguiente"] = msg_sig
             else:
                 # Conversación terminada
                 resultado["finalizado"] = True
@@ -695,6 +757,7 @@ init python:
 
     CONTACTOS_ESPECIALES = {
         "libre_mercado": {"nombre": "Libre Mercado", "icono": "🛒"},
+        "tienda_coxplay": {"nombre": "Tienda CoXplay", "icono": "🛍️"},
     }
 
     def obtener_nombre_contacto(contacto_id):
@@ -716,6 +779,16 @@ init python:
         sistema_mensajes.inicializar_chat("jasmine")
         sistema_mensajes.inicializar_chat("monica")
         sistema_mensajes.inicializar_chat("violet")
+
+        # Tienda CoXplay — mensaje de bienvenida presente desde el inicio del juego
+        sistema_mensajes.inicializar_chat("tienda_coxplay")
+        if not sistema_mensajes.chats["tienda_coxplay"].historial:
+            sistema_mensajes.chats["tienda_coxplay"].agregar_mensaje(
+                "tienda_coxplay",
+                "Gracias por su compra en Coxplay, para futuras compras y consultas puede usar este canal"
+            )
+            # El mensaje de bienvenida no bloquea la lectura como pendiente
+            sistema_mensajes.chats["tienda_coxplay"].mensajes_sin_leer = 0
     
     def disparar_mensaje(trigger_id, npc_id):
         """
@@ -752,3 +825,60 @@ init python:
         chat = sistema_mensajes.chats.get(npc_id)
         if chat:
             chat.bloqueado = False
+
+    def obtener_bloqueo_mensaje_prioritario():
+        """
+        Verifica si hay algún mensaje prioritario ya entregado esperando respuesta.
+        Retorna el nombre del NPC remitente, o None si no hay bloqueo.
+        Un mensaje prioritario bloquea avanzar tiempo y dormir hasta ser respondido.
+        """
+        for npc_id, chat in sistema_mensajes.chats.items():
+            if chat.grupo_activo and getattr(chat.grupo_activo, 'prioritario', False):
+                npc = obtener_npc(npc_id)
+                return npc.nombre if npc else npc_id.capitalize()
+            for grupo in chat.grupos_pendientes:
+                if getattr(grupo, 'prioritario', False):
+                    npc = obtener_npc(npc_id)
+                    return npc.nombre if npc else npc_id.capitalize()
+        return None
+
+    def obtener_horario_despertar_prioritario():
+        """
+        Busca mensajes prioritarios en espera que se entregarán en un horario futuro.
+        Verifica todas las condiciones de entrega (horario, locación del NPC, condicion_entrega)
+        para garantizar que el mensaje realmente llegará a ese horario.
+        Retorna el menor horario futuro válido, o None si ninguno se va a entregar.
+        """
+        horario_hoy = getattr(store, 'horario_actual', 0)
+        dia_hoy = getattr(store, 'dia_semana_actual', 0)
+        grupos_en_espera = getattr(sistema_mensajes, '_grupos_en_espera', [])
+        horario_min = None
+
+        for grupo in grupos_en_espera:
+            if not getattr(grupo, 'prioritario', False):
+                continue
+            mh = getattr(grupo, 'momento_horario', None)
+            if mh is None or mh <= horario_hoy:
+                continue
+
+            # Verificar condicion_entrega si existe (se evalúa ahora como aproximación)
+            if grupo.condicion_entrega is not None:
+                try:
+                    if not grupo.condicion_entrega():
+                        continue
+                except Exception:
+                    continue
+
+            # Verificar locación del NPC en el horario futuro usando su rutina predicha
+            if grupo.momento_locacion is not None:
+                npc = obtener_npc(grupo.npc_id)
+                if npc is None:
+                    continue
+                loc_futura = npc.obtener_locacion_rutina(dia_hoy, mh)
+                if loc_futura != grupo.momento_locacion:
+                    continue
+
+            if horario_min is None or mh < horario_min:
+                horario_min = mh
+
+        return horario_min

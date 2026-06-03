@@ -14,7 +14,12 @@ define violet_susurro = Character("Violet", color="#956db3", what_prefix="{i}{co
 define violet_pensando = Character("Violet", color="#956db3", what_prefix="{i}{color=#a8b4c4}", what_suffix="{/color}{/i}")
 
 init python:
-    
+
+    def _cond_pijama_desbloqueo():
+        """Quest 02_b completada — condición extra para el desbloqueo del skin pijama."""
+        q = store.sistema_quests.obtener_quest("violet_questprincipal_02_b")
+        return bool(q and q.completada)
+
     # Diccionario para almacenar sprites y posiciones de rutina de Violet
     # Clave: (dia_semana, horario) -> {"sprite": path, "posicion": (x, y)}
     violet_rutinas_visuales = {}
@@ -119,9 +124,9 @@ init python:
         
         # Sincronizar el objeto NPC con las variables guardables
         # Las variables default ya tienen los valores
-        violet.estado["amor"] = store.violet_amor
-        violet.estado["deseo"] = store.violet_deseo
-        violet.estado["progreso"] = store.violet_progreso
+        violet.estado["amor"] = min(100, max(0, store.violet_amor))
+        violet.estado["deseo"] = min(100, max(0, store.violet_deseo))
+        violet.estado["progreso"] = max(0, store.violet_progreso)
         violet.estado["conocido"] = True
         
         # =====================================================================
@@ -174,10 +179,11 @@ init python:
         )
         
         # Lunes a Sábado (0-5) - Noche en H. Violet
+        # AJUSTE TEMPORAL: usa sprite de tarde hasta que se cargue uno de noche propio
         establecer_rutina_visual_violet(
             [0, 1, 2, 3, 4, 5], 2,
-            "images/characters/casa/idle/idle_violet_casa_hviolet_noche_rutinabase_grupopijama_skinbase.png",
-            (1558, 988)  # Posición personalizable
+            "images/characters/casa/idle/idle_violet_casa_hviolet_tarde_rutinabase_grupobase_skinbase.png",
+            (721, 793)
         )
         
         # Lunes a Domingo (0-6) - Trasnoche en H. Violet
@@ -231,6 +237,28 @@ init python:
             horarios=[1, 2],
             nombre="Violet en la ducha"
         ))
+
+        # =====================================================================
+        # DESBLOQUEOS DE RELACIÓN
+        # =====================================================================
+
+        # Amor
+        violet.agregar_desbloqueo("amor", 10, "💬", "Conversación Diaria",
+            "Podés hablar con Violet todos los días.")
+        violet.agregar_desbloqueo("amor", 30, "🚪", "Ingreso Habitación",
+            "Violet te deja entrar a su cuarto durante el día.")
+        violet.agregar_desbloqueo("amor", 60, "📺", "Ver TV Juntos",
+            "Pueden ver televisión juntos en el living.")
+
+        # Deseo
+        violet.agregar_desbloqueo("deseo", 10, "👗", "Skin Pijama",
+            "Violet sale al pasillo en pijama.",
+            condicion_extra=_cond_pijama_desbloqueo,
+            nombre_pendiente="Completar Quest: Mangas Prestados")
+        violet.agregar_desbloqueo("deseo", 40, "😘", "???",
+            "")
+        violet.agregar_desbloqueo("deseo", 60, "🌙", "Ingreso Nocturno",
+            "Podés entrar a la habitación de Violet de noche.")
 
         # =====================================================================
         # REGISTRAR EN EL SISTEMA

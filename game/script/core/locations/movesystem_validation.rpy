@@ -142,10 +142,13 @@ init python:
 
 init python:
     
+    def _bloqueo_siempre_falso():
+        return False
+
     def bloquear_movimiento(origen_id, destino_id, mensaje="No puedes ir ahí"):
         """Bloquea un movimiento específico"""
         validador = ValidadorEstado(
-            condicion_func=lambda: False,
+            condicion_func=_bloqueo_siempre_falso,
             mensaje_error=mensaje
         )
         sistema_locaciones.registrar_validador(origen_id, destino_id, validador)

@@ -186,9 +186,10 @@ label talk_iniciar:
                 _t_b, _t_o = _t_facial
                 _t_img, _t_c_base, _t_c_caliente = _t_skin_data
                 _t_c = _t_c_caliente if _t_resultado_id == "+1_deseo" else _t_c_base
-                renpy.show((_t_img, _t_b, _t_o, _t_c),
-                           tag="talk_npc_sprite",
-                           at_list=[right])
+                renpy.show(
+                    (_t_img, _t_b, _t_o, _t_c),
+                    tag="talk_npc_sprite",
+                    at_list=[right])
                 renpy.with_statement(dissolve)
 
     "[_t_resultado_texto]"
@@ -197,6 +198,9 @@ label talk_iniciar:
         $ sistema_talk.actualizar_memoria_mc(_npc_id_temp, _t_estado.id, _t_opcion_id, _t_resultado_id)
 
     $ sistema_talk.asignar_estado_posterior(_npc_id_temp, _t_resultado_id, _t_estado, _t_oesp)
+
+    if _t_estado and _t_estado.es_especial:
+        $ sistema_talk.consumir_estado_especial(_npc_id_temp)
 
     if _t_es_especial and _t_oesp.recompensa_extra:
         $ _t_oesp.recompensa_extra()

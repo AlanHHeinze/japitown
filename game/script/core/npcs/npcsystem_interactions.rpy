@@ -6,6 +6,7 @@
 # Variable temporal para pasar datos a los labels
 default _hotspot_temp = None
 default _locacion_temp = None
+# (accion_locacion_temp_id se define en actionsystem_core.rpy)
 
 
 label accion_hotspot_move:
@@ -34,7 +35,18 @@ label accion_hotspot_move:
             # Guardar destino antes de salir del flujo
             $ _destino_puerta = _hotspot_temp.destino
             jump interaccion_puerta_npc
-    
+
+    # Verificar si el destino es un baño ocupado por un NPC
+    if _hotspot_temp and _hotspot_temp.destino in ["casa_banioarriba", "casa_baniomonica"]:
+        $ _npc_banio_temp = obtener_npc_en_banio(_hotspot_temp.destino)
+        if _npc_banio_temp:
+            $ _msg_restriccion_banio = accion_bloqueada_movimiento(_hotspot_temp.destino)
+            if _msg_restriccion_banio:
+                piensa "[_msg_restriccion_banio]"
+                return
+            $ _destino_banio_npc = _hotspot_temp.destino
+            jump interaccion_banio_ocupado
+
     if _hotspot_temp and _hotspot_temp.destino:
         # Verificar restricción de movimiento
         $ _msg_restriccion = accion_bloqueada_movimiento(_hotspot_temp.destino)
@@ -92,14 +104,20 @@ label accion_avanzar_tiempo:
     if hasattr(store, 'sistema_events') and sistema_events.hay_bloqueo("avanzar_tiempo"):
         piensa "No puedes avanzar el tiempo ahora."
         return
-    
+
+    # Verificar mensaje prioritario pendiente de respuesta
+    $ _npc_prioritario = obtener_bloqueo_mensaje_prioritario()
+    if _npc_prioritario:
+        piensa "Debo responder el mensaje de [_npc_prioritario] antes de continuar"
+        return
+
     $ avanzar_horario()
     
     return
 
 
 label accion_ir_a_locacion:
-    
+
     if _locacion_temp:
         # Verificar restricción de quest/evento
         $ _msg_restriccion = accion_bloqueada_movimiento(_locacion_temp)
@@ -116,6 +134,53 @@ label accion_ir_a_locacion:
                 $ _label_loc = restriccion_quest_activa.obtener_label_locacion(_dest_loc.id)
                 if _label_loc:
                     call expression _label_loc from _call_expression_2
-    
+
+    return
+
+
+################################################################################
+## Label: Ejecutar acción de locación
+################################################################################
+
+label accion_locacion_ejecutar:
+
+    # 1. Verificar restricción activa del sistema de quests/eventos
+    $ _ale_msg = accion_bloqueada(_accion_locacion_temp_id)
+    if _ale_msg:
+        piensa "[_ale_msg]"
+        return
+
+    # 2. Si ya fue usada hoy y tiene mensaje de reintento — mostrar mensaje
+    if not sistema_acciones.esta_disponible(_accion_locacion_temp_id):
+        $ _ale_accion_ch = sistema_acciones.acciones.get(_accion_locacion_temp_id)
+        if _ale_accion_ch and _ale_accion_ch.mensaje_reintento:
+            $ _ale_msg_ch = renpy.translate_string(_ale_accion_ch.mensaje_reintento)
+            piensa "[_ale_msg_ch]"
+        return
+
+    # 3. Listeners válidos registrados por quests/eventos
+    $ _ale_listeners = sistema_acciones.preparar_ejecucion(_accion_locacion_temp_id)
+
+    # 4. Sin listeners → ejecutar label genérico
+    if not _ale_listeners:
+        $ _ale_accion = sistema_acciones.acciones.get(_accion_locacion_temp_id)
+        if _ale_accion and _ale_accion.label_generico:
+            call expression _ale_accion.label_generico from _call_ale_generico
+        else:
+            piensa "No hay nada especial que hacer aquí ahora."
+        return
+
+    # 5. Un solo listener → ejecutar directamente
+    if len(_ale_listeners) == 1:
+        $ sistema_acciones.post_ejecutar(_accion_locacion_temp_id, _ale_listeners[0])
+        call expression _ale_listeners[0].label from _call_ale_listener_unico
+        return
+
+    # 6. Múltiples listeners → menú de elección del jugador
+    $ _ale_opciones = [(_ale_l.nombre_menu, _ale_l) for _ale_l in _ale_listeners]
+    $ _ale_elegido = renpy.display_menu(_ale_opciones)
+    $ sistema_acciones.post_ejecutar(_accion_locacion_temp_id, _ale_elegido)
+    call expression _ale_elegido.label from _call_ale_listener_menu
+
     return
 

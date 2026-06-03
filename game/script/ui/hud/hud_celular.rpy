@@ -72,16 +72,17 @@ screen menu_celular():
                     # Definir botones del celular como lista para grid dinamico
                     python:
                         _botones_cel = [
-                            ("relaciones", "📊", "Relaciones", Show("estadisticas_npcs"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
+                            ("relaciones", "💝", "Relaciones", Show("panel_relaciones"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
                             ("pistas", "📋", "Pistas", Show("panel_pistas"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
                             ("stats", "🎮", "Stats", Show("panel_stats_mc"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
                             ("comprar", "🛒", "Tienda", Show("panel_tienda"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
-                            ("cheats", "⚙️", "Cheats", Show("menu_cheats"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
                             ("mensajes", "💬", "Chat", Show("lista_contactos_mensajes"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
                             ("galeria", "🖼️", "Galería", Show("panel_galeria"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
                             ("hot", "🔥", "Hot", Call("narrar_mensaje", "Contenido en desarrollo"), "#2a1a10CC", "#3d2a1aCC", "#888888"),
                             ("banco", "🏦", "Banco", Call("narrar_mensaje", "Contenido en desarrollo"), "#2a1a10CC", "#3d2a1aCC", "#888888"),
                         ]
+                        if store.MODO_DEV:
+                            _botones_cel.insert(4, ("cheats", "⚙️", "Cheats", Show("menu_cheats"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"))
                         _grid_cols = _ajc.grid_cols if _ajc and _ajc.grid_cols else 3
                         _grid_rows = _ajc.grid_rows if _ajc and _ajc.grid_rows else 5
 

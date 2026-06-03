@@ -295,6 +295,8 @@ label evento1_violet:
 
     $ avanzar_horario()
     $ violet_evento1_completado = True
+    $ _ev1 = sistema_events.obtener_event("violet_evento_01")
+    $ _ev1 and _ev1.completar()
     jump game_loop
 
 

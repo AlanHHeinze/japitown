@@ -1047,9 +1047,11 @@ init python:
 screen boton_posicionamiento_overlay():
     zorder 300
 
-    # Tecla P: abre/cierra herramienta de posicionamiento (no requiere debug activo)
     if MODO_DEV:
+        # Tecla P: herramienta de posicionamiento
         key "p" action ToggleScreen("herramienta_pos_simple")
+        # Tecla O: herramienta de completar quests
+        key "o" action ToggleScreen("herramienta_quests")
 
     # Botón flotante — solo visible cuando el panel de debug está abierto (F1)
     if MODO_DEV and mostrar_debug_hud:

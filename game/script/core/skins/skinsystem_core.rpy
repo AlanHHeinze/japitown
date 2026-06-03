@@ -29,8 +29,8 @@ init python:
         """
         
         def __init__(self, id, npc_id, nombre, grupo="base", descripcion="",
-                     condicion_desbloqueo=None, sprite_idle=None, sprite_menu=None,
-                     posicion=None):
+                condicion_desbloqueo=None, sprite_idle=None, sprite_menu=None,
+                posicion=None):
             """
             Args:
                 id: ID único del skin (ej: "jasmine_entrenamiento_deportiva")
@@ -224,7 +224,7 @@ default skins_activos = {}
 
 init python:
     
-    def establecer_grupo_rutina(npc_id, dia, horario, grupo):
+    def establecer_grupo_rutina(npc_id, dia, horario, grupo, condicion=None):
         """
         Asigna un grupo de skin a una rutina específica de un NPC.
         
@@ -239,31 +239,35 @@ init python:
         if npc_id not in rutinas_skin_grupos:
             rutinas_skin_grupos[npc_id] = {}
         
+        entrada = {"grupo": grupo, "condicion": condicion} if condicion else grupo
         if isinstance(dia, (list, tuple)):
             for d in dia:
-                rutinas_skin_grupos[npc_id][(d, horario)] = grupo
+                rutinas_skin_grupos[npc_id][(d, horario)] = entrada
         else:
-            rutinas_skin_grupos[npc_id][(dia, horario)] = grupo
-    
+            rutinas_skin_grupos[npc_id][(dia, horario)] = entrada
+
     def obtener_grupo_rutina(npc_id, dia=None, horario=None):
         """
         Obtiene el grupo de skin asignado a una rutina específica.
-        
-        Args:
-            npc_id: ID del NPC
-            dia: Día (si None, usa día actual)
-            horario: Horario (si None, usa horario actual)
-        
-        Returns:
-            str: Grupo de skin (default "base")
+        Si la entrada tiene condicion y ésta falla, retorna "base".
         """
         if dia is None:
             dia = getattr(store, 'dia_semana_actual', 0)
         if horario is None:
             horario = getattr(store, 'horario_actual', 0)
-        
+
         grupos_npc = rutinas_skin_grupos.get(npc_id, {})
-        return grupos_npc.get((dia, horario), "base")
+        entrada = grupos_npc.get((dia, horario), "base")
+
+        if isinstance(entrada, dict):
+            condicion = entrada.get("condicion")
+            try:
+                if condicion and not condicion():
+                    return "base"
+            except:
+                return "base"
+            return entrada.get("grupo", "base")
+        return entrada
     
     def obtener_grupo_rutina_actual(npc_id):
         """
@@ -330,3 +334,25 @@ init python:
         """
         grupo_actual = obtener_grupo_rutina_actual(npc_id)
         return sistema_skins.obtener_sprite_idle_por_grupo(npc_id, grupo_actual)
+
+    # Mapeo de grupo de skin → prefijo del atributo de cuerpo en la layered image.
+    # Actualizar aquí cuando se agregue un grupo con body propio.
+    GRUPO_CUERPO_MAP = {
+        "base":          "c_rbase",
+        "pijama":        "c_pijama",
+        "entrenamiento": "c_rbase",
+        "bikini":        "c_rbase",
+        "ropa_interior": "c_rbase",
+        "vestidos":      "c_rbase",
+    }
+
+    def cuerpo_activo(npc_id):
+        """
+        Retorna el prefijo del atributo de cuerpo según el grupo de skin activo del NPC.
+        Usar para evaluar qué skin mostrar al inicio de una quest.
+
+        Returns:
+            str: "c_rbase" o "c_pijama" según el grupo activo.
+        """
+        grupo = obtener_grupo_rutina_actual(npc_id)
+        return GRUPO_CUERPO_MAP.get(grupo, "c_rbase")

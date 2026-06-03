@@ -151,6 +151,14 @@ layeredimage mc_parado_base:
             "images/characters/mc/base/mc_base_cuerpo_rbase_vr.png"
         attribute c_rbase_cuestionando:
             "images/characters/mc/base/mc_base_cuerpo_cuestionando.png"
+        attribute c_rbase_cajacosplay:
+            "images/characters/mc/base/mc_base_cuerpo_rbase_cajacoxplay.png"
+        attribute c_rbase_mangas:
+            "images/characters/mc/base/mc_base_cuerpo_rbase_mangas.png"
+        attribute c_rbase_tanga:
+            "images/characters/mc/base/mc_base_cuerpo_tanga.png"
+        attribute c_rbase_leyendocyberpunk:
+            "images/characters/mc/base/mc_base_cuerpo_rbase_leyendocyberpunk.png" 
         attribute c_none:
             Null()
 

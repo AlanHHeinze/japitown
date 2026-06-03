@@ -88,26 +88,3 @@ init 6 python:
     )
     sistema_mensajes.registrar_grupo("monica", chat_monica_violet_quest2_fallo)
 
-    # =========================================================================
-    # Violet Quest 1 — Monica avisa que dejo el paquete
-    # =========================================================================
-
-    chat_monica_violet_quest1_paquete = GrupoMensajes(
-        id="monica_chat_violet_quest1_paquete",
-        npc_id="monica",
-        mensaje_inicial="Llegó un paquete, creo que es tuyo lo dejé en tu habitación",
-        trigger_id="violet_quest1_paquete_monica",
-        tabla_recompensas=TablaRecompensas({}),
-        pasos=[
-            PasoConversacion(
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto="Gracias, luego lo reviso",
-                        respuesta_npc="👍",
-                        puntos={}
-                    ),
-                ]
-            ),
-        ]
-    )
-    sistema_mensajes.registrar_grupo("monica", chat_monica_violet_quest1_paquete)

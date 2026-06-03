@@ -85,7 +85,7 @@ init python:
         "casco_realidad_virtual": {
             "nombre": "Casco realidad virtual",
             "emoji": "🎮",
-            "precio": 200,
+            "precio": 250,
             "dias_entrega": 4,
             "descripcion": "Un casco de realidad virtual para jugar videojuegos",
             "usable": True,
@@ -115,6 +115,39 @@ init python:
             "stock": 1,
             "reposicion": 0,
             "icono": "images/ui/shopping/caja_cerrada.png", # Se asume una imagen genérica si no existe
+        },
+
+        # Entrada Japicon — disponible en tienda, stock 0 hasta completar quest 05_c
+        "entrada_japicon": {
+            "nombre": "Entrada Japicon",
+            "emoji": "🎟️",
+            "precio": 150,
+            "dias_entrega": 2,
+            "descripcion": "Entradas para la Japicon.",
+            "usable": True,
+            "vendible": True,
+            "consumible": False,
+            "condicion_uso": lambda: False,
+            "instruccion_uso": "Entradas para la Japicon",
+            "stock": 0,
+            "reposicion": 0,
+        },
+
+        # Coxplay Box — llega por delivery de la quest 05_a
+        "coxplay_box": {
+            "nombre": "Coxplay Box",
+            "emoji": "📦",
+            "precio": 0,
+            "dias_entrega": 0,
+            "descripcion": "Una caja con tres cosplay. Debería dársela a Violet.",
+            "usable": True,
+            "vendible": False,
+            "consumible": False,
+            "condicion_uso": lambda: False,
+            "instruccion_uso": "Debería darle esto a Violet",
+            "stock": 0,
+            "reposicion": 0,
+            "icono": "images/ui/shopping/caja_cerrada.png",
         },
 
         # Items de quest (no comprables, se obtienen durante quests)
@@ -162,6 +195,26 @@ init python:
         },
 
         # Quest items — no comprables
+        "mangas_violet_mc": {
+            "nombre": "Mangas de Violet",
+            "emoji": "📚",
+            "precio": 0,
+            "dias_entrega": 0,
+            "descripcion": "Las mangas de Violet. Debería leerlas en mi habitación.",
+            "usable": True,
+            "vendible": False,
+            "consumible": False,
+            "condicion_uso": lambda: (
+                hasattr(store, 'sistema_locaciones') and
+                store.sistema_locaciones.locacion_actual and
+                store.sistema_locaciones.locacion_actual.id == "casa_hmc"
+            ),
+            "instruccion_uso": "Debería estar en mi habitación para leer más tranquilo",
+            "label_uso": "usar_mangas_violet_mc",
+            "stock": 0,
+            "reposicion": 0,
+        },
+
         "mangas_violet": {
             "nombre": "Mangas para Violet",
             "emoji": "📦",
@@ -178,6 +231,26 @@ init python:
             ),
             "instruccion_uso": "Si voy a abrirlo debería estar en mi habitación",
             "label_uso": "usar_mangas_violet",
+            "stock": 0,
+            "reposicion": 0,
+        },
+
+        "tanga_violet": {
+            "nombre": "Tanga de Violet",
+            "emoji": "🩲",
+            "precio": 0,
+            "dias_entrega": 0,
+            "descripcion": "La tanga de Violet",
+            "usable": True,
+            "vendible": False,
+            "consumible": False,
+            "condicion_uso": lambda: (
+                hasattr(store, 'sistema_locaciones') and
+                store.sistema_locaciones.locacion_actual and
+                store.sistema_locaciones.locacion_actual.id == "casa_hmc"
+            ),
+            "instruccion_uso": "No debo sacar esto acá",
+            "label_uso": "usar_tanga_violet",
             "stock": 0,
             "reposicion": 0,
         },

@@ -4,6 +4,28 @@
 
 init 10 python:
 
+    def _violet_cond_golosinas():
+        return (
+            store.inventario.get("golosinas", 0) > 0 and
+            getattr(store.sistema_talk.obtener_estado_activo("violet"), "id", None) == "violet_hambre"
+        )
+
+    def _violet_recompensa_golosinas():
+        npc = obtener_npc("violet")
+        if npc:
+            npc.modificar_stat2(1)
+
+    def _violet_cond_videojuegos():
+        return (
+            store.mc_inteligencia >= 3 and
+            getattr(store.sistema_talk.obtener_estado_activo("violet"), "id", None) == "violet_ansiosa"
+        )
+
+    def _violet_recompensa_videojuegos():
+        npc = obtener_npc("violet")
+        if npc:
+            npc.modificar_stat2(1)
+
     def inicializar_talk_violet():
 
         # ==================================================================
@@ -18,7 +40,7 @@ init 10 python:
                 intro="Violet parece estar a la defensiva hoy.",
                 efectos={
                     "complacerla": "+1_deseo",
-                    "provocarla":  "-2_amor",
+                    "provocarla":  "nada",
                     "escucharla":  "nada",
                     "hablarle":    "+2_amor",
                     "adularla":    "-1_deseo",
@@ -39,7 +61,7 @@ init 10 python:
                 intro="Violet parece estar molesta.",
                 efectos={
                     "complacerla": "-2_amor",
-                    "provocarla":  "-1_deseo",
+                    "provocarla":  "nada",
                     "escucharla":  "+1_deseo",
                     "hablarle":    "+2_amor",
                     "adularla":    "nada",
@@ -61,7 +83,7 @@ init 10 python:
                 efectos={
                     "complacerla": "+2_amor",
                     "provocarla":  "nada",
-                    "escucharla":  "-2_amor",
+                    "escucharla":  "nada",
                     "hablarle":    "-1_deseo",
                     "adularla":    "+1_deseo",
                 },
@@ -84,7 +106,7 @@ init 10 python:
                     "provocarla":  "-2_amor",
                     "escucharla":  "nada",
                     "hablarle":    "+2_amor",
-                    "adularla":    "-1_deseo",
+                    "adularla":    "nada",
                 },
                 mensaje="ella tenía hambre y estaba irritada.",
                 estados_posteriores={
@@ -101,7 +123,7 @@ init 10 python:
                 nombre="Ansiosa",
                 intro="Violet parece estar ansiosa.",
                 efectos={
-                    "complacerla": "-2_amor",
+                    "complacerla": "nada",
                     "provocarla":  "-1_deseo",
                     "escucharla":  "+2_amor",
                     "hablarle":    "+1_deseo",
@@ -125,7 +147,7 @@ init 10 python:
                     "complacerla": "nada",
                     "provocarla":  "+1_deseo",
                     "escucharla":  "-2_amor",
-                    "hablarle":    "-1_deseo",
+                    "hablarle":    "nada",
                     "adularla":    "+2_amor",
                 },
                 mensaje="ella estaba inusualmente dócil.",
@@ -184,31 +206,25 @@ init 10 python:
             OpcionEspecialTalk(
                 id="violet_golosinas",
                 texto="Darle golosinas",
-                condicion=lambda: (
-                    store.inventario.get("golosinas", 0) > 0 and
-                    getattr(store.sistema_talk.obtener_estado_activo("violet"), "id", None) == "violet_hambre"
-                ),
+                condicion=_violet_cond_golosinas,
                 mensaje_opcion="Le ofreciste unas golosinas.",
                 resultado_id="+2_amor",
                 item_requerido="golosinas",
                 item_consumible=True,
                 estado_posterior_npc="posterior_feliz",
-                recompensa_extra=lambda: obtener_npc("violet").modificar_stat("deseo", 1) if obtener_npc("violet") else None,
+                recompensa_extra=_violet_recompensa_golosinas,
             ),
 
             OpcionEspecialTalk(
                 id="violet_videojuegos",
                 texto="Jugar videojuegos",
-                condicion=lambda: (
-                    store.mc_inteligencia >= 3 and
-                    getattr(store.sistema_talk.obtener_estado_activo("violet"), "id", None) == "violet_ansiosa"
-                ),
+                condicion=_violet_cond_videojuegos,
                 mensaje_opcion="La invitaste a jugar videojuegos.",
                 resultado_id="+2_amor",
                 item_requerido=None,
                 item_consumible=False,
                 estado_posterior_npc="posterior_feliz",
-                recompensa_extra=lambda: obtener_npc("violet").modificar_stat("deseo", 1) if obtener_npc("violet") else None,
+                recompensa_extra=_violet_recompensa_videojuegos,
             ),
 
         ]

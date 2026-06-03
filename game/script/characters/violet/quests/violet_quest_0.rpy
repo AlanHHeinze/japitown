@@ -13,10 +13,15 @@ image quest0_violet_pizzalista = "images/quest/violet/quest0/quest0_violet_pizza
 image quest0_violet_poniendopizza = "images/quest/violet/quest0/quest0_violet_poniendopizza.png"
 image quest0_violet_puertahabitacion = "images/quest/violet/quest0/quest0_violet_puertahabitacion.png"
 image quest0_violet_sacandopizza = "images/quest/violet/quest0/quest0_violet_sacandopizza.png"
+image quest0_violet_cenando = "images/quest/violet/quest0/quest0_violet_cenando.jpg"
 
 # =============================================================================
 
 # QUEST 0 - El Muro de Cristal (Violet)
+# =============================================================================
+# Para activar un recuerdo y mostrar la notificación flotante, usar:
+#   $ notificar_recuerdo_activado()
+#   $ notificar_recordara("violet")       
 # =============================================================================
 label quest_violet_questprincipal_0:
     # Ocultar HUD
@@ -175,10 +180,7 @@ label quest_violet_0_opcion_respeto:
 
     piensa "Creo que conseguí avanzar un poco en la relación"
 
-
-    # +5 amor
-    $ _npc_v = obtener_npc("violet")
-    $ _npc_v.modificar_stat1(5)
+    $ _ruta_vq0 = "respeto"
 
     # =========================================================================
     # Modo restringido: el jugador debe ir a la cocina
@@ -187,7 +189,7 @@ label quest_violet_0_opcion_respeto:
 
     $ activar_restriccion(
         locaciones_permitidas=["casa_pasilloarriba", "casa_living", "casa_pasilloabajo", "casa_cocina"],
-        acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar"],
+        acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar", "ver_tv"],
         mensaje_movimiento=_("Deberia ir a la cocina a preparar la pizza"),
         mensajes_acciones={
             "avanzar_tiempo": _("Tengo que encargarme de las pizzas antes de hacer otra cosa"),
@@ -197,8 +199,14 @@ label quest_violet_0_opcion_respeto:
         npcs_ocultos=["monica", "jasmine", "violet"],
     )
 
-    # Al entrar a la cocina se dispara el label de cierre
-    $ restriccion_quest_activa.registrar_label_locacion("casa_cocina", "quest_violet_0_cierre")
+    # Conectar la accion Cocinar a la quest para que sea el disparador
+    $ sistema_acciones.registrar_listener(ListenerAccion(
+        accion_id="cocinar",
+        label="quest_violet_0_cierre",
+        nombre_menu="Preparar las pizzas",
+        prioridad="quest",
+        unico=True,
+    ))
 
     # Mover al jugador al pasillo arriba (donde esta la puerta de Violet)
     $ sistema_locaciones.mover_a_locacion("casa_pasilloarriba")
@@ -460,12 +468,12 @@ label quest_violet_0_opcion_entrar:
     pause 0.3
 
     # (Mc cuerpo regalo violet)
-    show mc_parado_base c_rbase_regaloviolet with sprite_normal
+    show mc_parado_base c_rbase_cajacosplay with sprite_normal
     pause 0.3
     # (Mc boca hablando cuerpo base)
     show mc_parado_base b_hablando c_rbase_base with sprite_normal
     # (Violet cuerpo recibiendo regalo)
-    show violet_parada c_rbase_regalo with sprite_normal
+    show violet_parada c_rbase_cajacosplay with sprite_normal
     mc "Toma"
     # (Mc boca neutral)
     show mc_parado_base b_none
@@ -524,9 +532,7 @@ label quest_violet_0_opcion_entrar:
     # (Violet boca sonrisa leve)
     show violet_parada b_sonrisaleve
 
-    # +5 deseo
-    $ _npc_v = obtener_npc("violet")
-    $ _npc_v.modificar_stat2(5)
+    $ _ruta_vq0 = "confrontar"
 
     # =========================================================================
     # Modo restringido: el jugador debe ir a la cocina
@@ -538,7 +544,7 @@ label quest_violet_0_opcion_entrar:
 
     $ activar_restriccion(
         locaciones_permitidas=["casa_pasilloarriba", "casa_living", "casa_pasilloabajo", "casa_cocina"],
-        acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar"],
+        acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar", "ver_tv"],
         mensaje_movimiento=_("Deberia ir a la cocina a preparar la pizza"),
         mensajes_acciones={
             "avanzar_tiempo": _("Tengo que cocinar primero"),
@@ -548,8 +554,14 @@ label quest_violet_0_opcion_entrar:
         npcs_ocultos=["monica", "jasmine", "violet"],
     )
 
-    # Al entrar a la cocina se dispara el label de cierre
-    $ restriccion_quest_activa.registrar_label_locacion("casa_cocina", "quest_violet_0_cierre")
+    # Conectar la accion Cocinar a la quest para que sea el disparador
+    $ sistema_acciones.registrar_listener(ListenerAccion(
+        accion_id="cocinar",
+        label="quest_violet_0_cierre",
+        nombre_menu="Preparar las pizzas",
+        prioridad="quest",
+        unico=True,
+    ))
 
     # Mover al jugador al pasillo arriba (donde esta la puerta de Violet)
     $ sistema_locaciones.mover_a_locacion("casa_pasilloarriba")
@@ -603,7 +615,7 @@ label quest_violet_0_cierre:
 
     $ activar_restriccion(
         locaciones_permitidas=["casa_pasilloabajo", "casa_living", "casa_pasilloarriba", "casa_hviolet"],
-        acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar"],
+        acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar", "cocinar", "ver_tv"],
         mensaje_movimiento=_("Debo avisarle a Violet que esta la comida"),
         celular_bloqueado=True,
         npcs_ocultos=["monica", "jasmine", "violet"],
@@ -653,9 +665,15 @@ label quest_violet_0_puerta:
     scene quest0_violet_cambiandose3 with dissolve
     mc "Me voy..."
 
-    scene black with fade
-    centered "La cena continuo tranquila, aunque violet ni siquiera me miró. Voy a tener que seguir intentando mejorar la relacion"
+    scene quest0_violet_cenando with fade
+    vozoff "En la cena Violet se sento en la punta de la mesa, lejos de mi y no me hablo en toda la noche"
     pause 0.3
+
+    # Evaluar ruta elegida y aplicar stats
+    if _ruta_vq0 == "respeto":
+        $ obtener_npc("violet").modificar_stat1(4)
+    elif _ruta_vq0 == "confrontar":
+        $ obtener_npc("violet").modificar_stat2(2)
 
     # Finalizar Quest
     $ avanzar_horario()

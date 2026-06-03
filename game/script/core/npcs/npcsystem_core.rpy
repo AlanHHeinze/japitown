@@ -4,7 +4,41 @@
 ## Sistema para gestionar personajes no jugables con rutinas dinámicas
 
 init python:
-    
+
+    class RutinaEspecial:
+        """
+        Actividad opcional que un NPC puede realizar en un slot de horario dado.
+        Se evalúa al inicio de cada día. Tiene prioridad sobre la rutina base,
+        pero es subordinada a overrides de quests y eventos.
+        """
+        def __init__(self, id, locacion, sprite, posicion,
+                     probabilidad=0.3,
+                     horarios=None,
+                     dias=None,
+                     condicion=None,
+                     nombre=""):
+            self.id = id
+            self.locacion = locacion
+            self.sprite = sprite
+            self.posicion = posicion
+            self.probabilidad = probabilidad
+            self.horarios = horarios    # None = todos; lista = slots válidos [0,1,2,3]
+            self.dias = dias            # None = todos; lista = días válidos [0-6]
+            self.condicion = condicion  # lambda → bool, o None
+            self.nombre = nombre
+
+        def es_candidata(self, dia, horario):
+            if self.dias is not None and dia not in self.dias:
+                return False
+            if self.horarios is not None and horario not in self.horarios:
+                return False
+            if self.condicion is not None:
+                try:
+                    return bool(self.condicion())
+                except:
+                    return False
+            return True
+
     class NPC:
         """
         Clase base para personajes no jugables.
@@ -12,7 +46,7 @@ init python:
         Stats configurables por NPC (ej: amor/deseo)
         """
         
-        def __init__(self, id, nombre, nombre_completo="", sprite=None, nombre_stat1="relacion", nombre_stat2="afinidad"):
+        def __init__(self, id, nombre, nombre_completo="", sprite=None, nombre_stat1="amor", nombre_stat2="deseo"):
             self.id = id
             self.nombre = nombre
             self.nombre_completo = nombre_completo if nombre_completo else nombre
@@ -53,7 +87,10 @@ init python:
             
             # Atributos personalizables
             self.atributos = {}
-            
+
+            # Lista de desbloqueos por stat (amor/deseo)
+            self.desbloqueos = []
+
             # Quests relacionadas con este NPC
             self.quests = []
             
@@ -62,7 +99,14 @@ init python:
             
             # Diálogos
             self.dialogos = {}
-        
+
+            # Rutinas especiales dinámicas
+            self.rutinas_especiales = []
+            self._rutina_especial_dia = {}   # {horario: RutinaEspecial|None} — resultado diario
+
+            # Overrides de rutina aplicados por quests activas
+            self.rutinas_quest = {}          # {(dia, horario): locacion_id}
+
         def establecer_rutina(self, dia_semana, horario, locacion_id):
             """
             Establece la rutina del NPC para un día y horario específico.
@@ -81,26 +125,113 @@ init python:
                 clave = (dia_semana, horario)
                 self.rutinas[clave] = locacion_id
         
+        def agregar_desbloqueo(self, stat, umbral, icono, nombre, desc="",
+                               condicion_extra=None, nombre_pendiente=None):
+            self.desbloqueos.append({
+                "stat":             stat,
+                "umbral":           umbral,
+                "icono":            icono,
+                "nombre":           nombre,
+                "desc":             desc,
+                "condicion_extra":  condicion_extra,
+                "nombre_pendiente": nombre_pendiente,
+            })
+
+        def agregar_rutina_especial(self, rutina_especial):
+            if not hasattr(self, 'rutinas_especiales'):
+                self.rutinas_especiales = []
+            self.rutinas_especiales.append(rutina_especial)
+
+        def evaluar_rutinas_especiales_dia(self, dia):
+            """Evalúa qué rutinas especiales se activan para cada slot del día dado."""
+            rutinas = getattr(self, 'rutinas_especiales', [])
+            dias_hoy = getattr(store, 'dias_totales', 0)
+
+            if not hasattr(self, '_rutina_cooldown'):
+                self._rutina_cooldown = {}
+
+            _loc_fuera = "fuera"
+            _loc_banio = {"casa_banioarriba", "casa_baniomonica", "casa_banioabajo"}
+
+            self._rutina_especial_dia = {}
+            for horario in range(4):
+                candidatas = [r for r in rutinas if r.es_candidata(dia, horario)]
+                # Excluir rutinas "fuera" y "baño" que estén en cooldown (< 2 días)
+                candidatas = [
+                    r for r in candidatas
+                    if (r.locacion != _loc_fuera and r.locacion not in _loc_banio)
+                    or dias_hoy - self._rutina_cooldown.get(r.id, -99) >= 2
+                ]
+                renpy.random.shuffle(candidatas)
+                activa = None
+                for candidata in candidatas:
+                    if renpy.random.random() < candidata.probabilidad:
+                        activa = candidata
+                        break
+                self._rutina_especial_dia[horario] = activa
+
+            # Restricción: no puede tener "fuera" Y "baño" el mismo día
+            slots_fuera = [h for h, r in self._rutina_especial_dia.items()
+                           if r and r.locacion == _loc_fuera]
+            slots_banio = [h for h, r in self._rutina_especial_dia.items()
+                           if r and r.locacion in _loc_banio]
+
+            if slots_fuera and slots_banio:
+                # Cancelar uno de los dos aleatoriamente
+                if renpy.random.random() < 0.5:
+                    for h in slots_fuera:
+                        self._rutina_especial_dia[h] = None
+                else:
+                    for h in slots_banio:
+                        self._rutina_especial_dia[h] = None
+
+            # Registrar cooldown para las rutinas "fuera"/"baño" que quedaron activas
+            for rutina in self._rutina_especial_dia.values():
+                if rutina and (rutina.locacion == _loc_fuera or rutina.locacion in _loc_banio):
+                    self._rutina_cooldown[rutina.id] = dias_hoy
+
+        def obtener_rutina_especial_actual(self, horario=None):
+            if horario is None and hasattr(store, 'horario_actual'):
+                horario = store.horario_actual
+            return getattr(self, '_rutina_especial_dia', {}).get(horario, None)
+
+        def obtener_visual_rutina_especial(self, horario=None):
+            """Retorna (sprite, posicion) de la rutina especial activa, o None."""
+            rutina = self.obtener_rutina_especial_actual(horario)
+            if rutina:
+                return (rutina.sprite, rutina.posicion)
+            return None
+
         def obtener_locacion_rutina(self, dia_semana=None, horario=None):
             """
             Obtiene la locación donde debería estar el NPC según su rutina.
-            Si no se especifican parámetros, usa el tiempo actual del juego.
-            Prioridad: 1) Override de evento, 2) Rutina normal
+            Prioridad: 1) Override de evento, 2) Rutina de quest, 3) Rutina especial, 4) Rutina base
             """
             # Usar tiempo actual si no se especifica
             if dia_semana is None and hasattr(store, 'dia_semana_actual'):
                 dia_semana = store.dia_semana_actual
             if horario is None and hasattr(store, 'horario_actual'):
                 horario = store.horario_actual
-            
-            # Prioridad 1: Verificar override de evento
+
+            clave = (dia_semana, horario)
+
+            # Prioridad 1: Override de evento
             if hasattr(store, 'sistema_events'):
                 override = store.sistema_events.obtener_override_rutina(self.id, dia_semana, horario)
                 if override:
                     return override
-            
-            # Prioridad 2: Buscar en rutinas normales
-            clave = (dia_semana, horario)
+
+            # Prioridad 2: Rutina de quest activa (manda sobre especiales)
+            rutinas_q = getattr(self, 'rutinas_quest', {})
+            if clave in rutinas_q:
+                return rutinas_q[clave]
+
+            # Prioridad 3: Rutina especial del día (fuera/baño)
+            rutina_esp = self.obtener_rutina_especial_actual(horario)
+            if rutina_esp:
+                return rutina_esp.locacion
+
+            # Prioridad 4: Rutina base
             return self.rutinas.get(clave, None)
 
         
@@ -110,20 +241,26 @@ init python:
             Debe llamarse cuando cambia el tiempo.
             """
             nueva_locacion = self.obtener_locacion_rutina()
-            
+
             if nueva_locacion and nueva_locacion != self.locacion_actual:
                 # Remover de locación anterior
                 if self.locacion_actual and hasattr(store, 'sistema_locaciones'):
                     loc_anterior = store.sistema_locaciones.obtener_locacion(self.locacion_actual)
                     if loc_anterior:
                         loc_anterior.remover_personaje(self.id)
-                
+
                 # Agregar a nueva locación
                 if hasattr(store, 'sistema_locaciones'):
                     loc_nueva = store.sistema_locaciones.obtener_locacion(nueva_locacion)
                     if loc_nueva:
                         loc_nueva.agregar_personaje(self.id)
-                
+
+                # Sincronizar disponibilidad al cruzar el estado "fuera"
+                if nueva_locacion == "fuera" and self.locacion_actual != "fuera":
+                    self.estado["disponible"] = False
+                elif nueva_locacion != "fuera" and self.locacion_actual == "fuera":
+                    self.estado["disponible"] = True
+
                 self.locacion_actual = nueva_locacion
         
         def esta_en_locacion(self, locacion_id):
@@ -228,6 +365,28 @@ init python:
             """Actualiza las ubicaciones de todos los NPCs según sus rutinas"""
             for npc in self.npcs.values():
                 npc.actualizar_ubicacion()
+
+        def evaluar_todas_rutinas_especiales_dia(self, dia):
+            """Evalúa las rutinas especiales de todos los NPCs y resuelve conflictos."""
+            for npc in self.npcs.values():
+                npc.evaluar_rutinas_especiales_dia(dia)
+            self._resolver_conflictos_banio()
+
+        def _resolver_conflictos_banio(self):
+            """Si Violet y Jasmine tienen ducha asignada al mismo horario, solo una la usa."""
+            violet = self.npcs.get("violet")
+            jasmine = self.npcs.get("jasmine")
+            if not violet or not jasmine:
+                return
+            for horario in range(4):
+                v_rutina = getattr(violet, '_rutina_especial_dia', {}).get(horario)
+                j_rutina = getattr(jasmine, '_rutina_especial_dia', {}).get(horario)
+                if (v_rutina and v_rutina.locacion == "casa_banioarriba" and
+                        j_rutina and j_rutina.locacion == "casa_banioarriba"):
+                    if renpy.random.random() < 0.5:
+                        violet._rutina_especial_dia[horario] = None
+                    else:
+                        jasmine._rutina_especial_dia[horario] = None
         
         def obtener_npcs_en_locacion(self, locacion_id):
             """Obtiene lista de NPCs en una locación específica"""
@@ -270,15 +429,6 @@ init python:
             return npc.obtener_estado(npc.nombre_stat2, 0)
         return 0
 
-    # Aliases para compatibilidad con questsystem_core
-    def obtener_relacion(npc_id):
-        """Alias: obtiene stat1 del NPC"""
-        return obtener_stat1(npc_id)
-
-    def obtener_afinidad(npc_id):
-        """Alias: obtiene stat2 del NPC"""
-        return obtener_stat2(npc_id)
-
     def cambiar_stat1(npc_id, cantidad):
         """Modifica el stat principal de un NPC"""
         npc = obtener_npc(npc_id)
@@ -290,15 +440,6 @@ init python:
         npc = obtener_npc(npc_id)
         if npc:
             npc.modificar_stat2(cantidad)
-
-    # Aliases para compatibilidad
-    def cambiar_relacion(npc_id, cantidad):
-        """Alias: modifica stat1 del NPC"""
-        cambiar_stat1(npc_id, cantidad)
-
-    def cambiar_afinidad(npc_id, cantidad):
-        """Alias: modifica stat2 del NPC"""
-        cambiar_stat2(npc_id, cantidad)
 
     def obtener_progreso(npc_id):
         """Obtiene el valor de progreso de un NPC"""
@@ -340,6 +481,13 @@ init python:
     def actualizar_rutinas_npcs():
         """Actualiza las ubicaciones de todos los NPCs"""
         sistema_npcs.actualizar_todas_ubicaciones()
+
+    def obtener_visual_npc_rutina_especial(npc_id, horario=None):
+        """Retorna (sprite, posicion) de la rutina especial activa del NPC, o None."""
+        npc = obtener_npc(npc_id)
+        if npc:
+            return npc.obtener_visual_rutina_especial(horario)
+        return None
     
     def resetear_interacciones_todos_npcs():
         """Resetea las interacciones diarias de todos los NPCs"""

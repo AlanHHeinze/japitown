@@ -4,6 +4,28 @@
 
 init 10 python:
 
+    def _jasmine_cond_bebida():
+        return (
+            store.inventario.get("bebida_energetica", 0) > 0 and
+            getattr(store.sistema_talk.obtener_estado_activo("jasmine"), "id", None) == "jasmine_agotada"
+        )
+
+    def _jasmine_recompensa_bebida():
+        npc = obtener_npc("jasmine")
+        if npc:
+            npc.modificar_stat2(1)
+
+    def _jasmine_cond_entrenar():
+        return (
+            store.mc_fuerza >= 3 and
+            getattr(store.sistema_talk.obtener_estado_activo("jasmine"), "id", None) == "jasmine_energica"
+        )
+
+    def _jasmine_recompensa_entrenar():
+        npc = obtener_npc("jasmine")
+        if npc:
+            npc.modificar_stat2(1)
+
     def inicializar_talk_jasmine():
 
         # ==================================================================
@@ -21,7 +43,7 @@ init 10 python:
                     "provocarla":  "+1_deseo",
                     "escucharla":  "nada",
                     "hablarle":    "-1_deseo",
-                    "adularla":    "-2_amor",
+                    "adularla":    "nada",
                 },
                 mensaje="ella estaba de humor provocativo.",
                 estados_posteriores={
@@ -39,7 +61,7 @@ init 10 python:
                 intro="Jasmine parece estar celosa.",
                 efectos={
                     "complacerla": "+1_deseo",
-                    "provocarla":  "-1_deseo",
+                    "provocarla":  "nada",
                     "escucharla":  "+2_amor",
                     "hablarle":    "-2_amor",
                     "adularla":    "nada",
@@ -60,7 +82,7 @@ init 10 python:
                 intro="Jasmine parece estar tranquila y relajada.",
                 efectos={
                     "complacerla": "nada",
-                    "provocarla":  "-2_amor",
+                    "provocarla":  "nada",
                     "escucharla":  "-1_deseo",
                     "hablarle":    "+2_amor",
                     "adularla":    "+1_deseo",
@@ -80,7 +102,7 @@ init 10 python:
                 nombre="Alegre",
                 intro="Jasmine parece estar de muy buen humor.",
                 efectos={
-                    "complacerla": "-1_deseo",
+                    "complacerla": "nada",
                     "provocarla":  "nada",
                     "escucharla":  "-2_amor",
                     "hablarle":    "+1_deseo",
@@ -101,7 +123,7 @@ init 10 python:
                 nombre="Enérgica",
                 intro="Jasmine está llena de energía.",
                 efectos={
-                    "complacerla": "-2_amor",
+                    "complacerla": "nada",
                     "provocarla":  "+2_amor",
                     "escucharla":  "-1_deseo",
                     "hablarle":    "+1_deseo",
@@ -125,7 +147,7 @@ init 10 python:
                     "complacerla": "+1_deseo",
                     "provocarla":  "-2_amor",
                     "escucharla":  "+2_amor",
-                    "hablarle":    "-1_deseo",
+                    "hablarle":    "nada",
                     "adularla":    "nada",
                 },
                 mensaje="ella estaba agotada.",
@@ -179,31 +201,25 @@ init 10 python:
             OpcionEspecialTalk(
                 id="jasmine_bebida",
                 texto="Darle la bebida",
-                condicion=lambda: (
-                    store.inventario.get("bebida_energetica", 0) > 0 and
-                    getattr(store.sistema_talk.obtener_estado_activo("jasmine"), "id", None) == "jasmine_agotada"
-                ),
+                condicion=_jasmine_cond_bebida,
                 mensaje_opcion="Le ofreciste una bebida energética.",
                 resultado_id="+2_amor",
                 item_requerido="bebida_energetica",
                 item_consumible=True,
                 estado_posterior_npc="posterior_feliz",
-                recompensa_extra=lambda: obtener_npc("jasmine").modificar_stat("deseo", 1) if obtener_npc("jasmine") else None,
+                recompensa_extra=_jasmine_recompensa_bebida,
             ),
 
             OpcionEspecialTalk(
                 id="jasmine_entrenar",
                 texto="Entrenar juntos",
-                condicion=lambda: (
-                    store.mc_fuerza >= 3 and
-                    getattr(store.sistema_talk.obtener_estado_activo("jasmine"), "id", None) == "jasmine_energica"
-                ),
+                condicion=_jasmine_cond_entrenar,
                 mensaje_opcion="La propusiste salir a entrenar juntos.",
                 resultado_id="+2_amor",
                 item_requerido=None,
                 item_consumible=False,
                 estado_posterior_npc="posterior_feliz",
-                recompensa_extra=lambda: obtener_npc("jasmine").modificar_stat("deseo", 1) if obtener_npc("jasmine") else None,
+                recompensa_extra=_jasmine_recompensa_entrenar,
             ),
 
         ]

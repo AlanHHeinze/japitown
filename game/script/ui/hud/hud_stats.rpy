@@ -675,7 +675,9 @@ label accion_entrenar(stat_id):
     if entrenamiento_hoy:
         call pensar_mensaje("Estoy cansado por hoy, debería intentarlo mañana.") from _call_pensar_entrenar_limite
         return
-    
+
+    # Bloquear rollback — la recompensa no se puede deshacer
+    $ renpy.block_rollback()
     $ entrenar_stat(stat_id)
     return
 
@@ -696,7 +698,9 @@ label accion_trabajar:
     if trabajo_hoy >= 2:
         call pensar_mensaje("No tengo tareas para hoy, debería esperar hasta mañana.") from _call_pensar_trabajar_limite
         return
-    
+
+    # Bloquear rollback — la recompensa no se puede deshacer
+    $ renpy.block_rollback()
     $ trabajar()
     return
 

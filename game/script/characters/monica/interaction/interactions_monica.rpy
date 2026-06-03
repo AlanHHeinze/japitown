@@ -42,7 +42,27 @@ label interaccion_monica:
             "label": "event_monica_01_check_replay",
             "condicion": True
         })
-    
+
+    # Quest 09_a: opciones relacionadas con la enfermedad de Violet
+    $ _quest_v09a_mon = sistema_quests.obtener_quest("violet_questprincipal_09_a")
+    if (_quest_v09a_mon and _quest_v09a_mon.activa and not _quest_v09a_mon.completada and
+            _quest_v09a_mon.etapa_actual == ETAPA_BOTON_LISTO):
+        # "Preguntar por Violet" mientras el MC no sabe que está enferma
+        if not getattr(store, 'mc_sabe_violet_enferma', False):
+            $ _opciones_extra_monica.append({
+                "texto": "Preguntar por Violet",
+                "label": "violet_quest09a_monica_preguntar",
+                "condicion": True
+            })
+        # "Te llama Violet" cuando Violet pidió que venga Monica y no se completó aún
+        if (getattr(store, 'violet_9a_pedido_actual', None) == "Dile a Monica que venga" and
+                not getattr(store, 'violet_9a_tiene_entregable', False)):
+            $ _opciones_extra_monica.append({
+                "texto": "Te llama Violet",
+                "label": "violet_quest09a_monica_llamar",
+                "condicion": True
+            })
+
     call screen menu_interaccion_npc_completo(_npc_actual, opciones_extra=_opciones_extra_monica)
 
     if isinstance(_return, tuple) and _return[0] == "opcion_especial":

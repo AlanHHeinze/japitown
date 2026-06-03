@@ -87,6 +87,9 @@ init python:
         """
         Acción de dormir: avanza al día siguiente y resetea el horario a Mañana.
         """
+        # Guardar horario antes de dormir para simular horarios omitidos después
+        _horario_antes_dormir = store.horario_actual
+
         # Usar store directamente en lugar de global
         store.horario_actual = 0
         
@@ -126,6 +129,10 @@ init python:
         if hasattr(store, 'resetear_interacciones_todos_npcs'):
             store.resetear_interacciones_todos_npcs()
         
+        # Evaluar rutinas especiales del nuevo día (antes de actualizar ubicaciones)
+        if hasattr(store, 'sistema_npcs'):
+            store.sistema_npcs.evaluar_todas_rutinas_especiales_dia(store.dia_semana_actual)
+
         # Actualizar ubicaciones de NPCs
         if hasattr(store, 'actualizar_rutinas_npcs'):
             store.actualizar_rutinas_npcs()
@@ -133,6 +140,10 @@ init python:
         # Actualizar estado de quests (para verificar tiempos de espera)
         if hasattr(store, 'actualizar_quests'):
             store.actualizar_quests()
+
+        # Simular horarios omitidos al dormir: entrega mensajes que debían llegar esa noche
+        if hasattr(store, 'sistema_mensajes'):
+            store.sistema_mensajes.verificar_mensajes_horarios_omitidos(_horario_antes_dormir)
 
         # Verificar mensajes en espera (condiciones de entrega)
         if hasattr(store, 'sistema_mensajes'):
@@ -143,6 +154,12 @@ init python:
             entregas = store.sistema_compras.verificar_entregas_hoy()
             if entregas:
                 store.repartidor_presente = True
+
+        # Resetear acciones de locación
+        if hasattr(store, 'sistema_acciones'):
+            store.sistema_acciones.resetear_diario()
+            if store.dia_semana_actual == 0:  # Lunes — resetear también semanales
+                store.sistema_acciones.resetear_semanal()
 
         # Asignar nuevos estados de talk para el día que empieza
         if hasattr(store, 'sistema_talk'):
@@ -218,7 +235,26 @@ label accion_dormir:
     if _msg_restriccion:
         piensa "[_msg_restriccion]"
         return
-    
+
+    # Verificar mensaje prioritario ya entregado — bloquea dormir hasta responder
+    $ _npc_prioritario = obtener_bloqueo_mensaje_prioritario()
+    if _npc_prioritario:
+        piensa "Debo responder el mensaje de [_npc_prioritario] antes de dormir"
+        return
+
+    # Verificar mensaje prioritario que llega mientras el jugador duerme — despertar anticipado
+    $ _horario_despertar = obtener_horario_despertar_prioritario()
+    if _horario_despertar is not None:
+        call screen animacion_dormir with dissolve
+        $ avanzar_horario_multiple(_horario_despertar - horario_actual)
+        piensa "Me despertó un mensaje"
+        return
+
+    # Verificar si hay entrega de quest pendiente de Violet (repartidor o paquete en cama)
+    if getattr(store, 'violet_quest1_entrega_pendiente', False):
+        piensa "Tengo cosas pendientes por hacer, no puedo dormir ahora"
+        return
+
     # Verificar si hay paquete bloqueando
     if paquete_en_habitacion:
         call intentar_dormir_con_paquete from _call_intentar_dormir_con_paquete
@@ -249,27 +285,48 @@ label accion_dormir:
     call screen animacion_dormir with dissolve
     
     # --- EVENTOS NOCTURNOS ---
-    
-    # Evento 2 de Violet: Se dispara al dormir después de completar Quest 7
-    if store.sistema_quests.obtener_quest("violet_questprincipal_7") and store.sistema_quests.obtener_quest("violet_questprincipal_7").completada:
-        if not violet_evento2_completado:
-            jump evento2_violet
+
+    # Evento 2 de Violet: Se dispara al dormir 1 día después de completar Quest 04_e
+    $ _quest_v04e = store.sistema_quests.obtener_quest("violet_questprincipal_04_e")
+    $ _quest_v05a = store.sistema_quests.obtener_quest("violet_questprincipal_05_a")
+    if (not violet_evento2_completado and
+            _quest_v04e and _quest_v04e.completada and
+            _quest_v05a and _quest_v05a.dia_inicio is not None and
+            getattr(store, 'dias_totales', 1) > _quest_v05a.dia_inicio):
+        jump evento2_violet
 
 
 
     # Ejecutar lógica de cambio de día
     $ dormir()
 
+    # Quest 08_a de Violet: auto-trigger al despertar cuando está en ETAPA_BOTON_LISTO
+    $ _quest_v08a = store.sistema_quests.obtener_quest("violet_questprincipal_08_a")
+    if _quest_v08a and _quest_v08a.activa and not _quest_v08a.completada and _quest_v08a.etapa_actual == ETAPA_BOTON_LISTO:
+        jump violet_quest08a_despertar
+
+    # Quest 09_a de Violet: gestión diaria de la enfermedad
+    $ _quest_v09a = store.sistema_quests.obtener_quest("violet_questprincipal_09_a")
+    if _quest_v09a and _quest_v09a.activa and not _quest_v09a.completada and _quest_v09a.etapa_actual == ETAPA_BOTON_LISTO:
+        # Penalizar si Violet pidió algo pero no se entregó antes de dormir
+        if getattr(store, 'violet_9a_pedido_actual', None) and not getattr(store, 'violet_9a_entrega_completada', False):
+            $ store.violet_enferma_atencion -= 1
+        # Resetear estado diario
+        $ store.violet_9a_pedido_actual = None
+        $ store.violet_9a_tiene_entregable = False
+        $ store.violet_9a_entrega_completada = False
+        # Avanzar contador de días de enfermedad
+        $ store.violet_9a_enfermedad_dia = getattr(store, 'violet_9a_enfermedad_dia', 0) + 1
+        if store.violet_9a_enfermedad_dia >= 3:
+            if getattr(store, 'violet_enferma_atencion', 0) >= 3:
+                # Buen cuidado: disparar quest 09_b en lugar de dormir normalmente
+                jump violet_quest09b_despertar
+            else:
+                # Cuidado insuficiente: completar 09_a y continuar el sueño normal
+                $ completar_quest_actual("violet")
+
     # Mostrar mensajes al despertar (quests, eventos, pedidos nuevos)
     call mensajes_al_despertar from _call_mensajes_al_despertar
-
-    # Quest 5 de Violet: auto-inicio al despertar
-    if getattr(store, 'violet_quest5_inicio_pendiente', False):
-        $ store.violet_quest5_inicio_pendiente = False
-        $ quest_vq5 = sistema_quests.obtener_quest("violet_questprincipal_5")
-        if quest_vq5 and quest_vq5.etapa_actual == ETAPA_BOTON_LISTO:
-            $ quest_vq5.etapa_actual = ETAPA_DESARROLLO
-            jump quest_violet_questprincipal_5
 
     # Verificar si hay entregas hoy
     if repartidor_presente:

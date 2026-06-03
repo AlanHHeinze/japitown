@@ -3,7 +3,7 @@
 ################################################################################
 ## 3 dias despues de completar quest 0, llega un paquete.
 ## El jugador puede recibirlo del repartidor (mañana) o de la cama (tarde).
-## Corresponde a: quest_violet_1 (id: violet_questprincipal_1)
+## Corresponde a: quest_violet_01_a (id: violet_questprincipal_01_a)
 
 
 # =============================================================================
@@ -44,10 +44,12 @@ init python:
         store.paquete_en_habitacion = True
         store.violet_quest1_en_cama = True
 
-        # Disparar mensaje de Monica
+        # Notificación de Monica (mensaje directo, sin respuesta)
         if hasattr(store, 'sistema_mensajes'):
-            store.sistema_mensajes.disparar_por_trigger(
-                "quest_etapa", "violet_quest1_paquete_monica", "monica"
+            store.sistema_mensajes.inicializar_chat("monica")
+            store.sistema_mensajes.chats["monica"].agregar_mensaje(
+                "monica",
+                "Llegó un paquete, creo que es tuyo lo dejé en tu habitación"
             )
 
     def _pista_quest1_violet():
@@ -128,7 +130,7 @@ label paqueterepartidor_quest01_violet:
     piensa "Debe ser de Violet, luego se lo doy"
 
     # Dar item al inventario
-    $ store.inventario["mangas_violet"] = store.inventario.get("mangas_violet", 0) + 1
+    $ agregar_al_inventario("mangas_violet")
 
     # Limpiar flags y aumentar confianza del repartidor
     $ _limpiar_flags_quest1_violet()
@@ -167,7 +169,7 @@ label paquetecama_quest01_violet:
     piensa "Debe ser de Violet, luego se lo doy"
 
     # Dar item al inventario
-    $ store.inventario["mangas_violet"] = store.inventario.get("mangas_violet", 0) + 1
+    $ agregar_al_inventario("mangas_violet")
 
     # Limpiar flags
     $ _limpiar_flags_quest1_violet()

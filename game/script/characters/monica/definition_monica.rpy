@@ -112,9 +112,9 @@ init python:
         
         # Sincronizar el objeto NPC con las variables guardables
         # Las variables default ya tienen los valores iniciales correctos
-        monica.estado["amor"] = store.monica_amor
-        monica.estado["deseo"] = store.monica_deseo
-        monica.estado["progreso"] = store.monica_progreso
+        monica.estado["amor"] = min(100, max(0, store.monica_amor))
+        monica.estado["deseo"] = min(100, max(0, store.monica_deseo))
+        monica.estado["progreso"] = max(0, store.monica_progreso)
         monica.estado["conocido"] = True  # Ya la conoces
         
         # =====================================================================
@@ -224,6 +224,24 @@ init python:
             horarios=[0],
             nombre="Monica en la ducha"
         ))
+
+        # =====================================================================
+        # DESBLOQUEOS DE RELACIÓN
+        # =====================================================================
+
+        # Amor
+        monica.agregar_desbloqueo("amor", 10, "💬", "Conversación Diaria",
+            "Podés hablar con Mónica todos los días.")
+        monica.agregar_desbloqueo("amor", 30, "🚪", "Ingreso Habitación",
+            "Mónica te deja entrar a su cuarto durante el día.")
+
+        # Deseo
+        monica.agregar_desbloqueo("deseo", 10, "👁", "???",
+            "")
+        monica.agregar_desbloqueo("deseo", 40, "😘", "???",
+            "")
+        monica.agregar_desbloqueo("deseo", 60, "🌙", "Ingreso Nocturno",
+            "Podés entrar a la habitación de Mónica de noche.")
 
         # =====================================================================
         # REGISTRAR EN EL SISTEMA

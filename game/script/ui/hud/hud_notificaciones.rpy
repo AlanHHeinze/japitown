@@ -147,3 +147,156 @@ screen notificaciones_stats():
                             bold True
                             yalign 0.5
                             outlines [(1, "#000000", 0, 0)]
+
+
+################################################################################
+## Sistema de Notificaciones de Recuerdos
+################################################################################
+## Notificaciones flotantes en el lado IZQUIERDO para eventos de memoria.
+##
+## Funciones disponibles:
+##   $ notificar_recuerdo_activado()          → "Recuerdo activado"
+##   $ notificar_recordara("violet")          → "Violet recordará esto"
+
+# Registrar screen como overlay persistente
+init python:
+    if "notificaciones_recuerdos" not in config.overlay_screens:
+        config.overlay_screens.append("notificaciones_recuerdos")
+
+init python:
+    # Cola de notificaciones de recuerdos activas
+    # Cada entrada: {"texto": str, "timestamp": float, "delay": float, "id_str": str}
+    _notificaciones_recuerdos = []
+
+    # Duración en segundos
+    _NOTIF_RECUERDO_DURACION = 2.5
+
+    def _agregar_notif_recuerdo(texto, color="#ffffff"):
+        """Agrega una notificación a la cola izquierda de recuerdos."""
+        import time as _t
+        _limpiar_notificaciones_recuerdos_expiradas()
+
+        notif = {
+            "texto":     texto,
+            "color":     color,
+            "timestamp": _t.time(),
+            "delay":     len(store._notificaciones_recuerdos) * 0.15,
+            "id_str":    "recuerdo_{}".format(_t.time()),
+        }
+
+        store._notificaciones_recuerdos.append(notif)
+
+        if len(store._notificaciones_recuerdos) > 3:
+            store._notificaciones_recuerdos.pop(0)
+
+    def notificar_item_obtenido(item_id):
+        """
+        Muestra '{emoji_item} + Nombre del Item' a la izquierda.
+            $ notificar_item_obtenido("golosinas")
+        """
+        info   = CATALOGO_ITEMS.get(item_id, {})
+        nombre = info.get("nombre", item_id)
+        emoji  = info.get("emoji", "📦")
+        _agregar_notif_recuerdo("{} + {}".format(emoji, nombre), color="#ffffff")
+
+    def notificar_item_perdido(item_id):
+        """
+        Muestra '{emoji_item} - Nombre del Item' en rojo a la izquierda.
+            $ notificar_item_perdido("golosinas")
+        """
+        info   = CATALOGO_ITEMS.get(item_id, {})
+        nombre = info.get("nombre", item_id)
+        emoji  = info.get("emoji", "📦")
+        _agregar_notif_recuerdo("{} - {}".format(emoji, nombre), color="#FF4444")
+
+    def agregar_al_inventario(item_id, cantidad=1):
+        """
+        Agrega cantidad al inventario y dispara la notificación de obtención.
+            $ agregar_al_inventario("golosinas")
+            $ agregar_al_inventario("tanga_violet", 1)
+        """
+        store.inventario[item_id] = store.inventario.get(item_id, 0) + cantidad
+        notificar_item_obtenido(item_id)
+
+    def quitar_del_inventario(item_id, cantidad=1):
+        """
+        Quita cantidad del inventario y dispara la notificación de pérdida.
+        Si llega a 0 o menos, elimina la entrada del dict.
+            $ quitar_del_inventario("golosinas")
+        """
+        actual = store.inventario.get(item_id, 0)
+        nuevo  = actual - cantidad
+        if nuevo <= 0:
+            store.inventario.pop(item_id, None)
+        else:
+            store.inventario[item_id] = nuevo
+        notificar_item_perdido(item_id)
+
+    def notificar_recuerdo_activado():
+        """
+        Muestra "Recuerdo activado" a la izquierda.
+            $ notificar_recuerdo_activado()
+        """
+        _agregar_notif_recuerdo("Recuerdo activado")
+
+    def notificar_recordara(npc_id):
+        """
+        Muestra "[Nombre] recordará esto" a la izquierda.
+            $ notificar_recordara("violet")   →   "Violet recordará esto"
+
+        Acepta el npc_id ("violet", "monica", "jasmine") y resuelve
+        el nombre visible automáticamente desde el sistema de NPCs.
+        """
+        npc = obtener_npc(npc_id) if hasattr(store, 'sistema_npcs') else None
+        nombre = npc.nombre if npc else npc_id.capitalize()
+        _agregar_notif_recuerdo("{} recordará esto".format(nombre))
+
+    def _limpiar_notificaciones_recuerdos_expiradas():
+        """Remueve notificaciones de recuerdos que ya expiraron."""
+        import time as _t
+        store._notificaciones_recuerdos = [
+            n for n in store._notificaciones_recuerdos
+            if _t.time() - n["timestamp"] < _NOTIF_RECUERDO_DURACION
+        ]
+
+
+# Entrada: slide desde la izquierda + fade in, luego fade out a la izquierda
+transform notif_recuerdo_aparecer(delay=0.0):
+    on show:
+        alpha 0.0 xoffset -30
+        pause delay
+        easein 0.3 alpha 1.0 xoffset 0
+        pause (_NOTIF_RECUERDO_DURACION - 0.6)
+        easeout 0.3 alpha 0.0 xoffset -30
+
+
+screen notificaciones_recuerdos():
+    zorder 150
+    layer "overlay"
+
+    python:
+        import time as _t
+        _notifs_recuerdos_act = [
+            n for n in _notificaciones_recuerdos
+            if _t.time() - n["timestamp"] < _NOTIF_RECUERDO_DURACION
+        ]
+
+    if _notifs_recuerdos_act:
+        vbox:
+            xalign 0.0
+            ypos 120
+            spacing 10
+
+            for _nr in _notifs_recuerdos_act:
+                frame:
+                    id "notif_" + _nr["id_str"]
+                    background "#00000099"
+                    padding (24, 9, 18, 9)
+                    at notif_recuerdo_aparecer(_nr["delay"])
+
+                    text _nr["texto"]:
+                        size 30
+                        color _nr.get("color", "#ffffff")
+                        bold True
+                        yalign 0.5
+                        outlines [(1, "#000000", 0, 0)]

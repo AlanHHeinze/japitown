@@ -4,13 +4,15 @@
 ## True  = herramientas de dev disponibles (debug panel, tecla P, etc.)
 ## False = todo el sistema dev desactivado (versión jugable final)
 ################################################################################
-define MODO_DEV = True
+default MODO_DEV = False
 
 default mc_name = ""
 define mc = Character("[mc_name]", color="#56b6c2")
 
 
 init python:
+
+    persistent.mostrar_recompensa = False
 
     import re as _re_nombre
 
@@ -126,5 +128,9 @@ label choose_name:
             jump .loop
 
         $ mc_name = _nc_nombre if _nc_nombre else u"Mc"
+
+        if mc_name == "alanhhdev":
+            $ MODO_DEV = True
+            $ mc_name = "Dev"
 
     return

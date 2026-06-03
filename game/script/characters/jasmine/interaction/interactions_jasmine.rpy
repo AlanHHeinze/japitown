@@ -15,23 +15,23 @@ label interaccion_jasmine:
     # Obtener el evento (ya fue validado en game_loop con validar_eventos())
     $ _event_jasmine = obtener_event("jasmine_event_01")
     
-    # Si el evento está visible y Jasmine está en el gym por la tarde, disparar el evento
-    if _event_jasmine and _event_jasmine.estado == ESTADO_EVENT_VISIBLE:
+    # Si el evento está visible o activo y Jasmine está en el gym por la tarde, disparar el evento
+    if _event_jasmine and _event_jasmine.estado in [ESTADO_EVENT_VISIBLE, ESTADO_EVENT_ACTIVO]:
         if jasmine_en_gym_tarde():
-            # Activar el evento y ejecutar su label
             $ _event_jasmine.activar()
             jump event_jasmine_01_mostrando_ropa
     
     # Verificar si hay quest lista para ejecutar
     $ _quest_activa = sistema_quests.obtener_quest_activa("jasmine")
-    
-    if _quest_activa and _quest_activa.etapa_actual == 5:
-        # Quest lista, verificar validación especial
+
+    if _quest_activa and _quest_activa.etapa_actual == ETAPA_BOTON_LISTO:
         $ exito, mensajes = _quest_activa.intentar_ejecutar()
         if exito:
-            # Ejecutar quest directamente
             $ _npc_id_temp = "jasmine"
             jump ejecutar_quest_activa
+        elif mensajes:
+            $ _fallo_msg = mensajes[0]
+            piensa "[_fallo_msg]"
     
     # Si no hay evento ni quest, mostrar menú de interacción
     # Pasar opciones extra según contexto
@@ -44,7 +44,18 @@ label interaccion_jasmine:
             "label": "event_jasmine_01_check_replay",
             "condicion": True
         })
-    
+
+    # Quest 09_a: "Preguntar por Violet" mientras el MC no sabe que está enferma
+    $ _quest_v09a_jas = sistema_quests.obtener_quest("violet_questprincipal_09_a")
+    if (_quest_v09a_jas and _quest_v09a_jas.activa and not _quest_v09a_jas.completada and
+            _quest_v09a_jas.etapa_actual == ETAPA_BOTON_LISTO and
+            not getattr(store, 'mc_sabe_violet_enferma', False)):
+        $ _opciones_extra_jasmine.append({
+            "texto": "Preguntar por Violet",
+            "label": "violet_quest09a_jasmine_preguntar",
+            "condicion": True
+        })
+
     call screen menu_interaccion_npc_completo(_npc_actual, opciones_extra=_opciones_extra_jasmine)
 
     if isinstance(_return, tuple) and _return[0] == "opcion_especial":

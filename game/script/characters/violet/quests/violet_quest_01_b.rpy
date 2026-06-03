@@ -12,6 +12,9 @@
 # True cuando el jugador abrio el paquete en su habitacion
 default violet_quest2n_paquete_abierto = False
 
+# Ruta elegida al entregar el paquete (para evitar exploit de rollback)
+default _ruta_vq01b = ""
+
 
 ################################################################################
 ## LABEL: Usar item mangas_violet (abrir paquete en habitacion MC)
@@ -83,7 +86,7 @@ label usar_mangas_violet:
 ## LABEL: Entry point del quest system
 ################################################################################
 
-label quest_violet_questprincipal_2:
+label quest_violet_questprincipal_01_b:
 
 ################################################################################
 ## LABEL: Dar paquete a Violet (router)
@@ -93,6 +96,13 @@ label dar_paquete_quest02_violet:
 
     $ ocultar_hud()
     window show
+
+    # Sábado por la mañana: Violet duerme, no responde
+    if dia_semana_actual == 5 and horario_actual == 0:
+        piensa "Violet no responde, debe estar durmiendo"
+        window hide
+        $ mostrar_hud()
+        jump game_loop
 
     # Verificar si hay otro NPC en la locacion (excluyendo a Violet)
     $ _loc_actual_id = sistema_locaciones.locacion_actual.id
@@ -220,9 +230,7 @@ label dar_paquete_quest02_violet_a:
     # Remover item del inventario
     $ del store.inventario["mangas_violet"]
 
-    # +5 amor
-    $ _npc_v = obtener_npc("violet")
-    $ _npc_v.modificar_stat1(5)
+    $ _ruta_vq01b = "a"
 
     hide violet_parada with dissolve
 
@@ -232,12 +240,7 @@ label dar_paquete_quest02_violet_a:
 
     hide mc_parado_base with dissolve
 
-    # Completar quest
-    $ completar_quest_actual("violet")
-
-    window hide
-    $ mostrar_hud()
-    jump game_loop
+    jump dar_paquete_violet_cierre
 
 
 ################################################################################
@@ -373,9 +376,7 @@ label dar_paquete_quest02_violet_b1:
     # Remover item del inventario
     $ del store.inventario["mangas_violet"]
 
-    # +5 progreso
-    $ _npc_v = obtener_npc("violet")
-    $ _npc_v.modificar_progreso(5)
+    $ _ruta_vq01b = "b1"
 
     hide violet_parada with dissolve
 
@@ -386,12 +387,7 @@ label dar_paquete_quest02_violet_b1:
 
     hide mc_parado_base with dissolve
 
-    # Completar quest
-    $ completar_quest_actual("violet")
-
-    window hide
-    $ mostrar_hud()
-    jump game_loop
+    jump dar_paquete_violet_cierre
 
 
 ################################################################################
@@ -441,7 +437,7 @@ label dar_paquete_quest02_violet_b2:
     show mc_parado_base b_none c_rbase_base with sprite_fast
 
     # (Violet ojos enojados cuerpo enojada)
-    show violet_parada o_enojados c_rbase_enojada ot_none with sprite_fast
+    show violet_parada o_enojados ot_none 
     violet "Creo que la linea es voy a matarte y a enterrarte"
     # (Violet ojos base boca neutral)
     show violet_parada o_base b_none
@@ -453,7 +449,7 @@ label dar_paquete_quest02_violet_b2:
     show mc_parado_base b_none
 
     # (Violet boca hablando cuerpo brazos cruzados)
-    show violet_parada b_hablando c_rbase_brazoscruzados with sprite_fast
+    show violet_parada b_hablando 
     violet "Me canse, me voy"
     # (Violet boca neutral)
     show violet_parada b_none
@@ -515,9 +511,7 @@ label dar_paquete_quest02_violet_b2:
     # Remover item del inventario
     $ del store.inventario["mangas_violet"]
 
-    # +5 deseo
-    $ _npc_v = obtener_npc("violet")
-    $ _npc_v.modificar_stat2(5)
+    $ _ruta_vq01b = "b2"
 
     hide violet_parada with dissolve
 
@@ -529,6 +523,23 @@ label dar_paquete_quest02_violet_b2:
     piensa "Voy entendiendo más a Violet, si la presiono se vuelve más fácil de tratar"
 
     hide mc_parado_base with dissolve
+
+    jump dar_paquete_violet_cierre
+
+
+################################################################################
+## LABEL CIERRE: Evalua ruta y completa quest (punto de convergencia)
+################################################################################
+
+label dar_paquete_violet_cierre:
+
+    if _ruta_vq01b == "a":
+        $ obtener_npc("violet").modificar_stat1(5)
+    elif _ruta_vq01b == "b1":
+        $ obtener_npc("violet").modificar_stat1(3)
+        $ obtener_npc("violet").modificar_stat2(1)
+    elif _ruta_vq01b == "b2":
+        $ obtener_npc("violet").modificar_stat2(2)
 
     # Completar quest
     $ completar_quest_actual("violet")

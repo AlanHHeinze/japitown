@@ -313,7 +313,7 @@ screen pantalla_chat(npc_id="monica"):
                     xfill True
                     spacing 10
 
-                    $ _puede_responder = _chat and _chat.puede_responder() and not _msg_escribiendo
+                    $ _puede_responder = _chat and _chat.puede_responder() and not _msg_escribiendo and not _msg_respuestas_pendientes
                     $ _bg_color = "#4CAF50CC" if _puede_responder else "#1e1e3a66"
                     $ _hover_color = "#66BB6ACC" if _puede_responder else "#1e1e3a66"
 

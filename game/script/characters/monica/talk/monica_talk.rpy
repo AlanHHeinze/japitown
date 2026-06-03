@@ -4,6 +4,28 @@
 
 init 10 python:
 
+    def _monica_cond_locion():
+        return (
+            store.inventario.get("locion_masajes", 0) > 0 and
+            getattr(store.sistema_talk.obtener_estado_activo("monica"), "id", None) == "monica_cansada"
+        )
+
+    def _monica_recompensa_locion():
+        npc = obtener_npc("monica")
+        if npc:
+            npc.modificar_stat2(1)
+
+    def _monica_cond_tareas():
+        return (
+            store.mc_destreza >= 3 and
+            getattr(store.sistema_talk.obtener_estado_activo("monica"), "id", None) == "monica_ocupada"
+        )
+
+    def _monica_recompensa_tareas():
+        npc = obtener_npc("monica")
+        if npc:
+            npc.modificar_stat2(1)
+
     def inicializar_talk_monica():
 
         # ==================================================================
@@ -20,7 +42,7 @@ init 10 python:
                     "complacerla": "+1_deseo",
                     "provocarla":  "-1_deseo",
                     "escucharla":  "nada",
-                    "hablarle":    "-2_amor",
+                    "hablarle":    "nada",
                     "adularla":    "+2_amor",
                 },
                 mensaje="ella estaba cansada.",
@@ -41,7 +63,7 @@ init 10 python:
                     "complacerla": "+2_amor",
                     "provocarla":  "-2_amor",
                     "escucharla":  "+1_deseo",
-                    "hablarle":    "-1_deseo",
+                    "hablarle":    "nada",
                     "adularla":    "nada",
                 },
                 mensaje="ella estaba ocupada con sus cosas.",
@@ -61,7 +83,7 @@ init 10 python:
                 efectos={
                     "complacerla": "-1_deseo",
                     "provocarla":  "+1_deseo",
-                    "escucharla":  "-2_amor",
+                    "escucharla":  "nada",
                     "hablarle":    "nada",
                     "adularla":    "+2_amor",
                 },
@@ -84,7 +106,7 @@ init 10 python:
                     "provocarla":  "-2_amor",
                     "escucharla":  "+1_deseo",
                     "hablarle":    "+2_amor",
-                    "adularla":    "-1_deseo",
+                    "adularla":    "nada",
                 },
                 mensaje="ella estaba de muy buen humor.",
                 estados_posteriores={
@@ -101,7 +123,7 @@ init 10 python:
                 nombre="Enérgica",
                 intro="Mónica está llena de energía.",
                 efectos={
-                    "complacerla": "-2_amor",
+                    "complacerla": "nada",
                     "provocarla":  "+2_amor",
                     "escucharla":  "-1_deseo",
                     "hablarle":    "nada",
@@ -122,7 +144,7 @@ init 10 python:
                 nombre="Abierta",
                 intro="Mónica parece estar abierta y receptiva.",
                 efectos={
-                    "complacerla": "-1_deseo",
+                    "complacerla": "nada",
                     "provocarla":  "nada",
                     "escucharla":  "+2_amor",
                     "hablarle":    "+1_deseo",
@@ -179,31 +201,25 @@ init 10 python:
             OpcionEspecialTalk(
                 id="monica_locion",
                 texto="Darle la loción",
-                condicion=lambda: (
-                    store.inventario.get("locion_masajes", 0) > 0 and
-                    getattr(store.sistema_talk.obtener_estado_activo("monica"), "id", None) == "monica_cansada"
-                ),
+                condicion=_monica_cond_locion,
                 mensaje_opcion="Le ofreciste la loción de masajes.",
                 resultado_id="+2_amor",
                 item_requerido="locion_masajes",
                 item_consumible=True,
                 estado_posterior_npc="posterior_feliz",
-                recompensa_extra=lambda: obtener_npc("monica").modificar_stat("deseo", 1) if obtener_npc("monica") else None,
+                recompensa_extra=_monica_recompensa_locion,
             ),
 
             OpcionEspecialTalk(
                 id="monica_tareas",
                 texto="Ayudarla con cosas de la casa",
-                condicion=lambda: (
-                    store.mc_destreza >= 3 and
-                    getattr(store.sistema_talk.obtener_estado_activo("monica"), "id", None) == "monica_ocupada"
-                ),
+                condicion=_monica_cond_tareas,
                 mensaje_opcion="Te ofreciste a ayudarla con las tareas de la casa.",
                 resultado_id="+2_amor",
                 item_requerido=None,
                 item_consumible=False,
                 estado_posterior_npc="posterior_feliz",
-                recompensa_extra=lambda: obtener_npc("monica").modificar_stat("deseo", 1) if obtener_npc("monica") else None,
+                recompensa_extra=_monica_recompensa_tareas,
             ),
 
         ]

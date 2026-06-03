@@ -22,6 +22,13 @@ init 5 python:
             Requisito("npc_presente", "Violet debe estar en su habitación", npc_id="violet", locacion_id="casa_hviolet"),
             Requisito("horario", "Debe ser por la tarde", horario_id=1)
         ],
+        rutina_quest={
+            (dia, 1): RutinaQuest(
+                locacion="casa_hviolet",
+                sprite="images/characters/casa/idle/idle_violet_casa_hviolet_tarde_rutinabase_grupobase_skinbase.png",
+            )
+            for dia in range(7)
+        },
         mensaje_pista="Tengo que hablar con Violet, podría aprovechar cuando está en su habitación por la tarde.",
         mensaje_despertar="Tengo que encontrar algún momento para acercarme a Violet y ver qué le pasa.",
         retorno=ConfiguracionRetorno(avanzar_dia=False),
@@ -39,14 +46,14 @@ init 5 python:
     # QUEST 1 - Un paquete misterioso (Violet)
     # =========================================================================
 
-    quest_violet_1 = Quest(
-        id="violet_questprincipal_1",
+    quest_violet_01_a = Quest(
+        id="violet_questprincipal_01_a",
         npc_id="violet",
         nombre="Un paquete misterioso",
         descripcion="Parece que llegó algo para mí.",
         numero_quest=1,
         dias_espera=3,
-        condicion_espera=lambda: len(sistema_compras.verificar_entregas_hoy()) == 0,
+        condicion_espera=_qc("vq01a_condicion_espera", lambda: len(sistema_compras.verificar_entregas_hoy()) == 0),
         quest_anterior="violet_questprincipal_0",
         requisitos=[],
         validacion_especial=[],
@@ -54,33 +61,33 @@ init 5 python:
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
                 pista="Todo tranquilo por ahora",
-                que_hacer=lambda: "Esperar {} d{}".format(
-                    max(1, 3 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_1').dia_inicio or 0))),
-                    "ia" if max(1, 3 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_1').dia_inicio or 0))) == 1 else "ias"
-                ),
+                que_hacer=_qc("vq01a_espera_quehacer", lambda: "Esperar {} d{}".format(
+                    max(1, 3 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_01_a').dia_inicio or 0))),
+                    "ia" if max(1, 3 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_01_a').dia_inicio or 0))) == 1 else "ias"
+                )),
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista=lambda: _pista_quest1_violet(),
-                que_hacer=lambda: _quehacer_quest1_violet(),
-                mensaje_despertar=lambda: "Escuche el timbre" if getattr(store, 'violet_quest1_entrega_pendiente', False) else "",
-                accion_al_entrar=lambda: setup_entrega_quest1_violet(),
+                pista=_pista_quest1_violet,
+                que_hacer=_quehacer_quest1_violet,
+                mensaje_despertar=_qc("vq01a_botonlisto_despertar", lambda: "Escuche el timbre" if getattr(store, 'violet_quest1_entrega_pendiente', False) else ""),
+                accion_al_entrar=setup_entrega_quest1_violet,
             ),
         },
     )
-    sistema_quests.registrar_quest(quest_violet_1)
+    sistema_quests.registrar_quest(quest_violet_01_a)
 
     # =========================================================================
-    # QUEST 2 NUEVA - El contenido del paquete (Violet)
+    # QUEST 1_B - El contenido del paquete (Violet)
     # =========================================================================
 
-    quest_violet_2_nueva = Quest(
-        id="violet_questprincipal_2",
+    quest_violet_01_b = Quest(
+        id="violet_questprincipal_01_b",
         npc_id="violet",
         nombre="El contenido del paquete",
         descripcion="Tengo un paquete que parece ser de Violet, podría dárselo o ver qué tiene.",
         numero_quest=2,
         dias_espera=0,
-        quest_anterior="violet_questprincipal_1",
+        quest_anterior="violet_questprincipal_01_a",
         requisitos=[],
         validacion_especial=[],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
@@ -91,158 +98,148 @@ init 5 python:
             ),
         },
     )
-    sistema_quests.registrar_quest(quest_violet_2_nueva)
+    sistema_quests.registrar_quest(quest_violet_01_b)
 
     # =========================================================================
-    # QUEST 4 - Limpieza del Sábado (Violet)
+    # QUEST 02_A - Un manga prestado (Violet)
     # =========================================================================
 
-    quest_violet_4 = Quest(
-        id="violet_questprincipal_4",
+    quest_violet_02_a = Quest(
+        id="violet_questprincipal_02_a",
         npc_id="violet",
-        nombre="Limpieza del Sábado",
-        descripcion="Monica me pidió que limpie la casa con Violet el sábado por la mañana.",
-        numero_quest=4,
-        dias_espera=4,
-        quest_anterior="violet_questprincipal_2",
-        requisitos=[
-            Requisito("mensaje", "Contestar el mensaje de Monica", grupo_id="monica_chat_violet_quest2"),
-        ],
-        validacion_especial=[
-            Requisito("dia", "Debe ser sábado", dia_id=5),
-            Requisito("horario", "Debe ser por la mañana", horario_id=0),
-            Requisito("npc_presente", "Violet debe estar en su habitación", npc_id="violet", locacion_id="casa_hviolet"),
-        ],
-        rutina_quest={
-            (5, 0): RutinaQuest(
-                locacion="casa_hviolet",
-                sprite="images/characters/casa/idle/idle_violet_casa_hviolet_mañana_rutinabase_grupobase_skinbase.png",
-                posicion=(800, 700)
-            ),
-        },
-        rutinas_adicionales={
-            "monica": {
-                (5, 0): RutinaQuest(locacion="fuera"),
-            },
-            "jasmine": {
-                (5, 0): RutinaQuest(locacion="fuera"),
-            },
-        },
-        prioridad_rutina=0,
-        retorno=ConfiguracionRetorno(avanzar_dia=False),
-        config_etapas={
-            ETAPA_ESPERA: ConfigEtapa(
-                pista="Monica me dijo algo sobre limpiar la casa, tengo que esperar.",
-                que_hacer=lambda: "Esperar {} d{}".format(
-                    max(1, 4 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_4').dia_inicio or 0))),
-                    "ia" if max(1, 4 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_4').dia_inicio or 0))) == 1 else "ias"
-                ),
-            ),
-            ETAPA_CONDICIONES: ConfigEtapa(
-                pista="Deberia responderle a Monica.",
-                que_hacer="Responder mensaje de Monica.",
-                trigger_mensaje=("violet_quest2_chat_monica", "monica"),
-            ),
-            ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista=lambda: "Hoy es sábado, tengo que despertar a Violet temprano." if getattr(store, 'dia_semana_actual', 0) == 5 else "Monica me pidió que despierte a Violet temprano el sábado para limpiar la casa.",
-                que_hacer=lambda: "Ir a la habitación de Violet por la mañana." if getattr(store, 'dia_semana_actual', 0) == 5 else "Esperar hasta el sabado por la mañana.",
-                mensaje_despertar=lambda: "Hoy es sábado, tengo que despertar a Violet para que limpiemos la casa." if getattr(store, 'dia_semana_actual', 0) == 5 else "",
-            ),
-        },
-        config_fallo=ConfigFallo(
-            condicion=lambda: getattr(store, 'dia_semana_actual', 0) == 5 and getattr(store, 'horario_actual', 0) == 1,
-            trigger_mensaje=("violet_quest2_fallo", "monica"),
-            cambio_relacion=("monica", -1),
-            pista="El próximo sábado debería ocuparme de la limpieza.",
-            que_hacer=lambda: "Esperar hasta el próximo sábado por la mañana.",
-        ),
-    )
-
-    # =========================================================================
-    # QUEST 5 - Solo en casa (Violet)
-    # =========================================================================
-
-    quest_violet_5 = Quest(
-        id="violet_questprincipal_5",
-        npc_id="violet",
-        nombre="Solo en casa",
-        descripcion="Hoy estoy solo en la casa, podría aprovechar el tiempo.",
-        numero_quest=5,
-        dias_espera=3,
-        quest_anterior="violet_questprincipal_4",
+        nombre="Un manga prestado",
+        descripcion="Podría pedirle a Violet que me preste algún manga para leer.",
+        numero_quest=3,
+        dias_espera=1,
+        quest_anterior="violet_questprincipal_01_b",
         requisitos=[],
         validacion_especial=[],
-        rutinas_adicionales={
-            "violet": {
-                (0, 0): RutinaQuest(locacion="fuera"),
-                (1, 0): RutinaQuest(locacion="fuera"),
-                (2, 0): RutinaQuest(locacion="fuera"),
-                (3, 0): RutinaQuest(locacion="fuera"),
-                (4, 0): RutinaQuest(locacion="fuera"),
-                (5, 0): RutinaQuest(locacion="fuera"),
-                (6, 0): RutinaQuest(locacion="fuera"),
-            },
-            "monica": {
-                (0, 0): RutinaQuest(locacion="fuera"),
-                (1, 0): RutinaQuest(locacion="fuera"),
-                (2, 0): RutinaQuest(locacion="fuera"),
-                (3, 0): RutinaQuest(locacion="fuera"),
-                (4, 0): RutinaQuest(locacion="fuera"),
-                (5, 0): RutinaQuest(locacion="fuera"),
-                (6, 0): RutinaQuest(locacion="fuera"),
-            },
-            "jasmine": {
-                (0, 0): RutinaQuest(locacion="fuera"),
-                (1, 0): RutinaQuest(locacion="fuera"),
-                (2, 0): RutinaQuest(locacion="fuera"),
-                (3, 0): RutinaQuest(locacion="fuera"),
-                (4, 0): RutinaQuest(locacion="fuera"),
-                (5, 0): RutinaQuest(locacion="fuera"),
-                (6, 0): RutinaQuest(locacion="fuera"),
-            },
-        },
-        prioridad_rutina=0,
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
-                pista="Todo tranquilo por ahora.",
-                que_hacer=lambda: "Esperar {} d{}".format(
-                    max(1, 3 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_5').dia_inicio or 0))),
-                    "ia" if max(1, 3 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_5').dia_inicio or 0))) == 1 else "ias"
-                ),
+                pista="Podría hablar con Violet a ver si me presta algún manga",
+                que_hacer="Darle un día",
+                mensaje_despertar="Podría usar el anime para conectarme más con Violet, le voy a hablar para que me preste algún manga y luego hablar de él",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista="Hoy estoy solo en la casa.",
-                que_hacer="Esperar al día siguiente.",
-                accion_al_entrar=lambda: setattr(store, 'violet_quest5_inicio_pendiente', True),
+                pista=_qc("vq02a_botonlisto_pista", lambda: (
+                    "Podría intentar nuevamente" if getattr(store, 'violet_quest02a_primer_intento_hecho', False) and obtener_stat1("violet") >= 10
+                    else "Tengo que mejorar la relación con Violet" if getattr(store, 'violet_quest02a_primer_intento_hecho', False)
+                    else "Podría hablar con Violet a ver si me presta algún manga"
+                )),
+                que_hacer=_qc("vq02a_botonlisto_quehacer", lambda: (
+                    "Pedirle los mangas a Violet" if getattr(store, 'violet_quest02a_primer_intento_hecho', False) and obtener_stat1("violet") >= 10
+                    else "Requisito ❤️ 10" if getattr(store, 'violet_quest02a_primer_intento_hecho', False)
+                    else "Hablar con Violet"
+                )),
             ),
         },
     )
-    sistema_quests.registrar_quest(quest_violet_5)
-    sistema_quests.registrar_quest(quest_violet_4)
+    sistema_quests.registrar_quest(quest_violet_02_a)
 
     # =========================================================================
-    # QUEST 6 - El cosplay de Violet
+    # QUEST 02_B - Los mangas de Violet
     # =========================================================================
 
-    quest_violet_6 = Quest(
-        id="violet_questprincipal_6",
+    quest_violet_02_b = Quest(
+        id="violet_questprincipal_02_b",
+        npc_id="violet",
+        nombre="Los mangas de Violet",
+        descripcion="Violet me dijo que pasara a buscar los mangas esta noche.",
+        numero_quest=4,
+        dias_espera=0,
+        quest_anterior="violet_questprincipal_02_a",
+        requisitos=[],
+        validacion_especial=[],
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista="Tengo que buscar los mangas",
+                que_hacer="Ir a la habitación de Violet por la noche",
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_02_b)
+
+    # =========================================================================
+    # QUEST 02_C - Leer los mangas
+    # =========================================================================
+
+    quest_violet_02_c = Quest(
+        id="violet_questprincipal_02_c",
+        npc_id="violet",
+        nombre="Leer los mangas",
+        descripcion="Violet me prestó sus mangas, tendría que leerlos.",
+        numero_quest=5,
+        dias_espera=0,
+        quest_anterior="violet_questprincipal_02_b",
+        requisitos=[],
+        validacion_especial=[],
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista=_qc("vq02c_botonlisto_pista", lambda: (
+                    "Terminar de leer los mangas" if getattr(store, 'mangas_violet_lecturas', 0) > 0
+                    else "Tengo que leer los mangas"
+                )),
+                que_hacer=_qc("vq02c_botonlisto_quehacer", lambda: (
+                    "Manga leído {}/4".format(getattr(store, 'mangas_violet_lecturas', 0)) if getattr(store, 'mangas_violet_lecturas', 0) > 0
+                    else "Desde el inventario leer Mangas de Violet"
+                )),
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_02_c)
+
+    # =========================================================================
+    # QUEST 03_A - Devolver los mangas
+    # =========================================================================
+
+    quest_violet_03_a = Quest(
+        id="violet_questprincipal_03_a",
+        npc_id="violet",
+        nombre="Devolver los mangas",
+        descripcion="Tengo que devolverle los mangas a Violet.",
+        numero_quest=6,
+        dias_espera=0,
+        quest_anterior="violet_questprincipal_02_c",
+        requisitos=[],
+        validacion_especial=[],
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista="Tengo que devolver los mangas",
+                que_hacer="Interactuar habitación Violet",
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_03_a)
+
+    # =========================================================================
+    # QUEST 04_A - El cosplay de Violet
+    # =========================================================================
+
+    quest_violet_04_a = Quest(
+        id="violet_questprincipal_04_a",
         npc_id="violet",
         nombre="El cosplay de Violet",
         descripcion="Podría preguntarle a Violet si se probó el cosplay.",
         numero_quest=6,
         dias_espera=3,
-        quest_anterior="violet_questprincipal_5",
+        quest_anterior="violet_questprincipal_03_a",
         requisitos=[],
-        validacion_especial=[],
+        validacion_especial=[
+            Requisito("horario", "Debe ser por la mañana", horario_id=0),
+            Requisito("locacion", "Deben estar en la cocina", locacion_id="casa_cocina"),
+        ],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
                 pista="Recuerdo lo del cosplay, deberia esperar unos dias.",
-                que_hacer=lambda: "Esperar {} d{}".format(
-                    max(1, 3 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_6').dia_inicio or 0))),
-                    "ia" if max(1, 3 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_6').dia_inicio or 0))) == 1 else "ias"
-                ),
+                que_hacer=_qc("vq04a_espera_quehacer", lambda: "Esperar {} d{}".format(
+                    max(1, 3 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_04_a').dia_inicio or 0))),
+                    "ia" if max(1, 3 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_04_a').dia_inicio or 0))) == 1 else "ias"
+                )),
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista="Cuando encuentre a Violet podría ver si se probó el cosplay",
@@ -251,123 +248,507 @@ init 5 python:
             ),
         },
     )
-    sistema_quests.registrar_quest(quest_violet_6)
+    sistema_quests.registrar_quest(quest_violet_04_a)
 
     # =========================================================================
-    # QUEST 7 - El cosplay de Violet II (deseo 20)
+    # QUEST 04_B - Hablar con Violet (perdón)
     # =========================================================================
 
-    quest_violet_7 = Quest(
-        id="violet_questprincipal_7",
+    quest_violet_04_b = Quest(
+        id="violet_questprincipal_04_b",
+        npc_id="violet",
+        nombre="Hablar con Violet",
+        descripcion="Deberia ir a hablar con Violet y pedirle perdon.",
+        numero_quest=7,
+        dias_espera=2,
+        quest_anterior="violet_questprincipal_04_a",
+        requisitos=[],
+        validacion_especial=[],
+        rutina_quest={
+            (dia, 0): RutinaQuest(
+                locacion="casa_pasilloarriba",
+                sprite="images/characters/casa/idle/idle_violet_casa_pasillo_fuera_rutinabase_grupobase_skinbase.png",
+                posicion=(663, 804),
+            )
+            for dia in range(7)
+        },
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_ESPERA: ConfigEtapa(
+                pista="Deberia esperar un poco antes de hablar con Violet.",
+                que_hacer=_qc("vq04b_espera_quehacer", lambda: "Esperar {} d{}".format(
+                    max(1, 2 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_04_b').dia_inicio or 0))),
+                    "ia" if max(1, 2 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_04_b').dia_inicio or 0))) == 1 else "ias"
+                )),
+                mensaje_despertar="Deberia esperar un poco antes de hablar con Violet.",
+            ),
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista="Podria hablar con Violet y pedirle perdon",
+                que_hacer="Hablar con Violet",
+                mensaje_despertar="Podria hablar con Violet y pedirle perdon",
+                accion_al_entrar=setup_restriccion_violet_quest04b,
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_04_b)
+
+    # =========================================================================
+    # QUEST 04_C - El cosplay de Violet II (mensaje al día siguiente)
+    # =========================================================================
+
+    quest_violet_04_c = Quest(
+        id="violet_questprincipal_04_c",
         npc_id="violet",
         nombre="El cosplay de Violet II",
-        descripcion="Violet tiene vergüenza de mostrarme el cosplay, tengo que mejorar mi deseo con ella.",
-        numero_quest=7,
-        dias_espera=0,
-        quest_anterior="violet_questprincipal_6",
-        requisitos=[
-            Requisito("deseo", "Necesitas mas deseo con Violet", npc_id="violet", valor=20),
-        ],
+        descripcion="Esperar a que Violet se comunique sobre el cosplay.",
+        numero_quest=8,
+        dias_espera=1,
+        quest_anterior="violet_questprincipal_04_b",
+        requisitos=[],
         validacion_especial=[
-            Requisito("mensaje", "Responder el mensaje de Violet", grupo_id="violet_quest7_chat"),
+            Requisito("mensaje", "Responder el mensaje de Violet", grupo_id="violet_quest04c_chat"),
         ],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
-                pista="Deberia esperar unos dias antes de hablar con Violet sobre el cosplay.",
-                que_hacer=lambda: "Esperar {} d{}".format(
-                    max(1, 4 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_7').dia_inicio or 0))),
-                    "ia" if max(1, 4 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_7').dia_inicio or 0))) == 1 else "ias"
-                ),
-            ),
-            ETAPA_CONDICIONES: ConfigEtapa(
-                pista="Violet tiene vergüenza de mostrarme el cosplay, tengo que mejorar mi deseo con ella",
-                que_hacer=lambda: renpy.translate_string("Subir deseo con Violet ({}/{})").format(
-                    getattr(store, 'violet_deseo', 0), 20
-                ),
-                mensaje_despertar="Violet tiene vergüenza de mostrarme el cosplay, tengo que mejorar mi deseo con ella",
+                pista="Quizas Violet me mande un mensaje sobre el cosplay.",
+                que_hacer="Darle un día",
+                mensaje_despertar="Quizas hoy Violet me mande algo sobre el cosplay.",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista=lambda: "Violet ya me contestó, debería ir a hablar con ella." if store.sistema_mensajes.grupo_completado("violet_quest7_chat") else "Violet me envió un mensaje, debería responderle.",
-                que_hacer=lambda: "Ir a ver a Violet a su habitación." if store.sistema_mensajes.grupo_completado("violet_quest7_chat") else "Responder mensaje de Violet",
-                mensaje_despertar=lambda: "Tengo que ir a ver a Violet por lo de su cosplay." if store.sistema_mensajes.grupo_completado("violet_quest7_chat") else "Violet me envió un mensaje, debería responderle",
-                trigger_mensaje=("violet_quest7_chat", "violet"),
+                pista=_qc("vq04c_botonlisto_pista", lambda: "Violet ya me contestó, debería ir a hablar con ella." if store.sistema_mensajes.grupo_completado("violet_quest04c_chat") else "Violet me envió un mensaje, debería responderle."),
+                que_hacer=_qc("vq04c_botonlisto_quehacer", lambda: "Ir a ver a Violet." if store.sistema_mensajes.grupo_completado("violet_quest04c_chat") else "Responder mensaje de Violet"),
+                mensaje_despertar=_qc("vq04c_botonlisto_despertar", lambda: "Tengo que ir a ver a Violet por lo del cosplay." if store.sistema_mensajes.grupo_completado("violet_quest04c_chat") else "Violet me envió un mensaje, debería responderle."),
+                trigger_mensaje=("violet_quest04c_chat", "violet"),
             ),
         },
     )
-    sistema_quests.registrar_quest(quest_violet_7)
+    sistema_quests.registrar_quest(quest_violet_04_c)
 
     # =========================================================================
-    # QUEST 8 - El cosplay de Violet III (deseo 25)
+    # QUEST 04_D - El cosplay de Violet III (deseo 10)
     # =========================================================================
 
-    quest_violet_8 = Quest(
-        id="violet_questprincipal_8",
+    quest_violet_04_d = Quest(
+        id="violet_questprincipal_04_d",
         npc_id="violet",
         nombre="El cosplay de Violet III",
         descripcion="Quizás si sigo mejorando mi deseo con Violet me muestre un poco más.",
-        numero_quest=8,
+        numero_quest=9,
         dias_espera=0,
-        quest_anterior="violet_questprincipal_7",
+        quest_anterior="violet_questprincipal_04_c",
         requisitos=[
-            Requisito("deseo", "Necesitas mas deseo con Violet", npc_id="violet", valor=25),
+            Requisito("deseo", "Necesitas 10 de deseo con Violet", npc_id="violet", valor=10),
         ],
         validacion_especial=[
-            Requisito("mensaje", "Responder el mensaje de Violet", grupo_id="violet_quest8_chat"),
+            Requisito("mensaje", "Responder el mensaje de Violet", grupo_id="violet_quest04d_chat"),
         ],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_CONDICIONES: ConfigEtapa(
-                pista="Quizás si sigo mejorando mi deseo con Violet me muestre un poco más",
-                que_hacer=lambda: renpy.translate_string("Subir deseo con Violet ({}/{})").format(
-                    getattr(store, 'violet_deseo', 0), 25
-                ),
+                pista="Tengo que mejorar mi deseo con Violet para que me muestre mas del cosplay.",
+                que_hacer=_qc("vq04d_condiciones_quehacer", lambda: renpy.translate_string("Subir deseo con Violet ({}/{})").format(
+                    getattr(store, 'violet_deseo', 0), 10
+                )),
+                mensaje_despertar="Tengo que seguir mejorando mi deseo con Violet.",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista=lambda: "Violet ya me contestó, debería ir a hablar con ella." if store.sistema_mensajes.grupo_completado("violet_quest8_chat") else "Violet me envió un mensaje, debería responderle.",
-                que_hacer=lambda: "Ir a ver a Violet a su habitación." if store.sistema_mensajes.grupo_completado("violet_quest8_chat") else "Responder mensaje de Violet",
-                mensaje_despertar=lambda: "Tengo que ir a ver a Violet por lo de su cosplay." if store.sistema_mensajes.grupo_completado("violet_quest8_chat") else "Violet me envió un mensaje, debería responderle",
-                trigger_mensaje=("violet_quest8_chat", "violet"),
+                pista=_qc("vq04d_botonlisto_pista", lambda: "Violet ya me contestó, debería ir a hablar con ella." if store.sistema_mensajes.grupo_completado("violet_quest04d_chat") else "Violet me envió un mensaje, debería responderle."),
+                que_hacer=_qc("vq04d_botonlisto_quehacer", lambda: "Ir a ver a Violet." if store.sistema_mensajes.grupo_completado("violet_quest04d_chat") else "Responder mensaje de Violet"),
+                mensaje_despertar=_qc("vq04d_botonlisto_despertar", lambda: "Tengo que ir a ver a Violet por lo del cosplay." if store.sistema_mensajes.grupo_completado("violet_quest04d_chat") else "Violet me envió un mensaje, debería responderle."),
+                trigger_mensaje=("violet_quest04d_chat", "violet"),
             ),
         },
     )
-    sistema_quests.registrar_quest(quest_violet_8)
+    sistema_quests.registrar_quest(quest_violet_04_d)
 
     # =========================================================================
-    # QUEST 9 - El cosplay de Violet IV (deseo 30)
+    # QUEST 04_E - El cosplay de Violet IV (deseo 15)
     # =========================================================================
 
-    quest_violet_9 = Quest(
-        id="violet_questprincipal_9",
+    quest_violet_04_e = Quest(
+        id="violet_questprincipal_04_e",
         npc_id="violet",
         nombre="El cosplay de Violet IV",
         descripcion="Quizás si sigo mejorando mi deseo con Violet me muestre un poco más.",
-        numero_quest=9,
+        numero_quest=10,
         dias_espera=0,
-        quest_anterior="violet_questprincipal_8",
+        quest_anterior="violet_questprincipal_04_d",
         requisitos=[
-            Requisito("deseo", "Necesitas mas deseo con Violet", npc_id="violet", valor=30),
+            Requisito("deseo", "Necesitas 15 de deseo con Violet", npc_id="violet", valor=15),
         ],
         validacion_especial=[
-            Requisito("mensaje", "Responder el mensaje de Violet", grupo_id="violet_quest9_chat"),
+            Requisito("mensaje", "Responder el mensaje de Violet", grupo_id="violet_quest04e_chat"),
         ],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_CONDICIONES: ConfigEtapa(
-                pista="Quizás si sigo mejorando mi deseo con Violet me muestre un poco más",
-                que_hacer=lambda: renpy.translate_string("Subir deseo con Violet ({}/{})").format(
-                    getattr(store, 'violet_deseo', 0), 30
-                ),
+                pista="Tengo que seguir mejorando mi deseo con Violet para que me muestre mas.",
+                que_hacer=_qc("vq04e_condiciones_quehacer", lambda: renpy.translate_string("Subir deseo con Violet ({}/{})").format(
+                    getattr(store, 'violet_deseo', 0), 15
+                )),
+                mensaje_despertar="Tengo que seguir mejorando mi deseo con Violet.",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista=lambda: "Violet ya me contestó, debería ir a hablar con ella." if store.sistema_mensajes.grupo_completado("violet_quest9_chat") else "Violet me envió un mensaje, debería responderle.",
-                que_hacer=lambda: "Ir a ver a Violet a su habitación." if store.sistema_mensajes.grupo_completado("violet_quest9_chat") else "Responder mensaje de Violet",
-                mensaje_despertar=lambda: "Tengo que ir a ver a Violet por lo de su cosplay." if store.sistema_mensajes.grupo_completado("violet_quest9_chat") else "Violet me envió un mensaje, debería responderle",
-                trigger_mensaje=("violet_quest9_chat", "violet"),
+                pista=_qc("vq04e_botonlisto_pista", lambda: "Violet ya me contestó, debería ir a hablar con ella." if store.sistema_mensajes.grupo_completado("violet_quest04e_chat") else "Violet me envió un mensaje, debería responderle."),
+                que_hacer=_qc("vq04e_botonlisto_quehacer", lambda: "Ir a ver a Violet." if store.sistema_mensajes.grupo_completado("violet_quest04e_chat") else "Responder mensaje de Violet"),
+                mensaje_despertar=_qc("vq04e_botonlisto_despertar", lambda: "Tengo que ir a ver a Violet por lo del cosplay." if store.sistema_mensajes.grupo_completado("violet_quest04e_chat") else "Violet me envió un mensaje, debería responderle."),
+                trigger_mensaje=("violet_quest04e_chat", "violet"),
             ),
         },
     )
-    sistema_quests.registrar_quest(quest_violet_9)
+    sistema_quests.registrar_quest(quest_violet_04_e)
+
+    # =========================================================================
+    # QUEST 05_A - Un nuevo cosplay (chat con Tienda CoXplay)
+    # =========================================================================
+
+    quest_violet_05_a = Quest(
+        id="violet_questprincipal_05_a",
+        npc_id="violet",
+        nombre="Un nuevo cosplay",
+        descripcion="Podría averiguar para comprar un nuevo cosplay para Violet.",
+        numero_quest=11,
+        dias_espera=0,
+        quest_anterior="violet_questprincipal_04_e",
+        requisitos=[],
+        validacion_especial=[
+            Requisito("mensaje", "Completar la conversación con la tienda", grupo_id="coxplay_q5a_g4"),
+        ],
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista=_pista_quest05a,
+                que_hacer=_quehacer_quest05a,
+                mensaje_despertar=_despertar_quest05a,
+                trigger_mensaje=("coxplay_q5a_g1", "tienda_coxplay"),
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_05_a)
+
+    # =========================================================================
+    # QUEST 05_B - El paquete llegó
+    # =========================================================================
+
+    quest_violet_05_b = Quest(
+        id="violet_questprincipal_05_b",
+        npc_id="violet",
+        nombre="El paquete llegó",
+        descripcion="Estoy esperando el paquete de cosplays de CoXplay.",
+        numero_quest=12,
+        dias_espera=0,
+        quest_anterior="violet_questprincipal_05_a",
+        requisitos=[
+            Requisito("item", "Recibir el paquete de CoXplay", item_id="coxplay_box"),
+        ],
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_CONDICIONES: ConfigEtapa(
+                pista="Estoy esperando que llegue el paquete de CoXplay.",
+                que_hacer="Esperar el paquete de CoXplay",
+            ),
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista="Ya tengo los cosplay, debería dárselos a Violet.",
+                que_hacer="Hablar con Violet",
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_05_b)
+
+    # =========================================================================
+    # QUEST 05_C - El malentendido del cosplay
+    # =========================================================================
+
+    quest_violet_05_c = Quest(
+        id="violet_questprincipal_05_c",
+        npc_id="violet",
+        nombre="El malentendido del cosplay",
+        descripcion="Tengo que esperar que Violet se los pruebe.",
+        numero_quest=13,
+        dias_espera=1,
+        quest_anterior="violet_questprincipal_05_b",
+        requisitos=[
+            Requisito("mensaje", "Responder el mensaje de Violet", grupo_id="violet_q5c_g1"),
+        ],
+        validacion_especial=[
+            Requisito("npc_presente", "Violet debe estar en su habitación", npc_id="violet", locacion_id="casa_hviolet"),
+        ],
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_ESPERA: ConfigEtapa(
+                pista="Tengo que esperar que Violet se los pruebe.",
+                que_hacer="Esperar mensaje de Violet (1 día, al otro día esperar a la noche)",
+            ),
+            ETAPA_CONDICIONES: ConfigEtapa(
+                pista=_pista_quest05c_condiciones,
+                que_hacer=_quehacer_quest05c_condiciones,
+                trigger_mensaje=("violet_q5c_g1", "violet"),
+            ),
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista="Debería pedirle perdón a Violet.",
+                que_hacer="Hablar con Violet en su habitación",
+                mensaje_despertar="Debería ir a hablar con Violet a su habitación.",
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_05_c)
+
+    # =========================================================================
+    # QUEST 06_A - Las entradas
+    # =========================================================================
+
+    quest_violet_06_a = Quest(
+        id="violet_questprincipal_06_a",
+        npc_id="violet",
+        nombre="Las entradas",
+        descripcion="Las entradas para la Japicon están disponibles.",
+        numero_quest=14,
+        dias_espera=1,
+        quest_anterior="violet_questprincipal_05_c",
+        requisitos=[
+            Requisito("item", "Comprar dos entradas para la Japicon", item_id="entrada_japicon", cantidad=2),
+        ],
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_ESPERA: ConfigEtapa(
+                pista="Tengo que esperar a que las entradas estén disponibles.",
+                que_hacer="Esperar 1 día",
+            ),
+            ETAPA_CONDICIONES: ConfigEtapa(
+                pista="Las entradas para la Japicon están disponibles.",
+                que_hacer="Comprar dos entradas para la Japicon",
+                trigger_mensaje=("japicon_tickets_g1", "libre_mercado"),
+            ),
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista="Contarle a Violet de las entradas.",
+                que_hacer="Hablar con Violet",
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_06_a)
+
+    # =========================================================================
+    # QUEST 06_B - La prueba del cosplay
+    # =========================================================================
+
+    quest_violet_06_b = Quest(
+        id="violet_questprincipal_06_b",
+        npc_id="violet",
+        nombre="La prueba del cosplay",
+        descripcion="Violet me pidió que la visite por la noche.",
+        numero_quest=15,
+        dias_espera=2,
+        quest_anterior="violet_questprincipal_06_a",
+        requisitos=[
+            Requisito("mensaje", "Responder el mensaje de Violet", grupo_id="violet_q6b_g1"),
+        ],
+        validacion_especial=[
+            Requisito("npc_presente", "Violet debe estar en su habitación", npc_id="violet", locacion_id="casa_hviolet"),
+            Requisito("horario", "Debe ser de noche", horario_id=2),
+        ],
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_ESPERA: ConfigEtapa(
+                pista="Supongo que toca esperar.",
+                que_hacer="Esperar 2 días",
+            ),
+            ETAPA_CONDICIONES: ConfigEtapa(
+                pista=_pista_quest06b_condiciones,
+                que_hacer=_quehacer_quest06b_condiciones,
+                trigger_mensaje=("violet_q6b_g1", "violet"),
+            ),
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista="Violet me pidió que la visite por la noche.",
+                que_hacer="Ir a la habitación de Violet por la noche",
+                mensaje_despertar="Violet me pidió que la visite por la noche.",
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_06_b)
+
+    # =========================================================================
+    # QUEST 07_A - El cierre del cosplay
+    # =========================================================================
+
+    quest_violet_07_a = Quest(
+        id="violet_questprincipal_07_a",
+        npc_id="violet",
+        nombre="El cierre del cosplay",
+        descripcion="Tengo que ver qué pasó con el cosplay.",
+        numero_quest=16,
+        dias_espera=3,
+        quest_anterior="violet_questprincipal_06_b",
+        requisitos=[],
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_ESPERA: ConfigEtapa(
+                pista=_pista_quest07a_espera,
+                que_hacer="Esperar 3 días",
+            ),
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista="Tengo que hablar con Violet sobre el cosplay.",
+                que_hacer="Hablar con Violet",
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_07_a)
+
+    # =========================================================================
+    # QUEST 07_B - El cambio del cosplay
+    # =========================================================================
+
+    quest_violet_07_b = Quest(
+        id="violet_questprincipal_07_b",
+        npc_id="violet",
+        nombre="El cambio del cosplay",
+        descripcion="Tengo que contactar a la tienda para pedir el cambio del cierre.",
+        numero_quest=17,
+        dias_espera=0,
+        quest_anterior="violet_questprincipal_07_a",
+        requisitos=[
+            Requisito("mensaje", "Enviar mensaje a Tienda Coxplay", grupo_id="tienda_coxplay_q7b_g1"),
+        ],
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_CONDICIONES: ConfigEtapa(
+                pista="Hablar con la tienda para pedir el cambio.",
+                que_hacer="Enviar mensaje a Tienda Coxplay",
+                trigger_mensaje=("tienda_coxplay_q7b_g1", "tienda_coxplay"),
+            ),
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista="Contarle a Violet sobre el cambio.",
+                que_hacer="Hablar con Violet",
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_07_b)
+
+    # =========================================================================
+    # QUEST 07_C - Cosplay de reemplazo
+    # =========================================================================
+
+    quest_violet_07_c = Quest(
+        id="violet_questprincipal_07_c",
+        npc_id="violet",
+        nombre="Cosplay de reemplazo",
+        descripcion="Violet me avisó que habló con la tienda y va a enviar el cosplay.",
+        numero_quest=18,
+        dias_espera=1,
+        quest_anterior="violet_questprincipal_07_b",
+        requisitos=[
+            Requisito("mensaje", "Responder el mensaje de Violet", grupo_id="violet_q7c_g1"),
+        ],
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_ESPERA: ConfigEtapa(
+                pista="Esperar que Violet hable con la tienda.",
+                que_hacer="Esperar 1 día",
+            ),
+            ETAPA_CONDICIONES: ConfigEtapa(
+                pista="Violet te mandó un mensaje.",
+                que_hacer="Responder mensaje de Violet",
+                trigger_mensaje=("violet_q7c_g1", "violet"),
+            ),
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista="Ya te pusiste al día con Violet sobre el cosplay.",
+                que_hacer="Hablar con Violet",
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_07_c)
+
+    # =========================================================================
+    # QUEST 08_A - La tormenta
+    # =========================================================================
+
+    quest_violet_08_a = Quest(
+        id="violet_questprincipal_08_a",
+        npc_id="violet",
+        nombre="La tormenta",
+        descripcion="Hoy iba a estar solo en casa.",
+        numero_quest=19,
+        dias_espera=3,
+        quest_anterior="violet_questprincipal_07_c",
+        requisitos=[],
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_ESPERA: ConfigEtapa(
+                pista="Esperar a que Violet me hable sobre el cosplay.",
+                que_hacer="Esperar 3 días",
+            ),
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista="Hoy las chicas salieron. Podría ver la TV en el living.",
+                que_hacer="Ver TV en el living",
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_08_a)
+
+    # =========================================================================
+    # QUEST 09_A — Violet enferma
+    # =========================================================================
+
+    _vq9a_sprites_violet = {
+        0: "images/characters/casa/idle/idle_violet_casa_hviolet_mañana_rutinabase_grupobase_skinbase.png",
+        1: "images/characters/casa/idle/idle_violet_casa_hviolet_tarde_rutinabase_grupobase_skinbase.png",
+        2: "images/characters/casa/idle/idle_violet_casa_hviolet_noche_rutinabase_grupopijama_skinbase.png",
+        3: "images/characters/casa/idle/idle_violet_casa_hviolet_trasnoche_rutinabase_grupobase_skinbase.png",
+    }
+    _vq9a_sprites_monica = {
+        0: "images/characters/casa/idle/idle_monica_casa_living_mañana_rutinabase_grupobase_skinbase.png",
+        1: "images/characters/casa/idle/idle_monica_casa_living_mañana_rutinabase_grupobase_skinbase.png",
+        2: "images/characters/casa/idle/idle_monica_casa_hmonica_noche_rutinabase_grupobase_skinbase.png",
+        3: "images/characters/casa/idle/idle_monica_casa_hmonica_trasnoche_rutinabase_grupobase_skinbase.png",
+    }
+    _vq9a_locs_monica = {0: "casa_living", 1: "casa_living", 2: "casa_hmonica", 3: "casa_hmonica"}
+
+    quest_violet_09_a = Quest(
+        id="violet_questprincipal_09_a",
+        npc_id="violet",
+        nombre="Violet enferma",
+        descripcion="Violet se pescó una gripe, tengo que cuidarla.",
+        numero_quest=20,
+        dias_espera=1,
+        quest_anterior="violet_questprincipal_08_a",
+        requisitos=[
+            Requisito("mensaje", "Leer el mensaje de Tienda Coxplay", grupo_id="tienda_coxplay_q9a_g1"),
+        ],
+        rutina_quest={
+            (dia, horario): RutinaQuest(
+                locacion="casa_hviolet",
+                sprite=_vq9a_sprites_violet[horario],
+            )
+            for dia in range(7) for horario in range(4)
+        },
+        rutinas_adicionales={
+            "monica": {
+                (dia, horario): RutinaQuest(
+                    locacion=_vq9a_locs_monica[horario],
+                    sprite=_vq9a_sprites_monica[horario],
+                )
+                for dia in range(7) for horario in range(4)
+            }
+        },
+        prioridad_rutina=0,
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_ESPERA: ConfigEtapa(
+                pista="A seguir esperando por la Japicon.",
+                que_hacer="Esperar 1 día",
+            ),
+            ETAPA_CONDICIONES: ConfigEtapa(
+                pista="Hay un mensaje de Tienda Coxplay.",
+                que_hacer="Leer el mensaje de Tienda Coxplay",
+                trigger_mensaje=("tienda_coxplay_q9a_g1", "tienda_coxplay"),
+            ),
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista="Podría ver si Violet necesita algo mientras está enferma.",
+                que_hacer=_qc("vq09a_botonlisto_quehacer", lambda: "Ayudar a Violet ({}/3)".format(getattr(store, 'violet_enferma_atencion', 0))),
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_09_a)
 
     # =========================================================================
     # QUEST 11 - Los ruidos nocturnos
@@ -380,7 +761,7 @@ init 5 python:
         descripcion="Violet me dijo que estaba intentando hacer cosplays, debería comprarle algunos.",
         numero_quest=11,
         dias_espera=3,
-        quest_anterior="violet_questprincipal_10",
+        quest_anterior="violet_questprincipal_09_a",
         requisitos=[
             Requisito("item", "Me falta el conjunto de cosplays", item_id="conjunto_cosplays", cantidad=1),
         ],
@@ -392,10 +773,10 @@ init 5 python:
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
                 pista="Todo tranquilo por ahora, deberia esperar unos dias.",
-                que_hacer=lambda: "Esperar {} d{}".format(
+                que_hacer=_qc("vq11_espera_quehacer", lambda: "Esperar {} d{}".format(
                     max(1, 3 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_11').dia_inicio or 0))),
                     "ia" if max(1, 3 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_11').dia_inicio or 0))) == 1 else "ias"
-                ),
+                )),
             ),
             ETAPA_CONDICIONES: ConfigEtapa(
                 pista="Podría conseguir algunos cosplay para que Violet se pruebe",
@@ -432,17 +813,182 @@ init 5 python:
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
                 pista="Deberia esperar unos dias.",
-                que_hacer=lambda: "Esperar {} d{}".format(
+                que_hacer=_qc("vq12_espera_quehacer", lambda: "Esperar {} d{}".format(
                     max(1, 3 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_12').dia_inicio or 0))),
                     "ia" if max(1, 3 - (getattr(store, 'dias_totales', 1) - (sistema_quests.obtener_quest('violet_questprincipal_12').dia_inicio or 0))) == 1 else "ias"
-                ),
+                )),
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista=lambda: "Violet me pidió que pase por su habitación, debería ir a la noche." if store.sistema_mensajes.grupo_completado("violet_quest12_chat") else "Violet me envió un mensaje, debería responderle.",
-                que_hacer=lambda: "Ir a la habitacion de Violet por la noche." if store.sistema_mensajes.grupo_completado("violet_quest12_chat") else "Responder mensaje de Violet",
-                mensaje_despertar=lambda: "Violet me pidió que pase por su habitación a la noche." if store.sistema_mensajes.grupo_completado("violet_quest12_chat") else "Violet me envió un mensaje, debería responderle",
+                pista=_qc("vq12_botonlisto_pista", lambda: "Violet me pidió que pase por su habitación, debería ir a la noche." if store.sistema_mensajes.grupo_completado("violet_quest12_chat") else "Violet me envió un mensaje, debería responderle."),
+                que_hacer=_qc("vq12_botonlisto_quehacer", lambda: "Ir a la habitacion de Violet por la noche." if store.sistema_mensajes.grupo_completado("violet_quest12_chat") else "Responder mensaje de Violet"),
+                mensaje_despertar=_qc("vq12_botonlisto_despertar", lambda: "Violet me pidió que pase por su habitación a la noche." if store.sistema_mensajes.grupo_completado("violet_quest12_chat") else "Violet me envió un mensaje, debería responderle"),
                 trigger_mensaje=("violet_quest12_chat", "violet"),
             ),
         },
     )
     sistema_quests.registrar_quest(quest_violet_12)
+
+
+################################################################################
+## Funciones auxiliares para quests de Violet
+################################################################################
+
+init python:
+
+    def _estado_quest05a():
+        """
+        Retorna (pista, que_hacer, despertar) dinámico según el estado del chat CoXplay.
+        """
+        msgs = getattr(store, 'sistema_mensajes', None)
+        if not msgs:
+            return (
+                "Podría averiguar para comprar un nuevo cosplay para Violet.",
+                "Escribirle un mensaje a Tienda CoXplay",
+                "Podría escribirle a la tienda CoXplay sobre un nuevo cosplay.",
+            )
+
+        def _grupo(grupo_id):
+            return msgs._todos_grupos.get(grupo_id)
+
+        def _completado(grupo_id):
+            return msgs.grupo_completado(grupo_id)
+
+        # Fase 4: dirección de envío
+        g4 = _grupo("coxplay_q5a_g4")
+        if g4:
+            if _completado("coxplay_q5a_g4"):
+                dias_restantes = max(0, getattr(store, 'coxplay_pedido_dia', 0) + 2 - getattr(store, 'dias_totales', 0))
+                if dias_restantes > 0:
+                    return (
+                        "Podría hablar con Violet y contarle lo que compré.",
+                        "Hablar con Violet / Esperar {} día{} más".format(dias_restantes, "s" if dias_restantes != 1 else ""),
+                        "Podría contarle a Violet sobre el pedido de cosplays.",
+                    )
+                return (
+                    "Podría hablar con Violet y contarle lo que compré.",
+                    "Hablar con Violet",
+                    "Podría contarle a Violet sobre los cosplays que compré.",
+                )
+            if g4.estado in ["pendiente", "en_curso"]:
+                return (
+                    "La tienda me pidió la dirección de envío.",
+                    "Responder a Tienda CoXplay",
+                    "Tengo que responderle a CoXplay con la dirección.",
+                )
+            return (
+                "La tienda está procesando la dirección de envío.",
+                "Esperar horario de atención de CoXplay",
+                "Hoy CoXplay puede confirmar la dirección de envío.",
+            )
+
+        # Fase 3: pago
+        g3 = _grupo("coxplay_q5a_g3")
+        if g3 and not _completado("coxplay_q5a_g3"):
+            if getattr(store, 'dinero', 0) >= 200:
+                return (
+                    "Tengo que confirmar el pago del cosplay.",
+                    "Confirmar pago ($200) en Tienda CoXplay",
+                    "Hoy puedo confirmar el pago del cosplay en el chat.",
+                )
+            return (
+                "Necesito $200 para pagar el cosplay.",
+                "Juntar $200 para abonar a CoXplay",
+                "Necesito ahorrar $200 para pagar el pedido a CoXplay.",
+            )
+
+        # Fase 2: conversación principal
+        g2 = _grupo("coxplay_q5a_g2")
+        if g2:
+            if g2.estado in ["pendiente", "en_curso"]:
+                return (
+                    "La tienda me respondió, tengo que continuar la conversación.",
+                    "Responder a Tienda CoXplay",
+                    "Tengo un mensaje de Tienda CoXplay esperando.",
+                )
+            return (
+                "Esperando respuesta de la tienda.",
+                "Esperar horario de atención de CoXplay",
+                "Hoy CoXplay puede responder a mi consulta.",
+            )
+
+        # Fase 1: esperando respuesta inicial
+        if _completado("coxplay_q5a_g1"):
+            return (
+                "Mandé el mensaje, esperando respuesta de la tienda.",
+                "Esperar horario de atención de CoXplay",
+                "Hoy CoXplay puede responder a mi consulta.",
+            )
+
+        return (
+            "Podría averiguar para comprar un nuevo cosplay para Violet.",
+            "Escribirle un mensaje a Tienda CoXplay",
+            "Podría escribirle a la tienda CoXplay sobre un nuevo cosplay.",
+        )
+
+    def _pista_quest05a():
+        return _estado_quest05a()[0]
+
+    def _quehacer_quest05a():
+        return _estado_quest05a()[1]
+
+    def _despertar_quest05a():
+        return _estado_quest05a()[2]
+
+    def _pista_quest05c_condiciones():
+        msgs = getattr(store, 'sistema_mensajes', None)
+        if not msgs:
+            return "Violet va a mandarme un mensaje de noche sobre los cosplays."
+        g1 = msgs._todos_grupos.get("violet_q5c_g1")
+        if g1 and g1.estado in ["pendiente", "en_curso"]:
+            return "Violet me mandó un mensaje, debería responderle."
+        return "Violet va a mandarme un mensaje de noche sobre los cosplays."
+
+    def _quehacer_quest05c_condiciones():
+        msgs = getattr(store, 'sistema_mensajes', None)
+        if not msgs:
+            return "Esperar el mensaje de noche"
+        g1 = msgs._todos_grupos.get("violet_q5c_g1")
+        if g1 and g1.estado in ["pendiente", "en_curso"]:
+            return "Responder a Violet"
+        return "Esperar el mensaje de noche"
+
+    def _pista_quest06b_condiciones():
+        msgs = getattr(store, 'sistema_mensajes', None)
+        if not msgs:
+            return "Violet me envió un mensaje."
+        g1 = msgs._todos_grupos.get("violet_q6b_g1")
+        if g1 and g1.estado == "completado":
+            return "Violet me pidió que la visite por la noche."
+        if g1 and g1.estado in ["pendiente", "en_curso"]:
+            return "Violet me envió un mensaje."
+        return "Violet va a mandarme un mensaje."
+
+    def _quehacer_quest06b_condiciones():
+        msgs = getattr(store, 'sistema_mensajes', None)
+        if not msgs:
+            return "Responder mensaje Violet"
+        g1 = msgs._todos_grupos.get("violet_q6b_g1")
+        if g1 and g1.estado == "completado":
+            return "Ir a la habitación de Violet por la noche"
+        if g1 and g1.estado in ["pendiente", "en_curso"]:
+            return "Responder mensaje Violet"
+        return "Responder mensaje Violet"
+
+    def _pista_quest07a_espera():
+        eleccion = getattr(store, 'violet_06b_eleccion', None)
+        if eleccion == "C":
+            return "Debería esperar antes de hablar con Violet."
+        return "Tengo que esperar a ver si Monica pudo arreglar el cierre."
+
+    def setup_restriccion_violet_quest04b():
+        """
+        Activa la restricción de auto-trigger para la quest 04_b de Violet.
+        Se llama como accion_al_entrar cuando la quest alcanza ETAPA_BOTON_LISTO.
+        Registra labels en todas las locaciones posibles de Violet.
+        Los NPCs siguen siendo interactuables normalmente.
+        """
+        r = activar_restriccion(
+            npcs_interactuables=["violet", "jasmine", "monica"],
+        )
+        for loc_id in ["casa_hviolet", "casa_pasilloarriba", "casa_cocina", "casa_living", "casa_gym"]:
+            r.registrar_label_locacion(loc_id, "violet_quest04b_check_locacion")

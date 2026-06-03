@@ -16,7 +16,51 @@ define ETAPA_MEMORIAS = 8
 define ETAPA_FINALIZACION = 9
 
 init python:
-    
+
+    # -------------------------------------------------------------------------
+    # Registro de callables para serialización de quests
+    # -------------------------------------------------------------------------
+    # Se reconstruye en cada inicio del juego; nunca se guarda en el save.
+    # Permite almacenar lambdas en Quest/ConfigEtapa sin romper el pickle.
+
+    _quest_callable_registry = {}
+
+    class CallableRef:
+        """
+        Referencia picklable a un callable del registro _quest_callable_registry.
+        Permite almacenar lambdas en objetos Quest/ConfigEtapa sin romper el guardado.
+        Se serializa solo como la clave (str); al ejecutarse busca la lambda en el
+        registro que se reconstruye en cada inicio antes de cargar cualquier save.
+        """
+        def __init__(self, key):
+            self.key = key
+
+        def __call__(self, *args, **kwargs):
+            fn = _quest_callable_registry.get(self.key)
+            if fn is None:
+                return None
+            try:
+                return fn(*args, **kwargs)
+            except Exception:
+                return None
+
+    def _qc(key, fn):
+        """
+        Registra un callable con clave estable y devuelve un CallableRef picklable.
+        Usar en ConfigEtapa/Quest en lugar de lambdas directas:
+
+            pista=_qc("vq01a_pista", lambda: calcular_pista())
+
+        Para funciones definidas con 'def' (que ya son picklables), usar
+        referencia directa sin _qc:
+
+            pista=mi_funcion
+        """
+        _quest_callable_registry[key] = fn
+        return CallableRef(key)
+
+    # -------------------------------------------------------------------------
+
     class Requisito:
         """
         Clase que representa un requisito para una quest.
@@ -26,10 +70,10 @@ init python:
         def __init__(self, tipo, mensaje, **params):
             """
             Args:
-                tipo: Tipo de requisito ("amor", "deseo", "relacion", "afinidad", "stat", "item", "dinero", "memoria")
+                tipo: Tipo de requisito ("amor", "deseo", "stat", "item", "dinero", "memoria")
                 mensaje: Mensaje personalizado para mostrar en pistas si no se cumple
                 **params: Parámetros específicos según el tipo:
-                    - amor/deseo/relacion/afinidad: npc_id, valor
+                    - amor/deseo: npc_id, valor
                     - stat: stat_id, valor
                     - item: item_id, cantidad (default 1)
                     - dinero: valor
@@ -46,20 +90,8 @@ init python:
             Returns:
                 bool: True si el requisito se cumple
             """
-            if self.tipo == "relacion":
-                npc_id = self.params.get("npc_id")
-                valor_requerido = self.params.get("valor", 0)
-                stat1_actual = obtener_stat1(npc_id)
-                return stat1_actual >= valor_requerido
-            
-            elif self.tipo == "afinidad":
-                npc_id = self.params.get("npc_id")
-                valor_requerido = self.params.get("valor", 0)
-                stat2_actual = obtener_stat2(npc_id)
-                return stat2_actual >= valor_requerido
-            
             # stat1 genérico
-            elif self.tipo == "amor":
+            if self.tipo == "amor":
                 npc_id = self.params.get("npc_id")
                 valor_requerido = self.params.get("valor", 0)
                 return obtener_stat1(npc_id) >= valor_requerido
@@ -635,12 +667,12 @@ init python:
                 nombre_dia = dias[dia_id] if 0 <= dia_id < len(dias) else "?"
                 return f"El día {nombre_dia}"
             
-            elif req.tipo in ("relacion", "amor"):
+            elif req.tipo == "amor":
                 npc_id = req.params.get("npc_id", "")
                 valor = req.params.get("valor", 0)
                 return f"Tener {valor} de Amor con {npc_id.capitalize()}"
 
-            elif req.tipo in ("afinidad", "deseo"):
+            elif req.tipo == "deseo":
                 npc_id = req.params.get("npc_id", "")
                 valor = req.params.get("valor", 0)
                 return f"Tener {valor} de Deseo con {npc_id.capitalize()}"
@@ -810,18 +842,16 @@ init python:
             if self._hay_prioridad_mayor(npc_id):
                 return
             
-            # Guardar rutina original (solo la primera vez)
-            if not hasattr(npc, 'rutina_original'):
-                npc.rutina_original = npc.rutinas.copy()
-            
-            # Aplicar rutina de quest
+            # Aplicar rutina de quest en el dict dedicado (prioridad sobre especiales)
+            if not hasattr(npc, 'rutinas_quest'):
+                npc.rutinas_quest = {}
+
             for (dia, horario), rutina in rutinas.items():
                 if isinstance(rutina, RutinaQuest):
-                    npc.rutinas[(dia, horario)] = rutina.locacion
+                    npc.rutinas_quest[(dia, horario)] = rutina.locacion
                 else:
-                    # Compatibilidad con formato antiguo (string)
-                    npc.rutinas[(dia, horario)] = rutina
-            
+                    npc.rutinas_quest[(dia, horario)] = rutina
+
             npc.actualizar_ubicacion()
         
         def _hay_prioridad_mayor(self, npc_id):
@@ -894,12 +924,24 @@ init python:
                 self._restaurar_rutina_npc(npc_id_adicional)
         
         def _restaurar_rutina_npc(self, npc_id):
-            """Restaura la rutina original de un NPC específico."""
+            """Restaura la rutina normal de un NPC eliminando las entradas de esta quest."""
             npc = obtener_npc(npc_id)
-            if npc and hasattr(npc, 'rutina_original'):
+            if not npc:
+                return
+
+            # Nuevo formato: eliminar las claves de esta quest de rutinas_quest
+            rutinas_a_limpiar = self.rutina_quest if npc_id == self.npc_id else self.rutinas_adicionales.get(npc_id, {})
+            rutinas_q = getattr(npc, 'rutinas_quest', {})
+            for clave in rutinas_a_limpiar:
+                rutinas_q.pop(clave, None)
+            npc.rutinas_quest = rutinas_q
+
+            # Compatibilidad con saves anteriores que usaban rutina_original
+            if hasattr(npc, 'rutina_original'):
                 npc.rutinas = npc.rutina_original.copy()
                 delattr(npc, 'rutina_original')
-                npc.actualizar_ubicacion()
+
+            npc.actualizar_ubicacion()
         
         def completar(self, recuerdos_finales=None):
             """
@@ -1247,11 +1289,14 @@ init python:
     def completar_quest_actual(npc_id=None, recuerdos=None):
         """
         Completa la quest activa.
-        
+
         Args:
             npc_id: ID del NPC (opcional, para buscar su quest activa)
             recuerdos: Dict con recuerdos a guardar
         """
+        # Bloquear rollback para que el jugador no pueda volver a entrar a la quest
+        renpy.block_rollback()
+
         quest_activa = None
         
         if npc_id:

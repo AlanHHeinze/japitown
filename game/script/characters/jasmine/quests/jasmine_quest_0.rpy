@@ -3,6 +3,9 @@
 # =============================================================================
 image jasmine_quest_0_beso = "images/quest/jasmine/quest_0/jasmine_quest_0_beso.png"
 
+# Ruta elegida en el menu de dialogo (para evitar exploit de rollback)
+default _ruta_jq0 = ""
+
 # =============================================================================
 # QUEST 0 - Rutina y Recuerdos (Jasmine)
 # =============================================================================
@@ -149,7 +152,7 @@ label quest_jasmine_0_opcion_perdon:
     mc "Lo prometo."
     show mc_parado_base b_seria
 
-    $ obtener_npc("jasmine").modificar_stat1(5)
+    $ _ruta_jq0 = "perdon"
     jump quest_jasmine_0_regalo
 
 # -----------------------------------------------------------------------------
@@ -215,7 +218,7 @@ label quest_jasmine_0_opcion_madurez:
     mc "Me alegra que asi sea."
     show mc_parado_base b_none
     
-    $ obtener_npc("jasmine").modificar_stat2(5)
+    $ _ruta_jq0 = "madurez"
     jump quest_jasmine_0_regalo
 
 # -----------------------------------------------------------------------------
@@ -286,6 +289,7 @@ label quest_jasmine_0_opcion_realidad:
     mc "Perdon por haberte dejado sola."
     show mc_parado_base b_none
 
+    $ _ruta_jq0 = "realidad"
     jump quest_jasmine_0_regalo
 
 # -----------------------------------------------------------------------------
@@ -409,6 +413,12 @@ label quest_jasmine_0_regalo:
     jasmine "Nos vemos, [mc_name]..."
     show jasmine_parada b_none
     
+    # Evaluar ruta elegida y aplicar stats
+    if _ruta_jq0 == "perdon":
+        $ obtener_npc("jasmine").modificar_stat1(5)
+    elif _ruta_jq0 == "madurez":
+        $ obtener_npc("jasmine").modificar_stat2(5)
+
     # Avanzar horario
     $ avanzar_horario()
     $ completar_quest_actual("jasmine")

@@ -239,8 +239,8 @@ screen menu_tutorial_choice():
                     action Return(False)
                     text_size 18
                     text_color "#ffffff"
-                    background "#B71C1C"
-                    hover_background "#E53935"
+                    background "#1565C0"
+                    hover_background "#1976D2"
                     padding (30, 14)
 
 
@@ -331,6 +331,13 @@ label game_loop:
 
     # Validar eventos en cada iteración del loop
     $ validar_eventos()
+
+    # Quest 09_a: disparar piensa "Debería avisarle a Violet" al llegar a ETAPA_BOTON_LISTO
+    $ _quest_v09a_gl = store.sistema_quests.obtener_quest("violet_questprincipal_09_a")
+    if (_quest_v09a_gl and _quest_v09a_gl.activa and not _quest_v09a_gl.completada and
+            _quest_v09a_gl.etapa_actual == ETAPA_BOTON_LISTO and
+            not getattr(store, 'violet_9a_piensa_mostrado', True)):
+        jump violet_quest09a_piensa_avisarle
 
     if not renpy.get_screen("navegacion_locaciones_con_hud"):
         show screen navegacion_locaciones_con_hud

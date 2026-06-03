@@ -120,6 +120,7 @@ init python:
             self.id = estado_id
             self.jerarquia = jerarquia
             self.dias_restantes = dias_restantes
+            self.consumido = False
 
 
     class EstadoTalk:
@@ -136,8 +137,8 @@ init python:
         es_especial: si True, tiene jerarquía y contador de días.
         """
         def __init__(self, id, nombre, intro, efectos, mensaje,
-                     es_especial=False, jerarquia=0, dias_duracion=1,
-                     estados_posteriores=None):
+                    es_especial=False, jerarquia=0, dias_duracion=1,
+                    estados_posteriores=None):
             self.id = id
             self.nombre = nombre
             self.intro = intro              # Narración mostrada antes del menú
@@ -163,8 +164,8 @@ init python:
         correctamente en cada inicio de sesión.
         """
         def __init__(self, id, texto, condicion, mensaje_opcion,
-                     resultado_id=None, item_requerido=None, item_consumible=False,
-                     estado_posterior_npc=None, recompensa_extra=None):
+                    resultado_id=None, item_requerido=None, item_consumible=False,
+                    estado_posterior_npc=None, recompensa_extra=None):
             self.id = id
             self.texto = texto
             self.condicion = condicion          # callable → bool
@@ -208,8 +209,8 @@ init python:
         resoluciones_especiales — parte 4 alternativa: texto por opcion_especial.id.
         """
         def __init__(self, npc_id, mensaje_general, mensajes_opciones, resoluciones,
-                     estados=None, estados_generales_ids=None,
-                     opciones_especiales=None, resoluciones_especiales=None):
+                    estados=None, estados_generales_ids=None,
+                    opciones_especiales=None, resoluciones_especiales=None):
             self.npc_id = npc_id
             self.mensaje_general = mensaje_general
             self.mensajes_opciones = mensajes_opciones
@@ -311,10 +312,23 @@ init python:
                 npc.talk_estados_especiales = []
                 return
             for e in npc.talk_estados_especiales:
-                e.dias_restantes -= 1
+                if getattr(e, 'consumido', False):
+                    e.dias_restantes = 0
+                else:
+                    e.dias_restantes -= 1
             npc.talk_estados_especiales = [
                 e for e in npc.talk_estados_especiales if e.dias_restantes > 0
             ]
+
+        def consumir_estado_especial(self, npc_id):
+            """Marca el estado especial activo como consumido. Se eliminará al dormir."""
+            npc = store.sistema_npcs.obtener_npc(npc_id)
+            if not npc:
+                return
+            especiales = getattr(npc, 'talk_estados_especiales', [])
+            if especiales:
+                mejor = max(especiales, key=lambda e: e.jerarquia)
+                mejor.consumido = True
 
         # ------------------------------------------------------------------
         # Post-interacción

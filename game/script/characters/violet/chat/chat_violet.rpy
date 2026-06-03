@@ -15,14 +15,14 @@ init 6 python:
 
 
     # =========================================================================
-    # QUEST 6 — Chat de deseo 20
+    # QUEST 04_C — Chat de deseo 20
     # =========================================================================
 
     chat_violet_quest6 = GrupoMensajes(
-        id="violet_quest7_chat",
+        id="violet_quest04c_chat",
         npc_id="violet",
         mensaje_inicial="Acá está...",
-        trigger_id="violet_quest7_chat",
+        trigger_id="violet_quest04c_chat",
         momento_locacion="casa_hviolet",
         momento_horario=2,
         foto_inicial="images/chat/violet/violet_chat_foto_01.png",
@@ -35,13 +35,13 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Te dije que te iba a quedar perfecto",
+                        texto="Es perfecto para vos",
                         respuesta_npc="",
-                        puntos={"amor": 2},
+                        puntos={"amor": 5},
                         saltar_a_paso=-1
                     ),
                     OpcionRespuesta(
-                        texto="Te dije que era sexy",
+                        texto="No diria apretado, diria sexy",
                         respuesta_npc="",
                         puntos={"deseo": 2},
                         saltar_a_paso=-1
@@ -53,14 +53,14 @@ init 6 python:
     sistema_mensajes.registrar_grupo("violet", chat_violet_quest6)
 
     # =========================================================================
-    # QUEST 7 — Chat de deseo 25
+    # QUEST 04_D — Chat de deseo 25
     # =========================================================================
 
     chat_violet_quest7 = GrupoMensajes(
-        id="violet_quest8_chat",
+        id="violet_quest04d_chat",
         npc_id="violet",
         mensaje_inicial="Acá está el motivo por el que no lo quiero usar",
-        trigger_id="violet_quest8_chat",
+        trigger_id="violet_quest04d_chat",
         momento_locacion="casa_hviolet",
         momento_horario=2,
         foto_inicial="images/chat/violet/violet_chat_foto_02.png",
@@ -309,14 +309,14 @@ init 6 python:
     sistema_mensajes.registrar_grupo("violet", chat_violet_quest7)
 
     # =========================================================================
-    # QUEST 8 — Chat de deseo 30
+    # QUEST 04_E — Chat de deseo 30
     # =========================================================================
 
     chat_violet_quest8 = GrupoMensajes(
-        id="violet_quest9_chat",
+        id="violet_quest04e_chat",
         npc_id="violet",
         mensaje_inicial="Tengo un trato",
-        trigger_id="violet_quest9_chat",
+        trigger_id="violet_quest04e_chat",
         momento_locacion="casa_hviolet",
         momento_horario=2,
         tabla_recompensas=TablaRecompensas({
@@ -518,3 +518,323 @@ init 6 python:
         ]
     )
     sistema_mensajes.registrar_grupo("violet", chat_violet_quest12)
+
+    # =========================================================================
+    # QUEST 05_C — Violet le escribe al MC (noche, Violet en su habitación)
+    # =========================================================================
+
+    chat_violet_q5c_g1 = GrupoMensajes(
+        id="violet_q5c_g1",
+        npc_id="violet",
+        mensaje_inicial="No sé si lo estás haciendo a propósito o eres idiota",
+        trigger_id="violet_q5c_g1",
+        momento_locacion="casa_hviolet",
+        momento_horario=2,
+        pasos=[
+            # Paso 0: Reacción inicial del jugador
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="¿Qué pasó ahora?",
+                        respuesta_npc="",
+                        saltar_a_paso=1,
+                    ),
+                    OpcionRespuesta(
+                        texto="No sé qué hice, así que idiota",
+                        respuesta_npc="",
+                        saltar_a_paso=1,
+                    ),
+                ]
+            ),
+            # Paso 1: Violet pregunta por la tienda
+            PasoConversacion(
+                mensaje_npc="¿Cuándo fuiste a la tienda no notaste nada raro?",
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="No, la verdad que no",
+                        respuesta_npc="¿Cómo encontraste la tienda esa?",
+                        saltar_a_paso=2,
+                    ),
+                    OpcionRespuesta(
+                        texto="Sí, había una persona muy extraña, toda tapada",
+                        respuesta_npc=["Me imagino por qué...", "¿Cómo encontraste la tienda esa?"],
+                        saltar_a_paso=2,
+                    ),
+                ]
+            ),
+            # Paso 2: MC explica cómo encontró la tienda
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Estaba en la misma calle que el edificio donde vivía",
+                        respuesta_npc=["Es una tienda de cosplays eróticos", "Por eso era tan ajustado el otro", "Y estos son peor"],
+                        saltar_a_paso=3,
+                    ),
+                ]
+            ),
+            # Paso 3: MC afirma que no sabía
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="No lo sabía",
+                        respuesta_npc=["Te podés ir olvidando de la Japicon", "No voy a usar nada de esto"],
+                        saltar_a_paso=4,
+                    ),
+                ]
+            ),
+            # Paso 4: Primeras opciones de respuesta
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Sabés que no lo hice con mala intención",
+                        respuesta_npc=["Ya tengo dudas de tus intenciones", "Todo lo que hacés de casualidad es lo que un pervertido haría"],
+                        saltar_a_paso=5,
+                    ),
+                    OpcionRespuesta(
+                        texto="Podemos ir sin cosplay",
+                        respuesta_npc="La verdad es que no sé si tengo ganas de ir con vos",
+                        saltar_a_paso=5,
+                    ),
+                ]
+            ),
+            # Paso 5: Disculpa final
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Perdón Violet, realmente no fue mi intención",
+                        respuesta_npc="",
+                        saltar_a_paso=-1,
+                    ),
+                ]
+            ),
+        ],
+    )
+    sistema_mensajes.registrar_grupo("violet", chat_violet_q5c_g1)
+
+    # =========================================================================
+    # QUEST 06_A — Libre Mercado avisa que las entradas están disponibles
+    # =========================================================================
+
+    chat_libre_mercado_japicon_g1 = GrupoMensajes(
+        id="japicon_tickets_g1",
+        npc_id="libre_mercado",
+        mensaje_inicial="La venta de entradas para la Japicon ya está disponible",
+        trigger_id="japicon_tickets_g1",
+        pasos=[
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Tengo que comprar las entradas",
+                        respuesta_npc="",
+                        saltar_a_paso=-1,
+                    ),
+                ]
+            ),
+        ],
+    )
+    sistema_mensajes.registrar_grupo("libre_mercado", chat_libre_mercado_japicon_g1)
+
+    # =========================================================================
+    # QUEST 06_B — Violet invita al MC a su habitación de noche
+    # =========================================================================
+
+    chat_violet_q6b_g1 = GrupoMensajes(
+        id="violet_q6b_g1",
+        npc_id="violet",
+        mensaje_inicial="Pasate a la noche por mi habitación",
+        trigger_id="violet_q6b_g1",
+        momento_locacion="casa_hviolet",
+        momento_horario=1,
+        pasos=[
+            PasoConversacion(
+                mensaje_npc="Te quiero consultar algo",
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Ok",
+                        respuesta_npc="",
+                        saltar_a_paso=-1,
+                    ),
+                ]
+            ),
+        ],
+    )
+    sistema_mensajes.registrar_grupo("violet", chat_violet_q6b_g1)
+
+    # =========================================================================
+    # QUEST 07_B — MC contacta a la Tienda Coxplay para el cambio del cosplay
+    # =========================================================================
+
+    chat_tienda_coxplay_q7b_g1 = GrupoMensajes(
+        id="tienda_coxplay_q7b_g1",
+        npc_id="tienda_coxplay",
+        mensaje_inicial="",
+        trigger_id="tienda_coxplay_q7b_g1",
+        pasos=[
+            # Paso 0: MC inicia contacto
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Hola, buen día, me comunico porque tuve un problema con una compra",
+                        respuesta_npc=["Hola [mc_name], buen día", "Tengo dos compras con tu usuario: el traje de piloto 77 y el Coxplay Box", "¿Con cuál tuvo el problema?"],
+                        saltar_a_paso=1,
+                    ),
+                    OpcionRespuesta(
+                        texto="Hola, buenas tardes, me comunico porque tuve un problema con una compra",
+                        respuesta_npc=["Hola [mc_name], buenas tardes", "Tengo dos compras con tu usuario: el traje de piloto 77 y el Coxplay Box", "¿Con cuál tuvo el problema?"],
+                        saltar_a_paso=1,
+                    ),
+                ]
+            ),
+            # Paso 1: MC identifica el producto
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Con el traje de piloto 77",
+                        respuesta_npc="",
+                        saltar_a_paso=2,
+                    ),
+                ]
+            ),
+            # Paso 2: MC describe el problema
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="El cierre está fallado y se traba",
+                        respuesta_npc=["Lo sentimos mucho", "Se puede acercar a la tienda o enviarlo y le haremos el cambio del mismo"],
+                        saltar_a_paso=3,
+                    ),
+                ]
+            ),
+            # Paso 3: MC decide enviar el cosplay
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Lo envío entonces",
+                        respuesta_npc="Una vez que lo recibamos hacemos las revisiones y le enviamos el cambio",
+                        saltar_a_paso=4,
+                    ),
+                ]
+            ),
+            # Paso 4: Despedida
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Muchas gracias por todo",
+                        respuesta_npc=["Muchas gracias a vos", "y nuevamente perdón por el inconveniente"],
+                        saltar_a_paso=-1,
+                    ),
+                ]
+            ),
+        ],
+    )
+    sistema_mensajes.registrar_grupo("tienda_coxplay", chat_tienda_coxplay_q7b_g1)
+
+    # =========================================================================
+    # QUEST 07_C — Violet le informa al MC sobre el envío del cosplay
+    # =========================================================================
+
+    chat_violet_q7c_g1 = GrupoMensajes(
+        id="violet_q7c_g1",
+        npc_id="violet",
+        mensaje_inicial="Ya hablé con la tienda, voy a enviar el paquete para que lo vean",
+        trigger_id="violet_q7c_g1",
+        momento_horario=0,
+        pasos=[
+            # Paso 0: MC pregunta si hay algo más que hacer
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="¿Hay algo más que hacer?",
+                        respuesta_npc=["No, hay que esperar", "Esto va a tardar varios días"],
+                        saltar_a_paso=1,
+                    ),
+                ]
+            ),
+            # Paso 1: MC pregunta cuántos días
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="¿Te dijeron cuántos?",
+                        respuesta_npc=["No, pero van a ser varios días", "Aparte del envío tienen que esperar que entre nuevo stock"],
+                        saltar_a_paso=2,
+                    ),
+                ]
+            ),
+            # Paso 2: MC espera que llegue para la Japicon
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Esperemos que esté listo para la Japicon",
+                        respuesta_npc=["No lo sé", "Igual hablé con una amiga que va a ir y hace cosplay, me dijo que me podría prestar alguno por si no llega"],
+                        saltar_a_paso=3,
+                    ),
+                ]
+            ),
+            # Paso 3: MC reconoce el plan B
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Qué bien, ya tenés un plan B",
+                        respuesta_npc="Sí, en estos días voy a ir",
+                        saltar_a_paso=4,
+                    ),
+                ]
+            ),
+            # Paso 4: MC ofrece ayudar a elegir cosplay
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Si querés te mando fotos y te puedo ayudar a elegir",
+                        respuesta_npc=["Jajajaja no", "Vas a tener que esperar al día del evento para verlo"],
+                        saltar_a_paso=5,
+                    ),
+                ]
+            ),
+            # Paso 5: MC acepta
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Puedo con eso",
+                        respuesta_npc="❤️",
+                        saltar_a_paso=6,
+                    ),
+                ]
+            ),
+            # Paso 6: MC responde con corazón — fin de la quest
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="❤️",
+                        respuesta_npc="",
+                        saltar_a_paso=-1,
+                    ),
+                ]
+            ),
+        ],
+    )
+    sistema_mensajes.registrar_grupo("violet", chat_violet_q7c_g1)
+
+    # =========================================================================
+    # QUEST 09_A — Notificación de Tienda Coxplay (paquete recibido)
+    # =========================================================================
+
+    chat_tienda_coxplay_q9a_g1 = GrupoMensajes(
+        id="tienda_coxplay_q9a_g1",
+        npc_id="tienda_coxplay",
+        mensaje_inicial="Buen día [mc_name], recibimos el paquete. Cuando esté la revisión lista le avisamos.",
+        trigger_id="tienda_coxplay_q9a_g1",
+        momento_horario=0,
+        pasos=[
+            # Paso 0: MC responde
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Gracias",
+                        respuesta_npc="",
+                        saltar_a_paso=-1,
+                    ),
+                ]
+            ),
+        ],
+    )
+    sistema_mensajes.registrar_grupo("tienda_coxplay", chat_tienda_coxplay_q9a_g1)

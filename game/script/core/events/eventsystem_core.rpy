@@ -31,7 +31,7 @@ init python:
                      condicion_duracion=None, label_efecto=None, modificaciones=None,
                      descripcion="", npc_id="", mensaje_pista="", mensaje_que_hacer="",
                      condicion_cierre_texto="", mensaje_despertar="",
-                     config_etapas=None):
+                     config_etapas=None, on_aparicion=None):
             """
             Args:
                 id: ID único del evento
@@ -76,7 +76,10 @@ init python:
             
             # Configuración de etapas por estado
             self.config_etapas = config_etapas or {}
-            
+
+            # Callback al volverse visible por primera vez
+            self.on_aparicion = on_aparicion
+
             # Estado
             self.estado = ESTADO_EVENT_OCULTO
         
@@ -196,6 +199,9 @@ init python:
         
         def completar(self):
             """Completa el evento y limpia modificaciones."""
+            # Bloquear rollback para que el jugador no pueda volver a entrar al evento
+            renpy.block_rollback()
+
             self.estado = ESTADO_EVENT_COMPLETADO
             
             # Remover modificaciones
@@ -507,14 +513,19 @@ init python:
                 if event.verificar_aparicion():
                     event.aparecer()
                     eventos_aparecieron.append(event)
-                    
+
                     # Ejecutar callback de aparición si existe
                     if hasattr(event, 'on_aparicion') and event.on_aparicion:
                         try:
                             event.on_aparicion()
                         except Exception as e:
                             pass
-        
+
+            # Si el evento está visible, verificar si debe activarse
+            elif event.estado == ESTADO_EVENT_VISIBLE:
+                if event.verificar_activacion():
+                    event.activar()
+
         return eventos_aparecieron
 
 

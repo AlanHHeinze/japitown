@@ -32,6 +32,9 @@ init 5 python:
                 pass
         return resultado
 
+    def _cond_pensamiento_violet_1():
+        return store.violet_evento2_completado
+
 ################################################################################
 ## Registro de pensamientos por NPC
 ################################################################################
@@ -44,7 +47,7 @@ init 6 python:
         npc_id="violet",
         nombre="Pensar en Violet...",
         label="evento2_violet_repetir",
-        condicion=lambda: store.violet_evento2_completado,
+        condicion=_cond_pensamiento_violet_1,
     )
 
 ################################################################################

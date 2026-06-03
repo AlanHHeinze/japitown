@@ -182,22 +182,20 @@ screen menu_puerta_npc(npc_id, opciones_especiales, bg_path=None):
         yanchor 0.5
         spacing gui.choice_spacing
 
-        # Opciones especiales
+        # Golpear la puerta — siempre primero
+        textbutton "Golpear la puerta":
+            style "choice_button"
+            action [Hide("menu_puerta_npc"),
+                    Return("golpear")]
+
+        # Opciones especiales de quest/evento
         for opcion in opciones_especiales:
-            textbutton renpy.translate_string(opcion.get("texto", "Opcion")):
+            textbutton (renpy.translate_string(opcion.get("texto", "Opcion")) + " (Quest)"):
                 style "choice_button"
                 action [Hide("menu_puerta_npc"),
                         Return(("opcion_especial", opcion.get("label", "game_loop")))]
 
-        # Opcion: Golpear la puerta (ocultar si una opcion especial lo indica)
-        $ _ocultar_golpear = any(op.get("ocultar_golpear", False) for op in opciones_especiales)
-        if not _ocultar_golpear:
-            textbutton "Golpear la puerta":
-                style "choice_button"
-                action [Hide("menu_puerta_npc"),
-                        Return("golpear")]
-
-        # Opcion: Volver
+        # Volver — siempre al final
         textbutton "Volver":
             style "choice_button"
             action [Hide("menu_puerta_npc"),
@@ -382,9 +380,9 @@ label interaccion_golpear_sale_pasillo:
         monica "[_msg_ahi_salgo]"
     pause 0.5
     $ _pasillo_destino = PASILLO_NPC.get(_npc_habitacion)
+    $ sistema_locaciones.mover_a_locacion(_pasillo_destino)
     if _pasillo_destino and _npc_obj:
         $ _npc_obj.locacion_actual = _pasillo_destino
-    $ sistema_locaciones.mover_a_locacion(_pasillo_destino)
     $ mostrar_hud()
     return
 

@@ -155,13 +155,17 @@ label conversacion_hablar_jasmine:
     menu:
         "[_txt_op0]":
             jasmine "[_op0['resp']]"
-            $ _npc_j.modificar_stat(_op0["stat"], 1)
+            $ _hablar_stat_elegido = _op0["stat"]
         "[_txt_op1]":
             jasmine "[_op1['resp']]"
-            $ _npc_j.modificar_stat(_op1["stat"], 1)
+            $ _hablar_stat_elegido = _op1["stat"]
         "[_txt_op2]":
             jasmine "[_op2['resp']]"
-            $ _npc_j.modificar_stat(_op2["stat"], 1)
+            $ _hablar_stat_elegido = _op2["stat"]
+
+    # Bloquear rollback — la recompensa y la conversación no se pueden deshacer
+    $ renpy.block_rollback()
+    $ _npc_j.modificar_stat(_hablar_stat_elegido, 1)
 
     hide jasmine_parada
     hide mc_parado_base

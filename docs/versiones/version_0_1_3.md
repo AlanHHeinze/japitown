@@ -668,3 +668,253 @@ Constantes en `talksystem_core.rpy`:
 | `jasmine_entrenamiento_deportiva` | `jasmine_paradadeportiva` | `c_base` | `c_expectativa` |
 
 Para registrar futuros skins, agregar una entrada en `_TALK_SKIN_CUERPO`.
+
+---
+
+## 10. Estado especial "Feliz" — los 3 NPCs
+
+### Qué es
+
+Se agregó un estado especial de tipo "feliz" para Violet, Mónica y Jasmine. Es el estado de mayor jerarquía del juego (jerarquía 5) y dura 2 días. Reemplaza temporalmente cualquier estado general o especial de menor jerarquía. Todos sus efectos son positivos, funcionando como recompensa visible al completar quests principales.
+
+---
+
+### Activación
+
+Se activa al completar la **Quest 0** de cada NPC mediante la función existente `activar_estado_especial_npc()`. En versiones posteriores podrá activarse también desde eventos u otras quests.
+
+| NPC | ID del estado | Activado al completar |
+|---|---|---|
+| Violet | `violet_feliz` | `violet_questprincipal_0` |
+| Mónica | `monica_feliz` | `monica_questprincipal_0` |
+| Jasmine | `jasmine_feliz` | `jasmine_questprincipal_0` |
+
+---
+
+### Archivos modificados
+
+| Archivo | Cambio |
+|---|---|
+| `game/script/characters/violet/talk/violet_talk.rpy` | Agregado `EstadoTalk` `violet_feliz` |
+| `game/script/characters/monica/talk/monica_talk.rpy` | Agregado `EstadoTalk` `monica_feliz` |
+| `game/script/characters/jasmine/talk/jasmine_talk.rpy` | Agregado `EstadoTalk` `jasmine_feliz` |
+| `game/script/characters/violet/quests/violet_quest_0.rpy` | `activar_estado_especial_npc("violet", "violet_feliz")` al completar |
+| `game/script/characters/monica/quests/monica_quest_0.rpy` | `activar_estado_especial_npc("monica", "monica_feliz")` al completar |
+| `game/script/characters/jasmine/quests/jasmine_quest_0.rpy` | `activar_estado_especial_npc("jasmine", "jasmine_feliz")` al completar |
+
+---
+
+## 11. Ítems de la tienda — nuevos y modificados
+
+### Cambios
+
+| Ítem | Cambio | Precio | Entrega | Stock |
+|---|---|---|---|---|
+| `golosinas` | Renombrado desde `chocolate`, nuevo ícono 🍭 | $20 | 1 día | 10 (repone 5) |
+| `locion_masajes` | Precio y entrega actualizados | $20 | 1 día | 10 (repone 5) |
+| `bebida_energetica` | **Nuevo ítem** 🥤 | $20 | 1 día | 10 (repone 5) |
+
+Los tres ítems tienen `usable=True` con un texto de instrucción de uso que aparece en el inventario. No se usan directamente desde el inventario — su uso está vinculado al sistema de Talk (ver sección 12).
+
+---
+
+### Archivos modificados
+
+| Archivo | Cambio |
+|---|---|
+| `game/script/core/shopping/items_shopping.rpy` | Modificados `golosinas` y `locion_masajes`, agregado `bebida_energetica` |
+
+---
+
+## 12. Opciones especiales Talk — basadas en ítems
+
+### Qué son
+
+Tres nuevas `OpcionEspecialTalk` que aparecen en el menú de Talk cuando el jugador tiene el ítem correspondiente **y** el NPC está en el estado de ánimo adecuado. Consumen el ítem y otorgan +2 amor +1 deseo.
+
+| Opción | Aparece con | Condición de NPC | Efecto |
+|---|---|---|---|
+| "Darle golosinas" | `golosinas` en inventario | Violet en estado `violet_hambre` | +2 amor, +1 deseo |
+| "Darle la loción" | `locion_masajes` en inventario | Mónica en estado `monica_cansada` | +2 amor, +1 deseo |
+| "Darle la bebida" | `bebida_energetica` en inventario | Jasmine en estado `jasmine_agotada` | +2 amor, +1 deseo |
+
+La parte 4 del texto resultado para estas opciones es: `"Y lo que le diste fue justo lo que necesitaba."`
+
+---
+
+### Archivos modificados
+
+| Archivo | Cambio |
+|---|---|
+| `game/script/characters/violet/talk/violet_talk.rpy` | `OpcionEspecialTalk` `violet_golosinas` |
+| `game/script/characters/monica/talk/monica_talk.rpy` | `OpcionEspecialTalk` `monica_locion` |
+| `game/script/characters/jasmine/talk/jasmine_talk.rpy` | `OpcionEspecialTalk` `jasmine_bebida` |
+| `game/tl/english/script/core/talk/talksystem_strings.rpy` | Traducciones al inglés de las 3 opciones |
+
+---
+
+## 13. Opciones especiales Talk — basadas en atributos del MC
+
+### Qué son
+
+Tres nuevas `OpcionEspecialTalk` que aparecen cuando el MC tiene el atributo requerido **y** el NPC está en el estado de ánimo específico. No consumen ítems. Otorgan +2 amor +1 deseo.
+
+| Opción | Aparece con | Condición de NPC | Efecto |
+|---|---|---|---|
+| "Jugar videojuegos" | `mc_inteligencia ≥ 3` | Violet en estado `violet_ansiosa` | +2 amor, +1 deseo |
+| "Ayudarla con cosas de la casa" | `mc_destreza ≥ 3` | Mónica en estado `monica_ocupada` | +2 amor, +1 deseo |
+| "Entrenar juntos" | `mc_fuerza ≥ 3` | Jasmine en estado `jasmine_energica` | +2 amor, +1 deseo |
+
+---
+
+### Archivos modificados
+
+| Archivo | Cambio |
+|---|---|
+| `game/script/characters/violet/talk/violet_talk.rpy` | `OpcionEspecialTalk` `violet_videojuegos` |
+| `game/script/characters/monica/talk/monica_talk.rpy` | `OpcionEspecialTalk` `monica_tareas` |
+| `game/script/characters/jasmine/talk/jasmine_talk.rpy` | `OpcionEspecialTalk` `jasmine_entrenar` |
+| `game/tl/english/script/core/talk/talksystem_strings.rpy` | Traducciones al inglés de las 3 opciones |
+
+---
+
+## 14. Talk — soporte completo para idioma inglés
+
+### Problema
+
+Al jugar con idioma inglés, el texto resultado de la interacción Talk no se mostraba. Además, la oración dinámica de la Parte 1 (horario + locación + NPC) tiene una estructura diferente en inglés (posesivo: "Violet's room" en lugar de "la habitación de Violet"), por lo que no bastaba con traducir strings.
+
+---
+
+### Cambios aplicados
+
+1. **Detección de idioma** en `talksystem_labels.rpy`:
+   ```python
+   $ _t_en = (renpy.game.preferences.language or "") == "english"
+   ```
+
+2. **Construcción separada de Parte 1** según idioma:
+   - Español: `"Aprovechaste la {horario} para hablar con {NPC} en {locación}."`
+   - Inglés: `"You spent the {horario} talking to {NPC} in {locación}."` con locaciones en inglés y posesivo (`"Violet's room"`)
+
+3. **`renpy.translate_string()`** en Partes 2, 3 y 4 para que Ren'Py aplique la traducción dinámica a strings construidos en Python.
+
+4. **Stubs auto-generados corregidos** en `game/tl/english/script/core/talk/talksystem_labels.rpy`:
+   - Ren'Py genera stubs vacíos (`""`) que silenciosamente sobreescriben el contenido dinámico
+   - Corregidos para que pasen el valor real: `"[_t_resultado_texto]"`, `piensa "[_msg_r]"`, `"[_t_intro_tr]" (interact=False)`, etc.
+
+5. **Archivo de traducciones nuevo**: `game/tl/english/script/core/talk/talksystem_strings.rpy` con todos los strings del sistema Talk: opciones base, textos de menú de opciones especiales, mensajes de opciones, intros de estado (3 NPCs), mensajes de estado, resoluciones y resoluciones especiales.
+
+---
+
+### Archivos modificados/creados
+
+| Archivo | Cambio |
+|---|---|
+| `game/script/core/talk/talksystem_core.rpy` | Agregados `_TALK_HORARIO_NOMBRES_EN` y `_TALK_LOCACIONES_NOMBRES_EN` |
+| `game/script/core/talk/talksystem_labels.rpy` | Detección de idioma, construcción separada Parte 1, `renpy.translate_string()` en partes 2-4 |
+| `game/tl/english/script/core/talk/talksystem_labels.rpy` | Stubs corregidos para pasar valores dinámicos |
+| `game/tl/english/script/core/talk/talksystem_strings.rpy` | **[NUEVO]** Todas las traducciones al inglés del sistema Talk |
+
+---
+
+## 15. Tutorial — nuevas traducciones al inglés
+
+Se completaron 3 stubs de traducción vacíos en `game/tl/english/script/story/intro/tutorial.rpy` correspondientes a las nuevas líneas agregadas al tutorial sobre el sistema de Talk:
+
+- Descripción del estado de ánimo diario de los NPCs
+- Ventaja del atributo carisma / inteligencia en el menú de Talk
+- Descripción del texto resultado que aparece al finalizar la interacción
+
+---
+
+## 16. Pantalla de ingreso de nombre — eliminación del botón Cancelar
+
+El botón "Cancelar" fue removido de la pantalla `name_input_screen`. No cumplía ninguna función (no había acción de cancelar implementada). La pantalla ahora tiene solo el botón "Confirmar" centrado.
+
+---
+
+### Archivos modificados
+
+| Archivo | Cambio |
+|---|---|
+| `game/script/_init/config_globals.rpy` | Reemplazado `hbox` con Confirmar+Cancelar por `textbutton` único con `xalign 0.5` |
+| `game/tl/english/script/_init/config_globals.rpy` | Eliminada la entrada `old "Cancelar" / new "Cancel"` |
+
+---
+
+## 17. Sistema de Condiciones de Entrega de Mensajes
+
+### Qué es
+
+Antes de este cambio, los mensajes de chat disparados por quests o eventos (`disparar_por_trigger()`) aparecían inmediatamente en el historial. El nuevo sistema agrega un mecanismo de espera con 3 condiciones que deben cumplirse antes de que el mensaje se entregue.
+
+---
+
+### Las 3 condiciones (en orden)
+
+1. **Bloqueo global**: si hay una `RestriccionQuest` activa con `mensajes_bloqueados=True`, los mensajes no se entregan.
+2. **Momento del NPC emisor**: el NPC debe estar en una locación y horario específicos (`momento_locacion`, `momento_horario` en `GrupoMensajes`). Si no están configurados, esta condición siempre es verdadera.
+3. **No compartir locación con el MC**: el NPC emisor no debe estar en la misma locación que el jugador al momento de enviar.
+
+---
+
+### Nuevos campos en `GrupoMensajes`
+
+| Parámetro | Tipo | Descripción |
+|---|---|---|
+| `momento_locacion` | `str \| None` | Locación donde debe estar el NPC para enviar |
+| `momento_horario` | `int \| None` | Horario requerido: 0=Mañana, 1=Tarde, 2=Noche |
+
+Si ambos son `None`, el grupo no tiene condiciones de entrega y se comporta igual que antes.
+
+---
+
+### Nuevo campo en `RestriccionQuest`
+
+| Parámetro | Tipo | Descripción |
+|---|---|---|
+| `mensajes_bloqueados` | `bool` | Si es `True`, bloquea la entrega de mensajes en espera |
+
+---
+
+### Hooks de verificación
+
+Los mensajes en espera se verifican automáticamente en 3 momentos:
+- Al avanzar el horario (`avanzar_horario()`)
+- Al dormir (`dormir()`)
+- Al moverse de locación (`accion_hotspot_move`, `accion_ir_a_locacion`)
+
+---
+
+### Archivos modificados
+
+| Archivo | Cambio |
+|---|---|
+| `game/script/core/messages/messagesystem_core.rpy` | Nuevos campos en `GrupoMensajes`, lista `_grupos_en_espera`, métodos `_intentar_entrega`, `_entregar_grupo`, `verificar_mensajes_en_espera` |
+| `game/script/core/quests/restriccion_quest_system.rpy` | Nuevo campo `mensajes_bloqueados` en `RestriccionQuest`, función `mensajes_estan_bloqueados()` |
+| `game/script/core/time/timesystem_core.rpy` | Hooks en `avanzar_horario()` y `dormir()` |
+| `game/script/core/npcs/npcsystem_interactions.rpy` | Hooks en `accion_hotspot_move` y `accion_ir_a_locacion` |
+
+---
+
+### Ejemplo de uso
+
+```python
+# Chat con condiciones de entrega
+chat_violet_quest8 = GrupoMensajes(
+    id="violet_quest8_chat",
+    npc_id="violet",
+    mensaje_inicial="Mira lo que encontré...",
+    trigger_id="violet_quest8_chat",
+    momento_locacion="casa_hviolet",  # Violet debe estar en su habitación
+    momento_horario=2,                # Debe ser de noche
+    pasos=[...]
+)
+
+# Restricción que bloquea mensajes en espera
+$ activar_restriccion(
+    locaciones_permitidas=["casa_living"],
+    mensajes_bloqueados=True,
+)
+```

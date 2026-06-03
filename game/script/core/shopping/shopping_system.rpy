@@ -22,11 +22,31 @@ init python:
             self.entregada = False
         
         def obtener_dias_restantes(self):
-            """Calcula los días restantes hasta la entrega."""
-            # Calcular día total actual
-            dia_total_actual = (store.año_actual * 4 * 31) + (store.estacion_actual * 31) + store.dia_actual
-            dia_total_entrega = (self.año_entrega * 4 * 31) + (self.estacion_entrega * 31) + self.dia_entrega
-            return max(0, dia_total_entrega - dia_total_actual)
+            """Calcula los días hábiles restantes hasta la entrega (igual que calcular_fecha_entrega)."""
+            dia      = store.dia_actual
+            dia_sem  = store.dia_semana_actual
+            estacion = store.estacion_actual
+            año      = store.año_actual
+
+            if (dia == self.dia_entrega and estacion == self.estacion_entrega and año == self.año_entrega):
+                return 0
+
+            habiles = 0
+            for _ in range(60):
+                dia += 1
+                dia_sem = (dia_sem + 1) % 7
+                if dia > 31:
+                    dia = 1
+                    estacion += 1
+                    if estacion >= 4:
+                        estacion = 0
+                        año += 1
+                if dia_sem < 5:
+                    habiles += 1
+                if (dia == self.dia_entrega and estacion == self.estacion_entrega and año == self.año_entrega):
+                    break
+
+            return max(0, habiles)
         
         def es_dia_entrega(self):
             """Verifica si hoy es el día de entrega."""
@@ -237,6 +257,8 @@ init python:
                 if item_id not in store.inventario:
                     store.inventario[item_id] = 0
                 store.inventario[item_id] += cantidad
+                if hasattr(store, 'notificar_item_obtenido'):
+                    notificar_item_obtenido(item_id)
         
         def hay_entrega_pendiente_hoy(self):
             """Verifica si hay entregas pendientes para hoy (mañana) y no hay paquete esperando."""
@@ -499,6 +521,10 @@ label recoger_paquete_habitacion:
 label mostrar_mensaje_uso_item:
     # Cerrar panel si quedo abierto
     hide screen panel_inventario
+    # Absorber el evento de clic pendiente del boton que disparo el jump
+    $ renpy.pause(0)
     # Muestra un mensaje del MC cuando intenta usar un item
+    window show
     piensa "[msg_uso_item]"
+    window hide
     jump game_loop
