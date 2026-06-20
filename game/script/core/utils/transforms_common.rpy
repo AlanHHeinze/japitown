@@ -120,10 +120,9 @@ transform entrar_poquito:
 # SALIDAS
 # =============================================================================
 
-# Sale hacia la izquierda
+# Sale hacia la izquierda (desde posición actual)
 transform personaje_salir_izquierda:
-    xalign 0.0 yalign 1.0
-    linear 1.4 xalign -0.6
+    ease 1.0 xalign -0.6
 
 # Sale hacia la derecha
 transform personaje_salir_derecha:
