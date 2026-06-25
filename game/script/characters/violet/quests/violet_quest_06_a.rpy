@@ -16,7 +16,7 @@ label quest_violet_questprincipal_06_a:
 
 
 ################################################################################
-## PUERTA — MC entra a la habitación de Violet
+## PUERTA — MC entra a la habitacion de Violet
 ################################################################################
 
 label violet_quest06a_puerta:
@@ -37,7 +37,7 @@ label violet_quest06a_puerta:
 
 
 ################################################################################
-## HABLAR — Acceso directo desde dentro de la habitación
+## HABLAR — Acceso directo desde dentro de la habitacion
 ################################################################################
 
 label violet_quest06a_hablar:
@@ -53,7 +53,7 @@ label violet_quest06a_hablar:
 
 
 ################################################################################
-## HABITACIÓN — Conversación inicial con evaluación de stat al final
+## HABITACIÓN — Conversacion inicial con evaluación de stat al final
 ################################################################################
 
 label violet_quest06a_habitacion:
@@ -170,15 +170,15 @@ label violet_quest06a_camino_deseo:
 
 
 ################################################################################
-## CIERRE — El MC huye a su habitación
+## CIERRE — El MC huye a su habitacion
 ################################################################################
 
 label violet_quest06a_cierre:
 
-    # Mover al MC a su habitación
+    # Mover al MC a su habitacion
     $ sistema_locaciones.mover_a_locacion("casa_hmc")
 
-    # Mostrar la habitación con el MC en el centro
+    # Mostrar la habitacion con el MC en el centro
     $ _bg_hmc = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
     scene expression _bg_hmc with fade
     

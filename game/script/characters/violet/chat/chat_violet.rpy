@@ -520,7 +520,7 @@ init 6 python:
     sistema_mensajes.registrar_grupo("violet", chat_violet_quest12)
 
     # =========================================================================
-    # QUEST 05_C — Violet le escribe al MC (noche, Violet en su habitación)
+    # QUEST 05_C — Violet le escribe al MC (noche, Violet en su habitacion)
     # =========================================================================
 
     chat_violet_q5c_g1 = GrupoMensajes(
@@ -612,7 +612,7 @@ init 6 python:
     sistema_mensajes.registrar_grupo("violet", chat_violet_q5c_g1)
 
     # =========================================================================
-    # QUEST 06_A — Libre Mercado avisa que las entradas están disponibles
+    # QUEST 06_A — Libre Mercado avisa que las entradas estan disponibles
     # =========================================================================
 
     chat_libre_mercado_japicon_g1 = GrupoMensajes(
@@ -635,7 +635,7 @@ init 6 python:
     sistema_mensajes.registrar_grupo("libre_mercado", chat_libre_mercado_japicon_g1)
 
     # =========================================================================
-    # QUEST 06_B — Violet invita al MC a su habitación de noche
+    # QUEST 06_B — Violet invita al MC a su habitacion de noche
     # =========================================================================
 
     chat_violet_q6b_g1 = GrupoMensajes(
@@ -750,7 +750,7 @@ init 6 python:
                     ),
                 ]
             ),
-            # Paso 1: MC pregunta cuántos días
+            # Paso 1: MC pregunta cuántos dias
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
@@ -800,7 +800,7 @@ init 6 python:
                     ),
                 ]
             ),
-            # Paso 6: MC responde con corazón — fin de la quest
+            # Paso 6: MC responde con corazon — fin de la quest
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(

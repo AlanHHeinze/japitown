@@ -1,5 +1,5 @@
 ################################################################################
-## Quest 09_b — [Pendiente de diseño]
+## Quest 09_b — [Pendiente de diseno]
 ################################################################################
 ## Se dispara al despertar del tercer dia de quest 09_a si violet_enferma_atencion >= 3.
 ## Interrumpe el flujo de accion_dormir (como hace quest 08_a).

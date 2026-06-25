@@ -6,7 +6,7 @@
 # Variable para controlar si ya se mostró la intro
 default intro_mostrada = False
 
-# Fondos de la intro (definidos aquí desde que se unificó el archivo)
+# Fondos de la intro (definidos aqui desde que se unificó el archivo)
 image bg_intro_edificio       = "images/intro/backgrounds/bg_intro_edificio.png"
 image bg_intro_aeropuerto     = "images/intro/backgrounds/bg_intro_aeropuerto.png"
 image bg_intro_aeropuerto_zoom = "images/intro/backgrounds/bg_intro_aeropuerto_zoom.png"
@@ -33,7 +33,7 @@ init python:
             # Si la variable no existe o falla, no cortamos el load
             pass
 
-        # NO inicializar NPCs aquí - los objetos NPC se guardan con el save
+        # NO inicializar NPCs aqui - los objetos NPC se guardan con el save
         # Solo recalcular rutinas según el tiempo guardado
         try:
             store.actualizar_rutinas_npcs()
@@ -413,7 +413,7 @@ label intro_llegada_casa:
     scene expression "images/bg/casa/bg_casa_mañana_living.png" with fade
 
     # Posicionar a las tres a la derecha, ligeramente montadas
-    # Orden de show = orden de profundidad (último = al frente)
+    # Orden de show = orden de profundidad (ultimo = al frente)
     show violet_parada c_rbase_base o_base b_none:
         xpos 0.58
         xanchor 0.5
@@ -536,7 +536,7 @@ label game_loop:
     # Validar eventos en cada iteración del loop
     $ validar_eventos()
 
-    # Quest 09_a: disparar piensa "Debería avisarle a Violet" al llegar a ETAPA_BOTON_LISTO
+    # Quest 09_a: disparar piensa "Deberia avisarle a Violet" al llegar a ETAPA_BOTON_LISTO
     $ _quest_v09a_gl = store.sistema_quests.obtener_quest("violet_questprincipal_09_a")
     if (_quest_v09a_gl and _quest_v09a_gl.activa and not _quest_v09a_gl.completada and
             _quest_v09a_gl.etapa_actual == ETAPA_BOTON_LISTO and
@@ -553,7 +553,7 @@ label game_loop:
         $ store.sistema_mensajes.disparar_por_trigger("quest", "carl_quest_j0b", "carl")
         jump quest_jasmine_questprincipal_0_b
 
-    # Quest 0b del MC: tutorial del celular al entrar al pasillo de arriba (día 2+)
+    # Quest 0b del MC: tutorial del celular al entrar al pasillo de arriba (dia 2+)
     $ _quest_mc_0b = sistema_quests_mc.quests.get("mc_quest_0b")
     if (_quest_mc_0b and _quest_mc_0b.activa and not _quest_mc_0b.completada and not getattr(store, "mc_q0b_disparada", False)):
         $ _loc_actual_id = sistema_locaciones.locacion_actual.id if sistema_locaciones.locacion_actual else ""

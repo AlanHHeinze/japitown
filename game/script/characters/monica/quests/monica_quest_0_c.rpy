@@ -1,13 +1,13 @@
 ################################################################################
 ## Quest 0_c de Mónica — La batería de la notebook
 ################################################################################
-## Se dispara al usar el item "notebook_monica" en la habitación del MC.
+## Se dispara al usar el item "notebook_monica" en la habitacion del MC.
 ## El MC descubre que el problema es la batería y hay que comprar una nueva.
 
 # =============================================================================
 # USO DEL ITEM "notebook_monica" — dispara la quest 0_c
 # =============================================================================
-# La condicion_uso del item ya garantiza que el MC esté en su habitación; si no
+# La condicion_uso del item ya garantiza que el MC esté en su habitacion; si no
 # lo está, el inventario muestra "Deberia revisarlo en mi habitacion".
 
 label revisar_notebook_monica:
@@ -36,7 +36,7 @@ label quest_monica_questprincipal_0_c:
     hide screen hud_navegacion
     window show
 
-    # MC en su habitación
+    # MC en su habitacion
     $ _bg_m0c = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
     scene expression _bg_m0c with fade
     show mc_parado_base c_rbase_pensando o_base b_none at center with dissolve
@@ -71,7 +71,7 @@ label quest_monica_questprincipal_0_c:
 # =============================================================================
 # USO DEL ITEM "bateria_nt520" — contenido en desarrollo
 # =============================================================================
-# La condicion_uso del item garantiza que el MC esté en su habitación.
+# La condicion_uso del item garantiza que el MC esté en su habitacion.
 
 label usar_bateria_nt520:
     $ ocultar_hud()

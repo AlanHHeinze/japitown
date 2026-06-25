@@ -154,7 +154,7 @@ label accion_cocinar:
     $ obtener_npc("monica").modificar_stat1(1)
     $ obtener_npc("jasmine").modificar_stat1(1)
 
-    # Efecto especial: si Violet tenía hambre y el jugador aún no habló con ella hoy
+    # Efecto especial: si Violet tenia hambre y el jugador aún no habló con ella hoy
     $ _ac_v = obtener_npc("violet")
     if _ac_v and _ac_v.talk_estado_id == "violet_hambre" and _ac_v.estado_posterior_id is None:
         $ activar_estado_especial_npc("violet", "violet_feliz")
@@ -180,7 +180,7 @@ label accion_cocinar:
 
 label accion_ver_tv:
 
-    # Quest 08_a de Violet: la acción Ver TV es el disparador de la escena de la
+    # Quest 08_a de Violet: la accion Ver TV es el disparador de la escena de la
     # tormenta. Se chequea antes que cualquier restricción horaria.
     $ _q8a_vertv = sistema_quests.obtener_quest("violet_questprincipal_08_a")
     if _q8a_vertv and _q8a_vertv.activa and not _q8a_vertv.completada and _q8a_vertv.etapa_actual == ETAPA_BOTON_LISTO:

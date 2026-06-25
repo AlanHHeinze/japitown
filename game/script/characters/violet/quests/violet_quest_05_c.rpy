@@ -39,7 +39,7 @@ label quest_violet_questprincipal_05_c:
 
 
 ################################################################################
-## PEDIRLE PERDÓN fuera de la habitación — Violet no tiene ganas de hablar
+## PEDIRLE PERDÓN fuera de la habitacion — Violet no tiene ganas de hablar
 ################################################################################
 
 label violet_quest05c_perdon_fuera:
@@ -80,7 +80,7 @@ label violet_quest05c_perdon_fuera:
 
 
 ################################################################################
-## PUERTA — Violet abre desde dentro y el MC entra a la habitación
+## PUERTA — Violet abre desde dentro y el MC entra a la habitacion
 ################################################################################
 
 label violet_quest05c_puerta:
@@ -104,7 +104,7 @@ label violet_quest05c_puerta:
 
 
 ################################################################################
-## HABITACIÓN — Conversación de perdón con menú de opciones
+## HABITACIÓN — Conversacion de perdón con menú de opciones
 ################################################################################
 
 label violet_quest05c_habitacion:
@@ -161,7 +161,7 @@ label violet_quest05c_habitacion:
 
 
 ################################################################################
-## OPCIÓN A — "Espero que en algún momento me creas"
+## OPCIÓN A — "Espero que en algun momento me creas"
 ################################################################################
 
 label violet_quest05c_opcion_a:

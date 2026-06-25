@@ -17,7 +17,7 @@ label accion_hotspot_move:
             call mc_q0_handler_move from _call_mc_q0_handler_move
             return
 
-    # Verificar si el destino es habitación de NPC (door_access system)
+    # Verificar si el destino es habitacion de NPC (door_access system)
     if _hotspot_temp and _hotspot_temp.destino in ["casa_hmonica", "casa_hviolet", "casa_hjasmine"]:
 
         # PRIORIDAD 1: Verificar restriccion de movimiento — tiene precedencia sobre el door access
@@ -89,7 +89,7 @@ label accion_hotspot_action:
         elif _hotspot_temp.id == "dormir":
             call accion_dormir from _call_accion_dormir
             
-        # Si tiene una acción Python, ejecutarla
+        # Si tiene una accion Python, ejecutarla
         elif _hotspot_temp.accion:
             $ _hotspot_temp.accion()
         else:
@@ -150,7 +150,7 @@ label accion_ir_a_locacion:
 
 
 ################################################################################
-## Label: Ejecutar acción de locación
+## Label: Ejecutar accion de locación
 ################################################################################
 
 label accion_locacion_ejecutar:

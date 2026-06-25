@@ -9,7 +9,7 @@ init python:
 
     class AccionLocacion(object):
         """
-        Una acción disponible para el jugador en una locación específica.
+        Una accion disponible para el jugador en una locación específica.
         """
         def __init__(self, id, nombre, icono, locacion_id,
             label_generico=None, reseteo="diario",
@@ -42,11 +42,11 @@ init python:
     class ListenerAccion(object):
         """
         Registrado por una quest o evento para interceptar una AccionLocacion.
-        Cuando la acción se ejecuta y el listener es válido, llama a su label.
+        Cuando la accion se ejecuta y el listener es válido, llama a su label.
         """
         def __init__(self, accion_id, label, nombre_menu,
             prioridad="quest", condicion=None, unico=True):
-            self.accion_id = accion_id      # Qué acción intercepta
+            self.accion_id = accion_id      # Qué accion intercepta
             self.label = label              # Label a ejecutar
             self.nombre_menu = nombre_menu  # Texto en el menú de elección (si hay conflicto)
             self.prioridad = prioridad      # "quest" | "evento" | "generico"
@@ -146,5 +146,5 @@ init python:
 # Instancia global
 define sistema_acciones = SistemaAcciones()
 
-# Variable temporal para pasar el ID de acción al label ejecutor
+# Variable temporal para pasar el ID de accion al label ejecutor
 default _accion_locacion_temp_id = None

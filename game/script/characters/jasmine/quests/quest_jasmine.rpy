@@ -2,7 +2,7 @@
 ## Quests de Jasmine
 ################################################################################
 ## Archivo principal con definiciones de quest
-## Los labels de cada quest están en archivos separados (jasmine_quest_X.rpy)
+## Los labels de cada quest estan en archivos separados (jasmine_quest_X.rpy)
 
 init 5 python:
 

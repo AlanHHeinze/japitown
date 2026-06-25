@@ -1,7 +1,7 @@
 ################################################################################
 ## HUD de Navegación
 ################################################################################
-## Interfaz visual para el sistema de navegación con información de tiempo
+## Interfaz visual para el sistema de navegación con informacion de tiempo
 
 
 # Variable para controlar visibilidad del modo debug/desarrollo
@@ -105,7 +105,7 @@ init python:
 ## Transforms de animación para el HUD
 ################################################################################
 
-# Hexágonos (día, estación): Escalan sutilmente al hover
+# Hexágonos (dia, estación): Escalan sutilmente al hover
 transform hud_hex_hover:
     zoom 0.75
     on idle:
@@ -123,7 +123,7 @@ transform hud_horario_hover:
     on insensitive:
         ease 0.2 alpha 0.6 zoom 0.75
 
-# Botones de acción (cama, mochila, celu, mapa): suben al hover
+# Botones de accion (cama, mochila, celu, mapa): suben al hover
 transform hud_action_hover:
     zoom 0.75 yoffset 0
     on idle:
@@ -222,7 +222,7 @@ screen hud_navegacion():
 
 
     # =========================================================================
-    # SUPERIOR IZQUIERDO - Día actual con nombre bilingüe
+    # SUPERIOR IZQUIERDO - Dia actual con nombre bilingüe
     # =========================================================================
     $ _dias_es = {0:"Lunes", 1:"Martes", 2:"Miércoles", 3:"Jueves", 4:"Viernes", 5:"Sábado", 6:"Domingo"}
     $ _dias_en = {0:"Monday", 1:"Tuesday", 2:"Wednesday", 3:"Thursday", 4:"Friday", 5:"Saturday", 6:"Sunday"}
@@ -250,13 +250,13 @@ screen hud_navegacion():
                 outlines [(2, "#000000", 0, 0)]
     
     # =========================================================================
-    # SUPERIOR DERECHO - Iconos de acceso rápido (independientes)
+    # SUPERIOR DERECHO - Iconos de acceso rapido (independientes)
     # =========================================================================
     # Cada botón en su propio frame para que las animaciones no afecten a los demás
     # Imágenes originales: 128x128px, zoom 0.75 = 96x96px. Spacing: 12px
     # Posiciones desde la derecha: mapa(0), celu(108), mochila(216), cama(324)
 
-    # Cama - Ir a mi habitación
+    # Cama - Ir a mi habitacion
     imagebutton:
         idle "images/hud/cama_base.png"
         hover "images/hud/cama_hover.png"
@@ -411,7 +411,7 @@ screen hud_navegacion():
                 
                 null height 5
                 
-                # Botón para herramienta de posicionamiento (también: tecla P)
+                # Botón para herramienta de posicionamiento (tambien: tecla P)
                 textbutton ("📐 Posicionar [[ON]]" if renpy.get_screen("herramienta_pos_simple") else "📐 Posicionar"):
                     action ToggleScreen("herramienta_pos_simple")
                     style "hud_button"
@@ -627,7 +627,7 @@ screen navegacion_locaciones_con_hud():
         $ npcs_aqui = npcs_en_locacion_actual()
         
         # =====================================================================
-        # CAPA 1: Hotspots interactivos (se renderizan primero, quedan detrás)
+        # CAPA 1: Hotspots interactivos (se renderizan primero, quedan detras)
         # =====================================================================
         
         # En modo posicionamiento de hotspots, usar draggroup para hotspots arrastrables
@@ -839,7 +839,7 @@ screen navegacion_locaciones_con_hud():
                             add _hs_flecha xpos _hs_cx ypos _hs_cy xanchor 0.5 yanchor 0.5
         
         # =====================================================================
-        # CAPA 2: Sprites de NPCs (se renderizan después, quedan arriba)
+        # CAPA 2: Sprites de NPCs (se renderizan despues, quedan arriba)
         # =====================================================================
 
         # Timer que revela los NPCs al terminar la transicion del bg
@@ -1015,7 +1015,7 @@ screen navegacion_locaciones_con_hud():
                 $ _cajas_y = _cajas.y if _cajas else 422
                 add "images/quest/mc/quest0/idle_cajas_intro.png" xpos _cajas_x ypos _cajas_y xanchor 0.0 yanchor 0.0
 
-        # Paquete en la habitación del MC (entrega perdida)
+        # Paquete en la habitacion del MC (entrega perdida)
         if paquete_en_habitacion and sistema_locaciones.locacion_actual.id == "casa_hmc":
             $ _paq = sistema_pos.obtener("casa_hmc_paquete")
             $ _paq_x = _paq.x if _paq else 1000
@@ -1031,7 +1031,7 @@ screen navegacion_locaciones_con_hud():
                     action Jump("recoger_paquete_habitacion")
         
         # Debug info unificado en el panel inferior izquierdo del HUD
-        # (se eliminó el panel superpuesto aquí para evitar conflicto con el panel de fecha)
+        # (se eliminó el panel superpuesto aqui para evitar conflicto con el panel de fecha)
     
     if hud_contenido_visible:
         # Mostrar panel de entrenamiento — oculto solo hasta completar la quest 0
@@ -1121,7 +1121,7 @@ screen mensaje_restriccion():
             size 32
             outlines [(2, "#000000", 0, 0)]
     
-    # Timer: cierra el screen automáticamente después de 1.5 segundos
+    # Timer: cierra el screen automáticamente despues de 1.5 segundos
     timer 1.5 action [Hide("mensaje_restriccion"), Return()]
 
 

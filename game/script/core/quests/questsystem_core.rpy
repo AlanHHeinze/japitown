@@ -186,7 +186,7 @@ init python:
     
     class ConfiguracionRetorno:
         """
-        Configuración para retornar al jugador después de completar una quest.
+        Configuración para retornar al jugador despues de completar una quest.
         """
         
         def __init__(self, locacion=None, horario=None, dia_semana=None, avanzar_dia=False):
@@ -194,8 +194,8 @@ init python:
             Args:
                 locacion: ID de la locación destino (None = mantener actual)
                 horario: Índice del horario (None = mantener actual)
-                dia_semana: Índice del día (None = mantener actual)
-                avanzar_dia: Si True, avanza al siguiente día
+                dia_semana: Índice del dia (None = mantener actual)
+                avanzar_dia: Si True, avanza al siguiente dia
             """
             self.locacion = locacion
             self.horario = horario
@@ -270,7 +270,7 @@ init python:
             Args:
                 condicion: Callable que retorna bool (cuándo se produce el fallo)
                 trigger_mensaje: Tupla (trigger_id, npc_id) para disparar chat de fallo
-                cambio_relacion: Tupla (npc_id, cantidad) para modificar relación
+                cambio_relacion: Tupla (npc_id, cantidad) para modificar relacion
                 pista: Texto o callable para pista post-fallo
                 que_hacer: Texto o callable para qué hacer post-fallo
             """
@@ -303,7 +303,7 @@ init python:
         
         Etapas:
         1. INICIALIZACION - Requiere quest anterior completada
-        2. ESPERA - Días que deben pasar
+        2. ESPERA - Dias que deben pasar
         3. CONDICIONES - Verificar requisitos especiales
         4. RUTINA - Modificar rutina del NPC con sprite personalizado
         5. BOTON_LISTO - Botón para iniciar quest disponible
@@ -325,8 +325,8 @@ init python:
                 npc_id: ID del NPC que da la quest
                 nombre: Nombre visible de la quest
                 descripcion: Descripción de la quest
-                numero_quest: Número secuencial de la quest
-                dias_espera: Días a esperar antes de avanzar de etapa 2
+                numero_quest: Numero secuencial de la quest
+                dias_espera: Dias a esperar antes de avanzar de etapa 2
                 condicion_espera: Callable extra que debe retornar True para salir de espera
                 requisitos: Lista de objetos Requisito para etapa 3
                 validacion_especial: Lista de objetos Requisito para etapa 6
@@ -369,7 +369,7 @@ init python:
             self.etapa_actual = 0  # 0 = No iniciada
             self.activa = False
             self.completada = False
-            self.dia_inicio = None  # Día del juego cuando inició
+            self.dia_inicio = None  # Dia del juego cuando inició
             
             # Estado de fallo
             self.fallo_ocurrido = False
@@ -428,7 +428,7 @@ init python:
                 if self.etapa_actual == ETAPA_INICIALIZACION:
                     self.etapa_actual = ETAPA_ESPERA
                 
-                # Etapa 2 -> 3: Verificar días de espera
+                # Etapa 2 -> 3: Verificar dias de espera
                 elif self.etapa_actual == ETAPA_ESPERA:
                     if self._verificar_espera():
                         self.etapa_actual = ETAPA_CONDICIONES
@@ -467,7 +467,7 @@ init python:
                     store.sistema_mensajes.disparar_por_trigger("quest_etapa", trigger_id, npc_id)
 
             
-            # Ejecutar acción de entrada si existe
+            # Ejecutar accion de entrada si existe
             if cfg_etapa.accion_al_entrar:
                 try:
                     cfg_etapa.accion_al_entrar()
@@ -569,7 +569,7 @@ init python:
                     pista = pista_override
                 if que_hacer_override:
                     que_hacer = que_hacer_override
-                # Si ambos están definidos, retornar sin genéricos
+                # Si ambos estan definidos, retornar sin genéricos
                 if pista and que_hacer:
                     return {"pista": pista, "que_hacer": que_hacer}
             
@@ -764,7 +764,7 @@ init python:
         def _generar_que_hacer_validacion(self):
             """
             Genera mensaje que_hacer para etapa BOTON_LISTO.
-            Siempre muestra la locación y horario de la quest, sin importar si ya están cumplidos.
+            Siempre muestra la locación y horario de la quest, sin importar si ya estan cumplidos.
             Formato: "Ve al [lugar] durante [horario]" + " y " + otros requisitos
             
             Returns:
@@ -963,7 +963,7 @@ init python:
             # Guardar recuerdos
             if recuerdos_finales:
                 self.recuerdos.update(recuerdos_finales)
-                # También guardar en el sistema de memorias global
+                # Tambien guardar en el sistema de memorias global
                 for clave, valor in recuerdos_finales.items():
                     guardar_memoria(self.npc_id, clave, valor)
             
@@ -984,7 +984,7 @@ init python:
             if npc:
                 npc.modificar_progreso(1)
             
-            # Avanzar número de quest global
+            # Avanzar numero de quest global
             store.quest_actual += 1
             
 
@@ -1002,7 +1002,7 @@ init python:
                 return
             
             if self.retorno.avanzar_dia:
-                # Avanzar al siguiente día
+                # Avanzar al siguiente dia
                 if hasattr(store, 'avanzar_dia'):
                     avanzar_dia()
             
@@ -1053,7 +1053,7 @@ init python:
         def verificar_fallo(self):
             """
             Verifica si se produce un fallo en la quest.
-            Solo se puede fallar una vez por día (evita repetir el mismo día).
+            Solo se puede fallar una vez por dia (evita repetir el mismo dia).
             Si se detecta fallo, dispara acciones y marca fallo_ocurrido.
             
             Returns:
@@ -1068,7 +1068,7 @@ init python:
             if self.etapa_actual not in [ETAPA_BOTON_LISTO, ETAPA_RUTINA]:
                 return False
             
-            # Evitar fallar dos veces el mismo día
+            # Evitar fallar dos veces el mismo dia
             dia_actual = getattr(store, 'dias_totales', 1)
             if self.ultimo_fallo_dia == dia_actual:
                 return False
@@ -1127,7 +1127,7 @@ init python:
         # Alias para compatibilidad
         def puede_activarse(self):
             """Alias de puede_iniciar para compatibilidad"""
-            # Verificar también que estemos en las condiciones correctas
+            # Verificar tambien que estemos en las condiciones correctas
             if not self.puede_iniciar():
                 return False
             
@@ -1234,10 +1234,10 @@ init python:
         
         def obtener_pista_actual(self):
             """
-            Obtiene la pista para la quest actual según el número de quest.
+            Obtiene la pista para la quest actual según el numero de quest.
             
             Returns:
-                Dict con información de la pista o None
+                Dict con informacion de la pista o None
             """
             # Buscar quest activa
             quest_activa = self.obtener_quest_activa()
@@ -1270,7 +1270,7 @@ init python:
 # Instancia global del sistema de quests (define para estar disponible en init)
 define sistema_quests = SistemaQuests()
 
-# Variable global para el número de quest actual
+# Variable global para el numero de quest actual
 default quest_actual = 0
 
 ################################################################################
@@ -1381,7 +1381,7 @@ init python:
         """
         Actualiza el estado de todas las quests activas.
         Se llama al dormir para verificar tiempos de espera y avanzar etapas.
-        También verifica condiciones de fallo.
+        Tambien verifica condiciones de fallo.
         """
         sistema_quests.actualizar_todas()
     

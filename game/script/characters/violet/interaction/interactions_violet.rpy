@@ -26,7 +26,7 @@ label interaccion_violet:
                 $ _npc_id_temp = "violet"
                 jump ejecutar_quest_activa
 
-    # Quest 09_a: interacción especial cuando Violet está enferma en su habitación
+    # Quest 09_a: interacción especial cuando Violet está enferma en su habitacion
     $ _quest_v09a_int = sistema_quests.obtener_quest("violet_questprincipal_09_a")
     if (_quest_v09a_int and _quest_v09a_int.activa and not _quest_v09a_int.completada and
             _quest_v09a_int.etapa_actual == ETAPA_BOTON_LISTO and
@@ -42,7 +42,7 @@ label interaccion_violet:
         $ _opciones_extra_v.append({"texto": "Hablar (quest)", "label": "quest_violet_questprincipal_0_a", "condicion": True})
 
     # Quest 0_a: tras el intro, botón de quest "Hablar" que dispara el talk especial.
-    # El botón real del sistema talk está oculto hasta completar esta quest, así que
+    # El botón real del sistema talk está oculto hasta completar esta quest, asi que
     # este botón de quest es el que permite avanzar (y al completar se desbloquea el real).
     if _quest_v0a and _quest_v0a.activa and not _quest_v0a.completada and _quest_v0a.etapa_actual == ETAPA_BOTON_LISTO and getattr(store, "violet_q0a_esperando_talk", False):
         $ _opciones_extra_v.append({"texto": "Hablar", "label": "violet_q0a_talk_sistema", "condicion": True})
@@ -87,7 +87,7 @@ label interaccion_violet:
         else:
             $ _opciones_extra_v.append({"texto": "Pedirle perdón", "label": "violet_quest05c_perdon_fuera", "condicion": True})
 
-    # Quest 06_a: Contarle de las entradas (de noche, dentro de la habitación)
+    # Quest 06_a: Contarle de las entradas (de noche, dentro de la habitacion)
     $ _quest_v06a = sistema_quests.obtener_quest("violet_questprincipal_06_a")
     if _quest_v06a and _quest_v06a.activa and not _quest_v06a.completada and _quest_v06a.etapa_actual == ETAPA_BOTON_LISTO:
         if _npc_actual.esta_en_locacion("casa_hviolet") and horario_actual == 2:

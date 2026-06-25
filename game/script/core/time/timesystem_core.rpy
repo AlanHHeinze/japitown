@@ -11,12 +11,12 @@ init python:
     HORARIOS = ["Mañana", "Tarde", "Noche", "Trasnoche"]
 
 # Variables del sistema de tiempo
-default dia_actual = 1  # Día del mes (1-31)
+default dia_actual = 1  # Dia del mes (1-31)
 default estacion_actual = 0  # Índice de la estación (0=Primavera, 1=Verano, 2=Otoño, 3=Invierno)
 default año_actual = 1  # Año actual
-default dia_semana_actual = 0  # Índice del día de la semana (0=Lunes, 6=Domingo)
+default dia_semana_actual = 0  # Índice del dia de la semana (0=Lunes, 6=Domingo)
 default horario_actual = 0  # Índice del horario (0=Mañana, 1=Tarde, 2=Noche, 3=Trasnoche)
-default dias_totales = 1  # Contador de días totales (para quests)
+default dias_totales = 1  # Contador de dias totales (para quests)
 
 ################################################################################
 ## Funciones del sistema de tiempo
@@ -92,15 +92,15 @@ init python:
 
     def dormir():
         """
-        Acción de dormir: avanza al día siguiente y resetea el horario a Mañana.
+        Accion de dormir: avanza al dia siguiente y resetea el horario a Mañana.
         """
-        # Guardar horario antes de dormir para simular horarios omitidos después
+        # Guardar horario antes de dormir para simular horarios omitidos despues
         _horario_antes_dormir = store.horario_actual
 
         # Usar store directamente en lugar de global
         store.horario_actual = 0
         
-        # Avanzar día de la semana
+        # Avanzar dia de la semana
         store.dia_semana_actual = (store.dia_semana_actual + 1) % 7
         
         # Reponer stock de tienda al inicio de semana (Lunes)
@@ -108,10 +108,10 @@ init python:
             if hasattr(store, 'reponer_stock'):
                 store.reponer_stock()
         
-        # Avanzar día del mes
+        # Avanzar dia del mes
         store.dia_actual += 1
         
-        # Incrementar contador de días totales (para quests)
+        # Incrementar contador de dias totales (para quests)
         store.dias_totales += 1
         
         # Verificar si se completa la estación
@@ -136,7 +136,7 @@ init python:
         if hasattr(store, 'resetear_interacciones_todos_npcs'):
             store.resetear_interacciones_todos_npcs()
         
-        # Evaluar rutinas especiales del nuevo día (antes de actualizar ubicaciones)
+        # Evaluar rutinas especiales del nuevo dia (antes de actualizar ubicaciones)
         if hasattr(store, 'sistema_npcs'):
             store.sistema_npcs.evaluar_todas_rutinas_especiales_dia(store.dia_semana_actual)
 
@@ -165,10 +165,10 @@ init python:
         # Resetear acciones de locación
         if hasattr(store, 'sistema_acciones'):
             store.sistema_acciones.resetear_diario()
-            if store.dia_semana_actual == 0:  # Lunes — resetear también semanales
+            if store.dia_semana_actual == 0:  # Lunes — resetear tambien semanales
                 store.sistema_acciones.resetear_semanal()
 
-        # Asignar nuevos estados de talk para el día que empieza
+        # Asignar nuevos estados de talk para el dia que empieza
         if hasattr(store, 'sistema_talk'):
             for _npc_id_talk in ["violet", "monica", "jasmine"]:
                 store.sistema_talk.decrementar_estados_especiales(_npc_id_talk)
@@ -195,7 +195,7 @@ init python:
     
     def obtener_dia_semana():
         """
-        Retorna el día de la semana actual como string.
+        Retorna el dia de la semana actual como string.
         """
         return renpy.translate_string(DIAS_SEMANA[dia_semana_actual])
     
@@ -207,7 +207,7 @@ init python:
     
     def es_dia_especifico(dia_nombre):
         """
-        Verifica si el día actual es el especificado.
+        Verifica si el dia actual es el especificado.
         Ejemplo: es_dia_especifico("Lunes")
         """
         return DIAS_SEMANA[dia_semana_actual] == dia_nombre
@@ -293,7 +293,7 @@ label accion_dormir:
     
     # --- EVENTOS NOCTURNOS ---
 
-    # Evento 2 de Violet: Se dispara al dormir 1 día después de completar Quest 04_e
+    # Evento 2 de Violet: Se dispara al dormir 1 dia despues de completar Quest 04_e
     $ _quest_v04e = store.sistema_quests.obtener_quest("violet_questprincipal_04_e")
     $ _quest_v05a = store.sistema_quests.obtener_quest("violet_questprincipal_05_a")
     if (not violet_evento2_completado and
@@ -304,7 +304,7 @@ label accion_dormir:
 
 
 
-    # Ejecutar lógica de cambio de día
+    # Ejecutar lógica de cambio de dia
     $ dormir()
 
     # Hook Quest 0 del MC — primer sueño al finalizar la introducción
@@ -330,7 +330,7 @@ label accion_dormir:
         $ store.violet_9a_pedido_actual = None
         $ store.violet_9a_tiene_entregable = False
         $ store.violet_9a_entrega_completada = False
-        # Avanzar contador de días de enfermedad
+        # Avanzar contador de dias de enfermedad
         $ store.violet_9a_enfermedad_dia = getattr(store, 'violet_9a_enfermedad_dia', 0) + 1
         if store.violet_9a_enfermedad_dia >= 3:
             if getattr(store, 'violet_enferma_atencion', 0) >= 3:
@@ -340,7 +340,7 @@ label accion_dormir:
                 # Cuidado insuficiente: completar 09_a y continuar el sueño normal
                 $ completar_quest_actual("violet")
 
-    # Evento 03 de Violet: enviar mensaje de Monica al día siguiente de completar quest 03_a
+    # Evento 03 de Violet: enviar mensaje de Monica al dia siguiente de completar quest 03_a
     $ _ev03_dia_pendiente = getattr(store, 'violet_ev03_pendiente_desde_dia', None)
     if (_ev03_dia_pendiente is not None and
             not getattr(store, 'violet_ev03_mensaje_disparado', False) and

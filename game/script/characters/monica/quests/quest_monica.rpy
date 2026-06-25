@@ -2,7 +2,7 @@
 ## Quests de Mónica
 ################################################################################
 ## Archivo principal con definiciones de quest
-## Los labels de cada quest están en archivos separados (monica_quest_X.rpy)
+## Los labels de cada quest estan en archivos separados (monica_quest_X.rpy)
 
 init 5 python:
     

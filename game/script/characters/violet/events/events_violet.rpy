@@ -30,8 +30,8 @@ init 10 python:
             return False
         if not getattr(store, 'violet_ev03_mensaje_disparado', False):
             return False
-        # El mensaje se envía el día siguiente a violet_ev03_pendiente_desde_dia.
-        # Bloqueamos activación en ese mismo día para evitar que evento y mensaje
+        # El mensaje se envía el dia siguiente a violet_ev03_pendiente_desde_dia.
+        # Bloqueamos activación en ese mismo dia para evitar que evento y mensaje
         # se disparen juntos en la misma mañana (ej: quest completa viernes, jugador
         # duerme directo al sábado).
         dias_actuales = getattr(store, 'dias_totales', 0)
@@ -53,7 +53,7 @@ init 10 python:
         # EVENTO 01: Casco VR
         # =====================================================================
         # Aparece al completar la quest 0 de Violet (el casco se desbloquea en tienda)
-        # Se dispara manualmente al usar el casco de noche con Violet en su habitación
+        # Se dispara manualmente al usar el casco de noche con Violet en su habitacion
 
         evento01_violet = Event(
             id="violet_evento_01",
@@ -77,7 +77,7 @@ init 10 python:
         # =====================================================================
         # Disponible luego de completar la quest 03_a
         # Se activa el sábado por la mañana
-        # El jugador lo dispara desde el door access de la habitación de Violet
+        # El jugador lo dispara desde el door access de la habitacion de Violet
 
         evento03_violet = Event(
             id="violet_evento_03",
@@ -113,7 +113,7 @@ init 10 python:
         )
 
         # DESCONECTADO TEMPORALMENTE: el evento 03 (Limpieza del Sábado) no se
-        # registra por ahora, así que no aparece en el panel de pistas ni se
+        # registra por ahora, asi que no aparece en el panel de pistas ni se
         # dispara. La definición de arriba y el label evento03_violet se dejan
         # intactos para reconectarlo en el futuro (basta descomentar la línea).
         # sistema_events.registrar_event(evento03_violet)

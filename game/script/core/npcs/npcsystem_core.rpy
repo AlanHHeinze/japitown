@@ -8,7 +8,7 @@ init python:
     class RutinaEspecial:
         """
         Actividad opcional que un NPC puede realizar en un slot de horario dado.
-        Se evalúa al inicio de cada día. Tiene prioridad sobre la rutina base,
+        Se evalúa al inicio de cada dia. Tiene prioridad sobre la rutina base,
         pero es subordinada a overrides de quests y eventos.
         """
         def __init__(self, id, locacion, sprite, posicion,
@@ -23,7 +23,7 @@ init python:
             self.posicion = posicion
             self.probabilidad = probabilidad
             self.horarios = horarios    # None = todos; lista = slots válidos [0,1,2,3]
-            self.dias = dias            # None = todos; lista = días válidos [0-6]
+            self.dias = dias            # None = todos; lista = dias válidos [0-6]
             self.condicion = condicion  # lambda → bool, o None
             self.nombre = nombre
 
@@ -61,7 +61,7 @@ init python:
             # Ubicación actual
             self.locacion_actual = None
             
-            # Rutinas: diccionario de horarios y días
+            # Rutinas: diccionario de horarios y dias
             self.rutinas = {}
             
             # Estado del NPC (usa nombres de stat configurables)
@@ -73,7 +73,7 @@ init python:
                 "disponible": True, # Si está disponible para interactuar
             }
             
-            # Interacciones diarias (se resetean cada día)
+            # Interacciones diarias (se resetean cada dia)
             self.interacciones_hoy = {
                 "hablar": False,  # Si ya habló hoy
                 "coquetear": False,  # Si ya coqueteó hoy
@@ -109,15 +109,15 @@ init python:
 
         def establecer_rutina(self, dia_semana, horario, locacion_id):
             """
-            Establece la rutina del NPC para un día y horario específico.
+            Establece la rutina del NPC para un dia y horario específico.
             
             Args:
-                dia_semana: Índice del día (0=Lunes, 6=Domingo) o "todos"
+                dia_semana: Índice del dia (0=Lunes, 6=Domingo) o "todos"
                 horario: Índice del horario (0=Mañana, 1=Tarde, 2=Noche, 3=Trasnoche)
                 locacion_id: ID de la locación donde estará el NPC
             """
             if dia_semana == "todos":
-                # Aplicar a todos los días
+                # Aplicar a todos los dias
                 for dia in range(7):
                     clave = (dia, horario)
                     self.rutinas[clave] = locacion_id
@@ -156,7 +156,7 @@ init python:
             self._rutina_especial_dia = {}
             for horario in range(4):
                 candidatas = [r for r in rutinas if r.es_candidata(dia, horario)]
-                # Excluir rutinas "fuera" y "baño" que estén en cooldown (< 2 días)
+                # Excluir rutinas "fuera" y "baño" que estén en cooldown (< 2 dias)
                 candidatas = [
                     r for r in candidatas
                     if (r.locacion != _loc_fuera and r.locacion not in _loc_banio)
@@ -170,7 +170,7 @@ init python:
                         break
                 self._rutina_especial_dia[horario] = activa
 
-            # Restricción: no puede tener "fuera" Y "baño" el mismo día
+            # Restricción: no puede tener "fuera" Y "baño" el mismo dia
             slots_fuera = [h for h, r in self._rutina_especial_dia.items()
                            if r and r.locacion == _loc_fuera]
             slots_banio = [h for h, r in self._rutina_especial_dia.items()
@@ -204,7 +204,7 @@ init python:
 
         def obtener_locacion_rutina(self, dia_semana=None, horario=None):
             """
-            Obtiene la locación donde debería estar el NPC según su rutina.
+            Obtiene la locación donde deberia estar el NPC según su rutina.
             Prioridad: 1) Override de evento, 2) Rutina de quest, 3) Rutina especial, 4) Rutina base
             """
             # Usar tiempo actual si no se especifica
@@ -226,7 +226,7 @@ init python:
             if clave in rutinas_q:
                 return rutinas_q[clave]
 
-            # Prioridad 3: Rutina especial del día (fuera/baño)
+            # Prioridad 3: Rutina especial del dia (fuera/baño)
             rutina_esp = self.obtener_rutina_especial_actual(horario)
             if rutina_esp:
                 return rutina_esp.locacion

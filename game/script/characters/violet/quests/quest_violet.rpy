@@ -2,15 +2,15 @@
 ## Quests de Violet
 ################################################################################
 ## Archivo principal con definiciones de quest
-## Los labels de cada quest están en archivos separados (violet_quest_X.rpy)
+## Los labels de cada quest estan en archivos separados (violet_quest_X.rpy)
 
 init 5 python:
 
     def vq_esperar_texto(quest_id, total_dias):
         """Texto dinámico de cuenta regresiva para una etapa de espera.
-        Calcula los días restantes según el dia_inicio de la quest, así el
+        Calcula los dias restantes según el dia_inicio de la quest, asi el
         contador baja solo (3 → 2 → 1) en lugar de quedar fijo.
-        Ej.: el primer día muestra 'Esperar 3 días'; al siguiente, 'Esperar 2 días'."""
+        Ej.: el primer dia muestra 'Esperar 3 días'; al siguiente, 'Esperar 2 días'."""
         q = sistema_quests.obtener_quest(quest_id)
         dia_inicio = (q.dia_inicio if q else 0) or 0
         restantes = max(1, total_dias - (getattr(store, 'dias_totales', 1) - dia_inicio))
@@ -326,7 +326,7 @@ init 5 python:
     sistema_quests.registrar_quest(quest_violet_04_b)
 
     # =========================================================================
-    # QUEST 04_C - El cosplay de Violet II (mensaje al día siguiente)
+    # QUEST 04_C - El cosplay de Violet II (mensaje al dia siguiente)
     # =========================================================================
 
     quest_violet_04_c = Quest(
@@ -929,7 +929,7 @@ init python:
                 "Necesito ahorrar $200 para pagar el pedido a CoXplay.",
             )
 
-        # Fase 2: conversación principal
+        # Fase 2: conversacion principal
         g2 = _grupo("coxplay_q5a_g2")
         if g2:
             if g2.estado in ["pendiente", "en_curso"]:

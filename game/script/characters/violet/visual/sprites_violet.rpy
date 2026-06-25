@@ -25,7 +25,7 @@ layeredimage violet_parada:
             Null()
 
     # Cuerpo completo — sprites que YA incluyen cabeza/cara (ej: cosplay eva).
-    # Va ANTES de boca/ojos para dibujarse DEBAJO de ellos, así las expresiones
+    # Va ANTES de boca/ojos para dibujarse DEBAJO de ellos, asi las expresiones
     # faciales (boca/ojos) siguen siendo visibles encima del sprite.
     # Usar con c_none (cuerpo base en Null) y ca_none (cabeza base en Null).
     group cuerpocompleto:

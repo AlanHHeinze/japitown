@@ -30,7 +30,7 @@ init python:
     
     class OpcionRespuesta:
         """
-        Opción de respuesta disponible para el jugador en un paso de conversación.
+        Opción de respuesta disponible para el jugador en un paso de conversacion.
         """
         
         def __init__(self, texto, respuesta_npc, puntos=None, foto_respuesta=None,
@@ -42,7 +42,7 @@ init python:
                 puntos: Dict de puntos por categoría (ej: {"relacion": 2, "afinidad": -1})
                 foto_respuesta: Ruta de foto adjunta a la respuesta del NPC (o None)
                 condicion: Callable que retorna True/False (None = siempre visible)
-                saltar_a_paso: Índice del paso al que saltar después de responder (None = paso+1, -1 = fin)
+                saltar_a_paso: Índice del paso al que saltar despues de responder (None = paso+1, -1 = fin)
             """
             self.texto = texto
             self.respuesta_npc = respuesta_npc
@@ -65,7 +65,7 @@ init python:
     
     class PasoConversacion:
         """
-        Un turno de ida y vuelta dentro de una conversación.
+        Un turno de ida y vuelta dentro de una conversacion.
         NPC dice algo → jugador elige respuesta → NPC responde.
         """
         
@@ -107,7 +107,7 @@ init python:
     class TablaRecompensas:
         """
         Tabla completa de recompensas por categoría de puntos.
-        Al finalizar una conversación, se evalúa cada categoría.
+        Al finalizar una conversacion, se evalúa cada categoría.
         """
         
         def __init__(self, rangos_por_categoria):
@@ -149,7 +149,7 @@ init python:
     
     class GrupoMensajes:
         """
-        Representa una conversación completa disparada por un trigger.
+        Representa una conversacion completa disparada por un trigger.
         Contiene el mensaje inicial del NPC y todos los pasos de ida y vuelta.
         """
         
@@ -239,7 +239,7 @@ init python:
         
         def finalizar(self):
             """
-            Finaliza la conversación: calcula recompensas y ejecuta accion_al_completar.
+            Finaliza la conversacion: calcula recompensas y ejecuta accion_al_completar.
 
             Returns:
                 Lista de recompensas otorgadas
@@ -327,7 +327,7 @@ init python:
     class ChatNPC:
         """
         Historial completo de chat con un NPC.
-        Almacena todos los mensajes y gestiona grupos de conversación.
+        Almacena todos los mensajes y gestiona grupos de conversacion.
         """
         
         def __init__(self, npc_id):
@@ -392,7 +392,7 @@ init python:
         def __init__(self):
             self.chats = {}    # {npc_id: ChatNPC}
             self.galeria = []  # Lista de {"ruta": str, "npc_id": str, "descripcion": str}
-            self._grupos_registrados = {}  # {trigger_id: GrupoMensajes} para lookup rápido
+            self._grupos_registrados = {}  # {trigger_id: GrupoMensajes} para lookup rapido
             self._todos_grupos = {}  # {grupo_id: GrupoMensajes}
             self._grupos_en_espera = []  # GrupoMensajes esperando condiciones de entrega
         
@@ -689,7 +689,7 @@ init python:
                     msg_sig = siguiente_paso.mensaje_npc() if callable(siguiente_paso.mensaje_npc) else siguiente_paso.mensaje_npc
                     resultado["mensaje_siguiente"] = msg_sig
             else:
-                # Conversación terminada
+                # Conversacion terminada
                 resultado["finalizado"] = True
                 resultado["recompensas"] = grupo.finalizar()
                 resultado["puntos_totales"] = grupo.puntos_acumulados.copy()
@@ -807,7 +807,7 @@ init python:
     
     def mensaje_completado(grupo_id):
         """
-        Verifica si una conversación de mensajes está completada.
+        Verifica si una conversacion de mensajes está completada.
         Para usar en Requisitos de quests.
 
         Args:
@@ -833,7 +833,7 @@ init python:
 
     def obtener_bloqueo_mensaje_prioritario():
         """
-        Verifica si hay algún mensaje prioritario ya entregado esperando respuesta.
+        Verifica si hay algun mensaje prioritario ya entregado esperando respuesta.
         Retorna el nombre del NPC remitente, o None si no hay bloqueo.
         Un mensaje prioritario bloquea avanzar tiempo y dormir hasta ser respondido.
         """

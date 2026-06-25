@@ -39,7 +39,7 @@ init 6 python:
         if dia_msg is None:
             return False
         if dias_totales <= dia_msg:
-            return False  # Todavía es día 1
+            return False  # Todavía es dia 1
         return _jasmine_quest0b_completada()
     
     def _jasmine_chat_cond_tarde():
@@ -48,17 +48,17 @@ init 6 python:
         if dia_msg is None:
             return False
         if dias_totales <= dia_msg:
-            return False  # Todavía es día 1
+            return False  # Todavía es dia 1
         return not _jasmine_quest0b_completada()
 
     # =========================================================================
-    # Conversación: Quest 0 completada
+    # Conversacion: Quest 0 completada
     # =========================================================================
     # 
     # RUTAS:
     # Ruta 1 (Normal): paso 0 → 1 → 2 → 3 → FIN
     # Ruta 2 (Evento 1 ya pasó): paso 0 → salto a 5 → FIN
-    # Ruta 3 (Más de 1 día): paso 0 → salto a 4 → salto a 1 → 2 → 3 → FIN
+    # Ruta 3 (Más de 1 dia): paso 0 → salto a 4 → salto a 1 → 2 → 3 → FIN
     #
     
     chat_jasmine_quest0 = GrupoMensajes(
@@ -103,7 +103,7 @@ init 6 python:
                         condicion=_jasmine_chat_cond_evento1,
                         saltar_a_paso=5
                     ),
-                    # --- Ruta 3 (más de 1 día, sin evento) ---
+                    # --- Ruta 3 (más de 1 dia, sin evento) ---
                     OpcionRespuesta(
                         texto="Perdón, no lo vi",
                         respuesta_npc=["Sí, me di cuenta ya que no me viniste a ver", "😢"],
@@ -115,7 +115,7 @@ init 6 python:
             ),
             
             # =================================================================
-            # PASO 1: Jasmine dice que se lo probó (Ruta 1 directa, Ruta 3 llega aquí vía salto)
+            # PASO 1: Jasmine dice que se lo probó (Ruta 1 directa, Ruta 3 llega aqui vía salto)
             # =================================================================
             PasoConversacion(
                 mensaje_npc="Aparte me lo acabo de probar y me queda genial",
@@ -174,7 +174,7 @@ init 6 python:
             ),
             
             # =================================================================
-            # PASO 4: Ruta 3 - Respuesta después de "no lo vi" (tarde)
+            # PASO 4: Ruta 3 - Respuesta despues de "no lo vi" (tarde)
             # =================================================================
             PasoConversacion(
                 opciones_jugador=[

@@ -2,7 +2,7 @@
 ## Sistema del Celular - Menú Central del Juego
 ################################################################################
 ## Script independiente para el sistema de celular.
-## Agrupa funciones de información y gestión del personaje.
+## Agrupa funciones de informacion y gestión del personaje.
 
 # Variable para controlar visibilidad del menú del celular
 default menu_celular_abierto = False
@@ -158,7 +158,7 @@ screen menu_celular():
 
 
 ################################################################################
-## Label para mostrar mensaje de acción bloqueada
+## Label para mostrar mensaje de accion bloqueada
 ################################################################################
 
 label mostrar_bloqueo_accion(mensaje=""):
@@ -171,7 +171,7 @@ label mostrar_bloqueo_accion(mensaje=""):
 
 
 ################################################################################
-## Validar estado después de cerrar el celular
+## Validar estado despues de cerrar el celular
 ################################################################################
 ## Se ejecuta al cerrar el celular para verificar si hay eventos pendientes
 ## (similar a lo que ocurre al cambiar de locación o adelantar tiempo)
@@ -182,6 +182,6 @@ label _validar_estado_tras_celular:
     if getattr(store, "mc_q0b_esperando", False) and getattr(store, "mc_q0b_pistas_visitada", False):
         jump mc_q0b_completar
 
-    # (Aquí pueden agregarse futuras validaciones tras cerrar el celular)
+    # (Aqui pueden agregarse futuras validaciones tras cerrar el celular)
 
     return

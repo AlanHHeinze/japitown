@@ -12,7 +12,7 @@ label interaccion_jasmine:
     if not _npc_actual:
         return
     
-    # Quest 0_b: Ropa Nueva — disponible después de completar quest 0
+    # Quest 0_b: Ropa Nueva — disponible despues de completar quest 0
     $ _quest_j0b = sistema_quests.obtener_quest("jasmine_questprincipal_0_b")
     if (_quest_j0b and _quest_j0b.activa and not _quest_j0b.completada and
             _quest_j0b.etapa_actual == ETAPA_BOTON_LISTO and
@@ -29,7 +29,7 @@ label interaccion_jasmine:
 
     if _quest_activa and _quest_activa.etapa_actual == ETAPA_BOTON_LISTO:
         # Las quests 0_a/0_b/0_c se manejan via opciones_extra y triggers especiales
-        # (lugar/hora), por eso NO deben auto-ejecutarse aquí.
+        # (lugar/hora), por eso NO deben auto-ejecutarse aqui.
         if _quest_activa.id not in ("jasmine_questprincipal_0_a", "jasmine_questprincipal_0_b", "jasmine_questprincipal_0_c"):
             $ exito, mensajes = _quest_activa.intentar_ejecutar()
             if exito:

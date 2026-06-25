@@ -45,7 +45,15 @@
       "Bash(awk '{print $1}')",
       "Bash(echo \"add done, exit=$?\")",
       "Bash(rm -f .git/index.lock)",
-      "Bash(echo \"add exit=$?\")"
+      "Bash(echo \"add exit=$?\")",
+      "Bash(awk -F/ '{print $1\"/\"$2}')",
+      "Bash(git reset *)",
+      "Bash(echo \"reset .tmp.driveupload exit=$?\")",
+      "Bash(git commit *)",
+      "Bash(echo \"commit exit=$?\")",
+      "Bash(python \"C:/Users/Alan/AppData/Local/Temp/claude/c--Users-Alan-OneDrive-Desktop-Japitown/21be6f5c-4b5d-41b2-876a-5caaeb50853d/scratchpad/scan_codigo.py\")",
+      "Bash(python \"C:/Users/Alan/AppData/Local/Temp/claude/c--Users-Alan-OneDrive-Desktop-Japitown/21be6f5c-4b5d-41b2-876a-5caaeb50853d/scratchpad/revertir_codigo.py\")",
+      "Bash(echo \"add -u exit=$?\")"
     ],
     "additionalDirectories": [
       "c:\\Users\\Alan\\OneDrive\\Desktop\\Japitown\\.claude\\skills\\cambios"

@@ -1,7 +1,7 @@
 ################################################################################
 ## Quest 0b del MC — Conociendo el celular
 ################################################################################
-## Se dispara automáticamente el día 2 al entrar al pasillo de arriba.
+## Se dispara automáticamente el dia 2 al entrar al pasillo de arriba.
 ## Enseña al jugador a usar el celular y la app de Pistas.
 ## Flujo:
 ## 1. Mostrar pasillo + mensajes de tutorial

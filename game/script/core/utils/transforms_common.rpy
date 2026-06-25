@@ -141,7 +141,7 @@ transform personaje_salir_derecha:
     xalign 0.0 yalign 1.0
     linear 1.5 xalign 1.5
 
-# MC sale hacia la izquierda (más rápido)
+# MC sale hacia la izquierda (más rapido)
 transform mc_salir_izquierda:
     xzoom 1.0
     yzoom 1.0

@@ -3,7 +3,7 @@
 ################################################################################
 ## Definición de todos los eventos de Mónica
 
-# Variable para rastrear día de completación de quest 0
+# Variable para rastrear dia de completación de quest 0
 default monica_quest_0_dia_completada = 0
 
 init 10 python:
@@ -18,7 +18,7 @@ init 10 python:
         if not quest or not quest.completada:
             return False
 
-        # Verificar que hayan pasado al menos 2 días desde la completación
+        # Verificar que hayan pasado al menos 2 dias desde la completación
         dia_completada = getattr(store, 'monica_quest_0_dia_completada', 0)
         dias_totales = getattr(store, 'dias_totales', 1)
         return dias_totales - dia_completada >= 2
@@ -38,7 +38,7 @@ init 10 python:
         # =====================================================================
         # EVENTO 1: Monica adolorida
         # =====================================================================
-        # Se dispara 2 días después de completar quest 0
+        # Se dispara 2 dias despues de completar quest 0
         # Al interactuar en living por la tarde, ejecuta escena
 
         event_monica_01 = Event(

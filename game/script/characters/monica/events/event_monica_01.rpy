@@ -116,7 +116,7 @@ layeredimage monica_evento_01:
 ################################################################################
 
 label event_monica_01_narrativa:
-    # Guardar el ID del evento para poder completarlo después
+    # Guardar el ID del evento para poder completarlo despues
     $ _event_id_temp = "monica_event_01"
     
     # Esconder pantallas del juego temporalmente

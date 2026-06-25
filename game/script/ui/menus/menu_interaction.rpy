@@ -50,7 +50,7 @@ screen menu_interaccion_npc_completo(npc, opciones_extra=None):
                 background "#4FC3F7"
             null height 5
             
-            # Información del NPC
+            # Informacion del NPC
             $ _emojis = {"stat1": "❤️", "stat2": "💋"}
 
             vbox:

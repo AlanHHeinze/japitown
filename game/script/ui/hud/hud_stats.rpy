@@ -1,7 +1,7 @@
 default inventario_pagina = 0
 
 # Límites diarios de entrenamiento y trabajo
-default entrenamiento_hoy = False  # True si ya entrenó hoy (1 vez al día)
+default entrenamiento_hoy = False  # True si ya entrenó hoy (1 vez al dia)
 default trabajo_hoy = 0  # Contador de veces que trabajó hoy (máx 2)
 
 ################################################################################
@@ -31,7 +31,7 @@ init python:
         if getattr(store, 'horario_actual', 0) == 3:
             return False
         
-        # Verificar límite diario (1 vez por día)
+        # Verificar límite diario (1 vez por dia)
         if store.entrenamiento_hoy:
             return False
         
@@ -69,7 +69,7 @@ init python:
         if getattr(store, 'horario_actual', 0) == 3:
             return False
         
-        # Verificar límite diario (2 veces por día)
+        # Verificar límite diario (2 veces por dia)
         if store.trabajo_hoy >= 2:
             return False
         
@@ -245,13 +245,13 @@ screen panel_stats_mc():
 
 
 ################################################################################
-## Panel de Entrenamiento (Solo en habitación del MC)
+## Panel de Entrenamiento (Solo en habitacion del MC)
 ################################################################################
 
 screen panel_entrenamiento():
     """Panel de entrenamiento que aparece en la habitación del MC"""
 
-    # Solo mostrar si estamos en la habitación del MC
+    # Solo mostrar si estamos en la habitacion del MC
     if sistema_locaciones.locacion_actual and sistema_locaciones.locacion_actual.id == "casa_hmc":
 
         # Verificar si es trasnoche

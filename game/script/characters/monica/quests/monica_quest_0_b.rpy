@@ -1,9 +1,9 @@
 ################################################################################
 ## Quest 0_b de Mónica — La notebook de Mónica
 ################################################################################
-## Inicia al día siguiente de completar la quest 0_a.
+## Inicia al dia siguiente de completar la quest 0_a.
 ## Mientras está activa se bloquea avanzar tiempo y dormir.
-## Al entrar al living se dispara la conversación automáticamente.
+## Al entrar al living se dispara la conversacion automáticamente.
 
 init python:
 

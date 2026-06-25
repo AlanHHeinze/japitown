@@ -35,7 +35,7 @@ label interaccion_monica:
     $ _opciones_extra_monica = []
 
     # Quest 0: botón "Agradecerle" — solo cuando la quest está lista y el MC
-    # está a solas con Mónica (ningún otro NPC en la locación).
+    # está a solas con Mónica (ningun otro NPC en la locación).
     $ _quest_m0 = sistema_quests.obtener_quest("monica_questprincipal_0")
     if (_quest_m0 and _quest_m0.activa and not _quest_m0.completada and
             _quest_m0.etapa_actual == ETAPA_BOTON_LISTO):

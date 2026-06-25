@@ -41,7 +41,7 @@ init python:
                                      "dormir", "usar_item", "comprar", etc.
                 mensaje_movimiento: Mensaje al intentar ir a locación no permitida.
                 mensajes_acciones: Dict {accion_id: mensaje} para mensajes específicos.
-                                   Si una acción está bloqueada pero no tiene mensaje
+                                   Si una accion está bloqueada pero no tiene mensaje
                                    específico, se usa un genérico.
                 npcs_ocultos: Set/lista de NPC IDs a ocultar de la escena.
                 npcs_interactuables: Set/lista de NPC IDs con los que SÍ se puede
@@ -97,10 +97,10 @@ init python:
         
         def obtener_bloqueo_accion(self, accion_id):
             """
-            Verifica si una acción está bloqueada.
+            Verifica si una accion está bloqueada.
             
             Returns:
-                str: Mensaje de bloqueo, o None si la acción está permitida.
+                str: Mensaje de bloqueo, o None si la accion está permitida.
             """
             if not self.activa:
                 return None
@@ -255,10 +255,10 @@ init python:
     
     def accion_bloqueada(accion_id):
         """
-        Verifica si una acción está bloqueada por la restricción activa.
+        Verifica si una accion está bloqueada por la restricción activa.
 
         Returns:
-            str: Mensaje de bloqueo, o None si la acción está permitida.
+            str: Mensaje de bloqueo, o None si la accion está permitida.
         """
         r = store.restriccion_quest_activa
         if r is None or not r.activa:

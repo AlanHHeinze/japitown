@@ -32,7 +32,7 @@ default vq8a_bgs_originales = {}
 ## LABELS
 ################################################################################
 
-# Parte 1 — Al despertar: el MC piensa en su habitación. El mensaje se muestra
+# Parte 1 — Al despertar: el MC piensa en su habitacion. El mensaje se muestra
 # en un contexto aislado (HUD oculto + escena propia) para que se lea bien y NO
 # dentro del game loop. Al terminar pasa a la parte 2 (loop restringido).
 label violet_quest08a_despertar:
@@ -45,7 +45,7 @@ label violet_quest08a_despertar:
     $ ocultar_hud()
     window hide
 
-    # MC pensando en su habitación
+    # MC pensando en su habitacion
     $ _bg_hmc_q8a = sistema_locaciones.obtener_locacion("casa_hmc").background
     scene expression _bg_hmc_q8a with fade
     show mc_parado_base c_rbase_pensando o_arribanm b_none at center with dissolve
@@ -60,7 +60,7 @@ label violet_quest08a_despertar:
     jump violet_quest08a_iniciar_loop
 
 
-# Parte 2 — Activa la restricción del día y devuelve el control al loop
+# Parte 2 — Activa la restricción del dia y devuelve el control al loop
 # restringido. La quest sigue su curso cuando el jugador entra al living.
 label violet_quest08a_iniciar_loop:
     $ activar_restriccion(
@@ -200,7 +200,7 @@ label violet_quest08a_ver_tv:
     piensa "Pobre Violet llego empapada, voy a buscar su pijama y dejarselo"
     window hide
 
-    # Fase 2 — solo living, pasillo arriba y habitación de Violet
+    # Fase 2 — solo living, pasillo arriba y habitacion de Violet
     $ desactivar_restriccion()
     $ activar_restriccion(
         locaciones_permitidas=["casa_living", "casa_pasilloarriba", "casa_hviolet"],
@@ -219,7 +219,7 @@ label violet_quest08a_ver_tv:
         mensaje_celular="No es el momento.",
         npcs_ocultos=["violet", "monica", "jasmine"],
     )
-    # Registrar un label de entrada para la habitación de Violet. Sirve para que
+    # Registrar un label de entrada para la habitacion de Violet. Sirve para que
     # el routing OMITA el door access (que si no bloquearía porque Violet está en
     # la ducha / oculta) y permita pasar — la entrada se valida solo contra la
     # whitelist de la restricción, que incluye casa_hviolet.
@@ -240,7 +240,7 @@ label violet_quest08a_ver_tv:
                 vq8a_bgs_originales[_loc_id] = _loc_obj.background_base
                 _loc_obj.background_base = _bg_path
 
-    # Acciones de locación: ropero y cajonera. Aparecen al estar en la habitación;
+    # Acciones de locación: ropero y cajonera. Aparecen al estar en la habitacion;
     # al usar AMBAS se auto-avanza (metodología de la quest 03_a), sin botón de salir.
     $ sistema_acciones.registrar_accion(AccionLocacion(
         id="vq8a_ropero", nombre="Ropero", icono=u"🚪",
@@ -258,14 +258,14 @@ label violet_quest08a_ver_tv:
     jump game_loop
 
 
-# Entrada a la habitación de Violet durante la fase 2. No hace nada por sí mismo
+# Entrada a la habitacion de Violet durante la fase 2. No hace nada por sí mismo
 # (la exploración la manejan las acciones Ropero/Cajonera); existe solo para que
 # el routing omita el door access y permita entrar aunque Violet no esté.
 label violet_quest08a_entrar_hviolet:
     return
 
 
-# Acción Ropero — el MC encuentra el pijama. Al usar ambas acciones se avanza.
+# Accion Ropero — el MC encuentra el pijama. Al usar ambas acciones se avanza.
 label violet_quest08a_accion_ropero:
     $ ocultar_hud()
     window show
@@ -282,7 +282,7 @@ label violet_quest08a_accion_ropero:
     return
 
 
-# Acción Cajonera — el MC encuentra la ropa interior.
+# Accion Cajonera — el MC encuentra la ropa interior.
 label violet_quest08a_accion_cajonera:
     $ ocultar_hud()
     window show
@@ -436,7 +436,7 @@ label violet_quest08a_cierre_desarrollo:
     # 1. Adelantar el tiempo 2 veces (queda de noche)
     $ avanzar_horario_multiple(2)
 
-    # 2. Mover al MC a su habitación
+    # 2. Mover al MC a su habitacion
     $ sistema_locaciones.mover_a_locacion("casa_hmc")
 
     # 3. Restablecer los backgrounds de las locaciones a su estado normal
@@ -480,7 +480,7 @@ label test_quest08a_violet:
     $ vq8a_cajonera_vista = False
 
     # Forzar la 08_a como la ÚNICA quest activa de Violet, en ETAPA_BOTON_LISTO
-    # (así el cierre la completa correctamente con completar_quest_actual("violet"))
+    # (asi el cierre la completa correctamente con completar_quest_actual("violet"))
     python:
         for _q in sistema_quests.quests.values():
             if _q.npc_id == "violet" and _q.activa and _q.id != "violet_questprincipal_08_a":

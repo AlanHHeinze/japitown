@@ -100,7 +100,7 @@ init python:
         loc_pasilloarriba.agregar_hotspot(Hotspot("casa_pasilloarriba_casa_altillo", "MOVE", 255, 0, 450, 200, destino="casa_altillo", nombre="Altillo"))
         sistema_locaciones.registrar_locacion(loc_pasilloarriba)
         
-        # Habitación del MC
+        # Habitacion del MC
         loc_hmc = Locacion(
             id="casa_hmc",
             nombre="Tu Habitación",
@@ -117,7 +117,7 @@ init python:
         ))
         sistema_locaciones.registrar_locacion(loc_hmc)
         
-        # Habitación de Monica
+        # Habitacion de Monica
         loc_hmonica = Locacion(
             id="casa_hmonica",
             nombre="Habitación de Monica",
@@ -128,7 +128,7 @@ init python:
         loc_hmonica.agregar_hotspot(Hotspot("casa_hmonica_casa_baniomonica", "MOVE", 64, 89, 200, 840, destino="casa_baniomonica", nombre="Baño"))
         sistema_locaciones.registrar_locacion(loc_hmonica)
         
-        # Habitación de Violet
+        # Habitacion de Violet
         loc_hviolet = Locacion(
             id="casa_hviolet",
             nombre="Habitación de Violet",
@@ -138,7 +138,7 @@ init python:
         loc_hviolet.agregar_hotspot(Hotspot("casa_hviolet_casa_pasilloarriba", "MOVE", 738, 980, 450, 100, destino="casa_pasilloarriba", nombre="Salida"))
         sistema_locaciones.registrar_locacion(loc_hviolet)
         
-        # Habitación de Jasmine
+        # Habitacion de Jasmine
         loc_hjasmine = Locacion(
             id="casa_hjasmine",
             nombre="Habitación de Jasmine",

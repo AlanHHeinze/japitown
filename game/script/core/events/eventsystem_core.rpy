@@ -369,13 +369,13 @@ init python:
         
         def hay_bloqueo(self, accion):
             """
-            Verifica si una acción está bloqueada por algún evento.
+            Verifica si una accion está bloqueada por algun evento.
             
             Args:
-                accion: Nombre de la acción (ej: "dormir", "avanzar_tiempo")
+                accion: Nombre de la accion (ej: "dormir", "avanzar_tiempo")
             
             Returns:
-                bool: True si la acción está bloqueada
+                bool: True si la accion está bloqueada
             """
             if "bloqueos" not in self.modificaciones_activas:
                 return False
@@ -393,7 +393,7 @@ init python:
             
             Args:
                 npc_id: ID del NPC
-                dia: Día de la semana
+                dia: Dia de la semana
                 horario: Índice del horario
             
             Returns:
@@ -500,7 +500,7 @@ init python:
     def validar_eventos():
         """
         Valida todos los eventos del juego.
-        Llamar después de CADA acción del jugador (moverse, interactuar, avanzar tiempo, etc.)
+        Llamar despues de CADA accion del jugador (moverse, interactuar, avanzar tiempo, etc.)
 
         Si un evento pasa de oculto a visible, ejecuta su callback on_aparicion.
         Retorna una lista de eventos que acaban de aparecer.
@@ -546,7 +546,7 @@ label ejecutar_event:
     
     jump game_loop
 
-# Label para completar el evento actual después de su efecto
+# Label para completar el evento actual despues de su efecto
 label completar_event:
     $ event = obtener_event(_event_id_temp)
     

@@ -18,7 +18,7 @@ init python:
 
     # Catálogo de items disponibles para comprar
     # Formato: "id": {"nombre": str, "emoji": str, "precio": int, "dias_entrega": int}
-    # dias_entrega: Días hábiles (no incluye fines de semana)
+    # dias_entrega: Dias hábiles (no incluye fines de semana)
 
     CATALOGO_ITEMS = {
         # Comida - Entrega rápida
@@ -178,7 +178,7 @@ init python:
             "reposicion": 0,
         },
 
-        # Notebook de Monica — item de quest (se revisa en la habitación del MC)
+        # Notebook de Monica — item de quest (se revisa en la habitacion del MC)
         "notebook_monica": {
             "nombre": "Notebook de Monica",
             "emoji": "💻",
@@ -196,7 +196,7 @@ init python:
         },
 
         # Batería NT520 — repuesto para la notebook de Monica (quest 0_c)
-        # Aparece en la tienda recién al completar la quest 0_c. 1 unidad, 2 días.
+        # Aparece en la tienda recién al completar la quest 0_c. 1 unidad, 2 dias.
         "bateria_nt520": {
             "nombre": "Bateria NT520",
             "emoji": "🔋",
@@ -382,7 +382,7 @@ init python:
     
     def obtener_item_info(item_id):
         """
-        Obtiene la información de un item.
+        Obtiene la informacion de un item.
         
         Args:
             item_id: ID del item

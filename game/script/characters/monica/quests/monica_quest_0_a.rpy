@@ -547,7 +547,7 @@ label quest_monica_0_cierre:
     # Avanzar horario
     $ avanzar_horario()
 
-    # Guardar día de completación para el evento 1
+    # Guardar dia de completación para el evento 1
     $ store.monica_quest_0_dia_completada = getattr(store, 'dias_totales', 1)
 
     # Completar quest

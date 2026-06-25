@@ -50,7 +50,7 @@ label quest_violet_questprincipal_06_b:
 
 
 ################################################################################
-## PUERTA — Violet pide que espere, varios minutos después la invita a pasar
+## PUERTA — Violet pide que espere, varios minutos despues la invita a pasar
 ################################################################################
 
 label violet_quest06b_puerta:

@@ -38,7 +38,7 @@ label quest_violet_questprincipal_0_a:
     hide screen hud_navegacion
     window show
 
-    # Fondo de la locación actual (habitación de Violet)
+    # Fondo de la locación actual (habitacion de Violet)
     $ _bg_v0a = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else None
     if _bg_v0a:
         scene expression _bg_v0a with fade
@@ -47,7 +47,7 @@ label quest_violet_questprincipal_0_a:
     show violet_parada c_rbase_base b_hablandochica at right with dissolve
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda with dissolve
 
-    # Conversación inicial
+    # Conversacion inicial
     mc "Hola Violet, ¿cómo estás?"
     show mc_parado_base b_none
 

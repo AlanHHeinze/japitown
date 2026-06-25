@@ -38,7 +38,7 @@ label talk_iniciar:
             $ _t_preview_opcion = renpy.random.choice(_t_sin_mem)
             $ _t_preview_resultado = _t_estado.obtener_resultado(_t_preview_opcion)
 
-    # Escena de conversación
+    # Escena de conversacion
     $ ocultar_hud()
     $ _t_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
     scene expression _t_bg

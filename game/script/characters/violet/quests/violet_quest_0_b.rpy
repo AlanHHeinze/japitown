@@ -128,7 +128,7 @@ label elecciones_violet_continuar:
             jump quest_violet_0_opcion_entrar
 
 # =============================================================================
-# OPCIÓN A: RESPETO (+Relación, +Empatía)
+# OPCIÓN A: RESPETO (+Relacion, +Empatía)
 # =============================================================================
 label quest_violet_0_opcion_respeto:
 

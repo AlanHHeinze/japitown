@@ -29,14 +29,14 @@ init python:
 
     def obtener_npc_habitacion(destino_id):
         """
-        Obtiene el ID del NPC dueño de una habitación.
+        Obtiene el ID del NPC dueño de una habitacion.
         """
         return HABITACION_NPC.get(destino_id, None)
 
     def retornar_npcs_pasillo_al_salir(locacion_salida_id):
         """
-        Llamada al salir de un pasillo: si algún NPC está ahí por door access
-        (no por rutina), lo devuelve automáticamente a su habitación.
+        Llamada al salir de un pasillo: si algun NPC está ahi por door access
+        (no por rutina), lo devuelve automáticamente a su habitacion.
         """
         if locacion_salida_id not in ("casa_pasilloarriba", "casa_pasilloabajo"):
             return
@@ -114,12 +114,12 @@ init python:
             if quest_v05b and quest_v05b.activa and not quest_v05b.completada and quest_v05b.etapa_actual == ETAPA_BOTON_LISTO:
                 opciones.append({"texto": "Llegaron los cosplay", "label": "violet_quest05b_puerta", "ocultar_golpear": True})
 
-            # Quest 05_c: Pedirle perdón a Violet (entra a la habitación)
+            # Quest 05_c: Pedirle perdón a Violet (entra a la habitacion)
             quest_v05c = store.sistema_quests.obtener_quest("violet_questprincipal_05_c")
             if quest_v05c and quest_v05c.activa and not quest_v05c.completada and quest_v05c.etapa_actual == ETAPA_BOTON_LISTO:
                 opciones.append({"texto": "Pedirle perdón", "label": "violet_quest05c_puerta", "ocultar_golpear": True})
 
-            # Quest 06_a: Contarle de las entradas (Violet en habitación, de noche)
+            # Quest 06_a: Contarle de las entradas (Violet en habitacion, de noche)
             quest_v06a = store.sistema_quests.obtener_quest("violet_questprincipal_06_a")
             if quest_v06a and quest_v06a.activa and not quest_v06a.completada and quest_v06a.etapa_actual == ETAPA_BOTON_LISTO and store.horario_actual == 2:
                 opciones.append({"texto": "Tengo las entradas", "label": "violet_quest06a_puerta", "ocultar_golpear": True})
@@ -252,7 +252,7 @@ screen menu_banio_npc(npc_id, bg_path=None):
 # Label completo de interaccion con puerta (se usa con jump, no call)
 # _destino_puerta debe estar seteado antes de saltar aqui
 label interaccion_puerta_npc:
-    # Obtener NPC de la habitación destino
+    # Obtener NPC de la habitacion destino
     $ _npc_habitacion = obtener_npc_habitacion(_destino_puerta)
 
     if not _npc_habitacion:
@@ -302,7 +302,7 @@ label interaccion_puerta_npc:
             return
 
         else:
-            # Ausente por rutina normal, quest, u otra razón
+            # Ausente por rutina normal, quest, u otra razon
             $ _msg_ausente = MENSAJES_AUSENTE.get(_npc_habitacion, "No hay nadie.")
             $ _msg_ausente = renpy.translate_string(_msg_ausente)
             piensa "[_msg_ausente]"
@@ -376,7 +376,7 @@ label interaccion_golpear_dejar_pasar:
 
 
 label interaccion_golpear_sale_pasillo:
-    # NPC dice "Ahí salgo" y se mueve al pasillo
+    # NPC dice "Ahi salgo" y se mueve al pasillo
     $ _msg_ahi_salgo = MENSAJES_NPC_PUERTA.get(_npc_habitacion, {}).get("ahi_salgo", "Ahí salgo.")
     if _npc_habitacion == "violet":
         violet "[_msg_ahi_salgo]"
@@ -406,7 +406,7 @@ label interaccion_banio_ocupado:
     hide screen hud_navegacion
     window hide
 
-    # Usar el background de la locación actual del jugador (hallway o habitación)
+    # Usar el background de la locación actual del jugador (hallway o habitacion)
     $ _bg_banio_frente = store.sistema_locaciones.locacion_actual.background if store.sistema_locaciones.locacion_actual else None
 
     call screen menu_banio_npc(_npc_banio_obj.id, bg_path=_bg_banio_frente)
