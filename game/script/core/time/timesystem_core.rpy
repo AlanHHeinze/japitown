@@ -179,7 +179,7 @@ init python:
         """
         Retorna la fecha completa como string.
         """
-        return f"{DIAS_SEMANA[dia_semana_actual]}, Día {dia_actual} de {ESTACIONES[estacion_actual]}, Año {año_actual}"
+        return f"{DIAS_SEMANA[dia_semana_actual]}, Día {dia_actual} de {ESTACIONES[estacion_actual]}, Año {ano_actual}"
     
     def obtener_horario():
         """

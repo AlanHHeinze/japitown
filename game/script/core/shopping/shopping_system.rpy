@@ -62,7 +62,7 @@ init python:
             elif dias == 1:
                 return renpy.translate_string("Llega mañana")
             else:
-                tmpl = renpy.translate_string("Llega en {días} días")
+                tmpl = renpy.translate_string("Llega en {dias} días")
                 return tmpl.format(dias=dias)
 
         def obtener_contenido_texto(self):
@@ -327,7 +327,7 @@ init python:
             
             lineas = []
             for orden in ordenes:
-                lineas.append(f"Orden de compra N°{orden.número}")
+                lineas.append(f"Orden de compra N°{orden.numero}")
                 lineas.append(orden.obtener_texto_dias())
                 lineas.append("Contenido:")
                 for texto in orden.obtener_contenido_texto():
