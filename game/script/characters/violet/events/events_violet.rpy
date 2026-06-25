@@ -3,6 +3,8 @@
 ################################################################################
 
 default violet_limpieza_completada = False
+default violet_ev03_pendiente_desde_dia = None
+default violet_ev03_mensaje_disparado = False
 
 init 10 python:
 
@@ -12,24 +14,37 @@ init 10 python:
 
     def condicion_aparicion_evento01_violet():
         """El evento aparece cuando la quest 0 de Violet está completada."""
-        quest = sistema_quests.obtener_quest("violet_questprincipal_0")
+        quest = sistema_quests.obtener_quest("violet_questprincipal_0_b")
         return quest is not None and quest.completada
 
     def condicion_aparicion_evento03_violet():
         """El evento aparece cuando la quest 03_a de Violet está completada."""
-        quest = sistema_quests.obtener_quest("violet_questprincipal_03_a")
+        quest = sistema_quests.obtener_quest("violet_questprincipal_0_b3_a")
         return quest is not None and quest.completada
 
     def condicion_activacion_evento03_violet():
-        """Se activa cuando es sábado por la mañana."""
+        """Se activa cuando es sábado por la mañana y el mensaje de Monica fue completado."""
         dia = getattr(store, 'dia_semana_actual', 0)
         horario = getattr(store, 'horario_actual', 0)
-        return dia == 5 and horario == 0
+        if dia != 5 or horario != 0:
+            return False
+        if not getattr(store, 'violet_ev03_mensaje_disparado', False):
+            return False
+        # El mensaje se envía el día siguiente a violet_ev03_pendiente_desde_dia.
+        # Bloqueamos activación en ese mismo día para evitar que evento y mensaje
+        # se disparen juntos en la misma mañana (ej: quest completa viernes, jugador
+        # duerme directo al sábado).
+        dias_actuales = getattr(store, 'dias_totales', 0)
+        dia_visible = getattr(store, 'violet_ev03_pendiente_desde_dia', None)
+        if dia_visible is None or dias_actuales <= dia_visible + 1:
+            return False
+        if not hasattr(store, 'sistema_mensajes'):
+            return False
+        return store.sistema_mensajes.grupo_completado("monica_chat_violet_quest2")
 
     def on_aparicion_evento03_violet():
-        """Dispara el chat de Monica al aparecer el evento de limpieza."""
-        if hasattr(store, 'sistema_mensajes'):
-            store.sistema_mensajes.disparar_por_trigger("event_aparicion", "violet_quest2_chat_monica", "monica")
+        """Guarda el día en que el evento se volvió visible para enviar el mensaje al día siguiente."""
+        store.violet_ev03_pendiente_desde_dia = getattr(store, 'dias_totales', 0)
 
     def inicializar_events_violet():
         """Inicializa todos los eventos de Violet."""
@@ -49,8 +64,8 @@ init 10 python:
             npc_id="violet",
             config_etapas={
                 ESTADO_EVENT_VISIBLE: ConfigEtapa(
-                    pista="Podría probar el casco VR.",
-                    que_hacer="Comprar el casco VR.",
+                    pista="Siempre quise un casco VR, ahora que esta disponible podria comprarlo",
+                    que_hacer="Comprar el casco VR y usarlo en tu habitacion por la noche",
                 ),
             },
         )
@@ -77,7 +92,6 @@ init 10 python:
             npc_id="violet",
             mensaje_pista="Monica me pidió que limpie la casa con Violet el sábado por la mañana.",
             mensaje_que_hacer="Ir a la habitación de Violet el sábado por la mañana.",
-            mensaje_despertar="Hoy es sábado, tengo que despertar a Violet para que limpiemos la casa.",
             modificaciones={
                 "rutinas": {
                     "violet":   {(5, 0): "casa_hviolet"},
@@ -89,7 +103,6 @@ init 10 python:
                 ESTADO_EVENT_VISIBLE: ConfigEtapa(
                     pista="Monica me pidió que limpie la casa con Violet el sábado por la mañana.",
                     que_hacer="Esperar al sábado por la mañana.",
-                    mensaje_despertar="Este sábado tengo que despertar a Violet para limpiar la casa.",
                 ),
                 ESTADO_EVENT_ACTIVO: ConfigEtapa(
                     pista="Hoy es sábado, tengo que despertar a Violet para limpiar.",
@@ -99,7 +112,11 @@ init 10 python:
             },
         )
 
-        sistema_events.registrar_event(evento03_violet)
+        # DESCONECTADO TEMPORALMENTE: el evento 03 (Limpieza del Sábado) no se
+        # registra por ahora, así que no aparece en el panel de pistas ni se
+        # dispara. La definición de arriba y el label evento03_violet se dejan
+        # intactos para reconectarlo en el futuro (basta descomentar la línea).
+        # sistema_events.registrar_event(evento03_violet)
 
 
 # Inicializar eventos de Violet al cargar el juego

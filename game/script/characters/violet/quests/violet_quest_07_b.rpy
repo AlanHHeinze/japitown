@@ -11,7 +11,7 @@ label quest_violet_questprincipal_07_b:
 
 
 ################################################################################
-## HABLAR — Conversación en la locación actual
+## HABLAR — Conversacion en la locación actual
 ################################################################################
 
 label violet_quest07b_hablar:

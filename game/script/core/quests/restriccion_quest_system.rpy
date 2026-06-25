@@ -20,17 +20,18 @@ init python:
         """
         
         def __init__(self,
-                     locaciones_permitidas=None,
-                     acciones_bloqueadas=None,
-                     mensaje_movimiento="No puedo ir ahí ahora",
-                     mensajes_acciones=None,
-                     npcs_ocultos=None,
-                     npcs_interactuables=None,
-                     mensaje_npc_bloqueado="No tengo tiempo para eso ahora",
-                     celular_bloqueado=False,
-                     mensaje_celular="No es momento de usar el celular",
-                     elementos_escena=None,
-                     mensajes_bloqueados=False):
+            locaciones_permitidas=None,
+            acciones_bloqueadas=None,
+            mensaje_movimiento="No puedo ir ahí ahora",
+            mensajes_acciones=None,
+            npcs_ocultos=None,
+            npcs_interactuables=None,
+            mensaje_npc_bloqueado="No tengo tiempo para eso ahora",
+            celular_bloqueado=False,
+            mensaje_celular="No es momento de usar el celular",
+            elementos_escena=None,
+            mensajes_bloqueados=False,
+            mensaje_accion_default=None):
             """
             Args:
                 locaciones_permitidas: Set/lista de IDs de locaciones permitidas (whitelist).
@@ -76,6 +77,9 @@ init python:
             
             # Elementos de escena
             self.elementos_escena = list(elementos_escena) if elementos_escena else []
+
+            # Mensaje genérico para acciones bloqueadas sin mensaje específico
+            self.mensaje_accion_default = mensaje_accion_default
             
             # Labels por locación — se disparan al entrar a una locación
             self.labels_por_locacion = {}
@@ -102,8 +106,12 @@ init python:
                 return None
             if accion_id not in self.acciones_bloqueadas:
                 return None
-            # Buscar mensaje específico, o usar genérico
-            return self.mensajes_acciones.get(accion_id, renpy.translate_string("No puedo hacer eso ahora"))
+            # Buscar mensaje específico → default de la restricción → genérico
+            if accion_id in self.mensajes_acciones:
+                return self.mensajes_acciones[accion_id]
+            if self.mensaje_accion_default:
+                return renpy.translate_string(self.mensaje_accion_default)
+            return renpy.translate_string("No puedo hacer eso ahora")
         
         def es_npc_oculto(self, npc_id):
             """Verifica si un NPC debe estar oculto."""

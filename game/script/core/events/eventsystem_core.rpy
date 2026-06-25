@@ -501,12 +501,16 @@ init python:
         """
         Valida todos los eventos del juego.
         Llamar después de CADA acción del jugador (moverse, interactuar, avanzar tiempo, etc.)
-        
+
         Si un evento pasa de oculto a visible, ejecuta su callback on_aparicion.
         Retorna una lista de eventos que acaban de aparecer.
         """
+        # Verificar condiciones de auto-completado de quests del MC
+        if hasattr(store, 'sistema_quests_mc'):
+            store.sistema_quests_mc.actualizar()
+
         eventos_aparecieron = []
-        
+
         for event in sistema_events.events.values():
             # Si el evento está oculto, verificar si debe aparecer
             if event.estado == ESTADO_EVENT_OCULTO:

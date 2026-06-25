@@ -2,7 +2,7 @@
 ## Violet Evento 03 — Limpieza del Sábado
 ################################################################################
 ## Narrativa del evento de limpieza sábado de Violet
-## Se dispara desde el door access de la habitación de Violet (sábado mañana)
+## Se dispara desde el door access de la habitacion de Violet (sábado mañana)
 ## Disponible luego de completar la quest 03_a
 
 # =============================================================================
@@ -33,28 +33,9 @@ screen menu_quest2_violet_opciones():
     style_prefix "choice"
 
     vbox:
-        # Opción A — siempre disponible
-        textbutton "En qué me estoy acostumbrando a volver a vivir acá" action Return("a")
-
-        # Opción B — requiere amor >= 10
-        if violet_amor >= 10:
-            textbutton "Me acordaba cuando inventábamos excusas para no ordenar y Monica se enojaba" action Return("b")
-        else:
-            textbutton "Me acordaba cuando inventabamos excusas para no ordenar y Monica se enojaba":
-                action None
-                sensitive False
-                text_color "#666666"
-                text_hover_color "#666666"
-
-        # Opción C — requiere deseo >= 10
-        if violet_deseo >= 10:
-            textbutton "Pensaba en que te queda muy sexy ese pijama" action Return("c")
-        else:
-            textbutton "Pensaba en que te queda muy sexy ese pijama":
-                action None
-                sensitive False
-                text_color "#666666"
-                text_hover_color "#666666"
+        textbutton "En qué me estoy acostumbrando a volver a vivir aquí" action Return("a")
+        textbutton "Me acordaba cuando inventábamos excusas para no ordenar y Monica se enojaba" action Return("b")
+        textbutton "Pensaba en que te queda muy sexy ese pijama" action Return("c")
 
 
 ################################################################################
@@ -110,10 +91,10 @@ label evento03_violet:
 
     # MC habla
     show mc_espalda_base brazoscruzados
-    mc "Violet, Monica pidio que nos ocupemos hoy de la limpieza, mientras ella estaba fuera con Jasmine."
+    mc "Violet, Monica pidió que nos ocupemos hoy de la limpieza, mientras ella estaba fuera con Jasmine."
 
     # MC habla
-    piensa "¿Se volvio a dormir?"
+    piensa "¿Se volvió a dormir?"
     show mc_espalda_base rascarse1
     pause 0.3
     show mc_espalda_base rascarse2
@@ -134,7 +115,7 @@ label evento03_violet:
     mc "DESPERTATEEEEE"
 
     # Violet habla
-    violet "¿Que pasa?"
+    violet "¿Qué pasa?"
 
     # MC habla
     mc "Vamos... tenemos que limpiar"
@@ -169,7 +150,7 @@ label evento03_violet:
 
     # Violet habla
     show violet_parada b_hablandochica
-    violet "¿Que pasa?"
+    violet "¿Qué pasa?"
     show violet_parada b_none
 
     # MC habla
@@ -201,7 +182,7 @@ label evento03_violet:
 
     # MC habla
     show mc_parado_base b_hablando
-    mc "Cuánto antes terminemos, antes te podés dormir"
+    mc "Cuánto antes terminemos, antes te puedes dormir"
     show mc_parado_base b_none
 
     # MC habla
@@ -262,93 +243,19 @@ label evento03_violet:
 
 label violet_quest2_living_interactivo:
 
-    # Ocultar HUD, mostrar fondo del living
-    $ ocultar_hud()
-    window show
+    # Mostrar escena y texto inicial solo la primera vez
+    if not vq2_texto_inicial_mostrado:
+        $ ocultar_hud()
+        window show
+        scene quest2_violet_living_mañana with fade
+        piensa "Bueno, a limpiar"
+        $ vq2_texto_inicial_mostrado = True
+        window hide
 
-    scene quest2_violet_living_mañana with fade
-
-    # Texto inicial del MC
-    piensa "Bueno, a limpiar"
-
-    # Marcar que se mostró el texto inicial
-    $ vq2_texto_inicial_mostrado = True
-
-    # Loop del screen de limpieza
-    label .loop_limpieza:
-
-        # Mostrar screen y esperar interacción
-        $ _elemento_elegido = renpy.call_screen("limpieza_quest2_violet")
-
-        if _elemento_elegido == "chimenea":
-            scene quest2_violet_limpiando_chimenea with fade
-            piensa "No se por que me puse a limpiar esto..."
-            $ vq2_chimenea_pendiente = False
-            scene quest2_violet_living_mañana with fade
-
-        elif _elemento_elegido == "escalera":
-            scene quest2_violet_limpiando_escalera with fade
-            piensa "Espero que Raquel vuelva pronto"
-            $ vq2_escalera_pendiente = False
-            scene quest2_violet_living_mañana with fade
-
-        elif _elemento_elegido == "sillon":
-            scene quest2_violet_limpiando_sillon with fade
-            piensa "Violet debería tener un poco más de cuidado cuando come acá"
-            $ vq2_sillon_pendiente = False
-            scene quest2_violet_living_mañana with fade
-
-        # Verificar si quedan elementos
-        if vq2_chimenea_pendiente or vq2_escalera_pendiente or vq2_sillon_pendiente:
-            jump .loop_limpieza
-
-    # =========================================================================
-    # Limpieza terminada — Activar restricción 2: solo pasillo arriba
-    # =========================================================================
-
-    piensa "Listo el living. Voy a ver como va Violet."
-
-    # Actualizar restricción: ahora solo puede ir al pasillo arriba
-    $ activar_restriccion(
-        locaciones_permitidas=["casa_pasilloarriba"],
-        acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar"],
-        mensaje_movimiento=_("Debo ir a ver como va Violet con la limpieza"),
-        mensajes_acciones={
-            "avanzar_tiempo": _("No puedo perder tiempo con esto"),
-            "dormir":         _("No puedo perder tiempo con esto"),
-            "entrenar":       _("No puedo perder tiempo con esto"),
-            "trabajar":       _("No puedo perder tiempo con esto"),
-            "usar_item":      _("No puedo perder tiempo con esto"),
-            "comprar":        _("No puedo perder tiempo con esto"),
-        },
-        mensaje_npc_bloqueado=_("No tengo tiempo para eso ahora"),
-        celular_bloqueado=True,
-        mensaje_celular=_("No puedo perder tiempo con esto"),
-        npcs_ocultos=["monica", "jasmine", "violet"],
-        # Sprite de Violet barriendo como elemento de escena en el pasillo
-        elementos_escena=[
-            {
-                "locacion": "casa_pasilloarriba",
-                "tipo": "imagebutton",
-                "id": "violet_barriendo",
-                "imagen": "images/quest/violet/quest1/violet_quest01_violetbarriendo.png",
-                "pos": vq2_pos_violet_barriendo,
-                "anchor": (0.5, 1.0),
-                "label": "violet_quest2_escena_pasillo",
-            }
-        ],
-    )
-
-    # Registrar label para cuando el jugador entre al pasillo arriba
-    $ restriccion_quest_activa.registrar_label_locacion("casa_pasilloarriba", "violet_quest2_pasillo_interactivo")
-
-    # Mover al jugador al living (donde terminó la limpieza)
-    $ sistema_locaciones.mover_a_locacion("casa_living")
-
-    # Devolver control al jugador
-    window hide
+    # Activar accion "Limpiar" en el living y devolver control al jugador
+    $ vq2_limpiar_accion_activa = True
     $ mostrar_hud()
-    jump game_loop
+    return
 
 
 ################################################################################
@@ -410,7 +317,7 @@ label violet_quest2_escena_pasillo:
 
     # Violet habla
     show violet_parada b_hablandochica
-    violet "¿Como me voy a quedar dormida barriendo?"
+    violet "¿Cómo me voy a quedar dormida barriendo?"
     show violet_parada b_none
     pause 0.3
 
@@ -422,7 +329,7 @@ label violet_quest2_escena_pasillo:
 
     # Violet habla
     show violet_parada b_hablandochica o_tristes
-    violet "Perdon"
+    violet "Perdón"
     show violet_parada b_none
     pause 0.3
 
@@ -431,7 +338,7 @@ label violet_quest2_escena_pasillo:
 
     # MC habla
     show mc_parado_base b_hablando
-    mc "Te voy a ayudar, yo sigo aca arriba, voy a buscar algo para limpiar"
+    mc "Te voy a ayudar, yo sigo aquí arriba, voy a buscar algo para limpiar"
     show mc_parado_base b_none
 
     # Violet habla
@@ -440,7 +347,7 @@ label violet_quest2_escena_pasillo:
     show violet_parada b_none
 
     # MC piensa
-    piensa "Voy a ir a la cocina a buscar un trapeador"
+    piensa "Voy a ir a la cocina a buscar algunas cosas para limpiar"
 
     # =========================================================================
     # Activar restricción: navegar a la cocina para buscar trapeador
@@ -484,55 +391,14 @@ label violet_quest2_cocina_interactivo:
 
     $ ocultar_hud()
     window show
-
     scene bg_casa_mañana_cocina with fade
-
     piensa "Alguno de estos muebles debe tener un trapeador"
-
-    # Loop del screen de búsqueda
-    label .loop_busqueda:
-
-        # Mostrar screen y esperar interacción
-        $ _elemento_cocina = renpy.call_screen("buscar_trapeador_quest2_violet")
-
-        if _elemento_cocina == "alacena":
-            piensa "Aca esta"
-        else:
-            piensa "Alguno de estos muebles debe tener un trapeador"
-            jump .loop_busqueda
-
-    # =========================================================================
-    # Trapeador encontrado — Restricción: solo pasillo arriba
-    # =========================================================================
-
-    $ activar_restriccion(
-        locaciones_permitidas=["casa_cocina", "casa_pasilloabajo", "casa_living", "casa_pasilloarriba"],
-        acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar"],
-        mensaje_movimiento=_("Debo volver arriba a limpiar"),
-        mensajes_acciones={
-            "avanzar_tiempo": _("No puedo perder tiempo con esto"),
-            "dormir":         _("No puedo perder tiempo con esto"),
-            "entrenar":       _("No puedo perder tiempo con esto"),
-            "trabajar":       _("No puedo perder tiempo con esto"),
-            "usar_item":      _("No puedo perder tiempo con esto"),
-            "comprar":        _("No puedo perder tiempo con esto"),
-        },
-        mensaje_npc_bloqueado=_("No tengo tiempo para eso ahora"),
-        celular_bloqueado=True,
-        mensaje_celular=_("No puedo perder tiempo con esto"),
-        npcs_ocultos=["monica", "jasmine", "violet"],
-    )
-
-    # Registrar label para cuando el jugador llegue al pasillo arriba
-    $ restriccion_quest_activa.registrar_label_locacion("casa_pasilloarriba", "violet_quest2_limpieza_pasillo")
-
-    # Mover al jugador a la cocina (donde está)
-    $ sistema_locaciones.mover_a_locacion("casa_cocina")
-
-    # Devolver control al jugador
     window hide
+
+    # Activar accion "Buscar" en la cocina y devolver control al jugador
+    $ vq2_buscar_accion_activa = True
     $ mostrar_hud()
-    jump game_loop
+    return
 
 
 ################################################################################
@@ -544,16 +410,15 @@ label violet_quest2_limpieza_pasillo:
     $ ocultar_hud()
     window show
 
-    scene black with fade
-    pause 1.0
-    centered "{color=#FFFFFF}Una limpieza más tarde{/color}"
-    pause 1.0
-
     scene quest2_violet_limpiandopasilloarriba with fade
 
     piensa "Estoy agotado ya, Violet debería haber terminado"
     piensa "Voy a ver como esta"
 
+    scene black with fade
+    pause 1.0
+    centered "{color=#FFFFFF}Una limpieza más tarde{/color}"
+    pause 1.0
 
 ################################################################################
 ## LABEL: Post-menú — Activar restricción 3: solo baño arriba
@@ -614,7 +479,7 @@ label violet_quest2_escena_banio:
 
     mc "¿Violet?"
     violet "¿Si?"
-    mc "¿Qué hacés?"
+    mc "¿Qué haces?"
     violet "Estoy limpiando el baño"
     mc "¿Está limpiando la alfombra del baño con un trapo?"
     violet "Estoy secando, se me cayó agua"
@@ -622,7 +487,7 @@ label violet_quest2_escena_banio:
     violet "¿Necesitas algo?"
     piensa "Tengo que dejar de mirarla o va a ser un problema"
     mc "No, ya terminé y quería ver cómo estaba"
-    violet "Yo también, ayudame a pararme"
+    violet "Yo también, ayúdame a pararme"
     mc "Ok"
 
     scene bg_casa_mañana_banioarriba_zoom
@@ -701,11 +566,11 @@ label violet_quest2_escena_banio:
 label violet_quest2_opcion_a:
 
     show violet_parada b_hablandochica
-    violet "Yo espero acostumbrarme tambien"
+    violet "Yo espero acostumbrarme también"
     show violet_parada b_sonrisapequeña
 
     show mc_parado_base b_hablando
-    mc "¿A que yo este aca?"
+    mc "¿A que yo este aquí?"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
@@ -721,11 +586,11 @@ label violet_quest2_opcion_a:
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Sí vos, ignorándome cada vez que tenés la oportunidad"
+    mc "Sí tú, ignorándome cada vez que tienes la oportunidad"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Yo pienso que tendrías que colaborar vos en remediar todo el tiempo que desapareciste"
+    violet "Yo pienso que tendrías que colaborar tú en remediar todo el tiempo que desapareciste"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
@@ -737,11 +602,11 @@ label violet_quest2_opcion_a:
     show violet_parada b_none o_base
     pause 0.3
     show violet_parada b_hablandochica o_arribanm
-    violet "Y ahora venís en rol de víctima esperando que todos digamos pobrecito [mc_name]"
+    violet "Y ahora vienes en rol de víctima esperando que todos digamos pobrecito [mc_name]"
     show violet_parada b_none o_base
 
     show mc_parado_base b_hablando
-    mc "No es asi"
+    mc "No es así"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica o_arribanm
@@ -768,7 +633,8 @@ label violet_quest2_opcion_a:
     violet "Otra vez escapando"
     show violet_parada b_none
 
-    $ vq4_rama_elegida = "a"
+    $ cambiar_stat1("violet", 2)
+    $ cambiar_stat2("violet", 1)
 
     jump violet_quest2_cierre
 
@@ -800,7 +666,7 @@ label violet_quest2_opcion_b:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica o_enojados
-    violet "Yo no tenia problemas con bañarme"
+    violet "Yo no tenía problemas con bañarme"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
@@ -832,10 +698,10 @@ label violet_quest2_opcion_b:
     hide mc_parado_base with dissolve
 
     show violet_parada b_hablandochica
-    violet "Yo tambien"
+    violet "Yo también"
     show violet_parada b_none
 
-    $ vq4_rama_elegida = "b"
+    $ cambiar_stat1("violet", 4)
 
     jump violet_quest2_cierre
 
@@ -849,11 +715,11 @@ label violet_quest2_opcion_c:
     $ violet_quest2_trajesexy = True
 
     show violet_parada b_hablandochica
-    violet "¿Que dijiste?"
+    violet "¿Qué dijiste?"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Jajajaja mala mia"
+    mc "Jajajaja mala mía"
     show mc_parado_base b_none
     pause 0.3
     show mc_parado_base b_hablando
@@ -897,11 +763,11 @@ label violet_quest2_opcion_c:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "¿Por que terminamos hablando de esto?"
+    violet "¿Por qué terminamos hablando de esto?"
     show violet_parada b_none
     pause 0.3
     show violet_parada b_hablando
-    violet "Ahh si por que sos un pervertido"
+    violet "Ahh si por qué eres un pervertido"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
@@ -924,24 +790,16 @@ label violet_quest2_opcion_c:
     violet "¿Debilidades...?"
     show violet_parada b_none
 
-    $ vq4_rama_elegida = "c"
+    $ cambiar_stat2("violet", 2)
 
     jump violet_quest2_cierre
 
 
 ################################################################################
-## CIERRE COMÚN — Todas las ramas convergen aquí
+## CIERRE COMÚN — Todas las ramas convergen aqui
 ################################################################################
 
 label violet_quest2_cierre:
-
-    # Evaluar ruta elegida y aplicar stats
-    if vq4_rama_elegida == "a":
-        $ obtener_npc("violet").modificar_stat1(5)
-    elif vq4_rama_elegida == "b":
-        $ obtener_npc("violet").modificar_stat2(5)
-    elif vq4_rama_elegida == "c":
-        $ obtener_npc("violet").modificar_stat2(5)
 
     # Desactivar restricción
     $ desactivar_restriccion()
@@ -958,3 +816,127 @@ label violet_quest2_cierre:
 
     # Volver al loop principal
     jump game_loop
+
+
+################################################################################
+## ACCIONES DE LOCACIÓN — Evento 03 Limpieza del Sábado
+################################################################################
+
+################################################################################
+## ACCIÓN: Limpiar en el living — ejecuta todas las escenas en secuencia
+################################################################################
+
+label ev03_accion_limpiar_living:
+
+    $ vq2_limpiar_accion_activa = False
+    $ ocultar_hud()
+    window show
+
+    scene quest2_violet_limpiando_chimenea with fade
+    piensa "No se por qué me puse a limpiar esto..."
+    $ vq2_chimenea_pendiente = False
+
+    scene quest2_violet_limpiando_escalera with fade
+    piensa "Espero que Raquel vuelva pronto"
+    $ vq2_escalera_pendiente = False
+
+    scene quest2_violet_limpiando_sillon with fade
+    piensa "Violet debería tener un poco más de cuidado cuando come aquí"
+    $ vq2_sillon_pendiente = False
+
+    scene quest2_violet_living_mañana with fade
+    piensa "Listo el living. Voy a ver como va Violet."
+
+    $ activar_restriccion(
+        locaciones_permitidas=["casa_pasilloarriba"],
+        acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar"],
+        mensaje_movimiento=_("Debo ir a ver como va Violet con la limpieza"),
+        mensajes_acciones={
+            "avanzar_tiempo": _("No puedo perder tiempo con esto"),
+            "dormir":         _("No puedo perder tiempo con esto"),
+            "entrenar":       _("No puedo perder tiempo con esto"),
+            "trabajar":       _("No puedo perder tiempo con esto"),
+            "usar_item":      _("No puedo perder tiempo con esto"),
+            "comprar":        _("No puedo perder tiempo con esto"),
+        },
+        mensaje_npc_bloqueado=_("No tengo tiempo para eso ahora"),
+        celular_bloqueado=True,
+        mensaje_celular=_("No puedo perder tiempo con esto"),
+        npcs_ocultos=["monica", "jasmine", "violet"],
+        elementos_escena=[
+            {
+                "locacion": "casa_pasilloarriba",
+                "tipo": "imagebutton",
+                "id": "violet_barriendo",
+                "imagen": "images/quest/violet/quest1/violet_quest01_violetbarriendo.png",
+                "pos": vq2_pos_violet_barriendo,
+                "anchor": (0.5, 1.0),
+                "label": "violet_quest2_escena_pasillo",
+            }
+        ],
+    )
+    $ restriccion_quest_activa.registrar_label_locacion("casa_pasilloarriba", "violet_quest2_pasillo_interactivo")
+    $ sistema_locaciones.mover_a_locacion("casa_living")
+
+    window hide
+    $ mostrar_hud()
+    return
+
+
+################################################################################
+## ACCIÓN: Buscar en la cocina — da ítem Elementos de Limpieza
+################################################################################
+
+label ev03_accion_buscar_cocina:
+
+    $ vq2_buscar_accion_activa = False
+    $ ocultar_hud()
+    window show
+
+    scene quest2_violet_limpiando_alacena with fade
+    piensa "Aquí esta"
+
+    $ store.inventario["elementos_limpieza"] = store.inventario.get("elementos_limpieza", 0) + 1
+
+    $ activar_restriccion(
+        locaciones_permitidas=["casa_cocina", "casa_pasilloabajo", "casa_living", "casa_pasilloarriba"],
+        acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar"],
+        mensaje_movimiento=_("Debo volver arriba a limpiar"),
+        mensajes_acciones={
+            "avanzar_tiempo": _("No puedo perder tiempo con esto"),
+            "dormir":         _("No puedo perder tiempo con esto"),
+            "entrenar":       _("No puedo perder tiempo con esto"),
+            "trabajar":       _("No puedo perder tiempo con esto"),
+            "usar_item":      _("No puedo perder tiempo con esto"),
+            "comprar":        _("No puedo perder tiempo con esto"),
+        },
+        mensaje_npc_bloqueado=_("No tengo tiempo para eso ahora"),
+        celular_bloqueado=True,
+        mensaje_celular=_("No puedo perder tiempo con esto"),
+        npcs_ocultos=["monica", "jasmine", "violet"],
+    )
+    $ restriccion_quest_activa.registrar_label_locacion("casa_pasilloarriba", "ev03_pasillo_limpiar_entrada")
+    $ sistema_locaciones.mover_a_locacion("casa_cocina")
+
+    window hide
+    $ mostrar_hud()
+    return
+
+
+################################################################################
+## ENTRADA AL PASILLO — Activa la accion "Limpiar" del pasillo arriba
+################################################################################
+
+label ev03_pasillo_limpiar_entrada:
+    $ vq2_limpiar_pasillo_accion_activa = True
+    $ mostrar_hud()
+    return
+
+
+################################################################################
+## ACCIÓN: Limpiar en el pasillo arriba — dispara la transición de limpieza
+################################################################################
+
+label ev03_accion_limpiar_pasillo:
+    $ vq2_limpiar_pasillo_accion_activa = False
+    jump violet_quest2_limpieza_pasillo

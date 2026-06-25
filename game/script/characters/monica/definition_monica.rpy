@@ -23,7 +23,7 @@ init python:
         Establece el sprite y posición para una rutina específica de Mónica.
         
         Args:
-            dia_semana: Índice del día (0=Lunes, 6=Domingo) o lista de días
+            dia_semana: Índice del dia (0=Lunes, 6=Domingo) o lista de dias
             horario: Índice del horario (0=Mañana, 1=Tarde, 2=Noche, 3=Trasnoche)
             sprite: Ruta del sprite a mostrar
             posicion: Tupla (x, y) con la posición en pantalla
@@ -44,7 +44,7 @@ init python:
     
     def obtener_sprite_rutina_monica():
         """
-        Obtiene el sprite actual de Mónica según el día y horario actual.
+        Obtiene el sprite actual de Mónica según el dia y horario actual.
         Prioridad: 0) Pasillo, 1) Skin activo (quest/evento), 2) Rutina especial, 3) Rutina base
         """
         # Prioridad 0: Sprite de pasillo (door access)
@@ -72,7 +72,7 @@ init python:
 
     def obtener_posicion_rutina_monica():
         """
-        Obtiene la posición actual de Mónica según el día y horario actual.
+        Obtiene la posición actual de Mónica según el dia y horario actual.
         Prioridad: 0) Pasillo, 1) Rutina especial, 2) Rutina base
         """
         # Prioridad 0: NPC en pasillo → posición fija
@@ -132,20 +132,20 @@ init python:
         for dia in range(5):  # 0-4 = Lunes a Viernes
             monica.establecer_rutina(dia, 0, "casa_cocina")      # Mañana: Cocina
             monica.establecer_rutina(dia, 1, "casa_living")      # Tarde: Living
-            monica.establecer_rutina(dia, 2, "casa_hmonica")     # Noche: Su habitación
-            monica.establecer_rutina(dia, 3, "casa_hmonica")     # Trasnoche: Su habitación
+            monica.establecer_rutina(dia, 2, "casa_hmonica")     # Noche: Su habitacion
+            monica.establecer_rutina(dia, 3, "casa_hmonica")     # Trasnoche: Su habitacion
         
         # Sábado
         monica.establecer_rutina(5, 0, "casa_living")       # Mañana: Living
         monica.establecer_rutina(5, 1, "casa_patio")        # Tarde: Patio
         monica.establecer_rutina(5, 2, "casa_cocina")       # Noche: Cocina
-        monica.establecer_rutina(5, 3, "casa_hmonica")      # Trasnoche: Su habitación
+        monica.establecer_rutina(5, 3, "casa_hmonica")      # Trasnoche: Su habitacion
         
         # Domingo
         monica.establecer_rutina(6, 0, "casa_cocina")       # Mañana: Cocina
         monica.establecer_rutina(6, 1, "casa_living")       # Tarde: Living
-        monica.establecer_rutina(6, 2, "casa_hmonica")      # Noche: Su habitación
-        monica.establecer_rutina(6, 3, "casa_hmonica")      # Trasnoche: Su habitación
+        monica.establecer_rutina(6, 2, "casa_hmonica")      # Noche: Su habitacion
+        monica.establecer_rutina(6, 3, "casa_hmonica")      # Trasnoche: Su habitacion
         
         # =====================================================================
         # SPRITES Y POSICIONES DE RUTINA
@@ -230,18 +230,12 @@ init python:
         # =====================================================================
 
         # Amor
-        monica.agregar_desbloqueo("amor", 10, "💬", "Conversación Diaria",
-            "Podés hablar con Mónica todos los días.")
         monica.agregar_desbloqueo("amor", 30, "🚪", "Ingreso Habitación",
             "Mónica te deja entrar a su cuarto durante el día.")
 
         # Deseo
-        monica.agregar_desbloqueo("deseo", 10, "👁", "???",
-            "")
-        monica.agregar_desbloqueo("deseo", 40, "😘", "???",
-            "")
         monica.agregar_desbloqueo("deseo", 60, "🌙", "Ingreso Nocturno",
-            "Podés entrar a la habitación de Mónica de noche.")
+            "Puedes entrar a la habitación de Mónica de noche.")
 
         # =====================================================================
         # REGISTRAR EN EL SISTEMA
@@ -255,19 +249,19 @@ init python:
 ## DIÁLOGOS DE MÓNICA
 ################################################################################
 
-# Aquí se pueden agregar diálogos específicos de Mónica en el futuro
+# Aqui se pueden agregar diálogos específicos de Mónica en el futuro
 
 ################################################################################
 ## EVENTOS DE MÓNICA
 ################################################################################
 
-# Aquí se pueden agregar eventos específicos de Mónica en el futuro
+# Aqui se pueden agregar eventos específicos de Mónica en el futuro
 
 ################################################################################
 ## QUESTS DE MÓNICA
 ################################################################################
 
-# Aquí se pueden agregar quests específicas de Mónica en el futuro
+# Aqui se pueden agregar quests específicas de Mónica en el futuro
 
 ################################################################################
 ## Datos de Mónica (Guardables)

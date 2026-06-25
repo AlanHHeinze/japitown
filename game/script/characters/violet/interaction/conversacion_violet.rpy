@@ -1,5 +1,5 @@
 ################################################################################
-## Conversación diaria con Violet
+## Conversacion diaria con Violet
 ################################################################################
 ## Pool de preguntas para la interacción "Hablar" con Violet.
 ## Stats: amor / deseo
@@ -26,8 +26,8 @@ init python:
         {
             "q": "¿Se te perdió algo o me estás mirando?",
             "ops": [
-                {"texto": "Solo pasaba por acá.",                               "resp": "Ajá. Seguro pasabas 'por acá' justo donde estoy yo.", "stat": "amor"},
-                {"texto": "Me quedé mirando sin querer, disculpá.",              "resp": "Está bien. Al menos sos honesto.", "stat": "deseo"},
+                {"texto": "Solo pasaba por aquí.",                               "resp": "Ajá. Seguro pasabas 'por aquí' justo donde estoy yo.", "stat": "amor"},
+                {"texto": "Me quedé mirando sin querer, disculpá.",              "resp": "Está bien. Al menos eres honesto.", "stat": "deseo"},
                 {"texto": "Estaba pensando en otra cosa.",                       "resp": "Eso espero.", "stat": "amor"},
             ]
         },
@@ -44,20 +44,20 @@ init python:
 
         # P3 — A=per  B=com  C=sum
         {
-            "q": "¿Cómo te llevás con la gente de esta casa?",
+            "q": "¿Cómo te llevas con la gente de esta casa?",
             "ops": [
                 {"texto": "Más o menos, cada uno tiene su onda.",                "resp": "Eso es bastante acertado.", "stat": "amor"},
-                {"texto": "Bien, me llevo bien con todos, incluida vos.",        "resp": "Incluida yo, claro. Qué generoso.", "stat": "amor"},
+                {"texto": "Bien, me llevo bien con todos, incluida tú.",        "resp": "Incluida yo, claro. Qué generoso.", "stat": "amor"},
                 {"texto": "Intento no molestar a nadie, nada más.",              "resp": "Eso ya es mucho más de lo que hacen otros.", "stat": "deseo"},
             ]
         },
 
         # P4 — A=com  B=per  C=sum
         {
-            "q": "¿Te aburre mucho estar acá sin hacer nada?",
+            "q": "¿Te aburre mucho estar aquí sin hacer nada?",
             "ops": [
                 {"texto": "Mientras pase algo interesante, me banco.",           "resp": "Depende de lo que cuente como 'interesante'.", "stat": "amor"},
-                {"texto": "A veces sí, pero me entretengo solo.",                "resp": "Autosuficiente. Eso es raro por acá.", "stat": "amor"},
+                {"texto": "A veces sí, pero me entretengo solo.",                "resp": "Autosuficiente. Eso es raro por aquí.", "stat": "amor"},
                 {"texto": "Un poco, pero no me quejo.",                          "resp": "Hm. Hay gente que se quejaría igual.", "stat": "deseo"},
             ]
         },
@@ -68,7 +68,7 @@ init python:
             "ops": [
                 {"texto": "Porque quería ver cómo estabas.",                     "resp": "...Eso es inesperado.", "stat": "deseo"},
                 {"texto": "¿Necesito un motivo?",                               "resp": "No. Pero no mucha gente viene sin uno.", "stat": "amor"},
-                {"texto": "Estaba desocupado, nada más.",                        "resp": "Al menos sos sincero. Eso se valora.", "stat": "amor"},
+                {"texto": "Estaba desocupado, nada más.",                        "resp": "Al menos eres sincero. Eso se valora.", "stat": "amor"},
             ]
         },
 
@@ -78,7 +78,7 @@ init python:
             "ops": [
                 {"texto": "No. A veces el silencio dice más que mil palabras.",  "resp": "Eso suena a frase de póster, pero… sí.", "stat": "amor"},
                 {"texto": "Prefiero escuchar antes que hablar de más.",          "resp": "Eso es más raro de lo que crees.", "stat": "deseo"},
-                {"texto": "Depende de la persona. Con vos no me jode.",          "resp": "...Bueno. Eso fue inesperado.", "stat": "amor"},
+                {"texto": "Depende de la persona. Contigo no me jode.",          "resp": "...Bueno. Eso fue inesperado.", "stat": "amor"},
             ]
         },
 
@@ -104,7 +104,7 @@ init python:
 
         # P9 — A=per  B=com  C=sum
         {
-            "q": "¿Hay algo que te gustaría cambiar de cómo vivís acá?",
+            "q": "¿Hay algo que te gustaría cambiar de cómo vives aquí?",
             "ops": [
                 {"texto": "Todo cambio empieza por uno mismo.",                  "resp": "Eso suena a consejo de coach, pero tiene razón.", "stat": "amor"},
                 {"texto": "Tal vez pasar más tiempo con la gente de la casa.",   "resp": "...Interesante.", "stat": "amor"},
@@ -118,7 +118,7 @@ init python:
             "ops": [
                 {"texto": "Me gustaría que fuera más.",                          "resp": "...Voy a tenerlo en cuenta.", "stat": "amor"},
                 {"texto": "Lo justo y necesario.",                               "resp": "Práctico. Está bien.", "stat": "amor"},
-                {"texto": "Lo que vos necesites, me adapto.",                    "resp": "...Eso es raro viniendo de alguien.", "stat": "deseo"},
+                {"texto": "Lo que tú necesites, me adapto.",                    "resp": "...Eso es raro viniendo de alguien.", "stat": "deseo"},
             ]
         },
 
@@ -126,7 +126,7 @@ init python:
 
 
 ################################################################################
-## Label de conversación con Violet
+## Label de conversacion con Violet
 ################################################################################
 
 label conversacion_hablar_violet:
@@ -163,7 +163,7 @@ label conversacion_hablar_violet:
             violet "[_op2['resp']]"
             $ _hablar_stat_elegido = _op2["stat"]
 
-    # Bloquear rollback — la recompensa y la conversación no se pueden deshacer
+    # Bloquear rollback — la recompensa y la conversacion no se pueden deshacer
     $ renpy.block_rollback()
     $ _npc_v.modificar_stat(_hablar_stat_elegido, 1)
 

@@ -2,7 +2,7 @@
 ## Mangas de Violet — Item de lectura
 ################################################################################
 ## Item no comprable. El jugador lo recibe durante la quest 01_b.
-## Se puede leer 4 veces en la habitación del MC.
+## Se puede leer 4 veces en la habitacion del MC.
 ## Al terminar la 4ta lectura activa mangas_violet_terminadas = True,
 ## variable que las quests pueden escuchar como condición.
 
@@ -47,7 +47,7 @@ label usar_mangas_violet_mc:
         jump game_loop
 
     if mangas_violet_ultimo_dia == dias_totales:
-        piensa "Ya un tomo fue suficiente por hoy, podría leer el proximo mañana"
+        piensa "Ya un tomo fue suficiente por hoy, podría leer el próximo mañana"
         window hide
         $ mostrar_hud()
         jump game_loop

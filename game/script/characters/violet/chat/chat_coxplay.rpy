@@ -1,7 +1,7 @@
 ################################################################################
 ## Chat de Tienda CoXplay — Quest 05_a
 ################################################################################
-## Conversación completa con la tienda para comprar el conjunto de cosplays.
+## Conversacion completa con la tienda para comprar el conjunto de cosplays.
 ## Se divide en 4 grupos encadenados via accion_al_completar.
 
 init 6 python:
@@ -125,17 +125,17 @@ init 6 python:
                 opciones_jugador=[
                     OpcionRespuesta(
                         texto="Es una buena idea, presentarle tres y que ella elija el que más le gusta, el precio también es conveniente",
-                        respuesta_npc=["Perfecto, podés abonar a la misma cuenta", "Una vez realizado el pago hacemos el envío"],
+                        respuesta_npc=["Perfecto, puedes abonar a la misma cuenta", "Una vez realizado el pago hacemos el envío"],
                         saltar_a_paso=2,
                     ),
                 ]
             ),
-            # Paso 2: Jugador se despide → tienda cierra la conversación
+            # Paso 2: Jugador se despide → tienda cierra la conversacion
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
                         texto="Muchas gracias, les aviso cuando les haga el pago",
-                        respuesta_npc="Gracias a vos",
+                        respuesta_npc="Gracias a ti",
                         saltar_a_paso=-1,
                     ),
                 ]
@@ -198,7 +198,7 @@ init 6 python:
                     ),
                 ]
             ),
-            # Paso 1: Jugador cierra la conversación
+            # Paso 1: Jugador cierra la conversacion
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(

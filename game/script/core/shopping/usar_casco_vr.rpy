@@ -51,7 +51,7 @@ label usar_casco_vr:
     show mc_base_parado_vr vr2 at center with dissolve
     piensa "Creo que voy entendiendo"
     show mc_base_parado_vr vr3 at center with dissolve
-    piensa "Ahi esta"
+    piensa "Ahí esta"
     show mc_base_parado_vr vr2 at center with dissolve
     pause 0.3
     show mc_base_parado_vr vr1 at center with dissolve

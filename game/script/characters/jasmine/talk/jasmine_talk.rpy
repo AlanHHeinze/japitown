@@ -240,9 +240,9 @@ init 10 python:
 
         resoluciones = {
             "+2_amor":  "Y quedó muy satisfecha con la interacción.",
-            "+1_deseo": "Y se mostró más interesada en vos.",
+            "+1_deseo": "Y se mostró más interesada en ti.",
             "-2_amor":  "Y quedó muy molesta con la situación.",
-            "-1_deseo": "Y se alejó un poco de vos.",
+            "-1_deseo": "Y se alejó un poco de ti.",
             "nada":     "La interacción no tuvo un efecto particular.",
         }
 

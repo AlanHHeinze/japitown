@@ -2,11 +2,11 @@
 ## Labels de Interacciones Genéricas
 ################################################################################
 ## Label que maneja la interacción "Hablar" con NPCs.
-## Delega en un label de conversación específico por NPC que:
+## Delega en un label de conversacion específico por NPC que:
 ##   - Muestra sprites de MC y NPC
 ##   - Presenta una pregunta aleatoria del pool del NPC
 ##   - Ofrece 3 opciones (cada una sube un stat distinto)
-##   - Solo se puede hacer 1 vez por día por NPC
+##   - Solo se puede hacer 1 vez por dia por NPC
 
 # Variable temporal para pasar el NPC ID
 default _npc_id_temp = None

@@ -11,6 +11,12 @@ default _locacion_temp = None
 
 label accion_hotspot_move:
 
+    # Hook Quest 0 del MC — intercepta clics MOVE durante la exploración de la casa
+    if _hotspot_temp and getattr(store, 'mc_q0_interceptar_movimiento', False):
+        if mc_q0_debe_interceptar():
+            call mc_q0_handler_move from _call_mc_q0_handler_move
+            return
+
     # Verificar si el destino es habitación de NPC (door_access system)
     if _hotspot_temp and _hotspot_temp.destino in ["casa_hmonica", "casa_hviolet", "casa_hjasmine"]:
 
@@ -112,7 +118,12 @@ label accion_avanzar_tiempo:
         return
 
     $ avanzar_horario()
-    
+
+    # Hook Quest 0 del MC — al avanzar horario en la etapa de espera
+    if getattr(store, 'mc_q0_esperar_horario', False):
+        $ mc_q0_esperar_horario = False
+        jump mc_q0_stage_b
+
     return
 
 

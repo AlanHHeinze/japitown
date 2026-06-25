@@ -100,7 +100,7 @@ label mensajes_al_despertar:
     $ ocultar_hud()
     hide screen hud_navegacion
     
-    # Mostrar habitación del MC (horario actual, normalmente mañana tras dormir)
+    # Mostrar habitacion del MC (horario actual, normalmente mañana tras dormir)
     $ _bg_despertar = sistema_locaciones.obtener_locacion("casa_hmc").background
     scene expression _bg_despertar with fade
     

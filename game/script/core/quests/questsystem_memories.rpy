@@ -88,13 +88,13 @@ init python:
     
     def contar_memorias(categoria=None):
         """
-        Cuenta el número de memorias guardadas.
+        Cuenta el numero de memorias guardadas.
         
         Args:
             categoria: Si se especifica, cuenta solo esa categoría
         
         Returns:
-            int: Número de memorias
+            int: Numero de memorias
         """
         if categoria:
             return len(store.memorias_jugador.get(categoria, {}))

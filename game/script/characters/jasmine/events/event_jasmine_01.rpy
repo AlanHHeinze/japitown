@@ -1,191 +1,13 @@
 ################################################################################
-## Evento 1 de Jasmine: Mostrando Ropa Deportiva
+## Evento 1 de Jasmine: "Volver a ver el conjunto"
 ################################################################################
-## Narrativa del evento donde Jasmine muestra su nueva ropa deportiva
-
+## La primera parte (Jasmine mostrando la ropa nueva) se convirtio en la quest
+## 0_c. Aca queda solo la repeticion: con la quest 0_c completada y Jasmine en
+## el gym por la tarde, el menu de interaccion muestra "Volver a ver el conjunto".
+## La PRIMERA vez ejecuta event_jasmine_01_repetir; las siguientes,
+## event_jasmine_01_repetir_alternativo (lo decide event_jasmine_01_check_replay).
 ################################################################################
-## Label principal del evento
-################################################################################
 
-label event_jasmine_01_mostrando_ropa:
-    # Guardar el ID del evento para poder completarlo después
-    $ _event_id_temp = "jasmine_event_01"
-    
-    # Esconder pantallas del juego temporalmente
-    hide screen hud_navegacion
-    
-    # Activar el skin de ropa deportiva automáticamente
-    $ activar_skin("jasmine", "jasmine_entrenamiento_deportiva")
-    
-    # Ocultar HUD
-    $ ocultar_hud()
-    hide screen hud_navegacion
-
-    # Mostrar background: Patio/Gym
-    scene bg_casa_tarde_gym_zoom with fade
-
-    # Mostrar personajes: MC a la izquierda, Jasmine a la derecha con ropa deportiva
-    show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
-    show jasmine_paradadeportiva c_estirando o_base b_none a_short at right
-
-    #Jasmine habla
-    show jasmine_paradadeportiva c_animacion1 b_hablando with sprite_normal
-    jasmine "¿Recuerdas la ropa que me regalaste?"
-    show jasmine_paradadeportiva b_none with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva c_animacion2 b_hablando with sprite_normal
-    jasmine "Mira como me queda."
-    show jasmine_paradadeportiva b_none with sprite_normal
-
-    #MC Habla
-    show mc_parado_base b_hablando o_felicescerrados with sprite_normal
-    mc "Te queda muy bien la verdad"
-    show mc_parado_base b_felizcerrada o_base with sprite_normal
-
-    #Jasmine habla
-    show jasmine_paradadeportiva c_animacion3 b_hablando with sprite_normal
-    jasmine "Es super elastica"
-    show jasmine_paradadeportiva b_none with sprite_normal
-    show jasmine_paradadeportiva c_animacion4 o_abajonm with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva c_animacion5 with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva c_animacion6 with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva c_animacion7 with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva c_animacion8 with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva c_animacion9 b_hablando o_base with sprite_normal
-    jasmine "Abajo tambien"
-    show jasmine_paradadeportiva b_none with sprite_normal
-    show jasmine_paradadeportiva c_animacion10 o_abajonm with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva c_animacion11 with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva c_animacion12 with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva c_animacion13 o_base with sprite_normal
-    "Pafffff"
-
-
-    #MC Habla
-    show mc_parado_base b_hablando with sprite_normal
-    mc "Supongo que eso es bueno"
-    show mc_parado_base b_felizcerrada with sprite_normal
-
-    #Jasmine habla
-
-    show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "Si, te mantiente el cuerpo firme y eso es comodo"
-    show jasmine_paradadeportiva b_none with sprite_normal
-    show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "Mira"
-    show jasmine_paradadeportiva b_none with sprite_normal
-    show jasmine_paradadeportiva c_animacion14 o_abajonm with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva c_animacion15 with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva c_animacion16 with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva c_animacion17 with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva c_animacion16 with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva c_animacion17 with sprite_normal
-    show jasmine_paradadeportiva b_hablando o_base with sprite_normal
-    jasmine "Vez lo que te digo"
-    show jasmine_paradadeportiva b_none with sprite_normal
-    
-    #MC Habla
-    show mc_parado_base b_hablando with sprite_normal
-    mc "Si..."
-    show mc_parado_base b_none with sprite_normal
-
-    #Jasmine habla
-    show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "¿Te gusta?"
-    show jasmine_paradadeportiva b_none with sprite_normal
-
-    #MC Habla
-    show mc_parado_base b_hablando with sprite_normal
-    mc "Si... Estan firmes"
-    show mc_parado_base b_none with sprite_normal
-
-    #Jasmine habla
-    show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "Hablaba del conjunto idiota jajaja"
-    show jasmine_paradadeportiva b_none with sprite_normal
-
-    #MC Habla
-    show mc_parado_base b_hablando o_arribanm c_rbase_avergonzado with sprite_normal
-    mc "Ehh yo tambien"
-    show mc_parado_base b_none c_rbase_base o_base with sprite_normal
-
-    #Jasmine habla
-    show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "Mira de atras como tambien se ajusta"
-    show jasmine_paradadeportiva b_none with sprite_normal
-    pause 0.3
-
-    
-    show jasmine_paradadeportiva e_animacion1 ca_none o_none b_none a_none c_none at right with sprite_normal
-
-    show jasmine_paradadeportiva e_animacion2 with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva e_animacion3 with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva e_animacion4 with sprite_normal
-    jasmine "¿Que te parece?"
-
-    #MC Habla
-    show mc_parado_base b_hablando with sprite_normal
-    mc "Tambien te queda muy bien"
-    show mc_parado_base b_none with sprite_normal
-
-    
-    #Jasmine habla
-    show jasmine_paradadeportiva e_animacion5 with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva e_animacion6 with sprite_normal
-    jasmine "Tambien se ajusta perfecto"
-    show jasmine_paradadeportiva e_animacion7 with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva e_animacion6 with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva e_animacion7 with sprite_normal
-    pause 0.3
-    show jasmine_paradadeportiva e_animacion6 with sprite_normal
-    pause 0.3
-    jasmine "Muchas gracias de verdad, lo amo"
-    hide jasmine_paradadeportiva
-    show jasmine_paradadeportiva c_estirando o_base b_hablando a_short at right with sprite_normal
-    jasmine "Bueno ahora a entrenar"
-
-    #MC Habla
-    show mc_parado_base b_hablando with sprite_normal
-    mc "Te dejo entrenar tranquila"
-    show mc_parado_base b_none with sprite_normal
-
-    # Ocultar personaje
-    hide jasmine_paradadeportiva
-
-    
-    # Completar el evento
-    $ event = obtener_event(_event_id_temp)
-    if event:
-        $ event.completar()
-    
-    # Mostrar pantallas del juego
-    show screen hud_navegacion
-    
-    # Volver al loop del juego
-    jump game_loop
-
-
-################################################################################
-## Label para repetir la escena (después de completar el evento)
-################################################################################
 
 label event_jasmine_01_repetir:
     # Esconder pantallas del juego temporalmente
@@ -352,6 +174,12 @@ label event_jasmine_01_repetir:
     # Mostrar pantallas del juego
     show screen hud_navegacion
     
+    # Completar el evento formal: lo saca del panel de pistas. El botón "Volver a
+    # ver el conjunto" sigue visible (su condición es la quest 0_c completada).
+    $ _ev_fin_jas01 = obtener_event("jasmine_event_01")
+    if _ev_fin_jas01 and _ev_fin_jas01.estado != ESTADO_EVENT_COMPLETADO:
+        $ _ev_fin_jas01.completar()
+
     # Volver al loop del juego
     jump game_loop
 
@@ -360,11 +188,11 @@ label event_jasmine_01_repetir:
 ## Router para repetir la escena (verifica si ya se vio)
 ################################################################################
 
-default jasmine_event_01_seen_replay = False
-
 label event_jasmine_01_check_replay:
-    if not jasmine_event_01_seen_replay:
-        $ jasmine_event_01_seen_replay = True
+    # Primera vez = evento todavía no completado → escena principal de repetición
+    # (que lo completa y lo saca del panel). Siguientes = ya completado → alternativa.
+    $ _ev_jas01 = obtener_event("jasmine_event_01")
+    if _ev_jas01 and _ev_jas01.estado != ESTADO_EVENT_COMPLETADO:
         jump event_jasmine_01_repetir
     else:
         jump event_jasmine_01_repetir_alternativo

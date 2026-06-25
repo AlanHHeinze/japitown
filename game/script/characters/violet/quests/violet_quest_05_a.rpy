@@ -8,6 +8,7 @@
 
 default coxplay_q5a_completada = False
 default coxplay_pedido_dia = 0
+default vq5a_cuerpo = "c_rbase"
 
 ################################################################################
 ## LABEL PRINCIPAL — llamado por el botón Listo del HUD
@@ -22,21 +23,29 @@ label quest_violet_questprincipal_05_a:
 
 label violet_quest05a_hablar:
 
+    $ vq5a_cuerpo = cuerpo_activo("violet")
+
     $ ocultar_hud()
     window show
 
     $ _bg_conv = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
     scene expression _bg_conv
 
-    show violet_parada c_rbase_base o_base b_none at right
+    if vq5a_cuerpo == "c_pijama":
+        show violet_parada c_pijama_base ca_pijama o_base b_none at right
+    else:
+        show violet_parada c_rbase_base ca_base o_base b_none at right
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
     show mc_parado_base b_hablando
     mc "Violet, quería contarte que compré los cosplay."
     show mc_parado_base b_none
 
-    show violet_parada b_hablandochica
-    violet "¿Que compraste?"
+    if vq5a_cuerpo == "c_pijama":
+        show violet_parada b_hablandochica c_pijama_base with sprite_fast
+    else:
+        show violet_parada b_hablandochica c_rbase_pensando with sprite_fast
+    violet "¿Qué compraste?"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
@@ -51,15 +60,18 @@ label violet_quest05a_hablar:
     mc "No sé exactamente, era un combo ya armado."
     show mc_parado_base b_none
 
-    show violet_parada b_hablandochica
-    violet "Raro... ¿Y vos qué te compraste?"
-    show violet_parada b_none
+    show violet_parada b_hablandochica o_arribanm
+    violet "Raro... ¿Y tú qué te compraste?"
+    show violet_parada b_none o_base
 
-    show mc_parado_base b_hablando
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
     mc "Voy a esperar que elijas uno de los tres y me compro algo acorde."
-    show mc_parado_base b_none
+    show mc_parado_base b_none c_rbase_base with sprite_fast
 
-    show violet_parada b_hablandochica
+    if vq5a_cuerpo == "c_pijama":
+        show violet_parada b_hablandochica c_pijama_base with sprite_fast
+    else:
+        show violet_parada b_hablandochica c_rbase_base with sprite_fast
     violet "Está bien, avisame cuando llegue el pedido."
     show violet_parada b_none
 
@@ -74,6 +86,8 @@ label violet_quest05a_hablar:
 
 label violet_quest05a_puerta:
 
+    $ vq5a_cuerpo = cuerpo_activo("violet")
+
     $ ocultar_hud()
     window show
 
@@ -87,19 +101,25 @@ label violet_quest05a_puerta:
     $ _bg_pasillo = _loc_pasillo.background if _loc_pasillo else "#1a1a1a"
     scene expression _bg_pasillo with fade
 
-    show violet_parada c_rbase_base o_base b_none at right
+    if vq5a_cuerpo == "c_pijama":
+        show violet_parada c_pijama_base ca_pijama o_base b_none at right
+    else:
+        show violet_parada c_rbase_base ca_base o_base b_none at right
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
     show mc_parado_base b_hablando
-    mc "Conseguí los cosplay que te comenté, quería avisarte."
+    mc "Violet, quería contarte que compré los cosplay."
     show mc_parado_base b_none
 
-    show violet_parada b_hablandochica
-    violet "¿Cosplay?"
+    if vq5a_cuerpo == "c_pijama":
+        show violet_parada b_hablandochica c_pijama_base with sprite_fast
+    else:
+        show violet_parada b_hablandochica c_rbase_pensando with sprite_fast
+    violet "¿Qué compraste?"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Compré una promo de tres, una box armada. Son para vos."
+    mc "Compré una promo de tres, una box armada"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
@@ -110,15 +130,18 @@ label violet_quest05a_puerta:
     mc "No sé exactamente, era un combo ya armado."
     show mc_parado_base b_none
 
-    show violet_parada b_hablandochica
-    violet "¿Y vos qué te compraste?"
-    show violet_parada b_none
+    show violet_parada b_hablandochica o_arribanm
+    violet "Raro... ¿Y tú qué te compraste?"
+    show violet_parada b_none o_base
 
-    show mc_parado_base b_hablando
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
     mc "Voy a esperar que elijas uno de los tres y me compro algo acorde."
-    show mc_parado_base b_none
+    show mc_parado_base b_none c_rbase_base with sprite_fast
 
-    show violet_parada b_hablandochica
+    if vq5a_cuerpo == "c_pijama":
+        show violet_parada b_hablandochica c_pijama_base with sprite_fast
+    else:
+        show violet_parada b_hablandochica c_rbase_base with sprite_fast
     violet "Está bien, avisame cuando llegue el pedido."
     show violet_parada b_none
 

@@ -11,6 +11,9 @@ screen panel_pistas():
 
     modal True
 
+    # Quest 0b del MC: marcar como visitada cuando la quest está esperando
+    on "show" action If(getattr(store, "mc_q0b_esperando", False), SetVariable("mc_q0b_pistas_visitada", True))
+
     $ _ajc = sistema_ajuste_cel.obtener_container("panel_pistas") if modo_ajuste_celular else None
 
     # Fondo del celular
@@ -111,6 +114,38 @@ screen panel_pistas():
 
                         if _hay_algo:
 
+                            # ── Quest activa del MC ──
+                            $ _quest_mc_activa = sistema_quests_mc.obtener_activa()
+                            if _quest_mc_activa:
+                                frame:
+                                    background "#1e1e3aCC"
+                                    padding (15, 12)
+                                    xfill True
+
+                                    hbox:
+                                        spacing 15
+                                        yalign 0.5
+
+                                        if renpy.loadable("images/hud/pista_mc.png"):
+                                            add "images/hud/pista_mc.png" zoom 0.2
+                                        else:
+                                            frame:
+                                                xysize (52, 52)
+                                                background "#3a3a5a"
+                                                text "?" size 26 xalign 0.5 yalign 0.5 color "#ffffff"
+
+                                        vbox:
+                                            spacing 5
+
+                                            text renpy.translate_string(_quest_mc_activa.nombre) + " " + renpy.translate_string("(Quest)") size 16 color "#FFD700" bold True
+
+                                            if mostrar_que_hacer:
+                                                $ _mc_qh = _quest_mc_activa.obtener_que_hacer()
+                                                text "[_mc_qh]" size 13 color "#cccccc"
+                                            else:
+                                                $ _mc_pi = _quest_mc_activa.obtener_pista()
+                                                text "[_mc_pi]" size 13 color "#cccccc"
+
                             # ── Un bloque por NPC conocido ──
                             for _npc_p in _npcs_conocidos:
                                 $ _npc_quest = _quests_por_npc.get(_npc_p.id)
@@ -178,10 +213,7 @@ screen panel_pistas():
                                                 $ _ntitulo = renpy.translate_string(_npc_p.nombre)
                                                 text "[_ntitulo]" size 16 color "#888888" bold True
 
-                                                if not mostrar_que_hacer:
-                                                    text _("Nuevo contenido en futuras actualizaciones.") size 13 color "#666666" italic True
-                                                else:
-                                                    text _("No hay acciones pendientes por ahora.") size 13 color "#666666" italic True
+                                                text _("Contenido en desarrollo") size 13 color "#666666" italic True
 
                                 # Bloques de eventos (uno por evento, independiente de si hay quest)
                                 for _ev in _npc_eventos:

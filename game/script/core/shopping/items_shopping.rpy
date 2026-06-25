@@ -5,11 +5,21 @@
 ## Agregar nuevos items es simple: solo agregar una entrada al diccionario
 
 init python:
-    
+
+    def _item_en_habitacion_mc():
+        """Condición de uso: el MC debe estar en su habitación (casa_hmc)."""
+        loc = store.sistema_locaciones.locacion_actual
+        return loc is not None and loc.id == "casa_hmc"
+
+    def _bateria_nt520_disponible():
+        """La batería aparece en la tienda recién al completar la quest 0_c de Monica."""
+        q = store.sistema_quests.obtener_quest("monica_questprincipal_0_c")
+        return q is not None and q.completada
+
     # Catálogo de items disponibles para comprar
     # Formato: "id": {"nombre": str, "emoji": str, "precio": int, "dias_entrega": int}
     # dias_entrega: Días hábiles (no incluye fines de semana)
-    
+
     CATALOGO_ITEMS = {
         # Comida - Entrega rápida
         "golosinas": {
@@ -150,6 +160,101 @@ init python:
             "icono": "images/ui/shopping/caja_cerrada.png",
         },
 
+        # Perfume — regalo de quest para Monica (no comprable)
+        # Ya no se "usa" desde el inventario: la quest 0 se inicia con el botón
+        # "Agradecerle" del menú de Mónica (que consume el perfume).
+        "perfume": {
+            "nombre": "Perfume",
+            "emoji": "🌸",
+            "precio": 0,
+            "dias_entrega": 0,
+            "descripcion": "El regalo que le traje a Monica.",
+            "usable": True,
+            "vendible": False,
+            "consumible": True,
+            "condicion_uso": lambda: False,
+            "instruccion_uso": "El regalo que le traje a Monica. Debería agradecerle en persona cuando esté sola.",
+            "stock": 0,
+            "reposicion": 0,
+        },
+
+        # Notebook de Monica — item de quest (se revisa en la habitación del MC)
+        "notebook_monica": {
+            "nombre": "Notebook de Monica",
+            "emoji": "💻",
+            "precio": 0,
+            "dias_entrega": 0,
+            "descripcion": "La notebook de Monica. Dijo que no le anda, voy a ver si puedo arreglarla.",
+            "usable": True,
+            "vendible": False,
+            "consumible": False,
+            "condicion_uso": _item_en_habitacion_mc,
+            "instruccion_uso": "Deberia revisarlo en mi habitacion",
+            "label_uso": "revisar_notebook_monica",
+            "stock": 0,
+            "reposicion": 0,
+        },
+
+        # Batería NT520 — repuesto para la notebook de Monica (quest 0_c)
+        # Aparece en la tienda recién al completar la quest 0_c. 1 unidad, 2 días.
+        "bateria_nt520": {
+            "nombre": "Bateria NT520",
+            "emoji": "🔋",
+            "precio": 150,
+            "dias_entrega": 2,
+            "descripcion": "Una batería nueva para la notebook de Monica.",
+            "usable": True,
+            "vendible": True,
+            "consumible": False,
+            "condicion_visible": _bateria_nt520_disponible,
+            "condicion_uso": _item_en_habitacion_mc,
+            "instruccion_uso": "Deberia hacer esto en mi habitacion",
+            "label_uso": "usar_bateria_nt520",
+            "stock": 1,
+            "reposicion": 0,
+        },
+
+        # Quest 0 del MC — cajas de mudanza
+        "mis_cosas": {
+            "nombre": "Mis cosas",
+            "emoji": u"📦",
+            "precio": 0,
+            "dias_entrega": 0,
+            "descripcion": "Las cajas con mis cosas de la mudanza.",
+            "usable": False,
+            "vendible": False,
+            "consumible": True,
+            "stock": 0,
+            "reposicion": 0,
+        },
+
+        # Regalos de bienvenida — se consumen durante la quest 0 de cada NPC
+        # (no comprables, no usables; solo reflejan la narrativa de entregarlos)
+        "regalo_violet": {
+            "nombre": "Regalo Violet",
+            "emoji": "🎁",
+            "precio": 0,
+            "dias_entrega": 0,
+            "descripcion": "Un regalo que le traje a Violet.",
+            "usable": False,
+            "vendible": False,
+            "consumible": True,
+            "stock": 0,
+            "reposicion": 0,
+        },
+        "regalo_jasmine": {
+            "nombre": "Regalo Jasmine",
+            "emoji": "🎁",
+            "precio": 0,
+            "dias_entrega": 0,
+            "descripcion": "Un regalo que le traje a Jasmine.",
+            "usable": False,
+            "vendible": False,
+            "consumible": True,
+            "stock": 0,
+            "reposicion": 0,
+        },
+
         # Items de quest (no comprables, se obtienen durante quests)
         "jabon_quest": {
             "nombre": "Jabon",
@@ -251,6 +356,18 @@ init python:
             ),
             "instruccion_uso": "No debo sacar esto acá",
             "label_uso": "usar_tanga_violet",
+            "stock": 0,
+            "reposicion": 0,
+        },
+
+        "elementos_limpieza": {
+            "nombre": "Elementos de Limpieza",
+            "emoji": "🧹",
+            "precio": 0,
+            "dias_entrega": 0,
+            "descripcion": "Elementos para limpiar el pasillo.",
+            "usable": False,
+            "vendible": False,
             "stock": 0,
             "reposicion": 0,
         },

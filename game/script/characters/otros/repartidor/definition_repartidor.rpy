@@ -63,7 +63,7 @@ init python:
         Procesa la entrega del repartidor.
         Aumenta confianza, entrega items al inventario y limpia el estado.
         """
-        # Unificar todas las entregas del día
+        # Unificar todas las entregas del dia
         items = sistema_compras.unificar_entregas_hoy()
         
         # Entregar al inventario

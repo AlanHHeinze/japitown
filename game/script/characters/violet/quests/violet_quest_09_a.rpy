@@ -17,7 +17,7 @@ default violet_enferma_atencion     = 0
 ## LABELS
 ################################################################################
 
-# Piensa "Debería avisarle a Violet" — se dispara desde game_loop al llegar a
+# Piensa "Deberia avisarle a Violet" — se dispara desde game_loop al llegar a
 # ETAPA_BOTON_LISTO la primera vez.
 label violet_quest09a_piensa_avisarle:
     $ store.violet_9a_piensa_mostrado = True
@@ -46,7 +46,7 @@ label violet_quest09a_manejo_puerta:
             window show
             play sound "audio/sfx/door_knock_3.ogg"
             pause 0.5
-            violet "Pasá."
+            violet "Pasa."
             $ store.mc_sabe_violet_enferma = True
             $ sistema_locaciones.mover_a_locacion("casa_hviolet")
             window hide
@@ -103,7 +103,7 @@ label violet_quest09a_manejo_puerta:
             return
 
 
-# Interacción con Violet enferma en su habitación.
+# Interacción con Violet enferma en su habitacion.
 # Reemplaza el menú de interacción normal durante la quest.
 label violet_quest09a_interaccion:
     # Si tiene algo para entregar y no lo ha entregado aún, ir directo a entrega
@@ -117,7 +117,7 @@ label violet_quest09a_interaccion:
     show violet_parada c_pijama_base ca_pijama o_base b_none at right with dissolve
 
     menu:
-        "¿Necesitás algo?":
+        "¿Necesitas algo?":
             if getattr(store, 'violet_9a_pedido_actual', None) is not None:
                 show violet_parada b_hablandochica
                 violet "Está bien por ahora."
@@ -128,7 +128,7 @@ label violet_quest09a_interaccion:
                     "Necesito tomar el medicamento",
                     "Un poco de agua",
                     "Dile a Monica que venga",
-                    "Traeme una toalla",
+                    "Tráeme una toalla",
                 ]
                 $ store.violet_9a_pedido_actual = renpy.random.choice(_pedidos_vq9)
                 show violet_parada b_hablandochica
@@ -154,7 +154,7 @@ label violet_quest09a_entregar_directo:
     if _pedido_vq9 == "Dile a Monica que venga":
         mc "Ya le avisé a Monica, dijo que en un momento va."
     else:
-        mc "Acá tengo lo que querías."
+        mc "Aquí tengo lo que querías."
 
     show violet_parada b_sonrisaleve
     violet "Gracias."
@@ -192,7 +192,7 @@ label violet_quest09a_monica_llamar:
     window show
     mc "Monica, Violet te llama."
     show monica_parada c_rbase_base o_base b_hablandochica at right with dissolve
-    monica "Decile que en un momento voy."
+    monica "Dile que en un momento voy."
     show monica_parada b_none
     hide monica_parada with dissolve
     $ store.violet_9a_tiene_entregable = True
@@ -229,7 +229,7 @@ label accion_violet_heladera:
     elif getattr(store, 'violet_9a_tiene_entregable', False):
         piensa "Ya tengo lo que necesito, hay que llevárselo a Violet."
     else:
-        piensa "Acá tengo lo que quería Violet."
+        piensa "Aquí tengo lo que quería Violet."
         $ store.violet_9a_tiene_entregable = True
     window hide
     $ mostrar_hud()
@@ -245,7 +245,7 @@ label accion_violet_agua:
     elif getattr(store, 'violet_9a_tiene_entregable', False):
         piensa "Ya tengo lo que necesito, hay que llevárselo a Violet."
     else:
-        piensa "Acá tengo lo que quería Violet."
+        piensa "Aquí tengo lo que quería Violet."
         $ store.violet_9a_tiene_entregable = True
     window hide
     $ mostrar_hud()
@@ -261,7 +261,7 @@ label accion_violet_medicina:
     elif getattr(store, 'violet_9a_tiene_entregable', False):
         piensa "Ya tengo lo que necesito, hay que llevárselo a Violet."
     else:
-        piensa "Acá tengo lo que quería Violet."
+        piensa "Aquí tengo lo que quería Violet."
         $ store.violet_9a_tiene_entregable = True
     window hide
     $ mostrar_hud()
@@ -272,12 +272,12 @@ label accion_violet_toalla:
     $ _pedido_t = getattr(store, 'violet_9a_pedido_actual', None)
     $ ocultar_hud()
     window show
-    if _pedido_t != "Traeme una toalla":
+    if _pedido_t != "Tráeme una toalla":
         piensa "Violet me pidió [_pedido_t]."
     elif getattr(store, 'violet_9a_tiene_entregable', False):
         piensa "Ya tengo lo que necesito, hay que llevárselo a Violet."
     else:
-        piensa "Acá tengo lo que quería Violet."
+        piensa "Aquí tengo lo que quería Violet."
         $ store.violet_9a_tiene_entregable = True
     window hide
     $ mostrar_hud()

@@ -36,5 +36,33 @@ translate english accion_ir_a_locacion_fdb73a5a:
 translate english accion_hotspot_move_dafe5006:
 
     # piensa "[_msg_restriccion_puerta]"
-    piensa ""
+    piensa "[_msg_restriccion_puerta]"
+
+# TODO: Translation updated at 2026-05-11 11:04
+
+# game/script/core/npcs/npcsystem_interactions.rpy:133
+translate english accion_locacion_ejecutar_51a6140e:
+
+    # piensa "[_ale_msg]"
+    piensa "[_ale_msg]"
+
+# game/script/core/npcs/npcsystem_interactions.rpy:141
+translate english accion_locacion_ejecutar_55abd526:
+
+    # piensa "[_ale_msg_ch]"
+    piensa "[_ale_msg_ch]"
+
+# game/script/core/npcs/npcsystem_interactions.rpy:153
+translate english accion_locacion_ejecutar_87660808:
+
+    # piensa "No hay nada especial que hacer aquí ahora."
+    piensa "There's nothing special to do here right now."
+
+# TODO: Translation updated at 2026-05-11 16:31
+
+# game/script/core/npcs/npcsystem_interactions.rpy:45
+translate english accion_hotspot_move_cf78c3b4:
+
+    # piensa "[_msg_restriccion_banio]"
+    piensa "[_msg_restriccion_banio]"
 

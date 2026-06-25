@@ -121,14 +121,14 @@ init python:
                 skin_id = skins_npc.get(grupo)
                 if skin_id:
                     skin = self.obtener_skin(skin_id)
-                    if skin and skin.esta_desbloqueado():
+                    if skin:
                         return skin
-            
-            # Fallback: primer skin desbloqueado del grupo
-            skins_disponibles = self.obtener_skins_desbloqueados_grupo(npc_id, grupo)
-            if skins_disponibles:
-                return skins_disponibles[0]
-            
+
+            # Fallback: primer skin registrado del grupo
+            skins_grupo = self.obtener_skins_grupo(npc_id, grupo)
+            if skins_grupo:
+                return skins_grupo[0]
+
             return None
         
         def obtener_skin_activo(self, npc_id, grupo=None):
@@ -141,18 +141,14 @@ init python:
             return self.obtener_skin_activo_grupo(npc_id, grupo)
         
         def activar_skin(self, npc_id, skin_id):
-            """Activa un skin para un NPC en su grupo correspondiente."""
+            """Activa un skin para un NPC en su grupo. Llamar desde quests para desbloquear."""
             skin = self.obtener_skin(skin_id)
-            if skin and skin.npc_id == npc_id and skin.esta_desbloqueado():
-                # Asegurar estructura de dict
+            if skin and skin.npc_id == npc_id:
                 if npc_id not in store.skins_activos:
                     store.skins_activos[npc_id] = {}
                 elif not isinstance(store.skins_activos[npc_id], dict):
-                    # Migrar formato antiguo
                     store.skins_activos[npc_id] = {}
-                
                 store.skins_activos[npc_id][skin.grupo] = skin_id
-
                 return True
             return False
         
@@ -230,7 +226,7 @@ init python:
         
         Args:
             npc_id: ID del NPC
-            dia: Índice del día (0-6) o lista de días
+            dia: Índice del dia (0-6) o lista de dias
             horario: Índice del horario (0-3)
             grupo: Grupo de skin a asignar
         """
@@ -298,6 +294,16 @@ init python:
     def activar_skin(npc_id, skin_id):
         """Activa un skin para un NPC."""
         return sistema_skins.activar_skin(npc_id, skin_id)
+
+    def desbloquear_skin(skin_id):
+        """
+        Desbloquea un skin y lo establece como activo para su grupo.
+        Llamar desde quests cuando se otorga un skin al jugador.
+        """
+        skin = sistema_skins.obtener_skin(skin_id)
+        if skin:
+            return sistema_skins.activar_skin(skin.npc_id, skin_id)
+        return False
     
     def desactivar_skin(npc_id, grupo=None):
         """Desactiva el skin de un NPC."""
@@ -336,7 +342,7 @@ init python:
         return sistema_skins.obtener_sprite_idle_por_grupo(npc_id, grupo_actual)
 
     # Mapeo de grupo de skin → prefijo del atributo de cuerpo en la layered image.
-    # Actualizar aquí cuando se agregue un grupo con body propio.
+    # Actualizar aqui cuando se agregue un grupo con body propio.
     GRUPO_CUERPO_MAP = {
         "base":          "c_rbase",
         "pijama":        "c_pijama",

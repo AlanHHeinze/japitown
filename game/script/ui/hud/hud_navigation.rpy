@@ -831,7 +831,12 @@ screen navegacion_locaciones_con_hud():
                             tooltip hotspot.id
 
                     if _hs_flecha and _hs_hover_id == hotspot.id:
-                        add _hs_flecha xpos _hs_cx ypos _hs_cy xanchor 0.5 yanchor 0.5
+                        if "flecha_abajo" in _hs_flecha and _hs_cy > 900:
+                            add _hs_flecha xpos _hs_cx ypos 1070 xanchor 0.5 yanchor 1.0
+                        elif hotspot.id == "casa_living_casa_pasilloabajo":
+                            add _hs_flecha xpos _hs_cx ypos 1022 xanchor 0.5 yanchor 0.5
+                        else:
+                            add _hs_flecha xpos _hs_cx ypos _hs_cy xanchor 0.5 yanchor 0.5
         
         # =====================================================================
         # CAPA 2: Sprites de NPCs (se renderizan después, quedan arriba)
@@ -977,6 +982,11 @@ screen navegacion_locaciones_con_hud():
                             action Call(_elem["label"])
         
         # =====================================================================
+        # CAPA 2.8: Overlay del visualizador de hotspots de movimiento
+        # =====================================================================
+        use visualizador_hotspot_overlay()
+
+        # =====================================================================
         # CAPA 3: Elementos "Otros" del sistema_pos — modo normal (idles, props)
         # NOTA: el drag de posicionamiento se gestiona en boton_posicionamiento_overlay
         # (zorder 200) para funcionar incluso dentro de screens de quest.
@@ -997,6 +1007,14 @@ screen navegacion_locaciones_con_hud():
                 else:
                     action Jump("interaccion_repartidor")
 
+        # Cajas de mudanza en el garage (quest 0 del MC)
+        if getattr(store, 'mc_q0_cajas_en_garage', False):
+            if sistema_locaciones.locacion_actual.id == "casa_garage":
+                $ _cajas = sistema_pos.obtener("mc_q0_cajas_intro")
+                $ _cajas_x = _cajas.x if _cajas else 629
+                $ _cajas_y = _cajas.y if _cajas else 422
+                add "images/quest/mc/quest0/idle_cajas_intro.png" xpos _cajas_x ypos _cajas_y xanchor 0.0 yanchor 0.0
+
         # Paquete en la habitación del MC (entrega perdida)
         if paquete_en_habitacion and sistema_locaciones.locacion_actual.id == "casa_hmc":
             $ _paq = sistema_pos.obtener("casa_hmc_paquete")
@@ -1016,8 +1034,12 @@ screen navegacion_locaciones_con_hud():
         # (se eliminó el panel superpuesto aquí para evitar conflicto con el panel de fecha)
     
     if hud_contenido_visible:
-        # Mostrar panel de entrenamiento si estamos en la habitación del MC
-        use panel_entrenamiento
+        # Mostrar panel de entrenamiento — oculto solo hasta completar la quest 0
+        # del MC ("De nuevo en casa"). Una vez completada, reaparece (aunque haya
+        # otras quests del MC activas, como la del celular o el reencuentro).
+        $ _mc_q0_panel = sistema_quests_mc.quests.get("mc_quest_0")
+        if _mc_q0_panel and _mc_q0_panel.completada:
+            use panel_entrenamiento
 
         # Panel de acciones de locación (cocinar, ver TV, etc.)
         use acciones_locacion

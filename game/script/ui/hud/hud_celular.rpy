@@ -7,6 +7,13 @@
 # Variable para controlar visibilidad del menú del celular
 default menu_celular_abierto = False
 
+init python:
+    def _ejecutar_accion_celular_validada(accion_id):
+        """Muestra mensaje de acción bloqueada."""
+        _msg = accion_bloqueada(accion_id)
+        if _msg:
+            renpy.call("mostrar_bloqueo_accion", _msg)
+
 screen menu_celular():
     """Menú del celular - Home Screen del smartphone"""
 
@@ -25,7 +32,7 @@ screen menu_celular():
         if modo_ajuste_celular:
             action NullAction()
         else:
-            action [SetVariable("menu_celular_abierto", False), Hide("menu_celular")]
+            action [SetVariable("menu_celular_abierto", False), Hide("menu_celular"), Call("_validar_estado_tras_celular")]
 
     # Panel del celular — constrainido al area de trabajo
     frame:
@@ -76,10 +83,11 @@ screen menu_celular():
                             ("pistas", "📋", "Pistas", Show("panel_pistas"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
                             ("stats", "🎮", "Stats", Show("panel_stats_mc"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
                             ("comprar", "🛒", "Tienda", Show("panel_tienda"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
-                            ("mensajes", "💬", "Chat", Show("lista_contactos_mensajes"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
+                            ("mensajes", "💬", "Chat", [Function(sistema_mensajes.verificar_mensajes_en_espera), Show("lista_contactos_mensajes")], "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
                             ("galeria", "🖼️", "Galería", Show("panel_galeria"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
                             ("hot", "🔥", "Hot", Call("narrar_mensaje", "Contenido en desarrollo"), "#2a1a10CC", "#3d2a1aCC", "#888888"),
                             ("banco", "🏦", "Banco", Call("narrar_mensaje", "Contenido en desarrollo"), "#2a1a10CC", "#3d2a1aCC", "#888888"),
+                            ("configuracion", u"⚙️", "Configuración", Show("panel_configuracion"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
                         ]
                         if store.MODO_DEV:
                             _botones_cel.insert(4, ("cheats", "⚙️", "Cheats", Show("menu_cheats"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"))
@@ -97,7 +105,7 @@ screen menu_celular():
                                     $ _btn_id, _btn_emoji, _btn_label, _btn_action, _btn_bg, _btn_hover, _btn_text_color = _botones_cel[_btn_idx]
                                     $ _e_btn = sistema_ajuste_cel.elementos.get("menu_celular_btn_{}".format(_btn_id)) if _ajc else None
                                     button:
-                                        action _btn_action
+                                        action If(accion_bloqueada(_btn_id), Function(_ejecutar_accion_celular_validada, _btn_id), _btn_action)
                                         xoffset (_e_btn.xoffset if _e_btn else 0)
                                         yoffset (_e_btn.yoffset if _e_btn else 0)
                                         frame:
@@ -142,8 +150,38 @@ screen menu_celular():
                     spacing 40
 
                     textbutton "○":
-                        action [SetVariable("menu_celular_abierto", False), Hide("menu_celular")]
+                        action [SetVariable("menu_celular_abierto", False), Hide("menu_celular"), Call("_validar_estado_tras_celular")]
                         text_size 24
                         text_color "#666666"
                         text_hover_color "#ffffff"
                         yalign 0.5
+
+
+################################################################################
+## Label para mostrar mensaje de acción bloqueada
+################################################################################
+
+label mostrar_bloqueo_accion(mensaje=""):
+    $ ocultar_hud()
+    window show
+    piensa "[mensaje]"
+    window hide
+    $ mostrar_hud()
+    return
+
+
+################################################################################
+## Validar estado después de cerrar el celular
+################################################################################
+## Se ejecuta al cerrar el celular para verificar si hay eventos pendientes
+## (similar a lo que ocurre al cambiar de locación o adelantar tiempo)
+
+label _validar_estado_tras_celular:
+
+    # Quest 0b del MC: completar si el jugador ya visitó la app de pistas
+    if getattr(store, "mc_q0b_esperando", False) and getattr(store, "mc_q0b_pistas_visitada", False):
+        jump mc_q0b_completar
+
+    # (Aquí pueden agregarse futuras validaciones tras cerrar el celular)
+
+    return

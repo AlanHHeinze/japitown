@@ -55,7 +55,7 @@ label quest_violet_questprincipal_02_b:
     show mc_parado_base b_none o_base
 
     show violet_parada b_hablando
-    violet "¿Pero buscas algun genero en particular?"
+    violet "¿Pero buscas algún genero en particular?"
     show violet_parada b_none
 
     show mc_parado_base b_hablando o_arribanm c_rbase_pensando with sprite_fast
@@ -83,7 +83,7 @@ label quest_violet_questprincipal_02_b:
     violet "Tengo este un colegio donde compiten entre los estudiantes con pruebas para subir de clase..."
 
     show mc_parado_base b_hablando o_cerrados c_rbase_avergonzado with sprite_fast
-    mc "Perdon no te escuche ¿Que dijiste?"
+    mc "Perdón no te escuche ¿Qué dijiste?"
     show mc_parado_base b_none o_base c_rbase_base with sprite_fast
 
     piensa "Me tengo que concentrar en lo que me dice y no en su trasero"
@@ -91,7 +91,7 @@ label quest_violet_questprincipal_02_b:
     piensa "Yo puedo con esto"
     show mc_parado_base c_rbase_base with sprite_fast
 
-    violet "Decia que tengo uno de un colegio donde compiten entre los estudiantes con pruebas para subir de clase, es bastante bueno"
+    violet "Decía que tengo uno de un colegio donde compiten entre los estudiantes con pruebas para subir de clase, es bastante bueno"
 
     show mc_parado_base b_hablando o_arribanm c_rbase_pensando with sprite_fast
     mc "Suena como un poco generico la verdad"
@@ -100,7 +100,7 @@ label quest_violet_questprincipal_02_b:
     violet "Si, es algo generico pero esta bien llevado"
 
     show mc_parado_base b_hablando
-    mc "¿Algun otro?"
+    mc "¿Algún otro?"
     show mc_parado_base b_none
 
     show violet_espalda p_rascando1 with sprite_fast
@@ -119,7 +119,7 @@ label quest_violet_questprincipal_02_b:
     violet "A ver... Este es de un joven que reencarna en otro mundo siendo un slime, es muy bueno"
 
     show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
-    mc "¿Es bueno para las personas que no son fanatica de los slime tambien?"
+    mc "¿Es bueno para las personas que no son fanatica de los slime también?"
     show mc_parado_base b_none
 
     show violet_espalda p_pensando with sprite_fast
@@ -140,7 +140,7 @@ label quest_violet_questprincipal_02_b:
     violet "Aparte el cyberpunk y los robots siempre te gustaron"
 
     show mc_parado_base b_hablando c_rbase_señalando with sprite_fast
-    mc "Tienes razon"
+    mc "Tienes razón"
     show mc_parado_base b_none c_rbase_base with sprite_fast
 
     show violet_espalda p_base at salir_todo with sprite_fast
@@ -166,7 +166,7 @@ label quest_violet_questprincipal_02_b:
     show mc_parado_base c_rbase_base with sprite_normal
 
     show violet_parada b_hablando
-    violet "Ahora si... ¿Que dijiste?"
+    violet "Ahora si... ¿Qué dijiste?"
     show violet_parada b_aburrida
 
     show mc_parado_base c_rbase_facepalm b_seria o_abajonm with sprite_fast
@@ -176,7 +176,7 @@ label quest_violet_questprincipal_02_b:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica o_juzgandonm c_pijama_brazoscruzados with sprite_fast
-    violet "Te esche, solo te estaba dando lugar a que me cuentes cual es la buena vista que tenias"
+    violet "Te esche, solo te estaba dando lugar a que me cuentes cual es la buena vista que tenías"
     show violet_parada b_aburrida
 
     show mc_parado_base b_hablando o_cerrados c_rbase_avergonzado with sprite_fast
@@ -190,13 +190,13 @@ label quest_violet_questprincipal_02_b:
     show mc_parado_base b_hablando o_arribanm 
     mc "Me quede impactado cuando te diste vuelta"
     show mc_parado_base b_abiertachica o_base
-    mc "Perdon me tomo desprevenido"
+    mc "Perdón me tomo desprevenido"
     show mc_parado_base b_none 
 
     show violet_parada b_hablandochica o_enojados 
-    violet "¿Que? ¿Me estabas mirando el trasero?"
+    violet "¿Qué? ¿Me estabas mirando el trasero?"
     show violet_parada b_hablando
-    violet "Es increible que cada vez que intento no estar molesta con vos, terminas logrando que si lo este"
+    violet "Es increíble que cada vez que intento no estar molesta contigo, terminas logrando que si lo este"
     show violet_parada b_aburrida
 
     show mc_parado_base b_abiertachica
@@ -265,7 +265,7 @@ label violet_quest02b_opcion_amor:
     show violet_parada b_aburrida o_base
 
     show mc_parado_base b_hablando o_cerrados c_rbase_brazoscruzados with sprite_fast
-    mc "Todo lo contrario, me alegra que aunque el tiempo haya pasado, pueda estar aca"
+    mc "Todo lo contrario, me alegra que aunque el tiempo haya pasado, pueda estar aquí"
     show mc_parado_base b_none o_base c_rbase_base with sprite_fast
 
     show violet_parada b_hablando c_pijama_brazoscruzados with sprite_fast
@@ -309,7 +309,7 @@ label violet_quest02b_fin:
     scene expression "images/bg/casa/bg_casa_trasnoche_pasilloarriba.png" with fade
 
     show mc_parado_base c_rbase_pensando o_arribanm b_none with sprite_fast
-    piensa "La situacion se fue para otro lado, espero que no se tome las cosas a mal"
+    piensa "La situación se fue para otro lado, espero que no se tome las cosas a mal"
     piensa "De momento a leer los mangas, con estos cuatro tengo para un buen rato"
     show mc_parado_base c_rbase_base o_base with sprite_fast
 
@@ -329,6 +329,7 @@ label violet_quest02b_fin:
     $ sistema_locaciones.mover_a_locacion("casa_pasilloarriba")
     $ avanzar_horario()
     $ completar_quest_actual("violet")
+    $ desbloquear_skin("violet_pijama_base")
 
     window hide
     $ mostrar_hud()

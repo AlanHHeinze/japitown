@@ -365,10 +365,13 @@ label event_monica_01_narrativa:
     $ event = obtener_event(_event_id_temp)
     if event:
         $ event.completar()
-    
+
+    # El masaje consume tiempo: adelantar el horario en 1
+    $ avanzar_horario()
+
     # Mostrar pantallas del juego
     show screen hud_navegacion
-    
+
     # Volver al loop del juego
     jump game_loop
 

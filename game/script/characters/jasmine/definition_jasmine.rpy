@@ -23,7 +23,7 @@ init python:
         Establece el sprite y posición para una rutina específica de Jasmine.
         
         Args:
-            dia_semana: Índice del día (0=Lunes, 6=Domingo) o lista de días
+            dia_semana: Índice del dia (0=Lunes, 6=Domingo) o lista de dias
             horario: Índice del horario (0=Mañana, 1=Tarde, 2=Noche, 3=Trasnoche)
             sprite: Ruta del sprite a mostrar
             posicion: Tupla (x, y) con la posición en pantalla
@@ -44,7 +44,7 @@ init python:
     
     def obtener_sprite_rutina_jasmine():
         """
-        Obtiene el sprite actual de Jasmine según el día y horario actual.
+        Obtiene el sprite actual de Jasmine según el dia y horario actual.
         Prioridad: 0) Pasillo, 1) Skin activo (quest/evento), 2) Rutina especial, 3) Rutina base
         """
         # Prioridad 0: Sprite de pasillo (door access) — variante según horario
@@ -74,7 +74,7 @@ init python:
 
     def obtener_posicion_rutina_jasmine():
         """
-        Obtiene la posición actual de Jasmine según el día y horario actual.
+        Obtiene la posición actual de Jasmine según el dia y horario actual.
         Prioridad: 0) Pasillo, 1) Rutina especial, 2) Rutina base
         """
         # Prioridad 0: NPC en pasillo → posición fija
@@ -137,19 +137,19 @@ init python:
             jasmine.establecer_rutina(dia, 0, "casa_cocina")    # Mañana: Cocina
             jasmine.establecer_rutina(dia, 1, "casa_gym")       # Tarde: Gym
             jasmine.establecer_rutina(dia, 2, "casa_living")    # Noche: Living
-            jasmine.establecer_rutina(dia, 3, "casa_hjasmine")  # Trasnoche: Su habitación
+            jasmine.establecer_rutina(dia, 3, "casa_hjasmine")  # Trasnoche: Su habitacion
         
         # Sábado
-        jasmine.establecer_rutina(5, 0, "casa_hjasmine")  # Mañana: Su habitación
+        jasmine.establecer_rutina(5, 0, "casa_hjasmine")  # Mañana: Su habitacion
         jasmine.establecer_rutina(5, 1, "casa_patio")     # Tarde: Patio
         jasmine.establecer_rutina(5, 2, "casa_patio")     # Noche: Patio
-        jasmine.establecer_rutina(5, 3, "casa_hjasmine")  # Trasnoche: Su habitación
+        jasmine.establecer_rutina(5, 3, "casa_hjasmine")  # Trasnoche: Su habitacion
         
         # Domingo
         jasmine.establecer_rutina(6, 0, "casa_cocina")    # Mañana: Cocina
         jasmine.establecer_rutina(6, 1, "casa_patio")     # Tarde: Patio
         jasmine.establecer_rutina(6, 2, "casa_patio")     # Noche: Patio
-        jasmine.establecer_rutina(6, 3, "casa_hjasmine")  # Trasnoche: Su habitación
+        jasmine.establecer_rutina(6, 3, "casa_hjasmine")  # Trasnoche: Su habitacion
         
         # =====================================================================
         # SPRITES Y POSICIONES DE RUTINA
@@ -174,7 +174,7 @@ init python:
         establecer_rutina_visual_jasmine(
             [0, 1, 2, 3, 4], 2,
             "images/characters/casa/idle/idle_jasmine_casa_living_noche_rutinabase_grupobase_skinbase.png",
-            (126, 958)  # Posición personalizable
+            (1219, 903)  # Posición personalizable
         )
 
         # Lunes a Domingo (0-6) - Trasnoche en H. Jasmine
@@ -234,18 +234,12 @@ init python:
         # =====================================================================
 
         # Amor
-        jasmine.agregar_desbloqueo("amor", 10, "💬", "Conversación Diaria",
-            "Podés hablar con Jasmine todos los días.")
         jasmine.agregar_desbloqueo("amor", 30, "🚪", "Ingreso Habitación",
             "Jasmine te deja entrar a su cuarto durante el día.")
 
         # Deseo
-        jasmine.agregar_desbloqueo("deseo", 10, "👗", "Ropa Deportiva",
-            "Jasmine usa ropa deportiva cuando va al gym.")
-        jasmine.agregar_desbloqueo("deseo", 40, "😘", "???",
-            "")
         jasmine.agregar_desbloqueo("deseo", 60, "🌙", "Ingreso Nocturno",
-            "Podés entrar a la habitación de Jasmine de noche.")
+            "Puedes entrar a la habitación de Jasmine de noche.")
 
         # =====================================================================
         # REGISTRAR EN EL SISTEMA
@@ -259,19 +253,19 @@ init python:
 ## DIÁLOGOS DE JASMINE
 ################################################################################
 
-# Aquí se pueden agregar diálogos específicos de Jasmine en el futuro
+# Aqui se pueden agregar diálogos específicos de Jasmine en el futuro
 
 ################################################################################
 ## EVENTOS DE JASMINE
 ################################################################################
 
-# Aquí se pueden agregar eventos específicos de Jasmine en el futuro
+# Aqui se pueden agregar eventos específicos de Jasmine en el futuro
 
 ################################################################################
 ## QUESTS DE JASMINE
 ################################################################################
 
-# Aquí se pueden agregar quests específicas de Jasmine en el futuro
+# Aqui se pueden agregar quests específicas de Jasmine en el futuro
 
 ################################################################################
 ## Datos de Jasmine (Guardables)

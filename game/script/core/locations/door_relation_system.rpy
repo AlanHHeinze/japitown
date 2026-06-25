@@ -1,17 +1,17 @@
 ################################################################################
-## Sistema de Relación — Nivel de Acceso a Habitaciones y Baño
+## Sistema de Relacion — Nivel de Acceso a Habitaciones y Baño
 ################################################################################
 ## Define los umbrales de stats que determinan cómo responde el NPC
-## cuando el jugador intenta entrar a su habitación o al baño.
+## cuando el jugador intenta entrar a su habitacion o al baño.
 ##
 ## Jerarquía de niveles para HABITACIÓN (el más alto que se cumpla aplica):
 ##   "ingreso_noche"   — horario 3, entra directamente sin menú      (stat2)
 ##   "ingreso_diurno"  — horario 0-2, entra directamente sin menú    (stat1)
 ##   "dejar_pasar"     — al golpear, NPC dice "Adelante" y el jugador entra (stat1)
-##   "sale_pasillo"    — al golpear, NPC dice "Ahí salgo" y va al pasillo   (stat1)
+##   "sale_pasillo"    — al golpear, NPC dice "Ahi salgo" y va al pasillo   (stat1)
 ##   None              — respuesta negativa ("Estoy ocupada") — sin requisito
 ##
-## Para el BAÑO las opciones "espiar" y "entrar" están reservadas pero
+## Para el BAÑO las opciones "espiar" y "entrar" estan reservadas pero
 ## desactivadas (verificar_nivel_acceso_banio siempre retorna None).
 
 ################################################################################
@@ -27,25 +27,25 @@ define TABLA_ACCESO_HABITACION = {
     # Violet — requiere Amor mínimo para cada nivel (0-9 = ninguna respuesta)
     "violet": {
         "ingreso_noche":  {"stat": "stat2", "umbral": 50},   # Deseo 50+ → entra de trasnoche
-        "ingreso_diurno": {"stat": "stat1", "umbral": 50},   # Amor  50+ → entra de día
+        "ingreso_diurno": {"stat": "stat1", "umbral": 50},   # Amor  50+ → entra de dia
         "dejar_pasar":    {"stat": "stat1", "umbral": 30},   # Amor  30+ → "Adelante"
-        "sale_pasillo":   {"stat": "stat1", "umbral": 10},   # Amor  10+ → "Ahí salgo"
+        "sale_pasillo":   {"stat": "stat1", "umbral": 10},   # Amor  10+ → "Ahi salgo"
     },                                                        # Amor  0-9 → sin respuesta ("ocupada")
 
     # Jasmine — sale al pasillo desde 0; a partir de 15 dice que pase
     "jasmine": {
         "ingreso_noche":  {"stat": "stat2", "umbral": 50},   # Deseo 50+ → entra de trasnoche
-        "ingreso_diurno": {"stat": "stat1", "umbral": 40},   # Amor  40+ → entra de día
+        "ingreso_diurno": {"stat": "stat1", "umbral": 40},   # Amor  40+ → entra de dia
         "dejar_pasar":    {"stat": "stat1", "umbral": 15},   # Amor  15+ → "Adelante"
-        "sale_pasillo":   {"stat": "stat1", "umbral": 0},    # Amor   0+ → "Ahí salgo"
+        "sale_pasillo":   {"stat": "stat1", "umbral": 0},    # Amor   0+ → "Ahi salgo"
     },
 
     # Monica — sale al pasillo desde 0; a partir de 15 dice que pase
     "monica": {
         "ingreso_noche":  {"stat": "stat2", "umbral": 50},   # Deseo 50+ → entra de trasnoche
-        "ingreso_diurno": {"stat": "stat1", "umbral": 40},   # Amor  40+ → entra de día
+        "ingreso_diurno": {"stat": "stat1", "umbral": 40},   # Amor  40+ → entra de dia
         "dejar_pasar":    {"stat": "stat1", "umbral": 15},   # Amor  15+ → "Adelante"
-        "sale_pasillo":   {"stat": "stat1", "umbral": 0},    # Amor   0+ → "Ahí salgo"
+        "sale_pasillo":   {"stat": "stat1", "umbral": 0},    # Amor   0+ → "Ahi salgo"
     },
 }
 
@@ -58,8 +58,8 @@ define TABLA_ACCESO_HABITACION = {
 
 define TABLA_ACCESO_BANIO = {
     "violet":  {
-        "espiar": {"stat": "stat2", "umbral": 40},   # Sumisión 40+ → espiar
-        "entrar": {"stat": "stat2", "umbral": 60},   # Sumisión 60+ → entrar
+        "espiar": {"stat": "stat2", "umbral": 40},   # Deseo 40+ → espiar
+        "entrar": {"stat": "stat2", "umbral": 60},   # Deseo 60+ → entrar
     },
     "jasmine": {
         "espiar": {"stat": "stat2", "umbral": 40},
@@ -76,7 +76,7 @@ define TABLA_ACCESO_BANIO = {
 ## MENSAJES DE RESPUESTA POR NPC
 ################################################################################
 ## Textos que dice cada NPC al responder en la puerta.
-## Editar aquí para personalizar la voz de cada personaje.
+## Editar aqui para personalizar la voz de cada personaje.
 
 define MENSAJES_NPC_PUERTA = {
     "violet": {
@@ -115,14 +115,14 @@ init python:
     def verificar_nivel_acceso_habitacion(npc_id):
         """
         Retorna el nivel de acceso más alto que cumple el jugador para
-        la habitación del NPC, teniendo en cuenta el horario actual.
+        la habitacion del NPC, teniendo en cuenta el horario actual.
 
         Jerarquía evaluada de mayor a menor:
             "ingreso_noche"   → horario == 3 y stat2 >= umbral
             "ingreso_diurno"  → horario in (0,1,2) y stat1 >= umbral
             "dejar_pasar"     → stat1 >= umbral
             "sale_pasillo"    → stat1 >= umbral
-            None              → ningún nivel alcanzado
+            None              → ningun nivel alcanzado
 
         Returns:
             str | None

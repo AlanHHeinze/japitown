@@ -39,18 +39,18 @@ init python:
             "titulo": "Paso 4 de 5 — Software complementario",
             "descripcion": "El instalador recomienda software adicional.",
             "opciones": [
-                {"texto": "Instalar CleanPC Pro (version de prueba)", "correcta": False},
+                {"texto": "Instalar CleanPC Pro (versión de prueba)", "correcta": False},
                 {"texto": "Instalar MediaPlayer Ultimate", "correcta": False},
-                {"texto": "Omitir instalacion de software adicional", "correcta": True},
+                {"texto": "Omitir instalación de software adicional", "correcta": True},
             ],
         },
         {
             "titulo": "Paso 5 de 5 — Finalizacion",
-            "descripcion": "Ultimo paso antes de completar la instalacion.",
+            "descripcion": "Último paso antes de completar la instalación.",
             "opciones": [
-                {"texto": "Completar instalacion y agregar accesos directos al escritorio", "correcta": False},
-                {"texto": "Completar instalacion sin modificaciones adicionales", "correcta": True},
-                {"texto": "Completar instalacion e iniciar diagnostico del sistema", "correcta": False},
+                {"texto": "Completar instalación y agregar accesos directos al escritorio", "correcta": False},
+                {"texto": "Completar instalación sin modificaciones adicionales", "correcta": True},
+                {"texto": "Completar instalación e iniciar diagnostico del sistema", "correcta": False},
             ],
         },
     ]
@@ -146,4 +146,4 @@ screen monica_quest1_pantalla_instalador(paso):
                                     text _opcion["texto"] size 14 color "#333333" yalign 0.5
 
                     # Texto informativo
-                    text "Seleccione una opcion para continuar" size 12 color "#888888" xalign 0.5
+                    text "Seleccione una opción para continuar" size 12 color "#888888" xalign 0.5

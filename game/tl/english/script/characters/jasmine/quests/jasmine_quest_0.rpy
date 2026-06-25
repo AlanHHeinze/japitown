@@ -145,73 +145,73 @@ translate english quest_jasmine_0_opcion_perdon_f9fafdd1:
     mc "I promise."
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:164
-translate english quest_jasmine_0_opcion_madurez_618a1d6b:
+translate english quest_jasmine_0_opcion_deseo_618a1d6b:
 
     # jasmine "¿Qué pasa que te quedás sin decir nada? ¿Y sonriendo?"
     jasmine "What's wrong? Why are you just standing there smiling?"
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:169
-translate english quest_jasmine_0_opcion_madurez_440eb067:
+translate english quest_jasmine_0_opcion_deseo_440eb067:
 
     # mc "Sigues siendo igual, siempre la mas madura y directa."
     mc "You're still the same — always the most mature and straightforward one."
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:173
-translate english quest_jasmine_0_opcion_madurez_ca108a28:
+translate english quest_jasmine_0_opcion_deseo_ca108a28:
 
     # mc "Me había olvidado lo cómodo que me sentía al hablar con vos."
     mc "I'd forgotten how comfortable I always felt talking to you."
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:178
-translate english quest_jasmine_0_opcion_madurez_9fdf5b71:
+translate english quest_jasmine_0_opcion_deseo_9fdf5b71:
 
     # jasmine "Idiota... No me intentes comprar ahora..."
     jasmine "Idiot... Don't try to flatter your way out of this..."
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:183
-translate english quest_jasmine_0_opcion_madurez_9d7a0c5a:
+translate english quest_jasmine_0_opcion_deseo_9d7a0c5a:
 
     # mc "Es verdad, no lo dije con otra intencion."
     mc "I mean it — I'm not saying it for any other reason."
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:187
-translate english quest_jasmine_0_opcion_madurez_6e7fd146:
+translate english quest_jasmine_0_opcion_deseo_6e7fd146:
 
     # mc "Aparte no quiero que me perdones."
     mc "And I don't want you to forgive me."
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:192
-translate english quest_jasmine_0_opcion_madurez_bcb3617e:
+translate english quest_jasmine_0_opcion_deseo_bcb3617e:
 
     # jasmine "¿No quieres que te perdone?"
     jasmine "You don't want me to forgive you?"
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:197
-translate english quest_jasmine_0_opcion_madurez_a088c425:
+translate english quest_jasmine_0_opcion_deseo_a088c425:
 
     # mc "No, si me perdonaras ahora sería fácil"
     mc "No — if you forgave me now it'd be too easy."
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:201
-translate english quest_jasmine_0_opcion_madurez_8de5c9bf:
+translate english quest_jasmine_0_opcion_deseo_8de5c9bf:
 
     # mc "Y no es lo que quiero, quiero esforzarme para que me perdones."
     mc "That's not what I want. I want to earn it."
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:206
-translate english quest_jasmine_0_opcion_madurez_73e0b519:
+translate english quest_jasmine_0_opcion_deseo_73e0b519:
 
     # jasmine "Mmm... Siempre diciendo lo que tenes que decir"
     jasmine "Hmm... always saying exactly the right thing."
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:210
-translate english quest_jasmine_0_opcion_madurez_2a3a580f:
+translate english quest_jasmine_0_opcion_deseo_2a3a580f:
 
     # jasmine "Bueno entonces te la voy a poner dificil jajaja."
     jasmine "Fine, then I'll make it hard for you. Ha."
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:215
-translate english quest_jasmine_0_opcion_madurez_75e874f8:
+translate english quest_jasmine_0_opcion_deseo_75e874f8:
 
     # mc "Me alegra que asi sea."
     mc "Good. That's exactly what I want."

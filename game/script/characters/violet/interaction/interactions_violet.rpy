@@ -17,7 +17,10 @@ label interaccion_violet:
 
     if _quest_activa and _quest_activa.etapa_actual == 5:
         # Quests que usan opciones_extra en vez de auto-trigger
-        if _quest_activa.id not in ("violet_questprincipal_04_a", "violet_questprincipal_02_a", "violet_questprincipal_02_c", "violet_questprincipal_03_a", "violet_questprincipal_05_a", "violet_questprincipal_05_b", "violet_questprincipal_05_c", "violet_questprincipal_06_a", "violet_questprincipal_06_b", "violet_questprincipal_07_a", "violet_questprincipal_07_b", "violet_questprincipal_09_a"):
+        # Quest 0_a: una vez hecho el intro (esperando_talk), no auto-ejecutar —
+        # el menú normal debe aparecer para que "Hablar" dispare el talk especial.
+        if (_quest_activa.id not in ("violet_questprincipal_04_a", "violet_questprincipal_02_a", "violet_questprincipal_02_c", "violet_questprincipal_03_a", "violet_questprincipal_05_a", "violet_questprincipal_05_b", "violet_questprincipal_05_c", "violet_questprincipal_06_a", "violet_questprincipal_06_b", "violet_questprincipal_07_a", "violet_questprincipal_07_b", "violet_questprincipal_09_a")
+                and not (_quest_activa.id == "violet_questprincipal_0_a" and getattr(store, "violet_q0a_esperando_talk", False))):
             $ exito, mensajes = _quest_activa.intentar_ejecutar()
             if exito:
                 $ _npc_id_temp = "violet"
@@ -32,6 +35,17 @@ label interaccion_violet:
 
     # Construir opciones extra
     $ _opciones_extra_v = []
+
+    # Quest 0_a: Botón de interacción para romper el hielo (solo antes del intro).
+    $ _quest_v0a = sistema_quests.obtener_quest("violet_questprincipal_0_a")
+    if _quest_v0a and _quest_v0a.activa and not _quest_v0a.completada and _quest_v0a.etapa_actual == ETAPA_BOTON_LISTO and not getattr(store, "violet_q0a_esperando_talk", False):
+        $ _opciones_extra_v.append({"texto": "Hablar (quest)", "label": "quest_violet_questprincipal_0_a", "condicion": True})
+
+    # Quest 0_a: tras el intro, botón de quest "Hablar" que dispara el talk especial.
+    # El botón real del sistema talk está oculto hasta completar esta quest, así que
+    # este botón de quest es el que permite avanzar (y al completar se desbloquea el real).
+    if _quest_v0a and _quest_v0a.activa and not _quest_v0a.completada and _quest_v0a.etapa_actual == ETAPA_BOTON_LISTO and getattr(store, "violet_q0a_esperando_talk", False):
+        $ _opciones_extra_v.append({"texto": "Hablar", "label": "violet_q0a_talk_sistema", "condicion": True})
 
     # Quest 04_a: Preguntar por el cosplay — solo en cocina por la mañana
     if _quest_activa and _quest_activa.id == "violet_questprincipal_04_a" and _quest_activa.etapa_actual == 5:
@@ -73,10 +87,11 @@ label interaccion_violet:
         else:
             $ _opciones_extra_v.append({"texto": "Pedirle perdón", "label": "violet_quest05c_perdon_fuera", "condicion": True})
 
-    # Quest 06_a: Contarle de las entradas
+    # Quest 06_a: Contarle de las entradas (de noche, dentro de la habitación)
     $ _quest_v06a = sistema_quests.obtener_quest("violet_questprincipal_06_a")
     if _quest_v06a and _quest_v06a.activa and not _quest_v06a.completada and _quest_v06a.etapa_actual == ETAPA_BOTON_LISTO:
-        $ _opciones_extra_v.append({"texto": "Tengo las entradas", "label": "violet_quest06a_hablar", "condicion": True})
+        if _npc_actual.esta_en_locacion("casa_hviolet") and horario_actual == 2:
+            $ _opciones_extra_v.append({"texto": "Tengo las entradas", "label": "violet_quest06a_hablar", "condicion": True})
 
     # Quest 07_a: Preguntar por el cosplay
     $ _quest_v07a = sistema_quests.obtener_quest("violet_questprincipal_07_a")
@@ -90,7 +105,7 @@ label interaccion_violet:
 
     # Evento 1: Invitar a jugar VR
     if violet_evento1_completado and "casco_realidad_virtual" in inventario and not violet_evento1_repetir:
-        $ _opciones_extra_v.append({"texto": "Invitar a jugar VR", "label": "invitar_violet_vr", "condicion": True})
+        $ _opciones_extra_v.append({"texto": "Invitar a jugar VR", "label": "invitar_violet_vr", "condicion": True, "tipo": "evento"})
 
     # Mostrar menú de interacción
     call screen menu_interaccion_npc_completo(_npc_actual, opciones_extra=_opciones_extra_v if _opciones_extra_v else None)

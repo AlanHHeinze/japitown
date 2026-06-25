@@ -16,16 +16,22 @@ init python:
 
     # Mapeo resultado_id → (stat, cantidad)
     RESULTADO_A_STAT = {
+        "+1_amor":  ("amor",  1),
         "+2_amor":  ("amor",  2),
+        "+4_amor":  ("amor",  4),
         "+1_deseo": ("deseo", 1),
+        "+2_deseo": ("deseo", 2),
         "-2_amor":  ("amor", -2),
         "-1_deseo": ("deseo", -1),
         "nada":     None,
     }
 
     RESULTADO_TEXTO = {
+        "+1_amor":  "+1 amor ❤️",
         "+2_amor":  "+2 amor ❤️",
+        "+4_amor":  "+4 amor ❤️",
         "+1_deseo": "+1 deseo 💋",
+        "+2_deseo": "+2 deseo 💋",
         "-2_amor":  "-2 amor ❤️",
         "-1_deseo": "-1 deseo 💋",
         "nada":     "sin efecto",
@@ -134,11 +140,11 @@ init python:
         estados_posteriores: dict resultado_id → estado_id
             Estado que se asigna al NPC tras la interacción (para otros sistemas).
 
-        es_especial: si True, tiene jerarquía y contador de días.
+        es_especial: si True, tiene jerarquía y contador de dias.
         """
         def __init__(self, id, nombre, intro, efectos, mensaje,
                     es_especial=False, jerarquia=0, dias_duracion=1,
-                    estados_posteriores=None):
+                    estados_posteriores=None, condicion=None):
             self.id = id
             self.nombre = nombre
             self.intro = intro              # Narración mostrada antes del menú
@@ -148,6 +154,7 @@ init python:
             self.efectos = efectos
             self.mensaje = mensaje
             self.estados_posteriores = estados_posteriores or {}
+            self.condicion = condicion      # callable → bool; None = siempre disponible
 
         def obtener_resultado(self, opcion_id):
             return self.efectos.get(opcion_id, "nada")
@@ -248,7 +255,15 @@ init python:
             npc = store.sistema_npcs.obtener_npc(npc_id)
             if not config or not npc or not config.estados_generales_ids:
                 return
-            estado_id = renpy.random.choice(config.estados_generales_ids)
+            disponibles = []
+            for estado_id in config.estados_generales_ids:
+                estado = config.obtener_estado(estado_id)
+                condicion = getattr(estado, 'condicion', None) if estado else None
+                if condicion is None or condicion():
+                    disponibles.append(estado_id)
+            if not disponibles:
+                return
+            estado_id = renpy.random.choice(disponibles)
             npc.talk_estado_id = estado_id
 
         # ------------------------------------------------------------------
@@ -376,7 +391,7 @@ init python:
             store.talk_memoria[npc_id] = store.talk_memoria[npc_id][:limite]
 
         def consultar_memoria_mc(self, npc_id, estado_id, opcion_id):
-            """Retorna el resultado_id recordado para (npc, estado, opcion) o None."""
+            """Retorna el resultado_id recordado para (npc, estado, opción) o None."""
             if not hasattr(store, 'talk_memoria'):
                 return None
             for e in store.talk_memoria.get(npc_id, []):

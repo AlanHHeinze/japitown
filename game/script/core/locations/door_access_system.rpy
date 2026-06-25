@@ -73,9 +73,9 @@ init python:
 
         if npc_id == "violet":
             # Quest 0: Intentar hablar (solo por la tarde)
-            quest_v0 = store.sistema_quests.obtener_quest("violet_questprincipal_0")
+            quest_v0 = store.sistema_quests.obtener_quest("violet_questprincipal_0_b")
             if quest_v0 and quest_v0.activa and not quest_v0.completada and store.horario_actual == 1:
-                opciones.append({"texto": "Intentar hablar", "label": "quest_violet_questprincipal_0", "ocultar_golpear": True})
+                opciones.append({"texto": "Intentar hablar", "label": "quest_violet_questprincipal_0_b", "ocultar_golpear": True})
 
             # Quest 2: Dar paquete
             if "mangas_violet" in store.inventario and store.inventario.get("mangas_violet", 0) > 0:
@@ -119,9 +119,9 @@ init python:
             if quest_v05c and quest_v05c.activa and not quest_v05c.completada and quest_v05c.etapa_actual == ETAPA_BOTON_LISTO:
                 opciones.append({"texto": "Pedirle perdón", "label": "violet_quest05c_puerta", "ocultar_golpear": True})
 
-            # Quest 06_a: Contarle de las entradas (Violet sale al pasillo)
+            # Quest 06_a: Contarle de las entradas (Violet en habitación, de noche)
             quest_v06a = store.sistema_quests.obtener_quest("violet_questprincipal_06_a")
-            if quest_v06a and quest_v06a.activa and not quest_v06a.completada and quest_v06a.etapa_actual == ETAPA_BOTON_LISTO:
+            if quest_v06a and quest_v06a.activa and not quest_v06a.completada and quest_v06a.etapa_actual == ETAPA_BOTON_LISTO and store.horario_actual == 2:
                 opciones.append({"texto": "Tengo las entradas", "label": "violet_quest06a_puerta", "ocultar_golpear": True})
 
             # Quest 06_b: Me pediste que pasara (solo de noche)
@@ -142,7 +142,7 @@ init python:
             # Evento 03: Despertar a Violet para limpiar (sabado mañana)
             event_limpieza = store.sistema_events.obtener_event("violet_evento_03")
             if event_limpieza and event_limpieza.estado == ESTADO_EVENT_ACTIVO and store.dia_semana_actual == 5 and store.horario_actual == 0:
-                opciones.append({"texto": "Despertar a Violet para limpiar", "label": "evento03_violet", "ocultar_golpear": True})
+                opciones.append({"texto": "Despertar a Violet para limpiar", "label": "evento03_violet", "ocultar_golpear": True, "tipo": "evento"})
 
         return opciones
 
@@ -175,6 +175,10 @@ screen menu_puerta_npc(npc_id, opciones_especiales, bg_path=None):
     # Overlay semi-transparente
     add Solid("#00000088")
 
+    # ¿Alguna opción especial pide ocultar el botón de golpear?
+    # (quests cuya interacción reemplaza al golpe normal de puerta)
+    $ _ocultar_golpear = any(o.get("ocultar_golpear", False) for o in opciones_especiales)
+
     # Menu de opciones - Mismo layout que screen choice
     vbox:
         xalign 0.5
@@ -182,15 +186,17 @@ screen menu_puerta_npc(npc_id, opciones_especiales, bg_path=None):
         yanchor 0.5
         spacing gui.choice_spacing
 
-        # Golpear la puerta — siempre primero
-        textbutton "Golpear la puerta":
-            style "choice_button"
-            action [Hide("menu_puerta_npc"),
-                    Return("golpear")]
+        # Golpear la puerta — siempre primero, salvo que una quest lo oculte
+        if not _ocultar_golpear:
+            textbutton "Golpear la puerta":
+                style "choice_button"
+                action [Hide("menu_puerta_npc"),
+                        Return("golpear")]
 
         # Opciones especiales de quest/evento
         for opcion in opciones_especiales:
-            textbutton (renpy.translate_string(opcion.get("texto", "Opcion")) + " (Quest)"):
+            $ _tag_opcion = " (Evento)" if opcion.get("tipo") == "evento" else " (Quest)"
+            textbutton (renpy.translate_string(opcion.get("texto", "Opcion")) + _tag_opcion):
                 style "choice_button"
                 action [Hide("menu_puerta_npc"),
                         Return(("opcion_especial", opcion.get("label", "game_loop")))]

@@ -8,7 +8,7 @@ default MODO_DEV = False
 
 default mc_name = ""
 define mc = Character("[mc_name]", color="#56b6c2")
-define tutorial = Character("Tutorial", color="#FFB74D", what_text_align=0.5, what_size=28)
+define tutorial = Character("Tutorial", color="#FFB74D", what_size=33, what_text_align=0.5)
 
 
 init python:

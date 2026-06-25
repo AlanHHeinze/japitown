@@ -11,7 +11,7 @@ image vq8a_living_tormenta   = "images/quest/violet/quest08/violet_quest08_livin
 image vq8a_living_tormenta1  = "images/quest/violet/quest08/violet_quest08_livingtormenta1.png"
 image vq8a_living_tormenta2  = "images/quest/violet/quest08/violet_quest08_livingtormenta2.png"
 image vq8a_living_cerrado    = "images/quest/violet/quest08/violet_quest08_livingtormentacerrado.png"
-image vq8a_mc_tv             = "images/quest/violet/quest08/violet_quest08_mcmirandotv.png"
+image vq8a_mc_tv             = "images/quest/violet/quest08/violet_quest08_mcmirantotv.png"
 image vq8a_tv1               = "images/quest/violet/quest08/violet_quest08_tv1.png"
 image vq8a_tv2               = "images/quest/violet/quest08/violet_quest08_tv2.png"
 image vq8a_tv3               = "images/quest/violet/quest08/violet_quest08_tv3.png"
@@ -26,95 +26,15 @@ image vq8a_duchaescena       = "images/quest/violet/quest08/violet_quest08_ducha
 # =============================================================================
 default vq8a_ropero_visto   = False
 default vq8a_cajonera_vista = False
-
-################################################################################
-## SCREENS
-################################################################################
-
-# Patron A: overlay sobre el living con boton "Ver TV"
-screen vq8a_ver_tv_screen():
-    if sistema_locaciones.locacion_actual and sistema_locaciones.locacion_actual.id != "casa_living":
-        timer 0.01 action Hide("vq8a_ver_tv_screen")
-    else:
-        button:
-            xpos 960
-            ypos 420
-            xsize 380
-            ysize 240
-            xanchor 0.5
-            yanchor 0.0
-            background Frame(Solid("#FFFFFF00"), 0, 0)
-            hover_background Frame(Solid("#FFFFFF22"), 0, 0)
-            mouse "hand"
-            if modo_posicionamiento:
-                action NullAction()
-            else:
-                action [Hide("vq8a_ver_tv_screen"), Jump("violet_quest08a_ver_tv")]
-            text "Ver TV" size 22 color "#ffffff" xalign 0.5 yalign 0.5 outlines [(1, "#000000", 0, 0)]
-
-
-# Patron B: exploracion habitacion de Violet (ropero + cajonera)
-screen vq8a_habitacion_violet():
-    # Fondo absorbe clicks
-    button:
-        xpos 0 ypos 0 xsize 1920 ysize 1080
-        background None
-        action NullAction()
-
-    # Ropero
-    if not vq8a_ropero_visto:
-        button:
-            xpos 380
-            ypos 560
-            xsize 220
-            ysize 320
-            xanchor 0.5
-            yanchor 0.0
-            background Frame(Solid("#FFFFFF00"), 0, 0)
-            hover_background Frame(Solid("#FFFFFF22"), 0, 0)
-            mouse "hand"
-            if modo_posicionamiento:
-                action NullAction()
-            else:
-                action Return("ropero")
-            text "Ropero" size 20 color "#ffffff" xalign 0.5 yalign 0.5 outlines [(1, "#000000", 0, 0)]
-
-    # Cajonera
-    if not vq8a_cajonera_vista:
-        button:
-            xpos 1520
-            ypos 620
-            xsize 200
-            ysize 200
-            xanchor 0.5
-            yanchor 0.0
-            background Frame(Solid("#FFFFFF00"), 0, 0)
-            hover_background Frame(Solid("#FFFFFF22"), 0, 0)
-            mouse "hand"
-            if modo_posicionamiento:
-                action NullAction()
-            else:
-                action Return("cajonera")
-            text "Cajonera" size 20 color "#ffffff" xalign 0.5 yalign 0.5 outlines [(1, "#000000", 0, 0)]
-
-    button:
-        xalign 0.5
-        ypos 20
-        background "#0288D1EE"
-        hover_background "#4FC3F7"
-        padding (30, 10)
-        mouse "hand"
-        if modo_posicionamiento:
-            action NullAction()
-        else:
-            action Return("salir")
-        text "Salir" size 22 color "#ffffff" bold True
-
+default vq8a_bgs_originales = {}
 
 ################################################################################
 ## LABELS
 ################################################################################
 
+# Parte 1 — Al despertar: el MC piensa en su habitación. El mensaje se muestra
+# en un contexto aislado (HUD oculto + escena propia) para que se lea bien y NO
+# dentro del game loop. Al terminar pasa a la parte 2 (loop restringido).
 label violet_quest08a_despertar:
     # Mover todos los NPCs fuera
     $ obtener_npc("violet").locacion_actual  = "fuera"
@@ -122,11 +42,27 @@ label violet_quest08a_despertar:
     $ obtener_npc("jasmine").locacion_actual = "fuera"
     $ actualizar_rutinas_npcs()
 
+    $ ocultar_hud()
+    window hide
+
+    # MC pensando en su habitación
+    $ _bg_hmc_q8a = sistema_locaciones.obtener_locacion("casa_hmc").background
+    scene expression _bg_hmc_q8a with fade
+    show mc_parado_base c_rbase_pensando o_arribanm b_none at center with dissolve
+
     window show
     piensa "Hoy las chicas salen. Voy a estar solo en casa."
     piensa "Podría aprovechar y ver la tele tranquilo."
     window hide
 
+    hide mc_parado_base with dissolve
+
+    jump violet_quest08a_iniciar_loop
+
+
+# Parte 2 — Activa la restricción del día y devuelve el control al loop
+# restringido. La quest sigue su curso cuando el jugador entra al living.
+label violet_quest08a_iniciar_loop:
     $ activar_restriccion(
         locaciones_permitidas=None,
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar"],
@@ -144,17 +80,8 @@ label violet_quest08a_despertar:
         mensaje_celular="Podría aprovechar a ver la tv",
         npcs_ocultos=["violet", "monica", "jasmine"],
     )
-    $ restriccion_quest_activa.registrar_label_locacion("casa_living", "violet_quest08a_en_living")
-
-    call mensajes_al_despertar from _call_quest08a_despertar_msgs
-
     $ mostrar_hud()
     jump game_loop
-
-
-label violet_quest08a_en_living:
-    show screen vq8a_ver_tv_screen
-    return
 
 
 label violet_quest08a_ver_tv:
@@ -292,57 +219,127 @@ label violet_quest08a_ver_tv:
         mensaje_celular="No es el momento.",
         npcs_ocultos=["violet", "monica", "jasmine"],
     )
-    $ restriccion_quest_activa.registrar_label_locacion("casa_hviolet", "violet_quest08a_en_hviolet")
+    # Registrar un label de entrada para la habitación de Violet. Sirve para que
+    # el routing OMITA el door access (que si no bloquearía porque Violet está en
+    # la ducha / oculta) y permita pasar — la entrada se valida solo contra la
+    # whitelist de la restricción, que incluye casa_hviolet.
+    $ restriccion_quest_activa.registrar_label_locacion("casa_hviolet", "violet_quest08a_entrar_hviolet")
+
+    # Backgrounds especiales de la tormenta durante la fase 2 (modo libre en el
+    # game loop). Se guardan los originales y se restauran en el cierre.
+    python:
+        vq8a_bgs_originales = {}
+        _vq8a_overrides = {
+            "casa_living":        "images/quest/violet/quest08/violet_quest08_livingtormentacerrado.png",
+            "casa_pasilloarriba": "images/bg/casa/bg_casa_trasnoche_pasilloarriba.png",
+            "casa_hviolet":       "images/quest/violet/quest08/violet_quest08_hviolet_tormenta.png",
+        }
+        for _loc_id, _bg_path in _vq8a_overrides.items():
+            _loc_obj = sistema_locaciones.obtener_locacion(_loc_id)
+            if _loc_obj:
+                vq8a_bgs_originales[_loc_id] = _loc_obj.background_base
+                _loc_obj.background_base = _bg_path
+
+    # Acciones de locación: ropero y cajonera. Aparecen al estar en la habitación;
+    # al usar AMBAS se auto-avanza (metodología de la quest 03_a), sin botón de salir.
+    $ sistema_acciones.registrar_accion(AccionLocacion(
+        id="vq8a_ropero", nombre="Ropero", icono=u"🚪",
+        locacion_id="casa_hviolet", label_generico="violet_quest08a_accion_ropero",
+        reseteo=None, color="#4527A0", color_hover="#7E57C2"
+    ))
+    $ sistema_acciones.registrar_accion(AccionLocacion(
+        id="vq8a_cajonera", nombre="Cajonera", icono=u"🗂️",
+        locacion_id="casa_hviolet", label_generico="violet_quest08a_accion_cajonera",
+        reseteo=None, color="#2E7D32", color_hover="#43A047"
+    ))
 
     $ sistema_locaciones.mover_a_locacion("casa_living")
     $ mostrar_hud()
     jump game_loop
 
 
-label violet_quest08a_en_hviolet:
+# Entrada a la habitación de Violet durante la fase 2. No hace nada por sí mismo
+# (la exploración la manejan las acciones Ropero/Cajonera); existe solo para que
+# el routing omita el door access y permita entrar aunque Violet no esté.
+label violet_quest08a_entrar_hviolet:
+    return
+
+
+# Acción Ropero — el MC encuentra el pijama. Al usar ambas acciones se avanza.
+label violet_quest08a_accion_ropero:
     $ ocultar_hud()
+    window show
+    piensa "El pijama rosa... acá está"
     window hide
 
-    scene vq8a_hviolet_tormenta with fade
-    show screen vq8a_habitacion_violet
+    $ vq8a_ropero_visto = True
+    $ sistema_acciones.acciones.pop("vq8a_ropero", None)
 
-    $ _en_hviolet_q8a = True
-    while _en_hviolet_q8a:
-        $ _res_hv = ui.interact()
+    if vq8a_ropero_visto and vq8a_cajonera_vista:
+        jump violet_quest08a_ir_al_baño
 
-        if _res_hv == "ropero":
-            hide screen vq8a_habitacion_violet
-            window show
-            piensa "El pijama rosa... acá está"
-            $ vq8a_ropero_visto = True
-            window hide
-            show screen vq8a_habitacion_violet
-
-        elif _res_hv == "cajonera":
-            hide screen vq8a_habitacion_violet
-            window show
-            piensa "Ropa interior..."
-            piensa "No me pidio pero supongo que también la va a necesitar"
-            $ vq8a_cajonera_vista = True
-            window hide
-            show screen vq8a_habitacion_violet
-
-        elif _res_hv == "salir":
-            if not vq8a_ropero_visto or not vq8a_cajonera_vista:
-                hide screen vq8a_habitacion_violet
-                window show
-                piensa "Todavía me falta algo. Violet pidió el pijama rosa y deberia llevarle ropa interior tambien"
-                window hide
-                show screen vq8a_habitacion_violet
-            else:
-                $ _en_hviolet_q8a = False
-
-    hide screen vq8a_habitacion_violet
-    jump violet_quest08a_puerta_baño
+    $ mostrar_hud()
+    return
 
 
+# Acción Cajonera — el MC encuentra la ropa interior.
+label violet_quest08a_accion_cajonera:
+    $ ocultar_hud()
+    window show
+    piensa "Ropa interior..."
+    piensa "No me pidio pero supongo que también la va a necesitar"
+    window hide
+
+    $ vq8a_cajonera_vista = True
+    $ sistema_acciones.acciones.pop("vq8a_cajonera", None)
+
+    if vq8a_ropero_visto and vq8a_cajonera_vista:
+        jump violet_quest08a_ir_al_baño
+
+    $ mostrar_hud()
+    return
+
+
+# Fase 3 — El MC ya tiene la ropa. Queda en el pasillo de arriba con todo
+# bloqueado salvo la puerta del baño. Al tocar la puerta se dispara el menú.
+label violet_quest08a_ir_al_baño:
+    window show
+    piensa "Ya tengo todo. Voy a llevárselo al baño."
+    window hide
+
+    $ desactivar_restriccion()
+    $ activar_restriccion(
+        locaciones_permitidas=["casa_pasilloarriba", "casa_banioarriba"],
+        acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar"],
+        mensaje_movimiento="Debo llevarle la ropa a Violet",
+        mensajes_acciones={
+            "avanzar_tiempo": "Debo llevarle la ropa a Violet",
+            "dormir":         "Debo llevarle la ropa a Violet",
+            "entrenar":       "Debo llevarle la ropa a Violet",
+            "trabajar":       "Debo llevarle la ropa a Violet",
+            "usar_item":      "Debo llevarle la ropa a Violet",
+            "comprar":        "Debo llevarle la ropa a Violet",
+        },
+        mensaje_npc_bloqueado="No es el momento.",
+        celular_bloqueado=True,
+        mensaje_celular="No es el momento.",
+        npcs_ocultos=["violet", "monica", "jasmine"],
+    )
+    $ restriccion_quest_activa.registrar_label_locacion("casa_banioarriba", "violet_quest08a_puerta_baño")
+
+    $ sistema_locaciones.mover_a_locacion("casa_pasilloarriba")
+    $ mostrar_hud()
+    jump game_loop
+
+
+# Door access de la puerta del baño: el menú se decide en la puerta (pasillo),
+# todavía no se entra. Por eso volvemos a pasillo arriba antes de mostrarlo.
 label violet_quest08a_puerta_baño:
-    scene vq8a_ducha with fade
+    $ sistema_locaciones.mover_a_locacion("casa_pasilloarriba")
+    $ ocultar_hud()
+
+    $ _bg_pasillo_baño = sistema_locaciones.obtener_locacion("casa_pasilloarriba").background
+    scene expression _bg_pasillo_baño
 
     window show
     piensa "La ropa de Violet... ¿la dejo afuera o llamo?"
@@ -361,15 +358,33 @@ label violet_quest08a_opcion_a:
     mc "Sí, está afuera de la puerta"
     violet "Gracias"
     piensa "Bien, a seguir con mis cosas"
-    window hide
-    $ desactivar_restriccion()
-    $ completar_quest_actual("violet")
-    $ avanzar_horario_multiple(2)
-    $ mostrar_hud()
-    jump game_loop
+    jump violet_quest08a_cierre_desarrollo
+
+
+# Menú del baño: "Acercarse" es una opción especial que requiere 3 de destreza.
+# Se muestra siempre; cuando no se cumple el requisito queda en gris (insensitive).
+screen vq8a_menu_bano():
+    modal True
+
+    vbox:
+        xalign 0.5
+        ypos 405
+        yanchor 0.5
+        spacing gui.choice_spacing
+
+        textbutton "Irse":
+            style "choice_button"
+            action Return("irse")
+
+        textbutton "Acercarse  🎯 (3 de destreza)":
+            style "choice_button"
+            action Return("acercarse")
+            sensitive (getattr(store, 'mc_destreza', 0) >= 3)
 
 
 label violet_quest08a_entrar_baño:
+    scene vq8a_ducha with fade
+
     window show
     piensa "No se si fue la mejor opcion entrar así"
     piensa "Esta lleno de vapor y no veo bien"
@@ -380,32 +395,107 @@ label violet_quest08a_entrar_baño:
     window show
     piensa "¿Podria acercarme mas?"
 
-    menu:
-        "Irse":
-            jump violet_quest08a_baño_irse
-        "Acercarse" if getattr(store, 'mc_destreza', 0) >= 3:
-            jump violet_quest08a_baño_acercarse
+    call screen vq8a_menu_bano
+
+    if _return == "acercarse":
+        jump violet_quest08a_baño_acercarse
+    else:
+        jump violet_quest08a_baño_irse
 
 
 label violet_quest08a_baño_irse:
     piensa "Mejor me voy, ya tuve suficientes problemas con Violet para buscarme uno nuevo"
-    window hide
-    $ desactivar_restriccion()
-    $ completar_quest_actual("violet")
-    $ avanzar_horario_multiple(2)
-    $ mostrar_hud()
-    jump game_loop
+    jump violet_quest08a_cierre_desarrollo
 
 
 label violet_quest08a_baño_acercarse:
-    scene vq8a_duchaescena with Dissolve
+    scene vq8a_duchaescena with dissolve
     window show
     piensa "No puedo creer que este haciendo esto, no se desde cuando pero me esta atrayendo mucho Violet"
     piensa "Hasta aca fue suficiente, si me ve me mata"
     piensa "Mejor me voy"
+    jump violet_quest08a_cierre_desarrollo
+
+
+################################################################################
+## CIERRE — Fin del contenido disponible (la quest 09_a está en desarrollo)
+################################################################################
+## Completa la quest 08_a. La 09_a NO se auto-inicia (su quest_anterior está
+## desvinculada temporalmente en quest_violet.rpy); cuando se retome el
+## contenido, basta con volver a encadenarla.
+
+label violet_quest08a_cierre_desarrollo:
     window hide
+
+    # Limpiar restricción y acciones de exploración
     $ desactivar_restriccion()
+    $ sistema_acciones.acciones.pop("vq8a_ropero", None)
+    $ sistema_acciones.acciones.pop("vq8a_cajonera", None)
     $ completar_quest_actual("violet")
+
+    # 1. Adelantar el tiempo 2 veces (queda de noche)
     $ avanzar_horario_multiple(2)
+
+    # 2. Mover al MC a su habitación
+    $ sistema_locaciones.mover_a_locacion("casa_hmc")
+
+    # 3. Restablecer los backgrounds de las locaciones a su estado normal
+    python:
+        for _loc_id, _bg_orig in dict(vq8a_bgs_originales).items():
+            _loc_obj = sistema_locaciones.obtener_locacion(_loc_id)
+            if _loc_obj:
+                _loc_obj.background_base = _bg_orig
+        vq8a_bgs_originales = {}
+
     $ mostrar_hud()
     jump game_loop
+
+
+################################################################################
+## TESTEO (solo desarrollo) — salta directo al contenido de la quest 08_a
+################################################################################
+## Disparado por el botón de test en la app de chats. Prepara el estado mínimo
+## (quest activa, NPCs fuera, flags limpios) y entra al label violet_quest08a_ver_tv.
+
+label test_quest08a_violet:
+    # Cerrar el celular si quedó abierto
+    $ renpy.hide_screen("menu_cheats")
+    $ renpy.hide_screen("lista_contactos_mensajes")
+    $ renpy.hide_screen("menu_celular")
+    $ menu_celular_abierto = False
+
+    # Restaurar backgrounds por si un test anterior quedó a medias
+    python:
+        for _loc_id, _bg_orig in dict(getattr(store, 'vq8a_bgs_originales', {})).items():
+            _loc_obj = sistema_locaciones.obtener_locacion(_loc_id)
+            if _loc_obj:
+                _loc_obj.background_base = _bg_orig
+        store.vq8a_bgs_originales = {}
+
+    # Limpiar restricción, acciones y flags de un test previo
+    $ desactivar_restriccion()
+    $ sistema_acciones.acciones.pop("vq8a_ropero", None)
+    $ sistema_acciones.acciones.pop("vq8a_cajonera", None)
+    $ vq8a_ropero_visto = False
+    $ vq8a_cajonera_vista = False
+
+    # Forzar la 08_a como la ÚNICA quest activa de Violet, en ETAPA_BOTON_LISTO
+    # (así el cierre la completa correctamente con completar_quest_actual("violet"))
+    python:
+        for _q in sistema_quests.quests.values():
+            if _q.npc_id == "violet" and _q.activa and _q.id != "violet_questprincipal_08_a":
+                _q.activa = False
+        _q08a = sistema_quests.obtener_quest("violet_questprincipal_08_a")
+        if _q08a:
+            _q08a.completada = False
+            _q08a.activa = True
+            _q08a.etapa_actual = ETAPA_BOTON_LISTO
+            _q08a.dia_inicio = getattr(store, 'dias_totales', 1)
+
+    # Setup de NPCs (replica el despertar) y salto directo al contenido
+    $ obtener_npc("violet").locacion_actual  = "fuera"
+    $ obtener_npc("monica").locacion_actual  = "fuera"
+    $ obtener_npc("jasmine").locacion_actual = "fuera"
+    $ actualizar_rutinas_npcs()
+
+    jump violet_quest08a_ver_tv

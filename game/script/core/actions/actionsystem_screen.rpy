@@ -1,7 +1,7 @@
 ################################################################################
 ## Screen de Acciones de Locación
 ################################################################################
-## Panel con los botones de acción disponibles en la locación actual.
+## Panel con los botones de accion disponibles en la locación actual.
 ## Misma estructura visual que panel_entrenamiento.
 
 screen acciones_locacion():

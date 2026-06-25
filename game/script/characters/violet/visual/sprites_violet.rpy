@@ -23,7 +23,17 @@ layeredimage violet_parada:
             "images/characters/casa/violet/violet_parada_cabeza_pijama.png"
         attribute ca_none:
             Null()
-    
+
+    # Cuerpo completo — sprites que YA incluyen cabeza/cara (ej: cosplay eva).
+    # Va ANTES de boca/ojos para dibujarse DEBAJO de ellos, así las expresiones
+    # faciales (boca/ojos) siguen siendo visibles encima del sprite.
+    # Usar con c_none (cuerpo base en Null) y ca_none (cabeza base en Null).
+    group cuerpocompleto:
+        attribute cc_none default:
+            Null()
+        attribute cc_eva_base:
+            "images/characters/casa/violet/violet_parada_cuerpo_eva_base.png"
+
     # Boca
     group boca:
         attribute b_aburrida default:
@@ -192,6 +202,9 @@ layeredimage violet_parada:
             "images/characters/casa/violet/violet_parada_cuerpo_pijama_victoria.png"
         attribute c_pijama_mangas:
             "images/characters/casa/violet/violet_parada_cuerpo_pijama_mangas.png"
+        attribute c_pijama_cajacosplay:
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_cajacoxplay.png"
+
         attribute c_none:
             Null()
     
@@ -231,6 +244,21 @@ layeredimage violet_espalda:
             "images/characters/casa/violet/violet_parada_espalada_pijama_rascando1.png"
         attribute p_rascando2:
             "images/characters/casa/violet/violet_parada_espalada_pijama_rascando2.png"
+
+    # Grupo eva — imágenes de espalda con skin eva
+    group eva:
+        attribute e_none default:
+            Null()
+        attribute e_base:
+            "images/characters/casa/violet/violet_parada_espalada_eva_base.png"
+        attribute e_lista:
+            "images/characters/casa/violet/violet_parada_espalada_eva_lista.png"
+        attribute e_pelo:
+            "images/characters/casa/violet/violet_parada_espalada_eva_pelo.png"
+        attribute e_cola1:
+            "images/characters/casa/violet/violet_parada_espalada_eva_cola1.png"
+        attribute e_cola2:
+            "images/characters/casa/violet/violet_parada_espalada_eva_cola2.png"
 
 
 ################################################################################

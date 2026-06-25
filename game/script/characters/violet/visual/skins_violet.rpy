@@ -6,12 +6,8 @@
 init 10 python:
 
     def _cond_pijama_violet():
-        """Pijama activo si quest 02_b completada Y deseo >= 10."""
-        q = store.sistema_quests.obtener_quest("violet_questprincipal_02_b")
-        if not q or not q.completada:
-            return False
-        npc = obtener_npc("violet")
-        return npc is not None and npc.obtener_estado("deseo", 0) >= 10
+        """Pijama activo si el skin fue desbloqueado por quest."""
+        return store.skins_activos.get("violet", {}).get("pijama") is not None
 
     def inicializar_skins_violet():
         """Inicializa los skins de Violet y asigna grupos a rutinas."""
@@ -54,7 +50,7 @@ init 10 python:
         # Lunes a Sábado (0-5) - Noche en H. Violet = Pijama (requiere desbloqueo)
         establecer_grupo_rutina("violet", [0, 1, 2, 3, 4, 5], 2, "pijama", condicion=_cond_pijama_violet)
 
-        # Todos los días (0-6) - Trasnoche en H. Violet = Pijama (requiere desbloqueo)
+        # Todos los dias (0-6) - Trasnoche en H. Violet = Pijama (requiere desbloqueo)
         establecer_grupo_rutina("violet", [0, 1, 2, 3, 4, 5, 6], 3, "pijama", condicion=_cond_pijama_violet)
         
         # El resto de rutinas usará "base" por defecto

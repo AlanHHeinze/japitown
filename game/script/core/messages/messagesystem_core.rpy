@@ -558,8 +558,13 @@ init python:
             if mensajes_estan_bloqueados():
                 return
 
-            # Horarios omitidos: los posteriores al horario en que durmió hasta trasnoche
-            horarios_omitidos = list(range(horario_desde + 1, 4))
+            # Horarios a simular: desde el horario en que durmió (inclusive) hasta
+            # trasnoche. Se incluye el propio horario_desde porque un mensaje puede
+            # haberse puesto en espera recién durante este dormir() (vía
+            # actualizar_quests, que avanza una quest a BOTON_LISTO y dispara su
+            # mensaje). Si ese mensaje es para el mismo horario en que el jugador se
+            # durmió, excluirlo haría que nunca se entregue esa noche.
+            horarios_omitidos = list(range(horario_desde, 4))
             if not horarios_omitidos:
                 return
 

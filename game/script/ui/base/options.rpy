@@ -106,11 +106,11 @@ define config.say_attribute_transition_layer = "master"
 ## Custom sprite transitions - Transiciones personalizadas para sprites
 ## Uso: show sprite with sprite_fast
 
-define sprite_fast = Dissolve(0.2, alpha=True)      # Muy rápido - para animaciones
+define sprite_fast = Dissolve(0.2, alpha=True)      # Muy rapido - para animaciones
 define sprite_normal = Dissolve(0.5, alpha=True)   # Normal - cambios de expresión
 define sprite_slow = Dissolve(1, alpha=True)      # Lento - cambios dramáticos
 
-## También puedes crear transiciones con otros efectos:
+## Tambien puedes crear transiciones con otros efectos:
 # define sprite_fade = Fade(0.1, 0.0, 0.1)          # Fade a negro y volver
 # define sprite_pixellate = Pixellate(0.3, 5)       # Efecto pixelado
 

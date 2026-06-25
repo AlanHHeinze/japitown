@@ -2,8 +2,8 @@
 ## Evento 2 de Violet - Noche post Quest 3.2
 ################################################################################
 ## Este evento se dispara automáticamente la primera vez que el jugador va a
-## dormir después de haber completado la Quest 3.2 de Violet.
-## También contiene el label para la versión repetible del evento.
+## dormir despues de haber completado la Quest 3.2 de Violet.
+## Tambien contiene el label para la versión repetible del evento.
 
 ################################################################################
 ## Imagenes
@@ -49,44 +49,42 @@ label evento2_violet:
 
     # img1
     show violet_evento_02 img1 with dissolve
-    mc ""
-    violet ""
+    
+    violet "¿Este era el cosplay que tanto querías ver?"
+    mc "Si... te queda muy bien"
 
     # img2
     show violet_evento_02 img2 with dissolve
-    mc ""
-    violet ""
+    violet "¿Me lo vuelvo a poner o me lo termino de quitar?"
+    mc "Ehhh"
+    
 
     # img3
     show violet_evento_02 img3 with dissolve
-    mc ""
-    violet ""
+    violet "¿Así o un poco mas?"
+    mc "Un poco mas"
 
-    # img4
-    show violet_evento_02 img4 with dissolve
-    mc ""
-    violet ""
 
     # img5
     show violet_evento_02 img5 with dissolve
-    mc ""
-    violet ""
+    violet "¿Esto querías ver? Perverido"
+    mc "Si, estaba deseando ese trasero"
 
     # img6
     show violet_evento_02 img6 with dissolve
-    mc ""
-    violet ""
+    violet "Bueno entonces veni a buscarlo"
+
 
     hide violet_evento_02 with dissolve
 
     scene violet_evento02_despierto with fade
-    piensa "Eso fue raro..."
+    piensa "Eso fue bastante raro..."
     piensa "Va a ser mejor que me vuelva a dormir"
     scene violet_evento02_despierto2 with fade
 
     $ violet_evento2_completado = True
 
-    # Ejecutar la acción de dormir
+    # Ejecutar la accion de dormir
     $ dormir()
 
     window hide
@@ -100,9 +98,26 @@ label evento2_violet_repetir:
 
     scene violet_evento02_fondo with fade
 
+    piensa "No puedo dejar de pensar en el trasero de violet..."
+    piensa "Tengo ese sueño grabado en la cabeza"
+
+    # img1
     show violet_evento_02 img1 with dissolve
-    mc ""
-    violet ""
+    pause 1.0
+    # img2
+    show violet_evento_02 img2 with dissolve
+    pause 1.0
+    # img3
+    show violet_evento_02 img3 with dissolve
+    pause 1.0
+    # img5
+    show violet_evento_02 img5 with dissolve
+    pause 1.0
+    # img6
+    show violet_evento_02 img6 with dissolve
+    pause 1.0
+    
+    piensa "Esto me va a terminar volviendo loco"
 
     hide violet_evento_02 with dissolve
     return

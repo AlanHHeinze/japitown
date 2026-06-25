@@ -133,7 +133,7 @@ layeredimage jasmine_parada:
 
 layeredimage jasmine_paradadeportiva:
     
-    # Espalda (detrás de todo)
+    # Espalda (detras de todo)
     group espalda:
         attribute e_none default:
             Null()

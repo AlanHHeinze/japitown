@@ -24,9 +24,13 @@ init 10 python:
         return dias_totales - dia_completada >= 2
 
     def condicion_activacion_event1_monica():
-        """Se activa al interactuar con Mónica en el living por la tarde."""
-        horario = getattr(store, 'horario_actual', 0)
-        return horario == 1
+        """El evento NO se auto-activa por tiempo: lo dispara la interacción con
+        Mónica en el living por la tarde (ver interaccion_monica, que exige estado
+        VISIBLE y llama a activar() manualmente).
+
+        Devolver False evita que validar_eventos() lo pase a ACTIVO apenas es de
+        tarde — eso lo sacaba de estado VISIBLE y rompía el disparador."""
+        return False
 
     def inicializar_events_monica():
         """Inicializa todos los eventos de Mónica."""

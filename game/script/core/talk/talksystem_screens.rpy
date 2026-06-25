@@ -5,7 +5,7 @@
 screen menu_talk_npc(npc, config, estado, especiales, preview_opcion, preview_resultado, npc_id, sprite_npc):
     modal True
 
-    # Overlay que dimea el fondo y el sprite del MC (que están en master layer)
+    # Overlay que dimea el fondo y el sprite del MC (que estan en master layer)
     add Solid("#00000077")
 
     # Sprite del NPC encima del overlay

@@ -41,7 +41,14 @@ init python:
         """
         Avanza el horario al siguiente estado.
         Si está en Trasnoche, no avanza más.
+        Si la quest 0_b de Jasmine está activa, no avanza el horario.
         """
+        # Verificar si la quest 0_b de Jasmine está activa (restricción de horario)
+        if hasattr(store, 'sistema_quests'):
+            q_j0b = store.sistema_quests.obtener_quest("jasmine_questprincipal_0_b")
+            if q_j0b and q_j0b.activa and not q_j0b.completada:
+                return
+
         # Usar store directamente en lugar de global
         if store.horario_actual < 3:  # Si no es Trasnoche
             # Si era mañana y el repartidor estaba presente, se va y deja paquete
@@ -300,6 +307,14 @@ label accion_dormir:
     # Ejecutar lógica de cambio de día
     $ dormir()
 
+    # Hook Quest 0 del MC — primer sueño al finalizar la introducción
+    if getattr(store, 'mc_q0_final_sleep', False):
+        $ mc_q0_final_sleep = False
+        $ desactivar_restriccion()
+        $ sistema_quests_mc.completar_activa()
+        $ config_mostrar_accion_movimiento = False
+        $ visualizador_hotspot_activo = False
+
     # Quest 08_a de Violet: auto-trigger al despertar cuando está en ETAPA_BOTON_LISTO
     $ _quest_v08a = store.sistema_quests.obtener_quest("violet_questprincipal_08_a")
     if _quest_v08a and _quest_v08a.activa and not _quest_v08a.completada and _quest_v08a.etapa_actual == ETAPA_BOTON_LISTO:
@@ -324,6 +339,14 @@ label accion_dormir:
             else:
                 # Cuidado insuficiente: completar 09_a y continuar el sueño normal
                 $ completar_quest_actual("violet")
+
+    # Evento 03 de Violet: enviar mensaje de Monica al día siguiente de completar quest 03_a
+    $ _ev03_dia_pendiente = getattr(store, 'violet_ev03_pendiente_desde_dia', None)
+    if (_ev03_dia_pendiente is not None and
+            not getattr(store, 'violet_ev03_mensaje_disparado', False) and
+            getattr(store, 'dias_totales', 0) > _ev03_dia_pendiente):
+        $ store.sistema_mensajes.disparar_por_trigger("event_aparicion", "violet_quest2_chat_monica", "monica")
+        $ store.violet_ev03_mensaje_disparado = True
 
     # Mostrar mensajes al despertar (quests, eventos, pedidos nuevos)
     call mensajes_al_despertar from _call_mensajes_al_despertar

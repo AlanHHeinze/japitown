@@ -644,7 +644,7 @@ init 6 python:
         mensaje_inicial="Pasate a la noche por mi habitación",
         trigger_id="violet_q6b_g1",
         momento_locacion="casa_hviolet",
-        momento_horario=1,
+        momento_horario=2,
         pasos=[
             PasoConversacion(
                 mensaje_npc="Te quiero consultar algo",
@@ -784,7 +784,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Si querés te mando fotos y te puedo ayudar a elegir",
+                        texto="Si querés mandame fotos y te puedo ayudar a elegir",
                         respuesta_npc=["Jajajaja no", "Vas a tener que esperar al día del evento para verlo"],
                         saltar_a_paso=5,
                     ),

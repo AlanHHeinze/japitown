@@ -23,7 +23,7 @@ screen _celular_cerrar_exterior(screen_actual):
         if modo_ajuste_celular:
             action NullAction()
         else:
-            action [Hide(screen_actual), SetVariable("menu_celular_abierto", False), Hide("menu_celular")]
+            action [Hide(screen_actual), SetVariable("menu_celular_abierto", False), Hide("menu_celular"), Call("_validar_estado_tras_celular")]
 
 
 ################################################################################

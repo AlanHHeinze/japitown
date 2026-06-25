@@ -24,5 +24,5 @@ layeredimage repartidor_parado:
 # Repartidor en frente de la casa (mañana de entrega)
 image idle_repartidor_puerta = "images/characters/otros/repartidor/idle/idle_repartidor_frentecasa.png"
 
-# Paquete en la habitación del MC (entrega perdida)
+# Paquete en la habitacion del MC (entrega perdida)
 image idle_paquete_hmc = "images/characters/otros/repartidor/idle/idle_paquete_hmc.png"

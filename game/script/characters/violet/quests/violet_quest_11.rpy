@@ -36,7 +36,7 @@ label quest_violet_questprincipal_11:
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Es un conjunto de cosplays. Vi que te gustaba eso y pense que quizas querias probarlos."
+    mc "Es un conjunto de cosplays. Vi que te gustaba eso y pense que quizás querías probarlos."
     show mc_parado_base b_none
 
     # Consumir item
@@ -49,17 +49,17 @@ label quest_violet_questprincipal_11:
     show violet_parada b_none
     
     show mc_parado_base b_hablando
-    mc "Lo importante es que te gusten, así tenés más opciones para probarte ademas del que ya tenias."
+    mc "Lo importante es que te gusten, así tienes más opciones para probarte además del que ya tenías."
     show mc_parado_base b_none
     
     show violet_parada b_hablandochica
-    violet "Muchas gracias en serio... no me lo esperaba. Dejame ver qué hay adentro."
+    violet "Muchas gracias en serio... no me lo esperaba. Déjame ver qué hay adentro."
     show violet_parada b_none
     
     menu:
-        "¿Querés que te deje sola para probártelos?":
+        "¿Quieres que te deje sola para probártelos?":
             jump violet_quest11_opcion_a
-        "Me gustaria ver como te quedan...":
+        "Me gustaría ver como te quedan...":
             jump violet_quest11_opcion_b
         "Apuesto a que te van a quedar increibles":
             jump violet_quest11_opcion_c
@@ -72,11 +72,11 @@ label quest_violet_questprincipal_11:
 label violet_quest11_opcion_a:
 
     show mc_parado_base b_hablando
-    mc "¿Querés que te deje sola para probártelos?"
+    mc "¿Quieres que te deje sola para probártelos?"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Hmm... no, no hace falta. Podés quedarte, me gustaría saber tu opinión."
+    violet "Hmm... no, no hace falta. Puedes quedarte, me gustaría saber tu opinión."
     show violet_parada b_none
 
     jump violet_quest11_cierre
@@ -89,11 +89,11 @@ label violet_quest11_opcion_a:
 label violet_quest11_opcion_b:
 
     show mc_parado_base b_hablando
-    mc "Me gustaria ver como te quedan..."
+    mc "Me gustaría ver como te quedan..."
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Q-quedate entonces. Me sirve tener una segunda opinión."
+    violet "Q-quédate entonces. Me sirve tener una segunda opinión."
     show violet_parada b_none
 
     jump violet_quest11_cierre
@@ -110,7 +110,7 @@ label violet_quest11_opcion_c:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "B-bueno, gracias... quedate así me decís cuál me queda mejor."
+    violet "B-bueno, gracias... quédate así me dices cuál me queda mejor."
     show violet_parada b_none
 
     jump violet_quest11_cierre
@@ -123,7 +123,7 @@ label violet_quest11_opcion_c:
 label violet_quest11_cierre:
 
     show violet_parada b_hablandochica
-    violet "Hay un montón de opciones acá, me va a llevar un tiempo medirme todo esto."
+    violet "Hay un montón de opciones aquí, me va a llevar un tiempo medirme todo esto."
     show violet_parada b_none
 
     show mc_parado_base b_hablando

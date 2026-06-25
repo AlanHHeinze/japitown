@@ -154,7 +154,15 @@ init python:
                 if npc and locacion_id:
                     return npc.esta_en_locacion(locacion_id)
                 return False
-            
+
+            elif self.tipo == "quest_mc":
+                # Requiere que una quest del sistema propio del MC esté completada.
+                quest_id = self.params.get("quest_id")
+                if hasattr(store, 'sistema_quests_mc'):
+                    q = store.sistema_quests_mc.quests.get(quest_id)
+                    return q is not None and q.completada
+                return False
+
             return True  # Tipo desconocido, asumir cumplido
     
     
@@ -205,7 +213,7 @@ init python:
         """
         
         def __init__(self, pista="", que_hacer="", mensaje_despertar="",
-                     trigger_mensaje=None, accion_al_entrar=None):
+                    trigger_mensaje=None, accion_al_entrar=None):
             """
             Args:
                 pista: Texto o callable para el panel de pistas
@@ -257,7 +265,7 @@ init python:
         """
         
         def __init__(self, condicion, trigger_mensaje=None,
-                     cambio_relacion=None, pista="", que_hacer=""):
+                    cambio_relacion=None, pista="", que_hacer=""):
             """
             Args:
                 condicion: Callable que retorna bool (cuándo se produce el fallo)
@@ -306,11 +314,11 @@ init python:
         """
         
         def __init__(self, id, npc_id, nombre, descripcion, numero_quest,
-                     dias_espera=0, condicion_espera=None, requisitos=None, validacion_especial=None,
-                     rutina_quest=None, rutinas_adicionales=None, prioridad_rutina=0,
-                     mensaje_pista="", retorno=None,
-                     mostrar_en_menu=True, quest_anterior=None, mensaje_despertar="",
-                     config_etapas=None, config_fallo=None):
+                    dias_espera=0, condicion_espera=None, requisitos=None, validacion_especial=None,
+                    rutina_quest=None, rutinas_adicionales=None, prioridad_rutina=0,
+                    mensaje_pista="", retorno=None,
+                    mostrar_en_menu=True, quest_anterior=None, mensaje_despertar="",
+                    config_etapas=None, config_fallo=None):
             """
             Args:
                 id: ID único de la quest
@@ -1395,16 +1403,16 @@ init python:
         quest_monica = sistema_quests.obtener_quest("monica_questprincipal_0")
         if quest_monica and quest_monica.puede_iniciar():
             quest_monica.iniciar()
-        
-        # Iniciar quest 0 de Jasmine
-        quest_jasmine = sistema_quests.obtener_quest("jasmine_questprincipal_0")
-        if quest_jasmine and quest_jasmine.puede_iniciar():
-            quest_jasmine.iniciar()
-        
-        # Iniciar quest 0 de Violet
-        quest_violet = sistema_quests.obtener_quest("violet_questprincipal_0")
-        if quest_violet and quest_violet.puede_iniciar():
-            quest_violet.iniciar()
+
+        # Iniciar quest 0_a de Jasmine (primera quest, sin dependencias)
+        quest_jasmine_0a = sistema_quests.obtener_quest("jasmine_questprincipal_0_a")
+        if quest_jasmine_0a and quest_jasmine_0a.puede_iniciar():
+            quest_jasmine_0a.iniciar()
+
+        # Iniciar quest 0_a de Violet (primera quest, sin dependencias)
+        quest_violet_0a = sistema_quests.obtener_quest("violet_questprincipal_0_a")
+        if quest_violet_0a and quest_violet_0a.puede_iniciar():
+            quest_violet_0a.iniciar()
 
 
 ################################################################################

@@ -50,6 +50,23 @@ screen menu_cheats():
                         spacing 12
                         xfill True
 
+                        # ── Tests de quests (saltar directo al contenido) ──
+                        text "TESTEO DE QUESTS" size 12 color "#4FC3F7" bold True
+
+                        button:
+                            xfill True
+                            background "#4a1e3aCC"
+                            hover_background "#6a2a50CC"
+                            padding (12, 10)
+                            action [
+                                Hide("menu_cheats"),
+                                SetVariable("menu_celular_abierto", False),
+                                Hide("menu_celular"),
+                                Jump("test_quest08a_violet")
+                            ]
+
+                            text "🧪 Quest 08_a Violet" size 14 color "#FFD54F" bold True
+
                         # Toggle de recompensas
                         frame:
                             xfill True
@@ -119,8 +136,8 @@ screen menu_cheats():
                                         text "❤️ Amor: [monica.estado['amor']]" size 12 color "#00ff00"
                                         textbutton "+1" action Function(monica.modificar_stat1, 1) style "cheat_button"
                                         textbutton "-1" action Function(monica.modificar_stat1, -1) style "cheat_button"
-                                        textbutton "Max" action SetDict(monica.estado, "amor", 100) style "cheat_button"
-                                        textbutton "0" action SetDict(monica.estado, "amor", 0) style "cheat_button"
+                                        textbutton "Max" action Function(monica.establecer_stat1, 100) style "cheat_button"
+                                        textbutton "0" action Function(monica.establecer_stat1, 0) style "cheat_button"
 
                                     hbox:
                                         spacing 8
@@ -128,8 +145,8 @@ screen menu_cheats():
                                         text "💋 Deseo: [monica.estado['deseo']]" size 12 color "#ff69b4"
                                         textbutton "+1" action Function(monica.modificar_stat2, 1) style "cheat_button"
                                         textbutton "-1" action Function(monica.modificar_stat2, -1) style "cheat_button"
-                                        textbutton "Max" action SetDict(monica.estado, "deseo", 100) style "cheat_button"
-                                        textbutton "0" action SetDict(monica.estado, "deseo", 0) style "cheat_button"
+                                        textbutton "Max" action Function(monica.establecer_stat2, 100) style "cheat_button"
+                                        textbutton "0" action Function(monica.establecer_stat2, 0) style "cheat_button"
 
                         # Jasmine
                         $ jasmine = obtener_npc("jasmine")
@@ -151,8 +168,8 @@ screen menu_cheats():
                                         text "❤️ Amor: [jasmine.estado['amor']]" size 12 color "#00ff00"
                                         textbutton "+1" action Function(jasmine.modificar_stat1, 1) style "cheat_button"
                                         textbutton "-1" action Function(jasmine.modificar_stat1, -1) style "cheat_button"
-                                        textbutton "Max" action SetDict(jasmine.estado, "amor", 100) style "cheat_button"
-                                        textbutton "0" action SetDict(jasmine.estado, "amor", 0) style "cheat_button"
+                                        textbutton "Max" action Function(jasmine.establecer_stat1, 100) style "cheat_button"
+                                        textbutton "0" action Function(jasmine.establecer_stat1, 0) style "cheat_button"
 
                                     hbox:
                                         spacing 8
@@ -160,8 +177,8 @@ screen menu_cheats():
                                         text "💋 Deseo: [jasmine.estado['deseo']]" size 12 color "#ff69b4"
                                         textbutton "+1" action Function(jasmine.modificar_stat2, 1) style "cheat_button"
                                         textbutton "-1" action Function(jasmine.modificar_stat2, -1) style "cheat_button"
-                                        textbutton "Max" action SetDict(jasmine.estado, "deseo", 100) style "cheat_button"
-                                        textbutton "0" action SetDict(jasmine.estado, "deseo", 0) style "cheat_button"
+                                        textbutton "Max" action Function(jasmine.establecer_stat2, 100) style "cheat_button"
+                                        textbutton "0" action Function(jasmine.establecer_stat2, 0) style "cheat_button"
 
                         # Violet
                         $ violet = obtener_npc("violet")
@@ -183,8 +200,8 @@ screen menu_cheats():
                                         text "❤️ Amor: [violet.estado['amor']]" size 12 color "#00ff00"
                                         textbutton "+1" action Function(violet.modificar_stat1, 1) style "cheat_button"
                                         textbutton "-1" action Function(violet.modificar_stat1, -1) style "cheat_button"
-                                        textbutton "Max" action SetDict(violet.estado, "amor", 100) style "cheat_button"
-                                        textbutton "0" action SetDict(violet.estado, "amor", 0) style "cheat_button"
+                                        textbutton "Max" action Function(violet.establecer_stat1, 100) style "cheat_button"
+                                        textbutton "0" action Function(violet.establecer_stat1, 0) style "cheat_button"
 
                                     hbox:
                                         spacing 8
@@ -192,8 +209,8 @@ screen menu_cheats():
                                         text "💋 Deseo: [violet.estado['deseo']]" size 12 color "#ff69b4"
                                         textbutton "+1" action Function(violet.modificar_stat2, 1) style "cheat_button"
                                         textbutton "-1" action Function(violet.modificar_stat2, -1) style "cheat_button"
-                                        textbutton "Max" action SetDict(violet.estado, "deseo", 100) style "cheat_button"
-                                        textbutton "0" action SetDict(violet.estado, "deseo", 0) style "cheat_button"
+                                        textbutton "Max" action Function(violet.establecer_stat2, 100) style "cheat_button"
+                                        textbutton "0" action Function(violet.establecer_stat2, 0) style "cheat_button"
 
                         # Separador MC stats
                         frame:

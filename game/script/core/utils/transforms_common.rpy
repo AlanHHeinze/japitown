@@ -30,6 +30,10 @@ transform mc_intro_micro_noche_transform:
     xalign 0.62
     yalign 1.0
 
+# Solo gira en X (espejo horizontal), sin tocar ninguna otra propiedad
+transform girar_x:
+    xzoom -1.0
+
 # Flip horizontal instantáneo (para usar en cadena con at)
 transform personaje_flip:
     xzoom -1.0
@@ -98,6 +102,14 @@ transform entrar_derecha_aright:
     yanchor 1.0
     ease 1.2 xpos 1920
 
+# Entra desde fuera por la izquierda hasta la posición right, flipeada (mirando
+# a la derecha mientras camina) y al llegar gira en X a su orientación original.
+transform reentrar_izquierda_a_right:
+    xzoom -1.0
+    xalign -0.3 yalign 1.0
+    ease 1.5 xalign 1.0
+    xzoom 1.0
+
 # Entra desde la derecha ya flipeado hasta right (par de right_a_salir)
 transform entrar_a_right:
     xzoom 1.0
@@ -122,7 +134,7 @@ transform entrar_poquito:
 
 # Sale hacia la izquierda (desde posición actual)
 transform personaje_salir_izquierda:
-    ease 1.0 xalign -0.6
+    ease 1.5 xalign -0.6
 
 # Sale hacia la derecha
 transform personaje_salir_derecha:

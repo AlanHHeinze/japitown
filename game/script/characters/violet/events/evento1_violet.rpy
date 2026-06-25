@@ -114,7 +114,7 @@ label evento1_violet:
 
     # Violet ve al MC en el piso
     show violet_parada o_abiertos b_abiertachica
-    violet "¿Que haces en el piso?"
+    violet "¿Qué haces en el piso?"
     show violet_parada b_none o_enojados
     mc "Me cai"
 
@@ -176,7 +176,7 @@ label evento1_violet:
 
     # MC pregunta que va a jugar
     show mc_parado_base o_aburridos b_hablando
-    mc "¿Que vas a jugar?"
+    mc "¿Qué vas a jugar?"
     show mc_parado_base b_seria o_base
     violet "Uno de cortar frutas"
     show mc_parado_base o_molestosnm b_hablando
@@ -225,7 +225,7 @@ label evento1_violet:
 
     # Violet no escucho
     show violet_evento_01_violetvr vr4 with dissolve
-    violet "¿Que? No te escuche"
+    violet "¿Qué? No te escuche"
 
     # MC se da cuenta de lo que dijo
     show mc_parado_base o_asustados b_asustada c_rbase_avergonzado
@@ -236,7 +236,7 @@ label evento1_violet:
 
     # Viene la sandia
     show violet_evento_01_violetvr vr7 with dissolve
-    violet "Ahi viene la sandia"
+    violet "Ahí viene la sandia"
     show violet_evento_01_violetvr vr8 with dissolve
     pause 0.3
 
@@ -269,11 +269,11 @@ label evento1_violet:
     show mc_parado_base b_seria
 
     # Violet menciona ropa comoda - MC se pone nervioso
-    violet "No, gracias... Otro dia volvemos a jugar y con ropa mas comoda"
+    violet "No, gracias... Otro día volvemos a jugar y con ropa mas comoda"
     show mc_parado_base o_sorprendidos b_hablando
-    mc "Eso es lo que decia yo"
+    mc "Eso es lo que decía yo"
     show mc_parado_base b_seria o_base
-    violet "¿Eso decias vos?"
+    violet "¿Eso decias tú?"
 
     # MC penso en voz alta otra vez
     show mc_parado_base o_asustados b_asustada c_rbase_avergonzado
@@ -336,7 +336,7 @@ label evento1_violet_repetir:
 
     # MC confundido
     show mc_parado_base o_sorprendidos b_hablando
-    mc "¿Que?"
+    mc "¿Qué?"
     show mc_parado_base b_seria o_base
 
     # Violet comienza
@@ -397,12 +397,12 @@ label evento1_violet_repetir:
 
     # MC sorprendido
     show mc_parado_base o_sorprendidos b_hablando
-    mc "¿Que? ¿Mas de 8000? Eso es imposible..."
+    mc "¿Qué? ¿Mas de 8000? Eso es imposible..."
     show mc_parado_base b_seria
 
     # Violet presume
     show violet_evento_01_violetvr vr4 with dissolve
-    violet "Te lo dije y todavia no termine"
+    violet "Te lo dije y todavía no termine"
 
     # El golpe final
     show violet_evento_01_violetvr vr7 with dissolve

@@ -1,5 +1,5 @@
 ################################################################################
-## Conversación diaria con Mónica
+## Conversacion diaria con Mónica
 ################################################################################
 ## Pool de preguntas para la interacción "Hablar" con Mónica.
 ## Stats: amor / deseo
@@ -126,7 +126,7 @@ init python:
 
 
 ################################################################################
-## Label de conversación con Mónica
+## Label de conversacion con Mónica
 ################################################################################
 
 label conversacion_hablar_monica:
@@ -163,7 +163,7 @@ label conversacion_hablar_monica:
             monica "[_op2['resp']]"
             $ _hablar_stat_elegido = _op2["stat"]
 
-    # Bloquear rollback — la recompensa y la conversación no se pueden deshacer
+    # Bloquear rollback — la recompensa y la conversacion no se pueden deshacer
     $ renpy.block_rollback()
     $ _npc_m.modificar_stat(_hablar_stat_elegido, 1)
 

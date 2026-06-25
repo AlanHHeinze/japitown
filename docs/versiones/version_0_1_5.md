@@ -186,3 +186,249 @@ Durante la quest `violet_questprincipal_0`, Violet ahora está en su habitación
 
 ### Archivos Modificados
 - `game/script/characters/violet/quests/quest_violet.rpy`
+
+---
+
+## 11. Refactor Sistema de Skins — Activación Interna
+
+### Descripción
+Los skins dejaron de ser elegidos por el jugador y de requerir stats para desbloquearse. Ahora se activan internamente desde quests y eventos mediante `desbloquear_skin(skin_id)`, que además los hace activos inmediatamente.
+
+### Cambios
+- `activar_skin()` ya no verifica `esta_desbloqueado()`.
+- Nueva función `desbloquear_skin(skin_id)`: marca el skin como desbloqueado y lo activa en su grupo.
+- `_cond_pijama_violet()` ahora lee `skins_activos["violet"]["pijama"]` en lugar de verificar quest + stats.
+- Eliminado el menú de selección de skin del menú de interacción con NPCs.
+
+### API
+```python
+desbloquear_skin("violet_pijama_base")   # desbloquea y activa
+cuerpo_activo("violet")                  # retorna "c_pijama" o "c_rbase"
+```
+
+### Archivos Modificados
+- `game/script/core/skins/skinsystem_core.rpy`
+- `game/script/characters/violet/visual/skins_violet.rpy`
+- `game/script/ui/menus/menu_interaction.rpy`
+
+---
+
+## 12. App de Cheats — Modo DEV Exclusivo
+
+### Descripción
+La aplicación de cheats en el celular ahora solo se muestra cuando `MODO_DEV = True`. El modo dev se activa ingresando `"alanhhdev"` como nombre del personaje al inicio.
+
+### Archivos Modificados
+- `game/script/ui/hud/hud_celular.rpy`
+
+---
+
+## 13. Fix — Violet Permanecía en el Pasillo Post-Quest 04_b
+
+### Descripción
+Al completar la quest `violet_questprincipal_04_b`, `_restaurar_rutina_normal()` no actualizaba `locacion_actual`. Se agregó limpieza explícita: itera los 7 días, elimina entradas `(dia, 0)` de `rutinas_quest`, y fuerza `npc.locacion_actual` al valor de rutina base.
+
+### Archivos Modificados
+- `game/script/characters/violet/quests/violet_quest_04_b.rpy`
+
+---
+
+## 14. Evaluador de Skin en Quests 04_c a 05_c
+
+### Descripción
+Se aplicó el patrón estándar de skin dinámico (ítem 1) a las quests de Violet 04_c, 04_d, 04_e, 05_a, 05_b y 05_c. Cada label principal evalúa `cuerpo_activo("violet")` al inicio.
+
+### Archivos Modificados
+- `game/script/characters/violet/quests/violet_quest_04_c.rpy`
+- `game/script/characters/violet/quests/violet_quest_04_d.rpy`
+- `game/script/characters/violet/quests/violet_quest_04_e.rpy`
+- `game/script/characters/violet/quests/violet_quest_05_a.rpy`
+- `game/script/characters/violet/quests/violet_quest_05_b.rpy`
+- `game/script/characters/violet/quests/violet_quest_05_c.rpy`
+
+---
+
+## 15. Quest 05_c — Tracking de Elección y Notificación de Memoria
+
+### Descripción
+La elección del jugador en `vq5c_menu_confesion` queda guardada en `vq5c_eleccion` y se pasa al sistema de memorias al completar la quest. Además se muestra la notificación flotante "Violet recordará esto".
+
+```renpy
+$ completar_quest_actual("violet", recuerdos={"eleccion_05c": vq5c_eleccion})
+$ notificar_recordara("violet")
+```
+
+### Archivos Modificados
+- `game/script/characters/violet/quests/violet_quest_05_c.rpy`
+
+---
+
+## 16. Quest 06_a — Rediseño Completo
+
+### Descripción
+La quest "Las entradas" fue rediseñada para ejecutarse de noche en la habitación de Violet.
+
+**Cambios:**
+- `validacion_especial`: Violet en `casa_hviolet` + horario 2 (noche).
+- Opción en door access y menú de interacción directa: solo aparecen cumplida la condición.
+- Conversación siempre en pijama (sin evaluador de skin, por horario y locación garantizados).
+- Reemplazado el menú de elección del jugador por branching automático según el stat más alto: `obtener_stat1("violet") >= obtener_stat2("violet")` → `camino_amor`, sino → `camino_deseo`.
+- Labels refactorizados: `violet_quest06a_puerta`, `violet_quest06a_hablar`, `violet_quest06a_habitacion`, `violet_quest06a_camino_amor`, `violet_quest06a_camino_deseo`.
+
+### Archivos Modificados
+- `game/script/characters/violet/quests/violet_quest_06_a.rpy`
+- `game/script/characters/violet/quests/quest_violet.rpy`
+- `game/script/core/locations/door_access_system.rpy`
+- `game/script/characters/violet/interaction/interactions_violet.rpy`
+
+---
+
+## 17. Botones de Quest/Evento en Door Access
+
+### Descripción
+Los botones del menú de puerta ahora muestran un tag según su tipo:
+- Quests → `(Quest)`
+- Eventos → `(Evento)`
+
+Se añadió el campo `"tipo": "evento"` a las opciones de eventos en `obtener_opciones_puerta()`. El screen `menu_puerta_npc` lo usa para elegir qué tag mostrar.
+
+Las opciones del menú de interacción directa con NPC (`menu_interaccion_npc_completo`) ya no muestran ningún tag.
+
+### Archivos Modificados
+- `game/script/core/locations/door_access_system.rpy`
+- `game/script/ui/menus/menu_interaction.rpy`
+
+---
+
+## 18. Renaming de Stats — Amor / Deseo
+
+### Descripción
+Los stats específicos de cada NPC (Complicidad/Sumisión para Violet, Adulación/Provocación para Jasmine, Madurez/Debilidad para Monica) fueron unificados bajo los nombres `amor` (stat1) y `deseo` (stat2) para todos los NPCs. Las variables guardables pasan a ser `{npc}_amor` y `{npc}_deseo`.
+
+### Archivos Modificados
+- `game/script/characters/violet/definition_violet.rpy`
+- `game/script/characters/jasmine/definition_jasmine.rpy`
+- `game/script/characters/monica/definition_monica.rpy`
+- `game/script/characters/jasmine/quests/jasmine_quest_0.rpy`
+- `game/script/characters/monica/quests/monica_quest_0.rpy`
+- `game/script/characters/violet/quests/violet_quest_06_a.rpy`
+- `game/script/core/locations/door_relation_system.rpy`
+
+---
+
+## 19. Fix — Interacción Jasmine Crasheaba en Locaciones Incorrectas
+
+### Descripción
+La quest `jasmine_questprincipal_0` arranca en `ETAPA_BOTON_LISTO` sin requisitos y tiene `validacion_especial` que requiere estar en el gym por la tarde. El auto-execute en `interaccion_jasmine` llamaba `intentar_ejecutar()` en cualquier locación, lo que causaba el mensaje de error y un estado inconsistente.
+
+**Solución:** se excluyó `jasmine_questprincipal_0` del auto-execute. Se agrega como `opciones_extra` con el texto "Saludar", visible solo en `casa_gym` + horario 1.
+
+### Archivos Modificados
+- `game/script/characters/jasmine/interaction/interactions_jasmine.rpy`
+
+---
+
+## 20. Evento 03 — Refactorización del Flujo
+
+### Descripción
+Múltiples correcciones y mejoras al evento de limpieza del sábado:
+
+**Flujo de activación:**
+- El mensaje de Monica se envía la mañana SIGUIENTE a que se complete la quest 03_a (no inmediato).
+- La condición de activación requiere: sábado mañana + `grupo_completado("monica_chat_violet_quest2")` + al menos 2 días desde que el evento se hizo visible.
+- `mensaje_despertar` eliminado del constructor del `Event` (causaba disparo diario); solo existe en `ESTADO_EVENT_ACTIVO`.
+
+**Gameplay interactivo:**
+- Living, cocina y pasillo arriba reemplazados por `AccionLocacion` en lugar de screens modales.
+- `ev03_limpiar_living`: ejecuta todas las escenas en secuencia (chimenea → escalera → sillón) con un solo click.
+- `ev03_buscar_cocina`: da el ítem "Elementos de Limpieza" al hacer click.
+- `ev03_limpiar_pasillo`: dispara la transición "Una limpieza más tarde…" y continúa el flujo.
+
+**Menú de opciones:**
+- Las 3 opciones del menú del baño están siempre disponibles (sin requisitos de stats).
+- Recompensas: A = +2 amor + 1 deseo, B = +4 amor, C = +2 deseo.
+- Eliminada la variable `vq4_rama_elegida`.
+
+**Nuevo ítem:**
+
+| Campo | Valor |
+|---|---|
+| ID | `elementos_limpieza` |
+| Emoji | 🧹 |
+| Vendible | No |
+
+### Archivos Modificados
+- `game/script/characters/violet/events/events_violet.rpy`
+- `game/script/characters/violet/events/evento03_violet.rpy`
+- `game/script/core/time/timesystem_core.rpy`
+- `game/script/core/actions/actions_catalog.rpy`
+- `game/script/core/shopping/items_shopping.rpy`
+- `game/script/core/locations/door_access_system.rpy`
+- `game/script/characters/monica/chat/chat_monica.rpy`
+- `game/script/characters/violet/screens/violet_quest02_screens.rpy`
+- `game/script/characters/violet/definition_violet.rpy`
+
+---
+
+## 21. Nuevos Estados de Conversación Condicionales — Violet
+
+### Descripción
+Se añadieron 3 estados al pool diario de Violet que solo aparecen cuando se cumplen condiciones de stats. El sistema de asignación ahora filtra el pool por `condicion()` antes de elegir al azar.
+
+| Estado | ID | Condición | Efectos destacados |
+|---|---|---|---|
+| Buen Humor | `violet_buen_humor` | amor ≥ 15 | Complacerla/Adularla +2 amor, resto +1 amor |
+| Muy Buen Humor | `violet_muy_buen_humor` | amor ≥ 15 | Escucharla/Hablarle +4 amor, resto +2 amor |
+| Caliente | `violet_caliente` | deseo ≥ 30 | Provocarla/Adularla +2 deseo, resto +1 deseo |
+
+**Nuevos códigos de resultado:** `+1_amor`, `+4_amor`, `+2_deseo`.
+
+**API de condición:**
+```python
+EstadoTalk(
+    id="violet_buen_humor",
+    condicion=lambda: store.violet_amor >= 15,
+    ...
+)
+```
+
+### Archivos Modificados
+- `game/script/core/talk/talksystem_core.rpy`
+- `game/script/characters/violet/talk/violet_talk.rpy`
+- `game/script/characters/violet/definition_violet.rpy`
+
+---
+
+## 22. Limpieza de Menú de Desbloqueos
+
+### Descripción
+Se reorganizaron los desbloqueos visibles en el menú de relaciones:
+
+**Violet** — eliminados: "Conversación Diaria" (amor 10), "Ver TV Juntos" (amor 60), "Skin Pijama" (deseo 10), "???" (deseo 40). Agregados: "Conversacion Especial Buen Humor" (amor 15), "Conversacion Especial Muy Buen Humor" (amor 15), "Conversacion Especial Caliente" (deseo 30).
+
+**Jasmine y Monica** — conservados solo los dos desbloqueos de door access: "Ingreso Habitación" (amor 30) e "Ingreso Nocturno" (deseo 60). Todos los demás eliminados.
+
+### Archivos Modificados
+- `game/script/characters/violet/definition_violet.rpy`
+- `game/script/characters/jasmine/definition_jasmine.rpy`
+- `game/script/characters/monica/definition_monica.rpy`
+
+---
+
+## 23. Fix — Posición Idle Jasmine en Living de Noche
+
+### Descripción
+La posición del idle de Jasmine en el living durante la noche (lunes a viernes) fue corregida de `(126, 958)` a `(1219, 903)`.
+
+### Archivos Modificados
+- `game/script/characters/jasmine/definition_jasmine.rpy`
+
+---
+
+## 24. Carpeta Tutorial
+
+### Descripción
+Se creó la carpeta `game/script/tutorial/` con el archivo base `tutorial.rpy` para alojar el tutorial interactivo del juego.
+
+### Archivos Creados
+- `game/script/tutorial/tutorial.rpy`

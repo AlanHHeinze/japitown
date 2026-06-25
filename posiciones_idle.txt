@@ -1,0 +1,252 @@
+
+# idlet_jasmine_casa_cocina_mañana_rutinabase_grupobase_skinbase — 2026-05-27 23:59:06
+# path: images/characters/casa/idle/idlet_jasmine_casa_cocina_mañana_rutinabase_grupobase_skinbase.png
+xpos 1594  ypos 392  # xanchor=0.0  yanchor=0.0
+
+# idlet_jasmine_casa_cocina_mañana_rutinabase_grupobase_skinbase — 2026-05-27 23:59:09
+# path: images/characters/casa/idle/idlet_jasmine_casa_cocina_mañana_rutinabase_grupobase_skinbase.png
+xpos 1594  ypos 392  # xanchor=0.0  yanchor=0.0
+
+# idle_monica_casa_living_mañana_rutinabase_grupobase_skinbase — 2026-05-28 00:00:02
+# path: images/characters/casa/idle/idle_monica_casa_living_mañana_rutinabase_grupobase_skinbase.png
+xpos 719  ypos 571  # xanchor=0.0  yanchor=0.0
+
+# idle_monica_casa_living_mañana_rutinabase_grupobase_skinbase — 2026-05-28 00:00:04
+# path: images/characters/casa/idle/idle_monica_casa_living_mañana_rutinabase_grupobase_skinbase.png
+xpos 719  ypos 571  # xanchor=0.0  yanchor=0.0
+
+# idle_violet_casa_living_noche_rutinabase_grupobase_skinbase — 2026-05-28 00:00:21
+# path: images/characters/casa/idle/idle_violet_casa_living_noche_rutinabase_grupobase_skinbase.png
+xpos 815  ypos 567  # xanchor=0.0  yanchor=0.0
+
+# idle_violet_casa_living_noche_rutinabase_grupobase_skinbase — 2026-05-28 00:00:22
+# path: images/characters/casa/idle/idle_violet_casa_living_noche_rutinabase_grupobase_skinbase.png
+xpos 815  ypos 567  # xanchor=0.0  yanchor=0.0
+
+# idle_violet_casa_living_tarde_rutinabase_grupobase_skinbase — 2026-05-28 00:00:40
+# path: images/characters/casa/idle/idle_violet_casa_living_tarde_rutinabase_grupobase_skinbase.png
+xpos 587  ypos 622  # xanchor=0.0  yanchor=0.0
+
+# idle_monica_casa_pasillo_fuera_rutinabase_grupobase_skinbase — 2026-05-28 00:01:59
+# path: images/characters/casa/idle/idle_monica_casa_pasillo_fuera_rutinabase_grupobase_skinbase.png
+xpos 143  ypos 217  # xanchor=0.0  yanchor=0.0
+
+# idle_monica_casa_pasillo_fuera_rutinabase_grupobase_skinbase — 2026-05-28 00:02:00
+# path: images/characters/casa/idle/idle_monica_casa_pasillo_fuera_rutinabase_grupobase_skinbase.png
+xpos 143  ypos 217  # xanchor=0.0  yanchor=0.0
+
+# idle_violet_casa_pasillo_fuera_rutinabase_grupobase_skinbase — 2026-05-28 00:02:32
+# path: images/characters/casa/idle/idle_violet_casa_pasillo_fuera_rutinabase_grupobase_skinbase.png
+xpos 596  ypos 382  # xanchor=0.0  yanchor=0.0
+
+# idle_violet_casa_pasillo_fuera_rutinabase_grupobase_skinbase — 2026-05-28 00:02:32
+# path: images/characters/casa/idle/idle_violet_casa_pasillo_fuera_rutinabase_grupobase_skinbase.png
+xpos 596  ypos 382  # xanchor=0.0  yanchor=0.0
+
+# idle_violet_casa_pasillo_fuera_rutinabase_grupopijama_skinbase — 2026-05-28 00:02:44
+# path: images/characters/casa/idle/idle_violet_casa_pasillo_fuera_rutinabase_grupopijama_skinbase.png
+xpos 597  ypos 394  # xanchor=0.0  yanchor=0.0
+
+# idle_violet_casa_pasillo_fuera_rutinabase_grupopijama_skinbase — 2026-05-28 00:02:45
+# path: images/characters/casa/idle/idle_violet_casa_pasillo_fuera_rutinabase_grupopijama_skinbase.png
+xpos 597  ypos 394  # xanchor=0.0  yanchor=0.0
+
+# idlet_jasmine_casa_pasillo_fuera_rutinabase_grupobase_skinbase — 2026-05-28 00:03:56
+# path: images/characters/casa/idle/idlet_jasmine_casa_pasillo_fuera_rutinabase_grupobase_skinbase.png
+xpos 856  ypos 387  # xanchor=0.0  yanchor=0.0
+
+# idlet_jasmine_casa_pasillo_fuera_rutinabase_grupobase_skinbase — 2026-05-28 00:04:17
+# path: images/characters/casa/idle/idlet_jasmine_casa_pasillo_fuera_rutinabase_grupobase_skinbase.png
+xpos 856  ypos 387  # xanchor=0.0  yanchor=0.0
+
+# idlet_jasmine_casa_pasillo_fuera_rutinabase_grupobase_skinbase — 2026-05-28 00:04:17
+# path: images/characters/casa/idle/idlet_jasmine_casa_pasillo_fuera_rutinabase_grupobase_skinbase.png
+xpos 856  ypos 387  # xanchor=0.0  yanchor=0.0
+
+# idle_altillo_pasilloarriba — 2026-05-28 18:12:45
+# path: images/bg/casa/idle_movimiento/idle_altillo_pasilloarriba.png
+xpos 625  ypos 830  # xanchor=0.0  yanchor=0.0
+
+# idle_cocina_comedor — 2026-05-28 18:13:10
+# path: images/bg/casa/idle_movimiento/idle_cocina_comedor.png
+xpos 460  ypos 333  # xanchor=0.0  yanchor=0.0
+
+# idle_comedor_patio — 2026-05-28 18:13:30
+# path: images/bg/casa/idle_movimiento/idle_comedor_patio.png
+xpos 752  ypos 342  # xanchor=0.0  yanchor=0.0
+
+# idle_frente_garage — 2026-05-28 18:13:49
+# path: images/bg/casa/idle_movimiento/idle_frente_garage.png
+xpos 960  ypos 539  # xanchor=0.0  yanchor=0.0
+
+# idle_frente_living — 2026-05-28 18:14:06
+# path: images/bg/casa/idle_movimiento/idle_frente_living.png
+xpos 503  ypos 524  # xanchor=0.0  yanchor=0.0
+
+# idle_frente_living — 2026-05-28 18:14:07
+# path: images/bg/casa/idle_movimiento/idle_frente_living.png
+xpos 503  ypos 524  # xanchor=0.0  yanchor=0.0
+
+# idle_frente_patio — 2026-05-28 18:14:14
+# path: images/bg/casa/idle_movimiento/idle_frente_patio.png
+xpos 1642  ypos 588  # xanchor=0.0  yanchor=0.0
+
+# idle_garage_frente — 2026-05-28 18:14:36
+# path: images/bg/casa/idle_movimiento/idle_garage_frente.png
+xpos 560  ypos 390  # xanchor=0.0  yanchor=0.0
+
+# idle_gym_patio — 2026-05-28 18:14:47
+# path: images/bg/casa/idle_movimiento/idle_gym_patio.png
+xpos 1564  ypos 114  # xanchor=0.0  yanchor=0.0
+
+# idle_hmonica_bañomonica — 2026-05-28 18:15:02
+# path: images/bg/casa/idle_movimiento/idle_hmonica_bañomonica.png
+xpos 64  ypos 89  # xanchor=0.0  yanchor=0.0
+
+# idle_living_garage — 2026-05-28 18:15:16
+# path: images/bg/casa/idle_movimiento/idle_living_garage.png
+xpos 1582  ypos 302  # xanchor=0.0  yanchor=0.0
+
+# idle_living_pasilloarriba — 2026-05-28 18:15:29
+# path: images/bg/casa/idle_movimiento/idle_living_pasilloarriba.png
+xpos 0  ypos 0  # xanchor=0.0  yanchor=0.0
+
+# idle_living_pasilloarriba — 2026-05-28 18:15:31
+# path: images/bg/casa/idle_movimiento/idle_living_pasilloarriba.png
+xpos 0  ypos 0  # xanchor=0.0  yanchor=0.0
+
+# idle_living_pasilloarriba — 2026-05-28 18:15:34
+# path: images/bg/casa/idle_movimiento/idle_living_pasilloarriba.png
+xpos 0  ypos 0  # xanchor=0.0  yanchor=0.0
+
+# idle_living_patio — 2026-05-28 18:15:52
+# path: images/bg/casa/idle_movimiento/idle_living_patio.png
+xpos 534  ypos 424  # xanchor=0.0  yanchor=0.0
+
+# idle_pasilloabajo_bañoabajo — 2026-05-28 18:16:06
+# path: images/bg/casa/idle_movimiento/idle_pasilloabajo_bañoabajo.png
+xpos 784  ypos 234  # xanchor=0.0  yanchor=0.0
+
+# idle_pasilloabajo_cocina — 2026-05-28 18:16:22
+# path: images/bg/casa/idle_movimiento/idle_pasilloabajo_cocina.png
+xpos 1440  ypos 0  # xanchor=0.0  yanchor=0.0
+
+# idle_pasilloabajo_hmonica — 2026-05-28 18:16:34
+# path: images/bg/casa/idle_movimiento/idle_pasilloabajo_hmonica.png
+xpos 83  ypos 0  # xanchor=0.0  yanchor=0.0
+
+# idle_pasilloarriba_bañoarriba — 2026-05-28 18:16:48
+# path: images/bg/casa/idle_movimiento/idle_pasilloarriba_bañoarriba.png
+xpos 1  ypos 153  # xanchor=0.0  yanchor=0.0
+
+# idle_pasilloarriba_hjasmine — 2026-05-28 18:16:58
+# path: images/bg/casa/idle_movimiento/idle_pasilloarriba_hjasmine.png
+xpos 939  ypos 338  # xanchor=0.0  yanchor=0.0
+
+# idle_pasilloarriba_hmc — 2026-05-28 18:17:06
+# path: images/bg/casa/idle_movimiento/idle_pasilloarriba_hmc.png
+xpos 1593  ypos 101  # xanchor=0.0  yanchor=0.0
+
+# idle_pasilloarriba_living — 2026-05-28 18:17:17
+# path: images/bg/casa/idle_movimiento/idle_pasilloarriba_living.png
+xpos 279  ypos 600  # xanchor=0.0  yanchor=0.0
+
+# idle_pasilloarriba_violet — 2026-05-28 18:17:27
+# path: images/bg/casa/idle_movimiento/idle_pasilloarriba_violet.png
+xpos 666  ypos 338  # xanchor=0.0  yanchor=0.0
+
+# idle_patio_gym — 2026-05-28 18:17:42
+# path: images/bg/casa/idle_movimiento/idle_patio_gym.png
+xpos 326  ypos 376  # xanchor=0.0  yanchor=0.0
+
+# idle_sotano_garage — 2026-05-28 18:18:06
+# path: images/bg/casa/idle_movimiento/idle_sotano_garage.png
+xpos 1455  ypos 227  # xanchor=0.0  yanchor=0.0
+
+# idle_jasmine_casa_cocina_mañana_rutinabase_grupobase_skinbase — 2026-05-28 18:18:32
+# path: images/characters/casa/idle/idle_jasmine_casa_cocina_mañana_rutinabase_grupobase_skinbase.png
+xpos 1557  ypos 408  # xanchor=0.0  yanchor=0.0
+
+# idle_jasmine_casa_pasillo_fuera_rutinabase_grupobase_skinbase — 2026-05-28 18:19:39
+# path: images/characters/casa/idle/idle_jasmine_casa_pasillo_fuera_rutinabase_grupobase_skinbase.png
+xpos 858  ypos 418  # xanchor=0.0  yanchor=0.0
+
+# idle_jasmine_casa_pasillo_fuera_rutinabase_grupobase_skinbase_noche — 2026-05-28 18:19:49
+# path: images/characters/casa/idle/idle_jasmine_casa_pasillo_fuera_rutinabase_grupobase_skinbase_noche.png
+xpos 0  ypos 0  # xanchor=0.0  yanchor=0.0
+
+# idle_jasmine_casa_pasillo_fuera_rutinabase_grupobase_skinbase_noche — 2026-05-28 18:19:53
+# path: images/characters/casa/idle/idle_jasmine_casa_pasillo_fuera_rutinabase_grupobase_skinbase_noche.png
+xpos 860  ypos 417  # xanchor=0.0  yanchor=0.0
+
+# idle_monica_casa_living_mañana_rutinabase_grupobase_skinbase — 2026-05-28 18:20:42
+# path: images/characters/casa/idle/idle_monica_casa_living_mañana_rutinabase_grupobase_skinbase.png
+xpos 1168  ypos 628  # xanchor=0.0  yanchor=0.0
+
+# idle_monica_casa_living_tarde_rutinabase_grupobase_skinbase — 2026-05-28 18:20:54
+# path: images/characters/casa/idle/idle_monica_casa_living_tarde_rutinabase_grupobase_skinbase.png
+xpos 1168  ypos 635  # xanchor=0.0  yanchor=0.0
+
+# idle_monica_casa_pasillo_fuera_rutinabase_grupobase_skinbase — 2026-05-28 18:21:13
+# path: images/characters/casa/idle/idle_monica_casa_pasillo_fuera_rutinabase_grupobase_skinbase.png
+xpos 183  ypos 247  # xanchor=0.0  yanchor=0.0
+
+# idle_monica_casa_pasillo_fuera_rutinabase_grupobase_skinbase — 2026-05-28 18:21:26
+# path: images/characters/casa/idle/idle_monica_casa_pasillo_fuera_rutinabase_grupobase_skinbase.png
+xpos 143  ypos 277  # xanchor=0.0  yanchor=0.0
+
+# idle_violet_casa_living_noche_rutinabase_grupobase_skinbase — 2026-05-28 18:22:00
+# path: images/characters/casa/idle/idle_violet_casa_living_noche_rutinabase_grupobase_skinbase.png
+xpos 589  ypos 619  # xanchor=0.0  yanchor=0.0
+
+# idle_violet_casa_living_tarde_rutinabase_grupobase_skinbase — 2026-05-28 18:22:20
+# path: images/characters/casa/idle/idle_violet_casa_living_tarde_rutinabase_grupobase_skinbase.png
+xpos 450  ypos 618  # xanchor=0.0  yanchor=0.0
+
+# idle_violet_casa_pasillo_fuera_rutinabase_grupobase_skinbase — 2026-05-28 18:22:49
+# path: images/characters/casa/idle/idle_violet_casa_pasillo_fuera_rutinabase_grupobase_skinbase.png
+xpos 599  ypos 410  # xanchor=0.0  yanchor=0.0
+
+# idle_violet_casa_pasillo_fuera_rutinabase_grupopijama_skinbase — 2026-05-28 18:22:59
+# path: images/characters/casa/idle/idle_violet_casa_pasillo_fuera_rutinabase_grupopijama_skinbase.png
+xpos 0  ypos 0  # xanchor=0.0  yanchor=0.0
+
+# idle_violet_casa_pasillo_fuera_rutinabase_grupopijama_skinbase — 2026-05-28 18:23:00
+# path: images/characters/casa/idle/idle_violet_casa_pasillo_fuera_rutinabase_grupopijama_skinbase.png
+xpos 0  ypos 0  # xanchor=0.0  yanchor=0.0
+
+# idle_violet_casa_pasillo_fuera_rutinabase_grupopijama_skinbase — 2026-05-28 18:23:04
+# path: images/characters/casa/idle/idle_violet_casa_pasillo_fuera_rutinabase_grupopijama_skinbase.png
+xpos 596  ypos 410  # xanchor=0.0  yanchor=0.0
+
+# idle_violet_casa_pasillo_fuera_rutinabase_grupopijama_skinbase — 2026-05-28 18:23:05
+# path: images/characters/casa/idle/idle_violet_casa_pasillo_fuera_rutinabase_grupopijama_skinbase.png
+xpos 596  ypos 410  # xanchor=0.0  yanchor=0.0
+
+# idle_jasmine_casa_living_noche_rutinabase_grupobase_skinbase — 2026-06-03 18:37:44
+# path: images/characters/casa/idle/idle_jasmine_casa_living_noche_rutinabase_grupobase_skinbase.png
+xpos 1219  ypos 903  # xanchor=0.5  yanchor=1.0
+
+# idle_jasmine_casa_living_noche_rutinabase_grupobase_skinbase — 2026-06-03 19:55:31
+# path: images/characters/casa/idle/idle_jasmine_casa_living_noche_rutinabase_grupobase_skinbase.png
+xpos 1219  ypos 903  # xanchor=0.5  yanchor=1.0
+
+# idle_jasmine_casa_living_noche_rutinabase_grupobase_skinbase — 2026-06-03 19:55:31
+# path: images/characters/casa/idle/idle_jasmine_casa_living_noche_rutinabase_grupobase_skinbase.png
+xpos 1219  ypos 903  # xanchor=0.5  yanchor=1.0
+
+# idle_jasmine_casa_living_noche_rutinabase_grupobase_skinbase — 2026-06-03 19:56:01
+# path: images/characters/casa/idle/idle_jasmine_casa_living_noche_rutinabase_grupobase_skinbase.png
+xpos 1219  ypos 903  # xanchor=0.5  yanchor=1.0
+
+# idle_jasmine_casa_living_noche_rutinabase_grupobase_skinbase — 2026-06-03 19:56:01
+# path: images/characters/casa/idle/idle_jasmine_casa_living_noche_rutinabase_grupobase_skinbase.png
+xpos 1219  ypos 903  # xanchor=0.5  yanchor=1.0
+
+# idle_cajas_intro — 2026-06-04 16:35:01
+# path: images/quest/mc/quest0/idle_cajas_intro.png
+xpos 629  ypos 422  # xanchor=0.0  yanchor=0.0
+
+# idle_cajas_intro — 2026-06-04 16:35:03
+# path: images/quest/mc/quest0/idle_cajas_intro.png
+xpos 629  ypos 422  # xanchor=0.0  yanchor=0.0

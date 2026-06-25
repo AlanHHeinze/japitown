@@ -625,18 +625,19 @@ init python:
         renpy.show_screen("selector_respuesta", npc_id=npc_id)
 
     def calcular_tiempo_escribiendo(texto):
-        """Calcula duración del indicador 'escribiendo...' según longitud del texto."""
+        """Calcula duración del indicador 'escribiendo...' según longitud del texto.
+        Tiempos reducidos a la mitad para respuestas más rápidas."""
         if not texto:
-            return 0.8
+            return 0.4
         longitud = len(texto)
         if longitud <= 20:
-            return 0.8
+            return 0.4
         elif longitud <= 50:
-            return 1.2
+            return 0.6
         elif longitud <= 100:
-            return 1.8
+            return 0.9
         else:
-            return 2.5
+            return 1.25
 
     def _procesar_respuesta(npc_id, opcion_idx):
         """

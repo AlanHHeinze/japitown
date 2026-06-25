@@ -3,7 +3,7 @@
 ################################################################################
 ## Label narrativo principal y ramificaciones
 ## Corresponde a: quest_violet_04_a (id: violet_questprincipal_04_a)
-## Se ramifica según violet_quest2_trajesexy (decisión de quest 2)
+## violet_quest2_trajesexy: se activa si el MC eligió opción C en el evento 03 (limpieza). Ramificación pendiente de implementar.
 
 
 ################################################################################
@@ -35,17 +35,17 @@ label quest_violet_questprincipal_04_a:
     show violet_parada b_none 
 
     show mc_parado_base b_hablando
-    mc "Perdon por eso, fue todo una gran confusion"
+    mc "Perdón por eso, fue todo una gran confusion"
     show mc_parado_base b_abiertachica
-    mc "Pero queria hablarte de otra cosa"
+    mc "Pero quería hablarte de otra cosa"
     show mc_parado_base b_seria
 
     show violet_parada b_hablandochica o_arribanm
-    violet "¿Que queres?"
+    violet "¿Qué queres?"
     show violet_parada b_none o_enojados
 
     show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
-    mc "Queria saber si te habias probado el regalo que te traje"
+    mc "Quería saber si te habias probado el regalo que te traje"
     show mc_parado_base b_seria
 
     show violet_parada b_hablandochica o_base c_rbase_base with sprite_fast
@@ -53,7 +53,7 @@ label quest_violet_questprincipal_04_a:
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "El otro dia vi la caja en tu ropero y me acorde de el"
+    mc "El otro día vi la caja en tu ropero y me acorde de el"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica o_enojados
@@ -73,7 +73,7 @@ label quest_violet_questprincipal_04_a:
     show mc_parado_base b_seria o_base c_rbase_base with sprite_fast
     
     show jasmine_parada b_hablando o_arribanm c_rbase_dedolabio with sprite_fast
-    jasmine "¿Por que pelean ahora?"
+    jasmine "¿Por qué pelean ahora?"
     show jasmine_parada b_none o_base
     
 
@@ -81,7 +81,7 @@ label quest_violet_questprincipal_04_a:
     pause 0.5
     
     show violet_parada b_hablando o_enojados c_rbase_brazoscruzados with sprite_fast
-    violet "Porque [mc_name] aprovecho que estaba solo en mi habitacion y me robo ropa interior"
+    violet "Porque [mc_name] aprovecho que estaba solo en mi habitación y me robo ropa interior"
     show violet_parada b_none
 
     show jasmine_parada b_hablando c_rbase_brazoscruzados with sprite_fast
@@ -98,7 +98,7 @@ label quest_violet_questprincipal_04_a:
     pause 1.0
 
     show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
-    mc "No fue asi, sabes que fue todo una confusion"
+    mc "No fue así, sabes que fue todo una confusion"
     show mc_parado_base b_seria
 
     show jasmine_parada b_hablando
@@ -114,16 +114,16 @@ label quest_violet_questprincipal_04_a:
     show mc_parado_base b_abiertachica
     mc "Se esta malinterpretando todo"
     show mc_parado_base b_hablando c_rbase_cuestionando with sprite_fast
-    mc "Solo queria preguntarle por el regalo que le traje de Central City"
+    mc "Solo quería preguntarle por el regalo que le traje de Central City"
     show mc_parado_base b_abiertachica
-    mc "Queria saber si te habia gustado"
+    mc "Quería saber si te había gustado"
     show mc_parado_base b_seria c_rbase_base o_base
 
     show jasmine_parada c_rbase_base at personaje_flip with sprite_fast
     pause 1.0
 
     show violet_parada b_hablando c_rbase_pensando with sprite_fast
-    violet "Si me gusto, pero despues de esto tengo mas dudas sobre las intenciones de tu regalo"
+    violet "Si me gusto, pero después de esto tengo mas dudas sobre las intenciones de tu regalo"
     show violet_parada b_none c_rbase_base with sprite_fast
 
     show jasmine_parada b_hablando
@@ -218,7 +218,7 @@ label violet_quest04a_jasmine_quest0_ok:
     show jasmine_parada b_none
 
     show mc_parado_base b_hablando 
-    mc "Si todavia te debo pasar a verlo"
+    mc "Si todavía te debo pasar a verlo"
     show mc_parado_base b_none 
 
     show jasmine_parada b_sorprendida c_rbase_dedolabio with sprite_fast
@@ -226,7 +226,7 @@ label violet_quest04a_jasmine_quest0_ok:
     show jasmine_parada b_none
 
     show mc_parado_base b_hablando 
-    mc "No es por eso, no tuve tiempo, perdon Jazmine"
+    mc "No es por eso, no tuve tiempo, perdón Jazmine"
     show mc_parado_base b_none 
 
     show jasmine_parada b_hablando c_rbase_base with sprite_fast

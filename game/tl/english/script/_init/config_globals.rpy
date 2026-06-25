@@ -9,8 +9,5 @@ translate english strings:
     old "Confirmar"
     new "Confirm"
 
-    old "Cancelar"
-    new "Cancel"
-
     old "El nombre no puede contener números ni caracteres especiales"
     new "The name cannot contain numbers or special characters"

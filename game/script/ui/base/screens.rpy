@@ -382,7 +382,7 @@ screen main_menu():
             text "[config.name!t]":
                 style "main_menu_title"
 
-            text "[config.version]":
+            text "[config.versión]":
                 style "main_menu_version"
 
 
@@ -570,7 +570,7 @@ screen about():
         vbox:
 
             label "[config.name!t]"
-            text _("Version [config.version!t]\n")
+            text _("Versión [config.versión!t]\n")
 
             ## gui.about is usually set in options.rpy.
             if gui.about:

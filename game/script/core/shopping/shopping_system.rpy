@@ -2,7 +2,7 @@
 ## Sistema de Compras - Core
 ################################################################################
 ## Sistema de compras con entrega a domicilio, tracking de órdenes y 
-## calculación de días hábiles
+## calculación de dias hábiles
 
 init python:
     
@@ -12,7 +12,7 @@ init python:
         """
         
         def __init__(self, numero, items, dia_entrega, dia_semana_entrega, estacion_entrega, año_entrega, dia_creacion=0):
-            self.numero = numero  # Número único de orden
+            self.numero = numero  # Numero único de orden
             self.items = items  # Dict {item_id: cantidad}
             self.dia_entrega = dia_entrega
             self.dia_semana_entrega = dia_semana_entrega
@@ -62,7 +62,7 @@ init python:
             elif dias == 1:
                 return renpy.translate_string("Llega mañana")
             else:
-                tmpl = renpy.translate_string("Llega en {dias} días")
+                tmpl = renpy.translate_string("Llega en {días} días")
                 return tmpl.format(dias=dias)
 
         def obtener_contenido_texto(self):
@@ -80,7 +80,7 @@ init python:
     class SistemaCompras:
         """
         Gestor central del sistema de compras.
-        Maneja órdenes, entregas y cálculo de días hábiles.
+        Maneja órdenes, entregas y cálculo de dias hábiles.
         """
         
         def __init__(self):
@@ -88,11 +88,11 @@ init python:
         
         def calcular_fecha_entrega(self, dias_espera):
             """
-            Calcula la fecha de entrega considerando solo días hábiles.
+            Calcula la fecha de entrega considerando solo dias hábiles.
             Los paquetes no llegan sábados ni domingos.
             
             Args:
-                dias_espera: Días base de espera del item
+                dias_espera: Dias base de espera del item
             
             Returns:
                 tuple: (dia, dia_semana, estacion, año)
@@ -105,7 +105,7 @@ init python:
             dias_contados = 0
             
             while dias_contados < dias_espera:
-                # Avanzar un día
+                # Avanzar un dia
                 dia += 1
                 dia_semana = (dia_semana + 1) % 7
                 
@@ -117,7 +117,7 @@ init python:
                         estacion = 0
                         año += 1
                 
-                # Solo contar días hábiles (Lunes=0 a Viernes=4)
+                # Solo contar dias hábiles (Lunes=0 a Viernes=4)
                 if dia_semana < 5:
                     dias_contados += 1
             
@@ -262,7 +262,7 @@ init python:
         
         def hay_entrega_pendiente_hoy(self):
             """Verifica si hay entregas pendientes para hoy (mañana) y no hay paquete esperando."""
-            # No mostrar repartidor si ya hay paquete en la habitación
+            # No mostrar repartidor si ya hay paquete en la habitacion
             if store.paquete_en_habitacion:
                 return False
             return len(self.verificar_entregas_hoy()) > 0 and store.horario_actual == 0
@@ -289,8 +289,8 @@ init python:
         
         def recoger_paquete_habitacion(self):
             """
-            El jugador recoge el paquete de la habitación.
-            Solo entrega los items del día actual, como hace el repartidor.
+            El jugador recoge el paquete de la habitacion.
+            Solo entrega los items del dia actual, como hace el repartidor.
             """
             if store.paquete_en_habitacion:
                 # Usar la misma lógica que el repartidor - solo items de hoy
@@ -305,7 +305,7 @@ init python:
                     # Entregar items de hoy y marcar órdenes
                     self.marcar_entregas_hoy_como_entregadas()
                     
-                    # Verificar si aún hay órdenes pendientes para otros días
+                    # Verificar si aún hay órdenes pendientes para otros dias
                     ordenes_pendientes = self.obtener_ordenes_pendientes()
                     if not ordenes_pendientes:
                         store.items_paquete_pendiente = {}
@@ -327,7 +327,7 @@ init python:
             
             lineas = []
             for orden in ordenes:
-                lineas.append(f"Orden de compra N°{orden.numero}")
+                lineas.append(f"Orden de compra N°{orden.número}")
                 lineas.append(orden.obtener_texto_dias())
                 lineas.append("Contenido:")
                 for texto in orden.obtener_contenido_texto():
@@ -343,7 +343,7 @@ default sistema_compras = SistemaCompras()
 # Variables persistentes del sistema de compras
 default ordenes_compra = []  # Lista de OrdenCompra
 default ultimo_numero_orden = 0  # Contador de órdenes (nunca se reinicia)
-default paquete_en_habitacion = False  # Si hay paquete en la habitación del MC
+default paquete_en_habitacion = False  # Si hay paquete en la habitacion del MC
 default items_paquete_pendiente = {}  # Items del paquete pendiente
 default repartidor_presente = False  # Si el repartidor está en la puerta
 
@@ -381,7 +381,7 @@ init python:
         """Calcula días que faltan para el próximo Lunes (reposición)."""
         dia_semana = store.dia_semana_actual  # 0=Lunes, 6=Domingo
         if dia_semana == 0:
-            return 7  # Si hoy es lunes, la próxima es en 7 días
+            return 7  # Si hoy es lunes, la próxima es en 7 dias
         return 7 - dia_semana
     
     def hay_entregas_hoy():
@@ -453,7 +453,7 @@ init python:
 ################################################################################
 
 label verificar_entrega_mañana:
-    # Se llama después de dormir, cuando es mañana
+    # Se llama despues de dormir, cuando es mañana
     
     $ entregas_hoy = sistema_compras.verificar_entregas_hoy()
     
@@ -476,7 +476,7 @@ label repartidor_se_fue:
 
 
 label intentar_dormir_con_paquete:
-    # Se llama cuando el jugador intenta dormir con paquete en habitación
+    # Se llama cuando el jugador intenta dormir con paquete en habitacion
     
     "Debería sacar esto de la cama antes de acostarme."
     
@@ -484,7 +484,7 @@ label intentar_dormir_con_paquete:
 
 
 label recoger_paquete_habitacion:
-    # Se llama cuando el jugador interactúa con el paquete en su habitación
+    # Se llama cuando el jugador interactúa con el paquete en su habitacion
 
     # Verificar si es un paquete de quest
     if violet_quest1_en_cama:
@@ -494,7 +494,7 @@ label recoger_paquete_habitacion:
     $ ocultar_hud()
     hide screen hud_navegacion
     
-    # Mostrar escena de la habitación del MC según horario
+    # Mostrar escena de la habitacion del MC según horario
     $ _horarios_bg = ["tarde", "tarde", "noche", "noche"]
     $ _bg_horario = _horarios_bg[horario_actual]
     scene expression "images/bg/casa/bg_casa_" + _bg_horario + "_hmc.png" with fade

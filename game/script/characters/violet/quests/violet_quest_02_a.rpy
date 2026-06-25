@@ -64,11 +64,11 @@ label violet_quest02a_rechaza_insiste:
     show mc_parado_base b_none 
 
     show violet_parada b_hablandochica
-    violet "¿Cual de todos?"
+    violet "¿Cuál de todos?"
     show violet_parada b_aburrida
 
     show mc_parado_base c_rbase_cuestionando with sprite_fast
-    piensa "El de no querer prestarme ningun manga..."
+    piensa "El de no querer prestarme ningún manga..."
     show mc_parado_base c_rbase_base with sprite_fast
 
     show violet_parada b_hablando o_arribanm c_rbase_pensando with sprite_fast
@@ -84,7 +84,7 @@ label violet_quest02a_rechaza_insiste:
 
     hide violet_parada with dissolve
 
-    piensa "Tengo que mejorar un poco mas la relacion y quizas logre que me los preste"
+    piensa "Tengo que mejorar un poco mas la relación y quizás logre que me los preste"
 
     hide mc_parado_base with dissolve
 
@@ -108,7 +108,7 @@ label violet_quest02a_rechaza:
     show mc_parado_base b_none 
 
     show violet_parada b_hablandochica
-    violet "¿Que queres?"
+    violet "¿Qué queres?"
     show violet_parada b_aburrida
 
     show mc_parado_base b_hablando
@@ -120,9 +120,9 @@ label violet_quest02a_rechaza:
     show violet_parada b_aburrida
 
     show mc_parado_base c_rbase_pensando with sprite_fast
-    piensa "Podria... pero no es lo mismo"
+    piensa "Podría... pero no es lo mismo"
     show mc_parado_base b_hablando c_rbase_base with sprite_fast
-    mc "Sabes que no es lo mismo... Aparte me gustaria leer algo nuevo y esperaba que me recomiendes algo"
+    mc "Sabes que no es lo mismo... Aparte me gustaría leer algo nuevo y esperaba que me recomiendes algo"
     show mc_parado_base b_none 
 
     show violet_parada b_hablando c_rbase_pensando with sprite_fast
@@ -130,7 +130,7 @@ label violet_quest02a_rechaza:
     show violet_parada b_aburrida c_rbase_base with sprite_fast
 
     show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
-    mc "No seas asi... ¿Me prestas o no?"
+    mc "No seas así... ¿Me prestas o no?"
     show mc_parado_base b_seria c_rbase_base with sprite_fast
 
     show violet_parada b_hablandochica
@@ -173,7 +173,7 @@ label violet_quest02a_acepta_directo:
     show mc_parado_base b_none 
 
     show violet_parada b_hablandochica
-    violet "¿Que queres?"
+    violet "¿Qué queres?"
     show violet_parada b_aburrida
 
     show mc_parado_base b_hablando
@@ -185,7 +185,7 @@ label violet_quest02a_acepta_directo:
     show violet_parada b_hablando o_arribanm c_rbase_pensando with sprite_fast
     violet "Mmm... pordia ser..."
     show violet_parada b_hablandochica o_base
-    violet "¿Que estas buscando?"
+    violet "¿Qué estas buscando?"
     show violet_parada b_none c_rbase_base with sprite_fast
 
     show mc_parado_base b_hablando 
@@ -207,7 +207,7 @@ label violet_quest02a_acepta_directo:
     show violet_parada b_hablandochica o_arribanm
     violet "Raro..."
     show violet_parada b_hablando o_base
-    violet "...Pasá por la noche a buscarlos"
+    violet "...Pasa por la noche a buscarlos"
     show violet_parada b_none o_base
 
     show mc_parado_base b_hablando  
@@ -246,13 +246,13 @@ label violet_quest02a_acepta_insiste:
     show violet_parada b_aburrida
 
     show mc_parado_base b_hablando c_rbase_pensando with sprite_fast
-    mc "¿Queria saber si cambiaste de idea sobre prestarme algún manga?"
+    mc "¿Quería saber si cambiaste de idea sobre prestarme algún manga?"
     show mc_parado_base b_none c_rbase_base with sprite_fast
 
     show violet_parada b_hablandochica o_arribanm c_rbase_pensando with sprite_fast
     violet "No se si tengo menos ganas de prestarte algo o de tenerte insistiendome todo el tiempo..."
     show violet_parada b_hablando o_base c_rbase_base with sprite_fast
-    violet "¿Que estas buscando?"
+    violet "¿Qué estas buscando?"
     show violet_parada b_aburrida
 
     piensa "La insistencia da sus frutos"
@@ -282,7 +282,7 @@ label violet_quest02a_acepta_insiste:
     show mc_parado_base b_none
 
     show violet_parada b_hablando 
-    violet "...Pasá por la noche a buscarlos"
+    violet "...Pasa por la noche a buscarlos"
     show violet_parada b_none o_base
 
     show mc_parado_base b_hablando  

@@ -12,9 +12,9 @@ init python:
         Una acción disponible para el jugador en una locación específica.
         """
         def __init__(self, id, nombre, icono, locacion_id,
-                     label_generico=None, reseteo="diario",
-                     condicion=None, mensaje_reintento=None,
-                     color="#0288D1", color_hover="#4FC3F7"):
+            label_generico=None, reseteo="diario",
+            condicion=None, mensaje_reintento=None,
+            color="#0288D1", color_hover="#4FC3F7"):
             self.id = id
             self.nombre = nombre
             self.icono = icono
@@ -45,7 +45,7 @@ init python:
         Cuando la acción se ejecuta y el listener es válido, llama a su label.
         """
         def __init__(self, accion_id, label, nombre_menu,
-                     prioridad="quest", condicion=None, unico=True):
+            prioridad="quest", condicion=None, unico=True):
             self.accion_id = accion_id      # Qué acción intercepta
             self.label = label              # Label a ejecutar
             self.nombre_menu = nombre_menu  # Texto en el menú de elección (si hay conflicto)
@@ -90,7 +90,7 @@ init python:
         def obtener_acciones_locacion(self, locacion_id):
             return [
                 a for a in self.acciones.values()
-                if a.locacion_id == locacion_id and a.esta_visible()
+                if (a.locacion_id == locacion_id or a.locacion_id is None) and a.esta_visible()
             ]
 
         def esta_disponible(self, accion_id):

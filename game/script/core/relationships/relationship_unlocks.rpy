@@ -1,5 +1,5 @@
 ################################################################################
-## Sistema de Desbloqueos por Relación
+## Sistema de Desbloqueos por Relacion
 ################################################################################
 ## Cada NPC registra su lista de desbloqueos en su definition_*.rpy usando
 ## npc.agregar_desbloqueo(stat, umbral, icono, nombre, desc).

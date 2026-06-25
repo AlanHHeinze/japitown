@@ -70,6 +70,12 @@ translate english strings:
     old "Dar paquete"
     new "Give package"
 
+    old "Devolver mangas"
+    new "Return manga"
+
+    old "Vengo por los mangas"
+    new "I'm here for the manga"
+
     old "Despertar a Violet para limpiar"
     new "Wake up Violet to clean"
 
@@ -78,4 +84,30 @@ translate english strings:
 
     old "Volver"
     new "Return"
+
+# TODO: Translation updated at 2026-05-11 16:31
+
+# game/script/core/locations/door_access_system.rpy:169
+translate english interaccion_puerta_npc_cc0f03b1:
+
+    # piensa "Parece que [_npc_nombre_door] no está en casa, debe haber salido."
+    piensa "It looks like [_npc_nombre_door] isn't home, she must have gone out."
+
+# game/script/core/locations/door_access_system.rpy:284
+translate english interaccion_banio_ocupado_7ce3ca1c:
+
+    # violet "Me estoy bañando."
+    violet "I'm in the shower."
+
+# game/script/core/locations/door_access_system.rpy:286
+translate english interaccion_banio_ocupado_edf269c3:
+
+    # jasmine "Me estoy bañando."
+    jasmine "I'm in the shower."
+
+# game/script/core/locations/door_access_system.rpy:288
+translate english interaccion_banio_ocupado_75d1d22a:
+
+    # monica "Me estoy bañando."
+    monica "I'm in the shower."
 

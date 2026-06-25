@@ -159,6 +159,8 @@ layeredimage mc_parado_base:
             "images/characters/mc/base/mc_base_cuerpo_tanga.png"
         attribute c_rbase_leyendocyberpunk:
             "images/characters/mc/base/mc_base_cuerpo_rbase_leyendocyberpunk.png" 
+        attribute c_rbase_perdon:
+            "images/characters/mc/base/mc_base_cuerpo_perdon.png"
         attribute c_none:
             Null()
 

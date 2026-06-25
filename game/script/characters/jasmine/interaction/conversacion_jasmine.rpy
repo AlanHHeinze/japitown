@@ -1,5 +1,5 @@
 ################################################################################
-## Conversación diaria con Jasmine
+## Conversacion diaria con Jasmine
 ################################################################################
 ## Pool de preguntas para la interacción "Hablar" con Jasmine.
 ## Stats: amor / deseo
@@ -36,25 +36,25 @@ init python:
         {
             "q": "¿Cuál es tu peli o serie favorita? Necesito nueva recomendación.",
             "ops": [
-                {"texto": "Depende del género, ¿qué te gusta a vos?",        "resp": "¡Me gusta todo! Sorpréndeme.", "stat": "deseo"},
+                {"texto": "Depende del género, ¿qué te gusta a ti?",        "resp": "¡Me gusta todo! Sorpréndeme.", "stat": "deseo"},
                 {"texto": "Veo de todo un poco, no tengo una favorita.",      "resp": "Eso es estratégico, nunca te decepcionan.", "stat": "amor"},
-                {"texto": "Te paso algunas opciones si querés.",               "resp": "¡Sí! ¿Las vemos juntos algún día?", "stat": "amor"},
+                {"texto": "Te paso algunas opciones si quieres.",               "resp": "¡Sí! ¿Las vemos juntos algún día?", "stat": "amor"},
             ]
         },
 
         # P3 — A=per  B=adu  C=pro
         {
-            "q": "¿Preferís planes grandes con mucha gente o algo más tranquilo?",
+            "q": "¿Prefieres planes grandes con mucha gente o algo más tranquilo?",
             "ops": [
                 {"texto": "Depende del momento, pero los dos tienen lo suyo.", "resp": "¡Eso es lo ideal! Flexibilidad total.", "stat": "amor"},
                 {"texto": "Algo más tranquilo, en grupos chicos.",              "resp": "Yo al revés, pero lo entiendo. ¡Igual puedo convencerte!", "stat": "amor"},
-                {"texto": "Mientras haya buena energía, me adapto.",           "resp": "¡Me encanta esa actitud! Energía buena es lo que sobra acá.", "stat": "deseo"},
+                {"texto": "Mientras haya buena energía, me adapto.",           "resp": "¡Me encanta esa actitud! Energía buena es lo que sobra aquí.", "stat": "deseo"},
             ]
         },
 
         # P4 — A=adu  B=per  C=pro
         {
-            "q": "¿Sos de los que escucha música todo el tiempo o preferís el silencio?",
+            "q": "¿Eres de los que escucha música todo el tiempo o prefieres el silencio?",
             "ops": [
                 {"texto": "Música casi siempre, sí.",                         "resp": "¡Obvio! El silencio es raro. ¿Qué escuchás?", "stat": "amor"},
                 {"texto": "Me gusta el silencio para concentrarme.",           "resp": "Respeto, aunque a mí me costaría muchísimo.", "stat": "amor"},
@@ -76,7 +76,7 @@ init python:
         {
             "q": "¿Qué opinas de las personas que se toman todo muy en serio?",
             "ops": [
-                {"texto": "Están bien, cada uno tiene su manera de ser.",      "resp": "Eso dice mucho de vos. ¡Sos tolerante!", "stat": "amor"},
+                {"texto": "Están bien, cada uno tiene su manera de ser.",      "resp": "Eso dice mucho de ti. ¡Eres tolerante!", "stat": "amor"},
                 {"texto": "A veces es cansador estar con gente tan seria.",    "resp": "¡Exacto! La vida también puede ser liviana.", "stat": "deseo"},
                 {"texto": "Depende de la situación, no siempre está mal.",     "resp": "Cierto, cierto. Contexto ante todo.", "stat": "amor"},
             ]
@@ -98,13 +98,13 @@ init python:
             "ops": [
                 {"texto": "Nada muy épico, pero pasé un buen rato.",           "resp": "¡Los mejores planes suelen ser los más simples!", "stat": "deseo"},
                 {"texto": "No tuve muchos planes últimamente.",                 "resp": "¡Eso cambia ya! No te puedo dejar sin planes.", "stat": "amor"},
-                {"texto": "Ponerme a hablar con vos, supongo.",                 "resp": "¡Awww! Eso fue muy lindo. Reconocido oficialmente.", "stat": "amor"},
+                {"texto": "Ponerme a hablar contigo, supongo.",                 "resp": "¡Awww! Eso fue muy lindo. Reconocido oficialmente.", "stat": "amor"},
             ]
         },
 
         # P9 — A=per  B=adu  C=pro
         {
-            "q": "¿Sos de dar consejos o preferís no meterte en los asuntos de los demás?",
+            "q": "¿Eres de dar consejos o prefieres no meterte en los asuntos de los demás?",
             "ops": [
                 {"texto": "Doy consejos si me los piden, no me meto solo.",    "resp": "¡Eso es respetuoso! Aunque a veces me cuestan las fronteras.", "stat": "amor"},
                 {"texto": "Me gusta ayudar, aunque no me lo pidan.",            "resp": "¡Yo igual! A veces funciona, a veces... no tanto.", "stat": "amor"},
@@ -116,7 +116,7 @@ init python:
         {
             "q": "¿Qué es lo que más te gusta de hablar conmigo?",
             "ops": [
-                {"texto": "Que siempre hay algo que contar.",                   "resp": "¡Eso! La vida nunca es aburrida si la contás bien.", "stat": "amor"},
+                {"texto": "Que siempre hay algo que contar.",                   "resp": "¡Eso! La vida nunca es aburrida si la cuentas bien.", "stat": "amor"},
                 {"texto": "Que no hay que pensar demasiado, fluye solo.",       "resp": "¡Exacto! Las mejores conversaciones son así.", "stat": "amor"},
                 {"texto": "Me hace reír sin mucho esfuerzo.",                   "resp": "¡Es mi superpoder! Que bueno que funciona.", "stat": "deseo"},
             ]
@@ -126,7 +126,7 @@ init python:
 
 
 ################################################################################
-## Label de conversación con Jasmine
+## Label de conversacion con Jasmine
 ################################################################################
 
 label conversacion_hablar_jasmine:
@@ -163,7 +163,7 @@ label conversacion_hablar_jasmine:
             jasmine "[_op2['resp']]"
             $ _hablar_stat_elegido = _op2["stat"]
 
-    # Bloquear rollback — la recompensa y la conversación no se pueden deshacer
+    # Bloquear rollback — la recompensa y la conversacion no se pueden deshacer
     $ renpy.block_rollback()
     $ _npc_j.modificar_stat(_hablar_stat_elegido, 1)
 

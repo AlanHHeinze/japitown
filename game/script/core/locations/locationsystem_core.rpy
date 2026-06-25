@@ -9,7 +9,7 @@ init python:
     class Hotspot:
         """
         Representa un área interactiva en una locación.
-        Puede ser de tipo MOVE (cambio de locación) o ACTION (acción sin movimiento)
+        Puede ser de tipo MOVE (cambio de locación) o ACTION (accion sin movimiento)
         """
         def __init__(self, id, tipo, x, y, w, h, destino=None, accion=None, label=None, condicion=None, nombre="", label_offset_y=0):
             self.id = id
@@ -150,7 +150,7 @@ init python:
             if destino_id not in self.locaciones:
                 return False, "Locación no existe"
             
-            # Aquí se pueden agregar más validaciones según el estado del juego
+            # Aqui se pueden agregar más validaciones según el estado del juego
             # Por ejemplo: verificar si el jugador tiene una llave, si es el horario correcto, etc.
             
             return True, ""
@@ -238,8 +238,8 @@ init python:
     
     def ir_a_locacion(locacion_id):
         """
-        Función de acceso rápido para ir directamente a una locación.
-        Útil para botones de acceso rápido en el HUD.
+        Función de acceso rapido para ir directamente a una locación.
+        Útil para botones de acceso rapido en el HUD.
         """
         if sistema_locaciones.mover_a_locacion(locacion_id):
             pass

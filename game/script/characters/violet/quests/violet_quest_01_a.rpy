@@ -76,7 +76,7 @@ init python:
         # Paquete en la cama
         if store.violet_quest1_en_cama:
             if hasattr(store, 'sistema_mensajes') and store.sistema_mensajes.grupo_completado("monica_chat_violet_quest1_paquete"):
-                return "Ir a la habitacion por el paquete"
+                return "Ir a la habitación por el paquete"
             else:
                 return "Responder el mensaje de Monica"
 
@@ -84,7 +84,7 @@ init python:
         return "Ir al frente"
 
     def _limpiar_flags_quest1_violet():
-        """Limpia todos los flags de la quest 1 despues de completarla."""
+        """Limpia todos los flags de la quest 1 después de completarla."""
         store.violet_quest1_entrega_pendiente = False
         store.violet_quest1_en_cama = False
 
@@ -114,7 +114,7 @@ label paqueterepartidor_quest01_violet:
     show mc_parado_base b_none
 
     show repartidor_parado c_hablando
-    repartidor "Acá tiene, que tenga un buen día."
+    repartidor "Aquí tiene, que tenga un buen día."
     show repartidor_parado c_base
 
     show mc_parado_base b_hablando

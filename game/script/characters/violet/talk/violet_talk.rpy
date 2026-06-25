@@ -161,6 +161,67 @@ init 10 python:
             ),
 
             # ==================================================================
+            # ESTADOS CONDICIONALES (se suman al pool cuando se cumplen requisitos)
+            # ==================================================================
+
+            EstadoTalk(
+                id="violet_buen_humor",
+                nombre="Buen Humor",
+                intro="Violet parece estar de buen humor hoy.",
+                efectos={
+                    "complacerla": "+2_amor",
+                    "provocarla":  "+1_amor",
+                    "escucharla":  "+1_amor",
+                    "hablarle":    "+1_amor",
+                    "adularla":    "+2_amor",
+                },
+                mensaje="ella estaba de buen humor.",
+                condicion=lambda: store.violet_amor >= 15,
+                estados_posteriores={
+                    "+2_amor": "posterior_feliz",
+                    "+1_amor": "posterior_feliz",
+                },
+            ),
+
+            EstadoTalk(
+                id="violet_muy_buen_humor",
+                nombre="Muy Buen Humor",
+                intro="Violet parece estar de muy buen humor hoy.",
+                efectos={
+                    "complacerla": "+2_amor",
+                    "provocarla":  "+2_amor",
+                    "escucharla":  "+4_amor",
+                    "hablarle":    "+4_amor",
+                    "adularla":    "+2_amor",
+                },
+                mensaje="ella estaba de muy buen humor.",
+                condicion=lambda: store.violet_amor >= 15,
+                estados_posteriores={
+                    "+2_amor": "posterior_feliz",
+                    "+4_amor": "posterior_feliz",
+                },
+            ),
+
+            EstadoTalk(
+                id="violet_caliente",
+                nombre="Caliente",
+                intro="Violet parece estar en un estado de ánimo especial hoy.",
+                efectos={
+                    "complacerla": "+1_deseo",
+                    "provocarla":  "+2_deseo",
+                    "escucharla":  "+1_deseo",
+                    "hablarle":    "+1_deseo",
+                    "adularla":    "+2_deseo",
+                },
+                mensaje="ella estaba en un estado de ánimo especial.",
+                condicion=lambda: store.violet_deseo >= 30,
+                estados_posteriores={
+                    "+1_deseo": "posterior_hot",
+                    "+2_deseo": "posterior_hot",
+                },
+            ),
+
+            # ==================================================================
             # ESTADOS ESPECIALES (se activan desde quests, eventos, items, etc.)
             # ==================================================================
 
@@ -194,6 +255,9 @@ init 10 python:
             "violet_hambre",
             "violet_ansiosa",
             "violet_sumisa",
+            "violet_buen_humor",
+            "violet_muy_buen_humor",
+            "violet_caliente",
         ]
 
         # ==================================================================
@@ -244,10 +308,13 @@ init 10 python:
         }
 
         resoluciones = {
+            "+1_amor":  "Y quedó satisfecha con la interacción.",
             "+2_amor":  "Y quedó muy satisfecha con la interacción.",
-            "+1_deseo": "Y se mostró más interesada en vos.",
+            "+4_amor":  "Y quedó emocionada con la interacción.",
+            "+1_deseo": "Y se mostró más interesada en ti.",
+            "+2_deseo": "Y se mostró bastante más interesada en ti.",
             "-2_amor":  "Y quedó muy molesta con la situación.",
-            "-1_deseo": "Y se alejó un poco de vos.",
+            "-1_deseo": "Y se alejó un poco de ti.",
             "nada":     "La interacción no tuvo un efecto particular.",
         }
 

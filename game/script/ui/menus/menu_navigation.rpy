@@ -23,7 +23,7 @@ screen navegacion_locaciones():
                 background None
                 hover_background None
                 
-                # Acción según tipo de hotspot
+                # Accion según tipo de hotspot
                 if hotspot.tipo == "MOVE":
                     action [SetVariable("_hotspot_temp", hotspot), Call("accion_hotspot_move")]
                 elif hotspot.tipo == "ACTION":
@@ -48,7 +48,7 @@ screen navegacion_locaciones():
                 action Jump("interaccion_repartidor")
         
         # ========== PAQUETE EN HABITACIÓN DEL MC ==========
-        # Mostrar idle del paquete si está en la habitación
+        # Mostrar idle del paquete si está en la habitacion
         if paquete_en_habitacion and sistema_locaciones.locacion_actual.id == "casa_hmc":
             imagebutton:
                 idle "idle_paquete_hmc"
@@ -57,7 +57,7 @@ screen navegacion_locaciones():
                 yalign 0.8
                 action Jump("recoger_paquete_habitacion")
         
-        # Información de la locación (opcional, para debug)
+        # Informacion de la locación (opcional, para debug)
         if config.developer:
             frame:
                 xalign 0.0
@@ -87,7 +87,7 @@ init python:
     def manejar_hotspot_action(hotspot):
         """
         Maneja el click en un hotspot de tipo ACTION.
-        Ejecuta la acción sin cambiar de locación.
+        Ejecuta la accion sin cambiar de locación.
         """
         sistema_locaciones.ejecutar_accion_hotspot(hotspot)
         

@@ -26,7 +26,7 @@ label quest_violet_questprincipal_12:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Placeholder: Queria mostrarte algo..."
+    violet "Placeholder: Quería mostrarte algo..."
     show violet_parada b_none
 
     show mc_parado_base b_hablando
@@ -34,18 +34,18 @@ label quest_violet_questprincipal_12:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Placeholder: (Violet explica la situacion)"
+    violet "Placeholder: (Violet explica la situación)"
     show violet_parada b_none
 
     # Menu con 4 opciones
     menu:
-        "Placeholder: Opcion A":
+        "Placeholder: Opción A":
             jump violet_quest12_opcion_a
-        "Placeholder: Opcion B":
+        "Placeholder: Opción B":
             jump violet_quest12_opcion_b
-        "Placeholder: Opcion C":
+        "Placeholder: Opción C":
             jump violet_quest12_opcion_c
-        "Placeholder: Opcion D":
+        "Placeholder: Opción D":
             jump violet_quest12_opcion_d
 
 
@@ -60,7 +60,7 @@ label violet_quest12_opcion_a:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Placeholder: (Reaccion de Violet a opcion A)"
+    violet "Placeholder: (Reacción de Violet a opción A)"
     show violet_parada b_none
 
     piensa "Placeholder: (Pensamiento final del MC)"
@@ -86,7 +86,7 @@ label violet_quest12_opcion_b:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Placeholder: (Reaccion de Violet a opcion B)"
+    violet "Placeholder: (Reacción de Violet a opción B)"
     show violet_parada b_none
 
     piensa "Placeholder: (Pensamiento final del MC)"
@@ -112,7 +112,7 @@ label violet_quest12_opcion_c:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Placeholder: (Reaccion de Violet a opcion C)"
+    violet "Placeholder: (Reacción de Violet a opción C)"
     show violet_parada b_none
 
     piensa "Placeholder: (Pensamiento final del MC)"
@@ -138,7 +138,7 @@ label violet_quest12_opcion_d:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Placeholder: (Reaccion de Violet a opcion D)"
+    violet "Placeholder: (Reacción de Violet a opción D)"
     show violet_parada b_none
 
     piensa "Placeholder: (Pensamiento final del MC)"

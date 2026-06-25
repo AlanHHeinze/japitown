@@ -35,7 +35,7 @@ label usar_mangas_violet:
 
     piensa "Me da algo de curiosidad que habra comprado Violet"
     piensa "Sí sé que le gusta, podría usarlo para mejorar la relación, es un buen plan... y una buena justificacion"
-    piensa "Aunque quizas puede que se enoje porque lo abrí"
+    piensa "Aunque quizás puede que se enoje porque lo abrí"
 
     menu:
         "No abrirlo":
@@ -47,7 +47,7 @@ label usar_mangas_violet:
             jump game_loop
 
         "Abrirlo":
-            piensa "Bueno... ya esta aca, no pierdo nada con ver que tiene."
+            piensa "Bueno... ya esta aquí, no pierdo nada con ver que tiene."
 
             $ store.violet_quest2n_paquete_abierto = True
 
@@ -135,13 +135,13 @@ label dar_paquete_quest02_violet_rechaza:
     pause 0.5
     # (Mc boca hablando)
     show mc_parado_base b_hablando
-    mc "Violet, tengo un paquete para vos"
+    mc "Violet, tengo un paquete para ti"
     # (Mc boca neutral)
     show mc_parado_base b_none
 
     # (Violet boca hablando chica)
     show violet_parada b_hablandochica
-    violet "¿Me lo podras llevar despues a mi habitacion?"
+    violet "¿Me lo podras llevar después a mi habitación?"
     # (Violet boca neutral)
     show violet_parada b_none
 
@@ -176,7 +176,7 @@ label dar_paquete_quest02_violet_a:
     pause 0.5
     # (Mc boca hablando)
     show mc_parado_base b_hablando
-    mc "Violet aca esta tu paquete"
+    mc "Violet aquí esta tu paquete"
     # (Mc boca neutral)
     show mc_parado_base b_none
 
@@ -217,7 +217,7 @@ label dar_paquete_quest02_violet_a:
 
     # (Mc boca hablando cuerpo asustado)
     show mc_parado_base b_hablando c_rbase_asustado with sprite_fast
-    mc "No, solo vi que en la etiqueta decia MundoMangas, asi que supuse que eran tuyos"
+    mc "No, solo vi que en la etiqueta decía MundoMangas, así que supuse que eran tuyos"
     # (Mc boca neutral cuerpo base)
     show mc_parado_base b_none c_rbase_base with sprite_fast
 
@@ -260,7 +260,7 @@ label dar_paquete_quest02_violet_b:
     pause 0.5
     # (Mc boca hablando)
     show mc_parado_base b_hablando
-    mc "Violet aca esta tu paquete"
+    mc "Violet aquí esta tu paquete"
     # (Mc boca neutral)
     show mc_parado_base b_none
 
@@ -316,7 +316,7 @@ label dar_paquete_quest02_violet_b:
 
     # (Mc boca hablando cuerpo avergonzado)
     show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
-    mc "Lo dejaron en mi habitacion y no sabia que era"
+    mc "Lo dejaron en mi habitación y no sabia que era"
     # (Mc boca abierta chica)
     show mc_parado_base b_abiertachica
     mc "Quizás era algo que me había mandado mi papá"
@@ -357,10 +357,10 @@ label dar_paquete_quest02_violet_b1:
 
     # (Mc boca hablando)
     show mc_parado_base b_hablando
-    mc "¿Por que tanto problema por unos mangas?"
+    mc "¿Por qué tanto problema por unos mangas?"
     # (Mc boca abierta chica)
     show mc_parado_base b_abiertachica
-    mc "¿Habia algo mas ahi?"
+    mc "¿Había algo mas ahí?"
     # (Mc boca neutral)
     show mc_parado_base b_none
 
@@ -407,7 +407,7 @@ label dar_paquete_quest02_violet_b2:
 
     # (Violet boca hablando ojos abiertos)
     show violet_parada b_hablando o_abiertos
-    violet "¡¿Que?!"
+    violet "¡¿Qué?!"
     # (Violet boca hablando chica ojos enojados)
     show violet_parada b_hablandochica o_enojados
     violet "¡Revisaste mis cosas!"
@@ -462,7 +462,7 @@ label dar_paquete_quest02_violet_b2:
 
     # (Violet boca hablando)
     show violet_parada b_hablando
-    violet "¿Que cosa?"
+    violet "¿Qué cosa?"
     # (Violet boca neutral)
     show violet_parada b_none
 
@@ -477,7 +477,7 @@ label dar_paquete_quest02_violet_b2:
     pause 0.5
     # (Violet boca hablando)
     show violet_parada b_hablando
-    violet "¿Por que quieres que te diga eso?"
+    violet "¿Por qué quieres que te diga eso?"
     # (Violet boca neutral)
     show violet_parada b_none
 
@@ -534,9 +534,9 @@ label dar_paquete_quest02_violet_b2:
 label dar_paquete_violet_cierre:
 
     if _ruta_vq01b == "a":
-        $ obtener_npc("violet").modificar_stat1(5)
+        $ obtener_npc("violet").modificar_stat1(4)
     elif _ruta_vq01b == "b1":
-        $ obtener_npc("violet").modificar_stat1(3)
+        $ obtener_npc("violet").modificar_stat1(2)
         $ obtener_npc("violet").modificar_stat2(1)
     elif _ruta_vq01b == "b2":
         $ obtener_npc("violet").modificar_stat2(2)

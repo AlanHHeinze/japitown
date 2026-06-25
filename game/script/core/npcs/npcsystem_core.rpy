@@ -316,6 +316,20 @@ init python:
             elif stat == self.nombre_stat2:
                 self.modificar_stat2(cantidad)
 
+        def establecer_stat1(self, valor):
+            """Fija el stat principal a un valor absoluto sincronizando el store.
+
+            Usar esto (no estado[...] directo) para no desincronizar la variable
+            guardable {npc_id}_{nombre_stat1}, que varios sistemas leen aparte de estado.
+            """
+            self.estado[self.nombre_stat1] = max(0, min(100, valor))
+            setattr(store, f"{self.id}_{self.nombre_stat1}", self.estado[self.nombre_stat1])
+
+        def establecer_stat2(self, valor):
+            """Fija el stat secundario a un valor absoluto sincronizando el store."""
+            self.estado[self.nombre_stat2] = max(0, min(100, valor))
+            setattr(store, f"{self.id}_{self.nombre_stat2}", self.estado[self.nombre_stat2])
+
         def modificar_progreso(self, cantidad):
             """Modifica el progreso del NPC y sincroniza con variables default"""
             self.estado["progreso"] += cantidad

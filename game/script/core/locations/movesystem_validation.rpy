@@ -46,7 +46,7 @@ init python:
             self.item_requerido = item_requerido
         
         def validar(self, origen, destino):
-            # Aquí deberías verificar tu sistema de inventario
+            # Aqui deberias verificar tu sistema de inventario
             # Ejemplo simplificado:
             if not hasattr(store, 'inventario'):
                 return True, ""

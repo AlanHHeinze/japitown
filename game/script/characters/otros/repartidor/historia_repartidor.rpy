@@ -40,7 +40,7 @@ label entrega_repartidor_0:
     show mc_parado_base b_none
     
     show repartidor_parado c_base
-    repartidor "¿Eres nuevo? Nunca te habia visto por aqui."
+    repartidor "¿Eres nuevo? Nunca te había visto por aquí."
     show repartidor_parado c_base
 
     show mc_parado_base b_hablando
@@ -52,11 +52,11 @@ label entrega_repartidor_0:
     show repartidor_parado c_base
 
     show mc_parado_base b_hablando
-    mc "¿Que?"
+    mc "¿Qué?"
     show mc_parado_base b_none
 
     show repartidor_parado c_hablando
-    repartidor "¿Que?"
+    repartidor "¿Qué?"
     show repartidor_parado c_base
 
     show mc_parado_base b_hablando

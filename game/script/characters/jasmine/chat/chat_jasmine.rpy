@@ -18,11 +18,11 @@ init 6 python:
                     return msg.timestamp[0]
         return None
     
-    def _jasmine_evento1_completado():
-        """Retorna True si el evento 01 de Jasmine ya se completó."""
+    def _jasmine_quest0b_completada():
+        """Retorna True si la quest 0_b de Jasmine ya se completó."""
         try:
-            ev = sistema_events.eventos.get("jasmine_evento_01")
-            return ev is not None and ev.estado == "completado"
+            q = sistema_quests.obtener_quest("jasmine_questprincipal_0_b")
+            return q is not None and q.completada
         except Exception:
             return False
     
@@ -40,7 +40,7 @@ init 6 python:
             return False
         if dias_totales <= dia_msg:
             return False  # Todavía es día 1
-        return _jasmine_evento1_completado()
+        return _jasmine_quest0b_completada()
     
     def _jasmine_chat_cond_tarde():
         """Ruta 3: Es día 2+ Y el jugador NO completó el evento de Jasmine."""
@@ -49,8 +49,8 @@ init 6 python:
             return False
         if dias_totales <= dia_msg:
             return False  # Todavía es día 1
-        return not _jasmine_evento1_completado()
-    
+        return not _jasmine_quest0b_completada()
+
     # =========================================================================
     # Conversación: Quest 0 completada
     # =========================================================================
@@ -65,7 +65,7 @@ init 6 python:
         id="jasmine_chat_quest0",
         npc_id="jasmine",
         mensaje_inicial="Gracias por el conjunto que me regalaste, me encantó! Mañana lo voy a empezar a usar 😊",
-        trigger_id="jasmine_questprincipal_0",
+        trigger_id="jasmine_questprincipal_0_b",
         momento_locacion="casa_hjasmine",
         momento_horario=3,
         prioritario=True,
@@ -160,13 +160,13 @@ init 6 python:
                 opciones_jugador=[
                     OpcionRespuesta(
                         texto="Hermosa",
-                        respuesta_npc=["❤️", "Gracias, te veo mañana"],
+                        respuesta_npc=["❤️", "Lo voy a estar usando, cuando quieras pasa a verlo"],
                         puntos={},
                         saltar_a_paso=-1
                     ),
                     OpcionRespuesta(
                         texto="Eso no se hace",
-                        respuesta_npc=["Jajaja 😏", "Te veo mañana ❤️"],
+                        respuesta_npc=["Jajaja 😏", "Lo voy a estar usando, cuando quieras pasa a verlo ❤️"],
                         puntos={},
                         saltar_a_paso=-1
                     ),
@@ -208,5 +208,5 @@ init 6 python:
             ),
         ]
     )
-    
+
     sistema_mensajes.registrar_grupo("jasmine", chat_jasmine_quest0)

@@ -2,7 +2,7 @@
 ## Violet Quest 04_B — Hablar con Violet (perdón)
 ################################################################################
 ## Se dispara automáticamente al entrar en una locación donde esté Violet,
-## o al golpear la puerta de su habitación (Violet sale al pasillo).
+## o al golpear la puerta de su habitacion (Violet sale al pasillo).
 
 
 ################################################################################
@@ -27,67 +27,93 @@ label quest_violet_questprincipal_04_b:
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Te queria pedir perdón por"
+    mc "Hola, justo estaba pensando en ir a verte"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
+    violet "¿Paso algo?"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando o_abajonm c_rbase_perdon with sprite_fast
+    mc "Te quería pedir perdón por la situación de la otra vez y por mirar tus cosas"
+    show mc_parado_base b_none o_base c_rbase_base with sprite_fast
+
+    show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_fast
     violet "Espera, te quiero hacer una pregunta primero"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Si, decime"
+    mc "Si, dime"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
     violet "¿Por qué me trajiste ese regalo?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando
-    mc "Porque pensé que te gustaría"
-    show mc_parado_base b_none
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_fast
+    mc "Mmmmm la verdad no lo pense mucho, simplemente senti que ese era el regalo"
+    show mc_parado_base b_abiertachica 
+    mc "Y pensé que te gustaría"
+    show mc_parado_base b_none c_rbase_base with sprite_fast
 
-    show violet_parada b_hablandochica
+    show violet_parada b_hablandochica c_rbase_base with sprite_fast
     violet "¿Lo viste antes de comprarlo?"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Si, osea en un maniqui, se que es uno de tus personajes favoritos y queria que el regalo no fuera algo generico"
+    mc "Si, estaba en un maniqui, sé que es uno de tus personajes favoritos y quería que el regalo no fuera algo generico"
     show mc_parado_base b_abiertachica
     mc "Aparte de eso pronto se va a hacer la Japicon y pense que seria un buen cosplay"
     show mc_parado_base b_none
 
-    show violet_parada b_hablandochica
-    violet "No hay otro tipo de intenciones detras del regalo?"
+    show violet_parada b_hablandochica c_rbase_pensando with sprite_fast
+    violet "¿No hay otro tipo de intenciones detrás del regalo?"
+    show violet_parada b_none c_rbase_base with sprite_fast
+
+    show mc_parado_base b_hablando
+    mc "No ¿Qué puede haber detrás de eso? es solo un cosplay"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablandochica o_arribanm
+    violet "El tipo de cosplay que es, es un traje digamos que muy..."
+    show violet_parada b_hablando o_base ot_avergonzada
+    violet "Apretado"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_fast
+    mc "Pero es así el traje, no tiene nada de raro"
+    show mc_parado_base b_none c_rbase_base with sprite_fast
+
+    show violet_parada b_hablandochica c_rbase_dedolabio with sprite_fast
+    violet "No creo que todos sean así..." 
+    show violet_parada b_hablando ot_none c_rbase_brazoscruzados with sprite_fast
+    violet "Y ya te digo que no hay posibilidades que vaya a usarlo en un evento"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "No, que puede haber detras de eso? es solo un cosplay"
+    mc "¿Por qué no me muestras que tal esta? Y te doy mi opion, seguro estas exagerando"
     show mc_parado_base b_none
 
-    show violet_parada b_hablandochica
-    violet "El tipo de cosplay que es, es un traje digamos que muy apretado..."
-    show violet_parada b_none
-
-    show mc_parado_base b_hablando
-    mc "Pero es asi el traje, no tiene nada de raro"
-    show mc_parado_base b_none
-
-    show violet_parada b_hablandochica
-    violet "No creo que todos sean asi ya te digo que no hay posibilidades que vaya a usarlo en un evento"
-    show violet_parada b_none
-
-    show mc_parado_base b_hablando
-    mc "¿Pero si de mostramelo a mi?"
-    show mc_parado_base b_none
-
-    show violet_parada b_hablandochica
+    show violet_parada b_hablandochica o_arribanm c_rbase_pensando with sprite_fast
     violet "Lo voy a pensar"
-    show violet_parada b_none
+    show violet_parada b_none o_base c_rbase_base with sprite_fast
 
     hide violet_parada with dissolve
     hide mc_parado_base with dissolve
 
     $ completar_quest_actual("violet")
+
+    # Devolver a Violet a su rutina base (sale del pasillo para siempre)
+    python:
+        _nv = obtener_npc("violet")
+        if _nv:
+            # Limpiar todos los overrides de mañana que dejó la quest
+            if hasattr(_nv, 'rutinas_quest'):
+                for _d in range(7):
+                    _nv.rutinas_quest.pop((_d, 0), None)
+            # Forzar ubicación al valor base del dia actual
+            _loc_base = _nv.rutinas.get((dia_semana_actual, horario_actual))
+            _nv.locacion_actual = _loc_base if _loc_base else "casa_hviolet"
 
     window hide
     $ mostrar_hud()

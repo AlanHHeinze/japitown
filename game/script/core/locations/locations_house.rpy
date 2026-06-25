@@ -30,7 +30,7 @@ init python:
             background_base="images/bg/casa/bg_casa_{horario}_living.png",
             descripcion="La sala de estar"
         )
-        loc_living.agregar_hotspot(Hotspot("casa_living_casa_pasilloabajo", "MOVE", 0, 446, 130, 640, destino="casa_pasilloabajo", nombre="Pasillo"))
+        loc_living.agregar_hotspot(Hotspot("casa_living_casa_pasilloabajo", "MOVE", 0, 651, 130, 435, destino="casa_pasilloabajo", nombre="Pasillo"))
         loc_living.agregar_hotspot(Hotspot("casa_living_casa_frente", "MOVE", 678, 980, 450, 100, destino="casa_frente", nombre="Salida"))
         loc_living.agregar_hotspot(Hotspot("casa_living_casa_garage", "MOVE", 1582, 302, 310, 610, destino="casa_garage", nombre="Garage"))
         loc_living.agregar_hotspot(Hotspot("casa_living_casa_patio", "MOVE", 534, 424, 630, 280, destino="casa_patio", nombre="Patio"))
@@ -97,7 +97,7 @@ init python:
         loc_pasilloarriba.agregar_hotspot(Hotspot("casa_pasilloarriba_casa_banioarriba", "MOVE", 1, 153, 210, 870, destino="casa_banioarriba", nombre="Baño"))
         loc_pasilloarriba.agregar_hotspot(Hotspot("casa_pasilloarriba_casa_hviolet", "MOVE", 666, 338, 170, 380, destino="casa_hviolet", nombre="Hab. Violet", label_offset_y=-32))
         loc_pasilloarriba.agregar_hotspot(Hotspot("casa_pasilloarriba_casa_hjasmine", "MOVE", 939, 338, 160, 380, destino="casa_hjasmine", nombre="Hab. Jasmine", label_offset_y=32))
-        loc_pasilloarriba.agregar_hotspot(Hotspot("casa_pasilloarriba_casa_altillo", "MOVE", 702, 0, 450, 200, destino="casa_altillo", nombre="Altillo"))
+        loc_pasilloarriba.agregar_hotspot(Hotspot("casa_pasilloarriba_casa_altillo", "MOVE", 255, 0, 450, 200, destino="casa_altillo", nombre="Altillo"))
         sistema_locaciones.registrar_locacion(loc_pasilloarriba)
         
         # Habitación del MC

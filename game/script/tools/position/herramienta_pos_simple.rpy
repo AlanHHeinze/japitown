@@ -36,13 +36,14 @@ init python:
             return []
 
     def _hpos_lista_idles():
-        """Retorna lista de paths de idles de personajes e imágenes de movimiento, ordenados."""
+        """Retorna lista de paths de idles de personajes, imágenes de movimiento y props de quest, ordenados."""
         try:
             return sorted([
                 f for f in renpy.list_files()
                 if (
                     (f.startswith("images/characters/") and "/idle/" in f)
                     or f.startswith("images/bg/casa/idle_movimiento/")
+                    or (f.startswith("images/quest/") and "/idle_" in f)
                 )
                 and f.lower().endswith((".png", ".jpg", ".webp"))
             ])

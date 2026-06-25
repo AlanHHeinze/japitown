@@ -25,6 +25,11 @@ default vq2_texto_inicial_mostrado = False
 # Posición del elemento alacena en la cocina
 default vq2_pos_alacena = (651, 795)  # 20/02/2026 12:04
 
+# Controla qué acciones de locación del evento 03 estan activas
+default vq2_limpiar_accion_activa = False
+default vq2_buscar_accion_activa = False
+default vq2_limpiar_pasillo_accion_activa = False
+
 
 # =============================================================================
 # SCREEN: Buscar trapeador en la cocina
@@ -184,5 +189,5 @@ init python:
 
         if pendientes:
             lista = ", ".join(pendientes)
-            store._msg_restriccion_texto = "Todavia me falta limpiar: {}".format(lista)
+            store._msg_restriccion_texto = "Todavía me falta limpiar: {}".format(lista)
             renpy.show_screen("mensaje_restriccion")

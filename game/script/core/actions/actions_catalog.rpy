@@ -6,6 +6,34 @@
 
 init 5 python:
 
+    # ── Quest 0 del MC — Mudanza ──────────────────────────────────────────────
+
+    def _mc_q0_mudanza_garage_visible():
+        return getattr(store, 'mc_q0_mudanza_garage_activa', False)
+
+    def _mc_q0_mudanza_hmc_visible():
+        return getattr(store, 'mc_q0_mudanza_hmc_activa', False)
+
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="mudanza_garage",
+        nombre="Mudanza",
+        icono=u"📦",
+        locacion_id="casa_garage",
+        label_generico="mudanza_garage_generico",
+        reseteo=None,
+        condicion=_mc_q0_mudanza_garage_visible,
+    ))
+
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="mudanza_hmc",
+        nombre="Mudanza",
+        icono=u"📦",
+        locacion_id="casa_hmc",
+        label_generico="mudanza_hmc_generico",
+        reseteo=None,
+        condicion=_mc_q0_mudanza_hmc_visible,
+    ))
+
     def _vq9a_accion_activa():
         q = store.sistema_quests.obtener_quest("violet_questprincipal_09_a")
         return (q is not None and q.activa and not q.completada and
@@ -51,6 +79,40 @@ init 5 python:
         label_generico="accion_violet_toalla",
         reseteo=None,
         condicion=_vq9a_accion_activa,
+    ))
+
+    # =========================================================================
+    # EVENTO 03 — Limpieza del Sábado
+    # =========================================================================
+
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="ev03_limpiar_living",
+        nombre="Limpiar",
+        icono=u"🧹",
+        locacion_id="casa_living",
+        label_generico="ev03_accion_limpiar_living",
+        reseteo=None,
+        condicion=lambda: getattr(store, 'vq2_limpiar_accion_activa', False),
+    ))
+
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="ev03_buscar_cocina",
+        nombre="Buscar",
+        icono=u"🔍",
+        locacion_id="casa_cocina",
+        label_generico="ev03_accion_buscar_cocina",
+        reseteo=None,
+        condicion=lambda: getattr(store, 'vq2_buscar_accion_activa', False),
+    ))
+
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="ev03_limpiar_pasillo",
+        nombre="Limpiar",
+        icono=u"🧹",
+        locacion_id="casa_pasilloarriba",
+        label_generico="ev03_accion_limpiar_pasillo",
+        reseteo=None,
+        condicion=lambda: getattr(store, 'vq2_limpiar_pasillo_accion_activa', False),
     ))
 
     sistema_acciones.registrar_accion(AccionLocacion(
@@ -117,6 +179,12 @@ label accion_cocinar:
 ################################################################################
 
 label accion_ver_tv:
+
+    # Quest 08_a de Violet: la acción Ver TV es el disparador de la escena de la
+    # tormenta. Se chequea antes que cualquier restricción horaria.
+    $ _q8a_vertv = sistema_quests.obtener_quest("violet_questprincipal_08_a")
+    if _q8a_vertv and _q8a_vertv.activa and not _q8a_vertv.completada and _q8a_vertv.etapa_actual == ETAPA_BOTON_LISTO:
+        jump violet_quest08a_ver_tv
 
     # Restricción: solo de noche
     if horario_actual < 2:

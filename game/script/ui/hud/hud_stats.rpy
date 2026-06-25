@@ -467,7 +467,8 @@ screen panel_tienda():
                         text _("Productos") size 14 color "#4FC3F7" bold True
 
                         for item_id, item_info in CATALOGO_ITEMS.items():
-                            if item_info.get("vendible", True):
+                            $ _item_visible_cond = item_info.get("condicion_visible")
+                            if item_info.get("vendible", True) and (_item_visible_cond is None or _item_visible_cond()):
                                 $ item_stock = stock_tienda.get(item_id, 0)
                                 $ agotado = (item_stock <= 0)
 

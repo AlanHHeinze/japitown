@@ -29,7 +29,7 @@ init python:
         Establece el sprite y posición para una rutina específica de Violet.
         
         Args:
-            dia_semana: Índice del día (0=Lunes, 6=Domingo) o lista de días
+            dia_semana: Índice del dia (0=Lunes, 6=Domingo) o lista de dias
             horario: Índice del horario (0=Mañana, 1=Tarde, 2=Noche, 3=Trasnoche)
             sprite: Ruta del sprite a mostrar
             posicion: Tupla (x, y) con la posición en pantalla
@@ -50,7 +50,7 @@ init python:
     
     def obtener_sprite_rutina_violet():
         """
-        Obtiene el sprite actual de Violet según el día y horario actual.
+        Obtiene el sprite actual de Violet según el dia y horario actual.
         Prioridad: 0) Pasillo, 1) Skin activo (quest/evento), 2) Rutina especial, 3) Rutina base
         """
         # Prioridad 0: Sprite de pasillo (door access) — respeta el grupo de skin activo
@@ -81,7 +81,7 @@ init python:
 
     def obtener_posicion_rutina_violet():
         """
-        Obtiene la posición actual de Violet según el día y horario actual.
+        Obtiene la posición actual de Violet según el dia y horario actual.
         Prioridad: 0) Pasillo, 1) Rutina especial, 2) Rutina base
         """
         # Prioridad 0: NPC en pasillo → posición fija según skin
@@ -143,21 +143,21 @@ init python:
         # Lunes a Viernes
         for dia in range(5):
             violet.establecer_rutina(dia, 0, "casa_cocina")         # Mañana: Cocina
-            violet.establecer_rutina(dia, 1, "casa_hviolet")        # Tarde: Su habitación (leyendo)
-            violet.establecer_rutina(dia, 2, "casa_hviolet")        # Noche: Su habitación
-            violet.establecer_rutina(dia, 3, "casa_hviolet")        # Trasnoche: Su habitación
+            violet.establecer_rutina(dia, 1, "casa_hviolet")        # Tarde: Su habitacion (leyendo)
+            violet.establecer_rutina(dia, 2, "casa_hviolet")        # Noche: Su habitacion
+            violet.establecer_rutina(dia, 3, "casa_hviolet")        # Trasnoche: Su habitacion
         
         # Sábado
-        violet.establecer_rutina(5, 0, "casa_hviolet")       # Mañana: Su habitación
+        violet.establecer_rutina(5, 0, "casa_hviolet")       # Mañana: Su habitacion
         violet.establecer_rutina(5, 1, "casa_living")        # Tarde: Living (leyendo)
-        violet.establecer_rutina(5, 2, "casa_hviolet")       # Noche: Su habitación
-        violet.establecer_rutina(5, 3, "casa_hviolet")       # Trasnoche: Su habitación
+        violet.establecer_rutina(5, 2, "casa_hviolet")       # Noche: Su habitacion
+        violet.establecer_rutina(5, 3, "casa_hviolet")       # Trasnoche: Su habitacion
         
         # Domingo
         violet.establecer_rutina(6, 0, "casa_cocina")        # Mañana: Cocina
-        violet.establecer_rutina(6, 1, "casa_hviolet")       # Tarde: Su habitación
+        violet.establecer_rutina(6, 1, "casa_hviolet")       # Tarde: Su habitacion
         violet.establecer_rutina(6, 2, "casa_living")        # Noche: Living
-        violet.establecer_rutina(6, 3, "casa_hviolet")       # Trasnoche: Su habitación
+        violet.establecer_rutina(6, 3, "casa_hviolet")       # Trasnoche: Su habitacion
         
         # =====================================================================
         # SPRITES Y POSICIONES DE RUTINA
@@ -243,22 +243,17 @@ init python:
         # =====================================================================
 
         # Amor
-        violet.agregar_desbloqueo("amor", 10, "💬", "Conversación Diaria",
-            "Podés hablar con Violet todos los días.")
+        violet.agregar_desbloqueo("amor", 15, "💬", "Conversación Especial Buen Humor",
+            "Violet puede aparecer de buen humor durante la conversación diaria.")
+        violet.agregar_desbloqueo("amor", 15, "💬", "Conversación Especial Muy Buen Humor",
+            "Violet puede aparecer de muy buen humor durante la conversación diaria.")
         violet.agregar_desbloqueo("amor", 30, "🚪", "Ingreso Habitación",
             "Violet te deja entrar a su cuarto durante el día.")
-        violet.agregar_desbloqueo("amor", 60, "📺", "Ver TV Juntos",
-            "Pueden ver televisión juntos en el living.")
-
         # Deseo
-        violet.agregar_desbloqueo("deseo", 10, "👗", "Skin Pijama",
-            "Violet sale al pasillo en pijama.",
-            condicion_extra=_cond_pijama_desbloqueo,
-            nombre_pendiente="Completar Quest: Mangas Prestados")
-        violet.agregar_desbloqueo("deseo", 40, "😘", "???",
-            "")
+        violet.agregar_desbloqueo("deseo", 30, "💬", "Conversación Especial Caliente",
+            "Violet puede aparecer en un estado especial durante la conversación diaria.")
         violet.agregar_desbloqueo("deseo", 60, "🌙", "Ingreso Nocturno",
-            "Podés entrar a la habitación de Violet de noche.")
+            "Puedes entrar a la habitación de Violet de noche.")
 
         # =====================================================================
         # REGISTRAR EN EL SISTEMA
@@ -272,19 +267,19 @@ init python:
 ## DIÁLOGOS DE VIOLET
 ################################################################################
 
-# Aquí se pueden agregar diálogos específicos de Violet en el futuro
+# Aqui se pueden agregar diálogos específicos de Violet en el futuro
 
 ################################################################################
 ## EVENTOS DE VIOLET
 ################################################################################
 
-# Aquí se pueden agregar eventos específicos de Violet en el futuro
+# Aqui se pueden agregar eventos específicos de Violet en el futuro
 
 ################################################################################
 ## QUESTS DE VIOLET
 ################################################################################
 
-# Aquí se pueden agregar quests específicas de Violet en el futuro
+# Aqui se pueden agregar quests específicas de Violet en el futuro
 
 ################################################################################
 ## Datos de Violet (Guardables)
@@ -295,4 +290,3 @@ default violet_deseo = 0
 default violet_progreso = 0
 default violet_interacciones = {"hablar": False, "coquetear": False}
 default violet_quest2_trajesexy = False
-default vq4_rama_elegida = None

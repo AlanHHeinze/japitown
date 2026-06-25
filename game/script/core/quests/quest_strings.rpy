@@ -9,7 +9,7 @@ init python:
     _quest_strings_registradas = [
 
         ## Nombres de Quests
-        "¿Que le pasa a Violet?",
+        "¿Qué le pasa a Violet?",
         "Un paquete misterioso",
         "El contenido del paquete",
         "Limpieza del Sábado",
@@ -50,7 +50,7 @@ init python:
         "Debo volver arriba a limpiar",
         "Debo ver como va Violet con el baño",
         "No puedo salir de la casa ahora",
-        "Deberia llevarle ropa a Violet",
+        "Debería llevarle ropa a Violet",
         "Debo llevarle la ropa a Violet",
 
         ## Mensajes de bloqueo — acciones
@@ -90,12 +90,12 @@ init python:
         "Escuche el timbre",
 
         ## Pistas — Quest Violet 2
-        "Podria entregarle el paquete a Violet o podria ver bien que tiene",
+        "Podría entregarle el paquete a Violet o podría ver bien que tiene",
         "Hablar con Violet y darle su paquete o revisar el contenido del paquete",
 
         ## Pistas — Quest Violet 4
         "Monica me dijo algo sobre limpiar la casa, tengo que esperar.",
-        "Deberia responderle a Monica.",
+        "Debería responderle a Monica.",
         "Responder mensaje de Monica.",
         "Hoy es sábado, tengo que despertar a Violet temprano.",
         "Monica me pidió que despierte a Violet temprano el sábado para limpiar la casa.",
@@ -124,14 +124,14 @@ init python:
         "Quizás si sigo mejorando mi deseo con Violet me muestre un poco más",
         "Violet me envió un mensaje, debería responderle.",
         "Violet me envió un mensaje, debería responderle",
-        "Violet ya me contestó, deberia ir a hablar con ella.",
+        "Violet ya me contestó, debería ir a hablar con ella.",
         "Ir a ver a Violet a su habitación.",
         "Responder mensaje de Violet",
         "Tengo que ir a ver a Violet por lo de su cosplay.",
 
         ## Pistas — Quest Violet 11
         "Todo tranquilo por ahora, debería esperar unos días.",
-        "Podria conseguir algunos cosplay para que Violet se pruebe",
+        "Podría conseguir algunos cosplay para que Violet se pruebe",
         "Comprar el ítem conjunto de cosplay",
         "Podría ir a la habitación de violet por la noche a ver si le gusta lo que compré",
         "Ir a la habitación de violet por la noche",
@@ -139,8 +139,8 @@ init python:
 
         ## Pistas — Quest Violet 12
         "Violet me pidió que pase por su habitación, debería ir a la noche.",
-        "Ir a la habitacion de Violet por la noche.",
-        "Violet me pidio que pase por su habitacion a la noche.",
+        "Ir a la habitación de Violet por la noche.",
+        "Violet me pidió que pase por su habitación a la noche.",
 
         ## Pistas — Quests Monica
         "Tendría que encontrarme con Monica para darle las gracias, podría verla por la tarde.",
@@ -148,19 +148,19 @@ init python:
         "Podría aprovechar que Monica está en casa para hablar con ella.",
         "Monica parece más ocupada por las tardes",
         "Ir a la habitación de Monica por la tarde",
-        "Podria ver si Monica necesita algo",
+        "Podría ver si Monica necesita algo",
         "Podría ver a Monica en la tarde y ofrecerle un masaje.",
         "Habla con Monica cuando esté en el living por la tarde.",
         "Mónica se quejó de dolor en sus hombros, podría hacerle un masaje en la tarde.",
 
         ## Pistas — Quests Jasmine
-        "Podria ver a Jasmine por la tarde cuando entrena y hablar un poco.",
+        "Podría ver a Jasmine por la tarde cuando entrena y hablar un poco.",
         "Ir al gym por la tarde.",
-        "Podria buscar a Jasmine cuando este entrenando para hablar con ella.",
+        "Podría buscar a Jasmine cuando este entrenando para hablar con ella.",
 
         ## Mensajes de Requisito
         "Violet debe estar en su habitación",
-        "Violet debe estar en su habitacion",
+        "Violet debe estar en su habitación",
         "Debe ser sábado",
         "Debe ser por la mañana",
         "Debe ser por la tarde",
@@ -168,7 +168,7 @@ init python:
         "Me falta el conjunto de cosplays",
         "Contestar el mensaje de Monica",
         "Responder el mensaje de Violet",
-        "Monica debe estar en su habitacion",
+        "Monica debe estar en su habitación",
         "Necesitas mas deseo con Violet",
         "Debes estar en el gym",
         "Debes estar en el living",
