@@ -250,9 +250,7 @@ translate english strings:
 
     # game/script/characters/mc/quests/intro_main.rpy:107
     old "Este juego contiene material explícito no apto para menores de 18 años. Todos los personajes, nombres y eventos retratados en esta obra son completamente ficticios. Cualquier parecido con personas reales, vivas o muertas, es pura coincidencia.\n\nTodos los personajes involucrados en escenas de contenido sexual tienen 18 años o más al momento de los hechos representados"
-    new "This game contains explicit material not suitable for minors under 18 years of age. All characters, names and events portrayed in this work are entirely fictional. Any resemblance to real persons, living or dead, is purely coincidental.
-
-All characters involved in scenes of a sexual nature are 18 years of age or older at the time of the depicted events."
+    new "This game contains explicit material not suitable for minors under 18 years of age. All characters, names and events portrayed in this work are entirely fictional. Any resemblance to real persons, living or dead, is purely coincidental.\n\nAll characters involved in scenes of a sexual nature are 18 years of age or older at the time of the depicted events."
 
     # game/script/characters/mc/quests/intro_main.rpy:167
     old "La misma presenta el comienzo de la historia, presentacion de personajes iniciales y incluye el tutorial de las funciones mas basicas.\n\nSi es tu primera vez en Japitonw te recomendamos jugar la introduccion "
