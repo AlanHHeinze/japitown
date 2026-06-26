@@ -16,7 +16,7 @@ translate english intro_principal_03bd9f73:
 translate english intro_principal_7118cb05:
 
     # piensa "Toca que cada uno haga su propio camino"
-    piensa ""
+    piensa "It's time for each of us to make our own way"
 
 # game/script/characters/mc/quests/intro_main.rpy:262
 translate english intro_principal_02f2b8e9:
@@ -178,7 +178,7 @@ translate english intro_llegada_casa_03587584:
 translate english intro_llegada_casa_3fabddd9:
 
     # monica "Bueno, tu habitación está casi lista, solo falta lo que enviaste en las cajas, esta todo en el [colorear_locacion('Garage')]"
-    monica ""
+    monica "Well, your room is almost ready, only what you sent in the boxes is left; it's all in the [colorear_locacion('Garage')]"
 
 # game/script/characters/mc/quests/intro_main.rpy:455
 translate english intro_llegada_casa_b6b61428:
@@ -220,7 +220,7 @@ translate english intro_llegada_casa_0f9c7cca:
 translate english intro_llegada_casa_4cd4e0ae:
 
     # mc "¿Qué le pasa a [colorear_npc('violet', 'Violet')]?"
-    mc ""
+    mc "What's wrong with [colorear_npc('violet', 'Violet')]?"
 
 # game/script/characters/mc/quests/intro_main.rpy:506
 translate english intro_llegada_casa_8cfe9deb:
@@ -232,19 +232,19 @@ translate english intro_llegada_casa_8cfe9deb:
 translate english intro_llegada_casa_c0a0117b:
 
     # monica "A la noche vamos a salir a cenar a algún restaurante"
-    monica ""
+    monica "Tonight we're going out for dinner at some restaurant"
 
 # game/script/characters/mc/quests/intro_main.rpy:512
 translate english intro_llegada_casa_50fd80c8:
 
     # monica "Pero ahora encargate tranquilo de tus cosas, Jasmine dejemmos que [mc_name] se acomode. Cualquier cosa me avisas"
-    monica ""
+    monica "But for now take care of your things calmly. Jasmine, let's let [mc_name] settle in. Let me know if you need anything"
 
 # game/script/characters/mc/quests/intro_main.rpy:518
 translate english intro_llegada_casa_49d728bf:
 
     # jasmine "Voy a estar en mi habitación por si me necesitas"
-    jasmine ""
+    jasmine "I'll be in my room in case you need me"
 
 translate english strings:
 
@@ -256,5 +256,5 @@ All characters involved in scenes of a sexual nature are 18 years of age or olde
 
     # game/script/characters/mc/quests/intro_main.rpy:167
     old "La misma presenta el comienzo de la historia, presentacion de personajes iniciales y incluye el tutorial de las funciones mas basicas.\n\nSi es tu primera vez en Japitonw te recomendamos jugar la introduccion "
-    new ""
+    new "It presents the beginning of the story, the introduction of the initial characters, and includes the tutorial for the most basic features.\n\nIf this is your first time in Japitown, we recommend playing the introduction"
 

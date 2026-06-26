@@ -112,19 +112,19 @@ translate english quest_jasmine_questprincipal_0_a_08535851:
 translate english tutorial_elecciones_jasmine_76c80d93:
 
     # tutorial "A lo largo del desarrollo de la historia de un personaje nos iremos encontrando varias veces con distintas opciones para elegir. Estas representan la manera en la que nuestro personaje va a actuar ante la situación"
-    tutorial ""
+    tutorial "Throughout a character's story, we'll come across various choices several times. These represent the way our character will act in each situation"
 
 # game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy:121
 translate english tutorial_elecciones_jasmine_6e0e4d6c:
 
     # tutorial "Estas elecciones afectan el desarrollo inmediato como también a largo plazo. Los personajes recordaran las elecciones elegidas y actuaran en relación a ello en ciertos momentos"
-    tutorial ""
+    tutorial "These choices affect both the immediate and the long-term development. Characters will remember the choices made and act accordingly at certain moments"
 
 # game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy:122
 translate english tutorial_elecciones_jasmine_5f26a462:
 
     # tutorial "Aparte de los cambios narrativos algunas elecciones podrian darnos recompensas especiales, como estadisticas, objetos, escenas, etc"
-    tutorial ""
+    tutorial "Aside from the narrative changes, some choices can grant special rewards, like stats, items, scenes, etc"
 
 # game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy:183
 translate english quest_jasmine_0_opcion_deseo_ebea2368:

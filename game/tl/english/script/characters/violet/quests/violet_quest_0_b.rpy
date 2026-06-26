@@ -34,7 +34,7 @@ translate english quest_violet_questprincipal_0_b_867997b2:
 translate english quest_violet_questprincipal_0_b_d4354f8f:
 
     # mc "[mc_name]"
-    mc ""
+    mc "Yeah, here"
 
 # game/script/characters/violet/quests/violet_quest_0_b.rpy:68
 translate english quest_violet_questprincipal_0_b_14f6a3ef:
@@ -106,19 +106,19 @@ translate english quest_violet_questprincipal_0_b_8eaffd47:
 translate english tutorial_elecciones_violet_76c80d93:
 
     # tutorial "A lo largo del desarrollo de la historia de un personaje nos iremos encontrando varias veces con distintas opciones para elegir. Estas representan la manera en la que nuestro personaje va a actuar ante la situación"
-    tutorial ""
+    tutorial "Throughout a character's story, we'll come across various choices several times. These represent the way our character will act in each situation"
 
 # game/script/characters/violet/quests/violet_quest_0_b.rpy:115
 translate english tutorial_elecciones_violet_6e0e4d6c:
 
     # tutorial "Estas elecciones afectan el desarrollo inmediato como también a largo plazo. Los personajes recordaran las elecciones elegidas y actuaran en relación a ello en ciertos momentos"
-    tutorial ""
+    tutorial "These choices affect both the immediate and the long-term development. Characters will remember the choices made and act accordingly at certain moments"
 
 # game/script/characters/violet/quests/violet_quest_0_b.rpy:116
 translate english tutorial_elecciones_violet_5f26a462:
 
     # tutorial "Aparte de los cambios narrativos algunas elecciones podrian darnos recompensas especiales, como estadisticas, objetos, escenas, etc"
-    tutorial ""
+    tutorial "Aside from the narrative changes, some choices can grant special rewards, like stats, items, scenes, etc"
 
 # game/script/characters/violet/quests/violet_quest_0_b.rpy:138
 translate english quest_violet_0_opcion_respeto_4057fcbc:
@@ -250,7 +250,7 @@ translate english quest_violet_0_puerta_9ecc08ea:
 translate english quest_violet_0_puerta_926b8567:
 
     # vozoff "En la cena Violet se sento en la punta de la mesa, lejos de mi y no me hablo en toda la noche"
-    vozoff ""
+    vozoff "In future interactions we won't see the rewards associated with the approach. But by [colorear_quest('Improving the Attributes')] of our character we'll gain different [colorear_quest('Advantages')] for this system"
 
 translate english strings:
 

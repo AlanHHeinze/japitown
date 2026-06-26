@@ -4,5 +4,5 @@ translate english strings:
 
     # game/script/ui/hud/hud_relaciones.rpy:161
     old "Desbloqueos"
-    new ""
+    new "It's time for each of us to make our own way."
 

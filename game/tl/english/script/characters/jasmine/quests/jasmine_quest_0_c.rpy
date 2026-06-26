@@ -64,23 +64,23 @@ translate english quest_jasmine_questprincipal_0_c_cdc811f6:
 translate english quest_jasmine_questprincipal_0_c_545f1e7e:
 
     # mc "Te creo, te creo jaja"
-    mc ""
+    mc "I believe you, I believe you, haha"
 
 # game/script/characters/jasmine/quests/jasmine_quest_0_c.rpy:102
 translate english quest_jasmine_questprincipal_0_c_8ba481fe:
 
     # jasmine "Es que no te lo podía describir con palabras."
-    jasmine ""
+    jasmine "It's just that I couldn't put it into words."
 
 # game/script/characters/jasmine/quests/jasmine_quest_0_c.rpy:106
 translate english quest_jasmine_questprincipal_0_c_af96ec3e:
 
     # jasmine "¿Me veo bien así?"
-    jasmine ""
+    jasmine "Do I look good like this?"
 
 # game/script/characters/jasmine/quests/jasmine_quest_0_c.rpy:111
 translate english quest_jasmine_questprincipal_0_c_20531535:
 
     # mc "Perfecto. Te ves muy bien."
-    mc ""
+    mc "Perfect. You look great."
 

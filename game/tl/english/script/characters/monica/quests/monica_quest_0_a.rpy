@@ -16,19 +16,19 @@ translate english quest_monica_questprincipal_0_1b0e41ff:
 translate english tutorial_elecciones_monica_76c80d93:
 
     # tutorial "A lo largo del desarrollo de la historia de un personaje nos iremos encontrando varias veces con distintas opciones para elegir. Estas representan la manera en la que nuestro personaje va a actuar ante la situación"
-    tutorial ""
+    tutorial "Throughout a character's story, we'll come across various choices several times. These represent the way our character will act in each situation"
 
 # game/script/characters/monica/quests/monica_quest_0_a.rpy:171
 translate english tutorial_elecciones_monica_6e0e4d6c:
 
     # tutorial "Estas elecciones afectan el desarrollo inmediato como también a largo plazo. Los personajes recordaran las elecciones elegidas y actuaran en relación a ello en ciertos momentos"
-    tutorial ""
+    tutorial "These choices affect both the immediate and the long-term development. Characters will remember the choices made and act accordingly at certain moments"
 
 # game/script/characters/monica/quests/monica_quest_0_a.rpy:172
 translate english tutorial_elecciones_monica_5f26a462:
 
     # tutorial "Aparte de los cambios narrativos algunas elecciones podrian darnos recompensas especiales, como estadisticas, objetos, escenas, etc"
-    tutorial ""
+    tutorial "Aside from the narrative changes, some choices can grant special rewards, like stats, items, scenes, etc"
 
 # game/script/characters/monica/quests/monica_quest_0_a.rpy:209
 translate english quest_monica_0_opcion_familia_f661beba:

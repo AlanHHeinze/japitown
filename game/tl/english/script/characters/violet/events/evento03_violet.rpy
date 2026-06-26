@@ -94,7 +94,7 @@ translate english evento03_violet_dbba7139:
 translate english evento03_violet_22aaadff:
 
     # violet "..."
-    violet ""
+    violet "The cosplay looks great on you, you should wear it"
 
 # game/script/characters/violet/events/evento03_violet.rpy:148
 translate english evento03_violet_19c1e9c8:
@@ -130,7 +130,7 @@ translate english evento03_violet_4f139a7e:
 translate english evento03_violet_d3c46fee:
 
     # mc "¿Necesitas algo?"
-    mc ""
+    mc "Did someone arrive?"
 
 # game/script/characters/violet/events/evento03_violet.rpy:180
 translate english evento03_violet_d65894b5:
@@ -316,7 +316,7 @@ translate english violet_quest2_escena_banio_5fce0e23:
 translate english violet_quest2_escena_banio_d1f09f38:
 
     # violet "¿Necesitas algo?"
-    violet ""
+    violet "Did someone arrive?"
 
 # game/script/characters/violet/events/evento03_violet.rpy:488
 translate english violet_quest2_escena_banio_1e2935dd:
@@ -574,7 +574,7 @@ translate english violet_quest2_opcion_b_da93350f:
 translate english violet_quest2_opcion_b_22aaadff:
 
     # violet "..."
-    violet ""
+    violet "The cosplay looks great on you, you should wear it"
 
 # game/script/characters/violet/events/evento03_violet.rpy:688
 translate english violet_quest2_opcion_b_b035afe4:

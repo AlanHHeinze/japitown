@@ -72,5 +72,5 @@ translate english accion_hotspot_move_cf78c3b4:
 translate english accion_avanzar_tiempo_0b51825e:
 
     # piensa "Debo responder el mensaje de [_npc_prioritario] antes de continuar"
-    piensa ""
+    piensa "Flatter her (Nothing)"
 

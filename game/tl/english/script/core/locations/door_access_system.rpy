@@ -117,53 +117,53 @@ translate english interaccion_banio_ocupado_75d1d22a:
 translate english interaccion_puerta_npc_5a6d6d2b:
 
     # violet "[_msg_ocupada]"
-    violet ""
+    violet "When the interaction ends we'll get the reward; if we used a consumable it'll be gone, time will advance and we'll have to wait until the next day to use the Interaction again"
 
 # game/script/core/locations/door_access_system.rpy:353
 translate english interaccion_puerta_npc_da3cfba5:
 
     # jasmine "[_msg_ocupada]"
-    jasmine ""
+    jasmine "When the interaction ends we'll get the reward; if we used a consumable it'll be gone, time will advance and we'll have to wait until the next day to use the Interaction again"
 
 # game/script/core/locations/door_access_system.rpy:355
 translate english interaccion_puerta_npc_f51ab2e5:
 
     # monica "[_msg_ocupada]"
-    monica ""
+    monica "When the interaction ends we'll get the reward; if we used a consumable it'll be gone, time will advance and we'll have to wait until the next day to use the Interaction again"
 
 # game/script/core/locations/door_access_system.rpy:368
 translate english interaccion_golpear_dejar_pasar_fd1c066b:
 
     # violet "[_msg_adelante]"
-    violet ""
+    violet "Listen to her (Nothing)"
 
 # game/script/core/locations/door_access_system.rpy:370
 translate english interaccion_golpear_dejar_pasar_1772d232:
 
     # jasmine "[_msg_adelante]"
-    jasmine ""
+    jasmine "Listen to her (Nothing)"
 
 # game/script/core/locations/door_access_system.rpy:372
 translate english interaccion_golpear_dejar_pasar_ed0f1ecd:
 
     # monica "[_msg_adelante]"
-    monica ""
+    monica "Listen to her (Nothing)"
 
 # game/script/core/locations/door_access_system.rpy:382
 translate english interaccion_golpear_sale_pasillo_257bbf2e:
 
     # violet "[_msg_ahi_salgo]"
-    violet ""
+    violet "Talk to her (+2 ❤️)"
 
 # game/script/core/locations/door_access_system.rpy:384
 translate english interaccion_golpear_sale_pasillo_62c5567c:
 
     # jasmine "[_msg_ahi_salgo]"
-    jasmine ""
+    jasmine "Talk to her (+2 ❤️)"
 
 # game/script/core/locations/door_access_system.rpy:386
 translate english interaccion_golpear_sale_pasillo_b2ec6ef6:
 
     # monica "[_msg_ahi_salgo]"
-    monica ""
+    monica "Talk to her (+2 ❤️)"
 

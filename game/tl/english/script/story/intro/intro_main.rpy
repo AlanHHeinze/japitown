@@ -69,25 +69,25 @@ translate english strings:
 translate english intro_principal_43bb638e:
 
     # piensa "Otra vez teniendo que mudarme... Esta es la quinta vez..."
-    piensa ""
+    piensa "[_msg_ocupada]"
 
 # game/script/story/intro/intro_main.rpy:196
 translate english intro_principal_af3ce1d9:
 
     # piensa "Cada vez que mi padre se enamora termina cambiando toda mi vida entera."
-    piensa ""
+    piensa "[_msg_adelante]"
 
 # game/script/story/intro/intro_main.rpy:197
 translate english intro_principal_2c361ad4:
 
     # piensa "Esta vez será la última, no lo voy a seguir más, ya soy mayor y puedo vivir mi propia vida."
-    piensa ""
+    piensa "[_msg_ahi_salgo]"
 
 # game/script/story/intro/intro_main.rpy:198
 translate english intro_principal_8ca007aa:
 
     # piensa "Toca que cada uno haga su propio camino."
-    piensa ""
+    piensa "I have to reply to [_npc_prioritario]'s message before continuing"
 
 # game/script/story/intro/intro_main.rpy:200
 translate english intro_principal_b3e3d952:
@@ -99,7 +99,7 @@ translate english intro_principal_b3e3d952:
 translate english intro_principal_ac1e6bcc:
 
     # piensa "Es hora de apurarme"
-    piensa ""
+    piensa "I have to reply to [_npc_prioritario]'s message before sleeping"
 
 # TODO: Translation updated at 2026-05-07 16:53
 

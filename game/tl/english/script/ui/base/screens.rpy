@@ -265,5 +265,5 @@ translate english strings:
 
     # game/script/ui/base/screens.rpy:573
     old "Versión [config.version!t]\n"
-    new ""
+    new "A message woke me up"
 

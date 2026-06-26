@@ -434,7 +434,7 @@ translate english usar_mangas_violet_16c88120:
 translate english dar_paquete_quest02_violet_5dd170b3:
 
     # piensa "Violet no responde, debe estar durmiendo"
-    piensa ""
+    piensa "Honestly it exceeded expectations; now I want to talk to Violet and get a few things off my chest"
 
 # game/script/characters/violet/quests/violet_quest_01_b.rpy:138
 translate english dar_paquete_quest02_violet_rechaza_70d633b1:

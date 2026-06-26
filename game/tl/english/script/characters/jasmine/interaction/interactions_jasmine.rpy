@@ -4,5 +4,5 @@
 translate english interaccion_jasmine_848b91bf:
 
     # piensa "[_fallo_msg]"
-    piensa ""
+    piensa "[_fallo_msg]"
 

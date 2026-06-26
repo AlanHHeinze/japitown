@@ -4,13 +4,13 @@ translate english strings:
 
     # game/script/ui/hud/hud_configuracion.rpy:27
     old "Configuración"
-    new ""
+    new "Having to move again... This is the fifth time..."
 
     # game/script/ui/hud/hud_configuracion.rpy:61
     old "Mostrar Accion movimiento"
-    new ""
+    new "Every time my father falls in love it ends up changing my entire life."
 
     # game/script/ui/hud/hud_configuracion.rpy:62
     old "Muestra el botón para visualizar las salidas de cada locación."
-    new ""
+    new "This time will be the last, I won't follow him anymore, I'm grown now and I can live my own life."
 
