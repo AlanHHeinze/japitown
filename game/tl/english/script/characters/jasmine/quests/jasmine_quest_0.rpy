@@ -446,23 +446,23 @@ translate english strings:
 translate english quest_jasmine_questprincipal_0_ded73edf:
 
     # jasmine "¿A qué te referís con recibirte bien?"
-    jasmine ""
+    jasmine "What do you mean, welcoming?"
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:70
 translate english quest_jasmine_questprincipal_0_4a022c12:
 
     # mc "Con riesgo a que te puedas enojar más, ¿Puedo saber por qué estás enojada?"
-    mc ""
+    mc "At the risk of making it worse — can I ask why you're angry?"
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:272
 translate english quest_jasmine_0_opcion_realidad_45e1b3ef:
 
     # mc "Ahora somos grandes y solo un poco idiotas jajaja."
-    mc ""
+    mc "Now we're grown-ups, and only a little bit idiots. Ha."
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:297
 translate english quest_jasmine_0_regalo_4ff5cf5d:
 
     # mc "Ahhh, antes de que me olvide, te traje algo."
-    mc ""
+    mc "Oh, before I forget — I brought you something."
 

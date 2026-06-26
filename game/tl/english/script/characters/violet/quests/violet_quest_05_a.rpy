@@ -1,0 +1,110 @@
+﻿# TODO: Translation updated at 2026-06-25 23:12
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:41
+translate english violet_quest05a_hablar_a0d51676:
+
+    # mc "Violet, quería contarte que compré los cosplay."
+    mc ""
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:48
+translate english violet_quest05a_hablar_d0935eff:
+
+    # violet "¿Qué compraste?"
+    violet ""
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:52
+translate english violet_quest05a_hablar_33ff118e:
+
+    # mc "Compré una promo de tres, una box armada"
+    mc ""
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:56
+translate english violet_quest05a_hablar_458446df:
+
+    # violet "¿Qué personajes son?"
+    violet ""
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:60
+translate english violet_quest05a_hablar_f32f9943:
+
+    # mc "No sé exactamente, era un combo ya armado."
+    mc ""
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:64
+translate english violet_quest05a_hablar_dd332b2d:
+
+    # violet "Raro... ¿Y tú qué te compraste?"
+    violet ""
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:68
+translate english violet_quest05a_hablar_57269018:
+
+    # mc "Voy a esperar que elijas uno de los tres y me compro algo acorde."
+    mc ""
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:75
+translate english violet_quest05a_hablar_2cf8afc8:
+
+    # violet "Está bien, avisame cuando llegue el pedido."
+    violet ""
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:94
+translate english violet_quest05a_puerta_2033035d:
+
+    # mc "Violet, tengo algo para contarte."
+    mc ""
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:96
+translate english violet_quest05a_puerta_2f3d69cc:
+
+    # violet "Ahí salgo."
+    violet ""
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:111
+translate english violet_quest05a_puerta_a0d51676:
+
+    # mc "Violet, quería contarte que compré los cosplay."
+    mc ""
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:118
+translate english violet_quest05a_puerta_d0935eff:
+
+    # violet "¿Qué compraste?"
+    violet ""
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:122
+translate english violet_quest05a_puerta_33ff118e:
+
+    # mc "Compré una promo de tres, una box armada"
+    mc ""
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:126
+translate english violet_quest05a_puerta_458446df:
+
+    # violet "¿Qué personajes son?"
+    violet ""
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:130
+translate english violet_quest05a_puerta_f32f9943:
+
+    # mc "No sé exactamente, era un combo ya armado."
+    mc ""
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:134
+translate english violet_quest05a_puerta_dd332b2d:
+
+    # violet "Raro... ¿Y tú qué te compraste?"
+    violet ""
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:138
+translate english violet_quest05a_puerta_57269018:
+
+    # mc "Voy a esperar que elijas uno de los tres y me compro algo acorde."
+    mc ""
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:145
+translate english violet_quest05a_puerta_2cf8afc8:
+
+    # violet "Está bien, avisame cuando llegue el pedido."
+    violet ""
+

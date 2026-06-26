@@ -28,3 +28,23 @@ translate english strings:
     old "Pensar"
     new "Think"
 
+# TODO: Translation updated at 2026-06-25 23:12
+
+# game/script/core/time/timesystem_core.rpy:249
+translate english accion_dormir_7e028cb4:
+
+    # piensa "Debo responder el mensaje de [_npc_prioritario] antes de dormir"
+    piensa ""
+
+# game/script/core/time/timesystem_core.rpy:257
+translate english accion_dormir_3ea5b06c:
+
+    # piensa "Me despertó un mensaje"
+    piensa ""
+
+# game/script/core/time/timesystem_core.rpy:262
+translate english accion_dormir_f881b3be:
+
+    # piensa "Tengo cosas pendientes por hacer, no puedo dormir ahora"
+    piensa ""
+

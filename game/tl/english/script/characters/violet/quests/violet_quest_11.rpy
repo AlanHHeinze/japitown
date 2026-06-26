@@ -124,3 +124,69 @@ translate english violet_quest11_opcion_a_c78ed012:
     # mc "¿Querés que te deje sola para probártelos?"
     mc "Want me to leave so you can try them on?"
 
+# TODO: Translation updated at 2026-06-25 23:12
+
+# game/script/characters/violet/quests/violet_quest_11.rpy:39
+translate english quest_violet_questprincipal_11_e0705b9d:
+
+    # mc "Es un conjunto de cosplays. Vi que te gustaba eso y pensé que quizás querías probarlos."
+    mc "It's a set of cosplays. I saw you were into it and thought you might want to try some out."
+
+# game/script/characters/violet/quests/violet_quest_11.rpy:52
+translate english quest_violet_questprincipal_11_38b54ab5:
+
+    # mc "Lo importante es que te gusten, así tienes más opciones para probarte además del que ya tenías."
+    mc "What matters is that you like them. Now you've got more options on top of the one you already had."
+
+# game/script/characters/violet/quests/violet_quest_11.rpy:56
+translate english quest_violet_questprincipal_11_d0af4345:
+
+    # violet "Muchas gracias en serio... no me lo esperaba. Déjame ver qué hay adentro."
+    violet "Thank you, seriously... I wasn't expecting this. Let me see what's inside."
+
+# game/script/characters/violet/quests/violet_quest_11.rpy:75
+translate english violet_quest11_opcion_a_b8f5ef0c:
+
+    # mc "¿Quieres que te deje sola para probártelos?"
+    mc "Want me to leave you alone so you can try them on?"
+
+# game/script/characters/violet/quests/violet_quest_11.rpy:79
+translate english violet_quest11_opcion_a_333b7186:
+
+    # violet "Hmm... no, no hace falta. Puedes quedarte, me gustaría saber tu opinión."
+    violet "Hmm... no, it's fine. You can stay — I'd like your opinion."
+
+# game/script/characters/violet/quests/violet_quest_11.rpy:92
+translate english violet_quest11_opcion_b_7e46c4b1:
+
+    # mc "Me gustaría ver como te quedan..."
+    mc "I'd like to see how they look on you..."
+
+# game/script/characters/violet/quests/violet_quest_11.rpy:96
+translate english violet_quest11_opcion_b_72028336:
+
+    # violet "Q-quédate entonces. Me sirve tener una segunda opinión."
+    violet "S-stay then. A second opinion would help."
+
+# game/script/characters/violet/quests/violet_quest_11.rpy:113
+translate english violet_quest11_opcion_c_d080bc4f:
+
+    # violet "B-bueno, gracias... quédate así me dices cuál me queda mejor."
+    violet "W-well, thanks... stay so you can tell me which one looks best."
+
+# game/script/characters/violet/quests/violet_quest_11.rpy:126
+translate english violet_quest11_cierre_ae2da6a8:
+
+    # violet "Hay un montón de opciones aquí, me va a llevar un tiempo medirme todo esto."
+    violet "There are so many options in here — it's going to take me a while to try everything on."
+
+translate english strings:
+
+    # game/script/characters/violet/quests/violet_quest_11.rpy:60
+    old "¿Quieres que te deje sola para probártelos?"
+    new "Want me to leave you alone so you can try them on?"
+
+    # game/script/characters/violet/quests/violet_quest_11.rpy:62
+    old "Me gustaría ver como te quedan..."
+    new "I'd like to see how they look on you..."
+

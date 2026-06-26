@@ -408,3 +408,149 @@ translate english event_jasmine_01_repetir_alternativo_12953012:
     # mc "Perdon por molestarte otra vez"
     mc "Sorry for bothering you again."
 
+# TODO: Translation updated at 2026-06-25 23:12
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:30
+translate english event_jasmine_01_repetir_b63634b8:
+
+    # jasmine "¿Lo quieres volver a ver?"
+    jasmine "You want to see it again?"
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:39
+translate english event_jasmine_01_repetir_b9940979:
+
+    # mc "Sí, cuando vuela a Capital City puedo comprarte otro similar"
+    mc "Yeah, when I go to Capital City I can get you another one like it."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:48
+translate english event_jasmine_01_repetir_892ec54c:
+
+    # jasmine "Bueno, tiene que ser así."
+    jasmine "Fine, if you say so."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:71
+translate english event_jasmine_01_repetir_e80dad68:
+
+    # jasmine "Abajo también"
+    jasmine "Same down here."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:105
+translate english event_jasmine_01_repetir_65f9676b:
+
+    # mc "Sí..."
+    mc "Yeah..."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:110
+translate english event_jasmine_01_repetir_f200cfc5:
+
+    # jasmine "¿Eso querías ver?"
+    jasmine "Is that what you wanted to see?"
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:124
+translate english event_jasmine_01_repetir_29a5add4:
+
+    # jasmine "Te muestro como debe ser de atrás"
+    jasmine "Let me show you how it looks from behind."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:136
+translate english event_jasmine_01_repetir_0e15d6f8:
+
+    # jasmine "También ajustado"
+    jasmine "Tight back here too."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:140
+translate english event_jasmine_01_repetir_b3ebfbed:
+
+    # mc "Sí, lo veo"
+    mc "Yeah, I can see that."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:148
+translate english event_jasmine_01_repetir_541dbfe7:
+
+    # jasmine "Sobre todo aquí abajo, que es donde más se mueve"
+    jasmine "Especially down here — that's where it moves the most."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:164
+translate english event_jasmine_01_repetir_12f5d7d3:
+
+    # mc "Sí, perdón por molestarte"
+    mc "Yeah, sorry for interrupting."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:231
+translate english event_jasmine_01_repetir_alternativo_b9940979:
+
+    # mc "Sí, cuando vuela a Capital City puedo comprarte otro similar"
+    mc "Yeah, when I go to Capital City I can get you another one like it."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:236
+translate english event_jasmine_01_repetir_alternativo_9f55e38e:
+
+    # jasmine "Eso ya me lo dijiste y todavía no me compraste nada jajaja."
+    jasmine "You already said that, and you still haven't bought me anything. Ha."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:240
+translate english event_jasmine_01_repetir_alternativo_1639af91:
+
+    # jasmine "Me parece que tus intenciones son otras, pero está bien..."
+    jasmine "I think your reasons are different from what you're saying, but fine..."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:263
+translate english event_jasmine_01_repetir_alternativo_e80dad68:
+
+    # jasmine "Abajo también"
+    jasmine "Same down here."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:275
+translate english event_jasmine_01_repetir_alternativo_d06c045f:
+
+    # jasmine "Sí... me imagino no..."
+    jasmine "Yeah... I bet you weren't..."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:278
+translate english event_jasmine_01_repetir_alternativo_8f64f7a3:
+
+    # jasmine "Aquí tiene que sostener firme"
+    jasmine "It's supposed to hold firm here."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:297
+translate english event_jasmine_01_repetir_alternativo_65f9676b:
+
+    # mc "Sí..."
+    mc "Yeah..."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:302
+translate english event_jasmine_01_repetir_alternativo_1d9cd4b7:
+
+    # jasmine "¿También te tengo que mostrar otra vez como es la parte de atrás no?"
+    jasmine "I suppose you need me to show you the back again too, hm?"
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:316
+translate english event_jasmine_01_repetir_alternativo_9869ac32:
+
+    # jasmine "Así tiene que ser de atrás"
+    jasmine "This is how it's supposed to look from behind."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:332
+translate english event_jasmine_01_repetir_alternativo_30743f91:
+
+    # mc "Ajustado de atrás, lo voy a anotar"
+    mc "Tight from behind — I'll make a note of that."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:340
+translate english event_jasmine_01_repetir_alternativo_4e44cdac:
+
+    # jasmine "Así"
+    jasmine "Like this."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:349
+translate english event_jasmine_01_repetir_alternativo_dd750fa8:
+
+    # jasmine "¿Entendiste bien? Aunque supongo que no va a ser la última vez que tenga que mostrarte esto"
+    jasmine "Got it? Though I doubt this'll be the last time I have to show you."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:356
+translate english event_jasmine_01_repetir_alternativo_41fd650a:
+
+    # mc "Perdón por molestarte otra vez"
+    mc "Sorry for bothering you again."
+

@@ -287,6 +287,8 @@ label accion_dormir:
                 # Ejecutar el label del pensamiento seleccionado
                 call expression _return from _call_expression_4
                 # Al retornar, continúa al flujo de dormir
+            "Volver":
+                return
 
     # Llamar al screen como modal (espera a que el timer del screen haga Return())
     call screen animacion_dormir with dissolve

@@ -416,3 +416,113 @@ translate english dar_paquete_quest02_violet_b2_3037fa9e:
     # mc "Porque es divertido jajaja"
     mc "Because it's fun, hahaha."
 
+# TODO: Translation updated at 2026-06-25 23:12
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:38
+translate english usar_mangas_violet_e5b7c1fb:
+
+    # piensa "Aunque quizás puede que se enoje porque lo abrí"
+    piensa "Though she might be mad that I opened it."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:50
+translate english usar_mangas_violet_16c88120:
+
+    # piensa "Bueno... ya está aquí, no pierdo nada con ver que tiene."
+    piensa "Well... it's already here. Can't hurt to peek."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:102
+translate english dar_paquete_quest02_violet_5dd170b3:
+
+    # piensa "Violet no responde, debe estar durmiendo"
+    piensa ""
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:138
+translate english dar_paquete_quest02_violet_rechaza_70d633b1:
+
+    # mc "Violet, tengo un paquete para ti"
+    mc "Violet, I've got a package for you."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:144
+translate english dar_paquete_quest02_violet_rechaza_2aa158a9:
+
+    # violet "¿Me lo podras llevar después a mi habitación?"
+    violet "Can you bring it to my room later?"
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:179
+translate english dar_paquete_quest02_violet_a_3ee063bd:
+
+    # mc "Violet aquí esta tu paquete"
+    mc "Violet, here's your package."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:220
+translate english dar_paquete_quest02_violet_a_633cd35a:
+
+    # mc "No, solo vi que en la etiqueta decía MundoMangas, así que supuse que eran tuyos"
+    mc "No, I just saw MundoMangas on the label and figured it was yours."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:263
+translate english dar_paquete_quest02_violet_b_3ee063bd:
+
+    # mc "Violet aquí esta tu paquete"
+    mc "Violet, here's your package."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:313
+translate english dar_paquete_quest02_violet_b_e4ea348b:
+
+    # violet "La caja está abierta..."
+    violet "The box is open..."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:319
+translate english dar_paquete_quest02_violet_b_99238c92:
+
+    # mc "Lo dejaron en mi habitación y no sabia que era"
+    mc "They left it in my room and I didn't know what it was."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:348
+translate english dar_paquete_quest02_violet_b1_12464d76:
+
+    # mc "Tranquila, solo vi que eran unos mangas, pero nada más"
+    mc "Relax — I just saw some manga. Nothing more."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:354
+translate english dar_paquete_quest02_violet_b1_ac36061c:
+
+    # violet "Más te vale..."
+    violet "It better be..."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:360
+translate english dar_paquete_quest02_violet_b1_0e1957a5:
+
+    # mc "¿Por qué tanto problema por unos mangas?"
+    mc "Why all the fuss over some manga?"
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:363
+translate english dar_paquete_quest02_violet_b1_3ee48baf:
+
+    # mc "¿Había algo más ahí?"
+    mc "Was there something else in there?"
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:410
+translate english dar_paquete_quest02_violet_b2_97a32d95:
+
+    # violet "¡¿Qué?!"
+    violet "What?"
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:465
+translate english dar_paquete_quest02_violet_b2_6d7ebb8b:
+
+    # violet "¿Qué cosa?"
+    violet "Like what?"
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:480
+translate english dar_paquete_quest02_violet_b2_2456f852:
+
+    # violet "¿Por qué quieres que te diga eso?"
+    violet "Why would you want me to call you that?"
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:492
+translate english dar_paquete_quest02_violet_b2_67a484c6:
+
+    # violet "¿No me vas a molestar más verdad?"
+    violet "You're not going to keep bothering me about this, right?"
+

@@ -114,3 +114,59 @@ translate english strings:
     old "Placeholder: Opcion D"
     new "Placeholder: Option D"
 
+# TODO: Translation updated at 2026-06-25 23:12
+
+# game/script/characters/violet/quests/violet_quest_12.rpy:29
+translate english quest_violet_questprincipal_12_160c07c7:
+
+    # violet "Placeholder: Quería mostrarte algo..."
+    violet "Placeholder: I wanted to show you something..."
+
+# game/script/characters/violet/quests/violet_quest_12.rpy:37
+translate english quest_violet_questprincipal_12_a7fca056:
+
+    # violet "Placeholder: (Violet explica la situación)"
+    violet "Placeholder: (Violet explains the situation)"
+
+# game/script/characters/violet/quests/violet_quest_12.rpy:63
+translate english violet_quest12_opcion_a_d79e646f:
+
+    # violet "Placeholder: (Reacción de Violet a opción A)"
+    violet "Placeholder: (Violet's reaction to option A)"
+
+# game/script/characters/violet/quests/violet_quest_12.rpy:89
+translate english violet_quest12_opcion_b_8bfc74cc:
+
+    # violet "Placeholder: (Reacción de Violet a opción B)"
+    violet "Placeholder: (Violet's reaction to option B)"
+
+# game/script/characters/violet/quests/violet_quest_12.rpy:115
+translate english violet_quest12_opcion_c_df534cd7:
+
+    # violet "Placeholder: (Reacción de Violet a opción C)"
+    violet "Placeholder: (Violet's reaction to option C)"
+
+# game/script/characters/violet/quests/violet_quest_12.rpy:141
+translate english violet_quest12_opcion_d_70a4b622:
+
+    # violet "Placeholder: (Reacción de Violet a opción D)"
+    violet "Placeholder: (Violet's reaction to option D)"
+
+translate english strings:
+
+    # game/script/characters/violet/quests/violet_quest_12.rpy:42
+    old "Placeholder: Opción A"
+    new "Placeholder: Option A"
+
+    # game/script/characters/violet/quests/violet_quest_12.rpy:44
+    old "Placeholder: Opción B"
+    new "Placeholder: Option B"
+
+    # game/script/characters/violet/quests/violet_quest_12.rpy:46
+    old "Placeholder: Opción C"
+    new "Placeholder: Option C"
+
+    # game/script/characters/violet/quests/violet_quest_12.rpy:48
+    old "Placeholder: Opción D"
+    new "Placeholder: Option D"
+

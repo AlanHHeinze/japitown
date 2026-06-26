@@ -259,3 +259,11 @@ translate english strings:
     old "Menú"
     new "Menu"
 
+# TODO: Translation updated at 2026-06-25 23:12
+
+translate english strings:
+
+    # game/script/ui/base/screens.rpy:573
+    old "Versión [config.version!t]\n"
+    new ""
+

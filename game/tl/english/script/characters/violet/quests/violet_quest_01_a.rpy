@@ -66,3 +66,11 @@ translate english paquetecama_quest01_violet_dd1a986c:
     # piensa "Debe ser de Violet, luego se lo doy"
     piensa "Must be Violet's. I'll give it to her later."
 
+# TODO: Translation updated at 2026-06-25 23:12
+
+# game/script/characters/violet/quests/violet_quest_01_a.rpy:117
+translate english paqueterepartidor_quest01_violet_e11dcf90:
+
+    # repartidor "Aquí tiene, que tenga un buen día."
+    repartidor "Here you go. Have a good day."
+

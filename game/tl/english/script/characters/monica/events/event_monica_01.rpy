@@ -258,3 +258,101 @@ translate english masaje_repetir_aa30c4ef:
     # monica "Cuando consigas una, me avisas."
     monica "Let me know when you do."
 
+# TODO: Translation updated at 2026-06-25 23:12
+
+# game/script/characters/monica/events/event_monica_01.rpy:137
+translate english event_monica_01_narrativa_e1736274:
+
+    # mc "¿Cómo estas Monica? ¿Sigues con dolor en tus hombros?"
+    mc "How are you, Monica? Is your shoulder still bothering you?"
+
+# game/script/characters/monica/events/event_monica_01.rpy:142
+translate english event_monica_01_narrativa_bcd54522:
+
+    # monica "Ya se me está pasando,solo tengo que acostumbrarme a usar la notebook en casa"
+    monica "It's getting better. I just need to get used to working on the laptop at home."
+
+# game/script/characters/monica/events/event_monica_01.rpy:175
+translate english event_monica_01_narrativa_236319b6:
+
+    # monica "¿Aquí está bien?"
+    monica "Is here okay?"
+
+# game/script/characters/monica/events/event_monica_01.rpy:180
+translate english event_monica_01_narrativa_ca031d1c:
+
+    # mc "Sí, está bien."
+    mc "Yeah, that's fine."
+
+# game/script/characters/monica/events/event_monica_01.rpy:199
+translate english event_monica_01_narrativa_fc9d97e6:
+
+    # piensa "No me había puesto a pensar en el increíble cuerpo que tiene Monica para su edad."
+    piensa "I hadn't stopped to think about what an incredible figure Monica has for her age."
+
+# game/script/characters/monica/events/event_monica_01.rpy:216
+translate english event_monica_01_narrativa_1a4953b3:
+
+    # monica "Sí"
+    monica "Yeah..."
+
+# game/script/characters/monica/events/event_monica_01.rpy:226
+translate english event_monica_01_narrativa_96654d5d:
+
+    # mc "¿Está bien así? ¿O más suave?"
+    mc "Is this okay? Or softer?"
+
+# game/script/characters/monica/events/event_monica_01.rpy:229
+translate english event_monica_01_narrativa_adefa0fd:
+
+    # monica "Mmm... así está bien"
+    monica "Mmm... this is good."
+
+# game/script/characters/monica/events/event_monica_01.rpy:239
+translate english event_monica_01_narrativa_954bfe17:
+
+    # monica "Ahí..."
+    monica "Right there..."
+
+# game/script/characters/monica/events/event_monica_01.rpy:246
+translate english event_monica_01_narrativa_1ca6abbb:
+
+    # monica "Tenías razón... Eres realmente bueno en esto"
+    monica "You were right... you really are good at this."
+
+# game/script/characters/monica/events/event_monica_01.rpy:252
+translate english event_monica_01_narrativa_7d1ce838:
+
+    # monica "Voy a tener que pedirte que me lo hagas más seguido"
+    monica "I'm going to have to ask you to do this more often."
+
+# game/script/characters/monica/events/event_monica_01.rpy:265
+translate english event_monica_01_narrativa_90412a6e:
+
+    # monica "Más fuerte..."
+    monica "Harder..."
+
+# game/script/characters/monica/events/event_monica_01.rpy:281
+translate english event_monica_01_narrativa_2bf69165:
+
+    # monica "Sí..."
+    monica "Yeah..."
+
+# game/script/characters/monica/events/event_monica_01.rpy:298
+translate english event_monica_01_narrativa_a3760d4c:
+
+    # monica "Un poco más abajo..."
+    monica "A little lower..."
+
+# game/script/characters/monica/events/event_monica_01.rpy:306
+translate english event_monica_01_narrativa_1a0339e1:
+
+    # monica "Ahí es, más duro..."
+    monica "Right there — harder..."
+
+# game/script/characters/monica/events/event_monica_01.rpy:312
+translate english event_monica_01_narrativa_5e277c90:
+
+    # monica "Más..."
+    monica "More..."
+

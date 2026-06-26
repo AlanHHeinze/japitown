@@ -66,3 +66,11 @@ translate english accion_hotspot_move_cf78c3b4:
     # piensa "[_msg_restriccion_banio]"
     piensa "[_msg_restriccion_banio]"
 
+# TODO: Translation updated at 2026-06-25 23:12
+
+# game/script/core/npcs/npcsystem_interactions.rpy:117
+translate english accion_avanzar_tiempo_0b51825e:
+
+    # piensa "Debo responder el mensaje de [_npc_prioritario] antes de continuar"
+    piensa ""
+

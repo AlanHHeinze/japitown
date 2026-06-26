@@ -710,7 +710,7 @@ init 5 python:
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
-                pista="Esperar a que Violet me hable sobre el cosplay",
+                pista="No hay nada urgente que hacer, dejar pasar unos días",
                 que_hacer=_qc("vq08a_espera_quehacer", lambda: vq_esperar_texto("violet_questprincipal_08_a", 3)),
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(

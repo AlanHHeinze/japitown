@@ -90,3 +90,11 @@ translate english usar_casco_vr_repetir_56276ba3:
     # piensa "Placeholder: Estuvo bien la sesion de hoy."
     piensa "Placeholder: Today's session was pretty good."
 
+# TODO: Translation updated at 2026-06-25 23:12
+
+# game/script/core/shopping/usar_casco_vr.rpy:54
+translate english usar_casco_vr_73a9105a:
+
+    # piensa "Ahí esta"
+    piensa "There we go."
+

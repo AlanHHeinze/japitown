@@ -470,5 +470,5 @@ translate english strings:
 translate english quest_monica_0_cierre_45b6678a:
 
     # piensa "¿Qué me querrá decir con eso?"
-    piensa ""
+    piensa "What does she mean by that?"
 

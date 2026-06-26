@@ -60,3 +60,11 @@ translate english strings:
     old "Domingo"
     new "Sunday"
 
+# TODO: Translation updated at 2026-06-25 23:12
+
+# game/script/ui/hud/hud_celular.rpy:167
+translate english mostrar_bloqueo_accion_175af330:
+
+    # piensa "[mensaje]"
+    piensa ""
+

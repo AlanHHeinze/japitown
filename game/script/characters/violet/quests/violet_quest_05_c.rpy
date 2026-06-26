@@ -67,7 +67,7 @@ label violet_quest05c_perdon_fuera:
     else:
         show violet_parada b_hablandochica o_enojados c_rbase_brazoscruzados with sprite_fast
     violet "Ahora no, no tengo ganas de hablar de esto"
-    show viole_parada b_hablando
+    show violet_parada b_hablando
     violet "Chau"
     if vq5c_cuerpo == "c_pijama":
         show violet_parada b_none c_pijama_base with sprite_fast
@@ -132,7 +132,7 @@ label violet_quest05c_habitacion:
     violet "..."
     show violet_parada o_base
 
-    show mc_parado_base b_hablando c_base_avergonzado with sprite_fast
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
     mc "Fue un error, no sabía que era ese tipo de tienda"
     show mc_parado_base b_seria 
 
@@ -216,7 +216,7 @@ label violet_quest05c_opcion_b:
     mc "Me pondría un poco celoso..."
     show mc_parado_base b_seria
 
-    show violet_parada o_abiertos b_none ot_sonrojada with sprite_normal
+    show violet_parada o_abiertos b_none ot_avergonzada with sprite_normal
 
     pause 1.5
 

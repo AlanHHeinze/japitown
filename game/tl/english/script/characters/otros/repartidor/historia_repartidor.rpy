@@ -108,3 +108,35 @@ translate english entrega_repartidor_5_plus_a76ee258:
     # repartidor "Otro paquete entregado. ¡Nos vemos pronto!"
     repartidor "Another package delivered. See you soon!"
 
+# TODO: Translation updated at 2026-06-25 23:12
+
+# game/script/characters/otros/repartidor/historia_repartidor.rpy:39
+translate english entrega_repartidor_0_c322990c:
+
+    # mc "Sí, soy yo"
+    mc "Yeah, that's me."
+
+# game/script/characters/otros/repartidor/historia_repartidor.rpy:43
+translate english entrega_repartidor_0_017db630:
+
+    # repartidor "¿Eres nuevo? Nunca te había visto por aquí."
+    repartidor "You new here? Never seen you around."
+
+# game/script/characters/otros/repartidor/historia_repartidor.rpy:47
+translate english entrega_repartidor_0_4633479e:
+
+    # mc "Sí, acabo de mudarme. Esta sera mi casa a partir de ahora"
+    mc "Yeah, just moved in. This is home now."
+
+# game/script/characters/otros/repartidor/historia_repartidor.rpy:55
+translate english entrega_repartidor_0_a3db9a7f:
+
+    # mc "¿Qué?"
+    mc "What?"
+
+# game/script/characters/otros/repartidor/historia_repartidor.rpy:59
+translate english entrega_repartidor_0_f168ffdd:
+
+    # repartidor "¿Qué?"
+    repartidor "What?"
+

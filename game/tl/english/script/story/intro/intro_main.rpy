@@ -93,7 +93,7 @@ translate english intro_principal_8ca007aa:
 translate english intro_principal_b3e3d952:
 
     # piensa "Si bien sigo algo molesto con él, lo quería ver antes de que se vaya."
-    piensa ""
+    piensa "Even if I'm still a bit upset, I wanted to see him before he left."
 
 # game/script/story/intro/intro_main.rpy:202
 translate english intro_principal_ac1e6bcc:

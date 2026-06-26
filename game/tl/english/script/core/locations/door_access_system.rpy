@@ -111,3 +111,59 @@ translate english interaccion_banio_ocupado_75d1d22a:
     # monica "Me estoy bañando."
     monica "I'm in the shower."
 
+# TODO: Translation updated at 2026-06-25 23:12
+
+# game/script/core/locations/door_access_system.rpy:351
+translate english interaccion_puerta_npc_5a6d6d2b:
+
+    # violet "[_msg_ocupada]"
+    violet ""
+
+# game/script/core/locations/door_access_system.rpy:353
+translate english interaccion_puerta_npc_da3cfba5:
+
+    # jasmine "[_msg_ocupada]"
+    jasmine ""
+
+# game/script/core/locations/door_access_system.rpy:355
+translate english interaccion_puerta_npc_f51ab2e5:
+
+    # monica "[_msg_ocupada]"
+    monica ""
+
+# game/script/core/locations/door_access_system.rpy:368
+translate english interaccion_golpear_dejar_pasar_fd1c066b:
+
+    # violet "[_msg_adelante]"
+    violet ""
+
+# game/script/core/locations/door_access_system.rpy:370
+translate english interaccion_golpear_dejar_pasar_1772d232:
+
+    # jasmine "[_msg_adelante]"
+    jasmine ""
+
+# game/script/core/locations/door_access_system.rpy:372
+translate english interaccion_golpear_dejar_pasar_ed0f1ecd:
+
+    # monica "[_msg_adelante]"
+    monica ""
+
+# game/script/core/locations/door_access_system.rpy:382
+translate english interaccion_golpear_sale_pasillo_257bbf2e:
+
+    # violet "[_msg_ahi_salgo]"
+    violet ""
+
+# game/script/core/locations/door_access_system.rpy:384
+translate english interaccion_golpear_sale_pasillo_62c5567c:
+
+    # jasmine "[_msg_ahi_salgo]"
+    jasmine ""
+
+# game/script/core/locations/door_access_system.rpy:386
+translate english interaccion_golpear_sale_pasillo_b2ec6ef6:
+
+    # monica "[_msg_ahi_salgo]"
+    monica ""
+
