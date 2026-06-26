@@ -31,7 +31,7 @@ label quest_violet_questprincipal_04_d:
     show mc_parado_base b_felizcerrada
 
     show violet_parada b_hablandochica
-    violet "Bien... ¿Qué queres?"
+    violet "Bien... ¿Qué quieres?"
     show violet_parada b_none
 
     show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast

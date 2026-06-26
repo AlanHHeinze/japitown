@@ -96,7 +96,7 @@ label violet_quest06b_puerta:
     show mc_parado_base b_hablando
     mc "Wooooow"
     show mc_parado_base c_rbase_avergonzado with sprite_fast
-    piensa "Tenía razón, es muy llamativo, pense que era algo de las fotos"
+    piensa "Tenía razón, es muy llamativo, pensé que era algo de las fotos"
     piensa "Pero en persona es otra cosa..."
     show mc_parado_base b_abiertachica
     mc "Me encanta"
@@ -148,7 +148,7 @@ label violet_quest06b_puerta:
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Lo podes usar sin problema"
+    mc "Lo puedes usar sin problema"
     show mc_parado_base b_abiertachica c_rbase_cuestionando with sprite_fast
     mc "Es un poco llamativo, si no te voy a mentir. Pero es algo de lo que no te tienes que preocupar"
     show mc_parado_base b_none c_rbase_base with sprite_fast
@@ -176,7 +176,7 @@ label violet_quest06b_puerta:
     pause 0.5
 
     show violet_parada b_hablando
-    violet "Tenes un buen punto"
+    violet "Tienes un buen punto"
     show violet_parada b_none
 
     show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast

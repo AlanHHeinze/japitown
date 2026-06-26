@@ -80,7 +80,7 @@ init 6 python:
                         saltar_a_paso=1
                     ),
                     OpcionRespuesta(
-                        texto="Veo que tenes un gran y redondo problema jajaja",
+                        texto="Veo que tienes un gran y redondo problema jajaja",
                         respuesta_npc=["No es gracioso...", "Con mi gordo trasero no puedo usar esto"],
                         puntos={},
                         saltar_a_paso=1
@@ -275,7 +275,7 @@ init 6 python:
                         saltar_a_paso=14
                     ),
                     OpcionRespuesta(
-                        texto="No se, me imagine la situación y senti celos",
+                        texto="No se, me imagine la situación y sentí celos",
                         respuesta_npc=["No me lo hubiera imaginado", "¿Encerio te molestaria?"],
                         puntos={},
                         saltar_a_paso=14

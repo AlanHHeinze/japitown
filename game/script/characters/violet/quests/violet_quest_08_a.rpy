@@ -164,7 +164,7 @@ label violet_quest08a_ver_tv:
     show mc_parado_base b_none
 
     show violet_mojada b_hablando
-    violet "Monica me dejo en casa de Nath para ver el cosplay y cuando sali estaba apenas nublado, no pense que iba a llover tan fuerte"
+    violet "Monica me dejo en casa de Nath para ver el cosplay y cuando sali estaba apenas nublado, no pensé que iba a llover tan fuerte"
     show violet_mojada b_none
 
     show violet_mojada b_hablando

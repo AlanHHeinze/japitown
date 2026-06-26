@@ -101,7 +101,7 @@ label quest_violet_questprincipal_03_a:
     pause 0.5
 
     show violet_parada b_hablandochica
-    violet "Bueno listo, ya te podes ir"
+    violet "Bueno listo, ya te puedes ir"
     show violet_parada b_none o_base
 
     show mc_parado_base b_hablando
@@ -132,11 +132,11 @@ label vq03a_rama_deseo:
     show violet_parada b_none o_base
 
     show mc_parado_base b_hablando c_rbase_base
-    mc "Pensaba hablar del manga, pero... bueno, si queres hablar de tu trasero también puedo hacerlo jajaja"
+    mc "Pensaba hablar del manga, pero... bueno, si quieres hablar de tu trasero también puedo hacerlo jajaja"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Listo te podes ir"
+    violet "Listo te puedes ir"
     show violet_parada b_none o_base
 
     show mc_parado_base b_hablando
@@ -181,7 +181,7 @@ label vq03a_rama_amor:
     show violet_parada b_none o_base
 
     show mc_parado_base b_hablando c_rbase_base
-    mc "Perdón solo dije lo que pense, no sabia que te iba a molestar"
+    mc "Perdón solo dije lo que pensé, no sabia que te iba a molestar"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica 
@@ -220,7 +220,7 @@ label vq03a_comun:
     show violet_parada b_sonrisaleve o_base
 
     show mc_parado_base b_hablando o_base 
-    mc "Sí, empezó como algo solo de acción y tiros, pense que iba a ser eso"
+    mc "Sí, empezó como algo solo de acción y tiros, pensé que iba a ser eso"
     show mc_parado_base b_abiertachica
     mc "Pero el desarrollo de los personajes y la historia me parecio facinante, todavía sigo pensando en el final"
     show mc_parado_base b_none
@@ -421,7 +421,7 @@ label vq3a_accion_ropero:
     window show
     piensa "Ahí esta guardado el cosplay que le regale y sigue en la caja"
     piensa "¿Se lo habra probado? No me dijo nada de si le gusto o no, podría preguntarle cuando vuelva"
-    piensa "Tampoco veo aquí que tenga algún otro cosplay, pense que si iba a haber, quizás lo le gustan..."
+    piensa "Tampoco veo aquí que tenga algún otro cosplay, pensé que si iba a haber, quizás lo le gustan..."
     window hide
 
     $ vq3a_ropero_hecho = True

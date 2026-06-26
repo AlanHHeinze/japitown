@@ -72,7 +72,7 @@ label quest_jasmine_questprincipal_0_c:
 
     # Jasmine habla
     show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "Sí, te mantiente el cuerpo firme y eso es comodo"
+    jasmine "Sí, te mantiene el cuerpo firme y eso es cómodo"
     show jasmine_paradadeportiva b_none with sprite_normal
     show jasmine_paradadeportiva b_hablando with sprite_normal
     jasmine "Mira"

@@ -222,7 +222,7 @@ label quest_jasmine_0_opcion_deseo:
 
     # Jasmine habla
     show jasmine_parada b_hablando o_base
-    jasmine "Mmm... Siempre diciendo lo que tenes que decir"
+    jasmine "Mmm... Siempre diciendo lo que tienes que decir"
     show jasmine_parada b_sexy
     pause 0.3
     show jasmine_parada b_hablando

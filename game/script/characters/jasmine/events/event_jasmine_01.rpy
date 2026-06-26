@@ -27,7 +27,7 @@ label event_jasmine_01_repetir:
 
     #Jasmine habla
     show jasmine_paradadeportiva c_base b_hablando with sprite_normal
-    jasmine "¿Lo queres volver a ver?"
+    jasmine "¿Lo quieres volver a ver?"
     show jasmine_paradadeportiva b_none with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva b_hablando with sprite_normal

@@ -108,7 +108,7 @@ label violet_quest02a_rechaza:
     show mc_parado_base b_none 
 
     show violet_parada b_hablandochica
-    violet "¿Qué queres?"
+    violet "¿Qué quieres?"
     show violet_parada b_aburrida
 
     show mc_parado_base b_hablando
@@ -173,7 +173,7 @@ label violet_quest02a_acepta_directo:
     show mc_parado_base b_none 
 
     show violet_parada b_hablandochica
-    violet "¿Qué queres?"
+    violet "¿Qué quieres?"
     show violet_parada b_aburrida
 
     show mc_parado_base b_hablando

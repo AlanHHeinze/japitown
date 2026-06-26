@@ -36,7 +36,7 @@ label quest_violet_questprincipal_11:
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Es un conjunto de cosplays. Vi que te gustaba eso y pense que quizás querías probarlos."
+    mc "Es un conjunto de cosplays. Vi que te gustaba eso y pensé que quizás querías probarlos."
     show mc_parado_base b_none
 
     # Consumir item

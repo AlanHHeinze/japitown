@@ -173,7 +173,7 @@ label violet_quest05c_opcion_a:
     pause 1.0
 
     show mc_parado_base b_hablando
-    mc "Solo pense en acompañarte en eso que siempre quisiste hacer"
+    mc "Solo pensé en acompañarte en eso que siempre quisiste hacer"
     show mc_parado_base b_abiertachica
     mc "Nuevamente perdón"
     show mc_parado_base b_seria c_rbase_base with sprite_fast

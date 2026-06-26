@@ -41,7 +41,7 @@ label quest_violet_questprincipal_04_a:
     show mc_parado_base b_seria
 
     show violet_parada b_hablandochica o_arribanm
-    violet "¿Qué queres?"
+    violet "¿Qué quieres?"
     show violet_parada b_none o_enojados
 
     show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
@@ -134,7 +134,7 @@ label quest_violet_questprincipal_04_a:
     pause 1.0
 
     show mc_parado_base b_hablando c_rbase_facepalm o_abajonm with sprite_fast
-    mc "Es solo un cosplay, recorde que es algo que siempre quizo y pense que era un buen regalo"
+    mc "Es solo un cosplay, recorde que es algo que siempre quizo y pensé que era un buen regalo"
     show mc_parado_base b_abiertachica 
     mc "Y antes de que digas algo, no es nada raro... es de uno de sus personajes favoritos"
     show mc_parado_base b_seria o_base c_rbase_brazoscruzados with sprite_fast
@@ -212,7 +212,7 @@ label violet_quest04a_jasmine_quest0_ok:
     pause 1.0
 
     show jasmine_parada b_hablando
-    jasmine "A mi me trajo un conjunto para entrenar y lo primero que pense fue en mostraselo"
+    jasmine "A mi me trajo un conjunto para entrenar y lo primero que pensé fue en mostraselo"
     show jasmine_parada b_sorprendida
     jasmine "Le mande una foto y le dije que pase a verlo cuando entreno por la tarde"
     show jasmine_parada b_none
@@ -244,7 +244,7 @@ label violet_quest04a_jasmine_todo_ok:
     pause 1.0
 
     show jasmine_parada b_hablando
-    jasmine "A mi me trajo un conjunto para entrenar y lo primero que pense fue en mostraselo"
+    jasmine "A mi me trajo un conjunto para entrenar y lo primero que pensé fue en mostraselo"
     show jasmine_parada b_sorprendida
     jasmine "Le mande una foto y le dije que pase a verlo cuando entreno por la tarde"
     show jasmine_parada b_hablando
@@ -272,7 +272,7 @@ label violet_quest04a_continua:
     pause 1.0
 
     show jasmine_parada b_hablando
-    jasmine "Volviendo al tema, Violet si te hizo un regalo lo minimo que podes hacer es mostrarselo"
+    jasmine "Volviendo al tema, Violet si te hizo un regalo lo minimo que puedes hacer es mostrarselo"
     show jasmine_parada b_none
 
     show violet_parada b_hablandochica o_enojados c_rbase_brazoscruzados with sprite_fast
@@ -280,7 +280,7 @@ label violet_quest04a_continua:
     show violet_parada b_none o_base
 
     show jasmine_parada b_hablando
-    jasmine "Seguite portando como una niña pequeña si queres"
+    jasmine "Seguite portando como una niña pequeña si quieres"
     show jasmine_parada b_sorprendida
     jasmine "Mejor para mi"
     show jasmine_parada b_none

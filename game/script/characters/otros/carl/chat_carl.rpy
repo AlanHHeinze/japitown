@@ -34,7 +34,7 @@ init 6 python:
                 opciones_jugador=[
                     OpcionRespuesta(
                         texto="Bien, estoy acomodandome, son muchas cosas que hacer y procesar",
-                        respuesta_npc="Sí, debe ser un monton y estresante\nComo lo venis llevando",
+                        respuesta_npc="Sí, debe ser un monton y estresante\nComo lo vienes llevando",
                         puntos={},
                         saltar_a_paso=1
                     ),

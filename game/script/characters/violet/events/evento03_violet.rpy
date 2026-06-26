@@ -674,7 +674,7 @@ label violet_quest2_opcion_b:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Tenes los recuerdos un poco alterados"
+    violet "Tienes los recuerdos un poco alterados"
     show violet_parada b_none
 
     show mc_parado_base b_hablando

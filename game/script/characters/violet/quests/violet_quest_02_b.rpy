@@ -59,7 +59,7 @@ label quest_violet_questprincipal_02_b:
     show violet_parada b_none
 
     show mc_parado_base b_hablando o_arribanm c_rbase_pensando with sprite_fast
-    mc "No, si tenes algo con una historia media intrincada estaria bien"
+    mc "No, si tienes algo con una historia media intrincada estaria bien"
     show mc_parado_base b_none o_base c_rbase_base with sprite_fast
 
     show violet_parada b_hablando

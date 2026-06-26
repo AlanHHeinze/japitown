@@ -108,7 +108,7 @@ label evento1_violet:
 
     # Violet entra enojada por el ruido
     show violet_parada c_pijama_brazoscruzados ca_pijama o_enojados b_hablando at right
-    violet "¡Podes dejar de hacer tanto ruido!"
+    violet "¡Puedes dejar de hacer tanto ruido!"
     show violet_parada b_none
     pause 0.3
 

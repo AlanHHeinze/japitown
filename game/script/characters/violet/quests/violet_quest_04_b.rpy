@@ -51,7 +51,7 @@ label quest_violet_questprincipal_04_b:
     show violet_parada b_none
 
     show mc_parado_base b_hablando c_rbase_pensando with sprite_fast
-    mc "Mmmmm la verdad no lo pense mucho, simplemente senti que ese era el regalo"
+    mc "Mmmmm la verdad no lo pensé mucho, simplemente sentí que ese era el regalo"
     show mc_parado_base b_abiertachica 
     mc "Y pensé que te gustaría"
     show mc_parado_base b_none c_rbase_base with sprite_fast
@@ -63,7 +63,7 @@ label quest_violet_questprincipal_04_b:
     show mc_parado_base b_hablando
     mc "Sí, estaba en un maniqui, sé que es uno de tus personajes favoritos y quería que el regalo no fuera algo generico"
     show mc_parado_base b_abiertachica
-    mc "Aparte de eso pronto se va a hacer la Japicon y pense que seria un buen cosplay"
+    mc "Aparte de eso pronto se va a hacer la Japicon y pensé que seria un buen cosplay"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica c_rbase_pensando with sprite_fast
