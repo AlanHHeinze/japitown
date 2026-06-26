@@ -286,7 +286,7 @@ label intro_conversacion_padre:
     show padre_intro bnone
     
     show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
-    mc "Una parte de mí no quería venir, pero acá estoy"
+    mc "Una parte de mí no quería venir, pero aquí estoy"
     show mc_parado_base b_seria
     
     show padre_intro bhablando
@@ -507,7 +507,7 @@ label intro_llegada_casa:
     show mc_parado_base b_none
 
     show monica_parada b_hablandochica
-    monica "A la noche vamos a salir a cenar a algun restaurante"
+    monica "A la noche vamos a salir a cenar a algún restaurante"
     show monica_parada b_hablando
     monica "Pero ahora encargate tranquilo de tus cosas, Jasmine dejemmos que [mc_name] se acomode. Cualquier cosa me avisas"
     show monica_parada b_none
@@ -515,7 +515,7 @@ label intro_llegada_casa:
     hide monica_parada with dissolve
 
     show jasmine_parada b_sorprendida
-    jasmine "Voy a estar en mi habitacion por si me necesitas"
+    jasmine "Voy a estar en mi habitación por si me necesitas"
     show jasmine_parada b_none
 
     hide jasmine_parada with dissolve

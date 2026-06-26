@@ -54,7 +54,7 @@ label quest_jasmine_questprincipal_0_c:
     show jasmine_paradadeportiva c_animacion8 with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva c_animacion9 b_hablando o_base with sprite_normal
-    jasmine "Abajo tambien"
+    jasmine "Abajo también"
     show jasmine_paradadeportiva b_none with sprite_normal
     show jasmine_paradadeportiva c_animacion10 o_abajonm with sprite_normal
     pause 0.3

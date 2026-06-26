@@ -28,7 +28,7 @@ init 5 python:
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista="Debería agradecerle cuando esté a solas con ella.",
                 que_hacer="Hablar con Monica cuando esta sola en el Living por la tarde",
-                mensaje_despertar="Todavia tengo que darle las gracias a Monica por darme un lugar. Podria verla cuando esta sola y de paso darle el perfume",
+                mensaje_despertar="Todavía tengo que darle las gracias a Monica por darme un lugar. Podría verla cuando esta sola y de paso darle el perfume",
             ),
         },
     )
@@ -42,25 +42,25 @@ init 5 python:
         id="monica_questprincipal_0_b",
         npc_id="monica",
         nombre="Monica enojada",
-        descripcion="Parece que Monica tiene un problema ¿Que sera?",
+        descripcion="Parece que Monica tiene un problema ¿Qué sera?",
         numero_quest=1,
         dias_espera=1,
         quest_anterior="monica_questprincipal_0",
         requisitos=[],
         validacion_especial=[],
         mensaje_pista="Ver que le pasa a Monica",
-        mensaje_despertar="Escucho que Monica se esta peleando con alguien, deberia ver si todo esta bien",
+        mensaje_despertar="Escucho que Monica se esta peleando con alguien, debería ver si todo esta bien",
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
                 pista="Todo tranquilo por ahora",
                 que_hacer="Esperar al día siguiente",
-                mensaje_despertar="Escucho a Monica quejarse desde aca",
+                mensaje_despertar="Escucho a Monica quejarse desde aquí",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista="Ver que le pasa a Monica",
                 que_hacer="Ir al Living",
-                mensaje_despertar="Escucho que Monica se esta peleando con alguien, deberia ver si todo esta bien",
+                mensaje_despertar="Escucho que Monica se esta peleando con alguien, debería ver si todo esta bien",
                 accion_al_entrar=setup_restriccion_monica_quest0b,
             ),
         },

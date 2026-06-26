@@ -117,8 +117,8 @@ label tutorial_elecciones_jasmine:
     # Tutorial de elecciones compartido con la quest 0_b de Violet.
     # Como no se sabe qué quest hará primero el jugador, solo se muestra una vez.
     if not tutorial_elecciones_visto:
-        tutorial "A lo largo del desarrollo de la historia de un personaje nos iremos encontrando varias veces con distintas opciones para elegir. Estas representan la manera en la que nuestro personaje va a actuar ante la situacion"
-        tutorial "Estas elecciones afectan el desarrollo inmediato como tambien a largo plazo. Los personajes recordaran las elecciones elegidas y actuaran en relacion a ello en ciertos momentos"
+        tutorial "A lo largo del desarrollo de la historia de un personaje nos iremos encontrando varias veces con distintas opciones para elegir. Estas representan la manera en la que nuestro personaje va a actuar ante la situación"
+        tutorial "Estas elecciones afectan el desarrollo inmediato como también a largo plazo. Los personajes recordaran las elecciones elegidas y actuaran en relación a ello en ciertos momentos"
         tutorial "Aparte de los cambios narrativos algunas elecciones podrian darnos recompensas especiales, como estadisticas, objetos, escenas, etc"
         $ tutorial_elecciones_visto = True
 
@@ -180,7 +180,7 @@ label quest_jasmine_0_opcion_deseo:
 
     # Jasmine habla
     show jasmine_parada b_hablando o_base
-    jasmine "¿Qué pasa que te quedás sin decir nada? ¿Y sonriendo?"
+    jasmine "¿Qué pasa que te quedas sin decir nada? ¿Y sonriendo?"
     show jasmine_parada b_enojada
     
     # MC habla
@@ -189,7 +189,7 @@ label quest_jasmine_0_opcion_deseo:
     show mc_parado_base b_felizcerrada
     pause 0.3
     show mc_parado_base b_hablando
-    mc "Me había olvidado lo cómodo que me sentía al hablar con vos."
+    mc "Me había olvidado lo cómodo que me sentía al hablar contigo."
     show mc_parado_base b_none
     
     # Jasmine habla
@@ -226,12 +226,12 @@ label quest_jasmine_0_opcion_deseo:
     show jasmine_parada b_sexy
     pause 0.3
     show jasmine_parada b_hablando
-    jasmine "Bueno entonces te la voy a poner dificil jajaja."
+    jasmine "Bueno entonces te la voy a poner difícil jajaja."
     show jasmine_parada b_cachete
 
     # MC habla
     show mc_parado_base b_hablando
-    mc "Me alegra que asi sea."
+    mc "Me alegra que así sea."
     show mc_parado_base b_none
     
     $ _ruta_jq0 = "deseo"
@@ -244,7 +244,7 @@ label quest_jasmine_0_opcion_realidad:
     
     # MC habla
     show mc_parado_base b_hablando o_base c_rbase_brazoscruzados with sprite_normal
-    mc "Entiendo tu punto y tienes razon"
+    mc "Entiendo tu punto y tienes razón"
     show mc_parado_base b_molesta
     pause 0.3
     show mc_parado_base b_hablando
@@ -261,7 +261,7 @@ label quest_jasmine_0_opcion_realidad:
     show jasmine_parada b_enojada
     pause 0.3
     show jasmine_parada b_hablando o_tristesnm
-    jasmine "Se que fue asi y se que fue mas duro para vos."
+    jasmine "Sé que fue así y sé que fue mas duro para ti."
     show jasmine_parada b_enojada
     
     # MC habla
@@ -297,12 +297,12 @@ label quest_jasmine_0_opcion_realidad:
     show jasmine_parada b_none
     pause 0.3
     show jasmine_parada b_hablando
-    jasmine "Perdon por haberte dejado solo."
+    jasmine "Perdón por haberte dejado solo."
     show jasmine_parada b_none
 
     # MC habla
     show mc_parado_base b_hablando
-    mc "Perdon por haberte dejado sola."
+    mc "Perdón por haberte dejado sola."
     show mc_parado_base b_none
 
     $ _ruta_jq0 = "realidad"
@@ -395,7 +395,7 @@ label quest_jasmine_0_regalo:
 
     # Jasmine se acerca (Zoom/Evento)
     show jasmine_parada b_hablando
-    jasmine "Yo también tengo algo para vos, [mc_name]."
+    jasmine "Yo también tengo algo para ti, [mc_name]."
     show jasmine_parada b_none
     pause 0.3
     show jasmine_parada b_hablando
@@ -407,8 +407,8 @@ label quest_jasmine_0_regalo:
     scene black with fade
 
     jasmine "Jajaja, no te pongas nervioso."
-    jasmine "Ven mas para aca..."
-    mc "¿Aqui esta bien?"
+    jasmine "Ven mas para aquí..."
+    mc "¿Aquí esta bien?"
     jasmine "Espera un momento que lo agarro..."
     jasmine "Listo"
     pause 0.5

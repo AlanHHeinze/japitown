@@ -20,7 +20,7 @@ label revisar_notebook_monica:
     $ ocultar_hud()
     window show
     piensa "La bateria esta algo hinchada pareceria ser ese el problema"
-    piensa "Podria comprar una nueva y cambiarsela"
+    piensa "Podría comprar una nueva y cambiarsela"
     window hide
     $ mostrar_hud()
     jump game_loop
@@ -53,7 +53,7 @@ label quest_monica_questprincipal_0_c:
     tutorial "Todos los articulos van a tener tres indicadores: Su [colorear_quest('Costo')], el [colorear_quest('Stock')] en tienda (la mayoria de los articulos se reponen nuevamente los lunes) y los [colorear_quest('Dias hasta la Entrega')]"
     tutorial "Cuando el [colorear_quest('Dia de Entrega')] llegue tendras un [colorear_quest('Recordatorio al Despertar')], podras salir por la mañana hasta el [colorear_locacion('Frente')] y recoger el pedido [colorear_quest('Interactuando con el Repartidor')]"
     tutorial "Si no lo haces alguien recogera el paquete por ti y lo dejara [colorear_quest('Sobre tu Cama por la Tarde')]"
-    tutorial "Para conseguir mas [colorear_quest('Dinero')]	puedes hacer la [colorear_quest('Accion Trabajar')] disponible en [colorear_locacion('Tu Habitacion')]. Cada turno te da $20 y avanza el horario. Podés trabajar hasta 2 veces por día."
+    tutorial "Para conseguir mas [colorear_quest('Dinero')]	puedes hacer la [colorear_quest('Accion Trabajar')] disponible en [colorear_locacion('Tu Habitacion')]. Cada turno te da $20 y avanza el horario. Puedes trabajar hasta 2 veces por día."
    
     window hide
     $ mostrar_hud()

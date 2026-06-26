@@ -45,7 +45,7 @@ label event_jasmine_01_repetir:
     show jasmine_paradadeportiva b_feliz with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva c_animacion1 b_hablando with sprite_normal
-    jasmine "Bueno, tiene que ser asi."
+    jasmine "Bueno, tiene que ser así."
     show jasmine_paradadeportiva b_none with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva c_animacion5 with sprite_normal
@@ -68,7 +68,7 @@ label event_jasmine_01_repetir:
     show jasmine_paradadeportiva c_animacion13 o_base with sprite_normal
     "Pafffff"
     show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "Abajo tambien"
+    jasmine "Abajo también"
     show jasmine_paradadeportiva b_none with sprite_normal
 
 
@@ -107,7 +107,7 @@ label event_jasmine_01_repetir:
 
     #Jasmine habla
     show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "¿Eso querias ver?"
+    jasmine "¿Eso querías ver?"
     show jasmine_paradadeportiva b_none with sprite_normal
 
     #MC Habla
@@ -121,7 +121,7 @@ label event_jasmine_01_repetir:
     show jasmine_paradadeportiva b_none with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "Te muestro como debe ser de atras"
+    jasmine "Te muestro como debe ser de atrás"
     show jasmine_paradadeportiva b_none with sprite_normal
     pause 0.3
 
@@ -133,7 +133,7 @@ label event_jasmine_01_repetir:
     show jasmine_paradadeportiva e_animacion3 with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva e_animacion4 with sprite_normal
-    jasmine "Tambien ajustado"
+    jasmine "También ajustado"
 
     #MC Habla
     show mc_parado_base b_hablando with sprite_normal
@@ -145,7 +145,7 @@ label event_jasmine_01_repetir:
     show jasmine_paradadeportiva e_animacion5 with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva e_animacion6 with sprite_normal
-    jasmine "Sobre todo aca abajo, que es donde mas se mueve"
+    jasmine "Sobre todo aquí abajo, que es donde mas se mueve"
     show jasmine_paradadeportiva e_animacion7 with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva e_animacion6 with sprite_normal
@@ -161,7 +161,7 @@ label event_jasmine_01_repetir:
 
     #MC Habla
     show mc_parado_base b_hablando with sprite_normal
-    mc "Si, perdon por molestarte"
+    mc "Si, perdón por molestarte"
     show mc_parado_base b_none with sprite_normal
 
     # Ocultar personaje
@@ -233,7 +233,7 @@ label event_jasmine_01_repetir_alternativo:
 
     #Jasmine habla
     show jasmine_paradadeportiva c_feliz b_hablando with sprite_normal
-    jasmine "Eso ya me lo dijiste y todavia no me compraste nada jajaja."
+    jasmine "Eso ya me lo dijiste y todavía no me compraste nada jajaja."
     show jasmine_paradadeportiva b_feliz with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva c_animacion1 b_hablando with sprite_normal
@@ -260,7 +260,7 @@ label event_jasmine_01_repetir_alternativo:
     show jasmine_paradadeportiva c_animacion13 o_base with sprite_normal
     "Pafffff"
     show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "Abajo tambien"
+    jasmine "Abajo también"
     show jasmine_paradadeportiva b_none with sprite_normal
 
 
@@ -275,7 +275,7 @@ label event_jasmine_01_repetir_alternativo:
     jasmine "Si... me imagino no..."
     show jasmine_paradadeportiva b_none with sprite_normal
     show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "Aca tiene que sostener firme"
+    jasmine "Aquí tiene que sostener firme"
     show jasmine_paradadeportiva b_none with sprite_normal
     show jasmine_paradadeportiva c_animacion14 o_abajonm with sprite_normal
     pause 0.3
@@ -299,7 +299,7 @@ label event_jasmine_01_repetir_alternativo:
 
     #Jasmine habla
     show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "¿Tambien te tengo que mostrar otra vez como es la parte de atras no?"
+    jasmine "¿También te tengo que mostrar otra vez como es la parte de atrás no?"
     show jasmine_paradadeportiva b_none with sprite_normal
 
     #MC Habla
@@ -313,7 +313,7 @@ label event_jasmine_01_repetir_alternativo:
     show jasmine_paradadeportiva b_none with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "Asi tiene que ser de atras"
+    jasmine "Así tiene que ser de atrás"
     show jasmine_paradadeportiva b_none with sprite_normal
     pause 0.3
 
@@ -329,7 +329,7 @@ label event_jasmine_01_repetir_alternativo:
 
     #MC Habla
     show mc_parado_base b_hablando with sprite_normal
-    mc "Ajustado de atras, lo voy a anotar"
+    mc "Ajustado de atrás, lo voy a anotar"
     show mc_parado_base b_none with sprite_normal
 
     
@@ -337,7 +337,7 @@ label event_jasmine_01_repetir_alternativo:
     show jasmine_paradadeportiva e_animacion5 with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva e_animacion6 with sprite_normal
-    jasmine "Asi"
+    jasmine "Así"
     show jasmine_paradadeportiva e_animacion7 with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva e_animacion6 with sprite_normal
@@ -346,14 +346,14 @@ label event_jasmine_01_repetir_alternativo:
     pause 0.3
     show jasmine_paradadeportiva e_animacion6 with sprite_normal
     pause 0.3
-    jasmine "¿Entendiste bien? Aunque supongo que no va a ser la ultima vez que tenga que mostrarte esto"
+    jasmine "¿Entendiste bien? Aunque supongo que no va a ser la última vez que tenga que mostrarte esto"
     hide jasmine_paradadeportiva
     show jasmine_paradadeportiva c_estirando o_base b_hablando a_short at right with sprite_normal
     jasmine "Voy a seguir entrenando, espero que no pienses mucho en esto"
 
     #MC Habla
     show mc_parado_base b_hablando with sprite_normal
-    mc "Perdon por molestarte otra vez"
+    mc "Perdón por molestarte otra vez"
     show mc_parado_base b_none with sprite_normal
 
     # Ocultar personaje

@@ -80,7 +80,7 @@ label quest_violet_questprincipal_0_b:
 
     # (Mc espalda brazos cruzados)
     show mc_espalda_base brazoscruzados
-    mc "Vamos... solo quiero hablar con vos"
+    mc "Vamos... solo quiero hablar contigo"
 
     violet "Yo no quiero"
 
@@ -111,8 +111,8 @@ label tutorial_elecciones_violet:
     # Tutorial de elecciones compartido con la quest 0_a de Jasmine.
     # Como no se sabe qué quest hará primero el jugador, solo se muestra una vez.
     if not tutorial_elecciones_visto:
-        tutorial "A lo largo del desarrollo de la historia de un personaje nos iremos encontrando varias veces con distintas opciones para elegir. Estas representan la manera en la que nuestro personaje va a actuar ante la situacion"
-        tutorial "Estas elecciones afectan el desarrollo inmediato como tambien a largo plazo. Los personajes recordaran las elecciones elegidas y actuaran en relacion a ello en ciertos momentos"
+        tutorial "A lo largo del desarrollo de la historia de un personaje nos iremos encontrando varias veces con distintas opciones para elegir. Estas representan la manera en la que nuestro personaje va a actuar ante la situación"
+        tutorial "Estas elecciones afectan el desarrollo inmediato como también a largo plazo. Los personajes recordaran las elecciones elegidas y actuaran en relación a ello en ciertos momentos"
         tutorial "Aparte de los cambios narrativos algunas elecciones podrian darnos recompensas especiales, como estadisticas, objetos, escenas, etc"
         $ tutorial_elecciones_visto = True
 
@@ -121,7 +121,7 @@ label tutorial_elecciones_violet:
 label elecciones_violet_continuar:
 
     menu:
-        "Quizas darle su espacio funcione":
+        "Quizás darle su espacio funcione":
             jump quest_violet_0_opcion_respeto
 
         "Lo mejor seria confrontarla":
@@ -135,7 +135,7 @@ label quest_violet_0_opcion_respeto:
     # (Mc espalda brazos cruzados)
     show mc_espalda_base brazoscruzados
     mc "No sé cuál es el problema y tampoco sé si es conmigo"
-    mc "En el momento que me quieras contar por que y con quien estas enojada voy a estar para escucharte"
+    mc "En el momento que me quieras contar por qué y con quien estas enojada voy a estar para escucharte"
 
     violet "No estoy enojada, de un momento para el otro tengo un extraño viviendo en mi casa"
     violet "Y no tengo nada que hablar con ese extraño"
@@ -150,7 +150,7 @@ label quest_violet_0_opcion_respeto:
 
     piensa "Supongo que tiene un punto válido"
     piensa "Debería esforzarme en mejorar la relación y dejar de ser un extraño"
-    piensa "¿Que puedo hacer...?"
+    piensa "¿Qué puedo hacer...?"
 
     # (Mc espalda rascandose 1)
     show mc_espalda_base rascarse1
@@ -167,7 +167,7 @@ label quest_violet_0_opcion_respeto:
 
     violet "Gracias"
 
-    mc "Estaba con ganas de cocinar pizzas para la cena, pero supongo que no querés comer pizzas hechas por un extraño"
+    mc "Estaba con ganas de cocinar pizzas para la cena, pero supongo que no quieres comer pizzas hechas por un extraño"
 
     violet "Si quiero"
 
@@ -207,7 +207,7 @@ label quest_violet_0_opcion_respeto:
     # =========================================================================
     # Modo restringido: el jugador debe ir a la cocina
     # =========================================================================
-    piensa "Deberia ir a la cocina a prepararlas, Monica me dijo que habia todo lo necesario"
+    piensa "Debería ir a la cocina a prepararlas, Monica me dijo que había todo lo necesario"
 
     $ activar_restriccion(
         locaciones_permitidas=["casa_pasilloarriba", "casa_living", "casa_pasilloabajo", "casa_cocina"],
@@ -271,7 +271,7 @@ label quest_violet_0_opcion_entrar:
 
     # (Violet boca hablando)
     show violet_parada b_hablando
-    violet "¡¿Qué hacés?! ¡Te dije que no podías entrar!"
+    violet "¡¿Qué haces?! ¡Te dije que no podías entrar!"
     # (Violet boca aburrida)
     show violet_parada b_aburrida
 
@@ -313,7 +313,7 @@ label quest_violet_0_opcion_entrar:
     mc "Jajaja ¿Qué le vas a decir?"
     # (Mc boca sonrisa abierta)
     show mc_parado_base b_abiertachica
-    mc "Pienso ignorar a [mc_name] el resto de mi vida y está acá adelante mío hablándome ¿...?"
+    mc "Pienso ignorar a [mc_name] el resto de mi vida y está aquí adelante mío hablándome ¿...?"
     # (Mc boca feliz cerrada ojos base cuerpo base)
     show mc_parado_base b_felizcerrada o_base c_rbase_base with sprite_fast
 
@@ -331,7 +331,7 @@ label quest_violet_0_opcion_entrar:
 
     # (Violet boca hablando chica)
     show violet_parada b_hablandochica
-    violet "¿Qué querés?"
+    violet "¿Qué quieres?"
     # (Violet boca neutral)
     show violet_parada b_none
 
@@ -340,7 +340,7 @@ label quest_violet_0_opcion_entrar:
     mc "Hablar, cuando llegué ni me saludaste y cuando me acerco te vas"
     # (Mc boca sonrisa abierta)
     show mc_parado_base b_abiertachica
-    mc "Solo quiero saber ¿Que te pasa?"
+    mc "Solo quiero saber ¿Qué te pasa?"
     # (Mc boca seria cuerpo base)
     show mc_parado_base b_seria c_rbase_base with sprite_fast
 
@@ -399,7 +399,7 @@ label quest_violet_0_opcion_entrar:
     # (Mc cuerpo pensando ojos arriba)
     show mc_parado_base c_rbase_pensando o_arribanm
     piensa "Supongo que tiene un punto válido"
-    piensa "Pero no podemos seguir asi para siempre"
+    piensa "Pero no podemos seguir así para siempre"
     piensa "Algo tengo que hacer"
     # (Mc cuerpo base ojos base)
     show mc_parado_base c_rbase_base o_base
@@ -463,7 +463,7 @@ label quest_violet_0_opcion_entrar:
 
     # (Violet boca hablando chica)
     show violet_parada b_hablandochica
-    violet "¿Que pasa?"
+    violet "¿Qué pasa?"
     # (Violet boca neutral)
     show violet_parada b_none
 
@@ -505,7 +505,7 @@ label quest_violet_0_opcion_entrar:
 
     # (Violet boca hablando)
     show violet_parada b_hablando
-    violet "Eh Gracias... ¿Que es?"
+    violet "Eh Gracias... ¿Qué es?"
     # (Violet boca sonrisa pequeña)
     show violet_parada b_sonrisapequeña
 
@@ -528,7 +528,7 @@ label quest_violet_0_opcion_entrar:
     show mc_parado_base b_none
     # (Mc boca hablando)
     show mc_parado_base b_hablando
-    mc "Después me decís si te gustó el regalo"
+    mc "Después me dices si te gustó el regalo"
     # (Mc boca neutral)
     show mc_parado_base b_none
 
@@ -541,7 +541,7 @@ label quest_violet_0_opcion_entrar:
     # (Mc ojos abajo boca seria cuerpo facepalm)
     show mc_parado_base o_abajonm b_seria c_rbase_facepalm with sprite_normal
     piensa "Cierto, Violet es fanatica de la pizza"
-    piensa "Quizás podría haber empezado por ahí, hubiera sido mas facil"
+    piensa "Quizás podría haber empezado por ahí, hubiera sido mas fácil"
     # (Mc ojos base boca neutral cuerpo base)
     show mc_parado_base o_base b_none c_rbase_base with sprite_normal
 
@@ -612,7 +612,7 @@ label quest_violet_0_cierre:
     # Mc hace pizzas
     scene bg_casa_noche_cocina with fade
 
-    mc "Deberia ponerme a cocinar"
+    mc "Debería ponerme a cocinar"
 
     show quest0_violet_heladera with sprite_normal
     piensa "Voy a tener que acercarme de a poco dándole espacio"
@@ -624,7 +624,7 @@ label quest_violet_0_cierre:
 
     show quest0_violet_poniendopizza with sprite_normal
     piensa "Supongo que estaba cómoda con su vida y de la nada llega alguien a molestarse"
-    piensa "Aunque no sea mi intencion, en algun punto lo estoy haciendo"
+    piensa "Aunque no sea mi intencion, en algún punto lo estoy haciendo"
 
     show quest0_violet_esperando with sprite_normal
     piensa "Ya vere como resolverlo"
@@ -686,7 +686,7 @@ label quest_violet_0_puerta:
     scene quest0_violet_cambiandose with fade
     mc "..."
     scene quest0_violet_cambiandose2 with dissolve
-    mc "Eh... perdon"
+    mc "Eh... perdón"
     scene quest0_violet_cambiandose3 with dissolve
     mc "Me voy..."
 

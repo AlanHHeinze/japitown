@@ -137,7 +137,7 @@ label quest_monica_questprincipal_0:
 
     # Monica habla
     show monica_parada b_hablando
-    monica "Pero se que es para bien... tengo fe que las cosas volveran a ser como antes."
+    monica "Pero sé que es para bien... tengo fe que las cosas volveran a ser como antes."
     show monica_parada b_none
 
     # MC habla
@@ -167,8 +167,8 @@ label tutorial_elecciones_monica:
     # Tutorial de elecciones compartido con la quest 0_b de Violet y la 0_a de Jasmine.
     # Como no se sabe qué quest hará primero el jugador, solo se muestra una vez.
     if not tutorial_elecciones_visto:
-        tutorial "A lo largo del desarrollo de la historia de un personaje nos iremos encontrando varias veces con distintas opciones para elegir. Estas representan la manera en la que nuestro personaje va a actuar ante la situacion"
-        tutorial "Estas elecciones afectan el desarrollo inmediato como tambien a largo plazo. Los personajes recordaran las elecciones elegidas y actuaran en relacion a ello en ciertos momentos"
+        tutorial "A lo largo del desarrollo de la historia de un personaje nos iremos encontrando varias veces con distintas opciones para elegir. Estas representan la manera en la que nuestro personaje va a actuar ante la situación"
+        tutorial "Estas elecciones afectan el desarrollo inmediato como también a largo plazo. Los personajes recordaran las elecciones elegidas y actuaran en relación a ello en ciertos momentos"
         tutorial "Aparte de los cambios narrativos algunas elecciones podrian darnos recompensas especiales, como estadisticas, objetos, escenas, etc"
         $ tutorial_elecciones_visto = True
 
@@ -206,7 +206,7 @@ label quest_monica_0_opcion_familia:
     show monica_parada b_none
     pause 0.2
     show monica_parada b_hablando
-    monica "Y se que todas pensamos lo mismo."
+    monica "Y sé que todas pensamos lo mismo."
     show monica_parada b_none
 
     # MC habla
@@ -220,7 +220,7 @@ label quest_monica_0_opcion_familia:
 
     # Monica habla
     show monica_parada b_hablando
-    monica "Sabes que siempre voy a estar para vos."
+    monica "Sabes que siempre voy a estar para ti."
     show monica_parada b_none
     
     $ _ruta_mq0 = "familia"
@@ -253,12 +253,12 @@ label quest_monica_0_opcion_cercania:
     show monica_parada b_none
     pause 0.2
     show monica_parada b_hablando
-    monica "No sabia que pensabas asi..."
+    monica "No sabia que pensabas así..."
     show monica_parada b_none
     
     # MC habla
     show mc_parado_base b_hablando
-    mc "Siempre te admiré mucho y ahora que estoy acá quiero aprovechar para pasar mas tiempo contigo"
+    mc "Siempre te admiré mucho y ahora que estoy aquí quiero aprovechar para pasar mas tiempo contigo"
     show mc_parado_base b_none
     
     show monica_parada c_rbase_avergonzada with sprite_normal
@@ -270,11 +270,11 @@ label quest_monica_0_opcion_cercania:
     
     # Monica habla
     show monica_parada b_hablando
-    monica "No sabia que pensabas asi..."
+    monica "No sabia que pensabas así..."
     show monica_parada b_none
     pause 0.2
     show monica_parada b_hablando c_rbase_base with sprite_normal
-    monica "Voy a dar todo de mi para que podamos tener esa relacion que esperas."
+    monica "Voy a dar todo de mi para que podamos tener esa relación que esperas."
     show monica_parada b_none
     
     $ _ruta_mq0 = "cercania"
@@ -353,7 +353,7 @@ label quest_monica_0_cierre:
 
     # MC habla
     show mc_parado_base b_hablando
-    mc "Aqui esta"
+    mc "Aquí esta"
     show mc_parado_base b_none
 
     # MC piensa
@@ -483,7 +483,7 @@ label quest_monica_0_cierre:
     hide monica_quest_0_mc_avergonzado
     show monica_quest_0_mc_brazosarriba 
     show monica_quest_0_mc_brazosarriba_bocahablando
-    mc "Perdon, me deje llevar"
+    mc "Perdón, me deje llevar"
     hide monica_quest_0_mc_brazosarriba_bocahablando
     pause 0.3
 
@@ -498,7 +498,7 @@ label quest_monica_0_cierre:
     
     show monica_quest_0_monica_mirando_enojada
     show monica_quest_0_monica_mirando_hablando
-    monica "Creo que te pasaste un poco, ¿Hasta donde querias llegar?"
+    monica "Creo que te pasaste un poco, ¿Hasta donde querías llegar?"
     hide monica_quest_0_monica_mirando_hablando
     
 
@@ -507,11 +507,11 @@ label quest_monica_0_cierre:
     hide monica_quest_0_mc_brazosarriba_bocahablando
     
     show monica_quest_0_monica_mirando_hablando
-    monica "¿Acaso querias besarme el cuello?"
+    monica "¿Acaso querías besarme el cuello?"
     hide monica_quest_0_monica_mirando_hablando
 
     show monica_quest_0_mc_brazosarriba_bocahablando
-    mc "Perdon Monica no era mi intencion de verdad"
+    mc "Perdón Monica no era mi intencion de verdad"
     hide monica_quest_0_mc_brazosarriba_bocahablando
     hide monica_quest_0_mc_brazosarriba
     show monica_quest_0_mc_perdon

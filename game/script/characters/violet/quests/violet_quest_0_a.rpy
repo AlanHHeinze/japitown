@@ -61,7 +61,7 @@ label quest_violet_questprincipal_0_a:
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Solo queria hablar un momento con vos"
+    mc "Solo quería hablar un momento contigo"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
@@ -73,14 +73,14 @@ label quest_violet_questprincipal_0_a:
     hide violet_parada with dissolve
 
     show mc_parado_base c_rbase_pensando o_arribanm
-    piensa "Tengo que buscar la manera de romper el hielo y mejorar la relacion con ella"
+    piensa "Tengo que buscar la manera de romper el hielo y mejorar la relación con ella"
     show mc_parado_base c_rbase_base o_base b_none
 
     tutorial "Durante el transcurso del juego puede que necesitemos mejorar nuestra [colorear_quest('relacion con un personaje')] para avanzar en alguna quest"
     tutorial "Cada personaje tiene [colorear_quest('dos estadisticas')] que representan esto: [colorear_quest('el amor (❤️) y el deseo (💋)')]"
-    tutorial "La mejora de estos tambien nos desbloqueara recompensas especiales en situaciones especificas a lo largo del desarrollo de la historia de un personaje"
+    tutorial "La mejora de estos también nos desbloqueara recompensas especiales en situaciones especificas a lo largo del desarrollo de la historia de un personaje"
     tutorial "La forma mas directa de mejorarlos es usando la interaccion [colorear_quest('Hablar')] que veremos en el [colorear_quest('Menu del Personaje')] al hacerle click"
-    tutorial "Prueba [colorear_quest('Hablar con Violet')] para mejorar tu relacion con ella"
+    tutorial "Prueba [colorear_quest('Hablar con Violet')] para mejorar tu relación con ella"
 
     # Marcar que el intro ya se hizo: a partir de ahora "Hablar" con Violet
     # dispara el sistema talk especial (violet_q0a_talk_sistema) en vez del talk común.
@@ -110,9 +110,9 @@ label violet_q0a_talk_sistema:
     show violet_parada c_rbase_base b_none  at right with dissolve
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda with dissolve
 
-    tutorial "Durante la interaccion de hablar se nos presentara el [colorear_quest('Estado Actual')] del personaje. Cada dia el personaje tendra de manera aleatoria un [colorear_quest('Estado Basico')] o podra tener un [colorear_quest('Estado Especial')]"
-    tutorial "Los estados especiales se consiguen con acciones especificas y dan mejores recompensas que los estados basicos. Por ejemplo una quest podria hacer que el personaje gane el estado Feliz y nuestra interaccion de hablar se veria afectada por esto"
-    tutorial "Luego tendremos las [colorear_quest('Aproximaciones')], que representan de que manera nuestro personaje se comporta. Habra cinco aproximaciones basicas y tambien tendremos [colorear_quest('Aproximaciones Especiales')] al igual que los estados"
+    tutorial "Durante la interaccion de hablar se nos presentara el [colorear_quest('Estado Actual')] del personaje. Cada día el personaje tendra de manera aleatoria un [colorear_quest('Estado Basico')] o podra tener un [colorear_quest('Estado Especial')]"
+    tutorial "Los estados especiales se consiguen con acciones especificas y dan mejores recompensas que los estados basicos. Por ejemplo una quest podría hacer que el personaje gane el estado Feliz y nuestra interaccion de hablar se veria afectada por esto"
+    tutorial "Luego tendremos las [colorear_quest('Aproximaciones')], que representan de que manera nuestro personaje se comporta. Habra cinco aproximaciones basicas y también tendremos [colorear_quest('Aproximaciones Especiales')] al igual que los estados"
     tutorial "Las aproximaciones especiales, al igual que los estados, dependeran de factores externos y nos daran mejores recompensas. Por ejemplo si un personaje tiene el estado Hambre y disponemos de un item de comida, tendremos una aproximacion especial"
     tutorial "Este sistema se convertira en un minijuego de opciones que nos premiara ir conociendo mejor al personaje con el que vamos a interactuar"
     tutorial "Empecemos"
@@ -154,7 +154,7 @@ label violet_q0a_opciones:
 
 label violet_q0a_complacer:
     
-    "Podria aprovechar que tengo unas golosinas. Creo que es mi mejor opcion"
+    "Podría aprovechar que tengo unas golosinas. Creo que es mi mejor opcion"
 
     jump violet_q0a_opciones
 
@@ -165,7 +165,7 @@ label violet_q0a_complacer:
 
 label violet_q0a_provocar:
     
-    "Podria aprovechar que tengo unas golosinas. Creo que es mi mejor opcion"
+    "Podría aprovechar que tengo unas golosinas. Creo que es mi mejor opcion"
 
     jump violet_q0a_opciones
 
@@ -176,7 +176,7 @@ label violet_q0a_provocar:
 
 label violet_q0a_escuchar:
     
-    "Podria aprovechar que tengo unas golosinas. Creo que es mi mejor opcion"
+    "Podría aprovechar que tengo unas golosinas. Creo que es mi mejor opcion"
 
     jump violet_q0a_opciones
 
@@ -187,7 +187,7 @@ label violet_q0a_escuchar:
 
 label violet_q0a_hablar:
     
-    "Podria aprovechar que tengo unas golosinas. Creo que es mi mejor opcion"
+    "Podría aprovechar que tengo unas golosinas. Creo que es mi mejor opcion"
 
     jump violet_q0a_opciones
 
@@ -198,7 +198,7 @@ label violet_q0a_hablar:
 
 label violet_q0a_adulación:
     
-    "Podria aprovechar que tengo unas golosinas. Creo que es mi mejor opcion"
+    "Podría aprovechar que tengo unas golosinas. Creo que es mi mejor opcion"
 
     jump violet_q0a_opciones
 
@@ -237,7 +237,7 @@ label violet_q0a_golosinas:
     hide violet_parada with dissolve
 
     tutorial "En las futuras interacciones no veremos las recompensas asociadas a la aproximacion. Pero [colorear_quest('Mejorando los Atributos')] de nuestro personaje iremos ganando distintas [colorear_quest('Ventajas')] para este sistema"
-    tutorial "Al terminar la interaccion obtendremos la recompensa, si usamos algun consumible este se ira, el tiempo avanzara y tendremos que esperar hasta el siguiente dia para volver a hacer uso de la Interaccion"
+    tutorial "Al terminar la interaccion obtendremos la recompensa, si usamos algún consumible este se ira, el tiempo avanzara y tendremos que esperar hasta el siguiente día para volver a hacer uso de la Interaccion"
     # Avanzar tiempo
     $ avanzar_horario()
 

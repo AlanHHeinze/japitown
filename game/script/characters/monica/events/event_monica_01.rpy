@@ -134,7 +134,7 @@ label event_monica_01_narrativa:
 
     # MC habla
     show mc_parado_base b_hablando 
-    mc "¿Como estas Monica? ¿Sigues con dolor en tus hombros?"
+    mc "¿Cómo estas Monica? ¿Sigues con dolor en tus hombros?"
     show mc_parado_base b_none 
 
     # Monica habla
@@ -172,7 +172,7 @@ label event_monica_01_narrativa:
 
     # Monica habla
     show monica_parada b_hablando
-    monica "¿Aca esta bien?"
+    monica "¿Aquí esta bien?"
     show monica_parada b_none 
 
     # MC habla
@@ -196,7 +196,7 @@ label event_monica_01_narrativa:
     show monica_parada b_none c_remera_base
 
     # MC piensa
-    piensa "No me habia puesto a pensar en el increible cuerpo que tiene Monica para su edad."
+    piensa "No me había puesto a pensar en el increíble cuerpo que tiene Monica para su edad."
 
     # MC habla
     show mc_parado_base b_hablando 
@@ -223,10 +223,10 @@ label event_monica_01_narrativa:
     pause 0.3
     show monica_evento_01 img3 monica_none with sprite_normal 
     show monica_evento_01 bmc_hablando
-    mc "¿Esta bien asi? ¿O mas suave?"
+    mc "¿Esta bien así? ¿O mas suave?"
     show monica_evento_01 bmc_none
     show monica_evento_01 bmonica_hablando
-    monica "Mmm... asi esta bien"
+    monica "Mmm... así esta bien"
     show monica_evento_01 bmonica_none
     show monica_evento_01 img6 with sprite_normal
     pause 0.3
@@ -236,14 +236,14 @@ label event_monica_01_narrativa:
     pause 0.3
     show monica_evento_01 img7 with sprite_normal
     show monica_evento_01 bmonica_hablandoabajo
-    monica "Ahi..."
+    monica "Ahí..."
     show monica_evento_01 bmonica_none
     pause 0.3
     show monica_evento_01 img8 monica_feliz with sprite_normal
     pause 0.3
     show monica_evento_01 img7 with sprite_normal
     show monica_evento_01 bmonica_hablando
-    monica "Tenias razon... Sos realmente bueno en esto"
+    monica "Tenías razón... Eres realmente bueno en esto"
     show monica_evento_01 bmonica_none
     show monica_evento_01 bmc_hablando
     mc "Te dije que lo era"
@@ -303,7 +303,7 @@ label event_monica_01_narrativa:
     pause 0.3
     show monica_evento_01 img12 with sprite_normal
     show monica_evento_01 monica_relajada bmonica_hablandoabajo
-    monica "Ahi es, mas duro..."
+    monica "Ahí es, mas duro..."
     show monica_evento_01 bmonica_none
     show monica_evento_01 img10 with sprite_normal
     pause 0.3

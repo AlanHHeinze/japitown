@@ -17,7 +17,7 @@ init 5 python:
         id="jasmine_questprincipal_0_a",
         npc_id="jasmine",
         nombre="Reencuentro con Jasmine",
-        descripcion="Quiero hablar con Jasmine para ponerme al dia luego de tanto tiempo",
+        descripcion="Quiero hablar con Jasmine para ponerme al día luego de tanto tiempo",
         numero_quest=0,
         dias_espera=0,
         requisitos=[],
@@ -25,14 +25,14 @@ init 5 python:
             Requisito("locacion", "Debes estar en el gym", locacion_id="casa_gym"),
             Requisito("horario", "Debe ser por la tarde", horario_id=1)
         ],
-        mensaje_pista="Me gustaria ponerme al dia con Jasmine, podria hablar con ella cuando esta sola en el Gym",
-        mensaje_despertar="Jasmine suele entrenar en el Gym por la tarde, podria ir a verla y aprovechar el momento para hablar",
+        mensaje_pista="Me gustaría ponerme al día con Jasmine, podría hablar con ella cuando esta sola en el Gym",
+        mensaje_despertar="Jasmine suele entrenar en el Gym por la tarde, podría ir a verla y aprovechar el momento para hablar",
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista="Podria ver a Jasmine por la tarde cuando entrena y hablar un poco",
+                pista="Podría ver a Jasmine por la tarde cuando entrena y hablar un poco",
                 que_hacer="Hablar con Jasmine en el Gym por la tarde",
-                mensaje_despertar="Jasmine suele entrenar en el Gym por la tarde, podria ir a verla y aprovechar el momento para hablar",
+                mensaje_despertar="Jasmine suele entrenar en el Gym por la tarde, podría ir a verla y aprovechar el momento para hablar",
             ),
         },
     )
@@ -78,13 +78,13 @@ init 5 python:
         requisitos=[],
         validacion_especial=[],
         mensaje_pista="Jasmine quiere mostrar su nueva ropa deportiva.",
-        mensaje_despertar="Jasmine quiere que vea como le queda el conjunto deportivo que le regale, podria pasar a la tarde por el gym",
+        mensaje_despertar="Jasmine quiere que vea como le queda el conjunto deportivo que le regale, podría pasar a la tarde por el gym",
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista="Jasmine quiere mostrar su nueva ropa deportiva.",
                 que_hacer="Ver lo que Jasmine quiere mostrar.",
-                mensaje_despertar="Jasmine quiere que vea como le queda el conjunto deportivo que le regale, podria pasar a la tarde por el gym",
+                mensaje_despertar="Jasmine quiere que vea como le queda el conjunto deportivo que le regale, podría pasar a la tarde por el gym",
             ),
         },
     )

@@ -27,7 +27,7 @@ label violet_quest06a_puerta:
     mc "Violet..."
     violet "¿Qué?"
     mc "Tengo que contarte algo. ¿Puedo pasar?"
-    violet "Pasá"
+    violet "Pasa"
 
     $ _loc_hviolet = sistema_locaciones.obtener_locacion("casa_hviolet")
     $ _bg_hviolet = _loc_hviolet.background if _loc_hviolet else "#1a1a1a"
@@ -82,7 +82,7 @@ label violet_quest06a_habitacion:
     show violet_parada b_none
 
     show violet_parada b_hablandochica 
-    violet "No te entiendo ¿Por qué lo hacés?"
+    violet "No te entiendo ¿Por qué lo haces?"
     show violet_parada b_none
 
     if obtener_stat1("violet") >= obtener_stat2("violet"):
@@ -98,9 +98,9 @@ label violet_quest06a_habitacion:
 label violet_quest06a_camino_amor:
 
     show mc_parado_base b_hablando
-    mc "Quiero compartir momentos con vos, la Japicon es uno de esos momentos y no lo voy a dejar pasar por un error"
+    mc "Quiero compartir momentos contigo, la Japicon es uno de esos momentos y no lo voy a dejar pasar por un error"
     show mc_parado_base b_abiertachica
-    mc "Quiero que lo de los cosplay quede atras"
+    mc "Quiero que lo de los cosplay quede atrás"
     show mc_parado_base b_none
 
     # Beso amor — refrescar la escena con fade y cargar el sprite del beso centrado
@@ -119,7 +119,7 @@ label violet_quest06a_camino_amor:
     piensa "No puedo creer que di el paso, fue un impulso y no se como va a reaccionar Violet"
 
     show violet_parada b_hablandochica o_abiertos 
-    violet "Está bien... Voy a ir con vos a la Japicon"
+    violet "Está bien... Voy a ir contigo a la Japicon"
     show violet_parada b_contenta
 
     show mc_parado_base b_abiertachica
@@ -137,7 +137,7 @@ label violet_quest06a_camino_amor:
 label violet_quest06a_camino_deseo:
 
     show mc_parado_base b_hablando
-    mc "Hoy de nuevo en la casa, compartiendo momentos con vos, entendí que me equivoqué al enojarme cuando me fui y arruine la relación"
+    mc "Hoy de nuevo en la casa, compartiendo momentos contigo, entendí que me equivoqué al enojarme cuando me fui y arruine la relación"
     show mc_parado_base b_abiertachica
     mc "No voy a dejar que pase eso otra vez"
     show mc_parado_base b_none
@@ -158,7 +158,7 @@ label violet_quest06a_camino_deseo:
     piensa "No puedo creer que di el paso, fue un impulso y no se como va a reaccionar Violet"
 
     show violet_parada b_hablandochica o_abiertos 
-    violet "Está bien... Voy a ir con vos a la Japicon"
+    violet "Está bien... Voy a ir contigo a la Japicon"
     show violet_parada b_none
 
     show mc_parado_base b_abiertachica

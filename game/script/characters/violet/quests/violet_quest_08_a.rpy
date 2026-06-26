@@ -98,7 +98,7 @@ label violet_quest08a_ver_tv:
 
     show vq8a_tv2 as vq_tv with dissolve
     piensa "Quiero ver algo pero no creo que un documental de elefantes sea la mejor opción"
-    piensa "Se esta poniendo feo el dia, parece que va a llover"
+    piensa "Se esta poniendo feo el día, parece que va a llover"
 
     # Empieza a llover
     scene vq8a_living_lloviendo with Dissolve(2.0)
@@ -106,7 +106,7 @@ label violet_quest08a_ver_tv:
     show vq8a_tv2 as vq_tv
 
     piensa "¿Está lloviendo? Me pregunto si las chicas se llevaron paraguas... Espero que sí"
-    piensa "Estan bastante de moda ultimamente los piratas, no me quejo me gustan pero ya cansa un poco"
+    piensa "Están bastante de moda ultimamente los piratas, no me quejo me gustan pero ya cansa un poco"
 
     show vq8a_tv3 as vq_tv with dissolve
 
@@ -168,7 +168,7 @@ label violet_quest08a_ver_tv:
     show violet_mojada b_none
 
     show violet_mojada b_hablando
-    violet "Y aca estoy empapada"
+    violet "Y aquí estoy empapada"
     show violet_mojada b_none
 
     show mc_parado_base b_hablando
@@ -184,11 +184,11 @@ label violet_quest08a_ver_tv:
     show mc_parado_base b_none
 
     show violet_mojada b_hablandochica
-    violet "Si ¿Me podés traer el pijama rosa del ropero?"
+    violet "Si ¿Me puedes traer el pijama rosa del ropero?"
     show violet_mojada b_none
 
     show violet_mojada b_sonrisaleve
-    violet "Asi no mojo toda mi habitacion"
+    violet "Así no mojo toda mi habitación"
     show violet_mojada b_none
 
     show mc_parado_base b_hablando
@@ -269,7 +269,7 @@ label violet_quest08a_entrar_hviolet:
 label violet_quest08a_accion_ropero:
     $ ocultar_hud()
     window show
-    piensa "El pijama rosa... acá está"
+    piensa "El pijama rosa... aquí está"
     window hide
 
     $ vq8a_ropero_visto = True
@@ -287,7 +287,7 @@ label violet_quest08a_accion_cajonera:
     $ ocultar_hud()
     window show
     piensa "Ropa interior..."
-    piensa "No me pidio pero supongo que también la va a necesitar"
+    piensa "No me pidió pero supongo que también la va a necesitar"
     window hide
 
     $ vq8a_cajonera_vista = True
@@ -352,7 +352,7 @@ label violet_quest08a_puerta_baño:
 
 
 label violet_quest08a_opcion_a:
-    piensa "Mejor la dejo acá y me voy"
+    piensa "Mejor la dejo aquí y me voy"
     pause 0.3
     violet "¿Ya está?"
     mc "Sí, está afuera de la puerta"
@@ -393,7 +393,7 @@ label violet_quest08a_entrar_baño:
     pause 0.5
 
     window show
-    piensa "¿Podria acercarme mas?"
+    piensa "¿Podría acercarme mas?"
 
     call screen vq8a_menu_bano
 
@@ -412,7 +412,7 @@ label violet_quest08a_baño_acercarse:
     scene vq8a_duchaescena with dissolve
     window show
     piensa "No puedo creer que este haciendo esto, no se desde cuando pero me esta atrayendo mucho Violet"
-    piensa "Hasta aca fue suficiente, si me ve me mata"
+    piensa "Hasta aquí fue suficiente, si me ve me mata"
     piensa "Mejor me voy"
     jump violet_quest08a_cierre_desarrollo
 

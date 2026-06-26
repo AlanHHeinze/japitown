@@ -180,13 +180,13 @@ init 6 python:
                 opciones_jugador=[
                     OpcionRespuesta(
                         texto="Estuve un poco ocupado pero ya voy a pasar",
-                        respuesta_npc=["❤️", "Te estás perdiendo vos de verlo"],
+                        respuesta_npc=["❤️", "Te estás perdiendo tú de verlo"],
                         puntos={},
                         saltar_a_paso=1
                     ),
                     OpcionRespuesta(
                         texto="Mañana te prometo que voy",
-                        respuesta_npc=["❤️", "Te estás perdiendo vos de verlo"],
+                        respuesta_npc=["❤️", "Te estás perdiendo tú de verlo"],
                         puntos={},
                         saltar_a_paso=1
                     ),

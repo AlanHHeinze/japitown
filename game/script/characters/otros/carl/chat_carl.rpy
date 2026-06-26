@@ -20,7 +20,7 @@ init 6 python:
     chat_carl_quest_j0b = GrupoMensajes(
         id="carl_chat_quest_j0b",
         npc_id="carl",
-        mensaje_inicial="¿Como te fue con el regreso a Japitown?",
+        mensaje_inicial="¿Cómo te fue con el regreso a Japitown?",
         trigger_id="carl_quest_j0b",
         foto_inicial=None,
         prioritario=False,
@@ -47,13 +47,13 @@ init 6 python:
                 opciones_jugador=[
                     OpcionRespuesta(
                         texto="Bien, la verdad que es lo que necesitaba para avanzar con mi vida",
-                        respuesta_npc="Que bueno que asi sea\nCuando ya estes mas tranquilo nos tenemos que ver y charlar",
+                        respuesta_npc="Que bueno que así sea\nCuando ya estes mas tranquilo nos tenemos que ver y charlar",
                         puntos={},
                         saltar_a_paso=2
                     ),
                     OpcionRespuesta(
                         texto="Es un poco complicado, creo que me va a costar adaptarme",
-                        respuesta_npc="Va a ser asi solo al principio, es lo mejor que te podia pasar\nCuando ya estes mas tranquilo nos tenemos que ver y charlar",
+                        respuesta_npc="Va a ser así solo al principio, es lo mejor que te podía pasar\nCuando ya estes mas tranquilo nos tenemos que ver y charlar",
                         puntos={},
                         saltar_a_paso=2
                     ),

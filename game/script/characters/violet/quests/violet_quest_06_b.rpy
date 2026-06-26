@@ -68,17 +68,17 @@ label violet_quest06b_puerta:
     show mc_parado_base b_hablando
     mc "Violet, me pediste que pasara"
     show mc_parado_base b_none
-    piensa "Estoy muy nervioso, no menciono nada de lo que paso el otro dia"
+    piensa "Estoy muy nervioso, no menciono nada de lo que paso el otro día"
     piensa "Supongo que me quiere hablar de eso"
 
-    violet "Sí, esperá un momento"
+    violet "Sí, espera un momento"
 
     scene black with fade
     pause 1.0
     centered "{color=#FFFFFF}Varios minutos más tarde...{/color}"
     pause 1.0
 
-    violet "Pasá"
+    violet "Pasa"
 
     $ _loc_hviolet = sistema_locaciones.obtener_locacion("casa_hviolet")
     $ _bg_hviolet = _loc_hviolet.background if _loc_hviolet else "#1a1a1a"
@@ -90,13 +90,13 @@ label violet_quest06b_puerta:
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
     show violet_parada b_hablandochica
-    violet "¿Que te parece?"
+    violet "¿Qué te parece?"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
     mc "Wooooow"
     show mc_parado_base c_rbase_avergonzado with sprite_fast
-    piensa "Tenia razon, es muy llamativo, pense que era algo de las fotos"
+    piensa "Tenía razón, es muy llamativo, pense que era algo de las fotos"
     piensa "Pero en persona es otra cosa..."
     show mc_parado_base b_abiertachica
     mc "Me encanta"
@@ -107,11 +107,11 @@ label violet_quest06b_puerta:
     show violet_parada b_none o_base
 
     show mc_parado_base b_hablando o_arribanm c_rbase_pensando with sprite_fast
-    mc "Sí... ¿Por que no podrias?"
+    mc "Sí... ¿Por qué no podrías?"
     show mc_parado_base b_none o_base c_rbase_base with sprite_fast
 
     show violet_parada b_hablandochica
-    violet "Ya sabes el por que..."
+    violet "Ya sabes el por qué..."
     show violet_parada b_none
 
     hide violet_parada with sprite_normal
@@ -125,7 +125,7 @@ label violet_quest06b_puerta:
     show violet_espalda e_cola2 at right with sprite_normal
     pause 0.5
 
-    violet "Me queda muy apretado aca abajo"
+    violet "Me queda muy apretado aquí abajo"
 
     show violet_espalda e_cola1 at right with sprite_normal
     pause 0.5
@@ -144,31 +144,31 @@ label violet_quest06b_puerta:
 
 
     show violet_parada b_hablando
-    violet "Decime la verdad. No lo hagas solo porque a vos te gusta"
+    violet "Dime la verdad. No lo hagas solo porque a ti te gusta"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
     mc "Lo podes usar sin problema"
     show mc_parado_base b_abiertachica c_rbase_cuestionando with sprite_fast
-    mc "Es un poco llamativo, si no te voy a mentir. Pero es algo de lo que no te tenés que preocupar"
+    mc "Es un poco llamativo, si no te voy a mentir. Pero es algo de lo que no te tienes que preocupar"
     show mc_parado_base b_none c_rbase_base with sprite_fast
 
     show violet_parada b_hablandochica
-    violet "Sabes que nunca me gusto llamar la atencion"
+    violet "Sabes que nunca me gusto llamar la atención"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Te pongas un cosplay o no, vas a llamar la atencion igual"
+    mc "Te pongas un cosplay o no, vas a llamar la atención igual"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "¿Por que?"
+    violet "¿Por qué?"
     show violet_parada b_none
 
     show mc_parado_base b_hablando o_arribanm c_rbase_pensando with sprite_fast
-    mc "Porque eso no se va a ir a ningun lado"
+    mc "Porque eso no se va a ir a ningún lado"
     show mc_parado_base b_abiertachica o_base c_rbase_brazoscruzados with sprite_fast
-    mc "Pero el motivo principal es porque sos una chica linda llendo a la Japicon jajajaja"
+    mc "Pero el motivo principal es porque eres una chica linda yendo a la Japicon jajajaja"
     show mc_parado_base b_hablando
     mc "¿No te parece suficiente?"
     show mc_parado_base b_none
@@ -183,8 +183,8 @@ label violet_quest06b_puerta:
     mc "Bueno, nos costo pero estamos de acuerdo"
     show mc_parado_base b_none
 
-    piensa "Me gustaria hablar del beso, se que ella no lo va a hacer"
-    piensa "Pero tengo miedo de arruinar el momento, al fin las cosas me estan saliendo bien"
+    piensa "Me gustaría hablar del beso, sé que ella no lo va a hacer"
+    piensa "Pero tengo miedo de arruinar el momento, al fin las cosas me están saliendo bien"
 
     show violet_parada at mover_al_centro_lento 
     pause 1.0
@@ -200,7 +200,7 @@ label violet_quest06b_puerta:
     hide violet_parada with sprite_fast
     show violet_espalda e_base at center with sprite_fast
 
-    violet "¿Me podés bajar un poco el cierre? Se traba y es muy molesto de sacar"
+    violet "¿Me puedes bajar un poco el cierre? Se traba y es muy molesto de sacar"
 
     show violet_espalda e_pelo with sprite_normal
     pause 0.5
@@ -210,7 +210,7 @@ label violet_quest06b_puerta:
     show mc_parado_base b_hablando
     mc "Emmm sí, claro"
     show mc_parado_base b_none
-    piensa "Si fuece un juego para adultos, este es el momento en donde la cosa se descontrolaria"
+    piensa "Si fuese un juego para adultos, este es el momento en donde la cosa se descontrolaria"
     piensa "Pero no suelo tener esa suerte en la vida"
 
     hide violet_espalda
@@ -231,7 +231,7 @@ label violet_quest06b_puerta:
     pause 0.3
     show quest06 dos with sprite_fast
 
-    piensa "Que cierre de porqueria"
+    piensa "Que cierre de porquería"
 
     violet "¿Seguro que puedes?"
 

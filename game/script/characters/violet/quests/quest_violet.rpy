@@ -35,7 +35,7 @@ init 5 python:
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista=_pista_quest0a_violet,
                 que_hacer=_quehacer_quest0a_violet,
-                mensaje_despertar="Violet se veia bastante molesta, podria hablar con ella para saber que le pasa",
+                mensaje_despertar="Violet se veia bastante molesta, podría hablar con ella para saber que le pasa",
             ),
         },
     )
@@ -275,7 +275,7 @@ init 5 python:
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
-                pista="Recuerdo lo del cosplay, deberia esperar unos dias.",
+                pista="Recuerdo lo del cosplay, debería esperar unos días.",
                 que_hacer=_qc("vq04a_espera_quehacer", lambda: vq_esperar_texto("violet_questprincipal_04_a", 3)),
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
@@ -295,7 +295,7 @@ init 5 python:
         id="violet_questprincipal_04_b",
         npc_id="violet",
         nombre="Violet y el Cosplay",
-        descripcion="Deberia ir a hablar con Violet y pedirle perdon.",
+        descripcion="Debería ir a hablar con Violet y pedirle perdón.",
         numero_quest=7,
         dias_espera=2,
         quest_anterior="violet_questprincipal_04_a",
@@ -313,12 +313,12 @@ init 5 python:
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
                 que_hacer=_qc("vq04b_espera_quehacer", lambda: vq_esperar_texto("violet_questprincipal_04_b", 2)),
-                mensaje_despertar="Deberia esperar un poco antes de hablar con Violet.",
+                mensaje_despertar="Debería esperar un poco antes de hablar con Violet.",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista="Podria hablar con Violet y pedirle perdon",
+                pista="Podría hablar con Violet y pedirle perdón",
                 que_hacer="Hablar con Violet",
-                mensaje_despertar="No paro de tener problemas con Violet, deberia verda y pedirle perdon",
+                mensaje_despertar="No paro de tener problemas con Violet, debería verda y pedirle perdón",
                 accion_al_entrar=setup_restriccion_violet_quest04b,
             ),
         },
@@ -365,7 +365,7 @@ init 5 python:
         id="violet_questprincipal_04_d",
         npc_id="violet",
         nombre="Violet y el Cosplay III",
-        descripcion="Quizás si sigo mejorando mi relacion con Violet me muestre un poco más",
+        descripcion="Quizás si sigo mejorando mi relación con Violet me muestre un poco más",
         numero_quest=9,
         dias_espera=0,
         quest_anterior="violet_questprincipal_04_c",
@@ -378,11 +378,11 @@ init 5 python:
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_CONDICIONES: ConfigEtapa(
-                pista="Tengo que mejorar mi relacion con Violet para que me muestre mas del cosplay",
+                pista="Tengo que mejorar mi relación con Violet para que me muestre mas del cosplay",
                 que_hacer=_qc("vq04d_condiciones_quehacer", lambda: renpy.translate_string("Subir deseo 💋 con Violet ({}/{})").format(
                     getattr(store, 'violet_deseo', 0), 10
                 )),
-                mensaje_despertar="Violet dijo que tenia mas fotos, quizas pueda lograr que me las envie",
+                mensaje_despertar="Violet dijo que tenía mas fotos, quizás pueda lograr que me las envie",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista=_qc("vq04d_botonlisto_pista", lambda: "Violet ya me contestó, debería ir a hablar con ella" if store.sistema_mensajes.grupo_completado("violet_quest04d_chat") else "Violet me envió un mensaje, debería responderle"),
@@ -402,7 +402,7 @@ init 5 python:
         id="violet_questprincipal_04_e",
         npc_id="violet",
         nombre="El cosplay de Violet IV",
-        descripcion="Quizás si sigo mejorando mi relacion con Violet me muestre un poco más",
+        descripcion="Quizás si sigo mejorando mi relación con Violet me muestre un poco más",
         numero_quest=10,
         dias_espera=0,
         quest_anterior="violet_questprincipal_04_d",
@@ -415,11 +415,11 @@ init 5 python:
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_CONDICIONES: ConfigEtapa(
-                pista="Tengo que seguir mejorando mi relacion con Violet para que me muestre mas.",
+                pista="Tengo que seguir mejorando mi relación con Violet para que me muestre mas.",
                 que_hacer=_qc("vq04e_condiciones_quehacer", lambda: renpy.translate_string("Subir deseo 💋 con Violet ({}/{})").format(
                     getattr(store, 'violet_deseo', 0), 15
                 )),
-                mensaje_despertar="Esto de mejorar mi relacion con Violet esta trayendo buenos resultados, me pregunto si podre conseguir algo mas",
+                mensaje_despertar="Esto de mejorar mi relación con Violet esta trayendo buenos resultados, me pregunto si podre conseguir algo mas",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista=_qc("vq04e_botonlisto_pista", lambda: "Violet ya me contestó, debería ir a hablar con ella" if store.sistema_mensajes.grupo_completado("violet_quest04e_chat") else "Violet me envió un mensaje, debería responderle"),
@@ -811,7 +811,7 @@ init 5 python:
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
-                pista="Todo tranquilo por ahora, deberia esperar unos dias.",
+                pista="Todo tranquilo por ahora, debería esperar unos días.",
                 que_hacer=_qc("vq11_espera_quehacer", lambda: vq_esperar_texto("violet_questprincipal_11", 3)),
             ),
             ETAPA_CONDICIONES: ConfigEtapa(
@@ -848,7 +848,7 @@ init 5 python:
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
-                pista="Deberia esperar unos dias.",
+                pista="Debería esperar unos días.",
                 que_hacer=_qc("vq12_espera_quehacer", lambda: vq_esperar_texto("violet_questprincipal_12", 3)),
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(

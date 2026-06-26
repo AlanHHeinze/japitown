@@ -21,7 +21,7 @@ init 6 python:
     chat_violet_quest6 = GrupoMensajes(
         id="violet_quest04c_chat",
         npc_id="violet",
-        mensaje_inicial="Acá está...",
+        mensaje_inicial="Aquí está...",
         trigger_id="violet_quest04c_chat",
         momento_locacion="casa_hviolet",
         momento_horario=2,
@@ -35,7 +35,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Es perfecto para vos",
+                        texto="Es perfecto para ti",
                         respuesta_npc="",
                         puntos={"amor": 5},
                         saltar_a_paso=-1
@@ -59,7 +59,7 @@ init 6 python:
     chat_violet_quest7 = GrupoMensajes(
         id="violet_quest04d_chat",
         npc_id="violet",
-        mensaje_inicial="Acá está el motivo por el que no lo quiero usar",
+        mensaje_inicial="Aquí está el motivo por el que no lo quiero usar",
         trigger_id="violet_quest04d_chat",
         momento_locacion="casa_hviolet",
         momento_horario=2,
@@ -97,7 +97,7 @@ init 6 python:
                         saltar_a_paso=2 # Rama A
                     ),
                     OpcionRespuesta(
-                        texto="Sí lo podés usar",
+                        texto="Sí lo puedes usar",
                         respuesta_npc="No insistas no lo voy a usar",
                         puntos={},
                         saltar_a_paso=4 # Rama B
@@ -116,13 +116,13 @@ init 6 python:
                 opciones_jugador=[
                     OpcionRespuesta(
                         texto="Jajajaja solo te fui sincero",
-                        respuesta_npc="¿Desde el principio esto era lo que querias?",
+                        respuesta_npc="¿Desde el principio esto era lo que querías?",
                         puntos={},
                         saltar_a_paso=3
                     ),
                     OpcionRespuesta(
                         texto="¿Mala mía?",
-                        respuesta_npc="¿Desde el principio esto era lo que querias?",
+                        respuesta_npc="¿Desde el principio esto era lo que querías?",
                         puntos={},
                         saltar_a_paso=3
                     ),
@@ -202,13 +202,13 @@ init 6 python:
                 opciones_jugador=[
                     OpcionRespuesta(
                         texto="No digo que lo uses, solo que si quieres lo puedes usar",
-                        respuesta_npc="Llamar la atencion no es lo mio",
+                        respuesta_npc="Llamar la atención no es lo mío",
                         puntos={},
                         saltar_a_paso=5
                     ),
                     OpcionRespuesta(
                         texto="Entiendo que no quieras ser la envidia del lugar",
-                        respuesta_npc="Llamar la atencion no es lo mio",
+                        respuesta_npc="Llamar la atención no es lo mío",
                         puntos={},
                         saltar_a_paso=5
                     )
@@ -224,7 +224,7 @@ init 6 python:
                         saltar_a_paso=12
                     ),
                     OpcionRespuesta(
-                        texto="Mientras llames la mia yo estoy conforme",
+                        texto="Mientras llames la mía yo estoy conforme",
                         respuesta_npc="Idiota",
                         puntos={},
                         saltar_a_paso=12
@@ -275,7 +275,7 @@ init 6 python:
                         saltar_a_paso=14
                     ),
                     OpcionRespuesta(
-                        texto="No se, me imagine la situacion y senti celos",
+                        texto="No se, me imagine la situación y senti celos",
                         respuesta_npc=["No me lo hubiera imaginado", "¿Encerio te molestaria?"],
                         puntos={},
                         saltar_a_paso=14
@@ -329,7 +329,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Tienes toda mi atencion",
+                        texto="Tienes toda mi atención",
                         respuesta_npc=["Me había sacado una foto más...", "Te la puedo pasar, pero con una condición"],
                         puntos={},
                         saltar_a_paso=1
@@ -363,8 +363,8 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Podria ser...",
-                        respuesta_npc=["Listo, nada de podria ser", "Ya esta"],
+                        texto="Podría ser...",
+                        respuesta_npc=["Listo, nada de podría ser", "Ya esta"],
                         foto_respuesta="images/chat/violet/violet_chat_foto_03.png",
                         puntos={},
                         saltar_a_paso=3 # Rama A
@@ -489,7 +489,7 @@ init 6 python:
     chat_violet_quest12 = GrupoMensajes(
         id="violet_quest12_chat",
         npc_id="violet",
-        mensaje_inicial="Placeholder: Hola, cuando puedas pasate por mi habitacion a la noche...",
+        mensaje_inicial="Placeholder: Hola, cuando puedas pasate por mi habitación a la noche...",
         trigger_id="violet_quest12_chat",
         momento_locacion="casa_hviolet",
         momento_horario=1,
@@ -577,7 +577,7 @@ init 6 python:
                 opciones_jugador=[
                     OpcionRespuesta(
                         texto="No lo sabía",
-                        respuesta_npc=["Te podés ir olvidando de la Japicon", "No voy a usar nada de esto"],
+                        respuesta_npc=["Te puedes ir olvidando de la Japicon", "No voy a usar nada de esto"],
                         saltar_a_paso=4,
                     ),
                 ]
@@ -586,13 +586,13 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Sabés que no lo hice con mala intención",
-                        respuesta_npc=["Ya tengo dudas de tus intenciones", "Todo lo que hacés de casualidad es lo que un pervertido haría"],
+                        texto="Sabes que no lo hice con mala intención",
+                        respuesta_npc=["Ya tengo dudas de tus intenciones", "Todo lo que haces de casualidad es lo que un pervertido haría"],
                         saltar_a_paso=5,
                     ),
                     OpcionRespuesta(
                         texto="Podemos ir sin cosplay",
-                        respuesta_npc="La verdad es que no sé si tengo ganas de ir con vos",
+                        respuesta_npc="La verdad es que no sé si tengo ganas de ir contigo",
                         saltar_a_paso=5,
                     ),
                 ]
@@ -720,7 +720,7 @@ init 6 python:
                 opciones_jugador=[
                     OpcionRespuesta(
                         texto="Muchas gracias por todo",
-                        respuesta_npc=["Muchas gracias a vos", "y nuevamente perdón por el inconveniente"],
+                        respuesta_npc=["Muchas gracias a ti", "y nuevamente perdón por el inconveniente"],
                         saltar_a_paso=-1,
                     ),
                 ]
@@ -774,7 +774,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Qué bien, ya tenés un plan B",
+                        texto="Qué bien, ya tienes un plan B",
                         respuesta_npc="Sí, en estos días voy a ir",
                         saltar_a_paso=4,
                     ),
@@ -784,7 +784,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Si querés mandame fotos y te puedo ayudar a elegir",
+                        texto="Si quieres mándame fotos y te puedo ayudar a elegir",
                         respuesta_npc=["Jajajaja no", "Vas a tener que esperar al día del evento para verlo"],
                         saltar_a_paso=5,
                     ),

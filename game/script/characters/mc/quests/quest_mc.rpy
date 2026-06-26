@@ -151,7 +151,7 @@ init 5 python:
     _quest_mc_1 = QuestMC(
         id="mc_quest_1",
         nombre="Reencuentro",
-        pista="Tengo que ponerme al dia con Monica, Jasmine y Violet",
+        pista="Tengo que ponerme al día con Monica, Jasmine y Violet",
         que_hacer_fn=_mc_q1_que_hacer,
         condicion_completada=_mc_q1_condicion_completada,
     )

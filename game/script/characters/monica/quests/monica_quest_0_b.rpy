@@ -83,7 +83,7 @@ label quest_monica_questprincipal_0_b:
     show mc_parado_base b_none c_rbase_base o_base with sprite_normal
 
     show monica_parada b_hablando
-    monica "¿En serio? ¡Ay, sos un amor! Te la traigo ya mismo"
+    monica "¿En serio? ¡Ay, eres un amor! Te la traigo ya mismo"
     show monica_parada b_feliz
 
     # Mónica se retira hacia la izquierda
@@ -110,7 +110,7 @@ label quest_monica_questprincipal_0_b:
     show mc_parado_base b_none
 
     show monica_parada b_feliz o_felicesnm
-    monica "Gracias. Te dejo trabajar entonces, cualquier cosa estoy por acá"
+    monica "Gracias. Te dejo trabajar entonces, cualquier cosa estoy por aquí"
     show monica_parada b_none o_base
 
     # Mónica se va de nuevo hacia la izquierda
@@ -122,10 +122,10 @@ label quest_monica_questprincipal_0_b:
     $ agregar_al_inventario("notebook_monica")
 
     # Tutorial de inventario / items
-    tutorial "Acabás de [colorear_quest('Recibir Objeto')]: la notebook de Monica. Los objetos que conseguís se guardan en tu [colorear_quest('Inventario')]"
-    tutorial "Podés abrir el inventario desde el [colorear_quest('Icono de la Mochila')] en la parte superiro derecha, desde ahí, revisar y usar los objetos que tengas [colorear_quest('Haciendo Click')] en ellos"
-    tutorial "Algunos objenos no se pueden usar desde el inventario, sirven para ser utilizados en algun momento especifico del juego"
-    tutorial "Mientras que otros si puedes usarlos desde el mismo. Al usarlos disparara su accion relacionada o te indicara si hay algun requisito adicional para hacer, como una locacion o horario"
+    tutorial "Acabás de [colorear_quest('Recibir Objeto')]: la notebook de Monica. Los objetos que consigues se guardan en tu [colorear_quest('Inventario')]"
+    tutorial "Puedes abrir el inventario desde el [colorear_quest('Icono de la Mochila')] en la parte superiro derecha, desde ahí, revisar y usar los objetos que tengas [colorear_quest('Haciendo Click')] en ellos"
+    tutorial "Algunos objenos no se pueden usar desde el inventario, sirven para ser utilizados en algún momento especifico del juego"
+    tutorial "Mientras que otros si puedes usarlos desde el mismo. Al usarlos disparara su acción relacionada o te indicara si hay algún requisito adicional para hacer, como una locacion o horario"
     tutorial "Probá [colorear_item('Notebook de Monica')] desde el inventario cuando estés en [colorear_locacion('Tu Habitacion')]"
 
     window hide

@@ -59,7 +59,7 @@ label violet_quest05c_perdon_fuera:
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
     show mc_parado_base b_hablando
-    mc "Violet, quería hablar con vos sobre lo que pasó..."
+    mc "Violet, quería hablar contigo sobre lo que pasó..."
     show mc_parado_base b_none
 
     if vq5c_cuerpo == "c_pijama":
@@ -94,7 +94,7 @@ label violet_quest05c_puerta:
 
     mc "Necesito pasar a hablar"
 
-    violet "Pasá"
+    violet "Pasa"
 
     $ _loc_hviolet = sistema_locaciones.obtener_locacion("casa_hviolet")
     $ _bg_hviolet = _loc_hviolet.background if _loc_hviolet else "#1a1a1a"
@@ -167,7 +167,7 @@ label violet_quest05c_habitacion:
 label violet_quest05c_opcion_a:
 
     show mc_parado_base b_hablando o_abajonm c_rbase_brazoscruzados with sprite_fast
-    mc "Espero que en algún momento me creas que no tenía malas intenciones y que todo lo hice por vos"
+    mc "Espero que en algún momento me creas que no tenía malas intenciones y que todo lo hice por ti"
     show mc_parado_base b_seria
 
     pause 1.0
@@ -175,7 +175,7 @@ label violet_quest05c_opcion_a:
     show mc_parado_base b_hablando
     mc "Solo pense en acompañarte en eso que siempre quisiste hacer"
     show mc_parado_base b_abiertachica
-    mc "Nuevamente perdon"
+    mc "Nuevamente perdón"
     show mc_parado_base b_seria c_rbase_base with sprite_fast
 
     # La tienda lee stock_tienda, no CATALOGO_ITEMS[...]["stock"]: actualizar ambos
@@ -205,7 +205,7 @@ label violet_quest05c_opcion_b:
     show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
     mc "Nunca tuve malas intenciones, todo salió así sin buscarlo"
     show mc_parado_base b_abiertachica 
-    mc "Si bien me encantaría verte con algo así puesto... No lo compre para eso, queria que lo usaras en el evento"
+    mc "Si bien me encantaría verte con algo así puesto... No lo compre para eso, quería que lo usaras en el evento"
     show mc_parado_base b_seria
 
     show mc_parado_base b_hablando o_abajonm

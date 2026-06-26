@@ -64,8 +64,8 @@ init 10 python:
             npc_id="violet",
             config_etapas={
                 ESTADO_EVENT_VISIBLE: ConfigEtapa(
-                    pista="Siempre quise un casco VR, ahora que esta disponible podria comprarlo",
-                    que_hacer="Comprar el casco VR y usarlo en tu habitacion por la noche",
+                    pista="Siempre quise un casco VR, ahora que esta disponible podría comprarlo",
+                    que_hacer="Comprar el casco VR y usarlo en tu habitación por la noche",
                 ),
             },
         )
