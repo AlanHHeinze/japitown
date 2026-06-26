@@ -139,7 +139,7 @@ label event_monica_01_narrativa:
 
     # Monica habla
     show monica_parada b_hablando c_rbase_dolorhombro1 with sprite_normal
-    monica "Ya se me esta pasando,solo tengo que acostumbrarme a usar la notebook en casa"
+    monica "Ya se me está pasando,solo tengo que acostumbrarme a usar la notebook en casa"
     show monica_parada b_none
     pause 0.3
     show monica_parada b_dolor c_rbase_dolorhombro2 with sprite_normal
@@ -172,12 +172,12 @@ label event_monica_01_narrativa:
 
     # Monica habla
     show monica_parada b_hablando
-    monica "¿Aquí esta bien?"
+    monica "¿Aquí está bien?"
     show monica_parada b_none 
 
     # MC habla
     show mc_parado_base b_hablando 
-    mc "Sí, esta bien."
+    mc "Sí, está bien."
     show mc_parado_base b_none 
 
     # Monica se cambia
@@ -223,10 +223,10 @@ label event_monica_01_narrativa:
     pause 0.3
     show monica_evento_01 img3 monica_none with sprite_normal 
     show monica_evento_01 bmc_hablando
-    mc "¿Esta bien así? ¿O más suave?"
+    mc "¿Está bien así? ¿O más suave?"
     show monica_evento_01 bmc_none
     show monica_evento_01 bmonica_hablando
-    monica "Mmm... así esta bien"
+    monica "Mmm... así está bien"
     show monica_evento_01 bmonica_none
     show monica_evento_01 img6 with sprite_normal
     pause 0.3

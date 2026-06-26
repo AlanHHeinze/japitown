@@ -237,7 +237,7 @@ label event_jasmine_01_repetir_alternativo:
     show jasmine_paradadeportiva b_feliz with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva c_animacion1 b_hablando with sprite_normal
-    jasmine "Me parece que tus intenciones son otras, pero esta bien..."
+    jasmine "Me parece que tus intenciones son otras, pero está bien..."
     show jasmine_paradadeportiva b_none with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva c_animacion5 with sprite_normal

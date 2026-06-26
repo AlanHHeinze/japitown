@@ -149,7 +149,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Esta bien que no me creas",
+                        texto="Está bien que no me creas",
                         respuesta_npc="",
                         puntos={},
                         saltar_a_paso=9
@@ -402,7 +402,7 @@ init 6 python:
                 mensaje_npc="",
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Esta bien prometo",
+                        texto="Está bien prometo",
                         respuesta_npc=set_vq7_rama_a,
                         puntos={},
                         saltar_a_paso=-1

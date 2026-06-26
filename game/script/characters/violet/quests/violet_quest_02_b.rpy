@@ -97,7 +97,7 @@ label quest_violet_questprincipal_02_b:
     mc "Suena como un poco generico la verdad"
     show mc_parado_base b_none o_base c_rbase_base with sprite_fast
 
-    violet "Sí, es algo generico pero esta bien llevado"
+    violet "Sí, es algo generico pero está bien llevado"
 
     show mc_parado_base b_hablando
     mc "¿Algún otro?"

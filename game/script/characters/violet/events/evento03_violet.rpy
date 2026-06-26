@@ -165,7 +165,7 @@ label evento03_violet:
 
     # Violet habla
     show violet_parada b_hablandochica c_pijama_bostezo1 with sprite_normal
-    violet "Ahhhh... Esta bien"
+    violet "Ahhhh... Está bien"
     show violet_parada b_hablando
     pause 0.3
     show violet_parada b_none c_pijama_agotada with sprite_normal

@@ -58,7 +58,7 @@ label usar_mangas_violet_mc:
     show mc_parado_base c_rbase_leyendocyberpunk o_base b_none at Transform(xalign=0.5, yalign=1.0) with dissolve
 
     if mangas_violet_lecturas == 1:
-        piensa "El mundo esta bien plasmado y el prota un joven bien común, al que el mundo no le da respiro, me gusta bastante"
+        piensa "El mundo está bien plasmado y el prota un joven bien común, al que el mundo no le da respiro, me gusta bastante"
 
     elif mangas_violet_lecturas == 2:
         piensa "Se puso intenso, ya está metido de lleno en el mundo y encontró un grupo donde por fin pertenece"

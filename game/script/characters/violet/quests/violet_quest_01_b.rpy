@@ -47,7 +47,7 @@ label usar_mangas_violet:
             jump game_loop
 
         "Abrirlo":
-            piensa "Bueno... ya esta aquí, no pierdo nada con ver que tiene."
+            piensa "Bueno... ya está aquí, no pierdo nada con ver que tiene."
 
             $ store.violet_quest2n_paquete_abierto = True
 
@@ -310,7 +310,7 @@ label dar_paquete_quest02_violet_b:
     pause 0.5
     # (Violet ojos base boca hablando)
     show violet_parada o_base b_hablando
-    violet "La caja esta abierta..."
+    violet "La caja está abierta..."
     # (Violet boca neutral ojos base)
     show violet_parada b_none o_base
 

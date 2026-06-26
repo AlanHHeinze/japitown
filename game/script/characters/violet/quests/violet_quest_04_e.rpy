@@ -72,7 +72,7 @@ label quest_violet_questprincipal_04_e:
         show violet_parada b_hablandochica c_pijama_base with sprite_fast
     else:
         show violet_parada b_hablandochica c_rbase_base with sprite_fast
-    violet "Esta bien, pero que no sea algo tan llamativo y apretado esta vez"
+    violet "Está bien, pero que no sea algo tan llamativo y apretado esta vez"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
@@ -80,7 +80,7 @@ label quest_violet_questprincipal_04_e:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica o_arribanm
-    violet "Esta bien... pero no te emociones, no es que ya acepte usarlo, depende mucho de lo que sea"
+    violet "Está bien... pero no te emociones, no es que ya acepte usarlo, depende mucho de lo que sea"
     show violet_parada b_none
 
     show mc_parado_base b_hablando

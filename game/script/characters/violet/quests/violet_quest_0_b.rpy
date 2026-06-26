@@ -409,7 +409,7 @@ label quest_violet_0_opcion_entrar:
     mc "Ahora estamos hablando ya dejamos de ser extaños, entonces si te hablo me respondes"
     # (Mc boca sonrisa abierta)
     show mc_parado_base b_abiertachica
-    mc "¿Esta bien?"
+    mc "¿Está bien?"
     # (Mc boca seria cuerpo brazos cruzados)
     show mc_parado_base b_seria c_rbase_brazoscruzados with sprite_fast
 
@@ -553,7 +553,7 @@ label quest_violet_0_opcion_entrar:
 
     # (Violet boca hablando)
     show violet_parada b_hablando
-    violet "Esta bien"
+    violet "Está bien"
     # (Violet boca sonrisa leve)
     show violet_parada b_sonrisaleve
 

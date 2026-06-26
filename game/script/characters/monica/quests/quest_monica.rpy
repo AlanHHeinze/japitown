@@ -49,7 +49,7 @@ init 5 python:
         requisitos=[],
         validacion_especial=[],
         mensaje_pista="Ver que le pasa a Monica",
-        mensaje_despertar="Escucho que Monica se esta peleando con alguien, debería ver si todo esta bien",
+        mensaje_despertar="Escucho que Monica se esta peleando con alguien, debería ver si todo está bien",
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
@@ -60,7 +60,7 @@ init 5 python:
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista="Ver que le pasa a Monica",
                 que_hacer="Ir al Living",
-                mensaje_despertar="Escucho que Monica se esta peleando con alguien, debería ver si todo esta bien",
+                mensaje_despertar="Escucho que Monica se esta peleando con alguien, debería ver si todo está bien",
                 accion_al_entrar=setup_restriccion_monica_quest0b,
             ),
         },

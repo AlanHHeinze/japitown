@@ -408,7 +408,7 @@ label quest_jasmine_0_regalo:
 
     jasmine "Jajaja, no te pongas nervioso."
     jasmine "Ven más para aquí..."
-    mc "¿Aquí esta bien?"
+    mc "¿Aquí está bien?"
     jasmine "Espera un momento que lo agarro..."
     jasmine "Listo"
     pause 0.5

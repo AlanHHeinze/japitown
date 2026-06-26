@@ -387,7 +387,7 @@ label violet_quest08a_entrar_baño:
 
     window show
     piensa "No se si fue la mejor opcion entrar así"
-    piensa "Esta lleno de vapor y no veo bien"
+    piensa "Está lleno de vapor y no veo bien"
     window hide
 
     pause 0.5

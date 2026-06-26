@@ -355,7 +355,7 @@ label evento1_violet_repetir:
 
     # MC no entiende
     show mc_parado_base o_aburridosnm b_aburrida
-    piensa "No se de que esta hablando"
+    piensa "No se de que está hablando"
     show mc_parado_base b_hablando
     mc "Lo que digas..."
     show mc_parado_base b_seria o_base
