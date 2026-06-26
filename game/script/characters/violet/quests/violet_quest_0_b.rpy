@@ -101,7 +101,7 @@ label quest_violet_questprincipal_0_b:
     pause 0.3
     # (Mc espalda rascandose 1)
     show mc_espalda_base rascarse1
-    piensa "Esta mas terca de lo que la recuerdo"
+    piensa "Esta más terca de lo que la recuerdo"
     piensa "¿Qué debería hacer?"
 
     jump tutorial_elecciones_violet
@@ -195,7 +195,7 @@ label quest_violet_0_opcion_respeto:
     mc "Por cierto, antes que me olvide. El extraño que vive en tu casa te trajo un regalo"
     mc "Si no lo quieres, no hay problema"
 
-    violet "Dejalo en la puerta, ahora estoy descambiada"
+    violet "Déjalo en la puerta, ahora estoy descambiada"
 
     #Poner animacion sacar el regalo
     $ quitar_del_inventario("regalo_violet")
@@ -424,7 +424,7 @@ label quest_violet_0_opcion_entrar:
 
     # (Violet boca hablando)
     show violet_parada b_hablando
-    violet "Si..."
+    violet "Sí..."
     # (Violet boca neutral)
     show violet_parada b_none
 
@@ -454,7 +454,7 @@ label quest_violet_0_opcion_entrar:
 
     # (Violet boca hablando chica cuerpo sorprendida)
     show violet_parada b_hablandochica c_rbase_sorprendido with sprite_normal
-    violet "Si..."
+    violet "Sí..."
     # (Violet boca neutral)
     show violet_parada b_none
 
@@ -541,7 +541,7 @@ label quest_violet_0_opcion_entrar:
     # (Mc ojos abajo boca seria cuerpo facepalm)
     show mc_parado_base o_abajonm b_seria c_rbase_facepalm with sprite_normal
     piensa "Cierto, Violet es fanatica de la pizza"
-    piensa "Quizás podría haber empezado por ahí, hubiera sido mas fácil"
+    piensa "Quizás podría haber empezado por ahí, hubiera sido más fácil"
     # (Mc ojos base boca neutral cuerpo base)
     show mc_parado_base o_base b_none c_rbase_base with sprite_normal
 

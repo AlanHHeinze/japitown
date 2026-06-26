@@ -139,7 +139,7 @@ init 6 python:
                     ),
                     OpcionRespuesta(
                         texto="¿Eso piensas de mi?",
-                        respuesta_npc="Si...",
+                        respuesta_npc="Sí...",
                         puntos={},
                         saltar_a_paso=8
                     ),
@@ -460,7 +460,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Nada, pero con ese trasero mas ganas me dan de hablar jajaja",
+                        texto="Nada, pero con ese trasero más ganas me dan de hablar jajaja",
                         respuesta_npc="eres un idiota",
                         puntos={},
                         saltar_a_paso=10

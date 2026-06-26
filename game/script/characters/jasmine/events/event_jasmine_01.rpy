@@ -36,7 +36,7 @@ label event_jasmine_01_repetir:
 
     #MC Habla
     show mc_parado_base b_hablando o_felicescerrados with sprite_normal
-    mc "Si, cuando vuela a Capital City puedo comprarte otro similar"
+    mc "Sí, cuando vuela a Capital City puedo comprarte otro similar"
     show mc_parado_base b_felizcerrada o_base with sprite_normal
 
     #Jasmine habla
@@ -102,7 +102,7 @@ label event_jasmine_01_repetir:
     
     #MC Habla
     show mc_parado_base b_hablando with sprite_normal
-    mc "Si..."
+    mc "Sí..."
     show mc_parado_base b_none with sprite_normal
 
     #Jasmine habla
@@ -137,7 +137,7 @@ label event_jasmine_01_repetir:
 
     #MC Habla
     show mc_parado_base b_hablando with sprite_normal
-    mc "Si, lo veo"
+    mc "Sí, lo veo"
     show mc_parado_base b_none with sprite_normal
 
     
@@ -145,7 +145,7 @@ label event_jasmine_01_repetir:
     show jasmine_paradadeportiva e_animacion5 with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva e_animacion6 with sprite_normal
-    jasmine "Sobre todo aquí abajo, que es donde mas se mueve"
+    jasmine "Sobre todo aquí abajo, que es donde más se mueve"
     show jasmine_paradadeportiva e_animacion7 with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva e_animacion6 with sprite_normal
@@ -161,7 +161,7 @@ label event_jasmine_01_repetir:
 
     #MC Habla
     show mc_parado_base b_hablando with sprite_normal
-    mc "Si, perdón por molestarte"
+    mc "Sí, perdón por molestarte"
     show mc_parado_base b_none with sprite_normal
 
     # Ocultar personaje
@@ -228,7 +228,7 @@ label event_jasmine_01_repetir_alternativo:
 
     #MC Habla
     show mc_parado_base b_hablando o_felicescerrados with sprite_normal
-    mc "Si, cuando vuela a Capital City puedo comprarte otro similar"
+    mc "Sí, cuando vuela a Capital City puedo comprarte otro similar"
     show mc_parado_base b_felizcerrada o_base with sprite_normal
 
     #Jasmine habla
@@ -272,7 +272,7 @@ label event_jasmine_01_repetir_alternativo:
     #Jasmine habla
 
     show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "Si... me imagino no..."
+    jasmine "Sí... me imagino no..."
     show jasmine_paradadeportiva b_none with sprite_normal
     show jasmine_paradadeportiva b_hablando with sprite_normal
     jasmine "Aquí tiene que sostener firme"
@@ -294,7 +294,7 @@ label event_jasmine_01_repetir_alternativo:
     
     #MC Habla
     show mc_parado_base b_hablando with sprite_normal
-    mc "Si..."
+    mc "Sí..."
     show mc_parado_base b_none with sprite_normal
 
     #Jasmine habla

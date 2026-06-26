@@ -185,7 +185,7 @@ label quest_jasmine_0_opcion_deseo:
     
     # MC habla
     show mc_parado_base b_hablando o_base
-    mc "Sigues siendo igual, siempre la mas madura y directa."
+    mc "Sigues siendo igual, siempre la más madura y directa."
     show mc_parado_base b_felizcerrada
     pause 0.3
     show mc_parado_base b_hablando
@@ -261,7 +261,7 @@ label quest_jasmine_0_opcion_realidad:
     show jasmine_parada b_enojada
     pause 0.3
     show jasmine_parada b_hablando o_tristesnm
-    jasmine "Sé que fue así y sé que fue mas duro para ti."
+    jasmine "Sé que fue así y sé que fue más duro para ti."
     show jasmine_parada b_enojada
     
     # MC habla
@@ -407,7 +407,7 @@ label quest_jasmine_0_regalo:
     scene black with fade
 
     jasmine "Jajaja, no te pongas nervioso."
-    jasmine "Ven mas para aquí..."
+    jasmine "Ven más para aquí..."
     mc "¿Aquí esta bien?"
     jasmine "Espera un momento que lo agarro..."
     jasmine "Listo"

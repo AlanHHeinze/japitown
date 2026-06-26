@@ -51,7 +51,7 @@ label evento2_violet:
     show violet_evento_02 img1 with dissolve
     
     violet "¿Este era el cosplay que tanto querías ver?"
-    mc "Si... te queda muy bien"
+    mc "Sí... te queda muy bien"
 
     # img2
     show violet_evento_02 img2 with dissolve
@@ -61,14 +61,14 @@ label evento2_violet:
 
     # img3
     show violet_evento_02 img3 with dissolve
-    violet "¿Así o un poco mas?"
-    mc "Un poco mas"
+    violet "¿Así o un poco más?"
+    mc "Un poco más"
 
 
     # img5
     show violet_evento_02 img5 with dissolve
     violet "¿Esto querías ver? Perverido"
-    mc "Si, estaba deseando ese trasero"
+    mc "Sí, estaba deseando ese trasero"
 
     # img6
     show violet_evento_02 img6 with dissolve

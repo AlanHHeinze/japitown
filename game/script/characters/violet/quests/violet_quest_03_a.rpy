@@ -68,7 +68,7 @@ label quest_violet_questprincipal_03_a:
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Si, ya los termine de leer"
+    mc "Sí, ya los termine de leer"
     show mc_parado_base b_none
 
     show mc_parado_base c_rbase_mochila1 with sprite_normal
@@ -157,7 +157,7 @@ label vq03a_rama_deseo:
 
     show mc_parado_base c_rbase_pensando o_arribanm with sprite_fast
     piensa "Veo que se lo tomo bastante a pecho"
-    piensa "No se si es el mejor momento para hablar de eso, voy a esperar hasta que este un poco mas tranquila"
+    piensa "No se si es el mejor momento para hablar de eso, voy a esperar hasta que este un poco más tranquila"
     show mc_parado_base c_rbase_base o_base b_hablando with sprite_fast
     mc "Bueno, de verda hablemos del manga, necesito descargar con alguien"
     show mc_parado_base b_none
@@ -177,7 +177,7 @@ label vq03a_rama_amor:
         show violet_parada b_hablandochica o_juzgandonm c_pijama_brazoscruzados with sprite_fast
     else:
         show violet_parada b_hablandochica o_juzgandonm c_rbase_brazoscruzados with sprite_fast
-    violet "Si, pero no quiero que te pongas sentimental como la otra vez"
+    violet "Sí, pero no quiero que te pongas sentimental como la otra vez"
     show violet_parada b_none o_base
 
     show mc_parado_base b_hablando c_rbase_base
@@ -198,7 +198,7 @@ label vq03a_rama_amor:
 
     show mc_parado_base c_rbase_pensando o_arribanm with sprite_fast
     piensa "Veo que se lo tomo bastante a pecho"
-    piensa "No se si es el mejor momento para hablar de eso, voy a esperar hasta que este un poco mas tranquila"
+    piensa "No se si es el mejor momento para hablar de eso, voy a esperar hasta que este un poco más tranquila"
     show mc_parado_base c_rbase_base o_tristesnm b_hablando with sprite_fast
     mc "Bueno, de verda hablemos del manga, necesito descargar con alguien"
     show mc_parado_base b_none
@@ -220,7 +220,7 @@ label vq03a_comun:
     show violet_parada b_sonrisaleve o_base
 
     show mc_parado_base b_hablando o_base 
-    mc "Si, empezó como algo solo de acción y tiros, pense que iba a ser eso"
+    mc "Sí, empezó como algo solo de acción y tiros, pense que iba a ser eso"
     show mc_parado_base b_abiertachica
     mc "Pero el desarrollo de los personajes y la historia me parecio facinante, todavía sigo pensando en el final"
     show mc_parado_base b_none
@@ -251,7 +251,7 @@ label vq03a_comun:
     hide violet_parada with dissolve
 
     piensa "Podría ver si hay algún otro manga que me interese mientras espero"
-    piensa "Y chusmear un poco su habitación, capas que encuentro algo mas para conectar con ella"
+    piensa "Y chusmear un poco su habitación, capas que encuentro algo más para conectar con ella"
 
     # Quitar mangas del inventario
     $ store.inventario["mangas_violet_mc"] = store.inventario.get("mangas_violet_mc", 1) - 1

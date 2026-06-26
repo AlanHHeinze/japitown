@@ -378,11 +378,11 @@ init 5 python:
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_CONDICIONES: ConfigEtapa(
-                pista="Tengo que mejorar mi relación con Violet para que me muestre mas del cosplay",
+                pista="Tengo que mejorar mi relación con Violet para que me muestre más del cosplay",
                 que_hacer=_qc("vq04d_condiciones_quehacer", lambda: renpy.translate_string("Subir deseo 💋 con Violet ({}/{})").format(
                     getattr(store, 'violet_deseo', 0), 10
                 )),
-                mensaje_despertar="Violet dijo que tenía mas fotos, quizás pueda lograr que me las envie",
+                mensaje_despertar="Violet dijo que tenía más fotos, quizás pueda lograr que me las envie",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista=_qc("vq04d_botonlisto_pista", lambda: "Violet ya me contestó, debería ir a hablar con ella" if store.sistema_mensajes.grupo_completado("violet_quest04d_chat") else "Violet me envió un mensaje, debería responderle"),
@@ -415,11 +415,11 @@ init 5 python:
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_CONDICIONES: ConfigEtapa(
-                pista="Tengo que seguir mejorando mi relación con Violet para que me muestre mas.",
+                pista="Tengo que seguir mejorando mi relación con Violet para que me muestre más.",
                 que_hacer=_qc("vq04e_condiciones_quehacer", lambda: renpy.translate_string("Subir deseo 💋 con Violet ({}/{})").format(
                     getattr(store, 'violet_deseo', 0), 15
                 )),
-                mensaje_despertar="Esto de mejorar mi relación con Violet esta trayendo buenos resultados, me pregunto si podre conseguir algo mas",
+                mensaje_despertar="Esto de mejorar mi relación con Violet esta trayendo buenos resultados, me pregunto si podre conseguir algo más",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista=_qc("vq04e_botonlisto_pista", lambda: "Violet ya me contestó, debería ir a hablar con ella" if store.sistema_mensajes.grupo_completado("violet_quest04e_chat") else "Violet me envió un mensaje, debería responderle"),

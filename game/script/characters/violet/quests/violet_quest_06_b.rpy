@@ -194,7 +194,7 @@ label violet_quest06b_puerta:
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Si..."
+    mc "Sí..."
     show mc_parado_base b_none
 
     hide violet_parada with sprite_fast
@@ -277,7 +277,7 @@ label violet_quest06b_cierre_a:
 
     show quest06 uno with sprite_fast
 
-    mc "Creo que lo trabe mas, no lo puedo ni subir ahora"
+    mc "Creo que lo trabe más, no lo puedo ni subir ahora"
 
     violet "Es un problema ese cierre, me costo mucho sacarmelo la otra vez"
 
@@ -291,7 +291,7 @@ label violet_quest06b_cierre_a:
 
     mc "Seguro que ella lo puede arreglar"
 
-    violet "Si, le voy a decir ahora, antes que se haga mas tarde"
+    violet "Sí, le voy a decir ahora, antes que se haga más tarde"
 
     hide quest06
     show mc_parado_base c_rbase_brazoscruzados at mc_izquierda with fade

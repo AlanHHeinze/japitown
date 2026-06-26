@@ -27,7 +27,7 @@ init python:
             "q": "¿Se te perdió algo o me estás mirando?",
             "ops": [
                 {"texto": "Solo pasaba por aquí.",                               "resp": "Ajá. Seguro pasabas 'por aquí' justo donde estoy yo.", "stat": "amor"},
-                {"texto": "Me quedé mirando sin querer, disculpá.",              "resp": "Está bien. Al menos eres honesto.", "stat": "deseo"},
+                {"texto": "Me quedé mirando sin querer, disculpa.",              "resp": "Está bien. Al menos eres honesto.", "stat": "deseo"},
                 {"texto": "Estaba pensando en otra cosa.",                       "resp": "Eso espero.", "stat": "amor"},
             ]
         },
@@ -36,7 +36,7 @@ init python:
         {
             "q": "¿Te molesta el ruido cuando estoy con la música?",
             "ops": [
-                {"texto": "Para nada, ponela tranquila.",                        "resp": "Es la primera vez que alguien no se queja.", "stat": "deseo"},
+                {"texto": "Para nada, ponla tranquila.",                        "resp": "Es la primera vez que alguien no se queja.", "stat": "deseo"},
                 {"texto": "Depende del volumen, la verdad.",                     "resp": "Tiene sentido. Voy a tratar de no pasarme.", "stat": "amor"},
                 {"texto": "A veces hasta me gusta, suena bien.",                 "resp": "...Gracias. No me lo esperaba.", "stat": "amor"},
             ]

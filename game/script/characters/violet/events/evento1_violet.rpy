@@ -122,7 +122,7 @@ label evento1_violet:
     show violet_parada o_abiertos b_hablando
     violet "¿Eso es un casco vr?"
     show violet_parada b_none
-    mc "Si"
+    mc "Sí"
 
     # Violet quiere probarlo - entusiasmo
     show violet_parada o_felices b_feliz
@@ -202,7 +202,7 @@ label evento1_violet:
 
     # Sigue jugando emocionada
     show violet_evento_01_violetvr vr4 with dissolve
-    violet "Si, es genial"
+    violet "Sí, es genial"
 
     # Mas animacion de cortes
     show violet_evento_01_violetvr vr5 with dissolve
@@ -259,7 +259,7 @@ label evento1_violet:
     # Violet presume su golpe
     violet "¿Te gusto mi golpe final?"
     show mc_parado_base o_felices b_felizabierta
-    mc "Si, fue genial"
+    mc "Sí, fue genial"
     show mc_parado_base b_felizcerrada
 
     # Violet esta agotada
@@ -269,7 +269,7 @@ label evento1_violet:
     show mc_parado_base b_seria
 
     # Violet menciona ropa comoda - MC se pone nervioso
-    violet "No, gracias... Otro día volvemos a jugar y con ropa mas comoda"
+    violet "No, gracias... Otro día volvemos a jugar y con ropa más comoda"
     show mc_parado_base o_sorprendidos b_hablando
     mc "Eso es lo que decía yo"
     show mc_parado_base b_seria o_base
@@ -321,7 +321,7 @@ label evento1_violet_repetir:
     # Violet se pone el casco - confiada
     show violet_evento_01_violetvr vr1 with dissolve
     show violet_evento_01_violetvr b_hablando
-    violet "Esta vez voy a hacer muchos mas puntos"
+    violet "Esta vez voy a hacer muchos más puntos"
     show violet_evento_01_violetvr b_none
 
     # MC pregunta - curioso
@@ -331,7 +331,7 @@ label evento1_violet_repetir:
 
     # Violet responde con su logica
     show violet_evento_01_violetvr b_hablando
-    violet "Si, hay que reutilizar los recursos"
+    violet "Sí, hay que reutilizar los recursos"
     show violet_evento_01_violetvr b_none
 
     # MC confundido
@@ -397,7 +397,7 @@ label evento1_violet_repetir:
 
     # MC sorprendido
     show mc_parado_base o_sorprendidos b_hablando
-    mc "¿Qué? ¿Mas de 8000? Eso es imposible..."
+    mc "¿Qué? ¿Más de 8000? Eso es imposible..."
     show mc_parado_base b_seria
 
     # Violet presume
@@ -427,7 +427,7 @@ label evento1_violet_repetir:
 
     # MC acepta la derrota con determinacion
     show mc_parado_base o_serios b_hablando
-    mc "Voy a tener que practicar mas"
+    mc "Voy a tener que practicar más"
     show mc_parado_base b_seria
     violet "Nunca vas a superar mi puntuacion"
 

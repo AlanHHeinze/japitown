@@ -34,7 +34,7 @@ init 6 python:
                 opciones_jugador=[
                     OpcionRespuesta(
                         texto="Bien, estoy acomodandome, son muchas cosas que hacer y procesar",
-                        respuesta_npc="Si, debe ser un monton y estresante\nComo lo venis llevando",
+                        respuesta_npc="Sí, debe ser un monton y estresante\nComo lo venis llevando",
                         puntos={},
                         saltar_a_paso=1
                     ),
@@ -47,13 +47,13 @@ init 6 python:
                 opciones_jugador=[
                     OpcionRespuesta(
                         texto="Bien, la verdad que es lo que necesitaba para avanzar con mi vida",
-                        respuesta_npc="Que bueno que así sea\nCuando ya estes mas tranquilo nos tenemos que ver y charlar",
+                        respuesta_npc="Que bueno que así sea\nCuando ya estes más tranquilo nos tenemos que ver y charlar",
                         puntos={},
                         saltar_a_paso=2
                     ),
                     OpcionRespuesta(
                         texto="Es un poco complicado, creo que me va a costar adaptarme",
-                        respuesta_npc="Va a ser así solo al principio, es lo mejor que te podía pasar\nCuando ya estes mas tranquilo nos tenemos que ver y charlar",
+                        respuesta_npc="Va a ser así solo al principio, es lo mejor que te podía pasar\nCuando ya estes más tranquilo nos tenemos que ver y charlar",
                         puntos={},
                         saltar_a_paso=2
                     ),
@@ -65,7 +65,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Gracias Carl, cuando este mas tranquilo te escribo",
+                        texto="Gracias Carl, cuando este más tranquilo te escribo",
                         respuesta_npc="😉",
                         puntos={},
                         saltar_a_paso=-1

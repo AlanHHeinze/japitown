@@ -79,7 +79,7 @@ label quest_violet_questprincipal_0_a:
     tutorial "Durante el transcurso del juego puede que necesitemos mejorar nuestra [colorear_quest('relacion con un personaje')] para avanzar en alguna quest"
     tutorial "Cada personaje tiene [colorear_quest('dos estadisticas')] que representan esto: [colorear_quest('el amor (❤️) y el deseo (💋)')]"
     tutorial "La mejora de estos también nos desbloqueara recompensas especiales en situaciones especificas a lo largo del desarrollo de la historia de un personaje"
-    tutorial "La forma mas directa de mejorarlos es usando la interaccion [colorear_quest('Hablar')] que veremos en el [colorear_quest('Menu del Personaje')] al hacerle click"
+    tutorial "La forma más directa de mejorarlos es usando la interaccion [colorear_quest('Hablar')] que veremos en el [colorear_quest('Menu del Personaje')] al hacerle click"
     tutorial "Prueba [colorear_quest('Hablar con Violet')] para mejorar tu relación con ella"
 
     # Marcar que el intro ya se hizo: a partir de ahora "Hablar" con Violet
@@ -218,7 +218,7 @@ label violet_q0a_golosinas:
     show violet_parada c_rbase_base b_none
 
     show mc_parado_base b_hablando
-    mc "Si, toma"
+    mc "Sí, toma"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica

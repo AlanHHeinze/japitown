@@ -54,14 +54,14 @@ label quest_violet_questprincipal_04_c:
 
     show mc_parado_base o_arribanm c_rbase_pensando with sprite_fast
     piensa "¿Una de las fotos?"
-    piensa "Entonces se saco mas"
+    piensa "Entonces se saco más"
 
     show mc_parado_base b_hablando o_base
-    mc "¿Te sacaste mas fotos?"
+    mc "¿Te sacaste más fotos?"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "No hay ninguna foto mas y fin del tema"
+    violet "No hay ninguna foto más y fin del tema"
     if vq4c_cuerpo == "c_pijama":
         show violet_parada b_none c_pijama_base with sprite_fast
     else:
@@ -69,7 +69,7 @@ label quest_violet_questprincipal_04_c:
 
     hide violet_parada with dissolve
 
-    piensa "Violet se saco mas fotos, si logre que me mande una, puedo lograr que me mande las otras también"
+    piensa "Violet se saco más fotos, si logre que me mande una, puedo lograr que me mande las otras también"
     piensa "Sera cosa de seguir mejorarndo la relación"
     
     hide mc_parado_base with dissolve

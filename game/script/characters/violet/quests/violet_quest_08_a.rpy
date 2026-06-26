@@ -192,7 +192,7 @@ label violet_quest08a_ver_tv:
     show violet_mojada b_none
 
     show mc_parado_base b_hablando
-    mc "Si, anda a bañarte que ahora te lo llevo"
+    mc "Sí, anda a bañarte que ahora te lo llevo"
     show mc_parado_base b_none
 
     hide violet_mojada with dissolve
@@ -393,7 +393,7 @@ label violet_quest08a_entrar_baño:
     pause 0.5
 
     window show
-    piensa "¿Podría acercarme mas?"
+    piensa "¿Podría acercarme más?"
 
     call screen vq8a_menu_bano
 

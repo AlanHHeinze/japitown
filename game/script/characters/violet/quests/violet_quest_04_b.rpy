@@ -43,7 +43,7 @@ label quest_violet_questprincipal_04_b:
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Si, dime"
+    mc "Sí, dime"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
@@ -61,7 +61,7 @@ label quest_violet_questprincipal_04_b:
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Si, estaba en un maniqui, sé que es uno de tus personajes favoritos y quería que el regalo no fuera algo generico"
+    mc "Sí, estaba en un maniqui, sé que es uno de tus personajes favoritos y quería que el regalo no fuera algo generico"
     show mc_parado_base b_abiertachica
     mc "Aparte de eso pronto se va a hacer la Japicon y pense que seria un buen cosplay"
     show mc_parado_base b_none

@@ -36,7 +36,7 @@ label entrega_repartidor_0:
     show repartidor_parado c_bas
 
     show mc_parado_base b_hablando
-    mc "Si, soy yo"
+    mc "Sí, soy yo"
     show mc_parado_base b_none
     
     show repartidor_parado c_base
@@ -44,7 +44,7 @@ label entrega_repartidor_0:
     show repartidor_parado c_base
 
     show mc_parado_base b_hablando
-    mc "Si, acabo de mudarme. Esta sera mi casa a partir de ahora"
+    mc "Sí, acabo de mudarme. Esta sera mi casa a partir de ahora"
     show mc_parado_base b_none
     
     show repartidor_parado c_base

@@ -102,7 +102,7 @@ label quest_violet_questprincipal_04_a:
     show mc_parado_base b_seria
 
     show jasmine_parada b_hablando
-    jasmine "No lo hagas mas si le molesta"
+    jasmine "No lo hagas más si le molesta"
     show jasmine_parada b_sorprendida c_rbase_dedolabio with sprite_fast
     jasmine "Si te vuelve a surgir la necesidad, yo te regalo una jajaja"
     show jasmine_parada b_felizcerrada
@@ -123,7 +123,7 @@ label quest_violet_questprincipal_04_a:
     pause 1.0
 
     show violet_parada b_hablando c_rbase_pensando with sprite_fast
-    violet "Si me gusto, pero después de esto tengo mas dudas sobre las intenciones de tu regalo"
+    violet "Si me gusto, pero después de esto tengo más dudas sobre las intenciones de tu regalo"
     show violet_parada b_none c_rbase_base with sprite_fast
 
     show jasmine_parada b_hablando
@@ -252,7 +252,7 @@ label violet_quest04a_jasmine_todo_ok:
     show jasmine_parada b_none
 
     show mc_parado_base b_hablando c_rbase_confianza with sprite_fast
-    mc "Si, te quedaba genial, tengo buen gusto"
+    mc "Sí, te quedaba genial, tengo buen gusto"
     show mc_parado_base b_none with sprite_fast
 
     show jasmine_parada b_hablando
@@ -295,7 +295,7 @@ label violet_quest04a_continua:
     show mc_parado_base b_none
 
     show jasmine_parada b_hablando
-    jasmine "Si, lo mejor es no insistirle"
+    jasmine "Sí, lo mejor es no insistirle"
     show jasmine_parada b_sorprendida c_rbase_saludando with sprite_fast
     jasmine "Nos vemos luego"
     show jasmine_parada b_none c_rbase_base with sprite_fast
@@ -311,7 +311,7 @@ label violet_quest04a_continua:
     show mc_parado_base b_hablando
     mc "No era para molestarte de verdad"
     show mc_parado_base b_abiertachica
-    mc "Prometo no molestarte mas con eso"
+    mc "Prometo no molestarte más con eso"
     show mc_parado_base b_none
 
     hide mc_parado_base with dissolve

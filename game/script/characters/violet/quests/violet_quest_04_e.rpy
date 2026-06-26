@@ -43,7 +43,7 @@ label quest_violet_questprincipal_04_e:
     show mc_parado_base b_hablando 
     mc "No, esta es buena, podría encargar en la tienda un cosplay nuevo y que lo envien, si no queres usar el que tenes, podemos comprar otro"
     show mc_parado_base b_abiertachica c_rbase_brazoscruzados with sprite_fast
-    mc "No voy a insistirte mas con el cosplay, pero si en que vayamos a la Japicon"
+    mc "No voy a insistirte más con el cosplay, pero si en que vayamos a la Japicon"
     show mc_parado_base b_none
 
     if vq4e_cuerpo == "c_pijama":
@@ -65,7 +65,7 @@ label quest_violet_questprincipal_04_e:
     show violet_parada b_none
 
     show mc_parado_base b_hablando c_rbase_pensando with sprite_fast
-    mc "No lo pense, pero si te hace sentir mas comoda, puedo usar algún cosplay también"
+    mc "No lo pense, pero si te hace sentir más comoda, puedo usar algún cosplay también"
     show mc_parado_base b_none c_rbase_base with sprite_fast
 
     if vq4e_cuerpo == "c_pijama":

@@ -343,7 +343,7 @@ label violet_quest2_escena_pasillo:
 
     # Violet habla
     show violet_parada b_hablandochica
-    violet "Si... gracias [mc_name]"
+    violet "Sí... gracias [mc_name]"
     show violet_parada b_none
 
     # MC piensa
@@ -574,7 +574,7 @@ label violet_quest2_opcion_a:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Si..."
+    violet "Sí..."
     show violet_parada b_none
 
     show mc_parado_base b_hablando
@@ -598,7 +598,7 @@ label violet_quest2_opcion_a:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica o_arribanm
-    violet "Pero si te podías comunicar y no lo hiciste, no respondiste mas mensajes ni nada"
+    violet "Pero si te podías comunicar y no lo hiciste, no respondiste más mensajes ni nada"
     show violet_parada b_none o_base
     pause 0.3
     show violet_parada b_hablandochica o_arribanm

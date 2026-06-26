@@ -126,7 +126,7 @@ label quest_monica_questprincipal_0_b:
     tutorial "Puedes abrir el inventario desde el [colorear_quest('Icono de la Mochila')] en la parte superiro derecha, desde ahí, revisar y usar los objetos que tengas [colorear_quest('Haciendo Click')] en ellos"
     tutorial "Algunos objenos no se pueden usar desde el inventario, sirven para ser utilizados en algún momento especifico del juego"
     tutorial "Mientras que otros si puedes usarlos desde el mismo. Al usarlos disparara su acción relacionada o te indicara si hay algún requisito adicional para hacer, como una locacion o horario"
-    tutorial "Probá [colorear_item('Notebook de Monica')] desde el inventario cuando estés en [colorear_locacion('Tu Habitacion')]"
+    tutorial "Prueba [colorear_item('Notebook de Monica')] desde el inventario cuando estés en [colorear_locacion('Tu Habitacion')]"
 
     window hide
 

@@ -345,13 +345,13 @@ label dar_paquete_quest02_violet_b1:
 
     # (Mc boca hablando cuerpo asustado)
     show mc_parado_base b_hablando c_rbase_asustado with sprite_normal
-    mc "Tranquila, solo vi que eran unos mangas, pero nada mas"
+    mc "Tranquila, solo vi que eran unos mangas, pero nada más"
     # (Mc boca neutral cuerpo base)
     show mc_parado_base b_none c_rbase_base with sprite_normal
 
     # (Violet boca hablando chica)
     show violet_parada b_hablandochica
-    violet "Mas te vale..."
+    violet "Más te vale..."
     # (Violet boca neutral)
     show violet_parada b_none
 
@@ -360,7 +360,7 @@ label dar_paquete_quest02_violet_b1:
     mc "¿Por qué tanto problema por unos mangas?"
     # (Mc boca abierta chica)
     show mc_parado_base b_abiertachica
-    mc "¿Había algo mas ahí?"
+    mc "¿Había algo más ahí?"
     # (Mc boca neutral)
     show mc_parado_base b_none
 
@@ -489,7 +489,7 @@ label dar_paquete_quest02_violet_b2:
 
     # (Violet boca hablando)
     show violet_parada b_hablando
-    violet "¿No me vas a molestar mas verdad?"
+    violet "¿No me vas a molestar más verdad?"
     # (Violet boca neutral)
     show violet_parada b_none
 

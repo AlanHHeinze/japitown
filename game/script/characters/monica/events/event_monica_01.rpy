@@ -177,7 +177,7 @@ label event_monica_01_narrativa:
 
     # MC habla
     show mc_parado_base b_hablando 
-    mc "Si, esta bien."
+    mc "Sí, esta bien."
     show mc_parado_base b_none 
 
     # Monica se cambia
@@ -213,7 +213,7 @@ label event_monica_01_narrativa:
     mc "¿Estas lista?"
     show monica_evento_01 bmc_none
     show monica_evento_01 bmonica_hablando
-    monica "Si"
+    monica "Sí"
     show monica_evento_01 bmonica_none
     show monica_evento_01 img4 with sprite_normal
     pause 0.3
@@ -223,7 +223,7 @@ label event_monica_01_narrativa:
     pause 0.3
     show monica_evento_01 img3 monica_none with sprite_normal 
     show monica_evento_01 bmc_hablando
-    mc "¿Esta bien así? ¿O mas suave?"
+    mc "¿Esta bien así? ¿O más suave?"
     show monica_evento_01 bmc_none
     show monica_evento_01 bmonica_hablando
     monica "Mmm... así esta bien"
@@ -249,7 +249,7 @@ label event_monica_01_narrativa:
     mc "Te dije que lo era"
     show monica_evento_01 bmc_none
     show monica_evento_01 bmonica_hablando
-    monica "Voy a tener que pedirte que me lo hagas mas seguido"
+    monica "Voy a tener que pedirte que me lo hagas más seguido"
     show monica_evento_01 bmonica_none
     show monica_evento_01 img4 with sprite_normal
     pause 0.3
@@ -262,7 +262,7 @@ label event_monica_01_narrativa:
     show monica_evento_01 img8 with sprite_normal
     pause 0.3
     show monica_evento_01 bmonica_hablandoabajo
-    monica "Mas fuerte..."
+    monica "Más fuerte..."
     show monica_evento_01 bmonica_none
     show monica_evento_01 img6 with sprite_normal
     pause 0.3
@@ -278,7 +278,7 @@ label event_monica_01_narrativa:
     mc "¿Estas bien?"
     show monica_evento_01 bmc_none
     show monica_evento_01 bmonica_hablandoabajo
-    monica "Si..."
+    monica "Sí..."
     show monica_evento_01 bmonica_none
     show monica_evento_01 monica_sonrojada img4 with sprite_normal
     pause 0.3
@@ -295,7 +295,7 @@ label event_monica_01_narrativa:
     pause 0.3
     piensa "¿Eso fue un gemido?"
     show monica_evento_01 monica_sexy bmonica_hablandoabajo
-    monica "Un poco mas abajo..."
+    monica "Un poco más abajo..."
     show monica_evento_01 bmonica_none
     show monica_evento_01  img9 with sprite_normal
     pause 0.3
@@ -303,13 +303,13 @@ label event_monica_01_narrativa:
     pause 0.3
     show monica_evento_01 img12 with sprite_normal
     show monica_evento_01 monica_relajada bmonica_hablandoabajo
-    monica "Ahí es, mas duro..."
+    monica "Ahí es, más duro..."
     show monica_evento_01 bmonica_none
     show monica_evento_01 img10 with sprite_normal
     pause 0.3
     show monica_evento_01 img12 with sprite_normal
     show monica_evento_01 bmonica_hablandoabajo
-    monica "Mas..."
+    monica "Más..."
     show monica_evento_01 bmonica_none
     show monica_evento_01 img10 with sprite_normal
     pause 0.1

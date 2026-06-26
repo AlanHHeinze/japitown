@@ -420,7 +420,7 @@ label mc_q0_exploracion_completada:
     $ ocultar_hud()
     window show
 
-    tutorial "Esas son las [colorear_locacion('habitaciones')] con mas conexiones dentro de la casa"
+    tutorial "Esas son las [colorear_locacion('habitaciones')] con más conexiones dentro de la casa"
     tutorial "Durante el juego te podras mover libremente y explorar cada lugar, el movimiento no tiene ningún costo así que sientete libre de hacerlo"
     tutorial "Siempre que quieras puedes [colorear_quest('activar')] y [colorear_quest('desactivar')] la ayuda de movimiento con el [colorear_quest('boton del ojo')] que tendras en la [colorear_quest('barra de acciones')] de la locacion"
     tutorial "Una vez que estes familiarizado con el movimiento, dentro del [colorear_quest('celular')] en las [colorear_quest('opciones')] podras directamente [colorear_quest('desactivarla')] si así lo prefieres"

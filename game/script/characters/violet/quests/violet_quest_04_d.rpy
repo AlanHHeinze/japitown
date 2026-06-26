@@ -53,7 +53,7 @@ label quest_violet_questprincipal_04_d:
     show mc_parado_base b_felizcerrada o_base
 
     show violet_parada b_hablandochica o_enojados
-    violet "Basta con eso, no quiero que hables mas del tema"
+    violet "Basta con eso, no quiero que hables más del tema"
     show violet_parada b_none
 
     show mc_parado_base b_felizabierta

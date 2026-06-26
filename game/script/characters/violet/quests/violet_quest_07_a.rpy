@@ -106,7 +106,7 @@ label violet_quest07a_outcome_c:
     show violet_parada b_none
 
     show violet_parada b_hablandochica
-    violet "Habla con la tienda y probá a ver si te lo cambian"
+    violet "Habla con la tienda y prueba a ver si te lo cambian"
     show violet_parada b_none
 
     show mc_parado_base b_hablando

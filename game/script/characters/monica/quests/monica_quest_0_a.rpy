@@ -100,7 +100,7 @@ label quest_monica_questprincipal_0:
     
     #Monica Piensa
     show monica_parada o_arribanm
-    monica_pensando "Violet y Jasmine deben estar mas que felices en este momento..."
+    monica_pensando "Violet y Jasmine deben estar más que felices en este momento..."
     show monica_parada o_base
 
     # Monica habla
@@ -258,7 +258,7 @@ label quest_monica_0_opcion_cercania:
     
     # MC habla
     show mc_parado_base b_hablando
-    mc "Siempre te admiré mucho y ahora que estoy aquí quiero aprovechar para pasar mas tiempo contigo"
+    mc "Siempre te admiré mucho y ahora que estoy aquí quiero aprovechar para pasar más tiempo contigo"
     show mc_parado_base b_none
     
     show monica_parada c_rbase_avergonzada with sprite_normal

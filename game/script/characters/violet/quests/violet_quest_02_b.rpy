@@ -39,7 +39,7 @@ label quest_violet_questprincipal_02_b:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Si... tengo elegi algunos separados"
+    violet "Sí... tengo elegi algunos separados"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
@@ -97,7 +97,7 @@ label quest_violet_questprincipal_02_b:
     mc "Suena como un poco generico la verdad"
     show mc_parado_base b_none o_base c_rbase_base with sprite_fast
 
-    violet "Si, es algo generico pero esta bien llevado"
+    violet "Sí, es algo generico pero esta bien llevado"
 
     show mc_parado_base b_hablando
     mc "¿Algún otro?"
@@ -237,7 +237,7 @@ label violet_quest02b_opcion_deseo:
     show violet_parada b_aburrida c_pijama_brazoscruzados ot_avergonzada with sprite_fast
 
     show mc_parado_base b_abiertachica c_rbase_avergonzado with sprite_fast
-    mc "Si, dificiles... es todo lo que voy a decir"
+    mc "Sí, dificiles... es todo lo que voy a decir"
     show mc_parado_base b_hablando
     mc "Gracias por los mangas"
     show mc_parado_base b_none o_base c_rbase_base with sprite_fast

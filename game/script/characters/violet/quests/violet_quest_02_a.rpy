@@ -75,7 +75,7 @@ label violet_quest02a_rechaza_insiste:
     violet "A ver... mmmm..."
     pause 0.5
     show violet_parada b_hablandochica o_base c_rbase_base with sprite_fast
-    violet "No, no se me paso ¿Algo mas?"
+    violet "No, no se me paso ¿Algo más?"
     show violet_parada b_aburrida
 
     show mc_parado_base b_hablando  
@@ -84,7 +84,7 @@ label violet_quest02a_rechaza_insiste:
 
     hide violet_parada with dissolve
 
-    piensa "Tengo que mejorar un poco mas la relación y quizás logre que me los preste"
+    piensa "Tengo que mejorar un poco más la relación y quizás logre que me los preste"
 
     hide mc_parado_base with dissolve
 
@@ -140,7 +140,7 @@ label violet_quest02a_rechaza:
     piensa "Cortante como siempre"
 
     show violet_parada b_hablandochica
-    violet "¿Algo mas?"
+    violet "¿Algo más?"
     show violet_parada b_aburrida
 
     show mc_parado_base b_hablando  
