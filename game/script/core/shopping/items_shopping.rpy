@@ -16,9 +16,25 @@ init python:
         q = store.sistema_quests.obtener_quest("monica_questprincipal_0_c")
         return q is not None and q.completada
 
+    # Condiciones de uso como funciones de módulo (NO lambdas): CATALOGO_ITEMS se muta
+    # en runtime (stock), por lo que entra al save y las lambdas romperían el pickle.
+    def _item_cond_nunca():
+        """No usable directamente desde el inventario."""
+        return False
+
+    def _item_casco_vr_usable():
+        loc = store.sistema_locaciones.locacion_actual
+        return loc is not None and loc.id == "casa_hmc" and store.horario_actual == 2
+
+    def _pocion_conquista_usable():
+        """Usable en cualquier locación, pero no si el efecto ya está activo
+        (evita gastar una segunda poción sin beneficio)."""
+        return not getattr(store, 'pocion_conquista_activa', False)
+
     # Catálogo de items disponibles para comprar
     # Formato: "id": {"nombre": str, "emoji": str, "precio": int, "dias_entrega": int}
-    # dias_entrega: Dias hábiles (no incluye fines de semana)
+    # dias_entrega: Dias de calendario de espera. Si la entrega cae sábado/domingo
+    #               se mueve al lunes (ver calcular_fecha_entrega en shopping_system).
 
     CATALOGO_ITEMS = {
         # Comida - Entrega rápida
@@ -30,7 +46,7 @@ init python:
             "descripcion": "Una bolsa con varias golosinas",
             "usable": True,
             "vendible": True,
-            "condicion_uso": lambda: False,
+            "condicion_uso": _item_cond_nunca,
             "instruccion_uso": "Podría usarlo en alguien con hambre",
             "consumible": False,
             "stock": 10,
@@ -47,6 +63,23 @@ init python:
             "stock": 5,
             "reposicion": 3,
         },
+
+        # Poción de Conquista — activa por un día el ver resultados en el talk
+        "pocion_conquista": {
+            "nombre": "Poción de Conquista",
+            "emoji": "🧪",
+            "precio": 40,
+            "dias_entrega": 1,
+            "descripcion": "Una poción misteriosa que agudiza tu percepción por un día",
+            "usable": True,
+            "vendible": True,
+            "consumible": True,
+            "condicion_uso": _pocion_conquista_usable,
+            "instruccion_uso": "El efecto de la poción ya está activo",
+            "label_uso": "usar_pocion_conquista",
+            "stock": 5,
+            "reposicion": 5,
+        },
         
         # Lociones - Entrega media
         "locion_masajes": {
@@ -57,7 +90,7 @@ init python:
             "descripcion": "Loción de masajes para relajar los músculos",
             "usable": True,
             "vendible": True,
-            "condicion_uso": lambda: False,
+            "condicion_uso": _item_cond_nunca,
             "instruccion_uso": "Podría usarlo en alguien cansado",
             "consumible": False,
             "stock": 10,
@@ -72,7 +105,7 @@ init python:
             "descripcion": "Una bebida energética",
             "usable": True,
             "vendible": True,
-            "condicion_uso": lambda: False,
+            "condicion_uso": _item_cond_nunca,
             "instruccion_uso": "Podría usarlo en alguien agotada",
             "consumible": False,
             "stock": 10,
@@ -100,12 +133,7 @@ init python:
             "descripcion": "Un casco de realidad virtual para jugar videojuegos",
             "usable": True,
             "vendible": True,
-            "condicion_uso": lambda: (
-                hasattr(store, 'sistema_locaciones') and
-                store.sistema_locaciones.locacion_actual and
-                store.sistema_locaciones.locacion_actual.id == "casa_hmc" and
-                store.horario_actual == 2
-            ),
+            "condicion_uso": _item_casco_vr_usable,
             "instruccion_uso": "Debería usar esto en mi habitación por la noche",
             "label_uso": "usar_casco_vr",
             "consumible": False,
@@ -137,7 +165,7 @@ init python:
             "usable": True,
             "vendible": True,
             "consumible": False,
-            "condicion_uso": lambda: False,
+            "condicion_uso": _item_cond_nunca,
             "instruccion_uso": "Entradas para la Japicon",
             "stock": 0,
             "reposicion": 0,
@@ -153,7 +181,7 @@ init python:
             "usable": True,
             "vendible": False,
             "consumible": False,
-            "condicion_uso": lambda: False,
+            "condicion_uso": _item_cond_nunca,
             "instruccion_uso": "Debería darle esto a Violet",
             "stock": 0,
             "reposicion": 0,
@@ -172,7 +200,7 @@ init python:
             "usable": True,
             "vendible": False,
             "consumible": True,
-            "condicion_uso": lambda: False,
+            "condicion_uso": _item_cond_nunca,
             "instruccion_uso": "El regalo que le traje a Monica. Debería agradecerle en persona cuando esté sola.",
             "stock": 0,
             "reposicion": 0,
@@ -264,7 +292,7 @@ init python:
             "descripcion": "Un jabón que encontré en el baño",
             "usable": True,
             "vendible": False,
-            "condicion_uso": lambda: False,
+            "condicion_uso": _item_cond_nunca,
             "instruccion_uso": "Podría intentar ayudar a Violet con esto",
             "consumible": False,
             "stock": 0,
@@ -278,7 +306,7 @@ init python:
             "descripcion": "Un aceite que encontré en la cocina",
             "usable": True,
             "vendible": False,
-            "condicion_uso": lambda: False,
+            "condicion_uso": _item_cond_nunca,
             "instruccion_uso": "Podría intentar ayudar a Violet con esto",
             "consumible": False,
             "stock": 0,
@@ -292,7 +320,7 @@ init python:
             "descripcion": "Silicona que encontré en el garage",
             "usable": True,
             "vendible": False,
-            "condicion_uso": lambda: False,
+            "condicion_uso": _item_cond_nunca,
             "instruccion_uso": "Podría intentar ayudar a Violet con esto",
             "consumible": False,
             "stock": 0,
@@ -309,11 +337,7 @@ init python:
             "usable": True,
             "vendible": False,
             "consumible": False,
-            "condicion_uso": lambda: (
-                hasattr(store, 'sistema_locaciones') and
-                store.sistema_locaciones.locacion_actual and
-                store.sistema_locaciones.locacion_actual.id == "casa_hmc"
-            ),
+            "condicion_uso": _item_en_habitacion_mc,
             "instruccion_uso": "Debería estar en mi habitación para leer más tranquilo",
             "label_uso": "usar_mangas_violet_mc",
             "stock": 0,
@@ -329,11 +353,7 @@ init python:
             "usable": True,
             "vendible": False,
             "consumible": False,
-            "condicion_uso": lambda: (
-                hasattr(store, 'sistema_locaciones') and
-                store.sistema_locaciones.locacion_actual and
-                store.sistema_locaciones.locacion_actual.id == "casa_hmc"
-            ),
+            "condicion_uso": _item_en_habitacion_mc,
             "instruccion_uso": "Si voy a abrirlo debería estar en mi habitación",
             "label_uso": "usar_mangas_violet",
             "stock": 0,
@@ -349,11 +369,7 @@ init python:
             "usable": True,
             "vendible": False,
             "consumible": False,
-            "condicion_uso": lambda: (
-                hasattr(store, 'sistema_locaciones') and
-                store.sistema_locaciones.locacion_actual and
-                store.sistema_locaciones.locacion_actual.id == "casa_hmc"
-            ),
+            "condicion_uso": _item_en_habitacion_mc,
             "instruccion_uso": "No debo sacar esto acá",
             "label_uso": "usar_tanga_violet",
             "stock": 0,

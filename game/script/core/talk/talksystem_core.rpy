@@ -26,14 +26,16 @@ init python:
         "nada":     None,
     }
 
+    # Forma compacta: numero + emoji (sin la palabra amor/deseo).
+    # "sin efecto" es texto y se traduce via translate_string en los usos.
     RESULTADO_TEXTO = {
-        "+1_amor":  "+1 amor ❤️",
-        "+2_amor":  "+2 amor ❤️",
-        "+4_amor":  "+4 amor ❤️",
-        "+1_deseo": "+1 deseo 💋",
-        "+2_deseo": "+2 deseo 💋",
-        "-2_amor":  "-2 amor ❤️",
-        "-1_deseo": "-1 deseo 💋",
+        "+1_amor":  "+1 ❤️",
+        "+2_amor":  "+2 ❤️",
+        "+4_amor":  "+4 ❤️",
+        "+1_deseo": "+1 💋",
+        "+2_deseo": "+2 💋",
+        "-2_amor":  "-2 ❤️",
+        "-1_deseo": "-1 💋",
         "nada":     "sin efecto",
     }
 
@@ -165,10 +167,9 @@ init python:
         Opción adicional de talk disponible bajo condiciones específicas.
         Puede requerir un ítem, provenir de una quest, evento, etc.
 
-        Los callables (condicion, recompensa_extra) se excluyen del pickle
-        para no crashear al guardar durante una interacción de talk.
-        Como este objeto solo vive en sistema_talk (define), se reconstruye
-        correctamente en cada inicio de sesión.
+        condicion y recompensa_extra deben ser funciones de MÓDULO (no lambdas
+        ni defs anidadas): sistema_talk es default y se guarda en el save, y
+        pickle solo puede serializar callables de nivel de módulo.
         """
         def __init__(self, id, texto, condicion, mensaje_opcion,
                     resultado_id=None, item_requerido=None, item_consumible=False,
@@ -182,17 +183,6 @@ init python:
             self.item_consumible = item_consumible
             self.estado_posterior_npc = estado_posterior_npc
             self.recompensa_extra = recompensa_extra  # callable, para disparadores futuros
-
-        def __getstate__(self):
-            state = self.__dict__.copy()
-            # Los callables no son serializables — se excluyen del save.
-            # Como este objeto vive en sistema_talk (define), se recrea al inicio.
-            state['condicion'] = None
-            state['recompensa_extra'] = None
-            return state
-
-        def __setstate__(self, state):
-            self.__dict__.update(state)
 
         def esta_disponible(self):
             if not self.condicion:
@@ -400,7 +390,14 @@ init python:
             return None
 
 
-define sistema_talk = SistemaTalk()
+# Instancia creada en init 4 (los registros de init 5-11 la llenan) y declarada
+# con default para que se guarde en el save: estados activos y memoria del MC deben guardarse.
+init 4 python:
+    sistema_talk = SistemaTalk()
+# OJO: el default se re-evalúa en CADA partida nueva. Debe devolver una COPIA
+# del catálogo poblado en init — una instancia vacía (SistemaTalk()) borraría todo
+# el contenido registrado. Ver _ps_copia_fresca en persistencia_sistemas.rpy.
+default sistema_talk = _ps_copia_fresca("sistema_talk")
 default talk_memoria = {}
 
 

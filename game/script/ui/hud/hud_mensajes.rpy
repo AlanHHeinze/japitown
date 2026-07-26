@@ -13,6 +13,28 @@ default _msg_npc_chat_actual = ""
 default _msg_tiempo_escribiendo = 1.5
 default _msg_timer_id = 0
 
+# -----------------------------------------------------------------------------
+# Auto-scroll del chat
+# -----------------------------------------------------------------------------
+# El "yinitial 1.0" del viewport solo se aplica cuando el viewport se crea, asi
+# que al llegar un mensaje nuevo el scroll se quedaba donde estaba. Usamos un
+# adjustment propio para poder empujarlo al fondo cada vez que cambia el
+# contenido del chat (mensaje nuevo, respuesta del jugador, "escribiendo...").
+# Es "define" a proposito: es estado de UI, no va al save.
+define _chat_yadj = ui.adjustment()
+
+# Ultimo contenido visto: (npc_id, cantidad de mensajes, escribiendo?)
+default _chat_scroll_estado = None
+
+init python:
+
+    def _chat_scroll_al_fondo():
+        """Lleva el viewport del chat al ultimo mensaje."""
+        try:
+            _chat_yadj.change(_chat_yadj.range)
+        except Exception:
+            pass
+
 # =============================================================================
 # LISTA DE CONTACTOS
 # =============================================================================
@@ -23,9 +45,10 @@ screen lista_contactos_mensajes():
     modal True
 
     $ _ajc = sistema_ajuste_cel.obtener_container("lista_contactos_mensajes") if modo_ajuste_celular else None
+    $ _k = CEL_APP_ESCALA_SMALL if renpy.variant("small") else 1.0
 
     # Fondo del celular
-    add "images/hud/interfaz_celular.png" xalign 0.0 yalign 0.0
+    use _celular_fondo()
 
     # Click fuera del celular cierra todo
     use _celular_cerrar_exterior("lista_contactos_mensajes")
@@ -43,10 +66,10 @@ screen lista_contactos_mensajes():
             xfill True
 
             # Barra de estado
-            use _celular_barra_status()
+            use _celular_barra_status("lista_contactos_mensajes")
 
             # Header de app
-            use _celular_app_header("Chat", "💬", [Hide("lista_contactos_mensajes"), Show("menu_celular")])
+            use _celular_app_header("Chat", "💬", [Hide("lista_contactos_mensajes"), Show("menu_celular")], "lista_contactos_mensajes")
 
             # Lista de contactos
             $ _contactos_fijos = ["jasmine", "monica", "violet"]
@@ -63,10 +86,10 @@ screen lista_contactos_mensajes():
                 frame:
                     xfill True
                     background None
-                    padding (10, 8)
+                    padding (int(10 * _k), int(8 * _k))
 
                     vbox:
-                        spacing 4
+                        spacing int(4 * _k)
                         xfill True
 
                         for npc_id in _todos_contactos:
@@ -88,35 +111,35 @@ screen lista_contactos_mensajes():
                                     xfill True
                                     background "#1e1e3aCC"
                                     hover_background "#2a2a50CC"
-                                    padding (12, 10)
+                                    padding (int(12 * _k), int(10 * _k))
 
                                     hbox:
-                                        spacing 12
+                                        spacing int(12 * _k)
                                         yalign 0.5
 
                                         # Icono NPC
                                         $ _icon_path = "images/hud/pista_{}.png".format(npc_id)
                                         frame:
-                                            xysize (42, 42)
+                                            xysize (int(42 * _k), int(42 * _k))
                                             background "#3a3a5aCC"
 
                                             if renpy.loadable(_icon_path):
-                                                add _icon_path zoom 0.164 xalign 0.5 yalign 0.5
+                                                add _icon_path zoom (0.164 * _k) xalign 0.5 yalign 0.5
                                             else:
-                                                text "[_icono]" size 22 xalign 0.5 yalign 0.5
+                                                text "[_icono]" size int(22 * _k) xalign 0.5 yalign 0.5
 
                                         # Nombre y preview
                                         vbox:
-                                            spacing 2
+                                            spacing int(2 * _k)
 
-                                            text "[_nombre]" size 15 color "#ffffff" bold True
+                                            text "[_nombre]" size int(15 * _k) color "#ffffff" bold True
 
                                             if _ultimo:
                                                 $ _texto_sub = renpy.substitute(renpy.translate_string(_ultimo.texto))
                                                 $ _preview = _texto_sub[:35] + ("..." if len(_texto_sub) > 35 else "")
-                                                text "[_preview]" size 12 color "#aaaaaa"
+                                                text "[_preview]" size int(12 * _k) color "#aaaaaa"
                                             else:
-                                                text _("Sin mensajes") size 12 color "#666666"
+                                                text _("Sin mensajes") size int(12 * _k) color "#666666"
 
                                         # Badge
                                         if _sin_leer > 0:
@@ -124,10 +147,10 @@ screen lista_contactos_mensajes():
                                                 xalign 1.0
                                                 yalign 0.5
                                                 background "#FF4444"
-                                                padding (6, 3)
-                                                xminimum 24
+                                                padding (int(6 * _k), int(3 * _k))
+                                                xminimum int(24 * _k)
 
-                                                text "[_sin_leer]" size 12 color "#ffffff" bold True xalign 0.5
+                                                text "[_sin_leer]" size int(12 * _k) color "#ffffff" bold True xalign 0.5
 
 
 # =============================================================================
@@ -142,6 +165,7 @@ screen pantalla_chat(npc_id="monica"):
     $ _ajc = sistema_ajuste_cel.obtener_container("pantalla_chat") if modo_ajuste_celular else None
     $ _chat = sistema_mensajes.chats.get(npc_id)
     $ _nombre = obtener_nombre_contacto(npc_id)
+    $ _k = CEL_APP_ESCALA_SMALL if renpy.variant("small") else 1.0
 
     # Marcar como leído al abrir
     if _chat:
@@ -151,7 +175,7 @@ screen pantalla_chat(npc_id="monica"):
     use _timer_escribiendo()
 
     # Fondo del celular
-    add "images/hud/interfaz_celular.png" xalign 0.0 yalign 0.0
+    use _celular_fondo()
 
     # Click fuera del celular cierra todo
     use _celular_cerrar_exterior("pantalla_chat")
@@ -169,64 +193,134 @@ screen pantalla_chat(npc_id="monica"):
             xfill True
 
             # Barra de estado
-            use _celular_barra_status()
+            use _celular_barra_status("pantalla_chat")
 
             # Header del chat con avatar
             frame:
                 xsize ajuste_cel_area_w
-                ysize 55
+                ysize int(55 * _k)
                 background "#12122aFF"
-                padding (10, 0)
+                padding (int(10 * _k), 0)
 
-                hbox:
-                    yalign 0.5
-                    spacing 10
+                $ _icon_path_header = "images/hud/pista_{}.png".format(npc_id)
 
-                    textbutton "◀":
-                        action [Hide("pantalla_chat"), Show("lista_contactos_mensajes")]
-                        text_size 44
-                        text_color "#4FC3F7"
-                        text_hover_color "#81D4FA"
+                if renpy.variant("small"):
+                    # Táctil: volver (izquierda), avatar+nombre centrado, cerrar (derecha)
+                    fixed:
+                        xfill True
+                        yfill True
+
+                        textbutton "◀":
+                            xalign 0.0
+                            yalign 0.5
+                            action [Hide("pantalla_chat"), Show("lista_contactos_mensajes")]
+                            text_size int(44 * _k)
+                            text_color "#4FC3F7"
+                            text_hover_color "#81D4FA"
+                            padding (int(8 * _k), int(5 * _k))
+
+                        hbox:
+                            xalign 0.5
+                            yalign 0.5
+                            spacing int(10 * _k)
+
+                            frame:
+                                xysize (int(32 * _k), int(32 * _k))
+                                background "#3a3a5aCC"
+                                yalign 0.5
+
+                                if renpy.loadable(_icon_path_header):
+                                    add _icon_path_header zoom (0.125 * _k) xalign 0.5 yalign 0.5
+                                else:
+                                    text "👤" size int(16 * _k) xalign 0.5 yalign 0.5
+
+                            text "[_nombre]" size int(16 * _k) color "#ffffff" bold True yalign 0.5
+
+                        button:
+                            xalign 1.0
+                            yalign 0.5
+                            xysize (int(44 * _k), int(44 * _k))
+                            background "#E53935EE"
+                            hover_background "#FF5449"
+                            if modo_ajuste_celular:
+                                action NullAction()
+                            else:
+                                action [Hide("pantalla_chat"), SetVariable("menu_celular_abierto", False), Hide("menu_celular"), Call("_validar_estado_tras_celular")]
+                            text "X" size int(24 * _k) color "#ffffff" bold True xalign 0.5 yalign 0.5
+
+                else:
+                    hbox:
                         yalign 0.5
-                        padding (8, 5)
+                        spacing 10
 
-                    # Icono NPC
-                    $ _icon_path_header = "images/hud/pista_{}.png".format(npc_id)
-                    frame:
-                        xysize (32, 32)
-                        background "#3a3a5aCC"
-                        yalign 0.5
+                        textbutton "◀":
+                            action [Hide("pantalla_chat"), Show("lista_contactos_mensajes")]
+                            text_size 44
+                            text_color "#4FC3F7"
+                            text_hover_color "#81D4FA"
+                            yalign 0.5
+                            padding (8, 5)
 
-                        if renpy.loadable(_icon_path_header):
-                            add _icon_path_header zoom 0.125 xalign 0.5 yalign 0.5
-                        else:
-                            text "👤" size 16 xalign 0.5 yalign 0.5
+                        # Icono NPC
+                        frame:
+                            xysize (32, 32)
+                            background "#3a3a5aCC"
+                            yalign 0.5
 
-                    text "[_nombre]" size 16 color "#ffffff" bold True yalign 0.5
+                            if renpy.loadable(_icon_path_header):
+                                add _icon_path_header zoom 0.125 xalign 0.5 yalign 0.5
+                            else:
+                                text "👤" size 16 xalign 0.5 yalign 0.5
+
+                        text "[_nombre]" size 16 color "#ffffff" bold True yalign 0.5
 
                 frame:
                     xfill True
-                    ysize 1
+                    ysize int(1 * _k)
                     yalign 1.0
                     background "#ffffff11"
 
             # Área de mensajes (scrollable)
-            # Altura = area total - barra status(32) - header(55) - footer(100) - margen inferior(50)
-            $ _chat_viewport_h = ajuste_cel_area_h - 32 - 55 - 100 - 50
+            # Altura = area total - header - footer [- barra status - margen
+            # inferior, en PC: en táctil no hay barra de estado (se sacó) y el
+            # footer tiene que tocar el borde inferior de la pantalla, sin margen].
+            if renpy.variant("small"):
+                $ _chat_viewport_h = ajuste_cel_area_h - int(55 * _k) - int(100 * _k)
+            else:
+                $ _chat_viewport_h = ajuste_cel_area_h - 32 - 55 - 100 - 50
+
+            # Auto-scroll al ultimo mensaje: si cambio el contenido del chat,
+            # el timer deja que se re-renderice (para que el adjustment conozca
+            # el alto nuevo) y recien ahi empuja el scroll al fondo. En táctil
+            # el framerate real del dispositivo puede ser mucho mas bajo que en
+            # PC, asi que un solo timer corto puede disparar antes de que el
+            # viewport termine de acomodar el contenido nuevo: se reintenta un
+            # par de veces mas con mas margen, a modo de red de seguridad
+            # (los timers de mas no hacen nada si el primero ya alcanzo).
+            $ _chat_contenido = (npc_id, len(_chat.historial) if _chat else 0, bool(_msg_escribiendo))
+            if _chat_contenido != _chat_scroll_estado:
+                if renpy.variant("small"):
+                    timer 0.15 action Function(_chat_scroll_al_fondo)
+                    timer 0.4 action Function(_chat_scroll_al_fondo)
+                    timer 0.8 action [SetVariable("_chat_scroll_estado", _chat_contenido), Function(_chat_scroll_al_fondo)]
+                else:
+                    timer 0.01 action [SetVariable("_chat_scroll_estado", _chat_contenido), Function(_chat_scroll_al_fondo)]
+
             viewport:
                 xsize ajuste_cel_area_w
                 ysize _chat_viewport_h
+                yadjustment _chat_yadj
                 yinitial 1.0
                 scrollbars "vertical"
                 mousewheel True
                 draggable True
 
                 vbox:
-                    spacing 6
+                    spacing int(6 * _k)
                     xfill True
                     box_wrap False
 
-                    null height 8
+                    null height int(8 * _k)
 
                     if _chat and len(_chat.historial) > 0:
                         for _msg in _chat.historial:
@@ -240,21 +334,21 @@ screen pantalla_chat(npc_id="monica"):
 
                                     frame:
                                         xalign 1.0
-                                        xmaximum 420
+                                        xmaximum int(420 * _k)
                                         background "#1565C0CC"
-                                        padding (10, 7)
+                                        padding (int(10 * _k), int(7 * _k))
 
                                         vbox:
-                                            spacing 3
+                                            spacing int(3 * _k)
                                             if _msg.foto:
                                                 imagebutton:
                                                     idle _msg.foto
                                                     hover _msg.foto
                                                     action Show("vista_foto_ampliada", foto=_msg.foto)
                                                     at transform:
-                                                        zoom 0.3
+                                                        zoom (0.3 * _k)
                                             $ _texto_jugador = renpy.substitute(renpy.translate_string(_msg.texto))
-                                            text "[_texto_jugador]" size 13 color "#ffffff" xalign 1.0
+                                            text "[_texto_jugador]" size int(13 * _k) color "#ffffff" xalign 1.0
                             else:
                                 # Burbuja del NPC (izquierda)
                                 hbox:
@@ -263,26 +357,26 @@ screen pantalla_chat(npc_id="monica"):
 
                                     frame:
                                         xalign 0.0
-                                        xmaximum 420
+                                        xmaximum int(420 * _k)
                                         background "#1e1e3aCC"
-                                        padding (10, 7)
+                                        padding (int(10 * _k), int(7 * _k))
 
                                         vbox:
-                                            spacing 3
-                                            text "[_nombre]" size 10 color "#8888bb" bold True
+                                            spacing int(3 * _k)
+                                            text "[_nombre]" size int(10 * _k) color "#8888bb" bold True
                                             if _msg.foto:
                                                 imagebutton:
                                                     idle _msg.foto
                                                     hover _msg.foto
                                                     action Show("vista_foto_ampliada", foto=_msg.foto)
                                                     at transform:
-                                                        zoom 0.3
+                                                        zoom (0.3 * _k)
                                             $ _texto_npc = renpy.substitute(renpy.translate_string(_msg.texto))
-                                            text "[_texto_npc]" size 13 color "#dddddd"
+                                            text "[_texto_npc]" size int(13 * _k) color "#dddddd"
 
                                     null
                     else:
-                        text _("No hay mensajes aún") size 14 color "#666666" xalign 0.5 yalign 0.5
+                        text _("No hay mensajes aún") size int(14 * _k) color "#666666" xalign 0.5 yalign 0.5
 
                     # Indicador "Escribiendo..."
                     if _msg_escribiendo and _msg_npc_chat_actual == npc_id:
@@ -293,25 +387,25 @@ screen pantalla_chat(npc_id="monica"):
                             frame:
                                 xalign 0.0
                                 background "#1e1e3aCC"
-                                padding (10, 7)
+                                padding (int(10 * _k), int(7 * _k))
 
                                 hbox:
-                                    spacing 5
-                                    text "[_nombre]" size 10 color "#8888bb" bold True
-                                    text _("escribiendo...") size 10 color "#8888bb" italic True
+                                    spacing int(5 * _k)
+                                    text "[_nombre]" size int(10 * _k) color "#8888bb" bold True
+                                    text _("escribiendo...") size int(10 * _k) color "#8888bb" italic True
 
-                    null height 8
+                    null height int(8 * _k)
 
             # Barra inferior
             frame:
                 xsize ajuste_cel_area_w
-                ysize 100
+                ysize int(100 * _k)
                 background "#0a0a18FF"
-                padding (15, 12)
+                padding (int(15 * _k), int(12 * _k))
 
                 hbox:
                     xfill True
-                    spacing 10
+                    spacing int(10 * _k)
 
                     $ _puede_responder = _chat and _chat.puede_responder() and not _msg_escribiendo and not _msg_respuestas_pendientes
                     $ _bg_color = "#4CAF50CC" if _puede_responder else "#1e1e3a66"
@@ -320,24 +414,24 @@ screen pantalla_chat(npc_id="monica"):
                     button:
                         action (Function(_abrir_selector_respuesta, npc_id) if _puede_responder else NullAction())
                         xfill True
-                        ysize 76
+                        ysize int(76 * _k)
                         background _bg_color
                         hover_background _hover_color
-                        padding (15, 10)
-                        
+                        padding (int(15 * _k), int(10 * _k))
+
                         hbox:
-                            spacing 10
+                            spacing int(10 * _k)
                             yalign 0.5
                             if not _puede_responder:
                                 xalign 0.5
 
                             if _puede_responder:
-                                text "📝" size 36 yalign 0.5
-                                text _("Escribe un mensaje...") size 28 color "#ffffff" yalign 0.5
+                                text "📝" size int(36 * _k) yalign 0.5
+                                text _("Escribe un mensaje...") size int(28 * _k) color "#ffffff" yalign 0.5
                             elif _chat and _chat.tiene_pendientes() and not _msg_escribiendo:
-                                text _("[_nombre] responderá más tarde.") size 26 color "#888888" yalign 0.5
+                                text _("[_nombre] responderá más tarde.") size int(26 * _k) color "#888888" yalign 0.5
                             else:
-                                text "—" size 28 color "#444444" yalign 0.5
+                                text "—" size int(28 * _k) color "#444444" yalign 0.5
 
 
 # =============================================================================
@@ -351,6 +445,7 @@ screen selector_respuesta(npc_id="monica"):
 
     $ _ajc = sistema_ajuste_cel.obtener_container("selector_respuesta") if modo_ajuste_celular else None
     $ _chat = sistema_mensajes.chats.get(npc_id)
+    $ _k = CEL_APP_ESCALA_SMALL if renpy.variant("small") else 1.0
 
     # Fondo semi-transparente solo en area del celular
     button:
@@ -367,10 +462,10 @@ screen selector_respuesta(npc_id="monica"):
         xsize ajuste_cel_area_w
         yalign 1.0
         background "#12122aF5"
-        padding (15, 15)
+        padding (int(15 * _k), int(15 * _k))
 
         vbox:
-            spacing 10
+            spacing int(10 * _k)
             xfill True
 
             # Si hay grupo activo
@@ -381,7 +476,7 @@ screen selector_respuesta(npc_id="monica"):
                 if _paso:
                     $ _opciones_visibles = [(i, op) for i, op in enumerate(_paso.opciones_jugador) if op.es_visible()]
 
-                    text _("Elige tu respuesta:") size 14 color "#4FC3F7" bold True xalign 0.5
+                    text _("Elige tu respuesta:") size int(14 * _k) color "#4FC3F7" bold True xalign 0.5
 
                     for _i_real, _opcion in _opciones_visibles:
                         button:
@@ -395,14 +490,18 @@ screen selector_respuesta(npc_id="monica"):
                                 xfill True
                                 background "#1e1e3aCC"
                                 hover_background "#2a2a50CC"
-                                padding (12, 8)
+                                padding (int(12 * _k), int(8 * _k))
 
-                                $ _texto_opcion = renpy.substitute(renpy.translate_string(_opcion.texto))
-                                text "[_texto_opcion]" size 13 color "#ffffff"
+                                # texto puede ser callable (igual que en seleccionar_respuesta,
+                                # messagesystem_core): resolverlo antes de traducir, o se
+                                # renderiza el repr de la funcion.
+                                $ _texto_crudo = _opcion.texto() if callable(_opcion.texto) else _opcion.texto
+                                $ _texto_opcion = renpy.substitute(renpy.translate_string(_texto_crudo))
+                                text "[_texto_opcion]" size int(13 * _k) color "#ffffff"
 
             elif _chat and len(_chat.grupos_pendientes) > 0:
                 $ _grupos_visibles = [g for g in _chat.grupos_pendientes if _chat._horario_valido(g)]
-                text _("¿A qué mensaje respondés?") size 14 color "#4FC3F7" bold True xalign 0.5
+                text _("¿A qué mensaje respondés?") size int(14 * _k) color "#4FC3F7" bold True xalign 0.5
 
                 for _grupo in _grupos_visibles:
                     $ _texto_preview = renpy.substitute(_grupo.mensaje_inicial)
@@ -420,15 +519,15 @@ screen selector_respuesta(npc_id="monica"):
                             xfill True
                             background "#1e1e3aCC"
                             hover_background "#2a2a50CC"
-                            padding (12, 8)
+                            padding (int(12 * _k), int(8 * _k))
 
-                            text "\"[_preview_msg]\"" size 12 color "#aaaaaa" italic True
+                            text "\"[_preview_msg]\"" size int(12 * _k) color "#aaaaaa" italic True
 
             # Cancelar
             textbutton "✖ Cancelar":
                 action Hide("selector_respuesta")
                 xalign 0.5
-                text_size 13
+                text_size int(13 * _k)
                 text_color "#888888"
                 text_hover_color "#ffffff"
 
@@ -445,9 +544,10 @@ screen resumen_recompensas(npc_id="monica", recompensas=None, puntos_totales=Non
     $ _ajc = sistema_ajuste_cel.obtener_container("resumen_recompensas") if modo_ajuste_celular else None
     $ _npc = obtener_npc(npc_id)
     $ _nombre = _npc.nombre if _npc else npc_id.capitalize()
+    $ _k = CEL_APP_ESCALA_SMALL if renpy.variant("small") else 1.0
 
     # Fondo del celular
-    add "images/hud/interfaz_celular.png" xalign 0.0 yalign 0.0
+    use _celular_fondo()
 
     # Click fuera del celular cierra todo
     use _celular_cerrar_exterior("resumen_recompensas")
@@ -465,10 +565,10 @@ screen resumen_recompensas(npc_id="monica", recompensas=None, puntos_totales=Non
             xfill True
 
             # Barra de estado
-            use _celular_barra_status()
+            use _celular_barra_status("resumen_recompensas")
 
             # Header
-            use _celular_app_header("Resumen", "✉️", [Hide("resumen_recompensas"), Show("menu_celular")])
+            use _celular_app_header("Resumen", "✉️", [Hide("resumen_recompensas"), Show("menu_celular")], "resumen_recompensas")
 
             # Contenido
             viewport:
@@ -480,76 +580,76 @@ screen resumen_recompensas(npc_id="monica", recompensas=None, puntos_totales=Non
                 frame:
                     xfill True
                     background None
-                    padding (20, 15)
+                    padding (int(20 * _k), int(15 * _k))
 
                     vbox:
-                        spacing 15
+                        spacing int(15 * _k)
                         xfill True
 
                         # Info
                         vbox:
-                            spacing 5
+                            spacing int(5 * _k)
                             xalign 0.5
-                            text _("Conversación finalizada") size 18 color "#FFD700" bold True xalign 0.5
-                            text _("Chat con [_nombre]") size 14 color "#aaaaaa" xalign 0.5
+                            text _("Conversación finalizada") size int(18 * _k) color "#FFD700" bold True xalign 0.5
+                            text _("Chat con [_nombre]") size int(14 * _k) color "#aaaaaa" xalign 0.5
 
                         # Puntos
                         if puntos_totales:
                             frame:
                                 xfill True
                                 background "#1e1e3a88"
-                                padding (15, 10)
+                                padding (int(15 * _k), int(10 * _k))
 
                                 vbox:
-                                    spacing 6
-                                    text _("Puntos obtenidos:") size 13 color "#8888bb" bold True
+                                    spacing int(6 * _k)
+                                    text _("Puntos obtenidos:") size int(13 * _k) color "#8888bb" bold True
 
                                     for _cat, _pts in puntos_totales.items():
                                         hbox:
-                                            spacing 8
+                                            spacing int(8 * _k)
                                             $ _cat_display = _cat.capitalize()
-                                            text "  [_cat_display]:" size 13 color "#cccccc"
-                                            text "[_pts]" size 13 color "#FFD700" bold True
+                                            text "  [_cat_display]:" size int(13 * _k) color "#cccccc"
+                                            text "[_pts]" size int(13 * _k) color "#FFD700" bold True
 
                         # Recompensas
                         if recompensas:
                             frame:
                                 xfill True
                                 background "#1a2e1a88"
-                                padding (15, 10)
+                                padding (int(15 * _k), int(10 * _k))
 
                                 vbox:
-                                    spacing 6
-                                    text _("🎁 Recompensas:") size 13 color "#4CAF50" bold True
+                                    spacing int(6 * _k)
+                                    text _("🎁 Recompensas:") size int(13 * _k) color "#4CAF50" bold True
 
                                     for _rec in recompensas:
                                         $ _tipo = _rec["recompensa"].get("tipo", "")
                                         $ _val = _rec["recompensa"].get("valor", 0)
 
                                         if _tipo == "amor":
-                                            text "  +[_val] ❤️ Amor con [_nombre]" size 13 color "#4CAF50"
+                                            text "  +[_val] ❤️ Amor con [_nombre]" size int(13 * _k) color "#4CAF50"
                                         elif _tipo == "deseo":
-                                            text "  +[_val] 💋 Deseo con [_nombre]" size 13 color "#E91E63"
+                                            text "  +[_val] 💋 Deseo con [_nombre]" size int(13 * _k) color "#E91E63"
                                         elif _tipo == "dinero":
-                                            text "  +$[_val]" size 13 color "#FFD700"
+                                            text "  +$[_val]" size int(13 * _k) color "#FFD700"
                                         elif _tipo == "foto":
-                                            text _("  📷 Foto desbloqueada!") size 13 color "#2196F3"
+                                            text _("  📷 Foto desbloqueada!") size int(13 * _k) color "#2196F3"
                                         elif _tipo == "item":
-                                            text _("  📦 Item obtenido!") size 13 color "#FF9800"
+                                            text _("  📦 Item obtenido!") size int(13 * _k) color "#FF9800"
                                         elif _tipo == "stat":
                                             $ _stat_id = _rec["recompensa"].get("stat_id", "")
-                                            text "  +[_val] [_stat_id]" size 13 color "#9C27B0"
+                                            text "  +[_val] [_stat_id]" size int(13 * _k) color "#9C27B0"
                         elif not puntos_totales:
-                            text _("Sin recompensas") size 13 color "#666666" xalign 0.5
+                            text _("Sin recompensas") size int(13 * _k) color "#666666" xalign 0.5
 
                         # Cerrar
                         textbutton _("Cerrar"):
                             action Hide("resumen_recompensas")
                             xalign 0.5
-                            text_size 14
+                            text_size int(14 * _k)
                             background "#607D8B"
                             hover_background "#90A4AE"
-                            padding (20, 8)
+                            padding (int(20 * _k), int(8 * _k))
                             text_color "#ffffff"
 
 
@@ -559,9 +659,11 @@ screen resumen_recompensas(npc_id="monica", recompensas=None, puntos_totales=Non
 
 screen vista_foto_ampliada(foto):
     """Muestra una foto en tamaño completo — dentro del celular"""
-    
+
     modal True
-    
+
+    $ _k = CEL_APP_ESCALA_SMALL if renpy.variant("small") else 1.0
+
     # Fondo dentro del area del celular
     button:
         style "empty_button"
@@ -570,9 +672,9 @@ screen vista_foto_ampliada(foto):
         xsize ajuste_cel_area_w
         ysize ajuste_cel_area_h
         action Hide("vista_foto_ampliada")
-        
+
         add Solid("#000000EE")
-    
+
     # Foto dentro del area del celular
     frame:
         xpos ajuste_cel_area_x
@@ -583,14 +685,14 @@ screen vista_foto_ampliada(foto):
 
         add foto xalign 0.5 yalign 0.5 at transform:
             fit "contain"
-            xysize (ajuste_cel_area_w - 40, ajuste_cel_area_h - 80)
-    
+            xysize (ajuste_cel_area_w - int(40 * _k), ajuste_cel_area_h - int(80 * _k))
+
     # Botón cerrar dentro del celular
     textbutton "✖":
         action Hide("vista_foto_ampliada")
-        xpos ajuste_cel_area_x + ajuste_cel_area_w - 50
-        ypos ajuste_cel_area_y + 10
-        text_size 28
+        xpos ajuste_cel_area_x + ajuste_cel_area_w - int(50 * _k)
+        ypos ajuste_cel_area_y + int(10 * _k)
+        text_size int(28 * _k)
         text_color "#ffffff"
 
 

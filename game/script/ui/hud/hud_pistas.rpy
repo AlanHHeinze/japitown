@@ -15,9 +15,10 @@ screen panel_pistas():
     on "show" action If(getattr(store, "mc_q0b_esperando", False), SetVariable("mc_q0b_pistas_visitada", True))
 
     $ _ajc = sistema_ajuste_cel.obtener_container("panel_pistas") if modo_ajuste_celular else None
+    $ _k = CEL_APP_ESCALA_SMALL if renpy.variant("small") else 1.0
 
     # Fondo del celular
-    add "images/hud/interfaz_celular.png" xalign 0.0 yalign 0.0
+    use _celular_fondo()
 
     # Click fuera del celular cierra todo
     use _celular_cerrar_exterior("panel_pistas")
@@ -35,42 +36,42 @@ screen panel_pistas():
             xfill True
 
             # Barra de estado
-            use _celular_barra_status()
+            use _celular_barra_status("panel_pistas")
 
             # Header de app
-            use _celular_app_header(_("Pistas"), "📋", [Hide("panel_pistas"), Show("menu_celular")])
+            use _celular_app_header(_("Pistas"), "📋", [Hide("panel_pistas"), Show("menu_celular")], "panel_pistas")
 
             # Toggle entre Pistas y Qué hacer
             frame:
                 xfill True
                 background "#12122aCC"
-                padding (10, 8)
+                padding (int(10 * _k), int(8 * _k))
 
                 hbox:
                     xalign 0.5
-                    spacing 5
+                    spacing int(5 * _k)
 
                     textbutton _("💡 Pistas"):
                         action SetVariable("mostrar_que_hacer", False)
-                        text_size 14
+                        text_size int(14 * _k)
                         if not mostrar_que_hacer:
                             background "#4CAF50"
                             text_color "#ffffff"
                         else:
                             background "#1e1e3aCC"
                             text_color "#aaaaaa"
-                        padding (15, 8)
+                        padding (int(15 * _k), int(8 * _k))
 
                     textbutton _("📍 Qué Hacer"):
                         action SetVariable("mostrar_que_hacer", True)
-                        text_size 14
+                        text_size int(14 * _k)
                         if mostrar_que_hacer:
                             background "#2196F3"
                             text_color "#ffffff"
                         else:
                             background "#1e1e3aCC"
                             text_color "#aaaaaa"
-                        padding (15, 8)
+                        padding (int(15 * _k), int(8 * _k))
 
             # Contenido scrollable — organizado por NPC
             python:
@@ -106,10 +107,10 @@ screen panel_pistas():
                 frame:
                     xfill True
                     background None
-                    padding (15, 10)
+                    padding (int(15 * _k), int(10 * _k))
 
                     vbox:
-                        spacing 10
+                        spacing int(10 * _k)
                         xfill True
 
                         if _hay_algo:
@@ -119,32 +120,32 @@ screen panel_pistas():
                             if _quest_mc_activa:
                                 frame:
                                     background "#1e1e3aCC"
-                                    padding (15, 12)
+                                    padding (int(15 * _k), int(12 * _k))
                                     xfill True
 
                                     hbox:
-                                        spacing 15
+                                        spacing int(15 * _k)
                                         yalign 0.5
 
                                         if renpy.loadable("images/hud/pista_mc.png"):
-                                            add "images/hud/pista_mc.png" zoom 0.2
+                                            add "images/hud/pista_mc.png" zoom (0.2 * _k)
                                         else:
                                             frame:
-                                                xysize (52, 52)
+                                                xysize (int(52 * _k), int(52 * _k))
                                                 background "#3a3a5a"
-                                                text "?" size 26 xalign 0.5 yalign 0.5 color "#ffffff"
+                                                text "?" size int(26 * _k) xalign 0.5 yalign 0.5 color "#ffffff"
 
                                         vbox:
-                                            spacing 5
+                                            spacing int(5 * _k)
 
-                                            text renpy.translate_string(_quest_mc_activa.nombre) + " " + renpy.translate_string("(Quest)") size 16 color "#FFD700" bold True
+                                            text renpy.translate_string(_quest_mc_activa.nombre) + " " + renpy.translate_string("(Quest)") size int(16 * _k) color "#FFD700" bold True
 
                                             if mostrar_que_hacer:
                                                 $ _mc_qh = _quest_mc_activa.obtener_que_hacer()
-                                                text "[_mc_qh]" size 13 color "#cccccc"
+                                                text "[_mc_qh]" size int(13 * _k) color "#cccccc"
                                             else:
                                                 $ _mc_pi = _quest_mc_activa.obtener_pista()
-                                                text "[_mc_pi]" size 13 color "#cccccc"
+                                                text "[_mc_pi]" size int(13 * _k) color "#cccccc"
 
                             # ── Un bloque por NPC conocido ──
                             for _npc_p in _npcs_conocidos:
@@ -155,142 +156,142 @@ screen panel_pistas():
                                 if _npc_quest:
                                     frame:
                                         background "#1e1e3aCC"
-                                        padding (15, 12)
+                                        padding (int(15 * _k), int(12 * _k))
                                         xfill True
 
                                         hbox:
-                                            spacing 15
+                                            spacing int(15 * _k)
                                             yalign 0.5
 
                                             $ _icon_q = f"images/hud/pista_{_npc_quest.npc_id}.png"
                                             if renpy.loadable(_icon_q):
-                                                add _icon_q zoom 0.2
+                                                add _icon_q zoom (0.2 * _k)
                                             else:
                                                 frame:
-                                                    xysize (52, 52)
+                                                    xysize (int(52 * _k), int(52 * _k))
                                                     background "#3a3a5a"
-                                                    text "?" size 26 xalign 0.5 yalign 0.5 color "#ffffff"
+                                                    text "?" size int(26 * _k) xalign 0.5 yalign 0.5 color "#ffffff"
 
                                             vbox:
-                                                spacing 5
+                                                spacing int(5 * _k)
 
                                                 $ _qtitulo = renpy.translate_string(_npc_quest.nombre) + " " + renpy.translate_string("(Quest)")
-                                                text "[_qtitulo]" size 16 color "#FFD700" bold True
+                                                text "[_qtitulo]" size int(16 * _k) color "#FFD700" bold True
 
                                                 $ _qmsg = _npc_quest.obtener_mensajes()
                                                 $ _qmsg_txt = _qmsg["que_hacer"] if mostrar_que_hacer else _qmsg["pista"]
                                                 $ _qmsg_sub = renpy.substitute(_qmsg_txt)
-                                                text "[_qmsg_sub]" size 13 color "#cccccc"
+                                                text "[_qmsg_sub]" size int(13 * _k) color "#cccccc"
 
                                                 if MODO_DEV and mostrar_debug_hud:
                                                     $ _etapa_nombres = {1:"Inicialización",2:"Espera",3:"Condiciones",4:"Rutina",5:"Listo",6:"Validación",7:"Desarrollo",8:"Memorias",9:"Finalización"}
                                                     $ _etapa_txt = "Etapa {}: {}".format(_npc_quest.etapa_actual, _etapa_nombres.get(_npc_quest.etapa_actual, "?"))
-                                                    text "[[" + _etapa_txt + "]]" size 11 color "#888888"
+                                                    text "[[" + _etapa_txt + "]]" size int(11 * _k) color "#888888"
 
                                 # Bloque "sin quest" (siempre que no haya quest activa)
                                 else:
                                     frame:
                                         background "#1e1e3aCC"
-                                        padding (15, 12)
+                                        padding (int(15 * _k), int(12 * _k))
                                         xfill True
 
                                         hbox:
-                                            spacing 15
+                                            spacing int(15 * _k)
                                             yalign 0.5
 
                                             $ _icon_s = f"images/hud/pista_{_npc_p.id}.png"
                                             if renpy.loadable(_icon_s):
-                                                add _icon_s zoom 0.2
+                                                add _icon_s zoom (0.2 * _k)
                                             else:
                                                 frame:
-                                                    xysize (52, 52)
+                                                    xysize (int(52 * _k), int(52 * _k))
                                                     background "#3a3a5a"
-                                                    text "?" size 26 xalign 0.5 yalign 0.5 color "#ffffff"
+                                                    text "?" size int(26 * _k) xalign 0.5 yalign 0.5 color "#ffffff"
 
                                             vbox:
-                                                spacing 5
+                                                spacing int(5 * _k)
 
                                                 $ _ntitulo = renpy.translate_string(_npc_p.nombre)
-                                                text "[_ntitulo]" size 16 color "#888888" bold True
+                                                text "[_ntitulo]" size int(16 * _k) color "#888888" bold True
 
-                                                text _("Contenido en desarrollo") size 13 color "#666666" italic True
+                                                text _("Contenido en desarrollo") size int(13 * _k) color "#666666" italic True
 
                                 # Bloques de eventos (uno por evento, independiente de si hay quest)
                                 for _ev in _npc_eventos:
                                     frame:
                                         background "#1a2a1aCC"
-                                        padding (15, 12)
+                                        padding (int(15 * _k), int(12 * _k))
                                         xfill True
 
                                         hbox:
-                                            spacing 15
+                                            spacing int(15 * _k)
                                             yalign 0.5
 
                                             $ _icon_ev = f"images/hud/pista_{_ev.npc_id}.png" if _ev.npc_id else ""
                                             if _icon_ev and renpy.loadable(_icon_ev):
-                                                add _icon_ev zoom 0.2
+                                                add _icon_ev zoom (0.2 * _k)
                                             else:
                                                 frame:
-                                                    xysize (52, 52)
+                                                    xysize (int(52 * _k), int(52 * _k))
                                                     background "#1a3a1a"
-                                                    text "⚡" size 26 xalign 0.5 yalign 0.5
+                                                    text "⚡" size int(26 * _k) xalign 0.5 yalign 0.5
 
                                             vbox:
-                                                spacing 5
+                                                spacing int(5 * _k)
 
                                                 $ _etitulo = renpy.translate_string(_ev.nombre) + " " + renpy.translate_string("(Evento)")
-                                                text "[_etitulo]" size 16 color "#4CAF50" bold True
+                                                text "[_etitulo]" size int(16 * _k) color "#4CAF50" bold True
 
                                                 $ _emsg = _ev.obtener_mensajes()
                                                 $ _emsg_txt = _emsg["que_hacer"] if mostrar_que_hacer else _emsg["pista"]
                                                 $ _emsg_sub = renpy.substitute(_emsg_txt)
-                                                text "[_emsg_sub]" size 13 color "#cccccc"
+                                                text "[_emsg_sub]" size int(13 * _k) color "#cccccc"
 
                                                 if _ev.condicion_cierre_texto:
                                                     hbox:
-                                                        spacing 5
-                                                        text "🔒" size 12
-                                                        text renpy.translate_string(_ev.condicion_cierre_texto) size 12 color "#FF9800" italic True
+                                                        spacing int(5 * _k)
+                                                        text "🔒" size int(12 * _k)
+                                                        text renpy.translate_string(_ev.condicion_cierre_texto) size int(12 * _k) color "#FF9800" italic True
 
                                                 if MODO_DEV and mostrar_debug_hud:
                                                     $ _ev_estado = _ev.estado
-                                                    text "[[Estado: [_ev_estado]]" size 11 color "#888888"
+                                                    text "[[Estado: [_ev_estado]]" size int(11 * _k) color "#888888"
 
                             # Eventos sin NPC asociado
                             for _ev_libre in _eventos_por_npc.get("__sin_npc__", []):
                                 frame:
                                     background "#1a2a1aCC"
-                                    padding (15, 12)
+                                    padding (int(15 * _k), int(12 * _k))
                                     xfill True
 
                                     hbox:
-                                        spacing 15
+                                        spacing int(15 * _k)
                                         yalign 0.5
 
                                         frame:
-                                            xysize (52, 52)
+                                            xysize (int(52 * _k), int(52 * _k))
                                             background "#1a3a1a"
-                                            text "⚡" size 26 xalign 0.5 yalign 0.5
+                                            text "⚡" size int(26 * _k) xalign 0.5 yalign 0.5
 
                                         vbox:
-                                            spacing 5
+                                            spacing int(5 * _k)
 
                                             $ _etitulo_l = renpy.translate_string(_ev_libre.nombre) + " " + renpy.translate_string("(Evento)")
-                                            text "[_etitulo_l]" size 16 color "#4CAF50" bold True
+                                            text "[_etitulo_l]" size int(16 * _k) color "#4CAF50" bold True
 
                                             $ _emsg_l = _ev_libre.obtener_mensajes()
                                             $ _emsg_l_txt = _emsg_l["que_hacer"] if mostrar_que_hacer else _emsg_l["pista"]
                                             $ _emsg_l_sub = renpy.substitute(_emsg_l_txt)
-                                            text "[_emsg_l_sub]" size 13 color "#cccccc"
+                                            text "[_emsg_l_sub]" size int(13 * _k) color "#cccccc"
 
                         else:
-                            null height 40
+                            null height int(40 * _k)
                             vbox:
-                                spacing 10
+                                spacing int(10 * _k)
                                 xalign 0.5
-                                text "🔍" size 48 xalign 0.5
-                                text _("No hay actividades activas") size 16 color "#888888" xalign 0.5
-                                text _("Explora y habla con los personajes") size 13 color "#666666" xalign 0.5
+                                text "🔍" size int(48 * _k) xalign 0.5
+                                text _("No hay actividades activas") size int(16 * _k) color "#888888" xalign 0.5
+                                text _("Explora y habla con los personajes") size int(13 * _k) color "#666666" xalign 0.5
 
 
 screen boton_pistas():

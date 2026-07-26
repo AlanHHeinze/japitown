@@ -148,7 +148,7 @@ init 6 python:
                         texto="¿Qué pasa?",
                         respuesta_npc="Un adelanto",
                         puntos={},
-                        foto_respuesta="images/chat/jasmine/jasmine_chat_foto_01.png"
+                        foto_respuesta="images/chat/jasmine/jasmine_chat_foto_01.jpg"
                     ),
                 ]
             ),
@@ -166,7 +166,7 @@ init 6 python:
                     ),
                     OpcionRespuesta(
                         texto="Eso no se hace",
-                        respuesta_npc=["Jajaja 😏", "Lo voy a estar usando, cuando quieras pasa a verlo ❤️"],
+                        respuesta_npc=["Jajaja 😏", "Lo voy a estar usando, cuando quieras pasa a verlo"],
                         puntos={},
                         saltar_a_paso=-1
                     ),

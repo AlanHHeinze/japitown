@@ -23,6 +23,38 @@ default violet_quest1_en_cama = False
 
 init python:
 
+    def _vq01a_mc_quest1():
+        """La quest 1 del MC, o None."""
+        if not hasattr(store, 'sistema_quests_mc'):
+            return None
+        return store.sistema_quests_mc.quests.get("mc_quest_1")
+
+    def _vq01a_mc_quest1_completa():
+        q = _vq01a_mc_quest1()
+        return bool(q and q.completada)
+
+    def _vq01a_entrega_lista():
+        """
+        Gate de la entrega: el repartidor solo puede llegar POR LA MAÑANA y al
+        MENOS un día después de completarse la quest 1 del MC.
+
+        Sin esto, completar la quest 1 del MC a cualquier hora hacía avanzar la
+        01_a a BOTON_LISTO en el acto y el repartidor aparecía en ese mismo
+        horario (ej. de trasnoche).
+        """
+        q = _vq01a_mc_quest1()
+        if not (q and q.completada):
+            return False
+
+        if getattr(store, 'horario_actual', 0) != 0:
+            return False
+
+        dia_completada = getattr(q, 'dia_completada', None)
+        if dia_completada is None:
+            # Saves viejos (sin registro del día): alcanza con que sea de mañana.
+            return True
+        return getattr(store, 'dias_totales', 1) > dia_completada
+
     def setup_entrega_quest1_violet():
         """
         Se ejecuta via accion_al_entrar cuando quest 1 entra en ETAPA_BOTON_LISTO.
@@ -99,7 +131,7 @@ label paqueterepartidor_quest01_violet:
     $ ocultar_hud()
     window show
 
-    scene bg_casa_mañana_frente with fade
+    scene bg_casa_manana_frente with fade
 
     show repartidor_parado c_base at right
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
@@ -160,7 +192,7 @@ label paquetecama_quest01_violet:
     # Mostrar habitacion del MC segun horario
     $ _horarios_bg_vq1 = ["tarde", "tarde", "noche", "noche"]
     $ _bg_horario_vq1 = _horarios_bg_vq1[horario_actual]
-    scene expression "images/bg/casa/bg_casa_" + _bg_horario_vq1 + "_hmc.png" with fade
+    scene expression "images/bg/casa/bg_casa_" + _bg_horario_vq1 + "_hmc.jpg" with fade
 
     show mc_parado_base c_rbase_regaloviolet o_abajonm b_none at mc_izquierda with dissolve
 

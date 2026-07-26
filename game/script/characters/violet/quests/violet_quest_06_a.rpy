@@ -2,9 +2,42 @@
 ## Quest 06_a — Las entradas
 ################################################################################
 
-# Imágenes de la quest 06
-image beso_amor = "images/quest/violet/quest06/beso_amor.png"
-image beso_deseo = "images/quest/violet/quest06/beso_deseo.png"
+# Secuencias del beso — un solo grupo por secuencia para pasar de un frame al
+# siguiente sin hide ni reposicionar (mismo patrón que el layeredimage quest06).
+# Uso: show beso_amor f1 / show beso_amor f2 ... con pausa entre cada frame.
+layeredimage beso_amor:
+    group secuencia:
+        attribute f1 default:
+            "images/quest/violet/quest06/beso_amor1.webp"
+        attribute f2:
+            "images/quest/violet/quest06/beso_amor2.webp"
+        attribute f3:
+            "images/quest/violet/quest06/beso_amor3.webp"
+        attribute f4:
+            "images/quest/violet/quest06/beso_amor4.webp"
+        attribute f5:
+            "images/quest/violet/quest06/beso_amor5.webp"
+        attribute f6:
+            "images/quest/violet/quest06/beso_amor6.webp"
+        attribute f7:
+            "images/quest/violet/quest06/beso_amor7.webp"
+
+layeredimage beso_deseo:
+    group secuencia:
+        attribute f1 default:
+            "images/quest/violet/quest06/beso_deseo1.webp"
+        attribute f2:
+            "images/quest/violet/quest06/beso_deseo2.webp"
+        attribute f3:
+            "images/quest/violet/quest06/beso_deseo3.webp"
+        attribute f4:
+            "images/quest/violet/quest06/beso_deseo4.webp"
+        attribute f5:
+            "images/quest/violet/quest06/beso_deseo5.webp"
+        attribute f6:
+            "images/quest/violet/quest06/beso_deseo6.webp"
+        attribute f7:
+            "images/quest/violet/quest06/beso_deseo7.webp"
 
 
 ################################################################################
@@ -103,12 +136,25 @@ label violet_quest06a_camino_amor:
     mc "Quiero que lo de los cosplay quede atrás"
     show mc_parado_base b_none
 
-    # Beso amor — refrescar la escena con fade y cargar el sprite del beso centrado
+    # Beso amor — la escena entra con fade en el primer frame y luego la secuencia
+    # avanza frame a frame con show normal y una pausa de 0.5 entre cada uno.
     window hide
     scene expression _bg_hviolet
-    show beso_amor at center
+    show beso_amor f1 at center
     with fade
-    pause 2.0
+    pause 0.5
+    show beso_amor f2 with sprite_normal
+    pause 0.5
+    show beso_amor f3 with sprite_normal
+    pause 0.5
+    show beso_amor f4 with sprite_normal
+    pause 0.5
+    show beso_amor f5 with sprite_normal
+    pause 0.5
+    show beso_amor f6 with sprite_normal
+    pause 0.5
+    show beso_amor f7 with sprite_normal
+    pause 0.5
 
     # Refrescar de nuevo con fade: vuelven los layered de Violet y el MC como estaban
     scene expression _bg_hviolet
@@ -142,12 +188,25 @@ label violet_quest06a_camino_deseo:
     mc "No voy a dejar que pase eso otra vez"
     show mc_parado_base b_none
 
-    # Beso deseo — refrescar la escena con fade y cargar el sprite del beso centrado
+    # Beso deseo — la escena entra con fade en el primer frame y luego la secuencia
+    # avanza frame a frame con show normal y una pausa de 0.5 entre cada uno.
     window hide
     scene expression _bg_hviolet
-    show beso_deseo at center
+    show beso_deseo f1 at center
     with fade
-    pause 2.0
+    pause 0.5
+    show beso_deseo f2 with sprite_normal
+    pause 0.5
+    show beso_deseo f3 with sprite_normal
+    pause 0.5
+    show beso_deseo f4 with sprite_normal
+    pause 0.5
+    show beso_deseo f5 with sprite_normal
+    pause 0.5
+    show beso_deseo f6 with sprite_normal
+    pause 0.5
+    show beso_deseo f7 with sprite_normal
+    pause 0.5
 
     # Refrescar de nuevo con fade: vuelven los layered de Violet y el MC como estaban
     scene expression _bg_hviolet
@@ -194,3 +253,49 @@ label violet_quest06a_cierre:
     window hide
     $ mostrar_hud()
     jump game_loop
+
+
+################################################################################
+## TEST — salto directo al contenido de la 06_a (desde el menú de cheats)
+################################################################################
+
+label test_quest06a_violet:
+    # Cerrar el celular si quedó abierto
+    $ renpy.hide_screen("menu_cheats")
+    $ renpy.hide_screen("lista_contactos_mensajes")
+    $ renpy.hide_screen("menu_celular")
+    $ menu_celular_abierto = False
+
+    # Restaurar backgrounds por si un test anterior (ej. 08_a) quedó a medias
+    python:
+        for _loc_id, _bg_orig in dict(getattr(store, 'vq8a_bgs_originales', {})).items():
+            _loc_obj = sistema_locaciones.obtener_locacion(_loc_id)
+            if _loc_obj:
+                _loc_obj.background_base = _bg_orig
+        store.vq8a_bgs_originales = {}
+
+    # Limpiar restricción de un test previo
+    $ desactivar_restriccion()
+
+    # Forzar la 06_a como la ÚNICA quest activa de Violet, en ETAPA_BOTON_LISTO
+    # (asi el cierre la completa correctamente con completar_quest_actual("violet"))
+    python:
+        for _q in sistema_quests.quests.values():
+            if _q.npc_id == "violet" and _q.activa and _q.id != "violet_questprincipal_06_a":
+                _q.activa = False
+        _q06a = sistema_quests.obtener_quest("violet_questprincipal_06_a")
+        if _q06a:
+            _q06a.completada = False
+            _q06a.activa = True
+            _q06a.etapa_actual = ETAPA_BOTON_LISTO
+            _q06a.dia_inicio = getattr(store, 'dias_totales', 1)
+
+    # Contexto: Violet y el MC en la habitacion de Violet, de noche
+    $ horario_actual = 2
+    $ obtener_npc("violet").locacion_actual  = "casa_hviolet"
+    $ obtener_npc("monica").locacion_actual  = "fuera"
+    $ obtener_npc("jasmine").locacion_actual = "fuera"
+    $ actualizar_rutinas_npcs()
+    $ sistema_locaciones.mover_a_locacion("casa_hviolet")
+
+    jump violet_quest06a_hablar

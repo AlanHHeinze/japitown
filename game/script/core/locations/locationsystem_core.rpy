@@ -44,7 +44,7 @@ init python:
         def __init__(self, id, nombre, background_base, descripcion=""):
             self.id = id
             self.nombre = nombre
-            self.background_base = background_base  # Base del path sin horario (ej: "images/bg/casa/bg_casa_{horario}_frente.png")
+            self.background_base = background_base  # Base del path sin horario (ej: "images/bg/casa/bg_casa_{horario}_frente.jpg")
             self.descripcion = descripcion
             self.hotspots = []
             self.personajes_presentes = []
@@ -68,7 +68,7 @@ init python:
                 String con el path del background
             """
             # Mapeo de índices de horario a nombres
-            horarios_nombres = ["mañana", "tarde", "noche", "trasnoche"]
+            horarios_nombres = ["manana", "tarde", "noche", "trasnoche"]
             
             # Usar horario especificado o el actual
             if horario_override is not None:
@@ -219,10 +219,6 @@ default sistema_locaciones = SistemaLocaciones()
 
 init python:
     
-    def ir_a_locacion(destino_id):
-        """Función helper para mover a una locación"""
-        return sistema_locaciones.mover_a_locacion(destino_id)
-    
     def locacion_actual():
         """Retorna la locación actual"""
         return sistema_locaciones.locacion_actual
@@ -238,12 +234,9 @@ init python:
     
     def ir_a_locacion(locacion_id):
         """
-        Función de acceso rapido para ir directamente a una locación.
+        Mueve directamente a una locación y refresca el screen.
         Útil para botones de acceso rapido en el HUD.
         """
         if sistema_locaciones.mover_a_locacion(locacion_id):
-            pass
             # Refrescar el screen para mostrar la nueva locación
             renpy.restart_interaction()
-        else:
-            pass

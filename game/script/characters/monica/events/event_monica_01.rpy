@@ -12,103 +12,103 @@ layeredimage monica_evento_01:
     group img:
         attribute none default null
         attribute img_base:
-            "images/eventos/monica/monica_evento1.png"
+            "images/eventos/monica/monica_evento1.jpg"
         attribute img1:
-            "images/eventos/monica/monica_evento1_img1.png"
+            "images/eventos/monica/monica_evento1_img1.webp"
         attribute img2:
-            "images/eventos/monica/monica_evento1_img2.png"
+            "images/eventos/monica/monica_evento1_img2.webp"
         attribute img3:
-            "images/eventos/monica/monica_evento1_img3.png"
+            "images/eventos/monica/monica_evento1_img3.webp"
         attribute img4:
-            "images/eventos/monica/monica_evento1_img4.png"
+            "images/eventos/monica/monica_evento1_img4.webp"
         attribute img5:
-            "images/eventos/monica/monica_evento1_img5.png"
+            "images/eventos/monica/monica_evento1_img5.webp"
         attribute img6:
-            "images/eventos/monica/monica_evento1_img6.png"
+            "images/eventos/monica/monica_evento1_img6.webp"
         attribute img7:
-            "images/eventos/monica/monica_evento1_img7.png"
+            "images/eventos/monica/monica_evento1_img7.webp"
         attribute img8:
-            "images/eventos/monica/monica_evento1_img8.png"
+            "images/eventos/monica/monica_evento1_img8.webp"
         attribute img9:
-            "images/eventos/monica/monica_evento1_img9.png"
+            "images/eventos/monica/monica_evento1_img9.webp"
         attribute img10:
-            "images/eventos/monica/monica_evento1_img10.png"
+            "images/eventos/monica/monica_evento1_img10.webp"
         attribute img11:
-            "images/eventos/monica/monica_evento1_img11.png"
+            "images/eventos/monica/monica_evento1_img11.webp"
         attribute img12:
-            "images/eventos/monica/monica_evento1_img12.png"
+            "images/eventos/monica/monica_evento1_img12.webp"
     
     group mc:
         attribute mc_none:
             Null()
         attribute mc_abajopervertido:
-            "images/eventos/monica/monica_evento1_mc_abajopervertido.png"
+            "images/eventos/monica/monica_evento1_mc_abajopervertido.webp"
         attribute mc_avergonzado:
-            "images/eventos/monica/monica_evento1_mc_avergonzado.png"
+            "images/eventos/monica/monica_evento1_mc_avergonzado.webp"
         attribute mc_compasivo:
-            "images/eventos/monica/monica_evento1_mc_compasivo.png"
+            "images/eventos/monica/monica_evento1_mc_compasivo.webp"
         attribute mc_concentrado:
-            "images/eventos/monica/monica_evento1_mc_concentrado.png"
+            "images/eventos/monica/monica_evento1_mc_concentrado.webp"
         attribute mc_haciendofuerza:
-            "images/eventos/monica/monica_evento1_mc_haciendofuerza.png"
+            "images/eventos/monica/monica_evento1_mc_haciendofuerza.webp"
         attribute mc_mirandoabajo:
-            "images/eventos/monica/monica_evento1_mc_mirandoabajo.png"
+            "images/eventos/monica/monica_evento1_mc_mirandoabajo.webp"
         attribute mc_mirandofeliz:
-            "images/eventos/monica/monica_evento1_mc_mirandofeliz.png"
+            "images/eventos/monica/monica_evento1_mc_mirandofeliz.webp"
         attribute mc_pensando:
-            "images/eventos/monica/monica_evento1_mc_pensando.png"
+            "images/eventos/monica/monica_evento1_mc_pensando.webp"
         attribute mc_resistiendo:
-            "images/eventos/monica/monica_evento1_mc_resistiendo.png"
+            "images/eventos/monica/monica_evento1_mc_resistiendo.webp"
         attribute mc_sonrojado:
-            "images/eventos/monica/monica_evento1_mc_sonrojado.png"
+            "images/eventos/monica/monica_evento1_mc_sonrojado.webp"
         attribute mc_suspirando:
-            "images/eventos/monica/monica_evento1_mc_suspirando.png"
+            "images/eventos/monica/monica_evento1_mc_suspirando.webp"
     
     group monica:
         attribute monica_none:
             Null()
         attribute monica_aguantando:
-            "images/eventos/monica/monica_evento1_monica_aguantando.png"
+            "images/eventos/monica/monica_evento1_monica_aguantando.webp"
         attribute monica_aguantando2:
-            "images/eventos/monica/monica_evento1_monica_aguantando2.png"
+            "images/eventos/monica/monica_evento1_monica_aguantando2.webp"
         attribute monica_avergonzada:
-            "images/eventos/monica/monica_evento1_monica_avergonzada.png"
+            "images/eventos/monica/monica_evento1_monica_avergonzada.webp"
         attribute monica_dolor:
-            "images/eventos/monica/monica_evento1_monica_dolor.png"
+            "images/eventos/monica/monica_evento1_monica_dolor.webp"
         attribute monica_feliz:
-            "images/eventos/monica/monica_evento1_monica_feliz.png"
+            "images/eventos/monica/monica_evento1_monica_feliz.webp"
         attribute monica_gemido:
-            "images/eventos/monica/monica_evento1_monica_gemido.png"
+            "images/eventos/monica/monica_evento1_monica_gemido.webp"
         attribute monica_perdida:
-            "images/eventos/monica/monica_evento1_monica_perdida.png"
+            "images/eventos/monica/monica_evento1_monica_perdida.webp"
         attribute monica_relajada:
-            "images/eventos/monica/monica_evento1_monica_relajada.png"
+            "images/eventos/monica/monica_evento1_monica_relajada.webp"
         attribute monica_resistiendo:
-            "images/eventos/monica/monica_evento1_monica_resistiendo.png"
+            "images/eventos/monica/monica_evento1_monica_resistiendo.webp"
         attribute monica_resistiendo2:
-            "images/eventos/monica/monica_evento1_monica_resistiendo2.png"
+            "images/eventos/monica/monica_evento1_monica_resistiendo2.webp"
         attribute monica_sexy:
-            "images/eventos/monica/monica_evento1_monica_sexy.png"
+            "images/eventos/monica/monica_evento1_monica_sexy.webp"
         attribute monica_sonrojada:
-            "images/eventos/monica/monica_evento1_monica_sonrojada.png"
+            "images/eventos/monica/monica_evento1_monica_sonrojada.webp"
         attribute monica_suspiro:
-            "images/eventos/monica/monica_evento1_monica_suspiro.png"
+            "images/eventos/monica/monica_evento1_monica_suspiro.webp"
     
     group bocamc:
         attribute bmc_none:
             Null()
         attribute bmc_hablando:
-            "images/eventos/monica/monica_evento1_bocamc_hablando.png"
+            "images/eventos/monica/monica_evento1_bocamc_hablando.webp"
     
     group bocamonica:
         attribute bmonica_none:
             Null()
         attribute bmonica_hablando:
-            "images/eventos/monica/monica_evento1_bocamonica_hablando.png"
+            "images/eventos/monica/monica_evento1_bocamonica_hablando.webp"
         attribute bmonica_hablandoabajo:
-            "images/eventos/monica/monica_evento1_bocamc_hablandoabajo.png"
+            "images/eventos/monica/monica_evento1_bocamc_hablandoabajo.webp"
         attribute bmonica_hablandoabajo2:
-            "images/eventos/monica/monica_evento1_bocamc_hablandoabajo2.png"
+            "images/eventos/monica/monica_evento1_bocamc_hablandoabajo2.webp"
 
 
 ################################################################################
@@ -334,7 +334,7 @@ label event_monica_01_narrativa:
     pause 0.3
     show monica_evento_01 bmonica_hablandoabajo2 with vpunch
     monica "Ahhh..."
-    show monica_evento_01 monica_suspirando bmonica_none with hpunch
+    show monica_evento_01 monica_suspiro bmonica_none with hpunch
 
     # Corrección narrativa
     "Mónica suelta un suspiro profundo, relajando todo su cuerpo contra el sofá."
@@ -381,15 +381,19 @@ label event_monica_01_narrativa:
 ################################################################################
 
 label event_monica_01_check_replay:
-    # Verificar si el jugador tiene locion_masajes en el inventario
-    $ _tiene_locion = getattr(store, 'inventario', {}).get("locion_masajes", 0) >= 1
-    
-    if _tiene_locion:
-        # Consumir 1 unidad de locion_masajes
-        $ store.inventario["locion_masajes"] -= 1
-        jump masaje_locion
-    else:
-        jump masaje_repetir
+    # RETRABAJANDO: el replay del masaje (masaje_locion / masaje_repetir) está en
+    # rediseño. Por ahora solo se avisa y se vuelve al loop. NO consume la loción.
+    # `return` (no `jump game_loop`): este label se alcanza vía `jump expression`
+    # desde interaccion_monica, que el HUD invoca con Call — hay que cerrar el frame.
+    # El texto va por renpy.translate_string para traducirlo por `strings` (abajo,
+    # en el tl del evento) sin depender del id de diálogo.
+    $ ocultar_hud()
+    window show
+    $ _msg_rework_masaje = renpy.translate_string("Este evento se está retrabajando con la finalidad de mejorar la interacción y ofrecer escenas diferentes al evento original. Volverá en futuras actualizaciones.")
+    "[_msg_rework_masaje]"
+    window hide
+    $ mostrar_hud()
+    return
 
 
 ################################################################################

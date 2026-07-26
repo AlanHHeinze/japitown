@@ -17,20 +17,11 @@ init 6 python:
             and getattr(store, 'horario_actual', 0) in [0, 1]
         )
 
-    def _coxplay_saludo_jugador():
-        """Saludo del jugador según horario al escribir."""
-        if getattr(store, 'horario_actual', 0) == 0:
-            return "buen día"
-        return "buenas tardes"
-
     def _coxplay_saludo_tienda():
         """Saludo de la tienda según horario al abrir el grupo."""
         if getattr(store, 'horario_actual', 0) == 0:
-            return "buen día"
-        return "buenas tardes"
-
-    def _coxplay_nombre_mc():
-        return getattr(store, 'mc_name', 'Mc') or 'Mc'
+            return renpy.translate_string("buen día")
+        return renpy.translate_string("buenas tardes")
 
     def _coxplay_realizar_pago():
         """Descuenta $200 al ejecutarse como respuesta del jugador."""
@@ -50,21 +41,14 @@ init 6 python:
     def _coxplay_disparar_g4():
         disparar_mensaje("coxplay_q5a_g4", "tienda_coxplay")
 
-    def _coxplay_texto_contacto():
-        return "Hola {}, mi nombre es {}, hice hace algunos días una compra con ustedes y estoy buscando un cosplay nuevo.".format(
-            _coxplay_saludo_jugador(), _coxplay_nombre_mc()
-        )
-
-    def _coxplay_cond_manana():
-        return getattr(store, 'horario_actual', 0) == 0
-
-    def _coxplay_cond_no_manana():
-        return getattr(store, 'horario_actual', 0) != 0
-
     def _coxplay_msg_recordar():
-        return "Hola {} {}, si me acuerdo ¿Qué estabas buscando?".format(
-            _coxplay_nombre_mc(), _coxplay_saludo_tienda()
-        )
+        # El template se traduce entero: [mc_name] lo resuelve renpy.substitute al
+        # mostrarlo, y el saludo entra por .format porque depende del horario (un
+        # `old` con el saludo ya incrustado nunca matchearia). El `new` en ingles
+        # tiene que conservar el {}.
+        return renpy.translate_string(
+            "Hola [mc_name] {}, si me acuerdo ¿Qué estabas buscando?"
+        ).format(_coxplay_saludo_tienda())
 
     # =========================================================================
     # GRUPO 1 — El jugador inicia contacto (sin timing, sin mensaje NPC)
@@ -79,16 +63,13 @@ init 6 python:
         pasos=[
             PasoConversacion(
                 opciones_jugador=[
+                    # Una sola opcion, sin condicion de horario: el saludo ya no
+                    # depende del momento del dia. Con una unica opcion visible el
+                    # sistema la auto-envia (_abrir_selector_respuesta), asi que el
+                    # jugador no elige entre variantes identicas.
                     OpcionRespuesta(
-                        texto=_coxplay_texto_contacto,
+                        texto="Hola ¿Cómo están? Mi nombre es [mc_name], hice hace algunos días una compra con ustedes y estoy buscando un cosplay nuevo.",
                         respuesta_npc="",
-                        condicion=_coxplay_cond_manana,
-                        saltar_a_paso=-1,
-                    ),
-                    OpcionRespuesta(
-                        texto=_coxplay_texto_contacto,
-                        respuesta_npc="",
-                        condicion=_coxplay_cond_no_manana,
                         saltar_a_paso=-1,
                     ),
                 ]

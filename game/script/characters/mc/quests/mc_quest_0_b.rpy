@@ -1,10 +1,10 @@
 ################################################################################
 ## Quest 0b del MC — Conociendo el celular
 ################################################################################
-## Se dispara automáticamente el dia 2 al entrar al pasillo de arriba.
+## Se dispara automáticamente el dia 2 estando en la habitacion del MC.
 ## Enseña al jugador a usar el celular y la app de Pistas.
 ## Flujo:
-## 1. Mostrar pasillo + mensajes de tutorial
+## 1. Mensajes de tutorial (sin HUD)
 ## 2. Mostrar HUD (jugador debe entrar a pistas)
 ## 3. Validar que entró a pistas
 ## 4. Mostrar mensajes finales
@@ -17,7 +17,7 @@ default mc_q0b_pistas_visitada = False
 
 
 ################################################################################
-## Label principal — disparo automático al entrar al pasillo de arriba
+## Label principal — disparo automático en la habitacion del MC (dia 2+)
 ################################################################################
 
 label mc_q0b_trigger:
@@ -25,7 +25,7 @@ label mc_q0b_trigger:
     $ mc_q0b_disparada = True
     $ actualizar_bg_master()
 
-    # Mostrar escena del pasillo (sin HUD)
+    # Mostrar la escena sin HUD para que se lean los mensajes de tutorial
     $ ocultar_hud()
     hide screen hud_navegacion
 
@@ -48,8 +48,8 @@ label mc_q0b_trigger:
             "relaciones", "stats", "mensajes", "galeria",
             "hot", "banco", "configuracion", "cheats",
         ],
-        mensaje_movimiento="Primero vamos a revisar el celular.",
-        mensaje_accion_default="Primero vamos a revisar el celular.",
+        mensaje_movimiento="Primero vamos a revisar el celular y revisar la app de pistas.",
+        mensaje_accion_default="Primero vamos a revisar el celular y revisar la app de pistas.",
         celular_bloqueado=False,
         mensaje_celular="",
     )
@@ -90,6 +90,7 @@ label mc_q0b_completar:
     # Completar la quest
     $ sistema_quests_mc.completar_activa()
 
-    # Mostrar HUD y volver al game loop
+    # `return` (no `jump game_loop`): se llega por _validar_estado_tras_celular,
+    # que el celular invoca con Call(...) — ese frame hay que cerrarlo.
     $ mostrar_hud()
-    jump game_loop
+    return

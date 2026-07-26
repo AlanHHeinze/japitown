@@ -5,21 +5,55 @@
 # =============================================================================
 # IMAGENES
 # =============================================================================
-image vq8a_living_nublado    = "images/quest/violet/quest08/violet_quest08_livingnublado.png"
-image vq8a_living_lloviendo  = "images/quest/violet/quest08/violet_quest08_livinglloviendo.png"
-image vq8a_living_tormenta   = "images/quest/violet/quest08/violet_quest08_livingtormenta.png"
-image vq8a_living_tormenta1  = "images/quest/violet/quest08/violet_quest08_livingtormenta1.png"
-image vq8a_living_tormenta2  = "images/quest/violet/quest08/violet_quest08_livingtormenta2.png"
-image vq8a_living_cerrado    = "images/quest/violet/quest08/violet_quest08_livingtormentacerrado.png"
-image vq8a_mc_tv             = "images/quest/violet/quest08/violet_quest08_mcmirantotv.png"
-image vq8a_tv1               = "images/quest/violet/quest08/violet_quest08_tv1.png"
-image vq8a_tv2               = "images/quest/violet/quest08/violet_quest08_tv2.png"
-image vq8a_tv3               = "images/quest/violet/quest08/violet_quest08_tv3.png"
-image vq8a_tv4               = "images/quest/violet/quest08/violet_quest08_tv4.png"
-image vq8a_tv5               = "images/quest/violet/quest08/violet_quest08_tv5.png"
-image vq8a_hviolet_tormenta  = "images/quest/violet/quest08/violet_quest08_hviolet_tormenta.png"
-image vq8a_ducha             = "images/quest/violet/quest08/violet_quest08_ducha.png"
-image vq8a_duchaescena       = "images/quest/violet/quest08/violet_quest08_duchaescena.png"
+image vq8a_living_nublado    = "images/quest/violet/quest08/violet_quest08_livingnublado.jpg"
+image vq8a_living_lloviendo  = "images/quest/violet/quest08/violet_quest08_livinglloviendo.jpg"
+image vq8a_living_tormenta   = "images/quest/violet/quest08/violet_quest08_livingtormenta.jpg"
+image vq8a_living_tormenta1  = "images/quest/violet/quest08/violet_quest08_livingtormenta1.jpg"
+image vq8a_living_tormenta2  = "images/quest/violet/quest08/violet_quest08_livingtormenta2.jpg"
+image vq8a_living_cerrado    = "images/quest/violet/quest08/violet_quest08_livingtormentacerrado.jpg"
+image vq8a_mc_tv             = "images/quest/violet/quest08/violet_quest08_mcmirantotv.webp"
+image vq8a_tv1               = "images/quest/violet/quest08/violet_quest08_tv1.webp"
+image vq8a_tv2               = "images/quest/violet/quest08/violet_quest08_tv2.webp"
+image vq8a_tv3               = "images/quest/violet/quest08/violet_quest08_tv3.webp"
+image vq8a_tv4               = "images/quest/violet/quest08/violet_quest08_tv4.webp"
+image vq8a_tv5               = "images/quest/violet/quest08/violet_quest08_tv5.webp"
+image vq8a_hviolet_tormenta  = "images/quest/violet/quest08/violet_quest08_hviolet_tormenta.webp"
+image vq8a_ducha             = "images/quest/violet/quest08/violet_quest08_ducha.webp"
+image vq8a_duchaescena       = "images/quest/violet/quest08/violet_quest08_duchaescena.jpg"
+
+# Secuencia de la ducha — un solo grupo para pasar de un frame al siguiente sin
+# hide ni reposicionar. Uso: show violet_ducha_quest f1 / show violet_ducha_quest f2 ...
+layeredimage violet_ducha_quest:
+    group secuencia:
+        attribute f1 default:
+            "images/quest/violet/quest08/violet_ducha_quest_1.webp"
+        attribute f2:
+            "images/quest/violet/quest08/violet_ducha_quest_2.webp"
+        attribute f3:
+            "images/quest/violet/quest08/violet_ducha_quest_3.webp"
+        attribute f4:
+            "images/quest/violet/quest08/violet_ducha_quest_4.webp"
+        attribute f5:
+            "images/quest/violet/quest08/violet_ducha_quest_5.webp"
+        attribute f6:
+            "images/quest/violet/quest08/violet_ducha_quest_6.webp"
+
+    # Ojos y boca superpuestos — por defecto null (nada) para no forzarlos siempre.
+    group ojos:
+        attribute o_none default:
+            Null()
+        attribute o_molesta_4:
+            "images/quest/violet/quest08/violet_ducha_quest_ojos_molesta_4.webp"
+        attribute o_molesta_tapada:
+            "images/quest/violet/quest08/violet_ducha_quest_ojos_molesta_tapada.webp"
+
+    group boca:
+        attribute b_none default:
+            Null()
+        attribute b_hablando_4:
+            "images/quest/violet/quest08/violet_ducha_quest_boca_hablando_4.webp"
+        attribute b_hablando_tapada:
+            "images/quest/violet/quest08/violet_ducha_quest_boca_hablando_tapada.webp"
 
 # =============================================================================
 # VARIABLES
@@ -27,6 +61,9 @@ image vq8a_duchaescena       = "images/quest/violet/quest08/violet_quest08_ducha
 default vq8a_ropero_visto   = False
 default vq8a_cajonera_vista = False
 default vq8a_bgs_originales = {}
+# Flag de visibilidad de las acciones ropero/cajonera (registradas en init en
+# actions_catalog.rpy; registrarlas en runtime rompía la quest al cargar un save)
+default vq8a_acciones_activas = False
 
 ################################################################################
 ## LABELS
@@ -81,7 +118,7 @@ label violet_quest08a_iniciar_loop:
         npcs_ocultos=["violet", "monica", "jasmine"],
     )
     $ mostrar_hud()
-    jump game_loop
+    return
 
 
 label violet_quest08a_ver_tv:
@@ -230,9 +267,9 @@ label violet_quest08a_ver_tv:
     python:
         vq8a_bgs_originales = {}
         _vq8a_overrides = {
-            "casa_living":        "images/quest/violet/quest08/violet_quest08_livingtormentacerrado.png",
-            "casa_pasilloarriba": "images/bg/casa/bg_casa_trasnoche_pasilloarriba.png",
-            "casa_hviolet":       "images/quest/violet/quest08/violet_quest08_hviolet_tormenta.png",
+            "casa_living":        "images/quest/violet/quest08/violet_quest08_livingtormentacerrado.jpg",
+            "casa_pasilloarriba": "images/bg/casa/bg_casa_trasnoche_pasilloarriba.jpg",
+            "casa_hviolet":       "images/quest/violet/quest08/violet_quest08_hviolet_tormenta.webp",
         }
         for _loc_id, _bg_path in _vq8a_overrides.items():
             _loc_obj = sistema_locaciones.obtener_locacion(_loc_id)
@@ -242,20 +279,12 @@ label violet_quest08a_ver_tv:
 
     # Acciones de locación: ropero y cajonera. Aparecen al estar en la habitacion;
     # al usar AMBAS se auto-avanza (metodología de la quest 03_a), sin botón de salir.
-    $ sistema_acciones.registrar_accion(AccionLocacion(
-        id="vq8a_ropero", nombre="Ropero", icono=u"🚪",
-        locacion_id="casa_hviolet", label_generico="violet_quest08a_accion_ropero",
-        reseteo=None, color="#4527A0", color_hover="#7E57C2"
-    ))
-    $ sistema_acciones.registrar_accion(AccionLocacion(
-        id="vq8a_cajonera", nombre="Cajonera", icono=u"🗂️",
-        locacion_id="casa_hviolet", label_generico="violet_quest08a_accion_cajonera",
-        reseteo=None, color="#2E7D32", color_hover="#43A047"
-    ))
+    # Registradas en init (actions_catalog.rpy); este flag las muestra.
+    $ vq8a_acciones_activas = True
 
     $ sistema_locaciones.mover_a_locacion("casa_living")
     $ mostrar_hud()
-    jump game_loop
+    return
 
 
 # Entrada a la habitacion de Violet durante la fase 2. No hace nada por sí mismo
@@ -273,7 +302,6 @@ label violet_quest08a_accion_ropero:
     window hide
 
     $ vq8a_ropero_visto = True
-    $ sistema_acciones.acciones.pop("vq8a_ropero", None)
 
     if vq8a_ropero_visto and vq8a_cajonera_vista:
         jump violet_quest08a_ir_al_baño
@@ -291,7 +319,6 @@ label violet_quest08a_accion_cajonera:
     window hide
 
     $ vq8a_cajonera_vista = True
-    $ sistema_acciones.acciones.pop("vq8a_cajonera", None)
 
     if vq8a_ropero_visto and vq8a_cajonera_vista:
         jump violet_quest08a_ir_al_baño
@@ -307,6 +334,7 @@ label violet_quest08a_ir_al_baño:
     piensa "Ya tengo todo. Voy a llevárselo al baño."
     window hide
 
+    $ vq8a_acciones_activas = False
     $ desactivar_restriccion()
     $ activar_restriccion(
         locaciones_permitidas=["casa_pasilloarriba", "casa_banioarriba"],
@@ -347,16 +375,18 @@ label violet_quest08a_puerta_baño:
     menu:
         "Dejar la ropa afuera":
             jump violet_quest08a_opcion_a
-        "Golpear y entrar":
+        "Entrar":
             jump violet_quest08a_entrar_baño
 
 
 label violet_quest08a_opcion_a:
     piensa "Mejor la dejo aquí y me voy"
+    mc "Listo, te deje la ropa afuera de la puerta"
     pause 0.3
     violet "¿Ya está?"
-    mc "Sí, está afuera de la puerta"
+    mc "Sí"
     violet "Gracias"
+    mc "Cualquier cosa me llamas"
     piensa "Bien, a seguir con mis cosas"
     jump violet_quest08a_cierre_desarrollo
 
@@ -372,7 +402,7 @@ screen vq8a_menu_bano():
         yanchor 0.5
         spacing gui.choice_spacing
 
-        textbutton "Irse":
+        textbutton "Dejar la ropa aca":
             style "choice_button"
             action Return("irse")
 
@@ -383,7 +413,11 @@ screen vq8a_menu_bano():
 
 
 label violet_quest08a_entrar_baño:
-    scene vq8a_ducha with fade
+    scene ducha_gen_noche 
+    show ducha_gen_agua_atras f1
+    show violet_ducha_quest f1 at center
+    show ducha_gen_agua_adelante f1
+    show ducha_gen_capa_densa
 
     window show
     piensa "No se si fue la mejor opcion entrar así"
@@ -404,16 +438,126 @@ label violet_quest08a_entrar_baño:
 
 
 label violet_quest08a_baño_irse:
-    piensa "Mejor me voy, ya tuve suficientes problemas con Violet para buscarme uno nuevo"
+    piensa "Si me acerco mas me va a ver y me va a matar"
+    piensa "Puedo disfrutar un poco desde aquí"
+
+    show ducha_gen_agua_atras f2 
+    show violet_ducha_quest f2 with sprite_normal
+    show ducha_gen_agua_adelante 
+    pause 0.5
+    show ducha_gen_agua_atras f3 
+    show violet_ducha_quest f3 with sprite_normal
+    show ducha_gen_agua_adelante f3 
+    pause 0.5
+    show ducha_gen_agua_atras f4 
+    show violet_ducha_quest f2 with sprite_normal
+    show ducha_gen_agua_adelante f4 
+    pause 0.5
+    show ducha_gen_agua_atras f5 
+    show violet_ducha_quest f3 with sprite_normal
+    show ducha_gen_agua_adelante f5 
+    pause 0.5
+    show ducha_gen_agua_atras f6 
+    show violet_ducha_quest f4 with sprite_normal
+    show ducha_gen_agua_adelante f6
+    pause 0.5
+
+    piensa "Me parece que me vio"
+
+    show ducha_gen_agua_atras f7 
+    show violet_ducha_quest b_hablando_4 o_molesta_4 
+    violet "¿Qué haces ahí?"
+    show violet_ducha_quest b_none
+    show ducha_gen_agua_adelante f7 
+
+    show ducha_gen_agua_atras f8 
+    mc "Te traje la ropa"
+    show ducha_gen_agua_adelante 
+
+    show ducha_gen_agua_atras f9 
+    show violet_ducha_quest f5 o_molesta_tapada with sprite_normal
+    show ducha_gen_agua_adelante f9 
+    pause 0.5
+    show ducha_gen_agua_atras f1 
+    show violet_ducha_quest f6 with sprite_normal
+    show ducha_gen_agua_adelante 
+    pause 0.5
+
+    show ducha_gen_agua_atras 
+    show violet_ducha_quest b_hablando_tapada 
+    violet "Podrias haberlo dejado afuera"
+    show violet_ducha_quest b_none
+    show ducha_gen_agua_adelante 
+
+    show ducha_gen_agua_atras 
+    mc "Lo siento, no me di cuenta"
+    show ducha_gen_agua_adelante 
+
+
     jump violet_quest08a_cierre_desarrollo
 
 
 label violet_quest08a_baño_acercarse:
-    scene vq8a_duchaescena with dissolve
-    window show
-    piensa "No puedo creer que este haciendo esto, no se desde cuando pero me esta atrayendo mucho Violet"
-    piensa "Hasta aquí fue suficiente, si me ve me mata"
-    piensa "Mejor me voy"
+    
+    
+    show ducha_gen_capa_normal 
+    hide ducha_gen_capa_densa with dissolve
+    
+    piensa "De aca veo un poco mejor"
+    piensa "El riesgo valio la pena"
+
+    show ducha_gen_agua_atras f2 
+    show violet_ducha_quest f2 with sprite_normal
+    show ducha_gen_agua_adelante 
+    pause 0.5
+    show ducha_gen_agua_atras f3 
+    show violet_ducha_quest f3 with sprite_normal
+    show ducha_gen_agua_adelante f3 
+    pause 0.5
+    show ducha_gen_agua_atras f4 
+    show violet_ducha_quest f2 with sprite_normal
+    show ducha_gen_agua_adelante f4 
+    pause 0.5
+    show ducha_gen_agua_atras f5 
+    show violet_ducha_quest f3 with sprite_normal
+    show ducha_gen_agua_adelante f5 
+    pause 0.5
+    show ducha_gen_agua_atras f6 
+    show violet_ducha_quest f4 with sprite_normal
+    show ducha_gen_agua_adelante f6
+    pause 0.5
+
+    piensa "Me parece que me vio"
+
+    show ducha_gen_agua_atras f7 
+    show violet_ducha_quest b_hablando_4 o_molesta_4 
+    violet "¿Qué haces ahí?"
+    show violet_ducha_quest b_none
+    show ducha_gen_agua_adelante f7 
+
+    show ducha_gen_agua_atras f8 
+    mc "Te traje la ropa"
+    show ducha_gen_agua_adelante 
+
+    show ducha_gen_agua_atras f9 
+    show violet_ducha_quest f5 o_molesta_tapada with sprite_normal
+    show ducha_gen_agua_adelante f9 
+    pause 0.5
+    show ducha_gen_agua_atras f1 
+    show violet_ducha_quest f6 with sprite_normal
+    show ducha_gen_agua_adelante 
+    pause 0.5
+
+    show ducha_gen_agua_atras 
+    show violet_ducha_quest b_hablando_tapada 
+    violet "Podrias haberlo dejado afuera"
+    show violet_ducha_quest b_none
+    show ducha_gen_agua_adelante 
+
+    show ducha_gen_agua_atras 
+    mc "Lo siento, no me di cuenta"
+    show ducha_gen_agua_adelante 
+
     jump violet_quest08a_cierre_desarrollo
 
 
@@ -427,10 +571,9 @@ label violet_quest08a_baño_acercarse:
 label violet_quest08a_cierre_desarrollo:
     window hide
 
-    # Limpiar restricción y acciones de exploración
+    # Limpiar restricción y ocultar acciones de exploración
     $ desactivar_restriccion()
-    $ sistema_acciones.acciones.pop("vq8a_ropero", None)
-    $ sistema_acciones.acciones.pop("vq8a_cajonera", None)
+    $ vq8a_acciones_activas = False
     $ completar_quest_actual("violet")
 
     # 1. Adelantar el tiempo 2 veces (queda de noche)
@@ -448,7 +591,7 @@ label violet_quest08a_cierre_desarrollo:
         vq8a_bgs_originales = {}
 
     $ mostrar_hud()
-    jump game_loop
+    return
 
 
 ################################################################################
@@ -474,8 +617,7 @@ label test_quest08a_violet:
 
     # Limpiar restricción, acciones y flags de un test previo
     $ desactivar_restriccion()
-    $ sistema_acciones.acciones.pop("vq8a_ropero", None)
-    $ sistema_acciones.acciones.pop("vq8a_cajonera", None)
+    $ vq8a_acciones_activas = False
     $ vq8a_ropero_visto = False
     $ vq8a_cajonera_vista = False
 

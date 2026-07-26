@@ -58,9 +58,10 @@ define gui.hover_muted_color = '#66BB6A'
 define gui.text_color = '#FFFFFF'
 define gui.interface_text_color = '#FFF8E1'
 
-# Linea que da borde a los nombres
+# Linea que da borde a los nombres — mas grueso en pantalla chica, donde el
+# nombre tambien se muestra mas grande (gui.name_text_size, variante small).
 init python:
-    style.say_label.outlines = [(2, "#ffffff", 0, 0)]
+    style.say_label.outlines = [((4 if renpy.variant("small") else 2), "#ffffff", 0, 0)]
 
 ## Fonts and Font Sizes ########################################################
 
@@ -95,7 +96,7 @@ define gui.title_text_size = 75
 ## Main and Game Menus #########################################################
 
 ## The images used for the main and game menus.
-define gui.main_menu_background = "gui/portada.png"
+define gui.main_menu_background = "gui/portada.jpg"
 define gui.game_menu_background = "gui/game_menu.png"
 
 
@@ -442,11 +443,11 @@ init python:
     def small():
 
         ## Font sizes.
-        gui.text_size = 45
-        gui.name_text_size = 54
+        gui.text_size = 60
+        gui.name_text_size = 85
         gui.notify_text_size = 38
         gui.interface_text_size = 45
-        gui.button_text_size = 45
+        gui.button_text_size = 60
         gui.label_text_size = 51
 
         ## Adjust the location of the textbox.
@@ -461,7 +462,10 @@ init python:
         gui.choice_button_width = 1860
         gui.choice_button_text_size = 45
 
-        gui.navigation_spacing = 30
+        # Con el texto del menú principal duplicado (screens.rpy, screen
+        # navigation), un spacing de 30 no deja entrar todos los botones en
+        # pantalla — se reduce para que quepan.
+        gui.navigation_spacing = 10
         gui.pref_button_spacing = 15
 
         gui.history_height = 285

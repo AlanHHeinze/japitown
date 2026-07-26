@@ -12,63 +12,63 @@
 ## Imagenes
 ################################################################################
 
-image bg_casa_noche_hmc_zoom = "images/bg/casa/bg_casa_noche_hmc_zoom.png"
+image bg_casa_noche_hmc_zoom = "images/bg/casa/bg_casa_noche_hmc_zoom.jpg"
 
 layeredimage mc_base_parado_vr:
     group pose:
         attribute vr1 default:
-            "images/eventos/violet/evento1/mc_base_parado_vr1.png"
+            "images/eventos/violet/evento1/mc_base_parado_vr1.webp"
         attribute vr2:
-            "images/eventos/violet/evento1/mc_base_parado_vr2.png"
+            "images/eventos/violet/evento1/mc_base_parado_vr2.webp"
         attribute vr3:
-            "images/eventos/violet/evento1/mc_base_parado_vr3.png"
+            "images/eventos/violet/evento1/mc_base_parado_vr3.webp"
 
 layeredimage violet_evento_01_jugandosolo:
     group pose:
         attribute j1 default:
-            "images/eventos/violet/evento1/violet_evento_01_jugandosolo1.png"
+            "images/eventos/violet/evento1/violet_evento_01_jugandosolo1.webp"
         attribute j2:
-            "images/eventos/violet/evento1/violet_evento_01_jugandosolo2.png"
+            "images/eventos/violet/evento1/violet_evento_01_jugandosolo2.webp"
         attribute j3:
-            "images/eventos/violet/evento1/violet_evento_01_jugandosolo3.png"
+            "images/eventos/violet/evento1/violet_evento_01_jugandosolo3.webp"
         attribute j4:
-            "images/eventos/violet/evento1/violet_evento_01_jugandosolo4.png"
+            "images/eventos/violet/evento1/violet_evento_01_jugandosolo4.webp"
         attribute j5:
-            "images/eventos/violet/evento1/violet_evento_01_jugandosolo5.png"
+            "images/eventos/violet/evento1/violet_evento_01_jugandosolo5.webp"
         attribute j6:
-            "images/eventos/violet/evento1/violet_evento_01_jugandosolo6.png"
+            "images/eventos/violet/evento1/violet_evento_01_jugandosolo6.webp"
         attribute j7:
-            "images/eventos/violet/evento1/violet_evento_01_jugandosolo7.png"
+            "images/eventos/violet/evento1/violet_evento_01_jugandosolo7.webp"
 
 layeredimage violet_evento_01_violetvr:
     group pose:
         attribute vr1 default:
-            "images/eventos/violet/evento1/violet_evento_01_violetvr1.png"
+            "images/eventos/violet/evento1/violet_evento_01_violetvr1.webp"
         attribute vr2:
-            "images/eventos/violet/evento1/violet_evento_01_violetvr2.png"
+            "images/eventos/violet/evento1/violet_evento_01_violetvr2.webp"
         attribute vr3:
-            "images/eventos/violet/evento1/violet_evento_01_violetvr3.png"
+            "images/eventos/violet/evento1/violet_evento_01_violetvr3.webp"
         attribute vr4:
-            "images/eventos/violet/evento1/violet_evento_01_violetvr4.png"
+            "images/eventos/violet/evento1/violet_evento_01_violetvr4.webp"
         attribute vr5:
-            "images/eventos/violet/evento1/violet_evento_01_violetvr5.png"
+            "images/eventos/violet/evento1/violet_evento_01_violetvr5.webp"
         attribute vr6:
-            "images/eventos/violet/evento1/violet_evento_01_violetvr6.png"
+            "images/eventos/violet/evento1/violet_evento_01_violetvr6.webp"
         attribute vr7:
-            "images/eventos/violet/evento1/violet_evento_01_violetvr7.png"
+            "images/eventos/violet/evento1/violet_evento_01_violetvr7.webp"
         attribute vr8:
-            "images/eventos/violet/evento1/violet_evento_01_violetvr8.png"
+            "images/eventos/violet/evento1/violet_evento_01_violetvr8.webp"
         attribute vr9:
-            "images/eventos/violet/evento1/violet_evento_01_violetvr9.png"
+            "images/eventos/violet/evento1/violet_evento_01_violetvr9.webp"
         attribute vr10:
-            "images/eventos/violet/evento1/violet_evento_01_violetvr10.png"
+            "images/eventos/violet/evento1/violet_evento_01_violetvr10.webp"
         attribute vr11:
-            "images/eventos/violet/evento1/violet_evento_01_violetvr11.png"
+            "images/eventos/violet/evento1/violet_evento_01_violetvr11.webp"
         attribute vr12:
-            "images/eventos/violet/evento1/violet_evento_01_violetvr12.png"
+            "images/eventos/violet/evento1/violet_evento_01_violetvr12.webp"
     group boca:
         attribute b_hablando:
-            "images/eventos/violet/evento1/violet_evento_01_violetvrhablando.png"
+            "images/eventos/violet/evento1/violet_evento_01_violetvrhablando.webp"
         attribute b_none default:
             Null()
 

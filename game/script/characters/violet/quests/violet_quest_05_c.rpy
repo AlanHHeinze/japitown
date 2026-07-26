@@ -178,9 +178,8 @@ label violet_quest05c_opcion_a:
     mc "Nuevamente perdón"
     show mc_parado_base b_seria c_rbase_base with sprite_fast
 
-    # La tienda lee stock_tienda, no CATALOGO_ITEMS[...]["stock"]: actualizar ambos
-    # para que las entradas aparezcan disponibles con stock real.
-    $ CATALOGO_ITEMS["entrada_japicon"]["stock"] = 2
+    # La tienda lee stock_tienda (default, persiste en el save). No mutar
+    # CATALOGO_ITEMS: es dato de init y los cambios no sobreviven save/load.
     $ stock_tienda["entrada_japicon"] = 2
     $ cambiar_stat1("violet", 6)
     $ completar_quest_actual("violet", recuerdos={"eleccion_05c": vq5c_eleccion})
@@ -224,9 +223,8 @@ label violet_quest05c_opcion_b:
     mc "Espero que me creas, nos vemos"
     show mc_parado_base b_seria c_rbase_base with sprite_fast
 
-    # La tienda lee stock_tienda, no CATALOGO_ITEMS[...]["stock"]: actualizar ambos
-    # para que las entradas aparezcan disponibles con stock real.
-    $ CATALOGO_ITEMS["entrada_japicon"]["stock"] = 2
+    # La tienda lee stock_tienda (default, persiste en el save). No mutar
+    # CATALOGO_ITEMS: es dato de init y los cambios no sobreviven save/load.
     $ stock_tienda["entrada_japicon"] = 2
     $ cambiar_stat1("violet", 6)
     $ cambiar_stat2("violet", 3)

@@ -13,14 +13,14 @@ default ajuste_cel_undo = []
 default ajuste_cel_input_activo = None
 default ajuste_cel_input_valor = ""
 
-# Area de trabajo
-default ajuste_cel_area_x = 630
+# Area de trabajo — en pantalla táctil el celular ocupa toda la pantalla
+default ajuste_cel_area_x = (0 if renpy.variant("small") else 630)
 default ajuste_cel_area_y = 0
-default ajuste_cel_area_w = 660
+default ajuste_cel_area_w = (1920 if renpy.variant("small") else 660)
 default ajuste_cel_area_h = 1080
-default ajuste_cel_area_orig_x = 630
+default ajuste_cel_area_orig_x = (0 if renpy.variant("small") else 630)
 default ajuste_cel_area_orig_y = 0
-default ajuste_cel_area_orig_w = 660
+default ajuste_cel_area_orig_w = (1920 if renpy.variant("small") else 660)
 default ajuste_cel_area_orig_h = 1080
 
 init -5 python:

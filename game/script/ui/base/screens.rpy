@@ -105,6 +105,13 @@ screen say(who, what):
             window:
                 id "namebox"
                 style "namebox"
+                if renpy.variant("small"):
+                    # Con las fuentes agrandadas en táctil, el nombre queda muy
+                    # pegado al texto de diálogo. Se lo sube a la mitad: la
+                    # mitad de la caja del nombre queda arriba del borde del
+                    # cuadro de texto, y la otra mitad adentro.
+                    yanchor 0.5
+                    ypos 0
                 text who id "who"
 
         text what id "what"
@@ -290,50 +297,88 @@ style quick_button_text:
 
 screen navigation():
 
+    # Fijado directo en cada botón: la referencia a gui.button_text_size desde
+    # el estilo (navigation_button_text) no se estaba viendo reflejada en
+    # pantalla chica, asi que se calcula y aplica aca, en el screen, donde
+    # renpy.variant() se re-evalua en cada render (mismo patron que se usa en
+    # el resto del HUD para pantalla táctil).
+    $ _nav_text_size = int(32 * 2.0) if renpy.variant("small") else 32
+
     vbox:
         style_prefix "navigation"
 
         xpos gui.navigation_xpos
-        yalign 0.5
+        yalign (0.2 if renpy.variant("small") else 0.5)
 
         spacing gui.navigation_spacing
 
         if main_menu:
 
-            textbutton _("Comenzar") action Start()
+            textbutton _("Comenzar"):
+                action Start()
+                text_size _nav_text_size
 
         else:
 
-            textbutton _("Historial") action ShowMenu("history")
+            textbutton _("Historial"):
+                action ShowMenu("history")
+                text_size _nav_text_size
 
-            textbutton _("Guardar") action ShowMenu("save")
+            textbutton _("Guardar"):
+                action ShowMenu("save")
+                text_size _nav_text_size
 
-        textbutton _("Cargar") action ShowMenu("load")
+        textbutton _("Cargar"):
+            action ShowMenu("load")
+            text_size _nav_text_size
 
-        textbutton _("Preferencias") action ShowMenu("preferences")
+        textbutton _("Preferencias"):
+            action ShowMenu("preferences")
+            text_size _nav_text_size
+
+        if not main_menu:
+
+            ## Return() cierra el menú de pausa: así el panel queda sobre el JUEGO
+            ## (no sobre el menú) y la captura sale limpia. El panel sobrevive al
+            ## cambio de contexto vía config.always_shown_screens (ver sistema_feedback).
+            textbutton _("Errores y Feedback"):
+                action [Function(jp_fb_abrir), Return()]
+                text_size _nav_text_size
 
         if _in_replay:
 
-            textbutton _("Fin Replay") action EndReplay(confirm=True)
+            textbutton _("Fin Replay"):
+                action EndReplay(confirm=True)
+                text_size _nav_text_size
 
         elif not main_menu:
 
-            textbutton _("Menú Principal") action MainMenu()
+            textbutton _("Menú Principal"):
+                action MainMenu()
+                text_size _nav_text_size
 
-        textbutton _("Acerca de") action ShowMenu("about")
+        textbutton _("Acerca de"):
+            action ShowMenu("about")
+            text_size _nav_text_size
 
         if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
 
             ## Help isn't necessary or relevant to mobile devices.
-            textbutton _("Ayuda") action ShowMenu("help")
+            textbutton _("Ayuda"):
+                action ShowMenu("help")
+                text_size _nav_text_size
 
-        textbutton _("Idioma") action ShowMenu("language")
+        textbutton _("Idioma"):
+            action ShowMenu("language")
+            text_size _nav_text_size
 
         if renpy.variant("pc"):
 
             ## The quit button is banned on iOS and unnecessary on Android and
             ## Web.
-            textbutton _("Salir") action Quit(confirm=not main_menu)
+            textbutton _("Salir"):
+                action Quit(confirm=not main_menu)
+                text_size _nav_text_size
 
 
 style navigation_button is gui_button
@@ -345,6 +390,10 @@ style navigation_button:
     padding (15, 8, 15, 8)
 
 style navigation_button_text:
+    # El tamaño real para pantalla chica se fija por botón en el screen
+    # "navigation" (text_size _nav_text_size) — referenciar gui.button_text_size
+    # desde aca no se estaba reflejando en juego, asi que se lo maneja en un
+    # solo lugar, en el screen, en vez de en dos.
     size 32
     color "#FFFFFF"
     hover_color "#FFB74D"
@@ -385,6 +434,39 @@ screen main_menu():
             text "[config.version]":
                 style "main_menu_version"
 
+    ## Botones sociales (inferior izquierda): Discord arriba, Patreon abajo
+    $ _soc_k = 2.0 if renpy.variant("small") else 1.0
+
+    vbox:
+        xpos int(60 * _soc_k)
+        yalign 1.0
+        yoffset int(-40 * _soc_k)
+        spacing int(16 * _soc_k)
+
+        hbox:
+            spacing int(14 * _soc_k)
+            imagebutton:
+                idle Transform("images/hud/discord_logo.png", fit="contain", xysize=(int(56 * _soc_k), int(56 * _soc_k)), alpha=0.85)
+                hover Transform("images/hud/discord_logo.png", fit="contain", xysize=(int(56 * _soc_k), int(56 * _soc_k)), alpha=1.0)
+                action OpenURL("https://discord.gg/qz6REyW3Aw")
+            text "Discord" yalign 0.5 size int(28 * _soc_k) color "#ffffff" outlines [ (2, "#000000aa", 0, 0) ]
+
+        hbox:
+            spacing int(14 * _soc_k)
+            imagebutton:
+                idle Transform("images/hud/patreon_logo.png", fit="contain", xysize=(int(56 * _soc_k), int(56 * _soc_k)), alpha=0.85)
+                hover Transform("images/hud/patreon_logo.png", fit="contain", xysize=(int(56 * _soc_k), int(56 * _soc_k)), alpha=1.0)
+                action OpenURL("https://www.patreon.com/cw/Japitown")
+            text "Patreon" yalign 0.5 size int(28 * _soc_k) color "#ffffff" outlines [ (2, "#000000aa", 0, 0) ]
+
+        hbox:
+            spacing int(14 * _soc_k)
+            imagebutton:
+                idle Transform("images/hud/itch_logo.png", fit="contain", xysize=(int(56 * _soc_k), int(56 * _soc_k)), alpha=0.85)
+                hover Transform("images/hud/itch_logo.png", fit="contain", xysize=(int(56 * _soc_k), int(56 * _soc_k)), alpha=1.0)
+                action OpenURL("https://ahhgames.itch.io/japitown")
+            text "itch.io" yalign 0.5 size int(28 * _soc_k) color "#ffffff" outlines [ (2, "#000000aa", 0, 0) ]
+
 
 
 style main_menu_frame is empty
@@ -412,9 +494,13 @@ style main_menu_text:
 
 style main_menu_title:
     properties gui.text_properties("title")
+    # Borde blanco sobre el celeste (gui.accent_color) para que despegue del fondo.
+    # Va DESPUES de properties para que no lo pise text_properties.
+    outlines [(3, "#FFFFFF", 0, 0)]
 
 style main_menu_version:
     properties gui.text_properties("version")
+    outlines [(2, "#FFFFFF", 0, 0)]
 
 
 ## Game Menu screen ############################################################

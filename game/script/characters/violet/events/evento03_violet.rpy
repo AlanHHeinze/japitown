@@ -8,21 +8,21 @@
 # =============================================================================
 # IMAGENES
 # =============================================================================
-image quest2_violet_puertahabitacion = "images/quest/violet/quest1/quest01_violet_puertahabitacion.png"
-image quest2_violet_pasilloarriba_mañana = "images/quest/violet/quest1/quest01_violet_pasilloarriba_mañana.png"
-image quest2_violet_living_mañana = "images/bg/casa/bg_casa_mañana_living.png"
+image quest2_violet_puertahabitacion = "images/quest/violet/quest1/quest01_violet_puertahabitacion.jpg"
+image quest2_violet_pasilloarriba_mañana = "images/quest/violet/quest1/quest01_violet_pasilloarriba_manana.jpg"
+image quest2_violet_living_mañana = "images/bg/casa/bg_casa_manana_living.jpg"
 
-image quest2_violet_limpiando_chimenea = "images/quest/violet/quest1/violet_quest01_limpiando_chimenea.png"
-image quest2_violet_limpiando_escalera = "images/quest/violet/quest1/violet_quest01_limpiando_escalera.png"
-image quest2_violet_limpiando_sillon   = "images/quest/violet/quest1/violet_quest01_limpiando_sillon.png"
+image quest2_violet_limpiando_chimenea = "images/quest/violet/quest1/violet_quest01_limpiando_chimenea.jpg"
+image quest2_violet_limpiando_escalera = "images/quest/violet/quest1/violet_quest01_limpiando_escalera.jpg"
+image quest2_violet_limpiando_sillon   = "images/quest/violet/quest1/violet_quest01_limpiando_sillon.jpg"
 image quest2_violet_limpiando_alacena = "images/quest/violet/quest1/violet_quest01_limpiando_alacena.png"
 
-image quest2_violet_violetbarriendo = "images/quest/violet/quest1/violet_quest01_violetbarriendo.png"
+image quest2_violet_violetbarriendo = "images/quest/violet/quest1/violet_quest01_violetbarriendo.webp"
 
-image quest2_violet_baño1 = "images/quest/violet/quest1/quest01_violet_baño1.png"
-image bg_casa_mañana_banioarriba_zoom = "images/quest/violet/quest1/bg_casa_mañana_banioarribazoom.png"
+image quest2_violet_baño1 = "images/quest/violet/quest1/quest01_violet_banio1.jpg"
+image bg_casa_mañana_banioarriba_zoom = "images/quest/violet/quest1/bg_casa_manana_banioarribazoom.jpg"
 
-image quest2_violet_limpiandopasilloarriba = "images/quest/violet/quest1/violet_quest01_limpiandopasilloarriba.png"
+image quest2_violet_limpiandopasilloarriba = "images/quest/violet/quest1/violet_quest01_limpiandopasilloarriba.jpg"
 
 
 # =============================================================================
@@ -391,7 +391,7 @@ label violet_quest2_cocina_interactivo:
 
     $ ocultar_hud()
     window show
-    scene bg_casa_mañana_cocina with fade
+    scene bg_casa_manana_cocina with fade
     piensa "Alguno de estos muebles debe tener un trapeador"
     window hide
 
@@ -815,7 +815,7 @@ label violet_quest2_cierre:
     $ mostrar_hud()
 
     # Volver al loop principal
-    jump game_loop
+    return
 
 
 ################################################################################
@@ -868,7 +868,7 @@ label ev03_accion_limpiar_living:
                 "locacion": "casa_pasilloarriba",
                 "tipo": "imagebutton",
                 "id": "violet_barriendo",
-                "imagen": "images/quest/violet/quest1/violet_quest01_violetbarriendo.png",
+                "imagen": "images/quest/violet/quest1/violet_quest01_violetbarriendo.webp",
                 "pos": vq2_pos_violet_barriendo,
                 "anchor": (0.5, 1.0),
                 "label": "violet_quest2_escena_pasillo",

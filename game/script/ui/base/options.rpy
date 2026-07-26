@@ -26,7 +26,7 @@ define gui.show_name = True
 
 ## The version of the game.
 
-define config.version = "0.1.5d"
+define config.version = "0.1.8b"
 
 
 ## Text that is placed on the game's about screen. Place the text between the
@@ -207,10 +207,24 @@ init python:
     build.classify('**/#**', None)
     build.classify('**/thumbs.db', None)
 
-    ## To archive files, classify them as 'archive'.
+    ## Contenido de desarrollo que no debe viajar en las distribuciones.
+    ## NOTA: script/tools/ NO se puede excluir — el HUD referencia nombres
+    ## definidos ahí (sistema_pos, modo_posicionamiento, sistema_ajuste_cel).
+    build.classify('game/images/test/**', None)      # sprites de prueba
 
-    # build.classify('game/**.png', 'archive')
-    # build.classify('game/**.jpg', 'archive')
+    ## Archivar imágenes en .rpa. En el build web reduce cientos de requests
+    ## HTTP sueltos (uno por imagen, on-demand) a unos pocos → muchos menos
+    ## puntos de falla de descarga (ver E04 en errores_registro.md). Incluye
+    ## .webp porque los sprites (los más numerosos) usan ese formato.
+    build.classify('game/**.png', 'archive')
+    build.classify('game/**.jpg', 'archive')
+    build.classify('game/**.webp', 'archive')
+
+    ## IMPORTANTE: re-excluir los sprites de prueba DESPUÉS del archive. En
+    ## Ren'Py la ÚLTIMA regla que matchea un archivo es la que vale, y el
+    ## 'archive' de arriba (game/**) los volvería a incluir. Esta regla posterior
+    ## gana y los deja fuera de la distribución.
+    build.classify('game/images/test/**', None)
 
     ## Files matching documentation patterns are duplicated in a mac app build,
     ## so they appear in both the app and the zip file.

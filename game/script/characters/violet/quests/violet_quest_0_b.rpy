@@ -1,18 +1,18 @@
 # =============================================================================
 # IMAGENES - Quest 0 Violet
 # =============================================================================
-image quest0_puertaviolet = "images/quest/violet/quest0/quest0_puertaviolet.png"
-image quest0_violet = "images/quest/violet/quest0/quest0_violet.png"
-image quest0_violet_amasando = "images/quest/violet/quest0/quest0_violet_amasando.png"
-image quest0_violet_cambiandose = "images/quest/violet/quest0/quest0_violet_cambiandose.png"
-image quest0_violet_cambiandose2 = "images/quest/violet/quest0/quest0_violet_cambiandose2.png"
-image quest0_violet_cambiandose3 = "images/quest/violet/quest0/quest0_violet_cambiandose3.png"
-image quest0_violet_esperando = "images/quest/violet/quest0/quest0_violet_esperando.png"
-image quest0_violet_heladera = "images/quest/violet/quest0/quest0_violet_heladera.png"
-image quest0_violet_pizzalista = "images/quest/violet/quest0/quest0_violet_pizzalista.png"
-image quest0_violet_poniendopizza = "images/quest/violet/quest0/quest0_violet_poniendopizza.png"
-image quest0_violet_puertahabitacion = "images/quest/violet/quest0/quest0_violet_puertahabitacion.png"
-image quest0_violet_sacandopizza = "images/quest/violet/quest0/quest0_violet_sacandopizza.png"
+image quest0_puertaviolet = "images/quest/violet/quest0/quest0_puertaviolet.jpg"
+image quest0_violet = "images/quest/violet/quest0/quest0_violet.jpg"
+image quest0_violet_amasando = "images/quest/violet/quest0/quest0_violet_amasando.jpg"
+image quest0_violet_cambiandose = "images/quest/violet/quest0/quest0_violet_cambiandose.jpg"
+image quest0_violet_cambiandose2 = "images/quest/violet/quest0/quest0_violet_cambiandose2.jpg"
+image quest0_violet_cambiandose3 = "images/quest/violet/quest0/quest0_violet_cambiandose3.jpg"
+image quest0_violet_esperando = "images/quest/violet/quest0/quest0_violet_esperando.jpg"
+image quest0_violet_heladera = "images/quest/violet/quest0/quest0_violet_heladera.jpg"
+image quest0_violet_pizzalista = "images/quest/violet/quest0/quest0_violet_pizzalista.jpg"
+image quest0_violet_poniendopizza = "images/quest/violet/quest0/quest0_violet_poniendopizza.jpg"
+image quest0_violet_puertahabitacion = "images/quest/violet/quest0/quest0_violet_puertahabitacion.jpg"
+image quest0_violet_sacandopizza = "images/quest/violet/quest0/quest0_violet_sacandopizza.jpg"
 image quest0_violet_cenando = "images/quest/violet/quest0/quest0_violet_cenando.jpg"
 
 # =============================================================================
@@ -20,6 +20,12 @@ image quest0_violet_cenando = "images/quest/violet/quest0/quest0_violet_cenando.
 # True una vez que el jugador vio el tutorial de elecciones (compartido entre
 # la quest 0_b de Violet y la 0_a de Jasmine — solo se muestra en la primera).
 default tutorial_elecciones_visto = False
+
+# Rama elegida ("respeto" | "confrontar"): se decide temprano y se lee mucho
+# después, en el cierre (tras cocinar). DEBE ser `default` sin `_`: las variables
+# con `_` no se guardan, así que si el jugador guardaba entre la decisión y el
+# cierre, se perdía y crasheaba con NameError (E05). Antes era una temp `_`.
+default vq0b_ruta = ""
 
 
 # QUEST 0 - El Muro de Cristal (Violet)
@@ -202,7 +208,7 @@ label quest_violet_0_opcion_respeto:
 
     piensa "Creo que conseguí avanzar un poco en la relación"
 
-    $ _ruta_vq0 = "respeto"
+    $ vq0b_ruta = "respeto"
 
     # =========================================================================
     # Modo restringido: el jugador debe ir a la cocina
@@ -557,7 +563,7 @@ label quest_violet_0_opcion_entrar:
     # (Violet boca sonrisa leve)
     show violet_parada b_sonrisaleve
 
-    $ _ruta_vq0 = "confrontar"
+    $ vq0b_ruta = "confrontar"
 
     # =========================================================================
     # Modo restringido: el jugador debe ir a la cocina
@@ -654,7 +660,7 @@ label quest_violet_0_cierre:
     window hide
     $ mostrar_hud()
     show screen hud_navegacion
-    jump game_loop
+    return
 
 
 # =============================================================================
@@ -695,9 +701,9 @@ label quest_violet_0_puerta:
     pause 0.3
 
     # Evaluar ruta elegida y aplicar stats
-    if _ruta_vq0 == "respeto":
+    if vq0b_ruta == "respeto":
         $ obtener_npc("violet").modificar_stat1(4)
-    elif _ruta_vq0 == "confrontar":
+    elif vq0b_ruta == "confrontar":
         $ obtener_npc("violet").modificar_stat2(2)
 
     # Finalizar Quest
@@ -711,4 +717,4 @@ label quest_violet_0_puerta:
     window hide
     $ mostrar_hud()
     show screen hud_navegacion
-    jump game_loop
+    return

@@ -306,7 +306,7 @@ label violet_quest02b_opcion_amor:
 
 label violet_quest02b_fin:
 
-    scene expression "images/bg/casa/bg_casa_trasnoche_pasilloarriba.png" with fade
+    scene expression "images/bg/casa/bg_casa_trasnoche_pasilloarriba.jpg" with fade
 
     show mc_parado_base c_rbase_pensando o_arribanm b_none with sprite_fast
     piensa "La situación se fue para otro lado, espero que no se tome las cosas a mal"

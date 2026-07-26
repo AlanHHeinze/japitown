@@ -2,35 +2,35 @@
 # IMAGENES - Quest 0 Mónica
 # =============================================================================
 # Background
-image bg_quest_monica_0_living_zoom = "images/quest/monica/quest 0/bg_quest_monica_0_living_zoom.png"
+image bg_quest_monica_0_living_zoom = "images/quest/monica/quest 0/bg_quest_monica_0_living_zoom.jpg"
 
 # Sprites MC
-image monica_quest_0_mc_avergonzado = "images/quest/monica/quest 0/monica_quest_0_mc_avergonzado.png"
-image monica_quest_0_mc_brazosarriba = "images/quest/monica/quest 0/monica_quest_0_mc_brazosarriba.png"
-image monica_quest_0_mc_brazosarriba_bocahablando = "images/quest/monica/quest 0/monica_quest_0_mc_brazosarriba_bocahablando.png"
-image monica_quest_0_mc_oliendo = "images/quest/monica/quest 0/monica_quest_0_mc_oliendo.png"
-image monica_quest_0_mc_oliendo_2 = "images/quest/monica/quest 0/monica_quest_0_mc_oliendo_2.png"
-image monica_quest_0_mc_oliendo_2_cara = "images/quest/monica/quest 0/monica_quest_0_mc_oliendo_2_cara.png"
-image monica_quest_0_mc_oliendo_3 = "images/quest/monica/quest 0/monica_quest_0_mc_oliendo_3.png"
-image monica_quest_0_mc_oliendo_3_cara = "images/quest/monica/quest 0/monica_quest_0_mc_oliendo_3_cara.png"
-image monica_quest_0_mc_perdon = "images/quest/monica/quest 0/monica_quest_0_mc_perdon.png"
+image monica_quest_0_mc_avergonzado = "images/quest/monica/quest 0/monica_quest_0_mc_avergonzado.webp"
+image monica_quest_0_mc_brazosarriba = "images/quest/monica/quest 0/monica_quest_0_mc_brazosarriba.webp"
+image monica_quest_0_mc_brazosarriba_bocahablando = "images/quest/monica/quest 0/monica_quest_0_mc_brazosarriba_bocahablando.webp"
+image monica_quest_0_mc_oliendo = "images/quest/monica/quest 0/monica_quest_0_mc_oliendo.webp"
+image monica_quest_0_mc_oliendo_2 = "images/quest/monica/quest 0/monica_quest_0_mc_oliendo_2.webp"
+image monica_quest_0_mc_oliendo_2_cara = "images/quest/monica/quest 0/monica_quest_0_mc_oliendo_2_cara.webp"
+image monica_quest_0_mc_oliendo_3 = "images/quest/monica/quest 0/monica_quest_0_mc_oliendo_3.webp"
+image monica_quest_0_mc_oliendo_3_cara = "images/quest/monica/quest 0/monica_quest_0_mc_oliendo_3_cara.webp"
+image monica_quest_0_mc_perdon = "images/quest/monica/quest 0/monica_quest_0_mc_perdon.webp"
 
 # Sprites Monica - Carcajada
-image monica_quest_0_monica_carcajada = "images/quest/monica/quest 0/monica_quest_0_monica_carcajada.png"
+image monica_quest_0_monica_carcajada = "images/quest/monica/quest 0/monica_quest_0_monica_carcajada.webp"
 
 # Sprites Monica - Mirando (expresiones faciales)
-image monica_quest_0_monica_mirando_aguantandorisa = "images/quest/monica/quest 0/monica_quest_0_monica_mirando_aguantandorisa.png"
-image monica_quest_0_monica_mirando_empezando_a_reir = "images/quest/monica/quest 0/monica_quest_0_monica_mirando_empezando a reir.png"
-image monica_quest_0_monica_mirando_enojada = "images/quest/monica/quest 0/monica_quest_0_monica_mirando_enojada.png"
-image monica_quest_0_monica_mirando_hablando = "images/quest/monica/quest 0/monica_quest_0_monica_mirando_hablando.png"
-image monica_quest_0_monica_mirando_riendo = "images/quest/monica/quest 0/monica_quest_0_monica_mirando_riendo.png"
+image monica_quest_0_monica_mirando_aguantandorisa = "images/quest/monica/quest 0/monica_quest_0_monica_mirando_aguantandorisa.webp"
+image monica_quest_0_monica_mirando_empezando_a_reir = "images/quest/monica/quest 0/monica_quest_0_monica_mirando_empezando a reir.webp"
+image monica_quest_0_monica_mirando_enojada = "images/quest/monica/quest 0/monica_quest_0_monica_mirando_enojada.webp"
+image monica_quest_0_monica_mirando_hablando = "images/quest/monica/quest 0/monica_quest_0_monica_mirando_hablando.webp"
+image monica_quest_0_monica_mirando_riendo = "images/quest/monica/quest 0/monica_quest_0_monica_mirando_riendo.webp"
 
 # Sprites Monica - Perfume
-image monica_quest_0_monica_perfume = "images/quest/monica/quest 0/monica_quest_0_monica_perfume.png"
-image monica_quest_0_monica_perfume_bocahablando = "images/quest/monica/quest 0/monica_quest_0_monica_perfume_bocahablando.png"
-image monica_quest_0_monica_perfume_brazocostado = "images/quest/monica/quest 0/monica_quest_0_monica_perfume_brazocostado.png"
-image monica_quest_0_monica_perfume_carafeliz = "images/quest/monica/quest 0/monica_quest_0_monica_perfume_carafeliz.png"
-image monica_quest_0_monica_perfume_mirando = "images/quest/monica/quest 0/monica_quest_0_monica_perfume_mirando.png"
+image monica_quest_0_monica_perfume = "images/quest/monica/quest 0/monica_quest_0_monica_perfume.webp"
+image monica_quest_0_monica_perfume_bocahablando = "images/quest/monica/quest 0/monica_quest_0_monica_perfume_bocahablando.webp"
+image monica_quest_0_monica_perfume_brazocostado = "images/quest/monica/quest 0/monica_quest_0_monica_perfume_brazocostado.webp"
+image monica_quest_0_monica_perfume_carafeliz = "images/quest/monica/quest 0/monica_quest_0_monica_perfume_carafeliz.webp"
+image monica_quest_0_monica_perfume_mirando = "images/quest/monica/quest 0/monica_quest_0_monica_perfume_mirando.webp"
 
 # Ruta elegida en el menu de dialogo (para evitar exploit de rollback)
 default _ruta_mq0 = ""

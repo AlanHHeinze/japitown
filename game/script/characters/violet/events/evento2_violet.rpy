@@ -9,24 +9,24 @@
 ## Imagenes
 ################################################################################
 
-image violet_evento02_fondo = "images/eventos/violet/evento2/violet_evento02_fondo.png"
-image violet_evento02_despierto = "images/eventos/violet/evento2/violet_evento02_despierto.png"
-image violet_evento02_despierto2 = "images/eventos/violet/evento2/violet_evento02_despierto2.png"
+image violet_evento02_fondo = "images/eventos/violet/evento2/violet_evento02_fondo.jpg"
+image violet_evento02_despierto = "images/eventos/violet/evento2/violet_evento02_despierto.jpg"
+image violet_evento02_despierto2 = "images/eventos/violet/evento2/violet_evento02_despierto2.jpg"
 
 layeredimage violet_evento_02:
     group pose:
         attribute img1 default:
-            "images/eventos/violet/evento2/violet_evento02_img1.png"
+            "images/eventos/violet/evento2/violet_evento02_img1.webp"
         attribute img2:
-            "images/eventos/violet/evento2/violet_evento02_img2.png"
+            "images/eventos/violet/evento2/violet_evento02_img2.webp"
         attribute img3:
-            "images/eventos/violet/evento2/violet_evento02_img3.png"
+            "images/eventos/violet/evento2/violet_evento02_img3.webp"
         attribute img4:
-            "images/eventos/violet/evento2/violet_evento02_img4.png"
+            "images/eventos/violet/evento2/violet_evento02_img4.webp"
         attribute img5:
-            "images/eventos/violet/evento2/violet_evento02_img5.png"
+            "images/eventos/violet/evento2/violet_evento02_img5.webp"
         attribute img6:
-            "images/eventos/violet/evento2/violet_evento02_img6.png"
+            "images/eventos/violet/evento2/violet_evento02_img6.webp"
 
 ################################################################################
 ## Variables guardables
@@ -88,7 +88,7 @@ label evento2_violet:
     $ dormir()
 
     window hide
-    jump game_loop
+    return
 
 label evento2_violet_repetir:
     # Este label en la arquitectura original retorna para dejar que el botón de dormir se encargue

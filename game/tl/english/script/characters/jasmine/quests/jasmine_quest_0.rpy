@@ -1,113 +1,5 @@
 # TODO: Translation updated at 2026-04-21 21:46
 
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:25
-translate english quest_jasmine_questprincipal_0_46214770:
-
-    # mc "Hola Jasmine... ¿interrumpo?"
-    mc "Hey Jasmine... am I interrupting?"
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:30
-translate english quest_jasmine_questprincipal_0_8bb24cdb:
-
-    # jasmine "No, justo estoy en un descanso."
-    jasmine "No, I'm just on a break."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:34
-translate english quest_jasmine_questprincipal_0_bef3074a:
-
-    # jasmine "¿Qué necesitas?"
-    jasmine "What do you need?"
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:39
-translate english quest_jasmine_questprincipal_0_9d8ae860:
-
-    # mc "Bueno... Quería darte las gracias por recibirme tan bien."
-    mc "Well... I just wanted to thank you for being so welcoming."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:44
-translate english quest_jasmine_questprincipal_0_8d9c54f5:
-
-    # jasmine "¿A que te refieres con recibirte bien?"
-    jasmine "What do you mean, welcoming?"
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:48
-translate english quest_jasmine_questprincipal_0_3399ac2d:
-
-    # jasmine "¿Esperabas que te trate mal o algo?"
-    jasmine "Were you expecting me to be rude or something?"
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:53
-translate english quest_jasmine_questprincipal_0_4eb30177:
-
-    # mc "Bueno... Violet me ignoró por completo desde que llegué, me alegra que no seas igual."
-    mc "Well... Violet's been completely ignoring me since I got here, so I'm glad you're not the same."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:58
-translate english quest_jasmine_questprincipal_0_11fc177b:
-
-    # jasmine "Yo también estoy enojada contigo, [mc_name]."
-    jasmine "I'm angry with you too, [mc_name]."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:65
-translate english quest_jasmine_questprincipal_0_509b6243:
-
-    # jasmine "Pero a diferencia de mi Violet yo no soy tan inmadura."
-    jasmine "But unlike Violet, I'm not immature about it."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:70
-translate english quest_jasmine_questprincipal_0_1f31bbdb:
-
-    # mc "Con riesgo a que te puedas enojar mas, ¿Puedo saber porque estas enojada?"
-    mc "At the risk of making it worse — can I ask why you're angry?"
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:75
-translate english quest_jasmine_questprincipal_0_3119b8fd:
-
-    # jasmine "Te fuiste y no volviste nunca más, con el tiempo inclusive te volviste más distante."
-    jasmine "You left and never came back. Over time you only got more distant."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:79
-translate english quest_jasmine_questprincipal_0_10cb393b:
-
-    # jasmine "Nuestra relación pasó a ser un saludo de cumpleaños y nada más."
-    jasmine "Our relationship was reduced to a birthday message, and nothing more."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:84
-translate english quest_jasmine_questprincipal_0_96ad14a5:
-
-    # mc "No sé qué decir... Perdón..."
-    mc "I don't know what to say... I'm sorry..."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:89
-translate english quest_jasmine_questprincipal_0_b0b827b9:
-
-    # jasmine "No hace falta que digas nada."
-    jasmine "You don't have to say anything."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:93
-translate english quest_jasmine_questprincipal_0_2f869c94:
-
-    # jasmine "Pero vuelves de un momento para otro como si nada, va a llevar un tiempo que las cosas vuelvan a ser como antes."
-    jasmine "But you come back out of nowhere like nothing happened. It's going to take time to get back to how things were."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:98
-translate english quest_jasmine_questprincipal_0_b6967b68:
-
-    # mc "Lo entiendo..."
-    mc "I understand..."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:102
-translate english quest_jasmine_questprincipal_0_5e101d50:
-
-    # mc "Y lo siento, para mi fue muy duro irme de un momento para el otro."
-    mc "And I'm sorry. Leaving like that was really hard for me too."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:107
-translate english quest_jasmine_questprincipal_0_3e99af98:
-
-    # jasmine "¡Y para nosotras también lo fue! Nos quedamos aquí esperando a que al menos preguntaras cómo estábamos."
-    jasmine "It was hard for us too! We stayed here waiting for you to at least ask how we were doing."
-
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:127
 translate english quest_jasmine_0_opcion_perdon_5dc3d1c6:
 
@@ -143,24 +35,6 @@ translate english quest_jasmine_0_opcion_perdon_f9fafdd1:
 
     # mc "Lo prometo."
     mc "I promise."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:164
-translate english quest_jasmine_0_opcion_deseo_618a1d6b:
-
-    # jasmine "¿Qué pasa que te quedás sin decir nada? ¿Y sonriendo?"
-    jasmine "What's wrong? Why are you just standing there smiling?"
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:169
-translate english quest_jasmine_0_opcion_deseo_440eb067:
-
-    # mc "Sigues siendo igual, siempre la mas madura y directa."
-    mc "You're still the same — always the most mature and straightforward one."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:173
-translate english quest_jasmine_0_opcion_deseo_ca108a28:
-
-    # mc "Me había olvidado lo cómodo que me sentía al hablar con vos."
-    mc "I'd forgotten how comfortable I always felt talking to you."
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:178
 translate english quest_jasmine_0_opcion_deseo_9fdf5b71:
@@ -198,30 +72,6 @@ translate english quest_jasmine_0_opcion_deseo_8de5c9bf:
     # mc "Y no es lo que quiero, quiero esforzarme para que me perdones."
     mc "That's not what I want. I want to earn it."
 
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:206
-translate english quest_jasmine_0_opcion_deseo_73e0b519:
-
-    # jasmine "Mmm... Siempre diciendo lo que tenes que decir"
-    jasmine "Hmm... always saying exactly the right thing."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:210
-translate english quest_jasmine_0_opcion_deseo_2a3a580f:
-
-    # jasmine "Bueno entonces te la voy a poner dificil jajaja."
-    jasmine "Fine, then I'll make it hard for you. Ha."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:215
-translate english quest_jasmine_0_opcion_deseo_75e874f8:
-
-    # mc "Me alegra que asi sea."
-    mc "Good. That's exactly what I want."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:228
-translate english quest_jasmine_0_opcion_realidad_6e215376:
-
-    # mc "Entiendo tu punto y tienes razon"
-    mc "I get what you're saying, and you're right."
-
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:232
 translate english quest_jasmine_0_opcion_realidad_3688a8f3:
 
@@ -239,12 +89,6 @@ translate english quest_jasmine_0_opcion_realidad_d5e9d400:
 
     # jasmine "..."
     jasmine "..."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:245
-translate english quest_jasmine_0_opcion_realidad_13685280:
-
-    # jasmine "Se que fue asi y se que fue mas duro para vos."
-    jasmine "I know. And I know it was harder for you."
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:250
 translate english quest_jasmine_0_opcion_realidad_142e2a84:
@@ -276,35 +120,11 @@ translate english quest_jasmine_0_opcion_realidad_aeb6184e:
     # mc "Como dijiste, eramos chicos y fuimos idiotas."
     mc "Like you said — we were kids and we were idiots."
 
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:272
-translate english quest_jasmine_0_opcion_realidad_d3bf1550:
-
-    # mc "Ahora mosmos grandes y solo un poco idiotas jajaja."
-    mc "Now we're grown-ups, and only a little bit idiots. Ha."
-
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:277
 translate english quest_jasmine_0_opcion_realidad_31faddcc:
 
     # jasmine "Jajaja si."
     jasmine "Ha, yeah."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:281
-translate english quest_jasmine_0_opcion_realidad_0f077959:
-
-    # jasmine "Perdon por haberte dejado solo."
-    jasmine "I'm sorry for leaving you alone."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:286
-translate english quest_jasmine_0_opcion_realidad_46b53bde:
-
-    # mc "Perdon por haberte dejado sola."
-    mc "I'm sorry for leaving you alone too."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:297
-translate english quest_jasmine_0_regalo_1c90eb0b:
-
-    # mc "Ahhh antes que me olvide, te traje algo."
-    mc "Oh, before I forget — I brought you something."
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:301
 translate english quest_jasmine_0_regalo_1687f541:
@@ -366,12 +186,6 @@ translate english quest_jasmine_0_regalo_9e3f761c:
     # jasmine "Era broma, no me lo voy a poner ahora, estando toda transpirada."
     jasmine "I'm kidding — I'm not putting it on right now. I'm all sweaty."
 
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:375
-translate english quest_jasmine_0_regalo_248e6cd7:
-
-    # jasmine "Yo también tengo algo para vos, [mc_name]."
-    jasmine "I've got something for you too, [mc_name]."
-
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:379
 translate english quest_jasmine_0_regalo_c4c58128:
 
@@ -383,18 +197,6 @@ translate english quest_jasmine_0_regalo_af85a35e_1:
 
     # jasmine "Jajaja, no te pongas nervioso."
     jasmine "Ha, don't be nervous."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:387
-translate english quest_jasmine_0_regalo_d7e9e495:
-
-    # jasmine "Ven mas para aca..."
-    jasmine "Come a little closer..."
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:388
-translate english quest_jasmine_0_regalo_4bc29777:
-
-    # mc "¿Aqui esta bien?"
-    mc "Is here okay?"
 
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:389
 translate english quest_jasmine_0_regalo_8c162fac:
@@ -442,18 +244,6 @@ translate english strings:
 
 # TODO: Translation updated at 2026-04-27 15:17
 
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:44
-translate english quest_jasmine_questprincipal_0_ded73edf:
-
-    # jasmine "¿A qué te referís con recibirte bien?"
-    jasmine "What do you mean, welcoming?"
-
-# game/script/characters/jasmine/quests/jasmine_quest_0.rpy:70
-translate english quest_jasmine_questprincipal_0_4a022c12:
-
-    # mc "Con riesgo a que te puedas enojar más, ¿Puedo saber por qué estás enojada?"
-    mc "At the risk of making it worse — can I ask why you're angry?"
-
 # game/script/characters/jasmine/quests/jasmine_quest_0.rpy:272
 translate english quest_jasmine_0_opcion_realidad_45e1b3ef:
 
@@ -465,4 +255,3 @@ translate english quest_jasmine_0_regalo_4ff5cf5d:
 
     # mc "Ahhh, antes de que me olvide, te traje algo."
     mc "Oh, before I forget — I brought you something."
-

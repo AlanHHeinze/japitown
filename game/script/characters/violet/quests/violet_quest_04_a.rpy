@@ -64,7 +64,8 @@ label quest_violet_questprincipal_04_a:
     mc "Es que... "
     
     show jasmine_parada c_rbase_base o_base b_none at entrar_derecha_centro with sprite_normal
-    pause 0.5
+    pause 1.0
+    show jasmine_parada c_rbase_base o_base b_none at center 
     show jasmine_parada c_rbase_saludando at personaje_flip with sprite_fast
     pause 0.5
     show jasmine_parada at personaje_enderezar with sprite_fast
@@ -164,76 +165,6 @@ label quest_violet_questprincipal_04_a:
     violet "Pero ni loca voy a mostrarselo"
     show violet_parada b_none
 
-
-    # Evaluación: estado de progresión con Jasmine
-    if not (sistema_quests.obtener_quest("jasmine_questprincipal_0") and sistema_quests.obtener_quest("jasmine_questprincipal_0").completada):
-        jump violet_quest04a_jasmine_sin_quest0
-    elif not jasmine_event_01_completado():
-        jump violet_quest04a_jasmine_quest0_ok
-    else:
-        jump violet_quest04a_jasmine_todo_ok
-
-
-################################################################################
-## RAMAS JASMINE — Según estado de progresión con Jasmine
-################################################################################
-
-label violet_quest04a_jasmine_sin_quest0:
-
-    $ notificar_recuerdo_activado()
-
-    show jasmine_parada at personaje_enderezar with sprite_fast
-    pause 1.0
-
-    show jasmine_parada b_hablando
-    jasmine "Elegiste mal a quien traerle algo, si me hubieras traido algo a mi, yo te lo mostraria"
-    show jasmine_parada b_sorprendida c_rbase_dedolabio with sprite_fast
-    jasmine "Ahora no se si quiero darte mi ropa interior"
-    show jasmine_parada b_none
-
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
-    mc "Si te traje algo, pero no tuve momento para dartelo"
-    show mc_parado_base b_abiertachica
-    mc "No te enojes, por favor"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
-
-    show jasmine_parada b_hablando c_rbase_base with sprite_fast
-    jasmine "Te estaba peleando jajaja"
-    show jasmine_parada b_none
-
-    jump violet_quest04a_continua
-
-
-label violet_quest04a_jasmine_quest0_ok:
-    
-    $ notificar_recuerdo_activado()
-
-    show jasmine_parada at personaje_enderezar with sprite_fast
-    pause 1.0
-
-    show jasmine_parada b_hablando
-    jasmine "A mi me trajo un conjunto para entrenar y lo primero que pensé fue en mostraselo"
-    show jasmine_parada b_sorprendida
-    jasmine "Le mande una foto y le dije que pase a verlo cuando entreno por la tarde"
-    show jasmine_parada b_none
-
-    show mc_parado_base b_hablando 
-    mc "Si todavía te debo pasar a verlo"
-    show mc_parado_base b_none 
-
-    show jasmine_parada b_sorprendida c_rbase_dedolabio with sprite_fast
-    jasmine "Me parece que te voy a tener que ofrecer mi ropa interior como bonus para que vengas"
-    show jasmine_parada b_none
-
-    show mc_parado_base b_hablando 
-    mc "No es por eso, no tuve tiempo, perdón Jazmine"
-    show mc_parado_base b_none 
-
-    show jasmine_parada b_hablando c_rbase_base with sprite_fast
-    jasmine "Te estaba peleando jajaja"
-    show jasmine_parada b_none
-
-    jump violet_quest04a_continua
 
 
 label violet_quest04a_jasmine_todo_ok:

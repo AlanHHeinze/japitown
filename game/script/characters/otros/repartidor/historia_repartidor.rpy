@@ -26,14 +26,14 @@ label interaccion_repartidor:
 label entrega_repartidor_0:
     # Primera vez que el jugador recibe un paquete
     
-    scene bg_casa_mañana_frente with fade
+    scene bg_casa_manana_frente with fade
     
     show repartidor_parado c_base at right
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
     
     show repartidor_parado c_hablando
     repartidor "Hola, ¿Pedido para [mc_name]?"
-    show repartidor_parado c_bas
+    show repartidor_parado c_base
 
     show mc_parado_base b_hablando
     mc "Sí, soy yo"
@@ -87,7 +87,7 @@ label entrega_repartidor_0:
 label entrega_repartidor_1_5:
     # El repartidor ya conoce al jugador
     
-    scene bg_casa_mañana_frente with fade
+    scene bg_casa_manana_frente with fade
     
     show repartidor_parado c_base at right
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda

@@ -1,7 +1,7 @@
 # =============================================================================
 # IMAGENES - Quest 0 Jasmine
 # =============================================================================
-image jasmine_quest_0_beso = "images/quest/jasmine/quest_0/jasmine_quest_0_beso.png"
+image jasmine_quest_0_beso = "images/quest/jasmine/quest_0/jasmine_quest_0_beso.webp"
 
 # Ruta elegida en el menu de dialogo (para evitar exploit de rollback)
 default _ruta_jq0 = ""

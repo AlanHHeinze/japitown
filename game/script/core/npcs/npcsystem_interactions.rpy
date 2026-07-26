@@ -11,18 +11,13 @@ default _locacion_temp = None
 
 label accion_hotspot_move:
 
-    # Hook Quest 0 del MC — intercepta clics MOVE durante la exploración de la casa
-    if _hotspot_temp and getattr(store, 'mc_q0_interceptar_movimiento', False):
-        if mc_q0_debe_interceptar():
-            call mc_q0_handler_move from _call_mc_q0_handler_move
-            return
-
     # Verificar si el destino es habitacion de NPC (door_access system)
     if _hotspot_temp and _hotspot_temp.destino in ["casa_hmonica", "casa_hviolet", "casa_hjasmine"]:
 
         # PRIORIDAD 1: Verificar restriccion de movimiento — tiene precedencia sobre el door access
         $ _msg_restriccion_puerta = accion_bloqueada_movimiento(_hotspot_temp.destino)
         if _msg_restriccion_puerta:
+            $ _blk_guardar_toque()
             piensa "[_msg_restriccion_puerta]"
             return
 
@@ -48,6 +43,7 @@ label accion_hotspot_move:
         if _npc_banio_temp:
             $ _msg_restriccion_banio = accion_bloqueada_movimiento(_hotspot_temp.destino)
             if _msg_restriccion_banio:
+                $ _blk_guardar_toque()
                 piensa "[_msg_restriccion_banio]"
                 return
             $ _destino_banio_npc = _hotspot_temp.destino
@@ -57,6 +53,7 @@ label accion_hotspot_move:
         # Verificar restricción de movimiento
         $ _msg_restriccion = accion_bloqueada_movimiento(_hotspot_temp.destino)
         if _msg_restriccion:
+            $ _blk_guardar_toque()
             piensa "[_msg_restriccion]"
             return
         
@@ -103,17 +100,20 @@ label accion_avanzar_tiempo:
     # Verificar restricción de quest/evento
     $ _msg_restriccion = accion_bloqueada("avanzar_tiempo")
     if _msg_restriccion:
+        $ _blk_guardar_toque()
         piensa "[_msg_restriccion]"
         return
-    
+
     # Verificar si hay bloqueo de evento
     if hasattr(store, 'sistema_events') and sistema_events.hay_bloqueo("avanzar_tiempo"):
+        $ _blk_guardar_toque()
         piensa "No puedes avanzar el tiempo ahora."
         return
 
     # Verificar mensaje prioritario pendiente de respuesta
     $ _npc_prioritario = obtener_bloqueo_mensaje_prioritario()
     if _npc_prioritario:
+        $ _blk_guardar_toque()
         piensa "Debo responder el mensaje de [_npc_prioritario] antes de continuar"
         return
 
@@ -133,6 +133,7 @@ label accion_ir_a_locacion:
         # Verificar restricción de quest/evento
         $ _msg_restriccion = accion_bloqueada_movimiento(_locacion_temp)
         if _msg_restriccion:
+            $ _blk_guardar_toque()
             piensa "[_msg_restriccion]"
             return
         $ exito = sistema_locaciones.mover_a_locacion(_locacion_temp)
@@ -155,29 +156,38 @@ label accion_ir_a_locacion:
 
 label accion_locacion_ejecutar:
 
-    # 1. Verificar restricción activa del sistema de quests/eventos
-    $ _ale_msg = accion_bloqueada(_accion_locacion_temp_id)
-    if _ale_msg:
-        piensa "[_ale_msg]"
-        return
-
-    # 2. Si ya fue usada hoy y tiene mensaje de reintento — mostrar mensaje
-    if not sistema_acciones.esta_disponible(_accion_locacion_temp_id):
-        $ _ale_accion_ch = sistema_acciones.acciones.get(_accion_locacion_temp_id)
-        if _ale_accion_ch and _ale_accion_ch.mensaje_reintento:
-            $ _ale_msg_ch = renpy.translate_string(_ale_accion_ch.mensaje_reintento)
-            piensa "[_ale_msg_ch]"
-        return
-
-    # 3. Listeners válidos registrados por quests/eventos
+    # 0. Listeners válidos registrados por quests/eventos para esta acción.
+    #    Si hay alguno, la acción se está usando como DISPARADOR de una quest/evento
+    #    y tiene prioridad: se saltean los bloqueos genéricos (restricción activa y
+    #    "ya usada hoy" / cansancio). Sin esto, una quest que usa una acción diaria
+    #    como trigger (ej: Cocinar en violet_quest_0_b) quedaba trabada si el jugador
+    #    ya había usado esa acción ese día — no podía avanzar ni salir de la quest.
     $ _ale_listeners = sistema_acciones.preparar_ejecucion(_accion_locacion_temp_id)
 
-    # 4. Sin listeners → ejecutar label genérico
     if not _ale_listeners:
+
+        # 1. Verificar restricción activa del sistema de quests/eventos
+        $ _ale_msg = accion_bloqueada(_accion_locacion_temp_id)
+        if _ale_msg:
+            $ _blk_guardar_toque()
+            piensa "[_ale_msg]"
+            return
+
+        # 2. Si ya fue usada hoy y tiene mensaje de reintento — mostrar mensaje
+        if not sistema_acciones.esta_disponible(_accion_locacion_temp_id):
+            $ _ale_accion_ch = sistema_acciones.acciones.get(_accion_locacion_temp_id)
+            if _ale_accion_ch and _ale_accion_ch.mensaje_reintento:
+                $ _ale_msg_ch = renpy.translate_string(_ale_accion_ch.mensaje_reintento)
+                $ _blk_guardar_toque()
+                piensa "[_ale_msg_ch]"
+            return
+
+        # 4. Sin listeners → ejecutar label genérico
         $ _ale_accion = sistema_acciones.acciones.get(_accion_locacion_temp_id)
         if _ale_accion and _ale_accion.label_generico:
             call expression _ale_accion.label_generico from _call_ale_generico
         else:
+            $ _blk_guardar_toque()
             piensa "No hay nada especial que hacer aquí ahora."
         return
 

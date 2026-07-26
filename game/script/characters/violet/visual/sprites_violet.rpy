@@ -11,16 +11,16 @@ layeredimage violet_parada:
     # Area
     group area:
         attribute a_base default:
-            "images/characters/casa/violet/violet_parada_area.png"
+            "images/characters/casa/violet/violet_parada_area.webp"
         attribute a_none:
             Null()
     
     # Cabeza
     group cabeza:
         attribute ca_base default:
-            "images/characters/casa/violet/violet_parada_cabeza_rbase.png"
+            "images/characters/casa/violet/violet_parada_cabeza_rbase.webp"
         attribute ca_pijama:
-            "images/characters/casa/violet/violet_parada_cabeza_pijama.png"
+            "images/characters/casa/violet/violet_parada_cabeza_pijama.webp"
         attribute ca_none:
             Null()
 
@@ -32,178 +32,178 @@ layeredimage violet_parada:
         attribute cc_none default:
             Null()
         attribute cc_eva_base:
-            "images/characters/casa/violet/violet_parada_cuerpo_eva_base.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_eva_base.webp"
 
     # Boca
     group boca:
         attribute b_aburrida default:
-            "images/characters/casa/violet/violet_parada_boca_aburrida.png"
+            "images/characters/casa/violet/violet_parada_boca_aburrida.webp"
         attribute b_bostezogrande:
-            "images/characters/casa/violet/violet_parada_boca_bostezogrande.png"
+            "images/characters/casa/violet/violet_parada_boca_bostezogrande.webp"
         attribute b_abiertachica:
-            "images/characters/casa/violet/violet_parada_boca_abiertachica.png"
+            "images/characters/casa/violet/violet_parada_boca_abiertachica.webp"
         attribute b_cerradachica:
-            "images/characters/casa/violet/violet_parada_boca_cerradachica.png"
+            "images/characters/casa/violet/violet_parada_boca_cerradachica.webp"
         attribute b_contenta:
-            "images/characters/casa/violet/violet_parada_boca_contenta.png"
+            "images/characters/casa/violet/violet_parada_boca_contenta.webp"
         attribute b_feliz:
-            "images/characters/casa/violet/violet_parada_boca_feliz.png"
+            "images/characters/casa/violet/violet_parada_boca_feliz.webp"
         attribute b_gritandomucho:
-            "images/characters/casa/violet/violet_parada_boca_gritandomucho.png"
+            "images/characters/casa/violet/violet_parada_boca_gritandomucho.webp"
         attribute b_hablando:
-            "images/characters/casa/violet/violet_parada_boca_hablando.png"
+            "images/characters/casa/violet/violet_parada_boca_hablando.webp"
         attribute b_hablandochica:
-            "images/characters/casa/violet/violet_parada_boca_hablandochica.png"
+            "images/characters/casa/violet/violet_parada_boca_hablandochica.webp"
         attribute b_mordiendo:
-            "images/characters/casa/violet/violet_parada_boca_mordiendo.png"
+            "images/characters/casa/violet/violet_parada_boca_mordiendo.webp"
         attribute b_sexy:
-            "images/characters/casa/violet/violet_parada_boca_sexy.png"
+            "images/characters/casa/violet/violet_parada_boca_sexy.webp"
         attribute b_sonrisacerrada:
-            "images/characters/casa/violet/violet_parada_boca_sonrisacerrada.png"
+            "images/characters/casa/violet/violet_parada_boca_sonrisacerrada.webp"
         attribute b_sonrisacostado:
-            "images/characters/casa/violet/violet_parada_boca_sonrisacostado.png"
+            "images/characters/casa/violet/violet_parada_boca_sonrisacostado.webp"
         attribute b_sonrisaleve:
-            "images/characters/casa/violet/violet_parada_boca_sonrisaleve.png"
+            "images/characters/casa/violet/violet_parada_boca_sonrisaleve.webp"
         attribute b_sonrisapequeña:
-            "images/characters/casa/violet/violet_parada_boca_sonrisapequeña.png"
+            "images/characters/casa/violet/violet_parada_boca_sonrisapequena.webp"
         attribute b_triste:
-            "images/characters/casa/violet/violet_parada_boca_triste.png"
+            "images/characters/casa/violet/violet_parada_boca_triste.webp"
         attribute b_none:
             Null()
     
     # Ojos
     group ojos:
         attribute o_base default:
-            "images/characters/casa/violet/violet_parada_ojos_base.png"
+            "images/characters/casa/violet/violet_parada_ojos_base.webp"
         attribute o_bostezograndenm:
-            "images/characters/casa/violet/violet_parada_ojos_bostezograndenm.png"
+            "images/characters/casa/violet/violet_parada_ojos_bostezograndenm.webp"
         attribute o_abajonm:
-            "images/characters/casa/violet/violet_parada_ojos_abajonm.png"
+            "images/characters/casa/violet/violet_parada_ojos_abajonm.webp"
         attribute o_abiertos:
-            "images/characters/casa/violet/violet_parada_ojos_abiertos.png"
+            "images/characters/casa/violet/violet_parada_ojos_abiertos.webp"
         attribute o_arribanm:
-            "images/characters/casa/violet/violet_parada_ojos_arribanm.png"
+            "images/characters/casa/violet/violet_parada_ojos_arribanm.webp"
         attribute o_cerrados:
-            "images/characters/casa/violet/violet_parada_ojos_cerrados.png"
+            "images/characters/casa/violet/violet_parada_ojos_cerrados.webp"
         attribute o_felicesnm:
-            "images/characters/casa/violet/violet_parada_ojos_felicesnm.png"
+            "images/characters/casa/violet/violet_parada_ojos_felicesnm.webp"
         attribute o_dormidos:
-            "images/characters/casa/violet/violet_parada_ojos_dormidos.png"
+            "images/characters/casa/violet/violet_parada_ojos_dormidos.webp"
         attribute o_enojados:
-            "images/characters/casa/violet/violet_parada_ojos_enojados.png"
+            "images/characters/casa/violet/violet_parada_ojos_enojados.webp"
         attribute o_felices:
-            "images/characters/casa/violet/violet_parada_ojos_felices.png"
+            "images/characters/casa/violet/violet_parada_ojos_felices.webp"
         attribute o_guiñando:
-            "images/characters/casa/violet/violet_parada_ojos_guiñando.png"
+            "images/characters/casa/violet/violet_parada_ojos_guinando.webp"
         attribute o_juzgandonm:
-            "images/characters/casa/violet/violet_parada_ojos_juzgandonm.png"
+            "images/characters/casa/violet/violet_parada_ojos_juzgandonm.webp"
         attribute o_llorandomuchonm:
-            "images/characters/casa/violet/violet_parada_ojos_llorandomuchonm.png"
+            "images/characters/casa/violet/violet_parada_ojos_llorandomuchonm.webp"
         attribute o_sexys:
-            "images/characters/casa/violet/violet_parada_ojos_sexys.png"
+            "images/characters/casa/violet/violet_parada_ojos_sexys.webp"
         attribute o_tristes:
-            "images/characters/casa/violet/violet_parada_ojos_tristes.png"
+            "images/characters/casa/violet/violet_parada_ojos_tristes.webp"
         attribute o_pensando:
-            "images/characters/casa/violet/violet_parada_ojos_pensando.png"
+            "images/characters/casa/violet/violet_parada_ojos_pensando.webp"
         attribute o_costadobase:
-            "images/characters/casa/violet/violet_parada_ojos_costadobase.png"
+            "images/characters/casa/violet/violet_parada_ojos_costadobase.webp"
         attribute o_none:
             Null()
     
     # Cuerpo
     group cuerpo:
         attribute c_rbase_base default:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_base.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_base.webp"
         attribute c_rbase_brazoscruzados:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_brazoscruzados.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_brazoscruzados.webp"
         attribute c_rbase_celu:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_celu.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_celu.webp"
         attribute c_rbase_chek:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_chek.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_chek.webp"
         attribute c_rbase_cola:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_cola.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_cola.webp"
         attribute c_rbase_dedolabio:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_dedolabio.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_dedolabio.webp"
         attribute c_rbase_enojada:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_enojada.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_enojada.webp"
         attribute c_rbase_fuckyou:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_fuckyou.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_fuckyou.webp"
         attribute c_rbase_gestito:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_gestito.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_gestito.webp"
         attribute c_rbase_idea:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_idea.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_idea.webp"
         attribute c_rbase_notok:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_notok.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_notok.webp"
         attribute c_rbase_ok:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_ok.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_ok.webp"
         attribute c_rbase_paz:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_paz.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_paz.webp"
         attribute c_rbase_pensando:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_pensando.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_pensando.webp"
         attribute c_rbase_señalando:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_señalando.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_senalando.webp"
         attribute c_rbase_sorprendido:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_sorprendida.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_sorprendida.webp"
         attribute c_rbase_tetas:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_tetas.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_tetas.webp"
         attribute c_rbase_verguenza:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_verguenza.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_verguenza.webp"
         attribute c_rbase_victoria:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_victoria.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_victoria.webp"
         attribute c_rbase_regalo:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_cajaregalo.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_cajaregalo.webp"
         attribute c_rbase_cajacosplay:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_cajacoxplay.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_cajacoxplay.webp"
         attribute c_rbase_saludando:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_saludando.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_saludando.webp"
         attribute c_rbase_mangas:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_mangas.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_mangas.webp"
 
         # Pijama
         attribute c_pijama_base:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_base.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_base.webp"
         attribute c_pijama_agotada:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_agotada.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_agotada.webp"
         attribute c_pijama_bostezo1:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_bostezo1.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_bostezo1.webp"
         attribute c_pijama_bostezo2:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_bostezo2.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_bostezo2.webp"
         attribute c_pijama_brazoscruzados:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_brazoscruzados.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_brazoscruzados.webp"
         attribute c_pijama_rascando1:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_rascando1.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_rascando1.webp"
         attribute c_pijama_rascando2:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_rascando2.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_rascando2.webp"
         attribute c_pijama_escoba:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_escoba.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_escoba.webp"
         attribute c_pijama_celu:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_celu.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_celu.webp"
         attribute c_pijama_dedolabio:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_dedolabio.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_dedolabio.webp"
         attribute c_pijama_fuckyou:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_fuckyou.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_fuckyou.webp"
         attribute c_pijama_idea:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_idea.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_idea.webp"
         attribute c_pijama_notok:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_notok.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_notok.webp"
         attribute c_pijama_ok:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_ok.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_ok.webp"
         attribute c_pijama_pensando:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_pensando.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_pensando.webp"
         attribute c_pijama_saludando:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_saludando.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_saludando.webp"
         attribute c_pijama_señalando:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_señalando.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_senalando.webp"
         attribute c_pijama_tetas:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_tetas.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_tetas.webp"
         attribute c_pijama_verguenza:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_verguenza.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_verguenza.webp"
         attribute c_pijama_victoria:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_victoria.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_victoria.webp"
         attribute c_pijama_mangas:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_mangas.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_mangas.webp"
         attribute c_pijama_cajacosplay:
-            "images/characters/casa/violet/violet_parada_cuerpo_pijama_cajacoxplay.png"
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_cajacoxplay.webp"
 
         attribute c_none:
             Null()
@@ -213,7 +213,7 @@ layeredimage violet_parada:
         attribute ot_none default:
             Null()
         attribute ot_avergonzada:
-            "images/characters/casa/violet/violet_parada_otros_avergonzada.png"
+            "images/characters/casa/violet/violet_parada_otros_avergonzada.webp"
 
 ################################################################################
 ## Layeredimage: violet_espalda
@@ -231,34 +231,34 @@ layeredimage violet_espalda:
         attribute p_none default:
             Null()
         attribute p_base:
-            "images/characters/casa/violet/violet_parada_espalada_pijama_base.png"
+            "images/characters/casa/violet/violet_parada_espalada_pijama_base.webp"
         attribute p_cyberpunk:
-            "images/characters/casa/violet/violet_parada_espalada_pijama_cyberpunk.png"
+            "images/characters/casa/violet/violet_parada_espalada_pijama_cyberpunk.webp"
         attribute p_fantasia:
-            "images/characters/casa/violet/violet_parada_espalada_pijama_fantasia.png"
+            "images/characters/casa/violet/violet_parada_espalada_pijama_fantasia.webp"
         attribute p_novela:
-            "images/characters/casa/violet/violet_parada_espalada_pijama_novela.png"
+            "images/characters/casa/violet/violet_parada_espalada_pijama_novela.webp"
         attribute p_pensando:
-            "images/characters/casa/violet/violet_parada_espalada_pijama_pensando.png"
+            "images/characters/casa/violet/violet_parada_espalada_pijama_pensando.webp"
         attribute p_rascando1:
-            "images/characters/casa/violet/violet_parada_espalada_pijama_rascando1.png"
+            "images/characters/casa/violet/violet_parada_espalada_pijama_rascando1.webp"
         attribute p_rascando2:
-            "images/characters/casa/violet/violet_parada_espalada_pijama_rascando2.png"
+            "images/characters/casa/violet/violet_parada_espalada_pijama_rascando2.webp"
 
     # Grupo eva — imágenes de espalda con skin eva
     group eva:
         attribute e_none default:
             Null()
         attribute e_base:
-            "images/characters/casa/violet/violet_parada_espalada_eva_base.png"
+            "images/characters/casa/violet/violet_parada_espalada_eva_base.webp"
         attribute e_lista:
-            "images/characters/casa/violet/violet_parada_espalada_eva_lista.png"
+            "images/characters/casa/violet/violet_parada_espalada_eva_lista.webp"
         attribute e_pelo:
-            "images/characters/casa/violet/violet_parada_espalada_eva_pelo.png"
+            "images/characters/casa/violet/violet_parada_espalada_eva_pelo.webp"
         attribute e_cola1:
-            "images/characters/casa/violet/violet_parada_espalada_eva_cola1.png"
+            "images/characters/casa/violet/violet_parada_espalada_eva_cola1.webp"
         attribute e_cola2:
-            "images/characters/casa/violet/violet_parada_espalada_eva_cola2.png"
+            "images/characters/casa/violet/violet_parada_espalada_eva_cola2.webp"
 
 
 ################################################################################
@@ -268,20 +268,20 @@ layeredimage violet_espalda:
 layeredimage violet_mojada:
     group cuerpo:
         attribute c_mojada default:
-            "images/quest/violet/quest08/violet_parada_mojada.png"
+            "images/quest/violet/quest08/violet_parada_mojada.webp"
 
     group ojos:
         attribute o_base default:
-            "images/characters/casa/violet/violet_parada_ojos_base.png"
+            "images/characters/casa/violet/violet_parada_ojos_base.webp"
 
     group boca:
         attribute b_none default:
             Null()
         attribute b_hablando:
-            "images/characters/casa/violet/violet_parada_boca_hablando.png"
+            "images/characters/casa/violet/violet_parada_boca_hablando.webp"
         attribute b_hablandochica:
-            "images/characters/casa/violet/violet_parada_boca_hablandochica.png"
+            "images/characters/casa/violet/violet_parada_boca_hablandochica.webp"
         attribute b_sonrisaleve:
-            "images/characters/casa/violet/violet_parada_boca_sonrisaleve.png"
+            "images/characters/casa/violet/violet_parada_boca_sonrisaleve.webp"
         attribute b_sorprendida:
-            "images/characters/casa/violet/violet_parada_boca_abiertachica.png"
+            "images/characters/casa/violet/violet_parada_boca_abiertachica.webp"

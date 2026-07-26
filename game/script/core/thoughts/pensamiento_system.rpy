@@ -28,7 +28,7 @@ init 5 python:
             try:
                 if v["condicion"]():
                     resultado[k] = v
-            except:
+            except Exception:
                 pass
         return resultado
 

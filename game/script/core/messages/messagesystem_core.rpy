@@ -260,6 +260,17 @@ init python:
                     if renpy.config.developer:
                         print("[MsgSys] Error en accion_al_completar de {}: {}".format(self.id, _e))
 
+            # Revalidar las quests ACÁ mismo: muchas tienen un Requisito("mensaje")
+            # que se cumple justo ahora. El game_loop también las revalida, pero
+            # solo corre al cerrar el celular — y la app de Pistas está DENTRO del
+            # celular, así que sin esto la pista seguiría desactualizada mientras
+            # el jugador no salga. Es seguro: las accion_al_entrar de las etapas
+            # solo setean flags/restricciones, no saltan labels.
+            try:
+                store.actualizar_quests()
+            except Exception:
+                pass
+
             return self.recompensas_otorgadas
         
         def _aplicar_recompensa(self, recompensa):
@@ -469,7 +480,7 @@ init python:
             if grupo.foto_inicial:
                 self.agregar_foto_galeria(
                     grupo.foto_inicial, target_npc,
-                    "Foto de {}".format(target_npc.capitalize())
+                    renpy.translate_string("Foto de {npc}").format(npc=target_npc.capitalize())
                 )
 
             # Agregar a pendientes del chat
@@ -578,6 +589,15 @@ init python:
                     if hasattr(store, 'actualizar_rutinas_npcs'):
                         store.actualizar_rutinas_npcs()
                     for grupo in list(self._grupos_en_espera):
+                        # Los prioritarios NO se entregan mientras el jugador duerme:
+                        # por definicion no se pueden "dormir de largo". O lo despiertan
+                        # (obtener_horario_despertar_prioritario, antes de dormir) o
+                        # esperan a que el horario real llegue estando despierto.
+                        # Sin esto, una quest que recien habilita su mensaje al cambiar
+                        # el dia (dias_espera) lo dispara dentro de dormir() y se
+                        # entregaba en el trasnoche simulado, sin despertar ni bloquear.
+                        if getattr(grupo, 'prioritario', False):
+                            continue
                         self._intentar_entrega(grupo)
             finally:
                 store.horario_actual = horario_original
@@ -676,7 +696,7 @@ init python:
             if opcion.foto_respuesta:
                 self.agregar_foto_galeria(
                     opcion.foto_respuesta, npc_id,
-                    f"Foto de {npc_id.capitalize()}"
+                    renpy.translate_string("Foto de {npc}").format(npc=npc_id.capitalize())
                 )
             
             # Avanzar al siguiente paso (con posible salto)
@@ -751,7 +771,14 @@ init python:
 # Variables guardables
 # =============================================================================
 
-define sistema_mensajes = SistemaMensajes()
+# Instancia creada en init 4 (los registros de init 5-11 la llenan) y declarada
+# con default para que se guarde en el save: historiales de chat y galeria de fotos deben guardarse.
+init 4 python:
+    sistema_mensajes = SistemaMensajes()
+# OJO: el default se re-evalúa en CADA partida nueva. Debe devolver una COPIA
+# del catálogo poblado en init — una instancia vacía (SistemaMensajes()) borraría todo
+# el contenido registrado. Ver _ps_copia_fresca en persistencia_sistemas.rpy.
+default sistema_mensajes = _ps_copia_fresca("sistema_mensajes")
 
 
 # =============================================================================

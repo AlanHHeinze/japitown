@@ -2,8 +2,8 @@
 ## Violet Quest 03_A — Devolver los mangas
 ################################################################################
 
-image vq3a_ropero   = "images/quest/violet/quest4/violet_quest04_ropero.png"
-image vq3a_cajonera = "images/quest/violet/quest4/violet_quest04_cajonera.png"
+image vq3a_ropero   = "images/quest/violet/quest4/violet_quest04_ropero.jpg"
+image vq3a_cajonera = "images/quest/violet/quest4/violet_quest04_cajonera.webp"
 
 default vq3a_peluches_hecho  = False
 default vq3a_pc_hecho        = False
@@ -12,6 +12,11 @@ default vq3a_muñecos_hecho   = False
 default vq3a_mochila_hecho   = False
 default vq3a_ropero_hecho    = False
 default vq3a_cajonera_hecho  = False
+
+# Flags de visibilidad de las acciones (registradas en init en actions_catalog.rpy;
+# registrarlas en runtime rompía la quest al cargar un save a mitad del segmento)
+default vq3a_fase1_activa = False
+default vq3a_fase2_activa = False
 
 # Skin evaluado al inicio — persiste en save para sub-labels
 default vq3a_cuerpo = "c_rbase"
@@ -282,31 +287,8 @@ label vq03a_comun:
 
     $ sistema_locaciones.mover_a_locacion("casa_hviolet")
 
-    $ sistema_acciones.registrar_accion(AccionLocacion(
-        id="vq3a_peluches", nombre="Peluches", icono=u"🧸",
-        locacion_id="casa_hviolet", label_generico="vq3a_accion_peluches",
-        reseteo=None, color="#8E24AA", color_hover="#AB47BC"
-    ))
-    $ sistema_acciones.registrar_accion(AccionLocacion(
-        id="vq3a_pc", nombre="PC", icono=u"💻",
-        locacion_id="casa_hviolet", label_generico="vq3a_accion_pc",
-        reseteo=None, color="#1565C0", color_hover="#1E88E5"
-    ))
-    $ sistema_acciones.registrar_accion(AccionLocacion(
-        id="vq3a_manga", nombre="Manga", icono=u"📚",
-        locacion_id="casa_hviolet", label_generico="vq3a_accion_manga",
-        reseteo=None, color="#C62828", color_hover="#EF5350"
-    ))
-    $ sistema_acciones.registrar_accion(AccionLocacion(
-        id="vq3a_muñecos", nombre="Muñecos", icono=u"🎎",
-        locacion_id="casa_hviolet", label_generico="vq3a_accion_muñecos",
-        reseteo=None, color="#00695C", color_hover="#00897B"
-    ))
-    $ sistema_acciones.registrar_accion(AccionLocacion(
-        id="vq3a_mochila", nombre="Mochila", icono=u"🎒",
-        locacion_id="casa_hviolet", label_generico="vq3a_accion_mochila",
-        reseteo=None, color="#E65100", color_hover="#FB8C00"
-    ))
+    # Las acciones estan registradas en init (actions_catalog.rpy); este flag las muestra
+    $ vq3a_fase1_activa = True
 
     window hide
     $ mostrar_hud()
@@ -324,7 +306,6 @@ label vq3a_accion_peluches:
     piensa "Violet y su obsesion con los Slime... desde pequeña que le gustan y los colecciona"
     window hide
     $ vq3a_peluches_hecho = True
-    $ sistema_acciones.acciones.pop("vq3a_peluches", None)
     if vq3a_peluches_hecho and vq3a_pc_hecho and vq3a_manga_hecho and vq3a_muñecos_hecho and vq3a_mochila_hecho:
         jump vq3a_monologo
     $ mostrar_hud()
@@ -336,7 +317,6 @@ label vq3a_accion_pc:
     piensa "PC master race, me pregunto que estara jugando actualmente"
     window hide
     $ vq3a_pc_hecho = True
-    $ sistema_acciones.acciones.pop("vq3a_pc", None)
     if vq3a_peluches_hecho and vq3a_pc_hecho and vq3a_manga_hecho and vq3a_muñecos_hecho and vq3a_mochila_hecho:
         jump vq3a_monologo
     $ mostrar_hud()
@@ -348,7 +328,6 @@ label vq3a_accion_manga:
     piensa "Tiene bastantes opciones, la proxima le voy a pedir alguno de sus favoritos"
     window hide
     $ vq3a_manga_hecho = True
-    $ sistema_acciones.acciones.pop("vq3a_manga", None)
     if vq3a_peluches_hecho and vq3a_pc_hecho and vq3a_manga_hecho and vq3a_muñecos_hecho and vq3a_mochila_hecho:
         jump vq3a_monologo
     $ mostrar_hud()
@@ -360,7 +339,6 @@ label vq3a_accion_muñecos:
     piensa "Su coleccion de figuras, también tiene slimes aquí"
     window hide
     $ vq3a_muñecos_hecho = True
-    $ sistema_acciones.acciones.pop("vq3a_muñecos", None)
     if vq3a_peluches_hecho and vq3a_pc_hecho and vq3a_manga_hecho and vq3a_muñecos_hecho and vq3a_mochila_hecho:
         jump vq3a_monologo
     $ mostrar_hud()
@@ -372,7 +350,6 @@ label vq3a_accion_mochila:
     piensa "Tiene una mochila japonesa... sé que esas son muy caras, me pregunto cuanto le habra costado..."
     window hide
     $ vq3a_mochila_hecho = True
-    $ sistema_acciones.acciones.pop("vq3a_mochila", None)
     if vq3a_peluches_hecho and vq3a_pc_hecho and vq3a_manga_hecho and vq3a_muñecos_hecho and vq3a_mochila_hecho:
         jump vq3a_monologo
     $ mostrar_hud()
@@ -394,20 +371,13 @@ label vq3a_monologo:
 
     window hide
 
-    $ sistema_acciones.registrar_accion(AccionLocacion(
-        id="vq3a_ropero", nombre="Ropero", icono=u"🚪",
-        locacion_id="casa_hviolet", label_generico="vq3a_accion_ropero",
-        reseteo=None, color="#4527A0", color_hover="#7E57C2"
-    ))
-    $ sistema_acciones.registrar_accion(AccionLocacion(
-        id="vq3a_cajonera", nombre="Cajonera", icono=u"🗂️",
-        locacion_id="casa_hviolet", label_generico="vq3a_accion_cajonera",
-        reseteo=None, color="#2E7D32", color_hover="#43A047"
-    ))
+    # Fase 2: mostrar ropero/cajonera (registradas en init en actions_catalog.rpy)
+    $ vq3a_fase1_activa = False
+    $ vq3a_fase2_activa = True
 
     $ mostrar_hud()
     show screen hud_navegacion
-    jump game_loop
+    return
 
 
 ################################################################################
@@ -425,7 +395,6 @@ label vq3a_accion_ropero:
     window hide
 
     $ vq3a_ropero_hecho = True
-    $ sistema_acciones.acciones.pop("vq3a_ropero", None)
 
     $ _loc_hviolet_r = sistema_locaciones.obtener_locacion("casa_hviolet")
     $ _bg_hviolet_r = _loc_hviolet_r.background if _loc_hviolet_r else None
@@ -450,7 +419,6 @@ label vq3a_accion_cajonera:
     window hide
 
     $ vq3a_cajonera_hecho = True
-    $ sistema_acciones.acciones.pop("vq3a_cajonera", None)
 
     $ _loc_hviolet_c = sistema_locaciones.obtener_locacion("casa_hviolet")
     $ _bg_hviolet_c = _loc_hviolet_c.background if _loc_hviolet_c else None
@@ -529,6 +497,7 @@ label vq3a_final_escena:
 
     $ agregar_al_inventario("tanga_violet")
 
+    $ vq3a_fase2_activa = False
     $ desactivar_restriccion()
     $ completar_quest_actual("violet")
     $ sistema_locaciones.mover_a_locacion("casa_hmc")
@@ -537,7 +506,7 @@ label vq3a_final_escena:
     window hide
     $ mostrar_hud()
     show screen hud_navegacion
-    jump game_loop
+    return
 
 
 ################################################################################

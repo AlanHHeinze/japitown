@@ -7,8 +7,9 @@ screen panel_configuracion():
     modal True
 
     $ _ajc = sistema_ajuste_cel.obtener_container("panel_configuracion") if modo_ajuste_celular else None
+    $ _k = CEL_APP_ESCALA_SMALL if renpy.variant("small") else 1.0
 
-    add "images/hud/interfaz_celular.png" xalign 0.0 yalign 0.0
+    use _celular_fondo()
 
     use _celular_cerrar_exterior("panel_configuracion")
 
@@ -23,8 +24,8 @@ screen panel_configuracion():
         vbox:
             xfill True
 
-            use _celular_barra_status()
-            use _celular_app_header(_("Configuración"), u"⚙️", [Hide("panel_configuracion"), Show("menu_celular")])
+            use _celular_barra_status("panel_configuracion")
+            use _celular_app_header(_("Configuración"), u"⚙️", [Hide("panel_configuracion"), Show("menu_celular")], "panel_configuracion")
 
             # Lista de opciones
             viewport:
@@ -37,35 +38,35 @@ screen panel_configuracion():
                 frame:
                     xfill True
                     background None
-                    padding (15, 10)
+                    padding (int(15 * _k), int(10 * _k))
 
                     vbox:
-                        spacing 2
+                        spacing int(2 * _k)
                         xfill True
 
                         # ── Opción: Mostrar Accion movimiento ──
                         frame:
                             xfill True
                             background "#1e1e3aCC"
-                            padding (15, 14)
+                            padding (int(15 * _k), int(14 * _k))
 
                             hbox:
                                 xfill True
                                 yalign 0.5
-                                spacing 10
+                                spacing int(10 * _k)
 
                                 vbox:
                                     xfill True
                                     yalign 0.5
-                                    spacing 3
-                                    text _("Mostrar Accion movimiento") size 15 color "#ffffff" bold True
-                                    text _("Muestra el botón para visualizar las salidas de cada locación.") size 11 color "#888888"
+                                    spacing int(3 * _k)
+                                    text _("Mostrar Accion movimiento") size int(15 * _k) color "#ffffff" bold True
+                                    text _("Muestra el botón para visualizar las salidas de cada locación.") size int(11 * _k) color "#888888"
 
                                 # Toggle ON / OFF
                                 button:
                                     yalign 0.5
-                                    xsize 64
-                                    ysize 30
+                                    xsize int(64 * _k)
+                                    ysize int(30 * _k)
                                     if config_mostrar_accion_movimiento:
                                         background "#4CAF50"
                                         hover_background "#66BB6A"
@@ -79,7 +80,7 @@ screen panel_configuracion():
                                         action SetVariable("config_mostrar_accion_movimiento", True)
 
                                     text ("ON" if config_mostrar_accion_movimiento else "OFF"):
-                                        size 13
+                                        size int(13 * _k)
                                         bold True
                                         color "#ffffff"
                                         xalign 0.5

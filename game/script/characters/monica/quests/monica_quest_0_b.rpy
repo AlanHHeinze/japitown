@@ -134,4 +134,4 @@ label quest_monica_questprincipal_0_b:
     $ completar_quest_actual("monica")
 
     $ mostrar_hud()
-    jump game_loop
+    return

@@ -1,0 +1,18 @@
+# RenPyWeb progressive download rules - first match applies
+# '+' = progressive download, '-' = keep in game.zip (default)
+# See https://www.renpy.org/doc/html/build.html#classifying-and-ignoring-files for matching
+#
+# TODO se empaqueta en game.zip: el jugador descarga todo ANTES de llegar al menu
+# principal (Ren'Py Web muestra su propia barra de progreso mientras baja el zip)
+# y durante la partida no se descarga nada mas. Asi se elimina el pop-in de assets
+# que aparecian pixelados al mostrarse por primera vez.
+#
+# Contrapartida: la espera inicial pasa a ser de ~81 MB. Si en el build real
+# resulta demasiado, alcanza con volver a marcar como '+' lo que se ve una sola
+# vez (quest/ y eventos/, ~28 MB) para recortar la carga inicial sin que vuelva
+# el pop-in en fondos, sprites, HUD y celular.
+#
+# +/- type path
+- image game/**
+- music game/audio/**
+- voice game/voice/**

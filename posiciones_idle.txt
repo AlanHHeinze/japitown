@@ -250,3 +250,7 @@ xpos 629  ypos 422  # xanchor=0.0  yanchor=0.0
 # idle_cajas_intro — 2026-06-04 16:35:03
 # path: images/quest/mc/quest0/idle_cajas_intro.png
 xpos 629  ypos 422  # xanchor=0.0  yanchor=0.0
+
+# idle_violet_casa_hviolet_noche_rutinabase_grupopijama_skinbase — 2026-07-14 14:09:14
+# path: images/characters/casa/idle/idle_violet_casa_hviolet_noche_rutinabase_grupopijama_skinbase.jpg
+xpos 1537  ypos 1020  # xanchor=0.5  yanchor=1.0

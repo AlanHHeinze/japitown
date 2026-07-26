@@ -24,12 +24,6 @@ translate english usar_casco_vr_50978652:
     # piensa "Creo que voy entendiendo"
     piensa "I think I'm getting the hang of it."
 
-# game/script/core/shopping/usar_casco_vr.rpy:54
-translate english usar_casco_vr_ab2004c6:
-
-    # piensa "Ahi esta"
-    piensa "There we go."
-
 # game/script/core/shopping/usar_casco_vr.rpy:61
 translate english usar_casco_vr_c93d8eda:
 
@@ -97,4 +91,3 @@ translate english usar_casco_vr_73a9105a:
 
     # piensa "Ahí esta"
     piensa "There we go."
-

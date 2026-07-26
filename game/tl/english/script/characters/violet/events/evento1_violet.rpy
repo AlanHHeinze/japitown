@@ -1,17 +1,5 @@
 # TODO: Translation updated at 2026-04-21 21:46
 
-# game/script/characters/violet/events/evento1_violet.rpy:111
-translate english evento1_violet_55cfd2d2:
-
-    # violet "¡Podes dejar de hacer tanto ruido!"
-    violet "Can you stop making so much noise!"
-
-# game/script/characters/violet/events/evento1_violet.rpy:117
-translate english evento1_violet_6c5f5a5b:
-
-    # violet "¿Que haces en el piso?"
-    violet "What are you doing on the floor?"
-
 # game/script/characters/violet/events/evento1_violet.rpy:119
 translate english evento1_violet_100c4c86:
 
@@ -23,12 +11,6 @@ translate english evento1_violet_c900f8b7:
 
     # violet "¿Eso es un casco vr?"
     violet "Is that a VR headset?"
-
-# game/script/characters/violet/events/evento1_violet.rpy:125
-translate english evento1_violet_b6f2fa2e:
-
-    # mc "Si"
-    mc "Yeah."
 
 # game/script/characters/violet/events/evento1_violet.rpy:129
 translate english evento1_violet_b11093f2:
@@ -102,12 +84,6 @@ translate english evento1_violet_7dad2216:
     # violet "Ya entendi"
     violet "Got it."
 
-# game/script/characters/violet/events/evento1_violet.rpy:179
-translate english evento1_violet_f298721f:
-
-    # mc "¿Que vas a jugar?"
-    mc "What are you going to play?"
-
 # game/script/characters/violet/events/evento1_violet.rpy:181
 translate english evento1_violet_3b436247:
 
@@ -132,12 +108,6 @@ translate english evento1_violet_6e3e9524:
     # mc "¿Te gusta?"
     mc "You like it?"
 
-# game/script/characters/violet/events/evento1_violet.rpy:205
-translate english evento1_violet_96b96cce:
-
-    # violet "Si, es genial"
-    violet "Yeah, it's amazing."
-
 # game/script/characters/violet/events/evento1_violet.rpy:219
 translate english evento1_violet_5596c5cb:
 
@@ -150,12 +120,6 @@ translate english evento1_violet_35b6b068:
     # mc "Mientras no vengas con ese short corto vamos a estar bien"
     mc "As long as you don't come in those short shorts, we'll be fine."
 
-# game/script/characters/violet/events/evento1_violet.rpy:228
-translate english evento1_violet_72d8afed:
-
-    # violet "¿Que? No te escuche"
-    violet "What? I didn't catch that."
-
 # game/script/characters/violet/events/evento1_violet.rpy:232
 translate english evento1_violet_39ea4704:
 
@@ -167,12 +131,6 @@ translate english evento1_violet_b0e81b0c:
 
     # mc "Nada, nada"
     mc "Nothing, nothing."
-
-# game/script/characters/violet/events/evento1_violet.rpy:239
-translate english evento1_violet_4e366179:
-
-    # violet "Ahi viene la sandia"
-    violet "Here comes the watermelon."
 
 # game/script/characters/violet/events/evento1_violet.rpy:245
 translate english evento1_violet_5fbcee53:
@@ -192,12 +150,6 @@ translate english evento1_violet_1214a08c:
     # violet "¿Te gusto mi golpe final?"
     violet "Did you see my finishing move?"
 
-# game/script/characters/violet/events/evento1_violet.rpy:262
-translate english evento1_violet_0a1c03fa:
-
-    # mc "Si, fue genial"
-    mc "Yeah, it was epic."
-
 # game/script/characters/violet/events/evento1_violet.rpy:266
 translate english evento1_violet_ee8d2dad:
 
@@ -209,24 +161,6 @@ translate english evento1_violet_4d9fc0c3:
 
     # mc "¿Quieres algo de tomar?"
     mc "Want something to drink?"
-
-# game/script/characters/violet/events/evento1_violet.rpy:272
-translate english evento1_violet_c7bae516:
-
-    # violet "No, gracias... Otro dia volvemos a jugar y con ropa mas comoda"
-    violet "No, thanks... We'll play again another day — with more comfortable clothes on."
-
-# game/script/characters/violet/events/evento1_violet.rpy:274
-translate english evento1_violet_4daf3232:
-
-    # mc "Eso es lo que decia yo"
-    mc "That's what I was saying."
-
-# game/script/characters/violet/events/evento1_violet.rpy:276
-translate english evento1_violet_2e985700:
-
-    # violet "¿Eso decias vos?"
-    violet "Is that what you were saying?"
 
 # game/script/characters/violet/events/evento1_violet.rpy:280
 translate english evento1_violet_d510caf0:
@@ -258,29 +192,11 @@ translate english evento1_violet_repetir_2ac5a91a:
     # mc "Toma"
     mc "Here."
 
-# game/script/characters/violet/events/evento1_violet.rpy:322
-translate english evento1_violet_repetir_f3409895:
-
-    # violet "Esta vez voy a hacer muchos mas puntos"
-    violet "This time I'm going to score way more points."
-
 # game/script/characters/violet/events/evento1_violet.rpy:327
 translate english evento1_violet_repetir_2d19be85:
 
     # mc "¿Vas a jugar a lo mismo?"
     mc "Same game again?"
-
-# game/script/characters/violet/events/evento1_violet.rpy:332
-translate english evento1_violet_repetir_8416a368:
-
-    # violet "Si, hay que reutilizar los recursos"
-    violet "Yeah, you have to use your resources efficiently."
-
-# game/script/characters/violet/events/evento1_violet.rpy:337
-translate english evento1_violet_repetir_02b76332:
-
-    # mc "¿Que?"
-    mc "What?"
 
 # game/script/characters/violet/events/evento1_violet.rpy:342
 translate english evento1_violet_repetir_690cec74:
@@ -299,12 +215,6 @@ translate english evento1_violet_repetir_ad6185b4:
 
     # violet "Que parte de que hay que reutilizar los recursos no entendiste?"
     violet "Which part of 'use your resources efficiently' didn't you understand?"
-
-# game/script/characters/violet/events/evento1_violet.rpy:356
-translate english evento1_violet_repetir_0185fcb5:
-
-    # piensa "No se de que esta hablando"
-    piensa "I have no idea what she's talking about."
 
 # game/script/characters/violet/events/evento1_violet.rpy:358
 translate english evento1_violet_repetir_3cc1a297:
@@ -336,18 +246,6 @@ translate english evento1_violet_repetir_c5c646fb:
     # violet "Siiii, 8655 puntos"
     violet "Yesss, 8655 points!"
 
-# game/script/characters/violet/events/evento1_violet.rpy:398
-translate english evento1_violet_repetir_97f0f445:
-
-    # mc "¿Que? ¿Mas de 8000? Eso es imposible..."
-    mc "What? Over 8000? That's impossible..."
-
-# game/script/characters/violet/events/evento1_violet.rpy:403
-translate english evento1_violet_repetir_af0d284e:
-
-    # violet "Te lo dije y todavia no termine"
-    violet "Told you, and I'm not even done yet."
-
 # game/script/characters/violet/events/evento1_violet.rpy:407
 translate english evento1_violet_repetir_c6b64f5e:
 
@@ -371,12 +269,6 @@ translate english evento1_violet_repetir_f4738d8c:
 
     # violet "Listoooo, has sido destruido por la maestra del Fruit Samurai"
     violet "Done! You've been destroyed by the Fruit Samurai master."
-
-# game/script/characters/violet/events/evento1_violet.rpy:428
-translate english evento1_violet_repetir_dcc04421:
-
-    # mc "Voy a tener que practicar mas"
-    mc "I'm going to have to practice more."
 
 # game/script/characters/violet/events/evento1_violet.rpy:430
 translate english evento1_violet_repetir_3b74002f:
@@ -534,4 +426,3 @@ translate english evento1_violet_repetir_89a92d17:
 
     # mc "Voy a tener que practicar más"
     mc "I'm going to have to practice more."
-

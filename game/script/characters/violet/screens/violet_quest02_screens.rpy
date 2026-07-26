@@ -56,8 +56,8 @@ screen buscar_trapeador_quest2_violet():
     $ _alacena_y = _alacena_elem.y if _alacena_elem else vq2_pos_alacena[1]
 
     imagebutton:
-        idle Transform("images/quest/violet/quest1/violet_quest01_interaccion_alacena.png", alpha=0.0)
-        hover "images/quest/violet/quest1/violet_quest01_interaccion_alacena.png"
+        idle Transform("images/quest/violet/quest1/violet_quest01_interaccion_alacena.webp", alpha=0.0)
+        hover "images/quest/violet/quest1/violet_quest01_interaccion_alacena.webp"
         xpos _alacena_x
         ypos _alacena_y
         xanchor 0.5
@@ -113,8 +113,8 @@ screen limpieza_quest2_violet():
     if vq2_chimenea_pendiente:
         imagebutton:
             # Invisible en idle, visible en hover
-            idle Transform("images/quest/violet/quest1/violet_quest01_interaccion_chimenea.png", alpha=0.0)
-            hover "images/quest/violet/quest1/violet_quest01_interaccion_chimenea.png"
+            idle Transform("images/quest/violet/quest1/violet_quest01_interaccion_chimenea.webp", alpha=0.0)
+            hover "images/quest/violet/quest1/violet_quest01_interaccion_chimenea.webp"
             xpos _chimenea_x
             ypos _chimenea_y
             xanchor 0.5
@@ -130,8 +130,8 @@ screen limpieza_quest2_violet():
     # =========================================================================
     if vq2_escalera_pendiente:
         imagebutton:
-            idle Transform("images/quest/violet/quest1/violet_quest01_interaccion_escalera.png", alpha=0.0)
-            hover "images/quest/violet/quest1/violet_quest01_interaccion_escalera.png"
+            idle Transform("images/quest/violet/quest1/violet_quest01_interaccion_escalera.webp", alpha=0.0)
+            hover "images/quest/violet/quest1/violet_quest01_interaccion_escalera.webp"
             xpos _escalera_x
             ypos _escalera_y
             xanchor 0.5
@@ -147,8 +147,8 @@ screen limpieza_quest2_violet():
     # =========================================================================
     if vq2_sillon_pendiente:
         imagebutton:
-            idle Transform("images/quest/violet/quest1/violet_quest01_interaccion_sillon.png", alpha=0.0)
-            hover "images/quest/violet/quest1/violet_quest01_interaccion_sillon.png"
+            idle Transform("images/quest/violet/quest1/violet_quest01_interaccion_sillon.webp", alpha=0.0)
+            hover "images/quest/violet/quest1/violet_quest01_interaccion_sillon.webp"
             xpos _sillon_x
             ypos _sillon_y
             xanchor 0.5
@@ -188,6 +188,8 @@ init python:
             pendientes.append("el sillon")
 
         if pendientes:
-            lista = ", ".join(pendientes)
-            store._msg_restriccion_texto = "Todavía me falta limpiar: {}".format(lista)
+            lista = ", ".join(renpy.translate_string(p) for p in pendientes)
+            store._msg_restriccion_texto = renpy.translate_string(
+                "Todavía me falta limpiar: {lista}"
+            ).format(lista=lista)
             renpy.show_screen("mensaje_restriccion")

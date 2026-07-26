@@ -85,6 +85,16 @@ init 5 python:
     # EVENTO 03 — Limpieza del Sábado
     # =========================================================================
 
+    # Condiciones como funciones de módulo (NO lambdas), por convención anti-PicklingError.
+    def _ev03_limpiar_living_activa():
+        return getattr(store, 'vq2_limpiar_accion_activa', False)
+
+    def _ev03_buscar_cocina_activa():
+        return getattr(store, 'vq2_buscar_accion_activa', False)
+
+    def _ev03_limpiar_pasillo_activa():
+        return getattr(store, 'vq2_limpiar_pasillo_accion_activa', False)
+
     sistema_acciones.registrar_accion(AccionLocacion(
         id="ev03_limpiar_living",
         nombre="Limpiar",
@@ -92,7 +102,7 @@ init 5 python:
         locacion_id="casa_living",
         label_generico="ev03_accion_limpiar_living",
         reseteo=None,
-        condicion=lambda: getattr(store, 'vq2_limpiar_accion_activa', False),
+        condicion=_ev03_limpiar_living_activa,
     ))
 
     sistema_acciones.registrar_accion(AccionLocacion(
@@ -102,7 +112,7 @@ init 5 python:
         locacion_id="casa_cocina",
         label_generico="ev03_accion_buscar_cocina",
         reseteo=None,
-        condicion=lambda: getattr(store, 'vq2_buscar_accion_activa', False),
+        condicion=_ev03_buscar_cocina_activa,
     ))
 
     sistema_acciones.registrar_accion(AccionLocacion(
@@ -112,7 +122,7 @@ init 5 python:
         locacion_id="casa_pasilloarriba",
         label_generico="ev03_accion_limpiar_pasillo",
         reseteo=None,
-        condicion=lambda: getattr(store, 'vq2_limpiar_pasillo_accion_activa', False),
+        condicion=_ev03_limpiar_pasillo_activa,
     ))
 
     sistema_acciones.registrar_accion(AccionLocacion(
@@ -137,6 +147,96 @@ init 5 python:
         mensaje_reintento=None,
         color="#4527A0",
         color_hover="#7E57C2",
+    ))
+
+    # ── Violet Quest 03_a — Exploración de la habitación ─────────────────────
+    # Registradas en init (NO en runtime): sistema_acciones es define y no se
+    # guarda; un registro en runtime desaparece al cargar la partida y traba la
+    # quest. La visibilidad la controlan flags default via condicion.
+
+    def _vq3a_peluches_visible():
+        return getattr(store, 'vq3a_fase1_activa', False) and not store.vq3a_peluches_hecho
+
+    def _vq3a_pc_visible():
+        return getattr(store, 'vq3a_fase1_activa', False) and not store.vq3a_pc_hecho
+
+    def _vq3a_manga_visible():
+        return getattr(store, 'vq3a_fase1_activa', False) and not store.vq3a_manga_hecho
+
+    def _vq3a_muñecos_visible():
+        return getattr(store, 'vq3a_fase1_activa', False) and not store.vq3a_muñecos_hecho
+
+    def _vq3a_mochila_visible():
+        return getattr(store, 'vq3a_fase1_activa', False) and not store.vq3a_mochila_hecho
+
+    def _vq3a_ropero_visible():
+        return getattr(store, 'vq3a_fase2_activa', False) and not store.vq3a_ropero_hecho
+
+    def _vq3a_cajonera_visible():
+        return getattr(store, 'vq3a_fase2_activa', False) and not store.vq3a_cajonera_hecho
+
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="vq3a_peluches", nombre="Peluches", icono=u"🧸",
+        locacion_id="casa_hviolet", label_generico="vq3a_accion_peluches",
+        reseteo=None, color="#8E24AA", color_hover="#AB47BC",
+        condicion=_vq3a_peluches_visible,
+    ))
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="vq3a_pc", nombre="PC", icono=u"💻",
+        locacion_id="casa_hviolet", label_generico="vq3a_accion_pc",
+        reseteo=None, color="#1565C0", color_hover="#1E88E5",
+        condicion=_vq3a_pc_visible,
+    ))
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="vq3a_manga", nombre="Manga", icono=u"📚",
+        locacion_id="casa_hviolet", label_generico="vq3a_accion_manga",
+        reseteo=None, color="#C62828", color_hover="#EF5350",
+        condicion=_vq3a_manga_visible,
+    ))
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="vq3a_muñecos", nombre="Muñecos", icono=u"🎎",
+        locacion_id="casa_hviolet", label_generico="vq3a_accion_muñecos",
+        reseteo=None, color="#00695C", color_hover="#00897B",
+        condicion=_vq3a_muñecos_visible,
+    ))
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="vq3a_mochila", nombre="Mochila", icono=u"🎒",
+        locacion_id="casa_hviolet", label_generico="vq3a_accion_mochila",
+        reseteo=None, color="#E65100", color_hover="#FB8C00",
+        condicion=_vq3a_mochila_visible,
+    ))
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="vq3a_ropero", nombre="Ropero", icono=u"🚪",
+        locacion_id="casa_hviolet", label_generico="vq3a_accion_ropero",
+        reseteo=None, color="#4527A0", color_hover="#7E57C2",
+        condicion=_vq3a_ropero_visible,
+    ))
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="vq3a_cajonera", nombre="Cajonera", icono=u"🗂️",
+        locacion_id="casa_hviolet", label_generico="vq3a_accion_cajonera",
+        reseteo=None, color="#2E7D32", color_hover="#43A047",
+        condicion=_vq3a_cajonera_visible,
+    ))
+
+    # ── Violet Quest 08_a — Ropero y cajonera durante la tormenta ────────────
+
+    def _vq8a_ropero_visible():
+        return getattr(store, 'vq8a_acciones_activas', False) and not store.vq8a_ropero_visto
+
+    def _vq8a_cajonera_visible():
+        return getattr(store, 'vq8a_acciones_activas', False) and not store.vq8a_cajonera_vista
+
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="vq8a_ropero", nombre="Ropero", icono=u"🚪",
+        locacion_id="casa_hviolet", label_generico="violet_quest08a_accion_ropero",
+        reseteo=None, color="#4527A0", color_hover="#7E57C2",
+        condicion=_vq8a_ropero_visible,
+    ))
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="vq8a_cajonera", nombre="Cajonera", icono=u"🗂️",
+        locacion_id="casa_hviolet", label_generico="violet_quest08a_accion_cajonera",
+        reseteo=None, color="#2E7D32", color_hover="#43A047",
+        condicion=_vq8a_cajonera_visible,
     ))
 
 
@@ -188,6 +288,7 @@ label accion_ver_tv:
 
     # Restricción: solo de noche
     if horario_actual < 2:
+        $ _blk_guardar_toque()
         piensa "La casa está muy activa como para ver una película, podría intentarlo por la noche."
         return
 

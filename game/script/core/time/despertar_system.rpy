@@ -8,34 +8,44 @@ default mensajes_despertar_mostrados = set()
 
 init python:
     
+    def _agregar_mensajes_despertar(mensajes, msg):
+        """
+        Agrega uno o varios mensajes de despertar a la lista, evitando repetir.
+        `msg` puede ser un string (un solo pensamiento) o una lista/tupla de
+        strings: asi una misma etapa de quest puede mostrar varios piensa
+        seguidos (ej: la reflexion + un comentario). Cada linea se traduce al
+        mostrarse (piensa "[_(...)]" en el label), asi que aca van en español.
+        """
+        if not msg:
+            return
+        piezas = msg if isinstance(msg, (list, tuple)) else [msg]
+        for pieza in piezas:
+            if pieza and pieza not in store.mensajes_despertar_mostrados:
+                mensajes.append(pieza)
+                store.mensajes_despertar_mostrados.add(pieza)
+
     def obtener_mensajes_despertar():
         """
         Detecta quests, eventos y pedidos nuevos que tengan mensaje_despertar.
-        
+
         Returns:
             list: Lista de strings con los mensajes a mostrar
         """
         mensajes = []
-        
+
         # Validar eventos para que los que cumplan condición pasen a VISIBLE
         if hasattr(store, 'validar_eventos'):
             store.validar_eventos()
-        
+
         # 1. Quests activas — mensaje dinámico por etapa
         if hasattr(store, 'sistema_quests'):
             for quest in store.sistema_quests.obtener_quests_activas():
-                msg = quest.obtener_mensaje_despertar_actual()
-                if msg and msg not in store.mensajes_despertar_mostrados:
-                    mensajes.append(msg)
-                    store.mensajes_despertar_mostrados.add(msg)
+                _agregar_mensajes_despertar(mensajes, quest.obtener_mensaje_despertar_actual())
 
         # 2. Eventos visibles/activos — mensaje dinámico por estado
         if hasattr(store, 'sistema_events'):
             for evento in store.sistema_events.obtener_events_visibles():
-                msg = evento.obtener_mensaje_despertar_actual()
-                if msg and msg not in store.mensajes_despertar_mostrados:
-                    mensajes.append(msg)
-                    store.mensajes_despertar_mostrados.add(msg)
+                _agregar_mensajes_despertar(mensajes, evento.obtener_mensaje_despertar_actual())
         
         # 3. Pedidos que llegan hoy (siempre se muestra, no se trackea)
         if hasattr(store, 'sistema_compras') and store.repartidor_presente:

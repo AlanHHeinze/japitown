@@ -146,6 +146,29 @@ init python:
 
         return opciones
 
+    def obtener_trigger_habitacion_directo(npc_id):
+        """
+        Label de quest a disparar cuando el jugador ENTRA DIRECTO a la habitacion
+        (por tener relacion suficiente: ingreso_diurno / ingreso_noche), sin pasar
+        por el menu de puerta.
+
+        Antes, esos triggers vivían solo como opciones del menu de puerta; si el
+        jugador entraba directo, la quest que pedía "ir a la habitacion" (ej: 06_b
+        La prueba del cosplay) no se disparaba nunca. Reusa obtener_opciones_puerta
+        para respetar EXACTAMENTE las mismas condiciones (etapa, horario, ítems).
+
+        Devuelve el label de la primera opcion de quest disponible, o None. Se
+        ignoran las opciones de tipo "evento" (esas no son triggers de quest a
+        habitacion; se manejan por su cuenta).
+        """
+        for op in obtener_opciones_puerta(npc_id):
+            if op.get("tipo") == "evento":
+                continue
+            lbl = op.get("label")
+            if lbl:
+                return lbl
+        return None
+
     def obtener_npc_en_banio(banio_id):
         """Retorna el NPC que está actualmente en el baño indicado, o None."""
         if not hasattr(store, 'sistema_npcs'):
@@ -230,10 +253,18 @@ screen menu_banio_npc(npc_id, bg_path=None):
             style "choice_button"
             action [Hide("menu_banio_npc"), Return("golpear")]
 
-        textbutton "Espiar (Contenido en desarrollo)":
-            style "choice_button"
-            sensitive False
-            action NullAction()
+        # Espiar: minijuego (core/espiar). Requiere el interruptor maestro
+        # ESPIAR_HABILITADO (hoy False: en desarrollo) Y que el NPC tenga
+        # secuencias registradas. Con el flag en False queda deshabilitado.
+        if ESPIAR_HABILITADO and npc_tiene_espiar(npc_id):
+            textbutton "Espiar":
+                style "choice_button"
+                action [Hide("menu_banio_npc"), Return("espiar")]
+        else:
+            textbutton "Espiar (Contenido en desarrollo)":
+                style "choice_button"
+                sensitive False
+                action NullAction()
 
         textbutton "Entrar (Contenido en desarrollo)":
             style "choice_button"
@@ -275,10 +306,17 @@ label interaccion_puerta_npc:
     if store.horario_actual == 3:
         $ _nivel_trasnoche = verificar_nivel_acceso_habitacion(_npc_habitacion)
         if _nivel_trasnoche == "ingreso_noche" and _npc_presente:
+            # Si hay una quest esperando "ir a la habitacion", dispararla también
+            # cuando se entra directo (antes solo se disparaba desde el menú de
+            # puerta, así que con relación alta quedaba sin trigger).
+            $ _trigger_dir = obtener_trigger_habitacion_directo(_npc_habitacion)
+            if _trigger_dir:
+                jump expression _trigger_dir
             $ sistema_locaciones.mover_a_locacion(_destino_puerta)
             $ mostrar_hud()
             return
         else:
+            $ _blk_guardar_toque()
             piensa "Debe estar durmiendo, no voy a molestar."
             return
 
@@ -287,6 +325,15 @@ label interaccion_puerta_npc:
 
     # Ingreso diurno: acceso libre — entra sin importar si el NPC está presente
     if _nivel_acceso == "ingreso_diurno":
+        # Igual que en trasnoche: si hay una quest esperando "ir a la habitacion",
+        # dispararla al entrar directo (este era el caso de 06_b La prueba del
+        # cosplay — con amor >= 50 entraba directo y no se disparaba nunca).
+        # Se exige _npc_presente: el menú de puerta solo ofrece estos triggers
+        # cuando el NPC está en la habitación, y las escenas asumen que está.
+        # Si no está, se entra normal a la habitación vacía.
+        $ _trigger_dir = obtener_trigger_habitacion_directo(_npc_habitacion) if _npc_presente else None
+        if _trigger_dir:
+            jump expression _trigger_dir
         $ sistema_locaciones.mover_a_locacion(_destino_puerta)
         $ mostrar_hud()
         return
@@ -298,6 +345,7 @@ label interaccion_puerta_npc:
         if _loc_npc_actual == "fuera":
             # Salió de la casa — mensaje directo
             $ _npc_nombre_door = _npc_obj.nombre if _npc_obj else ""
+            $ _blk_guardar_toque()
             piensa "Parece que [_npc_nombre_door] no está en casa, debe haber salido."
             return
 
@@ -305,6 +353,7 @@ label interaccion_puerta_npc:
             # Ausente por rutina normal, quest, u otra razon
             $ _msg_ausente = MENSAJES_AUSENTE.get(_npc_habitacion, "No hay nadie.")
             $ _msg_ausente = renpy.translate_string(_msg_ausente)
+            $ _blk_guardar_toque()
             piensa "[_msg_ausente]"
             return
 
@@ -335,6 +384,7 @@ label interaccion_puerta_npc:
 
         # Caso especial: Violet los sabados por la mañana esta dormida
         if _npc_habitacion == "violet" and store.dia_semana_actual == 5 and store.horario_actual == 0:
+            $ _blk_guardar_toque()
             piensa "Violet debe estar dormida."
             $ mostrar_hud()
             return
@@ -346,7 +396,7 @@ label interaccion_puerta_npc:
             jump interaccion_golpear_sale_pasillo
         else:
             # Sin nivel suficiente — NPC dice que está ocupada
-            $ _msg_ocupada = MENSAJES_NPC_PUERTA.get(_npc_habitacion, {}).get("ocupada", "Estoy ocupada.")
+            $ _msg_ocupada = mensaje_puerta_npc(_npc_habitacion, "ocupada")
             if _npc_habitacion == "violet":
                 violet "[_msg_ocupada]"
             elif _npc_habitacion == "jasmine":
@@ -363,7 +413,7 @@ label interaccion_puerta_npc:
 
 label interaccion_golpear_dejar_pasar:
     # NPC dice "Adelante" y el jugador entra directamente
-    $ _msg_adelante = MENSAJES_NPC_PUERTA.get(_npc_habitacion, {}).get("adelante", "Adelante.")
+    $ _msg_adelante = mensaje_puerta_npc(_npc_habitacion, "adelante")
     if _npc_habitacion == "violet":
         violet "[_msg_adelante]"
     elif _npc_habitacion == "jasmine":
@@ -377,7 +427,7 @@ label interaccion_golpear_dejar_pasar:
 
 label interaccion_golpear_sale_pasillo:
     # NPC dice "Ahi salgo" y se mueve al pasillo
-    $ _msg_ahi_salgo = MENSAJES_NPC_PUERTA.get(_npc_habitacion, {}).get("ahi_salgo", "Ahí salgo.")
+    $ _msg_ahi_salgo = mensaje_puerta_npc(_npc_habitacion, "ahi_salgo")
     if _npc_habitacion == "violet":
         violet "[_msg_ahi_salgo]"
     elif _npc_habitacion == "jasmine":
@@ -410,6 +460,12 @@ label interaccion_banio_ocupado:
     $ _bg_banio_frente = store.sistema_locaciones.locacion_actual.background if store.sistema_locaciones.locacion_actual else None
 
     call screen menu_banio_npc(_npc_banio_obj.id, bg_path=_bg_banio_frente)
+
+    if _return == "espiar":
+        # El HUD queda oculto: el minijuego fuerza su propio panel de acciones.
+        # espiar_iniciar termina en return, cerrando este frame correctamente.
+        $ _espiar_npc_temp = _npc_banio_obj.id
+        jump espiar_iniciar
 
     if _return == "golpear":
         play sound "audio/sfx/door_knock_3.ogg"

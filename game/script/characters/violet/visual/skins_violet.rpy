@@ -23,7 +23,7 @@ init 10 python:
             grupo="base",
             descripcion="Ropa casual de todos los días.",
             condicion_desbloqueo=None,
-            sprite_menu="images/characters/casa/menu/violet_menu_base_base.png"
+            sprite_menu="images/characters/casa/menu/violet_menu_base_base.webp"
         )
         sistema_skins.registrar_skin(skin_base)
         
@@ -39,7 +39,7 @@ init 10 python:
             grupo="pijama",
             descripcion="Violet en pijama en su habitación.",
             condicion_desbloqueo=None,
-            sprite_menu="images/characters/casa/menu/violet_menu_pijama_base.png"
+            sprite_menu="images/characters/casa/menu/violet_menu_pijama_base.webp"
         )
         sistema_skins.registrar_skin(skin_pijama_base)
         

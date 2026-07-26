@@ -18,6 +18,49 @@ define ETAPA_FINALIZACION = 9
 init python:
 
     # -------------------------------------------------------------------------
+    # Helpers de texto traducible para las pistas genéricas
+    # -------------------------------------------------------------------------
+    # Las pistas se COMPONEN (plantilla + dias/nombres/items), asi que hay que
+    # traducir cada pieza por separado: un `old` con los valores ya incrustados
+    # nunca matchearia. Las plantillas usan placeholders con NOMBRE ({dias}, {npc})
+    # para que el ingles pueda reordenarlos o ignorarlos.
+
+    def _q_unir(partes):
+        """Une instrucciones con el conector traducido (' y ' / ' and ')."""
+        return renpy.translate_string(" y ").join(partes)
+
+    def _q_habla_con(npc_id):
+        npc = obtener_npc(npc_id) if hasattr(store, 'sistema_npcs') else None
+        nombre = npc.nombre if npc else npc_id.capitalize()
+        return renpy.translate_string("Habla con {npc}").format(npc=nombre)
+
+    def _q_nombre_item(item_id):
+        """Nombre visible y traducido de un item (antes se mostraba el id crudo)."""
+        info = getattr(store, 'CATALOGO_ITEMS', {}).get(item_id, {})
+        return renpy.translate_string(info.get("nombre", item_id))
+
+    def _q_nombre_horario(horario_id):
+        nombres = ["la Mañana", "la Tarde", "la Noche", "la Trasnoche"]
+        if 0 <= horario_id < len(nombres):
+            return renpy.translate_string(nombres[horario_id])
+        return "?"
+
+    def _q_nombre_dia(dia_id):
+        dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+        if 0 <= dia_id < len(dias):
+            return renpy.translate_string(dias[dia_id])
+        return "?"
+
+    def _q_ir_a(nombre_loc, articulo):
+        """
+        'Ve al Living' / 'Ve a la Cocina'. El articulo es gramatica del español;
+        el `new` en ingles simplemente lo ignora y usa solo {lugar}.
+        """
+        return renpy.translate_string("Ve {articulo} {lugar}").format(
+            articulo=articulo, lugar=nombre_loc
+        )
+
+    # -------------------------------------------------------------------------
     # Registro de callables para serialización de quests
     # -------------------------------------------------------------------------
     # Se reconstruye en cada inicio del juego; nunca se guarda en el save.
@@ -105,14 +148,12 @@ init python:
             elif self.tipo == "stat":
                 stat_id = self.params.get("stat_id")
                 valor_requerido = self.params.get("valor", 0)
-                # TODO: Implementar sistema de stats del MC
                 stat_actual = getattr(store, f"mc_{stat_id}", 0)
                 return stat_actual >= valor_requerido
             
             elif self.tipo == "item":
                 item_id = self.params.get("item_id")
                 cantidad = self.params.get("cantidad", 1)
-                # TODO: Implementar sistema de inventario
                 inventario = getattr(store, "inventario", {})
                 return inventario.get(item_id, 0) >= cantidad
             
@@ -162,6 +203,18 @@ init python:
                     q = store.sistema_quests_mc.quests.get(quest_id)
                     return q is not None and q.completada
                 return False
+
+            elif self.tipo == "condicion":
+                # Condición libre para casos que no cubren los tipos anteriores.
+                # El callable DEBE ser picklable (función de módulo o _qc(...)):
+                # los Requisito viven dentro de sistema_quests, que se guarda.
+                cond = self.params.get("condicion")
+                if cond is None:
+                    return True
+                try:
+                    return bool(cond())
+                except Exception:
+                    return False
 
             return True  # Tipo desconocido, asumir cumplido
     
@@ -581,41 +634,41 @@ init python:
                 if self.etapa_actual == ETAPA_ESPERA:
                     dias_restantes = self.dias_espera - (getattr(store, 'dias_totales', 1) - self.dia_inicio)
                     partes_que_hacer = []
-                    
+
                     if dias_restantes > 1:
-                        pista_gen = f"Debo esperar {dias_restantes} días más."
-                        partes_que_hacer.append(f"Esperar {dias_restantes} días")
+                        pista_gen = renpy.translate_string("Debo esperar {dias} días más.").format(dias=dias_restantes)
+                        partes_que_hacer.append(renpy.translate_string("Esperar {dias} días").format(dias=dias_restantes))
                     elif dias_restantes == 1:
-                        pista_gen = "Debo esperar hasta mañana."
-                        partes_que_hacer.append("Esperar hasta mañana")
+                        pista_gen = renpy.translate_string("Debo esperar hasta mañana.")
+                        partes_que_hacer.append(renpy.translate_string("Esperar hasta mañana"))
                     else:
-                        pista_gen = "Debo esperar algunos días."
-                        partes_que_hacer.append("Esperar algunos días")
-                    
+                        pista_gen = renpy.translate_string("Debo esperar algunos días.")
+                        partes_que_hacer.append(renpy.translate_string("Esperar algunos días"))
+
                     # Agregar requisitos faltantes
                     faltantes = self.obtener_requisitos_faltantes()
                     for req in faltantes:
                         partes_que_hacer.append(self._requisito_a_instruccion(req))
-                    
-                    que_hacer_gen = " y ".join(partes_que_hacer) if partes_que_hacer else ""
-                
+
+                    que_hacer_gen = _q_unir(partes_que_hacer) if partes_que_hacer else ""
+
                 elif self.etapa_actual == ETAPA_CONDICIONES:
                     faltantes = self.obtener_requisitos_faltantes()
                     if faltantes:
-                        pista_gen = faltantes[0].mensaje
+                        pista_gen = renpy.translate_string(faltantes[0].mensaje)
                         instrucciones = [self._requisito_a_instruccion(req) for req in faltantes]
-                        que_hacer_gen = " y ".join(instrucciones)
+                        que_hacer_gen = _q_unir(instrucciones)
                     else:
-                        pista_gen = "Verificando condiciones..."
-                        que_hacer_gen = "Verificando..."
-                
+                        pista_gen = renpy.translate_string("Verificando condiciones...")
+                        que_hacer_gen = renpy.translate_string("Verificando...")
+
                 elif self.etapa_actual in [ETAPA_RUTINA, ETAPA_BOTON_LISTO]:
-                    pista_gen = self.mensaje_pista or f"Habla con {self.npc_id.capitalize()}"
+                    pista_gen = self.mensaje_pista or _q_habla_con(self.npc_id)
                     que_hacer_gen = self._generar_que_hacer_validacion()
-                
+
                 elif self.etapa_actual == ETAPA_DESARROLLO:
-                    pista_gen = "Quest en progreso..."
-                    que_hacer_gen = "Continuar la quest."
+                    pista_gen = renpy.translate_string("Quest en progreso...")
+                    que_hacer_gen = renpy.translate_string("Continuar la quest.")
                 
                 # Usar genéricos solo para campos que no tienen override
                 if not pista:
@@ -661,48 +714,55 @@ init python:
             if req.tipo == "locacion":
                 loc_id = req.params.get("locacion_id", "")
                 nombre_loc, articulo = self._obtener_nombre_locacion_con_articulo(loc_id)
-                return f"Ve {articulo} {nombre_loc}"
-            
+                return _q_ir_a(nombre_loc, articulo)
+
             elif req.tipo == "horario":
                 horario_id = req.params.get("horario_id", 0)
-                nombres = ["la Mañana", "la Tarde", "la Noche", "la Trasnoche"]
-                nombre_horario = nombres[horario_id] if 0 <= horario_id < len(nombres) else "?"
-                return f"durante {nombre_horario}"
-            
+                return renpy.translate_string("durante {horario}").format(
+                    horario=_q_nombre_horario(horario_id)
+                )
+
             elif req.tipo == "dia":
                 dia_id = req.params.get("dia_id", 0)
-                dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
-                nombre_dia = dias[dia_id] if 0 <= dia_id < len(dias) else "?"
-                return f"El día {nombre_dia}"
-            
+                return renpy.translate_string("El día {dia}").format(dia=_q_nombre_dia(dia_id))
+
             elif req.tipo == "amor":
                 npc_id = req.params.get("npc_id", "")
                 valor = req.params.get("valor", 0)
-                return f"Tener {valor} de Amor con {npc_id.capitalize()}"
+                return renpy.translate_string("Tener {valor} de Amor con {npc}").format(
+                    valor=valor, npc=npc_id.capitalize()
+                )
 
             elif req.tipo == "deseo":
                 npc_id = req.params.get("npc_id", "")
                 valor = req.params.get("valor", 0)
-                return f"Tener {valor} de Deseo con {npc_id.capitalize()}"
-            
+                return renpy.translate_string("Tener {valor} de Deseo con {npc}").format(
+                    valor=valor, npc=npc_id.capitalize()
+                )
+
             elif req.tipo == "stat":
                 stat_id = req.params.get("stat_id", "")
                 valor = req.params.get("valor", 0)
-                return f"Tener {valor} de {stat_id}"
-            
+                return renpy.translate_string("Tener {valor} de {stat}").format(
+                    valor=valor, stat=renpy.translate_string(stat_id)
+                )
+
             elif req.tipo == "item":
                 item_id = req.params.get("item_id", "")
                 cantidad = req.params.get("cantidad", 1)
-                return f"Tener {cantidad}x {item_id}"
-            
+                # Antes mostraba el id crudo del item ("coxplay_box"); ahora el nombre.
+                return renpy.translate_string("Tener {cantidad}x {item}").format(
+                    cantidad=cantidad, item=_q_nombre_item(item_id)
+                )
+
             elif req.tipo == "dinero":
                 valor = req.params.get("valor", 0)
-                return f"Tener ${valor}"
-            
+                return renpy.translate_string("Tener ${valor}").format(valor=valor)
+
             elif req.tipo == "memoria":
-                return req.mensaje
-            
-            return req.mensaje  # Fallback al mensaje original
+                return renpy.translate_string(req.mensaje)
+
+            return renpy.translate_string(req.mensaje)  # Fallback al mensaje original
         
         def _obtener_nombre_locacion(self, loc_id):
             """
@@ -718,14 +778,14 @@ init python:
             if hasattr(store, 'sistema_locaciones'):
                 loc = store.sistema_locaciones.obtener_locacion(loc_id)
                 if loc and hasattr(loc, 'nombre'):
-                    return loc.nombre
-            
+                    return renpy.translate_string(loc.nombre)
+
             # Fallback: convertir ID a nombre legible
             # ej: "casa_living" -> "el Living"
             partes = loc_id.split("_")
             if len(partes) > 1:
                 nombre = partes[-1].capitalize()
-                return f"el {nombre}"
+                return renpy.translate_string("el {lugar}").format(lugar=nombre)
             return loc_id.capitalize()
         
         def _obtener_nombre_locacion_con_articulo(self, loc_id):
@@ -779,49 +839,50 @@ init python:
                 if req.tipo == "locacion":
                     loc_id = req.params.get("locacion_id", "")
                     nombre_loc, articulo = self._obtener_nombre_locacion_con_articulo(loc_id)
-                    locacion_texto = f"Ve {articulo} {nombre_loc}"
+                    locacion_texto = _q_ir_a(nombre_loc, articulo)
                 elif req.tipo == "horario":
                     horario_id = req.params.get("horario_id", 0)
-                    nombres = ["la Mañana", "la Tarde", "la Noche", "la Trasnoche"]
-                    nombre_horario = nombres[horario_id] if 0 <= horario_id < len(nombres) else "?"
-                    horario_texto = f"durante {nombre_horario}"
+                    horario_texto = renpy.translate_string("durante {horario}").format(
+                        horario=_q_nombre_horario(horario_id)
+                    )
                 elif req.tipo == "dia":
                     otros_requisitos.append(self._requisito_a_instruccion(req))
                 elif not req.verificar():
                     otros_requisitos.append(self._requisito_a_instruccion(req))
-            
+
             # Si no hay en validación especial, buscar en requisitos normales
             if not locacion_texto or not horario_texto:
                 for req in self.requisitos:
                     if req.tipo == "locacion" and not locacion_texto:
                         loc_id = req.params.get("locacion_id", "")
                         nombre_loc, articulo = self._obtener_nombre_locacion_con_articulo(loc_id)
-                        locacion_texto = f"Ve {articulo} {nombre_loc}"
+                        locacion_texto = _q_ir_a(nombre_loc, articulo)
                     elif req.tipo == "horario" and not horario_texto:
                         horario_id = req.params.get("horario_id", 0)
-                        nombres = ["la Mañana", "la Tarde", "la Noche", "la Trasnoche"]
-                        nombre_horario = nombres[horario_id] if 0 <= horario_id < len(nombres) else "?"
-                        horario_texto = f"durante {nombre_horario}"
-            
+                        horario_texto = renpy.translate_string("durante {horario}").format(
+                            horario=_q_nombre_horario(horario_id)
+                        )
+
             # Construir mensaje
             partes = []
-            
+
             # Combinar locación + horario (sin "y" entre ellos)
             if locacion_texto and horario_texto:
-                partes.append(f"{locacion_texto} {horario_texto}")
+                partes.append("{} {}".format(locacion_texto, horario_texto))
             elif locacion_texto:
                 partes.append(locacion_texto)
             elif horario_texto:
-                partes.append(horario_texto.capitalize())  # "Durante la Tarde"
-            
+                # Solo horario: va como frase suelta, con la primera en mayuscula
+                partes.append(horario_texto[:1].upper() + horario_texto[1:])
+
             # Agregar otros requisitos con "y"
             partes.extend(otros_requisitos)
-            
+
             if partes:
-                return " y ".join(partes)
-            
+                return _q_unir(partes)
+
             # Si no hay nada definido, indicar que hable con el NPC
-            return f"Habla con {self.npc_id.capitalize()}"
+            return _q_habla_con(self.npc_id)
         
         def _aplicar_rutina_quest(self):
             """Aplica la rutina especial de la quest al NPC principal y NPCs adicionales."""
@@ -1013,8 +1074,9 @@ init python:
                 store.dia_semana_actual = self.retorno.dia_semana
             
             if self.retorno.locacion:
-                # Ir a la locación especificada
-                sistema_locaciones.ir_a_locacion(self.retorno.locacion)
+                # Ir a la locación especificada (mover_a_locacion es el método
+                # real del sistema; ir_a_locacion no existe en la clase)
+                sistema_locaciones.mover_a_locacion(self.retorno.locacion)
         
         def _iniciar_siguiente_quest(self):
             """Busca e inicia la siguiente quest del mismo NPC."""
@@ -1268,7 +1330,14 @@ init python:
 
 
 # Instancia global del sistema de quests (define para estar disponible en init)
-define sistema_quests = SistemaQuests()
+# Instancia creada en init 4 (los registros de init 5-11 la llenan) y declarada
+# con default para que se guarde en el save: el progreso de quests vive dentro del sistema y debe guardarse.
+init 4 python:
+    sistema_quests = SistemaQuests()
+# OJO: el default se re-evalúa en CADA partida nueva. Debe devolver una COPIA
+# del catálogo poblado en init — una instancia vacía (SistemaQuests()) borraría todo
+# el contenido registrado. Ver _ps_copia_fresca en persistencia_sistemas.rpy.
+default sistema_quests = _ps_copia_fresca("sistema_quests")
 
 # Variable global para el numero de quest actual
 default quest_actual = 0
@@ -1431,12 +1500,22 @@ label ejecutar_quest_activa:
         if quest:
             # Construir el nombre del label de la quest
             $ label_quest = "quest_" + quest.id
-            
-            # Saltar al label de la quest
-            jump expression label_quest
-    
-    # Si no hay quest o NPC, volver al game loop
-    jump game_loop
+
+            # Saltar al label de la quest SOLO si existe. Red de seguridad
+            # universal (E03): una quest que llega al auto-trigger sin tener un
+            # label 'quest_<id>' (porque usa triggers custom y se la olvidó de la
+            # tupla de exclusión) tiraba LabelNotFound y crasheaba. Ahora se
+            # ignora en silencio en vez de romper.
+            # OJO: el label destino hereda el frame de este call-chain
+            # (interaccion_<npc> se invoca con Call desde el HUD), asi que DEBE
+            # terminar en `return`, nunca en `jump game_loop`.
+            if renpy.has_label(label_quest):
+                jump expression label_quest
+
+    # Sin quest ni NPC: cerrar el frame con return. Antes hacia `jump game_loop`
+    # y dejaba abierto el frame del Call("interaccion_<npc>"), acumulando uno
+    # por interacción durante toda la partida.
+    return
 
 # Label para iniciar una quest desde el menú
 label iniciar_quest_menu:

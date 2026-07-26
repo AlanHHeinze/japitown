@@ -150,7 +150,7 @@ init python:
                 return True
             try:
                 return self.condicion_aparicion()
-            except:
+            except Exception:
                 return False
         
         def verificar_activacion(self):
@@ -159,7 +159,7 @@ init python:
                 return True  # Autoactivar
             try:
                 return self.condicion_activacion()
-            except:
+            except Exception:
                 return False
         
         def verificar_duracion(self):
@@ -170,7 +170,7 @@ init python:
                 return False  # Sin condición de fin = permanece
             try:
                 return self.condicion_duracion()
-            except:
+            except Exception:
                 return False
         
         def aparecer(self):
@@ -453,7 +453,14 @@ init python:
 
 
 # Instancia global del sistema de eventos
-define sistema_events = SistemaEvents()
+# Instancia creada en init 4 (los registros de init 5-11 la llenan) y declarada
+# con default para que se guarde en el save: el estado de los eventos debe guardarse.
+init 4 python:
+    sistema_events = SistemaEvents()
+# OJO: el default se re-evalúa en CADA partida nueva. Debe devolver una COPIA
+# del catálogo poblado en init — una instancia vacía (SistemaEvents()) borraría todo
+# el contenido registrado. Ver _ps_copia_fresca en persistencia_sistemas.rpy.
+default sistema_events = _ps_copia_fresca("sistema_events")
 
 # Variable guardable para estados de eventos
 default event_estados = {}

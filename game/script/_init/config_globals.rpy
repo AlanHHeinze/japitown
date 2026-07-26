@@ -8,12 +8,29 @@ default MODO_DEV = False
 
 default mc_name = ""
 define mc = Character("[mc_name]", color="#56b6c2")
-define tutorial = Character("Tutorial", color="#FFB74D", what_size=33, what_text_align=0.5)
+# what_size fijo en 33 ignora el bump de gui.text_size que aplica en pantalla
+# chica (ver @gui.variant small() en gui.rpy) — por eso el texto del tutorial
+# se veía chico ahi. Se lo hace seguir al mismo tamaño que el diálogo general.
+define tutorial = Character("Tutorial", color="#FFB74D", what_size=(gui.text_size if renpy.variant("small") else 33), what_text_align=0.5)
 
 
 init python:
 
-    persistent.mostrar_recompensa = False
+    # Sacar la rueda del mouse de rollback/rollforward. Ren'Py la asigna por
+    # defecto (rueda arriba = atrás, rueda abajo = adelante), lo que hace que
+    # el jugador retroceda/avance el diálogo sin querer al scrollear.
+    # El scroll de los viewports usa viewport_wheelup/viewport_wheeldown, que
+    # son entradas distintas del keymap y NO se tocan: sigue funcionando.
+    if "mousedown_4" in config.keymap.get("rollback", []):
+        config.keymap["rollback"].remove("mousedown_4")
+    if "mousedown_5" in config.keymap.get("rollforward", []):
+        config.keymap["rollforward"].remove("mousedown_5")
+
+    # Asignación incondicional (sin el "if ... is None") pisaba el toggle del
+    # cheat "Ver resultados Talk" en cada arranque/reload — persistent debe
+    # sembrarse una sola vez, no reescribirse siempre.
+    if persistent.mostrar_recompensa is None:
+        persistent.mostrar_recompensa = False
 
     import re as _re_nombre
 
@@ -42,6 +59,14 @@ screen name_input_screen(nombre_previo=u"", error_msg=u""):
 
     frame:
         style "name_input_frame"
+
+        # El estilo "confirm_frame" centra con yalign 0.5, pero en táctil el
+        # teclado (anclado abajo, JP_TECLADO_ALTO + margen) ocupa esa zona.
+        # Se reubica el panel por encima del teclado, igual que el screen
+        # "input" en teclado_tactil.rpy. Solo aplica a small; en PC no cambia.
+        if renpy.variant("small"):
+            yanchor 1.0
+            ypos (config.screen_height - JP_TECLADO_ALTO - JP_TECLADO_MARGEN)
 
         vbox:
             xalign 0.5

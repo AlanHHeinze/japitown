@@ -34,7 +34,7 @@ translate english quest_violet_questprincipal_0_b_867997b2:
 translate english quest_violet_questprincipal_0_b_d4354f8f:
 
     # mc "[mc_name]"
-    mc "Yeah, here"
+    mc "[mc_name]"
 
 # game/script/characters/violet/quests/violet_quest_0_b.rpy:68
 translate english quest_violet_questprincipal_0_b_14f6a3ef:
@@ -250,7 +250,7 @@ translate english quest_violet_0_puerta_9ecc08ea:
 translate english quest_violet_0_puerta_926b8567:
 
     # vozoff "En la cena Violet se sento en la punta de la mesa, lejos de mi y no me hablo en toda la noche"
-    vozoff "In future interactions we won't see the rewards associated with the approach. But by [colorear_quest('Improving the Attributes')] of our character we'll gain different [colorear_quest('Advantages')] for this system"
+    vozoff "At dinner Violet sat at the end of the table, far from me, and didn't speak to me all night"
 
 translate english strings:
 

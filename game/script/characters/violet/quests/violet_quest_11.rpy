@@ -21,7 +21,7 @@ label quest_violet_questprincipal_11:
     window show
 
     # Escena nocturna en la habitacion de Violet
-    scene expression "images/bg/casa/bg_casa_noche_hviolet.png" with fade
+    scene expression "images/bg/casa/bg_casa_noche_hviolet.jpg" with fade
 
     show violet_parada c_rbase_base o_base b_none at right
     show mc_parado_base c_rbase_base o_base b_seria at mc_izquierda
@@ -39,10 +39,12 @@ label quest_violet_questprincipal_11:
     mc "Es un conjunto de cosplays. Vi que te gustaba eso y pensé que quizás querías probarlos."
     show mc_parado_base b_none
 
-    # Consumir item
-    $ store.inventario["conjunto_cosplays"] -= 1
-    if store.inventario["conjunto_cosplays"] <= 0:
-        $ del store.inventario["conjunto_cosplays"]
+    # Consumir item (guardado: sin el `if in` el `-= 1` y el `del` crasheaban con
+    # KeyError si el item no estaba — misma clase que E06).
+    if store.inventario.get("conjunto_cosplays", 0) > 0:
+        $ store.inventario["conjunto_cosplays"] -= 1
+        if store.inventario["conjunto_cosplays"] <= 0:
+            $ store.inventario.pop("conjunto_cosplays", None)
     
     show violet_parada b_hablandochica
     violet "¿E-en serio? ¿Para mí? ¿Y cuántos compraste, esto debe haber salido carísimo!"

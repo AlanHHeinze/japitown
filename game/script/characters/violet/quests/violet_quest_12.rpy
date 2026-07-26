@@ -15,7 +15,7 @@ label quest_violet_questprincipal_12:
     window show
 
     # Escena nocturna en la habitacion de Violet
-    scene expression "images/bg/casa/bg_casa_noche_hviolet.png" with fade
+    scene expression "images/bg/casa/bg_casa_noche_hviolet.jpg" with fade
 
     show violet_parada c_rbase_base o_base b_none at right
     show mc_parado_base c_rbase_base o_base b_seria at mc_izquierda

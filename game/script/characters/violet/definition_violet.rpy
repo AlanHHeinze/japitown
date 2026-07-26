@@ -58,8 +58,8 @@ init python:
         if npc_v and npc_v.locacion_actual == "casa_pasilloarriba":
             grupo = obtener_grupo_rutina_actual("violet")
             if grupo == "pijama":
-                return "images/characters/casa/idle/idle_violet_casa_pasillo_fuera_rutinabase_grupopijama_skinbase.png"
-            return "images/characters/casa/idle/idle_violet_casa_pasillo_fuera_rutinabase_grupobase_skinbase.png"
+                return "images/characters/casa/idle/idle_violet_casa_pasillo_fuera_rutinabase_grupopijama_skinbase.webp"
+            return "images/characters/casa/idle/idle_violet_casa_pasillo_fuera_rutinabase_grupobase_skinbase.webp"
 
         if hasattr(store, 'dia_semana_actual') and hasattr(store, 'horario_actual'):
             # Prioridad 1: Sprite del skin activo (quest/evento)
@@ -78,6 +78,65 @@ init python:
             if datos:
                 return datos.get("sprite")
         return None
+
+    def poblar_rutinas_visuales_violet():
+        """
+        Llena violet_rutinas_visuales (sprite+posicion por dia/horario).
+        Se llama al iniciar partida nueva (dentro de inicializar_violet) y
+        tambien despues de cargar un save / reload de script: ese diccionario
+        vive en memoria (no es parte del save), asi que si no se repuebla,
+        obtener_sprite_rutina_violet() no encuentra nada y cae al sprite
+        generico de la Prioridad 3, con ruta desactualizada y en el lugar
+        equivocado.
+        """
+        # Lunes a Viernes + Domingo (0-4, 6) - Mañana en Cocina
+        establecer_rutina_visual_violet(
+            [0, 1, 2, 3, 4, 6], 0,
+            "images/characters/casa/idle/idle_violet_casa_cocina_manana_rutinabase_grupobase_skinbase.webp",
+            (765, 1060)  # Posición personalizable
+        )
+
+        # Lunes a Viernes + Domingo (0-4, 6) - Tarde en H. Violet
+        establecer_rutina_visual_violet(
+            [0, 1, 2, 3, 4, 6], 1,
+            "images/characters/casa/idle/idle_violet_casa_hviolet_tarde_rutinabase_grupobase_skinbase.jpg",
+            (721, 793)  # Posición personalizable
+        )
+
+        # Lunes a Sábado (0-5) - Noche en H. Violet (pijama)
+        establecer_rutina_visual_violet(
+            [0, 1, 2, 3, 4, 5], 2,
+            "images/characters/casa/idle/idle_violet_casa_hviolet_noche_rutinabase_grupopijama_skinbase.jpg",
+            (1537, 1020)
+        )
+
+        # Lunes a Domingo (0-6) - Trasnoche en H. Violet
+        establecer_rutina_visual_violet(
+            [0, 1, 2, 3, 4, 5, 6], 3,
+            "images/characters/casa/idle/idle_violet_casa_hviolet_trasnoche_rutinabase_grupobase_skinbase.jpg",
+            (725, 862)  # Posición personalizable
+        )
+
+        # Sábado (5) - Mañana en H. Violet
+        establecer_rutina_visual_violet(
+            5, 0,
+            "images/characters/casa/idle/idle_violet_casa_hviolet_manana_rutinabase_grupobase_skinbase.jpg",
+            (728, 815)  # Posición personalizable
+        )
+
+        # Sábado (5) - Tarde en Living
+        establecer_rutina_visual_violet(
+            5, 1,
+            "images/characters/casa/idle/idle_violet_casa_living_tarde_rutinabase_grupobase_skinbase.webp",
+            (549, 991)  # Posición personalizable
+        )
+
+        # Domingo (6) - Noche en Living
+        establecer_rutina_visual_violet(
+            6, 2,
+            "images/characters/casa/idle/idle_violet_casa_living_noche_rutinabase_grupobase_skinbase.webp",
+            (689, 808)  # Posición personalizable
+        )
 
     def obtener_posicion_rutina_violet():
         """
@@ -113,7 +172,7 @@ init python:
             id="violet",
             nombre="Violet",
             nombre_completo="Violet",
-            sprite="images/characters/casa/idle/idle_violet_casa_hviolet_trasnoche_rutinabase_skinbase.png",
+            sprite="images/characters/casa/idle/idle_violet_casa_hviolet_trasnoche_rutinabase_grupobase_skinbase.jpg",
             nombre_stat1="amor",
             nombre_stat2="deseo"
         )
@@ -162,58 +221,8 @@ init python:
         # =====================================================================
         # SPRITES Y POSICIONES DE RUTINA
         # =====================================================================
-        # Cada rutina tiene un sprite específico y una posición personalizable
-        
-        # Lunes a Viernes + Domingo (0-4, 6) - Mañana en Cocina
-        establecer_rutina_visual_violet(
-            [0, 1, 2, 3, 4, 6], 0,
-            "images/characters/casa/idle/idle_violet_casa_cocina_mañana_rutinabase_grupobase_skinbase.png",
-            (765, 1060)  # Posición personalizable
-        )
-        
-        # Lunes a Viernes + Domingo (0-4, 6) - Tarde en H. Violet
-        establecer_rutina_visual_violet(
-            [0, 1, 2, 3, 4, 6], 1,
-            "images/characters/casa/idle/idle_violet_casa_hviolet_tarde_rutinabase_grupobase_skinbase.png",
-            (721, 793)  # Posición personalizable
-        )
-        
-        # Lunes a Sábado (0-5) - Noche en H. Violet
-        # AJUSTE TEMPORAL: usa sprite de tarde hasta que se cargue uno de noche propio
-        establecer_rutina_visual_violet(
-            [0, 1, 2, 3, 4, 5], 2,
-            "images/characters/casa/idle/idle_violet_casa_hviolet_tarde_rutinabase_grupobase_skinbase.png",
-            (721, 793)
-        )
-        
-        # Lunes a Domingo (0-6) - Trasnoche en H. Violet
-        establecer_rutina_visual_violet(
-            [0, 1, 2, 3, 4, 5, 6], 3,
-            "images/characters/casa/idle/idle_violet_casa_hviolet_trasnoche_rutinabase_grupobase_skinbase.png",
-            (725, 862)  # Posición personalizable
-        )
-        
-        # Sábado (5) - Mañana en H. Violet
-        establecer_rutina_visual_violet(
-            5, 0,
-            "images/characters/casa/idle/idle_violet_casa_hviolet_mañana_rutinabase_grupobase_skinbase.png",
-            (728, 815)  # Posición personalizable
-        )
-        
-        # Sábado (5) - Tarde en Living
-        establecer_rutina_visual_violet(
-            5, 1,
-            "images/characters/casa/idle/idle_violet_casa_living_tarde_rutinabase_grupobase_skinbase.png",
-            (549, 991)  # Posición personalizable
-        )
+        poblar_rutinas_visuales_violet()
 
-        # Domingo (6) - Noche en Living
-        establecer_rutina_visual_violet(
-            6, 2,
-            "images/characters/casa/idle/idle_violet_casa_living_noche_rutinabase_grupobase_skinbase.png",
-            (689, 808)  # Posición personalizable
-        )
-        
         # =====================================================================
         # RUTINAS ESPECIALES
         # =====================================================================

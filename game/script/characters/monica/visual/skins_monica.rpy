@@ -19,7 +19,7 @@ init 10 python:
             grupo="base",
             descripcion="Ropa casual de todos los días.",
             condicion_desbloqueo=None,
-            sprite_menu="images/characters/casa/menu/monica_menu_base_base.png"
+            sprite_menu="images/characters/casa/menu/monica_menu_base_base.webp"
         )
         sistema_skins.registrar_skin(skin_base)
         
@@ -35,7 +35,7 @@ init 10 python:
             grupo="bikini",
             descripcion="Mónica en bikini en el patio.",
             condicion_desbloqueo=None,
-            sprite_menu="images/characters/casa/menu/monica_menu_bikini_base.png"  # Ahora disponible
+            sprite_menu="images/characters/casa/menu/monica_menu_bikini_base.webp"  # Ahora disponible
         )
         sistema_skins.registrar_skin(skin_bikini_base)
         

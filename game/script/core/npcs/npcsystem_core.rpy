@@ -35,7 +35,7 @@ init python:
             if self.condicion is not None:
                 try:
                     return bool(self.condicion())
-                except:
+                except Exception:
                     return False
             return True
 
@@ -495,6 +495,22 @@ init python:
     def actualizar_rutinas_npcs():
         """Actualiza las ubicaciones de todos los NPCs"""
         sistema_npcs.actualizar_todas_ubicaciones()
+
+    def sincronizar_relaciones_npcs():
+        """
+        Empuja npc.estado (amor/deseo/progreso, guardado dentro de sistema_npcs)
+        hacia las variables sueltas {npc_id}_{stat} que leen talk/quests aparte
+        de estado (ej. violet_talk.rpy, quest_violet.rpy). En uso normal ya
+        quedan sincronizadas por modificar_stat1/2 y establecer_stat1/2 (ambos
+        hacen setattr(store, ...) al tocar estado), pero esto se llama después
+        de cargar una partida como red de seguridad — se estaba llamando desde
+        _jp_after_load_callback sin existir nunca (silenciada por el
+        try/except), así que no hacía nada.
+        """
+        for npc in sistema_npcs.npcs.values():
+            setattr(store, f"{npc.id}_{npc.nombre_stat1}", npc.estado.get(npc.nombre_stat1, 0))
+            setattr(store, f"{npc.id}_{npc.nombre_stat2}", npc.estado.get(npc.nombre_stat2, 0))
+            setattr(store, f"{npc.id}_progreso", npc.estado.get("progreso", 0))
 
     def obtener_visual_npc_rutina_especial(npc_id, horario=None):
         """Retorna (sprite, posicion) de la rutina especial activa del NPC, o None."""

@@ -42,6 +42,64 @@ init python:
                 "posicion": posicion
             }
     
+    def poblar_rutinas_visuales_jasmine():
+        """
+        Llena jasmine_rutinas_visuales (sprite+posicion por dia/horario).
+        Se llama al iniciar partida nueva (dentro de inicializar_jasmine) y
+        tambien despues de cargar un save / reload de script: ese diccionario
+        vive en memoria (no es parte del save), asi que si no se repuebla,
+        obtener_sprite_rutina_jasmine() no encuentra nada y cae al sprite
+        generico de la Prioridad 3, en el lugar equivocado.
+        """
+        # Lunes a Viernes + Domingo (0-4, 6) - Mañana en Cocina
+        establecer_rutina_visual_jasmine(
+            [0, 1, 2, 3, 4, 6], 0,
+            "images/characters/casa/idle/idle_jasmine_casa_cocina_manana_rutinabase_grupobase_skinbase.webp",
+            (1675, 921)  # Posición personalizable
+        )
+
+        # Lunes a Viernes (0-4) - Tarde en Gym (fallback: ropa casual)
+        establecer_rutina_visual_jasmine(
+            [0, 1, 2, 3, 4], 1,
+            "images/characters/casa/idle/idle_jasmine_casa_gym_tarde_rutinabase_grupobase_skinbase.jpg",
+            (1005, 1080)  # Posición personalizable
+        )
+
+        # Lunes a Viernes (0-4) - Noche en Living
+        establecer_rutina_visual_jasmine(
+            [0, 1, 2, 3, 4], 2,
+            "images/characters/casa/idle/idle_jasmine_casa_living_noche_rutinabase_grupobase_skinbase.webp",
+            (1219, 903)  # Posición personalizable
+        )
+
+        # Lunes a Domingo (0-6) - Trasnoche en H. Jasmine
+        establecer_rutina_visual_jasmine(
+            [0, 1, 2, 3, 4, 5, 6], 3,
+            "images/characters/casa/idle/idle_jasmine_casa_hjasmine_trasnoche_rutinabase_grupobase_skinbase.jpg",
+            (1519, 956)  # Posición personalizable
+        )
+
+        # Sábado (5) - Mañana en H. Jasmine
+        establecer_rutina_visual_jasmine(
+            5, 0,
+            "images/characters/casa/idle/idle_jasmine_casa_hjasmine_manana_rutinabase_grupobase_skinbase.jpg",
+            (527, 976)  # Posición personalizable
+        )
+
+        # Sábado y Domingo (5, 6) - Tarde en Patio
+        establecer_rutina_visual_jasmine(
+            [5, 6], 1,
+            "images/characters/casa/idle/idle_jasmine_casa_patio_tarde_rutinabase_grupobase_skinbase.jpg",
+            (541, 1078)  # Posición personalizable
+        )
+
+        # Sábado y Domingo (5, 6) - Noche en Patio
+        establecer_rutina_visual_jasmine(
+            [5, 6], 2,
+            "images/characters/casa/idle/idle_jasmine_casa_patio_noche_rutinabase_grupobase_skinbase.jpg",
+            (808, 983)  # Posición personalizable
+        )
+
     def obtener_sprite_rutina_jasmine():
         """
         Obtiene el sprite actual de Jasmine según el dia y horario actual.
@@ -51,8 +109,8 @@ init python:
         npc_j = obtener_npc("jasmine")
         if npc_j and npc_j.locacion_actual == "casa_pasilloarriba":
             if hasattr(store, 'horario_actual') and store.horario_actual == 2:
-                return "images/characters/casa/idle/idle_jasmine_casa_pasillo_fuera_rutinabase_grupobase_skinbase_noche.png"
-            return "images/characters/casa/idle/idle_jasmine_casa_pasillo_fuera_rutinabase_grupobase_skinbase.png"
+                return "images/characters/casa/idle/idle_jasmine_casa_pasillo_fuera_rutinabase_grupobase_skinbase_noche.webp"
+            return "images/characters/casa/idle/idle_jasmine_casa_pasillo_fuera_rutinabase_grupobase_skinbase.webp"
 
         if hasattr(store, 'dia_semana_actual') and hasattr(store, 'horario_actual'):
             # Prioridad 1: Sprite del skin activo (quest/evento)
@@ -105,7 +163,7 @@ init python:
             id="jasmine",
             nombre="Jasmine",
             nombre_completo="Jasmine",
-            sprite="images/characters/casa/idle/idle_jasmine_casa_hjasmine_trasnoche_rutinabase_grupobase_skinbase.png",
+            sprite="images/characters/casa/idle/idle_jasmine_casa_hjasmine_trasnoche_rutinabase_grupobase_skinbase.jpg",
             nombre_stat1="amor",
             nombre_stat2="deseo"
         )
@@ -154,57 +212,8 @@ init python:
         # =====================================================================
         # SPRITES Y POSICIONES DE RUTINA
         # =====================================================================
-        # Cada rutina tiene un sprite específico y una posición personalizable
-        
-        # Lunes a Viernes + Domingo (0-4, 6) - Mañana en Cocina
-        establecer_rutina_visual_jasmine(
-            [0, 1, 2, 3, 4, 6], 0,
-            "images/characters/casa/idle/idle_jasmine_casa_cocina_mañana_rutinabase_grupobase_skinbase.png",
-            (1675, 921)  # Posición personalizable
-        )
+        poblar_rutinas_visuales_jasmine()
 
-        # Lunes a Viernes (0-4) - Tarde en Gym (fallback: ropa casual)
-        establecer_rutina_visual_jasmine(
-            [0, 1, 2, 3, 4], 1,
-            "images/characters/casa/idle/idle_jasmine_casa_gym_tarde_rutinabase_grupobase_skinbase.png",
-            (1005, 1080)  # Posición personalizable
-        )
-
-        # Lunes a Viernes (0-4) - Noche en Living
-        establecer_rutina_visual_jasmine(
-            [0, 1, 2, 3, 4], 2,
-            "images/characters/casa/idle/idle_jasmine_casa_living_noche_rutinabase_grupobase_skinbase.png",
-            (1219, 903)  # Posición personalizable
-        )
-
-        # Lunes a Domingo (0-6) - Trasnoche en H. Jasmine
-        establecer_rutina_visual_jasmine(
-            [0, 1, 2, 3, 4, 5, 6], 3,
-            "images/characters/casa/idle/idle_jasmine_casa_hjasmine_trasnoche_rutinabase_grupobase_skinbase.png",
-            (1519, 956)  # Posición personalizable
-        )
-
-        # Sábado (5) - Mañana en H. Jasmine
-        establecer_rutina_visual_jasmine(
-            5, 0,
-            "images/characters/casa/idle/idle_jasmine_casa_hjasmine_mañana_rutinabase_grupobase_skinbase.png",
-            (527, 976)  # Posición personalizable
-        )
-
-        # Sábado y Domingo (5, 6) - Tarde en Patio
-        establecer_rutina_visual_jasmine(
-            [5, 6], 1,
-            "images/characters/casa/idle/idle_jasmine_casa_patio_tarde_rutinabase_grupobase_skinbase.png",
-            (541, 1078)  # Posición personalizable
-        )
-
-        # Sábado y Domingo (5, 6) - Noche en Patio
-        establecer_rutina_visual_jasmine(
-            [5, 6], 2,
-            "images/characters/casa/idle/idle_jasmine_casa_patio_noche_rutinabase_grupobase_skinbase.png",
-            (808, 983)  # Posición personalizable
-        )
-        
         # =====================================================================
         # RUTINAS ESPECIALES
         # =====================================================================

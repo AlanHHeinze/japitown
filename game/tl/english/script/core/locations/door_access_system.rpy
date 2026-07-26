@@ -18,31 +18,24 @@ translate english interaccion_puerta_npc_93fb1ac2:
     # piensa "Violet debe estar dormida."
     piensa "Violet must be asleep."
 
-# game/script/core/locations/door_access_system.rpy:192
-translate english interaccion_puerta_npc_e3e39725:
-
-    # violet "Estoy ocupada."
-    violet "I'm busy."
-
-# game/script/core/locations/door_access_system.rpy:197
-translate english interaccion_puerta_npc_c62620cb:
-
-    # violet "Adelante."
-    violet "Come in."
-
-# game/script/core/locations/door_access_system.rpy:199
-translate english interaccion_puerta_npc_87e73a9e:
-
-    # jasmine "Adelante."
-    jasmine "Come in."
-
-# game/script/core/locations/door_access_system.rpy:201
-translate english interaccion_puerta_npc_257c372f:
-
-    # monica "Adelante."
-    monica "Come in."
-
 translate english strings:
+
+    ############################################################################
+    ## Respuestas del NPC en la puerta (MENSAJES_NPC_PUERTA, door_relation_system)
+    ############################################################################
+    ## Antes eran diálogo literal (monica "Adelante.") y por eso estaban en
+    ## bloques de traducción por hash. Al pasarlas al dict se muestran por
+    ## interpolación (monica "[_msg_adelante]"), que NO traduce: ahora las traduce
+    ## mensaje_puerta_npc() y necesitan un `old` acá.
+
+    old "Estoy ocupada."
+    new "I'm busy."
+
+    old "Ahí salgo."
+    new "I'll be right out."
+
+    old "Adelante."
+    new "Come in."
 
     ############################################################################
     ## Mensajes de ausencia (MENSAJES_AUSENTE)
@@ -117,53 +110,53 @@ translate english interaccion_banio_ocupado_75d1d22a:
 translate english interaccion_puerta_npc_5a6d6d2b:
 
     # violet "[_msg_ocupada]"
-    violet "When the interaction ends we'll get the reward; if we used a consumable it'll be gone, time will advance and we'll have to wait until the next day to use the Interaction again"
+    violet "[_msg_ocupada]"
 
 # game/script/core/locations/door_access_system.rpy:353
 translate english interaccion_puerta_npc_da3cfba5:
 
     # jasmine "[_msg_ocupada]"
-    jasmine "When the interaction ends we'll get the reward; if we used a consumable it'll be gone, time will advance and we'll have to wait until the next day to use the Interaction again"
+    jasmine "[_msg_ocupada]"
 
 # game/script/core/locations/door_access_system.rpy:355
 translate english interaccion_puerta_npc_f51ab2e5:
 
     # monica "[_msg_ocupada]"
-    monica "When the interaction ends we'll get the reward; if we used a consumable it'll be gone, time will advance and we'll have to wait until the next day to use the Interaction again"
+    monica "[_msg_ocupada]"
 
 # game/script/core/locations/door_access_system.rpy:368
 translate english interaccion_golpear_dejar_pasar_fd1c066b:
 
     # violet "[_msg_adelante]"
-    violet "Listen to her (Nothing)"
+    violet "[_msg_adelante]"
 
 # game/script/core/locations/door_access_system.rpy:370
 translate english interaccion_golpear_dejar_pasar_1772d232:
 
     # jasmine "[_msg_adelante]"
-    jasmine "Listen to her (Nothing)"
+    jasmine "[_msg_adelante]"
 
 # game/script/core/locations/door_access_system.rpy:372
 translate english interaccion_golpear_dejar_pasar_ed0f1ecd:
 
     # monica "[_msg_adelante]"
-    monica "Listen to her (Nothing)"
+    monica "[_msg_adelante]"
 
 # game/script/core/locations/door_access_system.rpy:382
 translate english interaccion_golpear_sale_pasillo_257bbf2e:
 
     # violet "[_msg_ahi_salgo]"
-    violet "Talk to her (+2 ❤️)"
+    violet "[_msg_ahi_salgo]"
 
 # game/script/core/locations/door_access_system.rpy:384
 translate english interaccion_golpear_sale_pasillo_62c5567c:
 
     # jasmine "[_msg_ahi_salgo]"
-    jasmine "Talk to her (+2 ❤️)"
+    jasmine "[_msg_ahi_salgo]"
 
 # game/script/core/locations/door_access_system.rpy:386
 translate english interaccion_golpear_sale_pasillo_b2ec6ef6:
 
     # monica "[_msg_ahi_salgo]"
-    monica "Talk to her (+2 ❤️)"
+    monica "[_msg_ahi_salgo]"
 

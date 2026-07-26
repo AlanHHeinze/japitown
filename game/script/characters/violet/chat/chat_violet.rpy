@@ -5,6 +5,13 @@
 
 init 6 python:
 
+    def _violet_q7c_completado():
+        """La quest 07_c se cierra con el propio chat: no hay que hablar con
+        Violet después. Al completarla arranca la 08_a con su espera de 3 días.
+        Función de MÓDULO (no lambda/anidada): se guarda en el save vía el grupo."""
+        if hasattr(store, 'completar_quest_actual'):
+            store.completar_quest_actual("violet")
+
     def set_vq6_rama_a(): store.vq6_rama_a = True; return ""
     def set_vq6_rama_b(): store.vq6_rama_b = True; return ""
     def set_vq6_rama_c(): store.vq6_rama_c = True; return ""
@@ -15,7 +22,7 @@ init 6 python:
 
 
     # =========================================================================
-    # QUEST 04_C — Chat de deseo 20
+    # QUEST 04_C — Chat Inicial
     # =========================================================================
 
     chat_violet_quest6 = GrupoMensajes(
@@ -24,8 +31,9 @@ init 6 python:
         mensaje_inicial="Aquí está...",
         trigger_id="violet_quest04c_chat",
         momento_locacion="casa_hviolet",
-        momento_horario=2,
-        foto_inicial="images/chat/violet/violet_chat_foto_01.png",
+        momento_horario=3,
+        prioritario=True,
+        foto_inicial="images/chat/violet/violet_chat_foto_01.jpg",
         tabla_recompensas=TablaRecompensas({
             "amor": [
                 RangoRecompensa(1, 99, {"tipo": "amor", "valor": 1}),
@@ -53,7 +61,7 @@ init 6 python:
     sistema_mensajes.registrar_grupo("violet", chat_violet_quest6)
 
     # =========================================================================
-    # QUEST 04_D — Chat de deseo 25
+    # QUEST 04_D — Segundo Chat (trasero)
     # =========================================================================
 
     chat_violet_quest7 = GrupoMensajes(
@@ -62,8 +70,9 @@ init 6 python:
         mensaje_inicial="Aquí está el motivo por el que no lo quiero usar",
         trigger_id="violet_quest04d_chat",
         momento_locacion="casa_hviolet",
-        momento_horario=2,
-        foto_inicial="images/chat/violet/violet_chat_foto_02.png",
+        momento_horario=3,
+        prioritario=True,
+        foto_inicial="images/chat/violet/violet_chat_foto_02.jpg",
         tabla_recompensas=TablaRecompensas({
             "amor": [
                 RangoRecompensa(1, 99, {"tipo": "amor", "valor": 1}),
@@ -309,7 +318,7 @@ init 6 python:
     sistema_mensajes.registrar_grupo("violet", chat_violet_quest7)
 
     # =========================================================================
-    # QUEST 04_E — Chat de deseo 30
+    # QUEST 04_E — Chat hacer un trato
     # =========================================================================
 
     chat_violet_quest8 = GrupoMensajes(
@@ -318,7 +327,8 @@ init 6 python:
         mensaje_inicial="Tengo un trato",
         trigger_id="violet_quest04e_chat",
         momento_locacion="casa_hviolet",
-        momento_horario=2,
+        momento_horario=3,
+        prioritario=True,
         tabla_recompensas=TablaRecompensas({
             "amor": [
                 RangoRecompensa(1, 99, {"tipo": "amor", "valor": 1}),
@@ -365,21 +375,21 @@ init 6 python:
                     OpcionRespuesta(
                         texto="Podría ser...",
                         respuesta_npc=["Listo, nada de podría ser", "Ya esta"],
-                        foto_respuesta="images/chat/violet/violet_chat_foto_03.png",
+                        foto_respuesta="images/chat/violet/violet_chat_foto_03.jpg",
                         puntos={},
                         saltar_a_paso=3 # Rama A
                     ),
                     OpcionRespuesta(
                         texto="Es un trato justo",
                         respuesta_npc="Bueno tenemos un trato",
-                        foto_respuesta="images/chat/violet/violet_chat_foto_03.png",
+                        foto_respuesta="images/chat/violet/violet_chat_foto_03.jpg",
                         puntos={},
                         saltar_a_paso=5 # Rama B
                     ),
                     OpcionRespuesta(
                         texto="Primero tendría que ver la foto",
                         respuesta_npc="...",
-                        foto_respuesta="images/chat/violet/violet_chat_foto_03.png",
+                        foto_respuesta="images/chat/violet/violet_chat_foto_03.jpg",
                         puntos={},
                         saltar_a_paso=7 # Rama C
                     ),
@@ -528,8 +538,11 @@ init 6 python:
         npc_id="violet",
         mensaje_inicial="No sé si lo estás haciendo a propósito o eres idiota",
         trigger_id="violet_q5c_g1",
-        momento_locacion="casa_hviolet",
+        # Llega de noche esté donde esté Violet, con la única condición de que el MC
+        # NO esté en la misma locación (chequeo de co-locación en _intentar_entrega).
+        # Prioritario: despierta al jugador y bloquea dormir hasta responderlo.
         momento_horario=2,
+        prioritario=True,
         pasos=[
             # Paso 0: Reacción inicial del jugador
             PasoConversacion(
@@ -643,8 +656,9 @@ init 6 python:
         npc_id="violet",
         mensaje_inicial="Pasate a la noche por mi habitación",
         trigger_id="violet_q6b_g1",
-        momento_locacion="casa_hviolet",
-        momento_horario=2,
+        # Llega por la mañana y sin importar dónde esté Violet (sin momento_locacion):
+        # así no depende de que su rutina coincida y cae apenas empieza el día.
+        momento_horario=0,
         pasos=[
             PasoConversacion(
                 mensaje_npc="Te quiero consultar algo",
@@ -739,6 +753,9 @@ init 6 python:
         mensaje_inicial="Ya hablé con la tienda, voy a enviar el paquete para que lo vean",
         trigger_id="violet_q7c_g1",
         momento_horario=0,
+        # Al terminar el chat la quest 07_c se completa sola (sin hablar con
+        # Violet) y encadena la 08_a con su espera de 3 días.
+        accion_al_completar=_violet_q7c_completado,
         pasos=[
             # Paso 0: MC pregunta si hay algo más que hacer
             PasoConversacion(

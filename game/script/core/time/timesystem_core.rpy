@@ -94,6 +94,9 @@ init python:
         """
         Accion de dormir: avanza al dia siguiente y resetea el horario a Mañana.
         """
+        # Fin del efecto de la Poción de Conquista (dura hasta dormir)
+        store.pocion_conquista_activa = False
+
         # Guardar horario antes de dormir para simular horarios omitidos despues
         _horario_antes_dormir = store.horario_actual
 
@@ -240,12 +243,14 @@ label accion_dormir:
     # Verificar restricción de quest/evento
     $ _msg_restriccion = accion_bloqueada("dormir")
     if _msg_restriccion:
+        $ _blk_guardar_toque()
         piensa "[_msg_restriccion]"
         return
 
     # Verificar mensaje prioritario ya entregado — bloquea dormir hasta responder
     $ _npc_prioritario = obtener_bloqueo_mensaje_prioritario()
     if _npc_prioritario:
+        $ _blk_guardar_toque()
         piensa "Debo responder el mensaje de [_npc_prioritario] antes de dormir"
         return
 
@@ -254,11 +259,13 @@ label accion_dormir:
     if _horario_despertar is not None:
         call screen animacion_dormir with dissolve
         $ avanzar_horario_multiple(_horario_despertar - horario_actual)
+        $ _blk_guardar_toque()
         piensa "Me despertó un mensaje"
         return
 
     # Verificar si hay entrega de quest pendiente de Violet (repartidor o paquete en cama)
     if getattr(store, 'violet_quest1_entrega_pendiente', False):
+        $ _blk_guardar_toque()
         piensa "Tengo cosas pendientes por hacer, no puedo dormir ahora"
         return
 
@@ -269,6 +276,7 @@ label accion_dormir:
 
     # Verificar si hay una entrega pendiente para hoy por la mañana
     if horario_actual == 0 and len(sistema_compras.verificar_entregas_hoy()) > 0:
+        $ _blk_guardar_toque()
         piensa "Tengo una entrega pendiente para hoy"
         return
 

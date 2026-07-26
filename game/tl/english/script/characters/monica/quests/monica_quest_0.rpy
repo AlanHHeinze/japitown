@@ -36,12 +36,6 @@ translate english quest_monica_questprincipal_0_b0532231:
     # monica "De nuevo, no tienes nada que agradecer, me hace muy feliz tenerte de vuelta."
     monica "Again — nothing to thank me for. Having you back makes me very happy."
 
-# game/script/characters/monica/quests/monica_quest_0.rpy:86
-translate english quest_monica_questprincipal_0_07914a83:
-
-    # monica_pensando "Violet y Jasmine deben estar mas que felices en este momento..."
-    monica_pensando "Violet and Jasmine must be thrilled right now..."
-
 # game/script/characters/monica/quests/monica_quest_0.rpy:91
 translate english quest_monica_questprincipal_0_de63cf13:
 
@@ -71,12 +65,6 @@ translate english quest_monica_questprincipal_0_c3057fcf:
 
     # monica "No te preocupes por eso, es un cambio grande para todas y cada una lo procesa a su manera."
     monica "Don't worry about that — it's a big change for everyone, and each person handles it differently."
-
-# game/script/characters/monica/quests/monica_quest_0.rpy:123
-translate english quest_monica_questprincipal_0_3d51f10b:
-
-    # monica "Pero se que es para bien... tengo fe que las cosas volveran a ser como antes."
-    monica "But I know it's for the better. I have faith things will go back to how they used to be."
 
 # game/script/characters/monica/quests/monica_quest_0.rpy:128
 translate english quest_monica_questprincipal_0_3c9d41ad:
@@ -120,12 +108,6 @@ translate english quest_monica_0_opcion_familia_b8238e7c:
     # monica "Eso es muy tierno de tu parte. Me alegra mucho escuchar eso, haré lo posible por ayudarte."
     monica "That's really sweet of you. I'm so glad to hear that — I'll do everything I can to help."
 
-# game/script/characters/monica/quests/monica_quest_0.rpy:176
-translate english quest_monica_0_opcion_familia_494c2ee3:
-
-    # monica "Y se que todas pensamos lo mismo."
-    monica "And I know we all feel the same way."
-
 # game/script/characters/monica/quests/monica_quest_0.rpy:181
 translate english quest_monica_0_opcion_familia_fd244c18:
 
@@ -137,12 +119,6 @@ translate english quest_monica_0_opcion_familia_63883e66:
 
     # mc "Gracias por apoyarme antes ahora y siempre."
     mc "Thank you for supporting me then, now, and always."
-
-# game/script/characters/monica/quests/monica_quest_0.rpy:190
-translate english quest_monica_0_opcion_familia_9445555d:
-
-    # monica "Sabes que siempre voy a estar para vos."
-    monica "You know I'm always here for you."
 
 # game/script/characters/monica/quests/monica_quest_0.rpy:205
 translate english quest_monica_0_opcion_cercania_b8d5b942:
@@ -168,35 +144,11 @@ translate english quest_monica_0_opcion_cercania_6aa96787:
     # monica "Vaya..."
     monica "Oh..."
 
-# game/script/characters/monica/quests/monica_quest_0.rpy:223
-translate english quest_monica_0_opcion_cercania_1b7fc0e8:
-
-    # monica "No sabia que pensabas asi..."
-    monica "I didn't know you felt that way..."
-
-# game/script/characters/monica/quests/monica_quest_0.rpy:228
-translate english quest_monica_0_opcion_cercania_f59f71cc:
-
-    # mc "Siempre te admiré mucho y ahora que estoy acá quiero aprovechar para pasar mas tiempo contigo"
-    mc "I've always admired you a lot, and now that I'm here I want to take the chance to spend more time with you."
-
 # game/script/characters/monica/quests/monica_quest_0.rpy:235
 translate english quest_monica_0_opcion_cercania_e81a0791:
 
     # mc "Y conocernos mejor"
     mc "And really get to know each other."
-
-# game/script/characters/monica/quests/monica_quest_0.rpy:240
-translate english quest_monica_0_opcion_cercania_1b7fc0e8_1:
-
-    # monica "No sabia que pensabas asi..."
-    monica "I didn't know you felt that way..."
-
-# game/script/characters/monica/quests/monica_quest_0.rpy:244
-translate english quest_monica_0_opcion_cercania_122548e1:
-
-    # monica "Voy a dar todo de mi para que podamos tener esa relacion que esperas."
-    monica "I'm going to give everything I have to make that happen."
 
 # game/script/characters/monica/quests/monica_quest_0.rpy:258
 translate english quest_monica_0_opcion_independencia_c1e469d5:
@@ -258,12 +210,6 @@ translate english quest_monica_0_cierre_f37b3cef:
     # monica "¿Un regalo? Vaya, sí que eres un caballero. Déjame ver..."
     monica "A gift? My, what a gentleman. Let me see..."
 
-# game/script/characters/monica/quests/monica_quest_0.rpy:324
-translate english quest_monica_0_cierre_fd10ff0e:
-
-    # mc "Aqui esta"
-    mc "Here you go."
-
 # game/script/characters/monica/quests/monica_quest_0.rpy:329
 translate english quest_monica_0_cierre_7c13e9d5:
 
@@ -299,12 +245,6 @@ translate english quest_monica_0_cierre_7bc63402:
 
     # monica "Te vas a meter en problemas divertidos si sigues siendo tan directo."
     monica "Being that honest is going to get you into all kinds of interesting trouble."
-
-# game/script/characters/monica/quests/monica_quest_0.rpy:365
-translate english quest_monica_0_cierre_5efd9dae:
-
-    # piensa "Que me querrá decir con eso?"
-    piensa "What does she mean by that?"
 
 # game/script/characters/monica/quests/monica_quest_0.rpy:370
 translate english quest_monica_0_cierre_126a0d22:
@@ -378,12 +318,6 @@ translate english quest_monica_0_cierre_9ea311a5:
     # monica "No pas..."
     monica "It's fi—"
 
-# game/script/characters/monica/quests/monica_quest_0.rpy:454
-translate english quest_monica_0_cierre_391b7cd0:
-
-    # mc "Perdon, me deje llevar"
-    mc "Sorry, I got carried away."
-
 # game/script/characters/monica/quests/monica_quest_0.rpy:459
 translate english quest_monica_0_cierre_eecdec5f:
 
@@ -396,29 +330,11 @@ translate english quest_monica_0_cierre_f831a4ad:
     # monica_pensando "Tan inocente es... No estaría mal aprovecharme"
     monica_pensando "He's so innocent... it wouldn't hurt to take advantage of that."
 
-# game/script/characters/monica/quests/monica_quest_0.rpy:469
-translate english quest_monica_0_cierre_e87c260f:
-
-    # monica "Creo que te pasaste un poco, ¿Hasta donde querias llegar?"
-    monica "I think you went a little far there. Just how far were you planning to go?"
-
 # game/script/characters/monica/quests/monica_quest_0.rpy:474
 translate english quest_monica_0_cierre_559fb087:
 
     # mc "No es lo que parece"
     mc "It's not what it looks like."
-
-# game/script/characters/monica/quests/monica_quest_0.rpy:478
-translate english quest_monica_0_cierre_a27e23bb:
-
-    # monica "¿Acaso querias besarme el cuello?"
-    monica "Were you trying to kiss my neck?"
-
-# game/script/characters/monica/quests/monica_quest_0.rpy:482
-translate english quest_monica_0_cierre_da0f5443:
-
-    # mc "Perdon Monica no era mi intencion de verdad"
-    mc "Sorry Monica, I really didn't mean to."
 
 # game/script/characters/monica/quests/monica_quest_0.rpy:489
 translate english quest_monica_0_cierre_ad5173d1:
@@ -471,4 +387,3 @@ translate english quest_monica_0_cierre_45b6678a:
 
     # piensa "¿Qué me querrá decir con eso?"
     piensa "What does she mean by that?"
-

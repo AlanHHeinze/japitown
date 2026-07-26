@@ -19,7 +19,12 @@ label interaccion_violet:
         # Quests que usan opciones_extra en vez de auto-trigger
         # Quest 0_a: una vez hecho el intro (esperando_talk), no auto-ejecutar —
         # el menú normal debe aparecer para que "Hablar" dispare el talk especial.
-        if (_quest_activa.id not in ("violet_questprincipal_04_a", "violet_questprincipal_02_a", "violet_questprincipal_02_c", "violet_questprincipal_03_a", "violet_questprincipal_05_a", "violet_questprincipal_05_b", "violet_questprincipal_05_c", "violet_questprincipal_06_a", "violet_questprincipal_06_b", "violet_questprincipal_07_a", "violet_questprincipal_07_b", "violet_questprincipal_09_a")
+        # El gate `renpy.has_label("quest_"+id)` evita auto-ejecutar (y avanzar
+        # de etapa) quests sin label propio — las que usan triggers custom, como
+        # 01_a. Es self-maintaining: no depende de acordarse de la tupla (fue
+        # justo olvidarse 01_a lo que causaba el crash E03).
+        if (renpy.has_label("quest_" + _quest_activa.id)
+                and _quest_activa.id not in ("violet_questprincipal_01_a", "violet_questprincipal_04_a", "violet_questprincipal_02_a", "violet_questprincipal_02_b", "violet_questprincipal_02_c", "violet_questprincipal_03_a", "violet_questprincipal_05_a", "violet_questprincipal_05_b", "violet_questprincipal_05_c", "violet_questprincipal_06_a", "violet_questprincipal_06_b", "violet_questprincipal_07_a", "violet_questprincipal_07_b", "violet_questprincipal_09_a")
                 and not (_quest_activa.id == "violet_questprincipal_0_a" and getattr(store, "violet_q0a_esperando_talk", False))):
             $ exito, mensajes = _quest_activa.intentar_ejecutar()
             if exito:

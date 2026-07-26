@@ -94,9 +94,11 @@ label quest_violet_questprincipal_0_a:
         $ _q0a_reset.etapa_actual = ETAPA_BOTON_LISTO
 
     # Devolver el control al jugador; la pista cambia a "hablar con Violet".
+    # `return` (no `jump game_loop`): esta quest se alcanza como opción del menú
+    # de interacción, que corre dentro del Call("interaccion_violet") del HUD.
     window hide
     $ mostrar_hud()
-    jump game_loop
+    return
 
 
 ################################################################################

@@ -4,7 +4,13 @@
 ## Definición de todos los skins y asignación de grupos a rutinas
 
 init 10 python:
-    
+
+    # Función de MÓDULO (no anidada): la condicion_desbloqueo queda guardada en
+    # el save via el objeto Skin — una función local rompería el pickle al guardar.
+    def _jasmine_desbloqueo_deportiva():
+        quest = sistema_quests.obtener_quest("jasmine_questprincipal_0")
+        return quest and quest.completada
+
     def inicializar_skins_jasmine():
         """Inicializa los skins de Jasmine y asigna grupos a rutinas."""
         
@@ -19,7 +25,7 @@ init 10 python:
             grupo="base",
             descripcion="Ropa casual de todos los días.",
             condicion_desbloqueo=None,  # Siempre desbloqueado
-            sprite_menu="images/characters/casa/menu/jasmine_menu_base_base.png"
+            sprite_menu="images/characters/casa/menu/jasmine_menu_base_base.webp"
         )
         sistema_skins.registrar_skin(skin_base)
         
@@ -35,25 +41,21 @@ init 10 python:
             grupo="entrenamiento",
             descripcion="Jasmine en ropa casual cuando va al gym.",
             condicion_desbloqueo=None,  # Siempre desbloqueado
-            sprite_idle="images/characters/casa/idle/idle_jasmine_casa_gym_tarde_rutinabase_grupobase_skinbase.png",
-            sprite_menu="images/characters/casa/menu/jasmine_menu_entrenamiento_base.png"
+            sprite_idle="images/characters/casa/idle/idle_jasmine_casa_gym_tarde_rutinabase_grupobase_skinbase.jpg",
+            sprite_menu="images/characters/casa/menu/jasmine_menu_entrenamiento_base.webp"
         )
         sistema_skins.registrar_skin(skin_entrenamiento_base)
         
         # Skin: Ropa Deportiva
-        def condicion_desbloqueo_deportiva():
-            quest = sistema_quests.obtener_quest("jasmine_questprincipal_0")
-            return quest and quest.completada
-        
         skin_entrenamiento_deportiva = Skin(
             id="jasmine_entrenamiento_deportiva",
             npc_id="jasmine",
             nombre="Ropa Deportiva",
             grupo="entrenamiento",
             descripcion="Jasmine viste su ropa de gym cuando entrena.",
-            condicion_desbloqueo=condicion_desbloqueo_deportiva,
-            sprite_idle="images/characters/casa/idle/idle_jasmine_casa_gym_tarde_rutinabase_grupoentrenamiento_skinropadeportiva.png",
-            sprite_menu="images/characters/casa/menu/jasmine_menu_entrenamiento_deportiva.png"
+            condicion_desbloqueo=_jasmine_desbloqueo_deportiva,
+            sprite_idle="images/characters/casa/idle/idle_jasmine_casa_gym_tarde_rutinabase_grupoentrenamiento_skinropadeportiva.webp",
+            sprite_menu="images/characters/casa/menu/jasmine_menu_entrenamiento_deportiva.webp"
         )
         sistema_skins.registrar_skin(skin_entrenamiento_deportiva)
         
@@ -69,7 +71,7 @@ init 10 python:
             grupo="bikini",
             descripcion="Jasmine en bikini en el patio.",
             condicion_desbloqueo=None,
-            sprite_menu="images/characters/casa/menu/jasmine_menu_bikini_base.png"  # Ahora disponible
+            sprite_menu="images/characters/casa/menu/jasmine_menu_bikini_base.webp"  # Ahora disponible
         )
         sistema_skins.registrar_skin(skin_bikini_base)
         

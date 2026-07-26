@@ -10,4 +10,4 @@ label violet_quest09b_despertar:
     call mensajes_al_despertar from _call_quest09b_despertar_msgs
     $ renpy.restart_interaction()
     $ mostrar_hud()
-    jump game_loop
+    return

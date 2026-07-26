@@ -42,6 +42,65 @@ init python:
                 "posicion": posicion
             }
     
+    def poblar_rutinas_visuales_monica():
+        """
+        Llena monica_rutinas_visuales (sprite+posicion por dia/horario).
+        Se llama al iniciar partida nueva (dentro de inicializar_monica) y
+        tambien despues de cargar un save / reload de script: ese diccionario
+        vive en memoria (no es parte del save), asi que si no se repuebla,
+        obtener_sprite_rutina_monica() no encuentra nada y cae al sprite
+        generico de la Prioridad 3, con ruta desactualizada y en el lugar
+        equivocado.
+        """
+        # Lunes a Viernes + Domingo (0-4, 6) - Mañana en Cocina
+        establecer_rutina_visual_monica(
+            [0, 1, 2, 3, 4, 6], 0,
+            "images/characters/casa/idle/idle_monica_casa_cocina_manana_rutinabase_grupobase_skinbase.jpg",
+            (957, 730)  # Posición personalizable: centro-abajo
+        )
+
+        # Lunes a Viernes + Domingo (0-4, 6) - Tarde en Living
+        establecer_rutina_visual_monica(
+            [0, 1, 2, 3, 4, 6], 1,
+            "images/characters/casa/idle/idle_monica_casa_living_tarde_rutinabase_grupobase_skinbase.webp",
+            (1299, 1067)  # Posición personalizable
+        )
+
+        # Lunes a Viernes + Domingo (0-4, 6) - Noche en H. Mónica
+        establecer_rutina_visual_monica(
+            [0, 1, 2, 3, 4, 6], 2,
+            "images/characters/casa/idle/idle_monica_casa_hmonica_noche_rutinabase_grupobase_skinbase.jpg",
+            (1090, 928)  # Posición personalizable
+        )
+
+        # Lunes a Domingo (0-6) - Trasnoche en H. Mónica
+        establecer_rutina_visual_monica(
+            [0, 1, 2, 3, 4, 5, 6], 3,
+            "images/characters/casa/idle/idle_monica_casa_hmonica_trasnoche_rutinabase_grupobase_skinbase.jpg",
+            (953, 766)  # Posición personalizable
+        )
+
+        # Sábado (5) - Mañana en Living
+        establecer_rutina_visual_monica(
+            5, 0,
+            "images/characters/casa/idle/idle_monica_casa_living_manana_rutinabase_grupobase_skinbase.webp",
+            (1299, 1065)  # Posición personalizable
+        )
+
+        # Sábado (5) - Tarde en Patio
+        establecer_rutina_visual_monica(
+            5, 1,
+            "images/characters/casa/idle/idle_monica_casa_patio_tarde_rutinabase_grupobikini_skinbase.jpg",
+            (1564, 961)  # Posición personalizable
+        )
+
+        # Sábado (5) - Noche en Cocina
+        establecer_rutina_visual_monica(
+            5, 2,
+            "images/characters/casa/idle/idle_monica_casa_cocina_noche_rutinabase_grupobase_skinbae.jpg",
+            (637, 1062)  # Posición personalizable
+        )
+
     def obtener_sprite_rutina_monica():
         """
         Obtiene el sprite actual de Mónica según el dia y horario actual.
@@ -50,7 +109,7 @@ init python:
         # Prioridad 0: Sprite de pasillo (door access)
         npc_m = obtener_npc("monica")
         if npc_m and npc_m.locacion_actual == "casa_pasilloabajo":
-            return "images/characters/casa/idle/idle_monica_casa_pasillo_fuera_rutinabase_grupobase_skinbase.png"
+            return "images/characters/casa/idle/idle_monica_casa_pasillo_fuera_rutinabase_grupobase_skinbase.webp"
 
         if hasattr(store, 'dia_semana_actual') and hasattr(store, 'horario_actual'):
             # Prioridad 1: Sprite del skin activo (quest/evento)
@@ -101,7 +160,7 @@ init python:
             id="monica",
             nombre="Mónica",
             nombre_completo="Mónica",
-            sprite="images/characters/casa/idle/idle_monica_casa_hmonica_trasnoche_rutinabase_skinbase.png",
+            sprite="images/characters/casa/idle/idle_monica_casa_hmonica_trasnoche_rutinabase_grupobase_skinbase.jpg",
             nombre_stat1="amor",
             nombre_stat2="deseo"
         )
@@ -150,57 +209,8 @@ init python:
         # =====================================================================
         # SPRITES Y POSICIONES DE RUTINA
         # =====================================================================
-        # Cada rutina tiene un sprite específico y una posición personalizable
-        
-        # Lunes a Viernes + Domingo (0-4, 6) - Mañana en Cocina
-        establecer_rutina_visual_monica(
-            [0, 1, 2, 3, 4, 6], 0,
-            "images/characters/casa/idle/idle_monica_casa_cocina_mañana_rutinabase_grupobase_skinbase.png",
-            (957, 730)  # Posición personalizable: centro-abajo
-        )
-        
-        # Lunes a Viernes + Domingo (0-4, 6) - Tarde en Living
-        establecer_rutina_visual_monica(
-            [0, 1, 2, 3, 4, 6], 1,
-            "images/characters/casa/idle/idle_monica_casa_living_tarde_rutinabase_grupobase_skinbase.png",
-            (1299, 1067)  # Posición personalizable
-        )
-        
-        # Lunes a Viernes + Domingo (0-4, 6) - Noche en H. Mónica
-        establecer_rutina_visual_monica(
-            [0, 1, 2, 3, 4, 6], 2,
-            "images/characters/casa/idle/idle_monica_casa_hmonica_noche_rutinabase_grupobase_skinbase.png",
-            (1090, 928)  # Posición personalizable
-        )
-        
-        # Lunes a Domingo (0-6) - Trasnoche en H. Mónica
-        establecer_rutina_visual_monica(
-            [0, 1, 2, 3, 4, 5, 6], 3,
-            "images/characters/casa/idle/idle_monica_casa_hmonica_trasnoche_rutinabase_grupobase_skinbase.png",
-            (953, 766)  # Posición personalizable
-        )
-        
-        # Sábado (5) - Mañana en Living
-        establecer_rutina_visual_monica(
-            5, 0,
-            "images/characters/casa/idle/idle_monica_casa_living_mañana_rutinabase_grupobase_skinbase.png",
-            (1299, 1065)  # Posición personalizable
-        )
-        
-        # Sábado (5) - Tarde en Patio
-        establecer_rutina_visual_monica(
-            5, 1,
-            "images/characters/casa/idle/idle_monica_casa_patio_tarde_rutinabase_grupobikini_skinbase.png",
-            (1564, 961)  # Posición personalizable
-        )
-        
-        # Sábado (5) - Noche en Cocina
-        establecer_rutina_visual_monica(
-            5, 2,
-            "images/characters/casa/idle/idle_monica_casa_cocina_noche_rutinabase_grupobase_skinbae.png",
-            (637, 1062)  # Posición personalizable
-        )
-        
+        poblar_rutinas_visuales_monica()
+
         # =====================================================================
         # RUTINAS ESPECIALES
         # =====================================================================

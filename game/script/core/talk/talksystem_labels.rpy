@@ -6,6 +6,7 @@ label talk_iniciar:
 
     $ _msg_r = accion_bloqueada("hablar")
     if _msg_r:
+        $ _blk_guardar_toque()
         piensa "[_msg_r]"
         return
 
@@ -60,20 +61,24 @@ label talk_iniciar:
 
     python:
         _t_items = []
-        _t_cheat = getattr(persistent, "mostrar_recompensa", False)
+        _t_cheat_dev = getattr(persistent, "mostrar_recompensa", False)
+        _t_pocion = getattr(store, "pocion_conquista_activa", False)
+        _t_cheat = _t_cheat_dev or _t_pocion
+        # El cheat de dev y la Poción de Conquista muestran lo mismo, con tag distinto
+        _t_cheat_tag = u"(Cheat)" if _t_cheat_dev else renpy.translate_string(u"(Poción)")
         for opcion_id in OPCIONES_BASE_IDS:
             texto = renpy.translate_string(OPCIONES_BASE_TEXTO[opcion_id])
             if _t_cheat and _t_estado:
                 _t_res_id = _t_estado.obtener_resultado(opcion_id)
-                _t_res_txt = RESULTADO_TEXTO.get(_t_res_id, "?")
-                caption = u"{} {{color=#A5D6A7}}{}{{/color}} {{color=#FF9800}}(Cheat){{/color}}".format(texto, _t_res_txt)
+                _t_res_txt = renpy.translate_string(RESULTADO_TEXTO.get(_t_res_id, "?"))
+                caption = u"{} {{color=#A5D6A7}}{}{{/color}} {{color=#FF9800}}{}{{/color}}".format(texto, _t_res_txt, _t_cheat_tag)
             else:
                 recordado = sistema_talk.consultar_memoria_mc(_npc_id_temp, _t_estado.id, opcion_id) if _t_estado else None
                 if recordado:
-                    resultado_texto = RESULTADO_TEXTO[recordado]
+                    resultado_texto = renpy.translate_string(RESULTADO_TEXTO[recordado])
                     caption = u"{} {{color=#A5D6A7}}{}{{/color}}".format(texto, resultado_texto)
                 elif opcion_id == _t_preview_opcion:
-                    resultado_texto = RESULTADO_TEXTO[_t_preview_resultado]
+                    resultado_texto = renpy.translate_string(RESULTADO_TEXTO[_t_preview_resultado])
                     caption = u"{} {{color=#FFF176}}{}?{{/color}}".format(texto, resultado_texto)
                 else:
                     caption = texto
@@ -168,11 +173,17 @@ label talk_iniciar:
         if _t_msg4:
             _t_partes.append(_t_msg4)
         _t_limpias = []
-        for _i, _p in enumerate(_t_partes):
-            _p = _p.rstrip(".,")
-            if _i > 0 and _p:
-                _p = _p[0].lower() + _p[1:]
-            _t_limpias.append(_p)
+        # OJO: no usar `_p` como variable acá. En un `python:` de label las
+        # variables van al store, y `_p` es la función interna de Ren'Py para
+        # textos multilínea (la usa `define gui.about = _p("""...""")`).
+        # Pisarla la deja como string para toda la sesión y, al cambiar de
+        # idioma, gui.rebuild() re-evalúa ese define y crashea con
+        # "TypeError: 'str' object is not callable".
+        for _t_i, _t_p in enumerate(_t_partes):
+            _t_p = _t_p.rstrip(".,")
+            if _t_i > 0 and _t_p:
+                _t_p = _t_p[0].lower() + _t_p[1:]
+            _t_limpias.append(_t_p)
         _t_resultado_texto = " ".join(_t_limpias)
 
     # Expresión del NPC según resultado y skin actual

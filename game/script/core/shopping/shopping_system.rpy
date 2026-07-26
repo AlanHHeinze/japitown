@@ -5,7 +5,23 @@
 ## calculación de dias hábiles
 
 init python:
-    
+
+    def _sc_avanzar_un_dia(fecha):
+        """
+        Avanza una fecha (dia, dia_semana, estacion, año) un dia de calendario,
+        resolviendo el cambio de mes/estación/año. Funcion de modulo (no se guarda).
+        """
+        dia, dia_semana, estacion, año = fecha
+        dia += 1
+        dia_semana = (dia_semana + 1) % 7
+        if dia > 31:
+            dia = 1
+            estacion += 1
+            if estacion >= 4:
+                estacion = 0
+                año += 1
+        return (dia, dia_semana, estacion, año)
+
     class OrdenCompra:
         """
         Representa una orden de compra con sus items y fecha de entrega.
@@ -22,31 +38,27 @@ init python:
             self.entregada = False
         
         def obtener_dias_restantes(self):
-            """Calcula los días hábiles restantes hasta la entrega (igual que calcular_fecha_entrega)."""
-            dia      = store.dia_actual
-            dia_sem  = store.dia_semana_actual
-            estacion = store.estacion_actual
-            año      = store.año_actual
+            """
+            Días de CALENDARIO que faltan hasta la entrega. Como la fecha de entrega
+            ya nunca cae en fin de semana (calcular_fecha_entrega la mueve al lunes),
+            esto muestra, por ejemplo, los dias que faltan hasta el lunes por la mañana.
+            """
+            fecha = (store.dia_actual, store.dia_semana_actual, store.estacion_actual, store.año_actual)
 
-            if (dia == self.dia_entrega and estacion == self.estacion_entrega and año == self.año_entrega):
+            def _es_entrega(f):
+                return f[0] == self.dia_entrega and f[2] == self.estacion_entrega and f[3] == self.año_entrega
+
+            if _es_entrega(fecha):
                 return 0
 
-            habiles = 0
+            dias = 0
             for _ in range(60):
-                dia += 1
-                dia_sem = (dia_sem + 1) % 7
-                if dia > 31:
-                    dia = 1
-                    estacion += 1
-                    if estacion >= 4:
-                        estacion = 0
-                        año += 1
-                if dia_sem < 5:
-                    habiles += 1
-                if (dia == self.dia_entrega and estacion == self.estacion_entrega and año == self.año_entrega):
+                fecha = _sc_avanzar_un_dia(fecha)
+                dias += 1
+                if _es_entrega(fecha):
                     break
 
-            return max(0, habiles)
+            return max(0, dias)
         
         def es_dia_entrega(self):
             """Verifica si hoy es el día de entrega."""
@@ -88,40 +100,32 @@ init python:
         
         def calcular_fecha_entrega(self, dias_espera):
             """
-            Calcula la fecha de entrega considerando solo dias hábiles.
-            Los paquetes no llegan sábados ni domingos.
-            
+            Calcula la fecha de entrega.
+
+            Los dias de espera cuentan como dias de CALENDARIO (los fines de semana
+            cuentan igual que cualquier otro dia). Lo único que no puede pasar es
+            entregar sábado o domingo: si la fecha cae en fin de semana, se mueve al
+            lunes. Así una espera con un finde en el medio no suma dias extra;
+            solo se difiere la entrega cuando el propio dia de llegada es finde.
+
             Args:
                 dias_espera: Dias base de espera del item
-            
+
             Returns:
                 tuple: (dia, dia_semana, estacion, año)
             """
-            dia = store.dia_actual
-            dia_semana = store.dia_semana_actual
-            estacion = store.estacion_actual
-            año = store.año_actual
-            
-            dias_contados = 0
-            
-            while dias_contados < dias_espera:
-                # Avanzar un dia
-                dia += 1
-                dia_semana = (dia_semana + 1) % 7
-                
-                # Verificar cambio de estación
-                if dia > 31:
-                    dia = 1
-                    estacion += 1
-                    if estacion >= 4:
-                        estacion = 0
-                        año += 1
-                
-                # Solo contar dias hábiles (Lunes=0 a Viernes=4)
-                if dia_semana < 5:
-                    dias_contados += 1
-            
-            return (dia, dia_semana, estacion, año)
+            fecha = (store.dia_actual, store.dia_semana_actual, store.estacion_actual, store.año_actual)
+
+            # 1. Avanzar los dias de espera contando TODOS los dias.
+            for _ in range(dias_espera):
+                fecha = _sc_avanzar_un_dia(fecha)
+
+            # 2. Si la entrega cae en fin de semana (5=Sábado, 6=Domingo),
+            #    moverla al lunes siguiente.
+            while fecha[1] >= 5:
+                fecha = _sc_avanzar_un_dia(fecha)
+
+            return fecha
         
         def crear_orden(self, items, dia_entrega, dia_semana_entrega, estacion_entrega, año_entrega):
             """
@@ -327,11 +331,11 @@ init python:
             
             lineas = []
             for orden in ordenes:
-                lineas.append(f"Orden de compra N°{orden.numero}")
+                lineas.append(renpy.translate_string("Orden de compra N°{numero}").format(numero=orden.numero))
                 lineas.append(orden.obtener_texto_dias())
-                lineas.append("Contenido:")
+                lineas.append(renpy.translate_string("Contenido:"))
                 for texto in orden.obtener_contenido_texto():
-                    lineas.append(f"  {texto}")
+                    lineas.append("  {}".format(texto))
                 lineas.append("")
             
             return "\n".join(lineas)
@@ -392,9 +396,39 @@ init python:
         """Helper: obtiene órdenes pendientes."""
         return sistema_compras.obtener_ordenes_pendientes()
     
+    def cantidad_en_camino(item_id):
+        """Cuántas unidades de un item hay compradas pero todavía sin entregar."""
+        total = 0
+        try:
+            for orden in sistema_compras.obtener_ordenes_pendientes():
+                total += orden.items.get(item_id, 0)
+        except Exception:
+            pass
+        return total
+
+    def cantidad_comprada(item_id):
+        """Inventario + pedidos en camino. Sirve para que las pistas de quest
+        distingan 'todavía hay que comprarlo' de 'ya lo compré, está por llegar'."""
+        try:
+            en_inventario = store.inventario.get(item_id, 0)
+        except Exception:
+            en_inventario = 0
+        return en_inventario + cantidad_en_camino(item_id)
+
     def comprar_item_tienda(item_id):
         """Helper: compra un item de la tienda."""
-        return sistema_compras.comprar_item(item_id)
+        exito = sistema_compras.comprar_item(item_id)
+        # Revalidar las quests en el acto: varias tienen un Requisito("item") o
+        # una pista que depende de la compra. El game_loop también las revalida,
+        # pero solo corre al cerrar el celular — y la tienda y la app de Pistas
+        # están DENTRO del celular, así que sin esto la pista no se actualizaría
+        # hasta salir.
+        if exito:
+            try:
+                store.actualizar_quests()
+            except Exception:
+                pass
+        return exito
     
     def recoger_paquete():
         """Helper: recoge el paquete de la habitación."""
@@ -497,7 +531,7 @@ label recoger_paquete_habitacion:
     # Mostrar escena de la habitacion del MC según horario
     $ _horarios_bg = ["tarde", "tarde", "noche", "noche"]
     $ _bg_horario = _horarios_bg[horario_actual]
-    scene expression "images/bg/casa/bg_casa_" + _bg_horario + "_hmc.png" with fade
+    scene expression "images/bg/casa/bg_casa_" + _bg_horario + "_hmc.jpg" with fade
     
     # Mostrar MC a la izquierda sosteniendo el paquete
     show mc_parado_base c_rbase_regaloviolet o_abajonm b_none at mc_izquierda with dissolve

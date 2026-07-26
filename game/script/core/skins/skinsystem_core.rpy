@@ -59,7 +59,7 @@ init python:
                 return True  # Sin condición = siempre desbloqueado
             try:
                 return self.condicion_desbloqueo()
-            except:
+            except Exception:
                 return False
     
     
@@ -207,7 +207,14 @@ init python:
 
 
 # Instancia global del sistema de skins
-define sistema_skins = SistemaSkins()
+# Instancia creada en init 4 (los registros de init 5-11 la llenan) y declarada
+# con default para que se guarde en el save: skins activos/desbloqueados deben guardarse.
+init 4 python:
+    sistema_skins = SistemaSkins()
+# OJO: el default se re-evalúa en CADA partida nueva. Debe devolver una COPIA
+# del catálogo poblado en init — una instancia vacía (SistemaSkins()) borraría todo
+# el contenido registrado. Ver _ps_copia_fresca en persistencia_sistemas.rpy.
+default sistema_skins = _ps_copia_fresca("sistema_skins")
 
 # Variable guardable para skins activos
 # Formato: {npc_id: {grupo: skin_id}}
@@ -260,7 +267,7 @@ init python:
             try:
                 if condicion and not condicion():
                     return "base"
-            except:
+            except Exception:
                 return "base"
             return entrada.get("grupo", "base")
         return entrada

@@ -76,10 +76,10 @@ screen menu_talk_npc(npc, config, estado, especiales, preview_opcion, preview_re
                             text OPCIONES_BASE_TEXTO[opcion_id] size 18 color "#ffffff"
                             # Memoria del MC (verde): recuerda el resultado de este combo
                             if _tm:
-                                text RESULTADO_TEXTO[_tm] size 13 color "#A5D6A7" italic True xalign 1.0
+                                text renpy.translate_string(RESULTADO_TEXTO[_tm]) size 13 color "#A5D6A7" italic True xalign 1.0
                             # Carisma preview (amarillo): resultado probable de esta opción
                             elif _tp and preview_resultado:
-                                text RESULTADO_TEXTO[preview_resultado] size 13 color "#FFF176" italic True xalign 1.0
+                                text renpy.translate_string(RESULTADO_TEXTO[preview_resultado]) size 13 color "#FFF176" italic True xalign 1.0
 
             # Opciones especiales (separador + botones adicionales)
             if especiales:

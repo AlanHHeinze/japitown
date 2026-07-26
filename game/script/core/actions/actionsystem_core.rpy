@@ -14,14 +14,24 @@ init python:
         def __init__(self, id, nombre, icono, locacion_id,
             label_generico=None, reseteo="diario",
             condicion=None, mensaje_reintento=None,
-            color="#0288D1", color_hover="#4FC3F7"):
+            color="#0288D1", color_hover="#4FC3F7",
+            nombre_dinamico=None, condicion_habilitada=None):
             self.id = id
             self.nombre = nombre
+            # callable → str YA TRADUCIDO. Si está, reemplaza a `nombre` en el
+            # panel (ej: mostrar un % que cambia en runtime). Debe ser funcion
+            # de modulo, nunca lambda (anti-PicklingError).
+            self._nombre_dinamico = nombre_dinamico
             self.icono = icono
             self.locacion_id = locacion_id
             self.label_generico = label_generico      # Label si no hay listeners
             self.reseteo = reseteo                    # "diario" | "semanal_lunes" | None
             self._condicion = condicion               # callable → bool (visibilidad extra)
+            # callable → bool. Distinto de `condicion`: la accion SIGUE
+            # apareciendo en el panel, pero en gris (no clickeable) cuando da
+            # False. Para requisitos que el jugador debe poder ver que existen
+            # (ej: "Entrar" pide destreza 10). Funcion de modulo, nunca lambda.
+            self._condicion_habilitada = condicion_habilitada
             # Si es None: button insensitive cuando usada
             # Si es str: button siempre clickeable, muestra piensa cuando ya usada
             self.mensaje_reintento = mensaje_reintento
@@ -33,9 +43,24 @@ init python:
                 return True
             return self._condicion()
 
+        def esta_habilitada(self):
+            """False → se muestra en gris (visible pero no clickeable)."""
+            cond = getattr(self, '_condicion_habilitada', None)
+            if cond is None:
+                return True
+            return cond()
+
+        def obtener_nombre(self):
+            """Nombre YA TRADUCIDO para mostrar en el panel."""
+            if getattr(self, '_nombre_dinamico', None) is not None:
+                return self._nombre_dinamico()
+            return renpy.translate_string(self.nombre)
+
         def __getstate__(self):
             d = self.__dict__.copy()
             d['_condicion'] = None
+            d['_nombre_dinamico'] = None
+            d['_condicion_habilitada'] = None
             return d
 
 
@@ -88,6 +113,13 @@ init python:
             ]
 
         def obtener_acciones_locacion(self, locacion_id):
+            # Minijuego de espiar activo: el panel muestra EXCLUSIVAMENTE sus
+            # acciones (las demas globales, como "Ver salidas", no aplican ahi).
+            if getattr(store, 'espiar_sesion', None):
+                return [
+                    a for a in self.acciones.values()
+                    if a.id.startswith("espiar_") and a.esta_visible()
+                ]
             return [
                 a for a in self.acciones.values()
                 if (a.locacion_id == locacion_id or a.locacion_id is None) and a.esta_visible()
@@ -102,6 +134,8 @@ init python:
             if accion is None:
                 return False
             if not accion.esta_visible():
+                return False
+            if not accion.esta_habilitada():
                 return False
             if accion.reseteo == "diario" and accion_id in self._usados_hoy:
                 return False

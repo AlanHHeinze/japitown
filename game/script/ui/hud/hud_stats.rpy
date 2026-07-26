@@ -124,9 +124,10 @@ screen panel_stats_mc():
     modal True
 
     $ _ajc = sistema_ajuste_cel.obtener_container("panel_stats_mc") if modo_ajuste_celular else None
+    $ _k = CEL_APP_ESCALA_SMALL if renpy.variant("small") else 1.0
 
     # Fondo del celular
-    add "images/hud/interfaz_celular.png" xalign 0.0 yalign 0.0
+    use _celular_fondo()
 
     # Click fuera del celular cierra todo
     use _celular_cerrar_exterior("panel_stats_mc")
@@ -144,10 +145,10 @@ screen panel_stats_mc():
             xfill True
 
             # Barra de estado
-            use _celular_barra_status()
+            use _celular_barra_status("panel_stats_mc")
 
             # Header de app
-            use _celular_app_header("Stats", "🎮", [Hide("panel_stats_mc"), Show("menu_celular")])
+            use _celular_app_header("Stats", "🎮", [Hide("panel_stats_mc"), Show("menu_celular")], "panel_stats_mc")
 
             # Contenido
             viewport:
@@ -159,89 +160,89 @@ screen panel_stats_mc():
                 frame:
                     xfill True
                     background None
-                    padding (25, 20)
+                    padding (int(25 * _k), int(20 * _k))
 
                     vbox:
-                        spacing 20
+                        spacing int(20 * _k)
                         xfill True
 
                         # Sección stats
-                        text "Atributos" size 16 color "#4FC3F7" bold True
+                        text "Atributos" size int(16 * _k) color "#4FC3F7" bold True
 
                         vbox:
-                            spacing 12
+                            spacing int(12 * _k)
                             xfill True
 
                             # Fuerza
                             frame:
                                 xfill True
                                 background "#1e1e3aCC"
-                                padding (15, 10)
+                                padding (int(15 * _k), int(10 * _k))
 
                                 hbox:
-                                    spacing 12
+                                    spacing int(12 * _k)
                                     yalign 0.5
-                                    text "💪" size 22
-                                    text "Fuerza" size 16 color "#ffffff"
-                                    text "[mc_fuerza]" size 20 color "#FF6B6B" bold True xalign 1.0
+                                    text "💪" size int(22 * _k)
+                                    text "Fuerza" size int(16 * _k) color "#ffffff"
+                                    text "[mc_fuerza]" size int(20 * _k) color "#FF6B6B" bold True xalign 1.0
 
                             # Carisma
                             frame:
                                 xfill True
                                 background "#1e1e3aCC"
-                                padding (15, 10)
+                                padding (int(15 * _k), int(10 * _k))
 
                                 hbox:
-                                    spacing 12
+                                    spacing int(12 * _k)
                                     yalign 0.5
-                                    text "💬" size 22
-                                    text "Carisma" size 16 color "#ffffff"
-                                    text "[mc_carisma]" size 20 color "#FFB74D" bold True xalign 1.0
+                                    text "💬" size int(22 * _k)
+                                    text "Carisma" size int(16 * _k) color "#ffffff"
+                                    text "[mc_carisma]" size int(20 * _k) color "#FFB74D" bold True xalign 1.0
 
                             # Destreza
                             frame:
                                 xfill True
                                 background "#1e1e3aCC"
-                                padding (15, 10)
+                                padding (int(15 * _k), int(10 * _k))
 
                                 hbox:
-                                    spacing 12
+                                    spacing int(12 * _k)
                                     yalign 0.5
-                                    text "🎯" size 22
-                                    text "Destreza" size 16 color "#ffffff"
-                                    text "[mc_destreza]" size 20 color "#4FC3F7" bold True xalign 1.0
+                                    text "🎯" size int(22 * _k)
+                                    text "Destreza" size int(16 * _k) color "#ffffff"
+                                    text "[mc_destreza]" size int(20 * _k) color "#4FC3F7" bold True xalign 1.0
 
                             # Inteligencia
                             frame:
                                 xfill True
                                 background "#1e1e3aCC"
-                                padding (15, 10)
+                                padding (int(15 * _k), int(10 * _k))
 
                                 hbox:
-                                    spacing 12
+                                    spacing int(12 * _k)
                                     yalign 0.5
-                                    text "🧠" size 22
-                                    text "Inteligencia" size 16 color "#ffffff"
-                                    text "[mc_inteligencia]" size 20 color "#81C784" bold True xalign 1.0
+                                    text "🧠" size int(22 * _k)
+                                    text "Inteligencia" size int(16 * _k) color "#ffffff"
+                                    text "[mc_inteligencia]" size int(20 * _k) color "#81C784" bold True xalign 1.0
 
                         # Separador
                         frame:
                             xfill True
-                            ysize 1
+                            ysize int(1 * _k)
                             background "#ffffff11"
 
                         # Dinero
                         frame:
                             xfill True
                             background "#1a2e1aCC"
-                            padding (15, 12)
+                            padding (int(15 * _k), int(12 * _k))
 
                             hbox:
-                                spacing 12
+                                spacing int(12 * _k)
                                 yalign 0.5
-                                text "💰" size 24
-                                text "Dinero" size 18 color "#ffffff"
-                                text "$[dinero]" size 22 color "#4CAF50" bold True xalign 1.0
+                                text "💰" size int(24 * _k)
+                                text "Dinero" size int(18 * _k) color "#ffffff"
+                                text "$[dinero]" size int(22 * _k) color "#4CAF50" bold True xalign 1.0
 
 
 ################################################################################
@@ -250,6 +251,10 @@ screen panel_stats_mc():
 
 screen panel_entrenamiento():
     """Panel de entrenamiento que aparece en la habitación del MC"""
+
+    # Misma escala que el HUD superior y el panel de acciones de locación
+    # (HUD_ESCALA_SMALL, en hud_navigation.rpy / actionsystem_screen.rpy).
+    $ _pe_k = HUD_ESCALA_SMALL if renpy.variant("small") else 1.0
 
     # Solo mostrar si estamos en la habitacion del MC
     if sistema_locaciones.locacion_actual and sistema_locaciones.locacion_actual.id == "casa_hmc":
@@ -260,110 +265,110 @@ screen panel_entrenamiento():
         frame:
             xalign 0.5
             yalign 0.0
-            yoffset 120  # Debajo del panel de tiempo
+            yoffset int(120 * _pe_k)  # Debajo del panel de tiempo
             background "#1e112180"
-            padding (20, 12)
+            padding (int(20 * _pe_k), int(12 * _pe_k))
             at hud_panel_fadein
 
             # Borde redondeado simulado con frame interior
             has hbox
-            spacing 15
+            spacing int(15 * _pe_k)
             yalign 0.5
 
             if es_trasnoche:
-                text "Es muy tarde para hacer actividades" size 14 color "#ff6666" yalign 0.5
+                text "Es muy tarde para hacer actividades" size int(14 * _pe_k) color "#ff6666" yalign 0.5
             else:
                 # Botón Fuerza (circular)
                 vbox:
-                    spacing 4
+                    spacing int(4 * _pe_k)
                     xalign 0.5
 
                     button:
                         action Call("accion_entrenar", "fuerza")
-                        xsize 48 ysize 48
+                        xsize int(48 * _pe_k) ysize int(48 * _pe_k)
                         background "#D32F2F"
                         hover_background "#EF5350"
                         xalign 0.5
                         tooltip "Entrenar Fuerza"
-                        at hud_train_hover
-                        text "💪" size 22 xalign 0.5 yalign 0.5
+                        at hud_train_hover(_pe_k)
+                        text "💪" size int(22 * _pe_k) xalign 0.5 yalign 0.5
 
-                    text "STR" size 10 color "#EF9A9A" bold True xalign 0.5
+                    text "STR" size int(10 * _pe_k) color "#EF9A9A" bold True xalign 0.5
 
                 # Botón Carisma (circular)
                 vbox:
-                    spacing 4
+                    spacing int(4 * _pe_k)
                     xalign 0.5
 
                     button:
                         action Call("accion_entrenar", "carisma")
-                        xsize 48 ysize 48
+                        xsize int(48 * _pe_k) ysize int(48 * _pe_k)
                         background "#FF8F00"
                         hover_background "#FFB74D"
                         xalign 0.5
                         tooltip "Entrenar Carisma"
-                        at hud_train_hover
-                        text "💬" size 22 xalign 0.5 yalign 0.5
+                        at hud_train_hover(_pe_k)
+                        text "💬" size int(22 * _pe_k) xalign 0.5 yalign 0.5
 
-                    text "CHR" size 10 color "#FFCC80" bold True xalign 0.5
+                    text "CHR" size int(10 * _pe_k) color "#FFCC80" bold True xalign 0.5
 
                 # Botón Destreza (circular)
                 vbox:
-                    spacing 4
+                    spacing int(4 * _pe_k)
                     xalign 0.5
 
                     button:
                         action Call("accion_entrenar", "destreza")
-                        xsize 48 ysize 48
+                        xsize int(48 * _pe_k) ysize int(48 * _pe_k)
                         background "#0288D1"
                         hover_background "#4FC3F7"
                         xalign 0.5
                         tooltip "Entrenar Destreza"
-                        at hud_train_hover
-                        text "🎯" size 22 xalign 0.5 yalign 0.5
+                        at hud_train_hover(_pe_k)
+                        text "🎯" size int(22 * _pe_k) xalign 0.5 yalign 0.5
 
-                    text "DEX" size 10 color "#81D4FA" bold True xalign 0.5
+                    text "DEX" size int(10 * _pe_k) color "#81D4FA" bold True xalign 0.5
 
                 # Botón Inteligencia (circular)
                 vbox:
-                    spacing 4
+                    spacing int(4 * _pe_k)
                     xalign 0.5
 
                     button:
                         action Call("accion_entrenar", "inteligencia")
-                        xsize 48 ysize 48
+                        xsize int(48 * _pe_k) ysize int(48 * _pe_k)
                         background "#388E3C"
                         hover_background "#81C784"
                         xalign 0.5
                         tooltip "Entrenar Inteligencia"
-                        at hud_train_hover
-                        text "🧠" size 22 xalign 0.5 yalign 0.5
+                        at hud_train_hover(_pe_k)
+                        text "🧠" size int(22 * _pe_k) xalign 0.5 yalign 0.5
 
-                    text "INT" size 10 color "#A5D6A7" bold True xalign 0.5
+                    text "INT" size int(10 * _pe_k) color "#A5D6A7" bold True xalign 0.5
 
                 # Separador vertical
                 frame:
-                    xsize 1
-                    ysize 40
+                    xsize int(1 * _pe_k)
+                    ysize int(40 * _pe_k)
                     yalign 0.5
                     background "#ffffff33"
 
                 # Botón Trabajar (circular)
                 vbox:
-                    spacing 4
+                    spacing int(4 * _pe_k)
                     xalign 0.5
 
                     button:
                         action Call("accion_trabajar")
-                        xsize 48 ysize 48
+                        xsize int(48 * _pe_k) ysize int(48 * _pe_k)
                         background "#795548"
                         hover_background "#A1887F"
                         xalign 0.5
                         tooltip "Trabajar (+$20)"
-                        at hud_train_hover
-                        text "💼" size 22 xalign 0.5 yalign 0.5
+                        at hud_train_hover(_pe_k)
+                        text "💼" size int(22 * _pe_k) xalign 0.5 yalign 0.5
 
-                    text "WORK" size 10 color "#BCAAA4" bold True xalign 0.5
+                    text "WORK" size int(10 * _pe_k) color "#BCAAA4" bold True xalign 0.5
 
 
 ################################################################################
@@ -376,9 +381,10 @@ screen panel_tienda():
     modal True
 
     $ _ajc = sistema_ajuste_cel.obtener_container("panel_tienda") if modo_ajuste_celular else None
+    $ _k = CEL_APP_ESCALA_SMALL if renpy.variant("small") else 1.0
 
     # Fondo del celular
-    add "images/hud/interfaz_celular.png" xalign 0.0 yalign 0.0
+    use _celular_fondo()
 
     # Click fuera del celular cierra todo
     use _celular_cerrar_exterior("panel_tienda")
@@ -396,45 +402,90 @@ screen panel_tienda():
             xfill True
 
             # Barra de estado
-            use _celular_barra_status()
+            use _celular_barra_status("panel_tienda")
 
             # Header de app con dinero
             frame:
                 xfill True
-                ysize 55
+                ysize int(55 * _k)
                 background "#12122aFF"
-                padding (10, 0)
+                padding (int(10 * _k), 0)
 
-                hbox:
-                    yalign 0.5
-                    xfill True
-                    spacing 10
+                if renpy.variant("small"):
+                    # Táctil: volver (izquierda), título centrado, dinero + cerrar (derecha)
+                    fixed:
+                        xfill True
+                        yfill True
 
-                    textbutton "◀":
-                        action [Hide("panel_tienda"), Show("menu_celular")]
-                        text_size 44
-                        text_color "#4FC3F7"
-                        text_hover_color "#81D4FA"
-                        yalign 0.5
-                        padding (8, 5)
+                        textbutton "◀":
+                            xalign 0.0
+                            yalign 0.5
+                            action [Hide("panel_tienda"), Show("menu_celular")]
+                            text_size int(44 * _k)
+                            text_color "#4FC3F7"
+                            text_hover_color "#81D4FA"
+                            padding (int(8 * _k), int(5 * _k))
 
+                        hbox:
+                            xalign 0.5
+                            yalign 0.5
+                            spacing int(8 * _k)
+                            text "🛒" size int(20 * _k) yalign 0.5
+                            text _("Tienda") size int(18 * _k) color "#ffffff" bold True yalign 0.5
+
+                        hbox:
+                            xalign 1.0
+                            yalign 0.5
+                            spacing int(14 * _k)
+
+                            hbox:
+                                spacing int(5 * _k)
+                                yalign 0.5
+                                text "💰" size int(16 * _k) yalign 0.5
+                                text "$[dinero]" size int(16 * _k) color "#4CAF50" bold True yalign 0.5
+
+                            button:
+                                yalign 0.5
+                                xysize (int(44 * _k), int(44 * _k))
+                                background "#E53935EE"
+                                hover_background "#FF5449"
+                                if modo_ajuste_celular:
+                                    action NullAction()
+                                else:
+                                    action [Hide("panel_tienda"), SetVariable("menu_celular_abierto", False), Hide("menu_celular"), Call("_validar_estado_tras_celular")]
+                                text "X" size int(24 * _k) color "#ffffff" bold True xalign 0.5 yalign 0.5
+
+                else:
                     hbox:
-                        spacing 8
                         yalign 0.5
-                        text "🛒" size 20 yalign 0.5
-                        text _("Tienda") size 18 color "#ffffff" bold True yalign 0.5
+                        xfill True
+                        spacing 10
 
-                    # Dinero a la derecha
-                    hbox:
-                        spacing 5
-                        xalign 1.0
-                        yalign 0.5
-                        text "💰" size 16 yalign 0.5
-                        text "$[dinero]" size 16 color "#4CAF50" bold True yalign 0.5
+                        textbutton "◀":
+                            action [Hide("panel_tienda"), Show("menu_celular")]
+                            text_size 44
+                            text_color "#4FC3F7"
+                            text_hover_color "#81D4FA"
+                            yalign 0.5
+                            padding (8, 5)
+
+                        hbox:
+                            spacing 8
+                            yalign 0.5
+                            text "🛒" size 20 yalign 0.5
+                            text _("Tienda") size 18 color "#ffffff" bold True yalign 0.5
+
+                        # Dinero a la derecha
+                        hbox:
+                            spacing 5
+                            xalign 1.0
+                            yalign 0.5
+                            text "💰" size 16 yalign 0.5
+                            text "$[dinero]" size 16 color "#4CAF50" bold True yalign 0.5
 
                 frame:
                     xfill True
-                    ysize 1
+                    ysize int(1 * _k)
                     yalign 1.0
                     background "#ffffff11"
 
@@ -442,9 +493,9 @@ screen panel_tienda():
             frame:
                 xfill True
                 background "#12122a88"
-                padding (15, 5)
+                padding (int(15 * _k), int(5 * _k))
                 $ dias_repo = obtener_dias_para_reposicion()
-                text _("📦 Reposición en [dias_repo] días") size 12 color "#888888" xalign 0.5
+                text _("📦 Reposición en [dias_repo] días") size int(12 * _k) color "#888888" xalign 0.5
 
             # Contenido scrollable
             viewport:
@@ -457,14 +508,14 @@ screen panel_tienda():
                 frame:
                     xfill True
                     background None
-                    padding (15, 10)
+                    padding (int(15 * _k), int(10 * _k))
 
                     vbox:
-                        spacing 15
+                        spacing int(15 * _k)
                         xfill True
 
                         # Grid de items
-                        text _("Productos") size 14 color "#4FC3F7" bold True
+                        text _("Productos") size int(14 * _k) color "#4FC3F7" bold True
 
                         for item_id, item_info in CATALOGO_ITEMS.items():
                             $ _item_visible_cond = item_info.get("condicion_visible")
@@ -476,37 +527,37 @@ screen panel_tienda():
                                     xfill True
                                     background "#1e1e3aCC"
                                     hover_background "#2a2a50CC"
-                                    padding (15, 10)
+                                    padding (int(15 * _k), int(10 * _k))
 
                                     hbox:
-                                        spacing 12
+                                        spacing int(12 * _k)
                                         yalign 0.5
                                         xfill True
 
-                                        text item_info["emoji"] size 32 yalign 0.5
+                                        text item_info["emoji"] size int(32 * _k) yalign 0.5
 
                                         vbox:
-                                            spacing 2
-                                            text renpy.translate_string(item_info["nombre"]) size 14 color "#ffffff" bold True
+                                            spacing int(2 * _k)
+                                            text renpy.translate_string(item_info["nombre"]) size int(14 * _k) color "#ffffff" bold True
                                             $ dias = item_info.get("dias_entrega", 1)
                                             if dias == 1:
-                                                text _("📦 Entrega en 1 día") size 11 color "#888888"
+                                                text _("📦 Entrega en 1 día") size int(11 * _k) color "#888888"
                                             else:
-                                                text _("📦 Entrega en [dias] días") size 11 color "#888888"
+                                                text _("📦 Entrega en [dias] días") size int(11 * _k) color "#888888"
                                             if agotado:
-                                                text _("AGOTADO") size 11 color "#FF4444" bold True
+                                                text _("AGOTADO") size int(11 * _k) color "#FF4444" bold True
                                             else:
-                                                text _("Stock: [item_stock]") size 11 color "#aaaaaa"
+                                                text _("Stock: [item_stock]") size int(11 * _k) color "#aaaaaa"
 
                                         vbox:
                                             xalign 1.0
                                             yalign 0.5
-                                            spacing 5
-                                            text "$[item_info['precio']]" size 16 color "#4CAF50" bold True xalign 1.0
+                                            spacing int(5 * _k)
+                                            text "$[item_info['precio']]" size int(16 * _k) color "#4CAF50" bold True xalign 1.0
                                             $ _sin_dinero = (not agotado and dinero < item_info["precio"])
                                             textbutton _("Comprar"):
-                                                text_size 12
-                                                padding (10, 4)
+                                                text_size int(12 * _k)
+                                                padding (int(10 * _k), int(4 * _k))
                                                 if agotado:
                                                     action Function(renpy.notify, renpy.translate_string("Producto sin stock"))
                                                     background "#666666"
@@ -523,35 +574,35 @@ screen panel_tienda():
                         # Separador
                         frame:
                             xfill True
-                            ysize 1
+                            ysize int(1 * _k)
                             background "#ffffff11"
 
                         # Órdenes pendientes
                         $ ordenes = obtener_ordenes_pendientes()
 
-                        text _("📋 Órdenes Pendientes") size 14 color "#4FC3F7" bold True
+                        text _("📋 Órdenes Pendientes") size int(14 * _k) color "#4FC3F7" bold True
 
                         if ordenes:
                             for orden in ordenes:
                                 frame:
                                     background "#1e1e3aCC"
-                                    padding (15, 10)
+                                    padding (int(15 * _k), int(10 * _k))
                                     xfill True
 
                                     hbox:
-                                        spacing 15
+                                        spacing int(15 * _k)
 
                                         vbox:
-                                            spacing 3
-                                            text _("Orden N°[orden.numero]") size 13 color "#ffffff" bold True
-                                            text orden.obtener_texto_dias() size 11 color "#4FC3F7"
+                                            spacing int(3 * _k)
+                                            text _("Orden N°[orden.numero]") size int(13 * _k) color "#ffffff" bold True
+                                            text orden.obtener_texto_dias() size int(11 * _k) color "#4FC3F7"
 
                                         vbox:
-                                            spacing 2
+                                            spacing int(2 * _k)
                                             for texto_item in orden.obtener_contenido_texto():
-                                                text texto_item size 11 color "#cccccc"
+                                                text texto_item size int(11 * _k) color "#cccccc"
                         else:
-                            text _("Sin órdenes pendientes") size 13 color "#888888"
+                            text _("Sin órdenes pendientes") size int(13 * _k) color "#888888"
 
 
 ################################################################################
@@ -664,11 +715,13 @@ label accion_entrenar(stat_id):
     # Verificar restricción de quest/evento
     $ _msg_restriccion = accion_bloqueada("entrenar")
     if _msg_restriccion:
+        $ _blk_guardar_toque()
         piensa "[_msg_restriccion]"
         return
-    
+
     # Verificar si es trasnoche
     if horario_actual == 3:
+        $ _blk_guardar_toque()
         piensa "Es muy tarde para entrenar."
         return
     
@@ -687,11 +740,13 @@ label accion_trabajar:
     # Verificar restricción de quest/evento
     $ _msg_restriccion = accion_bloqueada("trabajar")
     if _msg_restriccion:
+        $ _blk_guardar_toque()
         piensa "[_msg_restriccion]"
         return
-    
+
     # Verificar si es trasnoche
     if horario_actual == 3:
+        $ _blk_guardar_toque()
         piensa "Es muy tarde para trabajar."
         return
     

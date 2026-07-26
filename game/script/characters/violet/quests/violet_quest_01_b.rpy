@@ -13,7 +13,9 @@
 default violet_quest2n_paquete_abierto = False
 
 # Ruta elegida al entregar el paquete (para evitar exploit de rollback)
-default _ruta_vq01b = ""
+# Guardable (sin `_`): las temp `_` no se guardan y la rama se lee
+# despues de elegirla; ver E05. Antes era `vq01b_ruta`.
+default vq01b_ruta = ""
 
 
 ################################################################################
@@ -28,7 +30,7 @@ label usar_mangas_violet:
     # BG segun horario
     $ _horarios_bg_vq2n = ["tarde", "tarde", "noche", "noche"]
     $ _bg_h_vq2n = _horarios_bg_vq2n[horario_actual]
-    scene expression "images/bg/casa/bg_casa_" + _bg_h_vq2n + "_hmc.png" with fade
+    scene expression "images/bg/casa/bg_casa_" + _bg_h_vq2n + "_hmc.jpg" with fade
 
     # (Mc cuerpo regalo violet ojos abajo boca neutral)
     show mc_parado_base c_rbase_regaloviolet o_abajonm b_none at center with dissolve
@@ -228,9 +230,12 @@ label dar_paquete_quest02_violet_a:
     show violet_parada b_none
 
     # Remover item del inventario
-    $ del store.inventario["mangas_violet"]
+    # pop(..., None) en vez de del: borrado idempotente. Si por re-entrada /
+    # rollback / menú stale el item ya no estaba, `del` crasheaba con KeyError
+    # (E06). pop no-op si falta; el intento de "dar el paquete" es único igual.
+    $ store.inventario.pop("mangas_violet", None)
 
-    $ _ruta_vq01b = "a"
+    $ vq01b_ruta = "a"
 
     hide violet_parada with dissolve
 
@@ -374,9 +379,12 @@ label dar_paquete_quest02_violet_b1:
     show violet_parada b_none
 
     # Remover item del inventario
-    $ del store.inventario["mangas_violet"]
+    # pop(..., None) en vez de del: borrado idempotente. Si por re-entrada /
+    # rollback / menú stale el item ya no estaba, `del` crasheaba con KeyError
+    # (E06). pop no-op si falta; el intento de "dar el paquete" es único igual.
+    $ store.inventario.pop("mangas_violet", None)
 
-    $ _ruta_vq01b = "b1"
+    $ vq01b_ruta = "b1"
 
     hide violet_parada with dissolve
 
@@ -509,9 +517,12 @@ label dar_paquete_quest02_violet_b2:
     show violet_parada b_none
 
     # Remover item del inventario
-    $ del store.inventario["mangas_violet"]
+    # pop(..., None) en vez de del: borrado idempotente. Si por re-entrada /
+    # rollback / menú stale el item ya no estaba, `del` crasheaba con KeyError
+    # (E06). pop no-op si falta; el intento de "dar el paquete" es único igual.
+    $ store.inventario.pop("mangas_violet", None)
 
-    $ _ruta_vq01b = "b2"
+    $ vq01b_ruta = "b2"
 
     hide violet_parada with dissolve
 
@@ -533,12 +544,12 @@ label dar_paquete_quest02_violet_b2:
 
 label dar_paquete_violet_cierre:
 
-    if _ruta_vq01b == "a":
+    if vq01b_ruta == "a":
         $ obtener_npc("violet").modificar_stat1(4)
-    elif _ruta_vq01b == "b1":
+    elif vq01b_ruta == "b1":
         $ obtener_npc("violet").modificar_stat1(2)
         $ obtener_npc("violet").modificar_stat2(1)
-    elif _ruta_vq01b == "b2":
+    elif vq01b_ruta == "b2":
         $ obtener_npc("violet").modificar_stat2(2)
 
     # Completar quest

@@ -7,13 +7,13 @@
 layeredimage quest06:
     group cierre:
         attribute uno default:
-            "images/quest/violet/quest06/quest06_1.png"
+            "images/quest/violet/quest06/quest06_1.webp"
         attribute dos:
-            "images/quest/violet/quest06/quest06_2.png"
+            "images/quest/violet/quest06/quest06_2.webp"
         attribute tres:
-            "images/quest/violet/quest06/quest06_3.png"
+            "images/quest/violet/quest06/quest06_3.webp"
         attribute roto:
-            "images/quest/violet/quest06/quest06_roto.png"
+            "images/quest/violet/quest06/quest06_roto.webp"
 
 default violet_06b_eleccion = None
 

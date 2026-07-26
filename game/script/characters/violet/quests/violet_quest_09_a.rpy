@@ -13,6 +13,24 @@ default violet_9a_piensa_mostrado   = False
 default violet_9a_enfermedad_dia    = 0
 default violet_enferma_atencion     = 0
 
+init python:
+
+    # Pedidos posibles de Violet enferma. El valor se guarda en el save y se usa
+    # como CLAVE de comparacion en varios labels y en interactions_monica, asi que
+    # violet_9a_pedido_actual SIEMPRE queda en español: se traduce solo al mostrarlo.
+    VQ9A_PEDIDOS = [
+        "Quiero algo de comer",
+        "Necesito tomar el medicamento",
+        "Un poco de agua",
+        "Dile a Monica que venga",
+        "Tráeme una toalla",
+    ]
+
+    def vq9a_pedido_texto():
+        """Texto traducido del pedido actual (para mostrar, nunca para comparar)."""
+        pedido = getattr(store, 'violet_9a_pedido_actual', None)
+        return renpy.translate_string(pedido) if pedido else ""
+
 ################################################################################
 ## LABELS
 ################################################################################
@@ -123,16 +141,10 @@ label violet_quest09a_interaccion:
                 violet "Está bien por ahora."
                 show violet_parada b_none
             else:
-                $ _pedidos_vq9 = [
-                    "Quiero algo de comer",
-                    "Necesito tomar el medicamento",
-                    "Un poco de agua",
-                    "Dile a Monica que venga",
-                    "Tráeme una toalla",
-                ]
-                $ store.violet_9a_pedido_actual = renpy.random.choice(_pedidos_vq9)
+                $ store.violet_9a_pedido_actual = renpy.random.choice(VQ9A_PEDIDOS)
+                $ _pedido_vq9_txt = vq9a_pedido_texto()
                 show violet_parada b_hablandochica
-                violet "[store.violet_9a_pedido_actual]."
+                violet "[_pedido_vq9_txt]."
                 show violet_parada b_none
         "Volver":
             pass
@@ -222,10 +234,11 @@ label violet_quest09a_jasmine_preguntar:
 
 label accion_violet_heladera:
     $ _pedido_h = getattr(store, 'violet_9a_pedido_actual', None)
+    $ _pedido_h_txt = vq9a_pedido_texto()
     $ ocultar_hud()
     window show
     if _pedido_h != "Quiero algo de comer":
-        piensa "Violet me pidió [_pedido_h]."
+        piensa "Violet me pidió [_pedido_h_txt]."
     elif getattr(store, 'violet_9a_tiene_entregable', False):
         piensa "Ya tengo lo que necesito, hay que llevárselo a Violet."
     else:
@@ -238,10 +251,11 @@ label accion_violet_heladera:
 
 label accion_violet_agua:
     $ _pedido_a = getattr(store, 'violet_9a_pedido_actual', None)
+    $ _pedido_a_txt = vq9a_pedido_texto()
     $ ocultar_hud()
     window show
     if _pedido_a != "Un poco de agua":
-        piensa "Violet me pidió [_pedido_a]."
+        piensa "Violet me pidió [_pedido_a_txt]."
     elif getattr(store, 'violet_9a_tiene_entregable', False):
         piensa "Ya tengo lo que necesito, hay que llevárselo a Violet."
     else:
@@ -254,10 +268,11 @@ label accion_violet_agua:
 
 label accion_violet_medicina:
     $ _pedido_m = getattr(store, 'violet_9a_pedido_actual', None)
+    $ _pedido_m_txt = vq9a_pedido_texto()
     $ ocultar_hud()
     window show
     if _pedido_m != "Necesito tomar el medicamento":
-        piensa "Violet me pidió [_pedido_m]."
+        piensa "Violet me pidió [_pedido_m_txt]."
     elif getattr(store, 'violet_9a_tiene_entregable', False):
         piensa "Ya tengo lo que necesito, hay que llevárselo a Violet."
     else:
@@ -270,10 +285,11 @@ label accion_violet_medicina:
 
 label accion_violet_toalla:
     $ _pedido_t = getattr(store, 'violet_9a_pedido_actual', None)
+    $ _pedido_t_txt = vq9a_pedido_texto()
     $ ocultar_hud()
     window show
     if _pedido_t != "Tráeme una toalla":
-        piensa "Violet me pidió [_pedido_t]."
+        piensa "Violet me pidió [_pedido_t_txt]."
     elif getattr(store, 'violet_9a_tiene_entregable', False):
         piensa "Ya tengo lo que necesito, hay que llevárselo a Violet."
     else:

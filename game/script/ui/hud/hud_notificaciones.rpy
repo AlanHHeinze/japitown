@@ -104,13 +104,13 @@ init python:
 ################################################################################
 
 # Entrada: slide desde la derecha + fade in, luego fade out al final
-transform notif_stat_aparecer(delay=0.0):
+transform notif_stat_aparecer(delay=0.0, k=1.0):
     on show:
-        alpha 0.0 xoffset 30
+        alpha 0.0 xoffset int(30 * k)
         pause delay
         easein 0.3 alpha 1.0 xoffset 0
         pause (_NOTIF_DURACION - 0.6)
-        easeout 0.3 alpha 0.0 xoffset 30
+        easeout 0.3 alpha 0.0 xoffset int(30 * k)
 
 
 ################################################################################
@@ -122,31 +122,32 @@ screen notificaciones_stats():
     layer "overlay"
 
     $ _notifs_actuales = [n for n in _notificaciones_stats if _time_module.time() - n["timestamp"] < _NOTIF_DURACION]
+    $ _notif_k = 2.0 if renpy.variant("small") else 1.0
 
     if _notifs_actuales:
         vbox:
             xalign 1.0
-            ypos 120
-            spacing 10
+            ypos int(120 * _notif_k)
+            spacing int(10 * _notif_k)
 
             for _notif in _notifs_actuales:
                 frame:
                     id "notif_" + _notif["id_str"]
                     background "#00000099"
-                    padding (18, 9, 24, 9)
-                    at notif_stat_aparecer(_notif["delay"])
+                    padding (int(18 * _notif_k), int(9 * _notif_k), int(24 * _notif_k), int(9 * _notif_k))
+                    at notif_stat_aparecer(_notif["delay"], _notif_k)
 
                     hbox:
-                        spacing 12
+                        spacing int(12 * _notif_k)
                         yalign 0.5
 
-                        text _notif["icono"] size 33 yalign 0.5
+                        text _notif["icono"] size int(33 * _notif_k) yalign 0.5
                         text _notif["texto"]:
-                            size 30
+                            size int(30 * _notif_k)
                             color _notif["color"]
                             bold True
                             yalign 0.5
-                            outlines [(1, "#000000", 0, 0)]
+                            outlines [(int(1 * _notif_k), "#000000", 0, 0)]
 
 
 ################################################################################
@@ -189,25 +190,37 @@ init python:
         if len(store._notificaciones_recuerdos) > 3:
             store._notificaciones_recuerdos.pop(0)
 
+    def _nombre_item_traducido(item_id):
+        """
+        Nombre visible del item, traducido.
+        El texto de la notificacion se arma con emoji y signo, asi que hay que
+        traducir el NOMBRE por separado: el string ya compuesto nunca matchearia
+        un `old`. Los nombres viven en tl/english/script/core/shopping/shopping_strings.rpy.
+        """
+        info = CATALOGO_ITEMS.get(item_id, {})
+        return renpy.translate_string(info.get("nombre", item_id))
+
     def notificar_item_obtenido(item_id):
         """
         Muestra '{emoji_item} + Nombre del Item' a la izquierda.
             $ notificar_item_obtenido("golosinas")
         """
-        info   = CATALOGO_ITEMS.get(item_id, {})
-        nombre = info.get("nombre", item_id)
-        emoji  = info.get("emoji", "📦")
-        _agregar_notif_recuerdo("{} + {}".format(emoji, nombre), color="#ffffff")
+        emoji = CATALOGO_ITEMS.get(item_id, {}).get("emoji", "📦")
+        _agregar_notif_recuerdo(
+            "{} + {}".format(emoji, _nombre_item_traducido(item_id)),
+            color="#ffffff",
+        )
 
     def notificar_item_perdido(item_id):
         """
         Muestra '{emoji_item} - Nombre del Item' en rojo a la izquierda.
             $ notificar_item_perdido("golosinas")
         """
-        info   = CATALOGO_ITEMS.get(item_id, {})
-        nombre = info.get("nombre", item_id)
-        emoji  = info.get("emoji", "📦")
-        _agregar_notif_recuerdo("{} - {}".format(emoji, nombre), color="#FF4444")
+        emoji = CATALOGO_ITEMS.get(item_id, {}).get("emoji", "📦")
+        _agregar_notif_recuerdo(
+            "{} - {}".format(emoji, _nombre_item_traducido(item_id)),
+            color="#FF4444",
+        )
 
     def agregar_al_inventario(item_id, cantidad=1):
         """
@@ -237,7 +250,7 @@ init python:
         Muestra "Recuerdo activado" a la izquierda.
             $ notificar_recuerdo_activado()
         """
-        _agregar_notif_recuerdo("Recuerdo activado")
+        _agregar_notif_recuerdo(renpy.translate_string("Recuerdo activado"))
 
     def notificar_recordara(npc_id):
         """
@@ -249,7 +262,9 @@ init python:
         """
         npc = obtener_npc(npc_id) if hasattr(store, 'sistema_npcs') else None
         nombre = npc.nombre if npc else npc_id.capitalize()
-        _agregar_notif_recuerdo("{} recordará esto".format(nombre))
+        # El nombre del NPC es propio (no se traduce), pero la frase si: se traduce
+        # el template y el nombre entra por .format. El `new` debe conservar el {}.
+        _agregar_notif_recuerdo(renpy.translate_string("{} recordará esto").format(nombre))
 
     def _limpiar_notificaciones_recuerdos_expiradas():
         """Remueve notificaciones de recuerdos que ya expiraron."""
@@ -261,13 +276,13 @@ init python:
 
 
 # Entrada: slide desde la izquierda + fade in, luego fade out a la izquierda
-transform notif_recuerdo_aparecer(delay=0.0):
+transform notif_recuerdo_aparecer(delay=0.0, k=1.0):
     on show:
-        alpha 0.0 xoffset -30
+        alpha 0.0 xoffset int(-30 * k)
         pause delay
         easein 0.3 alpha 1.0 xoffset 0
         pause (_NOTIF_RECUERDO_DURACION - 0.6)
-        easeout 0.3 alpha 0.0 xoffset -30
+        easeout 0.3 alpha 0.0 xoffset int(-30 * k)
 
 
 screen notificaciones_recuerdos():
@@ -281,22 +296,24 @@ screen notificaciones_recuerdos():
             if _t.time() - n["timestamp"] < _NOTIF_RECUERDO_DURACION
         ]
 
+    $ _notif_r_k = 2.0 if renpy.variant("small") else 1.0
+
     if _notifs_recuerdos_act:
         vbox:
             xalign 0.0
-            ypos 120
-            spacing 10
+            ypos int(120 * _notif_r_k)
+            spacing int(10 * _notif_r_k)
 
             for _nr in _notifs_recuerdos_act:
                 frame:
                     id "notif_" + _nr["id_str"]
                     background "#00000099"
-                    padding (24, 9, 18, 9)
-                    at notif_recuerdo_aparecer(_nr["delay"])
+                    padding (int(24 * _notif_r_k), int(9 * _notif_r_k), int(18 * _notif_r_k), int(9 * _notif_r_k))
+                    at notif_recuerdo_aparecer(_nr["delay"], _notif_r_k)
 
                     text _nr["texto"]:
-                        size 30
+                        size int(30 * _notif_r_k)
                         color _nr.get("color", "#ffffff")
                         bold True
                         yalign 0.5
-                        outlines [(1, "#000000", 0, 0)]
+                        outlines [(int(1 * _notif_r_k), "#000000", 0, 0)]

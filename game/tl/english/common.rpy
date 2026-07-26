@@ -308,15 +308,15 @@ translate english strings:
 
     # renpy/common/00action_file.rpy:258
     old "%b %d, %H:%M"
-    new ""
+    new "%b %d, %H:%M"
 
     # renpy/common/00action_file.rpy:395
     old "Save slot %s: [text]"
-    new ""
+    new "Save slot %s: [text]"
 
     # renpy/common/00action_file.rpy:481
     old "Load slot %s: [text]"
-    new ""
+    new "Load slot %s: [text]"
 
     # renpy/common/00action_file.rpy:534
     old "Delete slot [text]"
@@ -548,11 +548,11 @@ translate english strings:
 
     # renpy/common/00keymap.rpy:325
     old "Failed to save screenshot as %s."
-    new ""
+    new "Failed to save screenshot as %s."
 
     # renpy/common/00keymap.rpy:346
     old "Saved screenshot as %s."
-    new ""
+    new "Saved screenshot as %s."
 
     # renpy/common/00library.rpy:257
     old "Skip Mode"

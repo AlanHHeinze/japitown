@@ -11,8 +11,8 @@
 ##   "sale_pasillo"    — al golpear, NPC dice "Ahi salgo" y va al pasillo   (stat1)
 ##   None              — respuesta negativa ("Estoy ocupada") — sin requisito
 ##
-## Para el BAÑO las opciones "espiar" y "entrar" estan reservadas pero
-## desactivadas (verificar_nivel_acceso_banio siempre retorna None).
+## El BAÑO no usa este sistema: "Espiar" es el minijuego de core/espiar/
+## (espiar_system.rpy) y "Entrar" sigue en desarrollo.
 
 ################################################################################
 ## TABLA DE ACCESO A HABITACIONES
@@ -51,28 +51,6 @@ define TABLA_ACCESO_HABITACION = {
 
 
 ################################################################################
-## TABLA DE ACCESO AL BAÑO
-################################################################################
-## Reservada para cuando se habilite el contenido.
-## verificar_nivel_acceso_banio() siempre retorna None hasta entonces.
-
-define TABLA_ACCESO_BANIO = {
-    "violet":  {
-        "espiar": {"stat": "stat2", "umbral": 40},   # Deseo 40+ → espiar
-        "entrar": {"stat": "stat2", "umbral": 60},   # Deseo 60+ → entrar
-    },
-    "jasmine": {
-        "espiar": {"stat": "stat2", "umbral": 40},
-        "entrar": {"stat": "stat2", "umbral": 60},
-    },
-    "monica":  {
-        "espiar": {"stat": "stat2", "umbral": 40},
-        "entrar": {"stat": "stat2", "umbral": 60},
-    },
-}
-
-
-################################################################################
 ## MENSAJES DE RESPUESTA POR NPC
 ################################################################################
 ## Textos que dice cada NPC al responder en la puerta.
@@ -95,6 +73,30 @@ define MENSAJES_NPC_PUERTA = {
         "adelante":  "Adelante.",
     },
 }
+
+# Fallback si un NPC no tiene la clave definida arriba
+define MENSAJES_PUERTA_DEFAULT = {
+    "ocupada":   "Estoy ocupada.",
+    "ahi_salgo": "Ahí salgo.",
+    "adelante":  "Adelante.",
+}
+
+
+init python:
+
+    def mensaje_puerta_npc(npc_id, clave):
+        """
+        Respuesta TRADUCIDA del NPC en la puerta ("ocupada" / "ahi_salgo" / "adelante").
+
+        Los mensajes se muestran por interpolacion (violet "[_msg]"), y la
+        interpolacion NO traduce: hay que hacerlo aca. Centralizado a proposito —
+        antes cada label lo resolvia por su cuenta y solo uno de los cuatro
+        llamaba a translate_string, asi que tres salian siempre en español.
+        """
+        msg = MENSAJES_NPC_PUERTA.get(npc_id, {}).get(
+            clave, MENSAJES_PUERTA_DEFAULT.get(clave, "")
+        )
+        return renpy.translate_string(msg) if msg else ""
 
 
 ################################################################################
@@ -155,25 +157,3 @@ init python:
 
         return None
 
-    def verificar_nivel_acceso_banio(npc_id):
-        """
-        Retorna el nivel de acceso al baño cuando el NPC está dentro.
-        Actualmente desactivado — siempre retorna None.
-
-        Para habilitar cuando el contenido esté listo, descomentar el bloque
-        y usar TABLA_ACCESO_BANIO para calcular el nivel.
-
-        Returns:
-            None  (siempre, por ahora)
-        """
-        # TODO: Habilitar cuando el contenido de baño esté listo.
-        # tabla = TABLA_ACCESO_BANIO.get(npc_id)
-        # if not tabla:
-        #     return None
-        # conf = tabla.get("entrar")
-        # if conf and _stat_acceso_npc(npc_id, conf) >= conf["umbral"]:
-        #     return "entrar"
-        # conf = tabla.get("espiar")
-        # if conf and _stat_acceso_npc(npc_id, conf) >= conf["umbral"]:
-        #     return "espiar"
-        return None

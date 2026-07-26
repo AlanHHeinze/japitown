@@ -50,19 +50,19 @@ define _IDLE_MOV_IMGS = {
     "casa_cocina_casa_comedor":            "images/bg/casa/idle_movimiento/idle_cocina_comedor.png",
     "casa_comedor_casa_patio":             "images/bg/casa/idle_movimiento/idle_comedor_patio.png",
     "casa_patio_casa_gym":                 "images/bg/casa/idle_movimiento/idle_patio_gym.png",
-    "casa_pasilloabajo_casa_banioabajo":   "images/bg/casa/idle_movimiento/idle_pasilloabajo_bañoabajo.png",
+    "casa_pasilloabajo_casa_banioabajo":   "images/bg/casa/idle_movimiento/idle_pasilloabajo_banioabajo.png",
     "casa_pasilloabajo_casa_hmonica":      "images/bg/casa/idle_movimiento/idle_pasilloabajo_hmonica.png",
     "casa_pasilloabajo_casa_cocina":       "images/bg/casa/idle_movimiento/idle_pasilloabajo_cocina.png",
     "casa_pasilloarriba_casa_living":      "images/bg/casa/idle_movimiento/idle_pasilloarriba_living.png",
     "casa_pasilloarriba_casa_hmc":         "images/bg/casa/idle_movimiento/idle_pasilloarriba_hmc.png",
-    "casa_pasilloarriba_casa_banioarriba": "images/bg/casa/idle_movimiento/idle_pasilloarriba_bañoarriba.png",
+    "casa_pasilloarriba_casa_banioarriba": "images/bg/casa/idle_movimiento/idle_pasilloarriba_banioarriba.png",
     "casa_pasilloarriba_casa_hviolet":     "images/bg/casa/idle_movimiento/idle_pasilloarriba_violet.png",
     "casa_pasilloarriba_casa_hjasmine":    "images/bg/casa/idle_movimiento/idle_pasilloarriba_hjasmine.png",
     "casa_gym_casa_patio":                 "images/bg/casa/idle_movimiento/idle_gym_patio.png",
     "casa_sotano_casa_garage":             "images/bg/casa/idle_movimiento/idle_sotano_garage.png",
     "casa_altillo_casa_pasilloarriba":     "images/bg/casa/idle_movimiento/idle_altillo_pasilloarriba.png",
     "casa_garage_casa_frente":             "images/bg/casa/idle_movimiento/idle_garage_frente.png",
-    "casa_hmonica_casa_baniomonica":       "images/bg/casa/idle_movimiento/idle_hmonica_bañomonica.png",
+    "casa_hmonica_casa_baniomonica":       "images/bg/casa/idle_movimiento/idle_hmonica_baniomonica.png",
 }
 
 # Hotspots sin imagen propia → flecha centrada en el área al hacer hover
@@ -105,6 +105,10 @@ init python:
 ## Transforms de animación para el HUD
 ################################################################################
 
+# Cuanto se agranda el HUD superior en pantalla chica (variante `small`).
+# Es el unico numero a tocar para ajustar el tamaño del HUD en celular.
+define HUD_ESCALA_SMALL = 2.0
+
 # Hexágonos (dia, estación): Escalan sutilmente al hover
 transform hud_hex_hover:
     zoom 0.75
@@ -114,22 +118,27 @@ transform hud_hex_hover:
         ease 0.3 zoom 0.80
 
 # Botón de horario (centro): escala sutil al hover
-transform hud_horario_hover:
-    zoom 0.75 alpha 1.0
+# Los transforms del HUD reciben la escala `k` (1.0 en PC, HUD_ESCALA_SMALL en
+# celular) y la multiplican por su zoom base. Se hace asi —y no apilando un
+# segundo `at` con zoom— porque estos transforms YA controlan el zoom en sus
+# estados idle/hover: dos zooms encadenados se multiplicarian y las animaciones
+# de hover quedarian descalibradas.
+transform hud_horario_hover(k=1.0):
+    zoom (0.75 * k) alpha 1.0
     on idle:
-        ease 0.2 zoom 0.75 alpha 1.0
+        ease 0.2 zoom (0.75 * k) alpha 1.0
     on hover:
-        ease 0.2 zoom 0.80 alpha 1.0
+        ease 0.2 zoom (0.80 * k) alpha 1.0
     on insensitive:
-        ease 0.2 alpha 0.6 zoom 0.75
+        ease 0.2 alpha 0.6 zoom (0.75 * k)
 
 # Botones de accion (cama, mochila, celu, mapa): suben al hover
-transform hud_action_hover:
-    zoom 0.75 yoffset 0
+transform hud_action_hover(k=1.0):
+    zoom (0.75 * k) yoffset 0
     on idle:
-        ease 0.2 yoffset 0 zoom 0.75
+        ease 0.2 yoffset 0 zoom (0.75 * k)
     on hover:
-        ease 0.2 yoffset -6 zoom 0.78
+        ease 0.2 yoffset (-6 * k) zoom (0.78 * k)
 
 # Badge de notificaciones: bounce infinito
 transform hud_badge_bounce:
@@ -146,12 +155,12 @@ transform hud_panel_fadein:
     easein 0.4 alpha 1.0 yoffset 0
 
 # Botones de entrenamiento: suben al hover
-transform hud_train_hover:
+transform hud_train_hover(k=1.0):
     yoffset 0
     on idle:
         ease 0.15 yoffset 0
     on hover:
-        ease 0.15 yoffset -4
+        ease 0.15 yoffset (-4 * k)
 
 
 default _hud_horario_hover = False
@@ -159,9 +168,16 @@ default _hud_estacion_hover = False
 
 screen hud_navegacion():
     """HUD que se muestra durante la navegación por locaciones"""
-    
+
     # Ocultar el cuadro de diálogo de Ren'Py
     $ renpy.hide_screen("say")
+
+    # Escala del HUD superior. En celular los iconos de 96 px son casi
+    # intocables, asi que se agrandan; en PC/tablet queda 1.0 (sin cambios).
+    # NO hay un contenedor unico que escale a todos: cada bloque esta anclado a
+    # un borde distinto con offsets en px, asi que la escala se aplica al tamaño
+    # Y a los offsets de cada uno (si no, crecerian pero quedarian superpuestos).
+    $ _hud_k = HUD_ESCALA_SMALL if renpy.variant("small") else 1.0
 
 
 
@@ -172,25 +188,35 @@ screen hud_navegacion():
     # CENTRO SUPERIOR - Icono de horario (click para avanzar)
     # =========================================================================
     $ _horario_imgs = {
-        0: "images/hud/horario_mañana.png",
+        0: "images/hud/horario_manana.png",
         1: "images/hud/horario_tarde.png",
         2: "images/hud/horario_noche.png",
         3: "images/hud/horario_trasnoche.png"
     }
-    $ _horario_img = _horario_imgs.get(horario_actual, "images/hud/horario_mañana.png")
+    $ _horario_img = _horario_imgs.get(horario_actual, "images/hud/horario_manana.png")
     $ _horario_img_next = _horario_imgs.get(horario_actual + 1, _horario_img)
     $ _horario_nombres = ["Mañana", "Tarde", "Noche", "Trasnoche"]
     $ _horario_texto_actual = renpy.translate_string(_horario_nombres[horario_actual]) if horario_actual < len(_horario_nombres) else ""
     $ _horario_texto_next = renpy.translate_string(_horario_nombres[horario_actual + 1]) if horario_actual + 1 < len(_horario_nombres) else _horario_texto_actual
     fixed:
-        xalign 0.5
+        # En pantalla chica el HUD se agranda y centrado en pantalla (xalign 0.5)
+        # el horario invade al botón cama (movimiento rápido): cama queda con su
+        # borde izquierdo en 1920 - 344*k - 96*k (offset -344 + su propio ancho
+        # 96, ambos escalados). En small se centra a mitad de camino entre el
+        # borde derecho del ícono "día actual" (izquierda, ancho ~96*k) y ese
+        # borde de cama, en vez de en el centro de la pantalla.
+        if renpy.variant("small"):
+            xpos int(((96 * _hud_k) + (1920 - 440 * _hud_k)) / 2) + int(60 * _hud_k)
+            xanchor 0.5
+        else:
+            xalign 0.5
         yalign 0.0
-        yoffset 5
-        xsize 96
-        ysize 96
+        yoffset int(5 * _hud_k)
+        xsize int(96 * _hud_k)
+        ysize int(96 * _hud_k)
 
         button:
-            xysize (96, 96)
+            xysize (int(96 * _hud_k), int(96 * _hud_k))
             xalign 0.5
             yalign 0.5
             action Call("accion_avanzar_tiempo")
@@ -198,27 +224,31 @@ screen hud_navegacion():
                 sensitive False
             hovered SetVariable("_hud_horario_hover", True)
             unhovered SetVariable("_hud_horario_hover", False)
-            at hud_horario_hover
+            at hud_horario_hover(_hud_k)
 
             fixed:
-                xysize (96, 96)
+                xysize (int(96 * _hud_k), int(96 * _hud_k))
                 # Icono idle o siguiente en hover
                 if not _hud_horario_hover:
                     add _horario_img xalign 0.5 yalign 0.5
                 else:
                     add _horario_img_next xalign 0.5 yalign 0.5
 
-                # Texto del horario centrado sobre el icono
+                # Texto del horario centrado sobre el icono. En pantalla chica
+                # el texto interior se reduce un 30% respecto al resto del HUD
+                # (que ya escala con _hud_k), para que no compita tanto con el
+                # ícono.
+                $ _horario_texto_k = _hud_k * (0.7 if renpy.variant("small") else 1.0)
                 frame:
                     xalign 0.5
-                    xoffset -5
+                    xoffset int(-5 * _hud_k)
                     yalign 0.5
                     background None
                     padding (0, 0)
                     if not _hud_horario_hover:
-                        text _horario_texto_actual size 26 color "#ffffff" bold True xalign 0.5 outlines [(2, "#000000", 0, 0)] font "fonts/neotoxic-neotoxic-regular-400.otf"
+                        text _horario_texto_actual size int(26 * _horario_texto_k) color "#ffffff" bold True xalign 0.5 outlines [(2, "#000000", 0, 0)] font "fonts/neotoxic-neotoxic-regular-400.otf"
                     else:
-                        text _horario_texto_next size 26 color "#ffffff" bold True xalign 0.5 outlines [(2, "#000000", 0, 0)] font "fonts/neotoxic-neotoxic-regular-400.otf"
+                        text _horario_texto_next size int(26 * _horario_texto_k) color "#ffffff" bold True xalign 0.5 outlines [(2, "#000000", 0, 0)] font "fonts/neotoxic-neotoxic-regular-400.otf"
 
 
     # =========================================================================
@@ -231,10 +261,10 @@ screen hud_navegacion():
     fixed:
         xalign 0.0
         yalign 0.0
-        yoffset 10
+        yoffset int(10 * _hud_k)
         fit_first True
 
-        add "images/hud/dia_actual.png" zoom 0.65 xalign 0.5 yalign 0.5
+        add "images/hud/dia_actual.png" zoom (0.65 * _hud_k) xalign 0.5 yalign 0.5
 
         frame:
             xalign 0.5
@@ -245,7 +275,7 @@ screen hud_navegacion():
             text _dia_nombre:
                 xalign 0.5
                 font "fonts/neotoxic-neotoxic-regular-400.otf"
-                size 39
+                size int(39 * _hud_k)
                 color "#0e77fe"
                 outlines [(2, "#000000", 0, 0)]
     
@@ -256,14 +286,14 @@ screen hud_navegacion():
     # Imágenes originales: 128x128px, zoom 0.75 = 96x96px. Spacing: 12px
     # Posiciones desde la derecha: mapa(0), celu(108), mochila(216), cama(324)
 
-    # Cama - Ir a mi habitacion
+    # Cama - Viaje rápido: despliega las sublocaciones de la locación madre actual
     imagebutton:
         idle "images/hud/cama_base.png"
         hover "images/hud/cama_hover.png"
-        action [SetVariable("_locacion_temp", "casa_hmc"), Call("accion_ir_a_locacion")]
+        action ToggleScreen("menu_viaje_rapido")
         xalign 1.0 yalign 0.0
-        xoffset -344 yoffset 10
-        at hud_action_hover
+        xoffset int(-344 * _hud_k) yoffset int(10 * _hud_k)
+        at hud_action_hover(_hud_k)
 
     # Mochila - Inventario
     imagebutton:
@@ -271,14 +301,14 @@ screen hud_navegacion():
         hover "images/hud/mochila_hover.png"
         action Show("panel_inventario")
         xalign 1.0 yalign 0.0
-        xoffset -236 yoffset 10
-        at hud_action_hover
+        xoffset int(-236 * _hud_k) yoffset int(10 * _hud_k)
+        at hud_action_hover(_hud_k)
 
     # Celular - Menú del celular (con badge de mensajes)
     fixed:
         xalign 1.0 yalign 0.0
-        xoffset -128 yoffset 10
-        xsize 96 ysize 96
+        xoffset int(-128 * _hud_k) yoffset int(10 * _hud_k)
+        xsize int(96 * _hud_k) ysize int(96 * _hud_k)
 
         imagebutton:
             if celular_esta_bloqueado():
@@ -287,20 +317,20 @@ screen hud_navegacion():
                 action [SetVariable("menu_celular_abierto", True), Show("menu_celular")]
             idle "images/hud/celu_base.png"
             hover "images/hud/celu_hover.png"
-            at hud_action_hover
+            at hud_action_hover(_hud_k)
 
         $ _total_msg_sin_leer = sistema_mensajes.obtener_pendientes_total()
         if _total_msg_sin_leer > 0:
             frame:
                 xalign 1.0
                 yalign 0.0
-                xoffset -4
-                yoffset 6
+                xoffset int(-4 * _hud_k)
+                yoffset int(6 * _hud_k)
                 background "#FF4444"
-                xsize 32 ysize 32
+                xsize int(32 * _hud_k) ysize int(32 * _hud_k)
                 padding (0, 0)
                 at hud_badge_bounce
-                text "[_total_msg_sin_leer]" size 20 color "#ffffff" bold True xalign 0.5 yalign 0.5
+                text "[_total_msg_sin_leer]" size int(20 * _hud_k) color "#ffffff" bold True xalign 0.5 yalign 0.5
 
     # Mapa - Contenido en desarrollo
     imagebutton:
@@ -308,8 +338,8 @@ screen hud_navegacion():
         hover "images/hud/mapa_hover.png"
         action Call("narrar_mensaje", "Contenido en desarrollo")
         xalign 1.0 yalign 0.0
-        xoffset -20 yoffset 10
-        at hud_action_hover
+        xoffset int(-20 * _hud_k) yoffset int(10 * _hud_k)
+        at hud_action_hover(_hud_k)
     
     # =========================================================================
     # PANEL DEBUG UNIFICADO (inferior izquierdo) - Solo visible cuando debug activo
@@ -1013,7 +1043,7 @@ screen navegacion_locaciones_con_hud():
                 $ _cajas = sistema_pos.obtener("mc_q0_cajas_intro")
                 $ _cajas_x = _cajas.x if _cajas else 629
                 $ _cajas_y = _cajas.y if _cajas else 422
-                add "images/quest/mc/quest0/idle_cajas_intro.png" xpos _cajas_x ypos _cajas_y xanchor 0.0 yanchor 0.0
+                add "images/quest/mc/quest0/idle_cajas_intro.webp" xpos _cajas_x ypos _cajas_y xanchor 0.0 yanchor 0.0
 
         # Paquete en la habitacion del MC (entrega perdida)
         if paquete_en_habitacion and sistema_locaciones.locacion_actual.id == "casa_hmc":
@@ -1137,10 +1167,26 @@ label mostrar_mensaje_restriccion(texto):
     return
 
 ################################################################################
+## Fix táctil: mensajes de bloqueo que se cierran solos en celular
+################################################################################
+## En pantalla táctil, un solo toque puede generar un evento de mouse extra
+## que llega justo cuando se abre el diálogo (el mismo bind "mouseup_1" que
+## dispara el botón es el que usa Ren'Py para cerrar el cuadro de texto).
+## Como estos mensajes son de una sola línea, ese evento sobrante los cierra
+## al instante. after_longpress() es el mecanismo que el propio Ren'Py usa
+## para tragarse ese evento sobrante (ver renpy/display/core.py); en PC
+## renpy.variant("touch") es False y esta función no hace nada.
+init python:
+    def _blk_guardar_toque():
+        if renpy.variant("touch"):
+            renpy.game.interface.after_longpress()
+
+################################################################################
 ## Label helper: pensar un mensaje (usa piensa)
 ################################################################################
 
 label pensar_mensaje(msg):
+    $ _blk_guardar_toque()
     $ msg = renpy.translate_string(msg)
     piensa "[msg]"
     return
@@ -1150,6 +1196,7 @@ label pensar_mensaje(msg):
 ################################################################################
 
 label narrar_mensaje(msg):
+    $ _blk_guardar_toque()
     $ msg = renpy.translate_string(msg)
     "[msg]"
     return

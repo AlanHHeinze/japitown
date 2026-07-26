@@ -58,5 +58,5 @@ translate english quest_jasmine_questprincipal_0_b_2234d569:
 translate english quest_jasmine_questprincipal_0_b_a0d8baca:
 
     # tutorial "Ahora [colorear_quest('Respondamos el Mensaje')] pendiente para continuar"
-    tutorial "Now [colorear_quest('Let's Reply to the Message')] that's pending to continue"
+    tutorial "Now [colorear_quest('Let’s Reply to the Message')] that's pending to continue"
 

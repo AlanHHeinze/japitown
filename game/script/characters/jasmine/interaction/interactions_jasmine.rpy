@@ -30,7 +30,10 @@ label interaccion_jasmine:
     if _quest_activa and _quest_activa.etapa_actual == ETAPA_BOTON_LISTO:
         # Las quests 0_a/0_b/0_c se manejan via opciones_extra y triggers especiales
         # (lugar/hora), por eso NO deben auto-ejecutarse aqui.
-        if _quest_activa.id not in ("jasmine_questprincipal_0_a", "jasmine_questprincipal_0_b", "jasmine_questprincipal_0_c"):
+        # Gate has_label: no auto-ejecutar (ni avanzar etapa) quests sin label
+        # propio. Self-maintaining, no depende de la tupla (ver E03).
+        if (renpy.has_label("quest_" + _quest_activa.id) and
+                _quest_activa.id not in ("jasmine_questprincipal_0_a", "jasmine_questprincipal_0_b", "jasmine_questprincipal_0_c")):
             $ exito, mensajes = _quest_activa.intentar_ejecutar()
             if exito:
                 $ _npc_id_temp = "jasmine"

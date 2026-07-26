@@ -7,9 +7,9 @@
 default intro_mostrada = False
 
 # Fondos de la intro (definidos aqui desde que se unificó el archivo)
-image bg_intro_edificio       = "images/intro/backgrounds/bg_intro_edificio.png"
-image bg_intro_aeropuerto     = "images/intro/backgrounds/bg_intro_aeropuerto.png"
-image bg_intro_aeropuerto_zoom = "images/intro/backgrounds/bg_intro_aeropuerto_zoom.png"
+image bg_intro_edificio       = "images/intro/backgrounds/bg_intro_edificio.jpg"
+image bg_intro_aeropuerto     = "images/intro/backgrounds/bg_intro_aeropuerto.jpg"
+image bg_intro_aeropuerto_zoom = "images/intro/backgrounds/bg_intro_aeropuerto_zoom.jpg"
 
 
 # ---------------------------------------------------------
@@ -39,7 +39,21 @@ init python:
             store.actualizar_rutinas_npcs()
         except Exception:
             pass
-        
+
+        # Repoblar los diccionarios de sprite/posición por rutina (violet_/
+        # monica_/jasmine_rutinas_visuales). Viven en memoria, no en el save,
+        # y solo se llenan en inicializar_npcs_casa() (partida nueva) — sin
+        # esto, tras cargar o recargar el script quedan vacíos y todos los
+        # NPCs caen al sprite genérico de emergencia (ruta vieja, mal ubicado).
+        # Repoblar es seguro: solo reescribe estos diccionarios, no toca a
+        # los objetos NPC guardados ni los re-registra en sistema_npcs.
+        try:
+            store.poblar_rutinas_visuales_violet()
+            store.poblar_rutinas_visuales_monica()
+            store.poblar_rutinas_visuales_jasmine()
+        except Exception:
+            pass
+
         # Sincronizar variables default con objetos NPC
         try:
             store.sincronizar_relaciones_npcs()
@@ -83,65 +97,69 @@ init python:
 screen advertencia_adultos():
     modal True
 
+    $ _aa_k = 2.0 if renpy.variant("small") else 1.0
+
     add Solid("#000000")
 
     frame:
         xalign 0.5
         yalign 0.5
         background None
-        xmaximum 900
-        padding (60, 50)
+        xmaximum int(900 * _aa_k)
+        padding (int(60 * _aa_k), int(50 * _aa_k))
 
         vbox:
-            spacing 30
+            spacing int(30 * _aa_k)
             xalign 0.5
 
             text _("⚠ ADVERTENCIA: CONTENIDO PARA ADULTOS"):
-                size 28
+                size int(28 * _aa_k)
                 color "#FF4444"
                 bold True
                 xalign 0.5
 
-            null height 10
+            null height int(10 * _aa_k)
 
             text _("Este juego contiene material explícito no apto para menores de 18 años. Todos los personajes, nombres y eventos retratados en esta obra son completamente ficticios. Cualquier parecido con personas reales, vivas o muertas, es pura coincidencia.\n\nTodos los personajes involucrados en escenas de contenido sexual tienen 18 años o más al momento de los hechos representados"):
-                size 18
+                size int(18 * _aa_k)
                 color "#cccccc"
                 xalign 0.5
                 text_align 0.5
                 line_spacing 6
 
-            null height 10
+            null height int(10 * _aa_k)
 
             text _("¿Tenés 18 años o más?"):
-                size 22
+                size int(22 * _aa_k)
                 color "#ffffff"
                 bold True
                 xalign 0.5
 
             hbox:
                 xalign 0.5
-                spacing 40
+                spacing int(40 * _aa_k)
 
                 textbutton _("Sí, tengo 18 años o más"):
                     action Return(True)
-                    text_size 18
+                    text_size int(18 * _aa_k)
                     text_color "#ffffff"
                     background "#2E7D32"
                     hover_background "#43A047"
-                    padding (30, 14)
+                    padding (int(30 * _aa_k), int(14 * _aa_k))
 
                 textbutton "No":
                     action Function(renpy.quit)
-                    text_size 18
+                    text_size int(18 * _aa_k)
                     text_color "#ffffff"
                     background "#B71C1C"
                     hover_background "#E53935"
-                    padding (30, 14)
+                    padding (int(30 * _aa_k), int(14 * _aa_k))
 
 
 screen menu_intro_choice():
     modal True
+
+    $ _mic_k = 2.0 if renpy.variant("small") else 1.0
 
     add Solid("#000000")
 
@@ -149,49 +167,49 @@ screen menu_intro_choice():
         xalign 0.5
         yalign 0.5
         background None
-        xmaximum 900
-        padding (60, 50)
+        xmaximum int(900 * _mic_k)
+        padding (int(60 * _mic_k), int(50 * _mic_k))
 
         vbox:
-            spacing 30
+            spacing int(30 * _mic_k)
             xalign 0.5
 
             text _("INTRODUCCIÓN"):
-                size 28
+                size int(28 * _mic_k)
                 color "#4FC3F7"
                 bold True
                 xalign 0.5
 
-            null height 10
+            null height int(10 * _mic_k)
 
             text _("La misma presenta el comienzo de la historia, presentacion de personajes iniciales y incluye el tutorial de las funciones mas basicas.\n\nSi es tu primera vez en Japitonw te recomendamos jugar la introduccion "):
-                size 18
+                size int(18 * _mic_k)
                 color "#cccccc"
                 xalign 0.5
                 text_align 0.5
                 line_spacing 6
 
-            null height 20
+            null height int(20 * _mic_k)
 
             hbox:
                 xalign 0.5
-                spacing 40
+                spacing int(40 * _mic_k)
 
                 textbutton _("Ver introducción"):
                     action Return(True)
-                    text_size 18
+                    text_size int(18 * _mic_k)
                     text_color "#ffffff"
                     background "#2E7D32"
                     hover_background "#43A047"
-                    padding (30, 14)
+                    padding (int(30 * _mic_k), int(14 * _mic_k))
 
                 textbutton _("Omitir"):
                     action Return(False)
-                    text_size 18
+                    text_size int(18 * _mic_k)
                     text_color "#ffffff"
                     background "#1565C0"
                     hover_background "#1976D2"
-                    padding (30, 14)
+                    padding (int(30 * _mic_k), int(14 * _mic_k))
 
 
 label start:
@@ -331,7 +349,7 @@ label intro_conversacion_padre:
 
     show mc_parado_base b_hablando c_rbase_base with sprite_normal
     mc "Igual deseo que Eva y tú sean muy felices allí"
-    show mc_parado_base o_base
+    show mc_parado_base o_base b_none
     
     show padre_intro bhablando pbase
     padre "Bueno, ya terminé de arreglar todo con Mónica para que te reciba en su casa, no vayas a causarles muchos problemas"
@@ -357,6 +375,7 @@ label intro_conversacion_padre:
     mc "Supongo que podría ir en plan turístico..."
     show mc_parado_base c_rbase_base with sprite_normal
     mc "Avísame cuando llegues y mándale saludos a Eva de mi parte"
+    show mc_parado_base b_none
     
     show padre_intro bhablando 
     padre "Tú también avísame cuando llegues a Japitown"
@@ -395,7 +414,7 @@ label intro_llegada_casa:
     hide text with dissolve
 
     # Frente de la casa — horario mañana (inicio del juego)
-    scene expression "images/bg/casa/bg_casa_mañana_frente.png" with fade
+    scene expression "images/bg/casa/bg_casa_manana_frente.jpg" with fade
 
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
@@ -410,7 +429,7 @@ label intro_llegada_casa:
     piensa "Cada vez que lo pienso, fueron los mejores años de mi vida"
     piensa "Momento de dar el paso y entrar"
 
-    scene expression "images/bg/casa/bg_casa_mañana_living.png" with fade
+    scene expression "images/bg/casa/bg_casa_manana_living.jpg" with fade
 
     # Posicionar a las tres a la derecha, ligeramente montadas
     # Orden de show = orden de profundidad (ultimo = al frente)
@@ -533,6 +552,21 @@ label game_loop:
     # Asegurar que el HUD esté visible al devolver control al jugador
     $ mostrar_hud()
 
+    # Revalidar las quests en cada vuelta del loop (o sea, tras CADA acción del
+    # jugador). Antes esto solo pasaba al avanzar horario/dormir, así que una
+    # quest cuyo requisito se cumplía en el momento (ej. recibir un item) se
+    # quedaba trabada en ETAPA_CONDICIONES hasta que el jugador durmiera.
+    # Es barato y seguro: solo procesa el avance de etapas (ninguna quest define
+    # config_fallo, así que verificar_fallo() retorna de inmediato).
+    $ actualizar_quests()
+
+    # Revisar la entrega de los mensajes en espera. Antes esto solo se hacía al
+    # moverse, al avanzar horario y al dormir: si las condiciones de entrega se
+    # cumplían en cualquier otro momento (o si actualizar_quests acababa de
+    # disparar el trigger de un mensaje), el grupo quedaba en espera sin que
+    # nadie lo revisara hasta el próximo movimiento o cambio de horario.
+    $ sistema_mensajes.verificar_mensajes_en_espera()
+
     # Validar eventos en cada iteración del loop
     $ validar_eventos()
 
@@ -553,11 +587,20 @@ label game_loop:
         $ store.sistema_mensajes.disparar_por_trigger("quest", "carl_quest_j0b", "carl")
         jump quest_jasmine_questprincipal_0_b
 
-    # Quest 0b del MC: tutorial del celular al entrar al pasillo de arriba (dia 2+)
+    # Quest 0 del MC: recorrido libre terminado (visito las 3 locaciones objetivo).
+    # Se dispara desde aca y no desde los labels de entrada porque esos llegan por
+    # call expression y deben retornar; este jump es frameless.
+    if getattr(store, 'mc_q0_explorando', False) and mc_q0_exploracion_terminada():
+        jump mc_q0_exploracion_completada
+
+    # Quest 0b del MC: tutorial del celular en la habitacion del MC (dia 2+).
+    # Antes disparaba en casa_pasilloarriba, pero con el viaje rapido el jugador
+    # puede saltearse el pasillo y nunca verlo. La habitacion del MC no se puede
+    # esquivar: es donde despierta cada dia.
     $ _quest_mc_0b = sistema_quests_mc.quests.get("mc_quest_0b")
     if (_quest_mc_0b and _quest_mc_0b.activa and not _quest_mc_0b.completada and not getattr(store, "mc_q0b_disparada", False)):
         $ _loc_actual_id = sistema_locaciones.locacion_actual.id if sistema_locaciones.locacion_actual else ""
-        if _loc_actual_id == "casa_pasilloarriba" and dia_actual >= 2:
+        if _loc_actual_id == "casa_hmc" and dia_actual >= 2:
             jump mc_q0b_trigger
 
     if not renpy.get_screen("navegacion_locaciones_con_hud"):

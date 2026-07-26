@@ -103,6 +103,8 @@ label quest_violet_questprincipal_04_e:
 
     $ completar_quest_actual("violet")
 
+    # `return` (no `jump game_loop`): la dispara ejecutar_quest_activa, dentro
+    # del Call("interaccion_violet") del HUD.
     window hide
     $ mostrar_hud()
-    jump game_loop
+    return

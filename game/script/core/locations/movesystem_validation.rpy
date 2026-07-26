@@ -52,7 +52,10 @@ init python:
                 return True, ""
             
             if self.item_requerido not in inventario:
-                return False, f"Necesitas: {self.item_requerido}"
+                # Nombre visible del item, no el id crudo
+                _info = getattr(store, 'CATALOGO_ITEMS', {}).get(self.item_requerido, {})
+                _nombre = renpy.translate_string(_info.get("nombre", self.item_requerido))
+                return False, renpy.translate_string("Necesitas: {item}").format(item=_nombre)
             
             return True, ""
     

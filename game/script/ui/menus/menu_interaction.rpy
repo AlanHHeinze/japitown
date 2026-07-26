@@ -29,115 +29,136 @@ screen menu_interaccion_npc_completo(npc, opciones_extra=None):
             xalign 0.85
             yalign 1.0
     
-    # Menú de opciones - Centro izquierda
+    # Escala x2 en pantalla táctil, y el menú se corre a la izquierda para no
+    # tapar el sprite del NPC (anclado a la derecha, xalign 0.85).
+    $ _mi_k = 2.0 if renpy.variant("small") else 1.0
+    $ _mi_xalign = 0.28 if renpy.variant("small") else 0.5
+
+    # Menú de opciones
     frame:
-        xalign 0.25
+        xalign _mi_xalign
         yalign 0.5
         background "#0288D1EE"
-        padding (30, 20)
-        
+        padding (int(30 * _mi_k), int(20 * _mi_k))
+
         vbox:
-            spacing 15
-            
+            spacing int(15 * _mi_k)
+
             # Título con nombre del NPC
-            text "[npc.nombre]" size 32 color "#FFF8E1" bold True xalign 0.5 outlines [(2, "#1565C0", 0, 0)]
-            
+            text "[npc.nombre]" size int(32 * _mi_k) color "#FFF8E1" bold True xalign 0.5 outlines [(int(2 * _mi_k), "#1565C0", 0, 0)]
+
             # Línea separadora
-            null height 5
+            null height int(5 * _mi_k)
             frame:
-                xsize 300
-                ysize 2
+                xsize int(300 * _mi_k)
+                ysize int(2 * _mi_k)
                 background "#4FC3F7"
-            null height 5
-            
+            null height int(5 * _mi_k)
+
             # Informacion del NPC
             $ _emojis = {"stat1": "❤️", "stat2": "💋"}
 
             vbox:
-                spacing 5
+                spacing int(5 * _mi_k)
                 xalign 0.5
 
                 # Stats individuales con emojis
                 hbox:
-                    spacing 20
+                    spacing int(20 * _mi_k)
                     xalign 0.5
 
                     hbox:
-                        spacing 4
-                        text "[_emojis['stat1']]" size 16
-                        text "[npc.estado[npc.nombre_stat1]]" size 14 color "#66BB6A" bold True
+                        spacing int(4 * _mi_k)
+                        text "[_emojis['stat1']]" size int(16 * _mi_k)
+                        text "[npc.estado[npc.nombre_stat1]]" size int(14 * _mi_k) color "#66BB6A" bold True
 
                     hbox:
-                        spacing 4
-                        text "[_emojis['stat2']]" size 16
-                        text "[npc.estado[npc.nombre_stat2]]" size 14 color "#FFB74D" bold True
-            
-            null height 10
-            
-            # Opciones de interacción
+                        spacing int(4 * _mi_k)
+                        text "[_emojis['stat2']]" size int(16 * _mi_k)
+                        text "[npc.estado[npc.nombre_stat2]]" size int(14 * _mi_k) color "#FFB74D" bold True
+
+            null height int(10 * _mi_k)
+
+            # Opciones de interacción — orden fijo: Quest, Evento, Hablar.
+            # Se arma UNA lista ya ordenada y filtrada por condición, y se recorre
+            # en un solo vbox: así, si una opción no está disponible, la siguiente
+            # sube de lugar en vez de dejar un hueco vacío.
+            $ _opciones_quest = [o for o in (opciones_extra or []) if o.get("condicion", True) and o.get("tipo") != "evento"]
+            $ _opciones_evento = [o for o in (opciones_extra or []) if o.get("condicion", True) and o.get("tipo") == "evento"]
+            $ _opciones_ordenadas = _opciones_quest + _opciones_evento
+            $ puede_hablar = npc.puede_interactuar("hablar") if hablar_desbloqueado else False
+
             vbox:
-                spacing 10
-                xsize 300
-                
-                # Opción: Hablar — oculta hasta completar la quest 0_a de Violet
+                spacing int(10 * _mi_k)
+                xsize int(300 * _mi_k)
+
+                # 1. Quest, luego 2. Evento (mismo estilo, orden ya resuelto arriba)
+                for opcion in _opciones_ordenadas:
+                    # El texto se COMPONE (opcion + tag), asi que hay que traducir
+                    # cada parte por separado: el string ya concatenado nunca
+                    # matchearia un `old`. Mismo criterio que en door_access_system.
+                    $ _tag_extra = renpy.translate_string(" (Evento)") if opcion.get("tipo") == "evento" else renpy.translate_string(" (Quest)")
+                    $ _texto_extra = renpy.translate_string(opcion.get("texto", "Opción")) + _tag_extra
+                    button:
+                        xfill True
+                        background "#009688"
+                        hover_background "#4DB6AC"
+                        padding (int(15 * _mi_k), int(10 * _mi_k))
+                        action [Hide("menu_interaccion_npc_completo"),
+                                Return(("opcion_especial", opcion.get("label", "game_loop")))]
+
+                        text "[_texto_extra]" size int(18 * _mi_k) color "#ffffff"
+
+                # 3. Hablar — siempre al final, oculta hasta completar la quest 0_a de Violet
                 if hablar_desbloqueado:
-                    $ puede_hablar = npc.puede_interactuar("hablar")
+                    if _opciones_ordenadas:
+                        null height int(5 * _mi_k)
+                        frame:
+                            xfill True
+                            ysize int(1 * _mi_k)
+                            background "#00968844"
+                        null height int(5 * _mi_k)
 
                     if puede_hablar:
                         button:
                             xfill True
                             background "#1565C0"
                             hover_background "#FFB74D"
-                            padding (15, 10)
+                            padding (int(15 * _mi_k), int(10 * _mi_k))
+                            # Return, NO Call: este screen se muestra con
+                            # `call screen`, que solo cierra su frame cuando
+                            # recibe un Return. Saliendo con Call(...) el frame
+                            # quedaba abierto para siempre — y como "Hablar" es
+                            # de lo más usado del juego, el call stack crecía
+                            # toda la partida (tracebacks enormes que además
+                            # apuntaban a interacciones viejas). Se devuelve el
+                            # label igual que las opciones extra de arriba; el
+                            # caller hace `jump expression` e interaccion_hablar
+                            # cierra con return.
                             action [SetVariable("_npc_id_temp", npc.id),
                                     Hide("menu_interaccion_npc_completo"),
-                                    Call("interaccion_hablar")]
+                                    Return(("opcion_especial", "interaccion_hablar"))]
 
-                            text "💬 Hablar" size 20 color "#ffffff"
+                            text "💬 Hablar" size int(20 * _mi_k) color "#ffffff"
                     else:
                         button:
                             xfill True
                             background "#444444"
-                            padding (15, 10)
+                            padding (int(15 * _mi_k), int(10 * _mi_k))
                             action None
 
                             hbox:
-                                spacing 10
-                                text "💬 Hablar" size 20 color "#666666"
-                                text "(ya hecho hoy)" size 16 color "#ff6666" italic True
-                
-                # =====================================================================
-                # OPCIONES EXTRA (de eventos completados, etc.)
-                # =====================================================================
-                
-                if opciones_extra:
-                    null height 5
-                    frame:
-                        xfill True
-                        ysize 1
-                        background "#00968844"
-                    null height 5
-                    
-                    for opcion in opciones_extra:
-                        if opcion.get("condicion", True):
-                            $ _tag_extra = " (Evento)" if opcion.get("tipo") == "evento" else " (Quest)"
-                            button:
-                                xfill True
-                                background "#009688"
-                                hover_background "#4DB6AC"
-                                padding (15, 10)
-                                action [Hide("menu_interaccion_npc_completo"),
-                                        Return(("opcion_especial", opcion.get("label", "game_loop")))]
+                                spacing int(10 * _mi_k)
+                                text "💬 Hablar" size int(20 * _mi_k) color "#666666"
+                                text "(ya hecho hoy)" size int(16 * _mi_k) color "#ff6666" italic True
 
-                                text (opcion.get("texto", "Opción") + _tag_extra) size 18 color "#ffffff"
-            
-            null height 10
-            
+            null height int(10 * _mi_k)
+
             # Botón cerrar
             textbutton "Cerrar":
                 xalign 0.5
                 action Hide("menu_interaccion_npc_completo")
-                text_size 20
+                text_size int(20 * _mi_k)
                 text_color "#FFF8E1"
 
 
@@ -153,7 +174,7 @@ screen estadisticas_npcs():
     $ _ajc = sistema_ajuste_cel.obtener_container("estadisticas_npcs") if modo_ajuste_celular else None
 
     # Fondo del celular
-    add "images/hud/interfaz_celular.png" xalign 0.0 yalign 0.0
+    use _celular_fondo()
 
     # Click fuera del celular cierra todo
     use _celular_cerrar_exterior("estadisticas_npcs")
@@ -171,10 +192,10 @@ screen estadisticas_npcs():
             xfill True
 
             # Barra de estado
-            use _celular_barra_status()
+            use _celular_barra_status("estadisticas_npcs")
 
             # Header de app
-            use _celular_app_header("Relaciones", "📊", [Hide("estadisticas_npcs"), Show("menu_celular")])
+            use _celular_app_header("Relaciones", "📊", [Hide("estadisticas_npcs"), Show("menu_celular")], "estadisticas_npcs")
 
             # Contenido
             viewport:

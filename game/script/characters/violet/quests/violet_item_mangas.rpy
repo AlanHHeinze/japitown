@@ -30,9 +30,9 @@ label usar_mangas_violet_mc:
     hide screen hud_navegacion
     window show
 
-    $ _horarios_bg_manga = ["mañana", "tarde", "noche", "noche"]
+    $ _horarios_bg_manga = ["manana", "tarde", "noche", "noche"]
     $ _bg_h_manga = _horarios_bg_manga[horario_actual]
-    scene expression "images/bg/casa/bg_casa_" + _bg_h_manga + "_hmc.png" with fade
+    scene expression "images/bg/casa/bg_casa_" + _bg_h_manga + "_hmc.jpg" with fade
 
     if horario_actual == 3:
         piensa "Es muy tarde para ponerme a leer, sera mejor hacerlo mañana"

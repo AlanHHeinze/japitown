@@ -18,12 +18,6 @@ translate english paqueterepartidor_quest01_violet_beaf796d:
     # mc "Yo lo recibo, gracias"
     mc "I'll take it. Thanks."
 
-# game/script/characters/violet/quests/violet_quest_01_a.rpy:115
-translate english paqueterepartidor_quest01_violet_696339a2:
-
-    # repartidor "Acá tiene, que tenga un buen día."
-    repartidor "Here you go. Have a good day."
-
 # game/script/characters/violet/quests/violet_quest_01_a.rpy:119
 translate english paqueterepartidor_quest01_violet_d16395e6:
 
@@ -73,4 +67,3 @@ translate english paqueterepartidor_quest01_violet_e11dcf90:
 
     # repartidor "Aquí tiene, que tenga un buen día."
     repartidor "Here you go. Have a good day."
-

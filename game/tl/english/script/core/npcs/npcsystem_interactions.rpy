@@ -1,11 +1,5 @@
 # TODO: Translation updated at 2026-04-27
 
-# game/script/core/npcs/npcsystem_interactions.rpy:19
-translate english accion_hotspot_move_a1b2c3d4:
-
-    # piensa "[_msg_restriccion_puerta]"
-    piensa "[_msg_restriccion_puerta]"
-
 # game/script/core/npcs/npcsystem_interactions.rpy:36
 translate english accion_hotspot_move_fdb73a5a:
 
@@ -72,5 +66,4 @@ translate english accion_hotspot_move_cf78c3b4:
 translate english accion_avanzar_tiempo_0b51825e:
 
     # piensa "Debo responder el mensaje de [_npc_prioritario] antes de continuar"
-    piensa "Flatter her (Nothing)"
-
+    piensa "I have to reply to [_npc_prioritario]'s message before continuing"

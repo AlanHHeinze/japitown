@@ -8,9 +8,10 @@ screen menu_cheats():
     modal True
 
     $ _ajc = sistema_ajuste_cel.obtener_container("menu_cheats") if modo_ajuste_celular else None
+    $ _k = CEL_APP_ESCALA_SMALL if renpy.variant("small") else 1.0
 
     # Fondo del celular
-    add "images/hud/interfaz_celular.png" xalign 0.0 yalign 0.0
+    use _celular_fondo()
 
     # Click fuera del celular cierra todo
     use _celular_cerrar_exterior("menu_cheats")
@@ -28,10 +29,10 @@ screen menu_cheats():
             xfill True
 
             # Barra de estado
-            use _celular_barra_status()
+            use _celular_barra_status("menu_cheats")
 
             # Header de app
-            use _celular_app_header("Cheats", "⚡", [Hide("menu_cheats"), Show("menu_celular")])
+            use _celular_app_header("Cheats", "⚡", [Hide("menu_cheats"), Show("menu_celular")], "menu_cheats")
 
             # Contenido scrollable
             viewport:
@@ -44,20 +45,34 @@ screen menu_cheats():
                 frame:
                     xfill True
                     background None
-                    padding (12, 10)
+                    padding (int(12 * _k), int(10 * _k))
 
                     vbox:
-                        spacing 12
+                        spacing int(12 * _k)
                         xfill True
 
                         # ── Tests de quests (saltar directo al contenido) ──
-                        text "TESTEO DE QUESTS" size 12 color "#4FC3F7" bold True
+                        text "TESTEO DE QUESTS" size int(12 * _k) color "#4FC3F7" bold True
 
                         button:
                             xfill True
                             background "#4a1e3aCC"
                             hover_background "#6a2a50CC"
-                            padding (12, 10)
+                            padding (int(12 * _k), int(10 * _k))
+                            action [
+                                Hide("menu_cheats"),
+                                SetVariable("menu_celular_abierto", False),
+                                Hide("menu_celular"),
+                                Jump("test_quest06a_violet")
+                            ]
+
+                            text "🧪 Quest 06_a Violet" size int(14 * _k) color "#FFD54F" bold True
+
+                        button:
+                            xfill True
+                            background "#4a1e3aCC"
+                            hover_background "#6a2a50CC"
+                            padding (int(12 * _k), int(10 * _k))
                             action [
                                 Hide("menu_cheats"),
                                 SetVariable("menu_celular_abierto", False),
@@ -65,19 +80,36 @@ screen menu_cheats():
                                 Jump("test_quest08a_violet")
                             ]
 
-                            text "🧪 Quest 08_a Violet" size 14 color "#FFD54F" bold True
+                            text "🧪 Quest 08_a Violet" size int(14 * _k) color "#FFD54F" bold True
+
+                        # ── Test de sistema: forzar un error para probar Sentry ──
+                        text "TESTEO DE SISTEMA" size int(12 * _k) color "#4FC3F7" bold True
+
+                        button:
+                            xfill True
+                            background "#5a1e1eCC"
+                            hover_background "#7a2a2aCC"
+                            padding (int(12 * _k), int(10 * _k))
+                            action [
+                                Hide("menu_cheats"),
+                                SetVariable("menu_celular_abierto", False),
+                                Hide("menu_celular"),
+                                Function(jp_forzar_error_prueba)
+                            ]
+
+                            text "💥 Forzar error (test Sentry)" size int(14 * _k) color "#ff8888" bold True
 
                         # Toggle de recompensas
                         frame:
                             xfill True
                             background "#1e1e3aCC"
-                            padding (12, 10)
+                            padding (int(12 * _k), int(10 * _k))
 
                             hbox:
-                                spacing 10
+                                spacing int(10 * _k)
                                 yalign 0.5
                                 xfill True
-                                text "Ver resultados Talk:" size 13 color "#ffffff" bold True yalign 0.5
+                                text "Ver resultados Talk:" size int(13 * _k) color "#ffffff" bold True yalign 0.5
 
                                 if getattr(persistent, "mostrar_recompensa", False):
                                     textbutton "ON":
@@ -94,13 +126,13 @@ screen menu_cheats():
                         frame:
                             xfill True
                             background "#1e1e3aCC"
-                            padding (12, 10)
+                            padding (int(12 * _k), int(10 * _k))
 
                             hbox:
-                                spacing 10
+                                spacing int(10 * _k)
                                 yalign 0.5
                                 xfill True
-                                text "Botones de movimiento:" size 13 color "#ffffff" bold True yalign 0.5
+                                text "Botones de movimiento:" size int(13 * _k) color "#ffffff" bold True yalign 0.5
 
                                 if getattr(persistent, "hotspots_visibles", True):
                                     textbutton "ON":
@@ -114,7 +146,7 @@ screen menu_cheats():
                                         xalign 1.0
 
                         # Separador NPCs
-                        text "NPC STATS" size 12 color "#4FC3F7" bold True
+                        text "NPC STATS" size int(12 * _k) color "#4FC3F7" bold True
 
                         # Mónica
                         $ monica = obtener_npc("monica")
@@ -122,27 +154,27 @@ screen menu_cheats():
                             frame:
                                 xfill True
                                 background "#1e1e3aCC"
-                                padding (12, 10)
+                                padding (int(12 * _k), int(10 * _k))
 
                                 vbox:
-                                    spacing 8
+                                    spacing int(8 * _k)
                                     xfill True
 
-                                    text "[monica.nombre]" size 15 color "#ffffff" bold True
+                                    text "[monica.nombre]" size int(15 * _k) color "#ffffff" bold True
 
                                     hbox:
-                                        spacing 8
+                                        spacing int(8 * _k)
                                         yalign 0.5
-                                        text "❤️ Amor: [monica.estado['amor']]" size 12 color "#00ff00"
+                                        text "❤️ Amor: [monica.estado['amor']]" size int(12 * _k) color "#00ff00"
                                         textbutton "+1" action Function(monica.modificar_stat1, 1) style "cheat_button"
                                         textbutton "-1" action Function(monica.modificar_stat1, -1) style "cheat_button"
                                         textbutton "Max" action Function(monica.establecer_stat1, 100) style "cheat_button"
                                         textbutton "0" action Function(monica.establecer_stat1, 0) style "cheat_button"
 
                                     hbox:
-                                        spacing 8
+                                        spacing int(8 * _k)
                                         yalign 0.5
-                                        text "💋 Deseo: [monica.estado['deseo']]" size 12 color "#ff69b4"
+                                        text "💋 Deseo: [monica.estado['deseo']]" size int(12 * _k) color "#ff69b4"
                                         textbutton "+1" action Function(monica.modificar_stat2, 1) style "cheat_button"
                                         textbutton "-1" action Function(monica.modificar_stat2, -1) style "cheat_button"
                                         textbutton "Max" action Function(monica.establecer_stat2, 100) style "cheat_button"
@@ -154,27 +186,27 @@ screen menu_cheats():
                             frame:
                                 xfill True
                                 background "#1e1e3aCC"
-                                padding (12, 10)
+                                padding (int(12 * _k), int(10 * _k))
 
                                 vbox:
-                                    spacing 8
+                                    spacing int(8 * _k)
                                     xfill True
 
-                                    text "[jasmine.nombre]" size 15 color "#ffffff" bold True
+                                    text "[jasmine.nombre]" size int(15 * _k) color "#ffffff" bold True
 
                                     hbox:
-                                        spacing 8
+                                        spacing int(8 * _k)
                                         yalign 0.5
-                                        text "❤️ Amor: [jasmine.estado['amor']]" size 12 color "#00ff00"
+                                        text "❤️ Amor: [jasmine.estado['amor']]" size int(12 * _k) color "#00ff00"
                                         textbutton "+1" action Function(jasmine.modificar_stat1, 1) style "cheat_button"
                                         textbutton "-1" action Function(jasmine.modificar_stat1, -1) style "cheat_button"
                                         textbutton "Max" action Function(jasmine.establecer_stat1, 100) style "cheat_button"
                                         textbutton "0" action Function(jasmine.establecer_stat1, 0) style "cheat_button"
 
                                     hbox:
-                                        spacing 8
+                                        spacing int(8 * _k)
                                         yalign 0.5
-                                        text "💋 Deseo: [jasmine.estado['deseo']]" size 12 color "#ff69b4"
+                                        text "💋 Deseo: [jasmine.estado['deseo']]" size int(12 * _k) color "#ff69b4"
                                         textbutton "+1" action Function(jasmine.modificar_stat2, 1) style "cheat_button"
                                         textbutton "-1" action Function(jasmine.modificar_stat2, -1) style "cheat_button"
                                         textbutton "Max" action Function(jasmine.establecer_stat2, 100) style "cheat_button"
@@ -186,27 +218,27 @@ screen menu_cheats():
                             frame:
                                 xfill True
                                 background "#1e1e3aCC"
-                                padding (12, 10)
+                                padding (int(12 * _k), int(10 * _k))
 
                                 vbox:
-                                    spacing 8
+                                    spacing int(8 * _k)
                                     xfill True
 
-                                    text "[violet.nombre]" size 15 color "#ffffff" bold True
+                                    text "[violet.nombre]" size int(15 * _k) color "#ffffff" bold True
 
                                     hbox:
-                                        spacing 8
+                                        spacing int(8 * _k)
                                         yalign 0.5
-                                        text "❤️ Amor: [violet.estado['amor']]" size 12 color "#00ff00"
+                                        text "❤️ Amor: [violet.estado['amor']]" size int(12 * _k) color "#00ff00"
                                         textbutton "+1" action Function(violet.modificar_stat1, 1) style "cheat_button"
                                         textbutton "-1" action Function(violet.modificar_stat1, -1) style "cheat_button"
                                         textbutton "Max" action Function(violet.establecer_stat1, 100) style "cheat_button"
                                         textbutton "0" action Function(violet.establecer_stat1, 0) style "cheat_button"
 
                                     hbox:
-                                        spacing 8
+                                        spacing int(8 * _k)
                                         yalign 0.5
-                                        text "💋 Deseo: [violet.estado['deseo']]" size 12 color "#ff69b4"
+                                        text "💋 Deseo: [violet.estado['deseo']]" size int(12 * _k) color "#ff69b4"
                                         textbutton "+1" action Function(violet.modificar_stat2, 1) style "cheat_button"
                                         textbutton "-1" action Function(violet.modificar_stat2, -1) style "cheat_button"
                                         textbutton "Max" action Function(violet.establecer_stat2, 100) style "cheat_button"
@@ -215,60 +247,60 @@ screen menu_cheats():
                         # Separador MC stats
                         frame:
                             xfill True
-                            ysize 1
+                            ysize int(1 * _k)
                             background "#ffffff11"
 
-                        text "STATS DEL MC" size 12 color "#4FC3F7" bold True
+                        text "STATS DEL MC" size int(12 * _k) color "#4FC3F7" bold True
 
                         frame:
                             xfill True
                             background "#1e1e3aCC"
-                            padding (12, 10)
+                            padding (int(12 * _k), int(10 * _k))
 
                             vbox:
-                                spacing 8
+                                spacing int(8 * _k)
                                 xfill True
 
                                 hbox:
-                                    spacing 8
+                                    spacing int(8 * _k)
                                     yalign 0.5
-                                    text "💪 Fuerza: [mc_fuerza]" size 12 color "#FF6B6B"
+                                    text "💪 Fuerza: [mc_fuerza]" size int(12 * _k) color "#FF6B6B"
                                     textbutton "+1" action Function(modificar_stat, "fuerza", 1) style "cheat_button"
                                     textbutton "-1" action Function(modificar_stat, "fuerza", -1) style "cheat_button"
                                     textbutton "+10" action Function(modificar_stat, "fuerza", 10) style "cheat_button"
                                     textbutton "0" action SetVariable("mc_fuerza", 0) style "cheat_button"
 
                                 hbox:
-                                    spacing 8
+                                    spacing int(8 * _k)
                                     yalign 0.5
-                                    text "💬 Carisma: [mc_carisma]" size 12 color "#FFB74D"
+                                    text "💬 Carisma: [mc_carisma]" size int(12 * _k) color "#FFB74D"
                                     textbutton "+1" action Function(modificar_stat, "carisma", 1) style "cheat_button"
                                     textbutton "-1" action Function(modificar_stat, "carisma", -1) style "cheat_button"
                                     textbutton "+10" action Function(modificar_stat, "carisma", 10) style "cheat_button"
                                     textbutton "0" action SetVariable("mc_carisma", 0) style "cheat_button"
 
                                 hbox:
-                                    spacing 8
+                                    spacing int(8 * _k)
                                     yalign 0.5
-                                    text "🎯 Destreza: [mc_destreza]" size 12 color "#4FC3F7"
+                                    text "🎯 Destreza: [mc_destreza]" size int(12 * _k) color "#4FC3F7"
                                     textbutton "+1" action Function(modificar_stat, "destreza", 1) style "cheat_button"
                                     textbutton "-1" action Function(modificar_stat, "destreza", -1) style "cheat_button"
                                     textbutton "+10" action Function(modificar_stat, "destreza", 10) style "cheat_button"
                                     textbutton "0" action SetVariable("mc_destreza", 0) style "cheat_button"
 
                                 hbox:
-                                    spacing 8
+                                    spacing int(8 * _k)
                                     yalign 0.5
-                                    text "🧠 Inteligencia: [mc_inteligencia]" size 12 color "#81C784"
+                                    text "🧠 Inteligencia: [mc_inteligencia]" size int(12 * _k) color "#81C784"
                                     textbutton "+1" action Function(modificar_stat, "inteligencia", 1) style "cheat_button"
                                     textbutton "-1" action Function(modificar_stat, "inteligencia", -1) style "cheat_button"
                                     textbutton "+10" action Function(modificar_stat, "inteligencia", 10) style "cheat_button"
                                     textbutton "0" action SetVariable("mc_inteligencia", 0) style "cheat_button"
 
                                 hbox:
-                                    spacing 8
+                                    spacing int(8 * _k)
                                     yalign 0.5
-                                    text "💰 Dinero: $[dinero]" size 12 color "#4CAF50"
+                                    text "💰 Dinero: $[dinero]" size int(12 * _k) color "#4CAF50"
                                     textbutton "+100" action SetVariable("dinero", dinero + 100) style "cheat_button"
                                     textbutton "-100" action SetVariable("dinero", max(0, dinero - 100)) style "cheat_button"
                                     textbutton "+1k" action SetVariable("dinero", dinero + 1000) style "cheat_button"
@@ -296,8 +328,10 @@ screen menu_completar_quests():
 
     modal True
 
+    $ _k = CEL_APP_ESCALA_SMALL if renpy.variant("small") else 1.0
+
     # Fondo del celular
-    add "images/hud/interfaz_celular.png" xalign 0.0 yalign 0.0
+    use _celular_fondo()
 
     # Click fuera del celular cierra todo
     use _celular_cerrar_exterior("menu_completar_quests")
@@ -315,10 +349,10 @@ screen menu_completar_quests():
             xfill True
 
             # Barra de estado
-            use _celular_barra_status()
+            use _celular_barra_status("menu_completar_quests")
 
             # Header de app
-            use _celular_app_header("Completar Quests", "🏆", [Hide("menu_completar_quests"), Show("menu_cheats")])
+            use _celular_app_header("Completar Quests", "🏆", [Hide("menu_completar_quests"), Show("menu_cheats")], "menu_completar_quests")
 
             # Contenedor scrollable
             viewport:
@@ -331,10 +365,10 @@ screen menu_completar_quests():
                 frame:
                     xfill True
                     background None
-                    padding (12, 10)
+                    padding (int(12 * _k), int(10 * _k))
 
                     vbox:
-                        spacing 10
+                        spacing int(10 * _k)
                         xfill True
 
                         # Iterar por NPC
@@ -344,37 +378,37 @@ screen menu_completar_quests():
                                 frame:
                                     xfill True
                                     background "#1e1e3aCC"
-                                    padding (12, 10)
+                                    padding (int(12 * _k), int(10 * _k))
 
                                     vbox:
-                                        spacing 8
+                                        spacing int(8 * _k)
                                         xfill True
 
-                                        text "[_npc_id_cq!c]" size 15 color "#ffffff" bold True
+                                        text "[_npc_id_cq!c]" size int(15 * _k) color "#ffffff" bold True
 
                                         for _q_cq in _quests_npc_cq:
                                             hbox:
-                                                spacing 8
+                                                spacing int(8 * _k)
                                                 yalign 0.5
                                                 xfill True
 
                                                 # Indicador de estado
                                                 if _q_cq.completada:
-                                                    text "✅" size 14 yalign 0.5
+                                                    text "✅" size int(14 * _k) yalign 0.5
                                                 elif _q_cq.activa:
-                                                    text "🔶" size 14 yalign 0.5
+                                                    text "🔶" size int(14 * _k) yalign 0.5
                                                 else:
-                                                    text "⬜" size 14 yalign 0.5
+                                                    text "⬜" size int(14 * _k) yalign 0.5
 
                                                 # Nombre y estado
                                                 vbox:
-                                                    text "[_q_cq.nombre]" size 13 color "#ffffff"
+                                                    text "[_q_cq.nombre]" size int(13 * _k) color "#ffffff"
                                                     if _q_cq.completada:
-                                                        text "Completada" size 11 color "#4CAF50"
+                                                        text "Completada" size int(11 * _k) color "#4CAF50"
                                                     elif _q_cq.activa:
-                                                        text "Activa - Etapa [_q_cq.etapa_actual]" size 11 color "#FFB74D"
+                                                        text "Activa - Etapa [_q_cq.etapa_actual]" size int(11 * _k) color "#FFB74D"
                                                     else:
-                                                        text "Pendiente" size 11 color "#888888"
+                                                        text "Pendiente" size int(11 * _k) color "#888888"
 
                                                 # Botón completar
                                                 if not _q_cq.completada:
@@ -386,15 +420,19 @@ screen menu_completar_quests():
 ################################################################################
 ## Estilos para botones de cheats
 ################################################################################
+## Escalados en pantalla táctil: CEL_APP_ESCALA_SMALL se evalúa una sola vez,
+## al declarar el estilo, y renpy.variant() ya es estable en ese momento
+## (definido antes de que arranque el juego) — igual criterio que los
+## "default ajuste_cel_area_*" de ajuste_celular.rpy.
 
 style cheat_button is button:
     background "#4a4a00"
     hover_background "#6a6a00"
-    padding (8, 5)
-    xsize 80
-    
+    padding ((int(8 * CEL_APP_ESCALA_SMALL), int(5 * CEL_APP_ESCALA_SMALL)) if renpy.variant("small") else (8, 5))
+    xsize (int(80 * CEL_APP_ESCALA_SMALL) if renpy.variant("small") else 80)
+
 style cheat_button_text is button_text:
-    size 14
+    size (int(14 * CEL_APP_ESCALA_SMALL) if renpy.variant("small") else 14)
     color "#ffff00"
     hover_color "#ffffff"
     xalign 0.5

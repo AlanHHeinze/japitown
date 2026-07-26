@@ -33,7 +33,7 @@ screen navegacion_locaciones():
                 # Hover deshabilitado por el usuario
                 
                 if hotspot.nombre:
-                    tooltip hotspot.nombre
+                    tooltip renpy.translate_string(hotspot.nombre)
                 else:
                     tooltip hotspot.id
         

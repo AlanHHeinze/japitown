@@ -108,7 +108,7 @@ init python:
                 return None
             # Buscar mensaje específico → default de la restricción → genérico
             if accion_id in self.mensajes_acciones:
-                return self.mensajes_acciones[accion_id]
+                return renpy.translate_string(self.mensajes_acciones[accion_id])
             if self.mensaje_accion_default:
                 return renpy.translate_string(self.mensaje_accion_default)
             return renpy.translate_string("No puedo hacer eso ahora")

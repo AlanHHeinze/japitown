@@ -66,5 +66,5 @@ translate english strings:
 translate english mostrar_bloqueo_accion_175af330:
 
     # piensa "[mensaje]"
-    piensa "I have pending things to do, I can't sleep now"
+    piensa "[mensaje]"
 

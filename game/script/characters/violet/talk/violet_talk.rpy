@@ -26,6 +26,17 @@ init 10 python:
         if npc:
             npc.modificar_stat2(1)
 
+    # Condiciones de estados de talk — funciones de módulo (NO lambdas locales),
+    # porque los EstadoTalk se guardan en el save y las lambdas locales no se pueden picklear.
+    def _violet_cond_buen_humor():
+        return store.violet_amor >= 15
+
+    def _violet_cond_muy_buen_humor():
+        return store.violet_amor >= 15
+
+    def _violet_cond_caliente():
+        return store.violet_deseo >= 30
+
     def inicializar_talk_violet():
 
         # ==================================================================
@@ -176,7 +187,7 @@ init 10 python:
                     "adularla":    "+2_amor",
                 },
                 mensaje="ella estaba de buen humor.",
-                condicion=lambda: store.violet_amor >= 15,
+                condicion=_violet_cond_buen_humor,
                 estados_posteriores={
                     "+2_amor": "posterior_feliz",
                     "+1_amor": "posterior_feliz",
@@ -195,7 +206,7 @@ init 10 python:
                     "adularla":    "+2_amor",
                 },
                 mensaje="ella estaba de muy buen humor.",
-                condicion=lambda: store.violet_amor >= 15,
+                condicion=_violet_cond_muy_buen_humor,
                 estados_posteriores={
                     "+2_amor": "posterior_feliz",
                     "+4_amor": "posterior_feliz",
@@ -214,7 +225,7 @@ init 10 python:
                     "adularla":    "+2_deseo",
                 },
                 mensaje="ella estaba en un estado de ánimo especial.",
-                condicion=lambda: store.violet_deseo >= 30,
+                condicion=_violet_cond_caliente,
                 estados_posteriores={
                     "+1_deseo": "posterior_hot",
                     "+2_deseo": "posterior_hot",

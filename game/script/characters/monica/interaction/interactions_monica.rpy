@@ -23,7 +23,10 @@ label interaccion_monica:
     # Quests que NO se auto-disparan al hacer click:
     #  - 0   : se inicia con el botón "Agradecerle" (a solas con Mónica).
     #  - 0_b : se dispara solo al entrar al living (auto-trigger por locación).
+    # Gate has_label: no auto-ejecutar (ni avanzar etapa) quests sin label
+    # propio. Self-maintaining, no depende de la tupla (ver E03).
     if (_quest_activa and _quest_activa.etapa_actual == 5 and
+            renpy.has_label("quest_" + _quest_activa.id) and
             _quest_activa.id not in ("monica_questprincipal_0", "monica_questprincipal_0_b")):
         $ exito, mensajes = _quest_activa.intentar_ejecutar()
         if exito:
