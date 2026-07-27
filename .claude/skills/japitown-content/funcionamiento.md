@@ -36,7 +36,11 @@ game/script/
 
 ```renpy
 label game_loop:
+    python:                                   # drenaje anti-leak (ver abajo)
+        while renpy.call_stack_depth() > 0:
+            renpy.pop_call()
     window hide
+    $ actualizar_quests()
     $ validar_eventos()           # hace aparecer/activar eventos cuyas condiciones se cumplen
     if not renpy.get_screen("navegacion_locaciones_con_hud"):
         show screen navegacion_locaciones_con_hud
@@ -53,9 +57,94 @@ El HUD lanza labels con `Call(...)` al clickear hotspots o sprites NPC:
 - Sprite NPC → `interaccion_<npc_id>`
 - Acción de locación → `accion_locacion_ejecutar`
 
-**Regla de oro:** cualquier label invocado por el sistema vía `call expression` **debe terminar
-en `return`** para devolver control al game loop. Los labels que terminan flujo propio hacen
-`window hide` + `$ mostrar_hud()` + `jump game_loop`.
+---
+
+## 0.1 Cómo termina un label — `return` vs `jump game_loop`
+
+**El punto más crítico del proyecto.** Equivocarse acá produce dos bugs opuestos y
+ambos graves: `return` de más → **el juego se cierra al menú principal**; `jump` sin
+drenaje → **frames acumulados en el call stack → crash en sesiones largas**.
+
+### El drenaje (la pieza que lo hace seguro)
+
+`game_loop` arranca vaciando el call stack:
+
+```renpy
+python:
+    while renpy.call_stack_depth() > 0:
+        renpy.pop_call()
+```
+
+**Por qué es seguro:** el `game_loop` es el loop raíz — nada "retorna a través" de él.
+Cualquier frame vivo al empezar una iteración es basura por definición. Drenarlo ahí
+elimina el leak **estructuralmente**, sin depender de que cada label individual acierte.
+
+**Consecuencia clave:** con el drenaje, `jump game_loop` es **siempre** un final válido
+para un label terminal — venga con frame o sin frame — y ya no acumula nada.
+
+### La regla
+
+Clasificá el label por **quién espera algo de él**, no por cómo se lo invocó:
+
+| Tipo | Cuándo | Final |
+|---|---|---|
+| **Contenido** | Cierra una escena / quest / evento y **devuelve al juego libre**. Nadie espera continuar después. | `jump game_loop` |
+| **Subrutina** | El **caller sigue ejecutando lógica** después (el label es un paso intermedio). | `return` |
+
+```renpy
+# CONTENIDO — cierre de quest, transición de fase, escena terminada
+label mi_quest_cierre:
+    $ completar_quest_actual("violet")
+    window hide
+    $ mostrar_hud()
+    jump game_loop          # ← el jugador vuelve a jugar libremente
+
+# SUBRUTINA — el caller (executor de acciones) sigue con su lógica después
+label accion_mi_cosa:
+    piensa "Hice algo."
+    return                  # ← devolver control a quien llamó
+```
+
+### Cómo decidir en 1 pregunta
+
+> **Después de este label, ¿el caller tiene algo más que hacer?**
+> - **No** (la escena terminó, el jugador retoma el control) → `jump game_loop`
+> - **Sí** (el caller continúa: chequea el `_return`, marca la acción usada, sigue el menú) → `return`
+
+**Ojo:** ser invocado por `call expression` **no** implica `return`. Muchos cierres de
+quest se disparan con `call expression` desde `ejecutar_quest_activa`, y ese caller ya no
+hace nada útil después → van con `jump game_loop`.
+
+### Casos concretos del proyecto
+
+**`jump game_loop`** (contenido / terminales):
+- Cierres de quest (`quest_violet_questprincipal_04_c`, `..._07_c`, `quest_violet_0_cierre`)
+- Transiciones de fase dentro de una quest (`violet_quest08a_ver_tv`, `violet_quest08a_iniciar_loop`)
+- Escenas de evento completas (`evento2_violet`, `violet_quest2_cierre`)
+- Labels de despertar / disparados por el game_loop (`violet_quest09b_despertar`)
+- Mensajes terminales (ej. el aviso de "evento en rework")
+
+**`return`** (subrutinas del motor):
+- `accion_locacion_ejecutar` y los `label_generico` de acciones de locación
+- `pensar_mensaje` / `narrar_mensaje` (el caller sigue)
+- Labels de entrada de locación registrados con `registrar_label_locacion` (el flujo de
+  movimiento continúa después)
+- Labels de rutina de dormir (el sistema retoma el flujo de dormir)
+- Labels invocados por `call expression` cuyo caller **sigue con lógica** — ej.
+  `espiar_violet_primera_vez`, que vuelve al `espiar_descubierto` para avanzar el horario
+- Opciones de door access con post-lógica
+
+### Historial (para no repetir el error)
+
+- **2026-07-12:** se quitó el drenaje y se pasaron ~22 terminales a `return`, con la idea
+  de un flujo "call/return disciplinado". Objetivo correcto (matar el leak), método frágil.
+- **2026-07-27:** un `return` frameless en la quest 8 de Violet **cerraba el juego al menú
+  principal**. Se restauró el drenaje y se revirtieron los 23 terminales a `jump game_loop`.
+  Los fixes buenos de esa tanda se mantuvieron (botón Hablar con `Return(...)`, fallback de
+  `ejecutar_quest_activa`, subrutinas en `return`).
+
+**Moraleja:** el leak no se arregla obligando a cada label a acertar el final — se arregla
+en el loop raíz. Los labels solo declaran su intención (terminal vs subrutina).
 
 ---
 

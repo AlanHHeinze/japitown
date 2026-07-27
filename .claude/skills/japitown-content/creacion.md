@@ -13,9 +13,16 @@
    sumisión, adulación, provocación, madurez ni debilidad.
 3. **Anti-PicklingError en quests:** nunca poner lambdas crudas en `Quest`, `ConfigEtapa`,
    `ConfigFallo`. Usar función `def` (referencia directa) o `_qc("clave_unica", lambda: ...)`.
-4. **Devolver control al game loop:**
-   - Label que termina flujo propio: `window hide` + `$ mostrar_hud()` + `jump game_loop`.
-   - Label llamado por el sistema (`call expression`): terminar en `return`.
+4. **Cómo termina el label** (crítico — un `return` de más cierra el juego al menú principal).
+   Preguntá: *después de este label, ¿el caller tiene algo más que hacer?*
+   - **No** → **contenido** (cierre de quest/evento/escena, devuelve al juego libre):
+     `window hide` + `$ mostrar_hud()` + **`jump game_loop`**.
+   - **Sí** → **subrutina** (el caller sigue con lógica: executor de acciones,
+     `pensar_mensaje`, label de entrada de locación, label de dormir): **`return`**.
+
+   Ser invocado por `call expression` **no** implica `return`: los cierres de quest entran
+   así y van con `jump game_loop`. El `game_loop` drena el call stack al inicio, así que el
+   `jump` nunca acumula frames. Casuística completa en `funcionamiento.md` §0.1.
 5. **Inicio de label narrativo:** `$ ocultar_hud()` + `window show`.
 6. **Modo posicionamiento:** TODO botón/imagebutton interactivo debe tener
    `if modo_posicionamiento: action NullAction()` / `else: action ...`.

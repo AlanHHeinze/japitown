@@ -27,9 +27,18 @@ Leer solo el archivo relevante para ahorrar contexto; no hace falta cargarlos to
    npc_presente, memoria, stat).
 2. **Anti-PicklingError:** en `Quest`/`ConfigEtapa`/`ConfigFallo`, nunca lambdas crudas — usar
    función `def` (referencia directa) o `_qc("clave_unica", lambda: ...)`.
-3. **Devolver control al game loop:** terminar flujo propio con
-   `window hide` + `$ mostrar_hud()` + `jump game_loop`; un label llamado por el sistema
-   (`call expression`) termina en `return`.
+3. **Final de un label — `return` vs `jump game_loop`** (el error más caro del proyecto:
+   `return` de más cierra el juego al menú principal). Preguntá: *después de este label,
+   ¿el caller tiene algo más que hacer?*
+   - **No** → es **contenido** (cierre de quest/evento/escena, devuelve al juego libre):
+     `window hide` + `$ mostrar_hud()` + **`jump game_loop`**.
+   - **Sí** → es **subrutina** (el caller sigue con su lógica: executor de acciones,
+     `pensar_mensaje`, label de entrada de locación): **`return`**.
+
+   Ser invocado por `call expression` **no** implica `return` — muchos cierres de quest
+   entran así y van con `jump game_loop`. El `game_loop` drena el call stack al inicio
+   (`while renpy.call_stack_depth() > 0: renpy.pop_call()`), así que el `jump` nunca
+   acumula frames. Detalle completo y casuística en `funcionamiento.md` §0.1.
 4. **Modo posicionamiento:** todo botón interactivo con
    `if modo_posicionamiento: action NullAction()`.
 5. **Door access** lo decide `TABLA_ACCESO_HABITACION` (umbrales actuales: Violet 50/50/30/10,

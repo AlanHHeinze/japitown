@@ -660,7 +660,7 @@ label quest_violet_0_cierre:
     window hide
     $ mostrar_hud()
     show screen hud_navegacion
-    return
+    jump game_loop
 
 
 # =============================================================================
@@ -717,4 +717,4 @@ label quest_violet_0_puerta:
     window hide
     $ mostrar_hud()
     show screen hud_navegacion
-    return
+    jump game_loop

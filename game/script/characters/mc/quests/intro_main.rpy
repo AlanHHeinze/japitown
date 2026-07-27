@@ -547,6 +547,17 @@ label intro_llegada_casa:
 # ---------------------------------------------------------
 label game_loop:
 
+    # Red de seguridad anti-leak de frames: si llegamos aca con frames vivos en
+    # el call stack, son basura por definicion (nada "retorna a traves" del
+    # game_loop — es el loop raiz). Un label de contenido que termina en
+    # jump game_loop desde un contexto con frame (accion, puerta, listener)
+    # los dejaria acumulados, y en sesiones largas eso crashea. Drenarlos aca
+    # hace validos AMBOS finales: return (subrutina del motor) y
+    # jump game_loop (terminal de escena/quest/evento).
+    python:
+        while renpy.call_stack_depth() > 0:
+            renpy.pop_call()
+
     window hide
 
     # Asegurar que el HUD esté visible al devolver control al jugador

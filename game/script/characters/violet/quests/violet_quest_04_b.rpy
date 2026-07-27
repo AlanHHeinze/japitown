@@ -117,7 +117,7 @@ label quest_violet_questprincipal_04_b:
 
     window hide
     $ mostrar_hud()
-    return
+    jump game_loop
 
 
 ################################################################################

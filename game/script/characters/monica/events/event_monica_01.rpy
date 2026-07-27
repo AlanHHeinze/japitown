@@ -383,8 +383,8 @@ label event_monica_01_narrativa:
 label event_monica_01_check_replay:
     # RETRABAJANDO: el replay del masaje (masaje_locion / masaje_repetir) está en
     # rediseño. Por ahora solo se avisa y se vuelve al loop. NO consume la loción.
-    # `return` (no `jump game_loop`): este label se alcanza vía `jump expression`
-    # desde interaccion_monica, que el HUD invoca con Call — hay que cerrar el frame.
+    # Terminal de contenido: jump game_loop (si el camino hasta aca vino con
+    # frames, los drena el inicio del game_loop).
     # El texto va por renpy.translate_string para traducirlo por `strings` (abajo,
     # en el tl del evento) sin depender del id de diálogo.
     $ ocultar_hud()
@@ -393,7 +393,7 @@ label event_monica_01_check_replay:
     "[_msg_rework_masaje]"
     window hide
     $ mostrar_hud()
-    return
+    jump game_loop
 
 
 ################################################################################

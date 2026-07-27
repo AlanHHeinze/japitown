@@ -87,8 +87,13 @@ label evento2_violet:
     # Ejecutar la accion de dormir
     $ dormir()
 
+    # Este evento se dispara ANTES del dormir() de accion_dormir y salta afuera,
+    # asi que necesita su propio autoguardado (si no, la noche del evento 2
+    # quedaria sin punto de recuperacion).
+    $ autoguardar_partida()
+
     window hide
-    return
+    jump game_loop
 
 label evento2_violet_repetir:
     # Este label en la arquitectura original retorna para dejar que el botón de dormir se encargue

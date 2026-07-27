@@ -377,7 +377,7 @@ label vq3a_monologo:
 
     $ mostrar_hud()
     show screen hud_navegacion
-    return
+    jump game_loop
 
 
 ################################################################################
@@ -506,7 +506,7 @@ label vq3a_final_escena:
     window hide
     $ mostrar_hud()
     show screen hud_navegacion
-    return
+    jump game_loop
 
 
 ################################################################################

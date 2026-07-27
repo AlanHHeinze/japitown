@@ -26,13 +26,17 @@ define gui.show_name = True
 
 ## The version of the game.
 
-define config.version = "0.1.8b"
+define config.version = "0.1.8d"
 
 
 ## Text that is placed on the game's about screen. Place the text between the
 ## triple-quotes, and leave a blank line between paragraphs.
 
-define gui.about = _p("""
+# Se usa renpy.minstore._p (la funcion de modulo) en vez del builtin `_p` del
+# store a proposito: el rebuild de idioma re-evalua este define, y si algun .rpyc
+# viejo cacheado (web) llegara a pisar store._p con un string, `_p(...)` crashearia
+# con "'str' object is not callable". La referencia al modulo es inmune a ese shadow.
+define gui.about = renpy.minstore._p("""
 """)
 
 
@@ -41,6 +45,19 @@ define gui.about = _p("""
 ## or semicolons.
 
 define build.name = "Japitown"
+
+
+## Autoguardado #################################################################
+
+## Se declara explicito (aunque True ya es el default de Ren'Py) porque de esto
+## depende el autoguardado al dormir: force_autosave() no hace nada si esto es
+## False. Ver autoguardar_partida() en core/time/timesystem_core.rpy.
+## Los autoguardados quedan en la pagina "A" del menu de Cargar.
+define config.has_autosave = True
+
+## Cantidad de slots rotativos de autoguardado (default de Ren'Py). Como se
+## autoguarda una vez por noche, esto da ~10 dias de historial para recuperar.
+define config.autosave_slots = 10
 
 
 ## Sounds and music ############################################################

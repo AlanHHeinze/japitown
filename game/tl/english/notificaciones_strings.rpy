@@ -16,3 +16,7 @@ translate english strings:
     # El {} lo reemplaza el nombre del NPC — conservarlo en el `new`.
     old "{} recordará esto"
     new "{} will remember this"
+
+    # Autoguardado al dormir (autoguardar_partida en timesystem_core.rpy).
+    old "Partida guardada"
+    new "Game saved"

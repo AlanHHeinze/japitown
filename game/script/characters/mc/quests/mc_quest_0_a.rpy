@@ -445,7 +445,7 @@ label mc_q0_mudanza_completada:
 
     $ mc_q0_esperar_horario = True
     $ mostrar_hud()
-    return
+    jump game_loop
 
 
 ################################################################################
@@ -481,7 +481,7 @@ label mc_q0_stage_b:
     $ restriccion_quest_activa.registrar_label_locacion("casa_frente", "mc_q0_entrada_frente")
 
     $ mostrar_hud()
-    return
+    jump game_loop
 
 
 label mc_q0_entrada_frente:
@@ -567,4 +567,4 @@ label mc_q0_siguiente_etapa:
     )
 
     $ mc_q0_final_sleep = True
-    return
+    jump game_loop

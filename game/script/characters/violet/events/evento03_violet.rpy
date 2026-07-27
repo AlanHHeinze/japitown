@@ -815,7 +815,7 @@ label violet_quest2_cierre:
     $ mostrar_hud()
 
     # Volver al loop principal
-    return
+    jump game_loop
 
 
 ################################################################################

@@ -118,7 +118,7 @@ label violet_quest08a_iniciar_loop:
         npcs_ocultos=["violet", "monica", "jasmine"],
     )
     $ mostrar_hud()
-    return
+    jump game_loop
 
 
 label violet_quest08a_ver_tv:
@@ -284,7 +284,7 @@ label violet_quest08a_ver_tv:
 
     $ sistema_locaciones.mover_a_locacion("casa_living")
     $ mostrar_hud()
-    return
+    jump game_loop
 
 
 # Entrada a la habitacion de Violet durante la fase 2. No hace nada por sí mismo
@@ -591,7 +591,7 @@ label violet_quest08a_cierre_desarrollo:
         vq8a_bgs_originales = {}
 
     $ mostrar_hud()
-    return
+    jump game_loop
 
 
 ################################################################################

@@ -118,8 +118,8 @@ label quest_jasmine_questprincipal_0_c:
     # Completar quest
     $ completar_quest_actual("jasmine")
 
-    # `return` (no `jump game_loop`): se alcanza como opción del menú de
-    # interacción, dentro del Call("interaccion_jasmine") del HUD.
+    # Terminal de contenido: jump game_loop (si el camino hasta aca vino con
+    # frames, los drena el inicio del game_loop).
     window hide
     $ mostrar_hud()
-    return
+    jump game_loop

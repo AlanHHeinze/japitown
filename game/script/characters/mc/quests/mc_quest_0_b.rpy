@@ -90,7 +90,7 @@ label mc_q0b_completar:
     # Completar la quest
     $ sistema_quests_mc.completar_activa()
 
-    # `return` (no `jump game_loop`): se llega por _validar_estado_tras_celular,
-    # que el celular invoca con Call(...) — ese frame hay que cerrarlo.
+    # Terminal de contenido: jump game_loop (si el camino hasta aca vino con
+    # frames, los drena el inicio del game_loop).
     $ mostrar_hud()
-    return
+    jump game_loop

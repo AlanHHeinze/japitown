@@ -90,6 +90,38 @@ init python:
             avanzar_horario()
         renpy.restart_interaction()
 
+    def autoguardar_partida():
+        """
+        Autoguardado en un punto seguro. Se usa al dormir, para que el jugador
+        pueda recuperar la partida si el juego crashea durante el dia.
+
+        IMPORTANTE — por que hace checkpoint() ANTES del autosave:
+        al cargar una partida, Ren'Py no resume en el statement exacto del
+        guardado: `unfreeze_core` termina llamando a `rollback_core(0)`, o sea
+        hace rollback hasta el ULTIMO CHECKPOINT (loadsave/rollback.py). Los
+        checkpoints normalmente solo se crean en interacciones (dialogo, menus).
+        Sin este checkpoint explicito, cargar el autosave podria retroceder hasta
+        antes de la llamada a dormir() y re-ejecutarla, avanzando el dia dos
+        veces. renpy.checkpoint() marca ESTE punto exacto como restaurable.
+
+        Llamar SIEMPRE como statement propio de script, nunca desde adentro de
+        dormir(): si el checkpoint cayera sobre la linea que ejecuta dormir(),
+        volveriamos a tener el riesgo de la doble ejecucion.
+
+        No hace falta chequear nada mas: force_autosave() ya se auto-cancela
+        solo si esta en el menu principal, en un replay, en rollback, o si
+        config.has_autosave / _autosave estan en False.
+        """
+        renpy.checkpoint()
+        renpy.force_autosave()
+
+        # Aviso al jugador (notificacion no bloqueante de la cola izquierda).
+        # Se chequea has_autosave/_autosave porque force_autosave() se cancela
+        # sola y en silencio si el autoguardado esta apagado: sin el chequeo le
+        # estariamos diciendo "Partida guardada" sin haber guardado nada.
+        if config.has_autosave and getattr(store, "_autosave", True):
+            notificar_partida_guardada()
+
     def dormir():
         """
         Accion de dormir: avanza al dia siguiente y resetea el horario a Mañana.
@@ -316,6 +348,12 @@ label accion_dormir:
 
     # Ejecutar lógica de cambio de dia
     $ dormir()
+
+    # Autoguardado del nuevo dia. Va justo despues de dormir() a proposito: los
+    # bloqueos de "no podes dormir" ya retornaron antes, y TODO el contenido del
+    # dia nuevo (triggers de quest al despertar, mensajes, eventos) pasa despues
+    # — asi que si algo de eso crashea, el autosave es anterior al problema.
+    $ autoguardar_partida()
 
     # Hook Quest 0 del MC — primer sueño al finalizar la introducción
     if getattr(store, 'mc_q0_final_sleep', False):

@@ -252,6 +252,15 @@ init python:
         """
         _agregar_notif_recuerdo(renpy.translate_string("Recuerdo activado"))
 
+    def notificar_partida_guardada():
+        """
+        Muestra "Partida guardada" a la izquierda. La dispara el autoguardado
+        al dormir (ver autoguardar_partida() en core/time/timesystem_core.rpy).
+        Sin emoji ni color propio a proposito: es un aviso de sistema y tiene
+        que ser lo menos invasivo posible.
+        """
+        _agregar_notif_recuerdo(renpy.translate_string("Partida guardada"))
+
     def notificar_recordara(npc_id):
         """
         Muestra "[Nombre] recordará esto" a la izquierda.
