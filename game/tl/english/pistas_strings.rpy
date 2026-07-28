@@ -122,6 +122,20 @@ translate english strings:
     old "Ir a ver a Violet"
     new "Go see Violet"
 
+    # Rama "el mensaje todavía no llegó" de la 04_c (el chat llega de noche).
+    old "No voy a seguir molestando a Violet, por ahora podría esperar"
+    new "I'm not going to keep bothering Violet, for now I could just wait"
+
+    old "Esperar que Violet nos envíe un mensaje"
+    new "Wait for Violet to send a message"
+
+    # Idem en la 04_d (una vez alcanzado el deseo 10).
+    old "Ahora solo queda esperar el mensaje de Violet"
+    new "Now all that's left is to wait for Violet's message"
+
+    old "Esperar el mensaje de Violet"
+    new "Wait for Violet's message"
+
     # =========================================================================
     # Violet — Quest 07 (el cierre del cosplay)
     # =========================================================================

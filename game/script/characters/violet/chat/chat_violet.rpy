@@ -628,22 +628,16 @@ init 6 python:
     # QUEST 06_A — Libre Mercado avisa que las entradas estan disponibles
     # =========================================================================
 
+    # Aviso automatico de la tienda: se lee y listo, no se responde (es un
+    # anuncio, no una conversacion). `pasos=[]` lo marca como informativo:
+    # el sistema lo entrega al chat y lo da por completado en el acto, sin
+    # dejar el badge de "sin responder" (ver _entregar_grupo).
     chat_libre_mercado_japicon_g1 = GrupoMensajes(
         id="japicon_tickets_g1",
         npc_id="libre_mercado",
         mensaje_inicial="La venta de entradas para la Japicon ya está disponible",
         trigger_id="japicon_tickets_g1",
-        pasos=[
-            PasoConversacion(
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto="Tengo que comprar las entradas",
-                        respuesta_npc="",
-                        saltar_a_paso=-1,
-                    ),
-                ]
-            ),
-        ],
+        pasos=[],
     )
     sistema_mensajes.registrar_grupo("libre_mercado", chat_libre_mercado_japicon_g1)
 

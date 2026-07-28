@@ -145,17 +145,15 @@ translate english strings:
     old "Esperar horario de atención de CoXplay"
     new "Wait for CoXplay's business hours"
 
-    old "Tengo que confirmar el pago del cosplay."
-    new "I need to confirm the cosplay payment."
+    # Fase 3 (pago): pista y que_hacer unicos para toda la fase, con o sin plata.
+    # Reemplazan a las cuatro variantes viejas ("Tengo que confirmar el pago...",
+    # "Confirmar pago ($200)...", "Necesito $200...", "Juntar $200..."), que se
+    # borraron al quedar sin uso en el codigo.
+    old "Tienda Coxplay está esperando el pago"
+    new "The Coxplay Store is waiting for the payment"
 
-    old "Confirmar pago ($200) en Tienda CoXplay"
-    new "Confirm payment ($200) at the CoXplay Store"
-
-    old "Necesito $200 para pagar el cosplay."
-    new "I need $200 to pay for the cosplay."
-
-    old "Juntar $200 para abonar a CoXplay"
-    new "Save up $200 to pay CoXplay"
+    old "Tener $200 en la cuenta y responder el mensaje de Tienda Coxplay"
+    new "Have $200 in the account and reply to the Coxplay Store's message"
 
     old "La tienda me respondió, tengo que continuar la conversación."
     new "The store replied — I need to continue the conversation."

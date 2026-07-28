@@ -26,7 +26,7 @@ define gui.show_name = True
 
 ## The version of the game.
 
-define config.version = "0.1.8d"
+define config.version = "0.1.8f"
 
 
 ## Text that is placed on the game's about screen. Place the text between the
@@ -58,6 +58,27 @@ define config.has_autosave = True
 ## Cantidad de slots rotativos de autoguardado (default de Ren'Py). Como se
 ## autoguarda una vez por noche, esto da ~10 dias de historial para recuperar.
 define config.autosave_slots = 10
+
+## ---------------------------------------------------------------------------
+## SOLO se autoguarda al dormir. Aca se apagan los 3 disparadores automaticos
+## de Ren'Py, que hacian que el autoguardado saltara todo el tiempo y pisara
+## los slots (10 slots consumidos en minutos = se pierde el historial de dias).
+##
+## OJO: no se puede apagar poniendo has_autosave = False. Ese flag lo chequea
+## force_autosave() (loadsave.py:325), asi que apagarlo mataria TAMBIEN el
+## autoguardado al dormir, ademas de esconder la pagina "A" del menu Cargar.
+## Hay que apagar los disparadores, no el sistema.
+## ---------------------------------------------------------------------------
+
+## Autoguardado periodico (cada N interacciones). None lo desactiva por
+## completo — es el mismo mecanismo que usa Ren'Py en 00gamemenu.rpy.
+define config.autosave_frequency = None
+
+## Autoguardado al elegir una opcion de menu (menuexports.py:169).
+define config.autosave_on_choice = False
+
+## Autoguardado al ingresar texto, ej. el nombre del MC (inputexports.py:54).
+define config.autosave_on_input = False
 
 
 ## Sounds and music ############################################################

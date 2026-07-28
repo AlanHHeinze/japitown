@@ -3,6 +3,11 @@
 ################################################################################
 ## Definición de todos los eventos de Jasmine
 
+# Día en que se completó la quest 0_c. Lo escribe el cierre de esa quest
+# (jasmine_quest_0_c.rpy) y lo lee condicion_aparicion_event1_jasmine para
+# esperar 1 día antes de mostrar el evento.
+default jasmine_quest_0c_dia_completada = 0
+
 init 10 python:
 
     # ===========================================================================
@@ -13,9 +18,19 @@ init 10 python:
     # ===========================================================================
 
     def condicion_aparicion_event1_jasmine():
-        """Aparece (VISIBLE) tras completar la quest 0_c de Jasmine."""
+        """
+        Aparece (VISIBLE) 1 día después de completar la quest 0_c de Jasmine.
+
+        La espera evita que el evento de "volver a ver" aparezca el mismo día en
+        que acabás de ver el conjunto. Mismo patrón que el evento 1 de Mónica.
+        """
         q = sistema_quests.obtener_quest("jasmine_questprincipal_0_c")
-        return bool(q and q.completada)
+        if not q or not q.completada:
+            return False
+
+        dia_completada = getattr(store, 'jasmine_quest_0c_dia_completada', 0)
+        dias_totales = getattr(store, 'dias_totales', 1)
+        return dias_totales - dia_completada >= 1
 
     def condicion_activacion_event1_jasmine():
         """El evento NO se auto-activa por tiempo: lo dispara el botón

@@ -17,6 +17,56 @@ init 10 python:
         quest = sistema_quests.obtener_quest("violet_questprincipal_0_b")
         return quest is not None and quest.completada
 
+    # ---------------------------------------------------------------------------
+    # Evento 01 (Casco VR): pista y que_hacer segun en que punto esta el casco.
+    # Van como def de modulo (no lambdas): el evento se guarda en el save y una
+    # lambda rompe el pickle. Los textos se traducen solos — ConfigEtapa._resolver
+    # les pasa renpy.translate_string() al devolverlos.
+    # ---------------------------------------------------------------------------
+
+    def condicion_activacion_evento01_violet():
+        """
+        El evento NO se auto-activa: lo dispara el jugador al USAR el casco de
+        noche en su habitación (label_uso del item), y ahí mismo se completa.
+
+        Devolver False es imprescindible, no cosmético. Sin `condicion_activacion`,
+        verificar_activacion() devuelve True y el evento salta OCULTO → VISIBLE →
+        ACTIVO en la misma pasada de validar_eventos(). Como config_etapas solo
+        define ESTADO_EVENT_VISIBLE, en ACTIVO no hay override y obtener_mensajes()
+        cae al fallback `mensaje_pista or descripcion or nombre` — o sea mostraba
+        "Casco VR" en el panel de pistas en vez de la pista real.
+        Mismo patrón que el evento 1 de Jasmine.
+        """
+        return False
+
+    def _evento01_violet_tiene_casco():
+        """El casco ya esta en el inventario."""
+        try:
+            return store.inventario.get("casco_realidad_virtual", 0) > 0
+        except Exception:
+            return False
+
+    def _evento01_violet_casco_en_camino():
+        """Comprado pero todavia no entregado."""
+        try:
+            return cantidad_en_camino("casco_realidad_virtual") > 0
+        except Exception:
+            return False
+
+    def pista_evento01_violet():
+        if _evento01_violet_tiene_casco():
+            return "Podría probarlo a la noche cuando estoy en mi habitación"
+        if _evento01_violet_casco_en_camino():
+            return "No veo la hora de que llegue y probarlo"
+        return "Siempre quise uno de estos debería comprarlo"
+
+    def quehacer_evento01_violet():
+        if _evento01_violet_tiene_casco():
+            return "Usar el casco VR por la noche en tu habitación mientras Violet está disponible en la casa"
+        if _evento01_violet_casco_en_camino():
+            return "Esperar que llegue el casco VR"
+        return "Comprar casco VR"
+
     def condicion_aparicion_evento03_violet():
         """El evento aparece cuando la quest 03_a de Violet está completada."""
         quest = sistema_quests.obtener_quest("violet_questprincipal_0_b3_a")
@@ -61,11 +111,17 @@ init 10 python:
             tipo=TIPO_EVENT_ESPORADICO,
             prioridad=5,
             condicion_aparicion=condicion_aparicion_evento01_violet,
+            condicion_activacion=condicion_activacion_evento01_violet,
             npc_id="violet",
+            # Fallbacks estáticos: si algún día el evento queda en un estado sin
+            # entrada en config_etapas, el panel muestra esto y no el nombre.
+            mensaje_pista="Siempre quise uno de estos debería comprarlo",
+            mensaje_que_hacer="Comprar casco VR",
             config_etapas={
                 ESTADO_EVENT_VISIBLE: ConfigEtapa(
-                    pista="Siempre quise un casco VR, ahora que esta disponible podría comprarlo",
-                    que_hacer="Comprar el casco VR y usarlo en tu habitación por la noche",
+                    # Dinámicas: comprar -> esperar la entrega -> usarlo.
+                    pista=pista_evento01_violet,
+                    que_hacer=quehacer_evento01_violet,
                 ),
             },
         )

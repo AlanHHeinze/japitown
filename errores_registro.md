@@ -350,3 +350,82 @@ está, no-op si falta. El "dar el paquete" es único igual, así que no cambia l
 
 **Verificación:** no quedan mutaciones de inventario sin guardar (salvo las que ya lo
 estaban); lint limpio.
+
+---
+
+### E07 — Visual: sprite de quest en la locación equivocada
+
+- **Estado:** ✅ **CORREGIDO (2026-07-27)**
+- **Tipo:** bug visual (no crashea) — reporte manual
+- **Versión:** 0.1.8c · PC
+- **Contexto:** Lunes (día 22) — Mañana · Cocina (`casa_cocina`) ·
+  quest activa "Violet y el Cosplay" (`violet_questprincipal_04_b`) en **etapa 2**
+
+**Síntoma:** en la cocina, Violet aparece con el sprite del **door access** (el de
+"ya salgo", `idle_violet_casa_pasillo_fuera_*`), apoyada contra el mueble y en una
+posición que no corresponde a la cocina.
+
+#### 🔧 Diagnóstico
+
+Desincronización entre **dónde está el NPC** y **con qué sprite se lo dibuja**:
+
+- La quest 04_b define `rutina_quest` con `locacion="casa_pasilloarriba"` +
+  el sprite del pasillo, para `(dia, 0)` de **todos** los días.
+- Esa rutina recién se le **aplica** al NPC en `ETAPA_RUTINA` (etapa 4), dentro de
+  `_aplicar_rutina_quest()` (questsystem_core, transición etapa 3 → 4).
+- Pero `obtener_sprite_quest()` / `obtener_posicion_quest()` devolvían el sprite y
+  la posición **desde la etapa 1**, sin mirar la etapa ni la locación.
+
+Resultado: en etapas 1–3 Violet sigue en su rutina normal (cocina los lunes a la
+mañana), pero el HUD la dibuja con el visual de la quest — sprite del pasillo en la
+posición del pasillo (663, 804) en vez de la de cocina (765, 1060).
+
+El HUD consulta el sprite de quest como **Prioridad 1**, antes que la rutina visual,
+así que el visual incorrecto le gana al correcto.
+
+#### 🔨 El arreglo
+
+Nuevo helper `Quest._rutina_quest_vigente()`: devuelve la `RutinaQuest` del momento
+**solo si el NPC está realmente parado en la locación que ella define**.
+`obtener_sprite_quest()` y `obtener_posicion_quest()` pasan a usarlo.
+
+Se eligió contrastar contra `locacion_actual` en vez de contra la etapa porque
+mantiene sprite y posición coherentes **sin importar quién movió al NPC** (rutina,
+door access, evento) — no solo en el caso puntual de esta quest.
+
+**Alcance:** afecta a las 4 quests con `rutina_quest`. Los NPCs de
+`rutinas_adicionales` no tenían el mismo agujero: `obtener_quest_activa(npc_id)`
+solo matchea `quest.npc_id`, así que nunca tomaban sprite de quest por ese camino.
+
+**Verificación:** lint limpio.
+
+#### 🔁 Ampliación (2026-07-27) — mismo bug en NPCs prestados
+
+Al llevar el fix "a los demás personajes" se encontró que **ya estaba cubierto**
+para las quests de Mónica y Jasmine (el arreglo vive en la clase `Quest`, no en el
+código de Violet). Pero apareció una **segunda variante del mismo bug, ya viva**:
+
+`_aplicar_rutina_a_npc()` guardaba **solo la locación** de la rutina y descartaba el
+sprite:
+
+```python
+npc.rutinas_quest[(dia, horario)] = rutina.locacion   # el sprite se perdía
+```
+
+Y `obtener_sprite_quest_npc()` solo miraba `obtener_quest_activa(npc_id)`, que
+matchea únicamente por `quest.npc_id`. Resultado: cuando una quest mueve a un NPC
+**de otro personaje** vía `rutinas_adicionales`, ese NPC **cambiaba de locación pero
+seguía dibujándose con el sprite de su rutina normal**, correspondiente a otra
+habitación. Ya pasaba en la quest 09_a de Violet, que mueve a Mónica con sprites
+propios por horario.
+
+**Arreglo:** `_rutina_quest_vigente(npc_id)` ahora resuelve tanto `rutina_quest`
+(NPC principal) como `rutinas_adicionales` (NPC prestado), con el mismo chequeo de
+locación. Nuevo `_buscar_rutina_quest_vigente(npc_id)` busca en los dos lugares y lo
+usan `obtener_sprite_quest_npc()` y `obtener_posicion_quest_npc()`.
+
+No hace falta desempatar por prioridad: como solo se devuelven rutinas *vigentes*
+(NPC parado donde la rutina dice) y un NPC está en una sola locación, a lo sumo una
+puede coincidir.
+
+**Verificación:** lint limpio; firmas retrocompatibles (`npc_id` es opcional).

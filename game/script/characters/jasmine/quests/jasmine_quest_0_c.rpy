@@ -118,6 +118,10 @@ label quest_jasmine_questprincipal_0_c:
     # Completar quest
     $ completar_quest_actual("jasmine")
 
+    # Guardar el día para el evento "Volver a ver", que recién aparece 1 día
+    # después (ver condicion_aparicion_event1_jasmine en events_jasmine.rpy).
+    $ store.jasmine_quest_0c_dia_completada = getattr(store, 'dias_totales', 1)
+
     # Terminal de contenido: jump game_loop (si el camino hasta aca vino con
     # frames, los drena el inicio del game_loop).
     window hide

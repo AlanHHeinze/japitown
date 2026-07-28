@@ -184,7 +184,15 @@
       "Bash(gh issue *)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:itch.io)",
-      "WebFetch(domain:forum.defold.com)"
+      "WebFetch(domain:forum.defold.com)",
+      "Bash(java -version)",
+      "Bash(grep -n \"^_ = \\\\|^def _\\(\\\\|translate_string as _\\\\b\\\\|^from.*import.*as _$\" renpy/minstore.py)",
+      "Bash(grep -rhoE '^\\\\s*old \"\\(.*\\)\"$' game/tl/english/)",
+      "Bash(bc)",
+      "Bash(grep -rn -A 1 -F 'old \"Confirmar pago \\($200\\) en Tienda CoXplay\"' game/tl/english/)",
+      "Bash(grep -rn -A 1 -F 'old \"Necesito $200 para pagar el cosplay.\"' game/tl/english/)",
+      "Bash(grep -rn -A 1 -F 'old \"Juntar $200 para abonar a CoXplay\"' game/tl/english/)",
+      "Bash(python -c \"print\\(\\)\")"
     ],
     "additionalDirectories": [
       "c:\\Users\\Alan\\OneDrive\\Desktop\\Japitown\\.claude\\skills\\cambios",

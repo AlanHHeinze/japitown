@@ -351,7 +351,7 @@ label interaccion_puerta_npc:
 
         else:
             # Ausente por rutina normal, quest, u otra razon
-            $ _msg_ausente = MENSAJES_AUSENTE.get(_npc_habitacion, "No hay nadie.")
+            $ _msg_ausente = renpy.translate_string(MENSAJES_AUSENTE.get(_npc_habitacion, "No hay nadie."))
             $ _msg_ausente = renpy.translate_string(_msg_ausente)
             $ _blk_guardar_toque()
             piensa "[_msg_ausente]"

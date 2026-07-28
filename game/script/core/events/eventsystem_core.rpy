@@ -107,8 +107,19 @@ init python:
                 if pista and que_hacer:
                     return {"pista": pista, "que_hacer": que_hacer}
             
-            # Fallback a campos estáticos
+            # Fallback a campos estáticos.
+            # OJO: terminar en `self.nombre` hace que un evento mal configurado
+            # se vea "bien" (muestra su nombre) en vez de vacío, y eso escondia
+            # bugs reales: el evento del casco VR mostraba "Casco VR" como pista
+            # porque se auto-activaba a ACTIVO y config_etapas solo cubria
+            # VISIBLE. Por eso se avisa en modo desarrollador.
             if not pista:
+                if config.developer and not (self.mensaje_pista or self.descripcion):
+                    print(
+                        "[Events] '{}' sin pista para el estado '{}': "
+                        "falta esa clave en config_etapas o un mensaje_pista. "
+                        "Se muestra el nombre del evento.".format(self.id, self.estado)
+                    )
                 pista = self.mensaje_pista or self.descripcion or self.nombre
             if not que_hacer:
                 que_hacer = self.mensaje_que_hacer or pista

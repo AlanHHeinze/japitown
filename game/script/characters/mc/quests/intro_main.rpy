@@ -560,6 +560,11 @@ label game_loop:
 
     window hide
 
+    # Etiqueta de los slots de guardado ("Día N"). Se refresca acá ademas de en
+    # dormir() para que un guardado manual del dia 1 (todavia sin dormir nunca)
+    # tambien salga etiquetado.
+    $ save_name = jp_nombre_guardado()
+
     # Asegurar que el HUD esté visible al devolver control al jugador
     $ mostrar_hud()
 

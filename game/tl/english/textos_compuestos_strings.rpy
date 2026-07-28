@@ -150,3 +150,12 @@ translate english strings:
 
     old "Algunas horas después..."
     new "A few hours later..."
+
+    # =========================================================================
+    # Etiqueta de los slots de Guardar/Cargar (jp_nombre_guardado en
+    # timesystem_core.rpy). Se muestra delante de la fecha: "Día 22, domingo...".
+    # Conservar el placeholder {dia}.
+    # =========================================================================
+
+    old "Día {dia}"
+    new "Day {dia}"

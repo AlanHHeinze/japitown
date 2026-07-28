@@ -13,8 +13,13 @@ init python:
         Agrega uno o varios mensajes de despertar a la lista, evitando repetir.
         `msg` puede ser un string (un solo pensamiento) o una lista/tupla de
         strings: asi una misma etapa de quest puede mostrar varios piensa
-        seguidos (ej: la reflexion + un comentario). Cada linea se traduce al
-        mostrarse (piensa "[_(...)]" en el label), asi que aca van en español.
+        seguidos (ej: la reflexion + un comentario). Aca los textos van en
+        español; el label los pasa por renpy.translate_string() antes de
+        mostrarlos.
+
+        Ojo: el dedupe (mensajes_despertar_mostrados) se hace con el texto EN
+        ESPAÑOL, o sea con el original. Tiene que quedar asi: si se guardara ya
+        traducido, cambiar de idioma haria que los mensajes se repitieran.
         """
         if not msg:
             return
@@ -76,14 +81,21 @@ init python:
             base = _("Me llego un pedido, tendria que ir a buscarlo.")
         else:
             base = _("Ah me llego el pedido, voy a ir a buscarlo.")
-        
+
+        # Traducir ACA, antes de pegarle la lista de items: el string ya
+        # compuesto no matchearia ningun `old`. Los _() de arriba solo marcan
+        # los textos para el extractor, devuelven el string intacto.
+        base = renpy.translate_string(base)
+
         # Agregar lista de items
         items_unificados = store.sistema_compras.unificar_entregas_hoy()
         if items_unificados:
             lineas_items = []
             for item_id, cantidad in items_unificados.items():
                 if item_id in CATALOGO_ITEMS:
-                    nombre = CATALOGO_ITEMS[item_id]["nombre"]
+                    # El nombre va por separado por lo mismo: la linea con emoji
+                    # y cantidad tampoco matchearia (igual que en las notifs).
+                    nombre = renpy.translate_string(CATALOGO_ITEMS[item_id]["nombre"])
                     emoji = CATALOGO_ITEMS[item_id]["emoji"]
                     lineas_items.append(f"  {emoji} {nombre} x{cantidad}")
             
@@ -120,7 +132,12 @@ label mensajes_al_despertar:
     # Mostrar cada mensaje como pensamiento individual
     $ idx_despertar = 0
     while idx_despertar < len(lista_mensajes_despertar):
-        $ msg_despertar_actual = _(lista_mensajes_despertar[idx_despertar])
+        # renpy.translate_string y NO _(): _() solo marca el string para que el
+        # extractor lo encuentre, lo devuelve intacto. En un `piensa "[var]"` la
+        # traduccion se busca sobre el LITERAL "[var]" y recien despues se
+        # sustituye (renpy/substitutions.py:328), asi que el texto en español
+        # nunca se busca en el diccionario y sale sin traducir.
+        $ msg_despertar_actual = renpy.translate_string(lista_mensajes_despertar[idx_despertar])
         piensa "[msg_despertar_actual]"
         $ idx_despertar += 1
     

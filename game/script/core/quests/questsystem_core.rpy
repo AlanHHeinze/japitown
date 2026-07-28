@@ -945,43 +945,74 @@ init python:
                     return True
             return False
         
-        def obtener_sprite_quest(self):
+        def _rutina_quest_vigente(self, npc_id=None):
+            """
+            Devuelve la RutinaQuest de este momento para `npc_id` SOLO si esta
+            realmente aplicada, o sea si el NPC esta parado en la locacion que
+            ella define. Sin npc_id, se refiere al NPC principal de la quest.
+
+            Sirve tanto para el NPC principal (rutina_quest) como para los que la
+            quest mueve de prestado (rutinas_adicionales).
+
+            Por que el chequeo de locacion: la rutina de quest recien se le aplica
+            al NPC en ETAPA_RUTINA (_aplicar_rutina_quest, al pasar de etapa 3 a
+            4), pero el sprite y la posicion se consultaban desde la etapa 1.
+            En el medio el NPC sigue en su rutina normal, asi que el HUD lo
+            dibujaba en su locacion de siempre pero con el sprite y la posicion de
+            la quest. Bug real (0.1.8c): quest 04_b "Violet y el Cosplay" en
+            ETAPA_ESPERA mostraba a Violet en la cocina con el sprite del pasillo
+            del door access, y ubicada en la posicion del pasillo.
+
+            Comparar contra locacion_actual mantiene sprite y posicion
+            sincronizados con donde esta parado el NPC, sin importar la etapa ni
+            quien lo haya movido (rutina, door access, evento).
+            """
+            if npc_id is None:
+                npc_id = self.npc_id
+
+            if npc_id == self.npc_id:
+                rutinas = self.rutina_quest
+            else:
+                rutinas = self.rutinas_adicionales.get(npc_id)
+
+            if not rutinas:
+                return None
+
+            dia = getattr(store, 'dia_semana_actual', 0)
+            horario = getattr(store, 'horario_actual', 0)
+
+            rutina = rutinas.get((dia, horario))
+            if not (rutina and isinstance(rutina, RutinaQuest)):
+                return None
+
+            # Si la rutina define locacion, el NPC tiene que estar ahi para que
+            # su visual de quest valga. Sin locacion, no hay con que contrastar.
+            if rutina.locacion:
+                npc = obtener_npc(npc_id)
+                if not npc or npc.locacion_actual != rutina.locacion:
+                    return None
+
+            return rutina
+
+        def obtener_sprite_quest(self, npc_id=None):
             """
             Obtiene el sprite de la quest para el momento actual.
-            
+
             Returns:
                 str o None: Ruta del sprite o None si no hay sprite de quest
             """
-            if not self.rutina_quest:
-                return None
-            
-            dia = getattr(store, 'dia_semana_actual', 0)
-            horario = getattr(store, 'horario_actual', 0)
-            
-            rutina = self.rutina_quest.get((dia, horario))
-            if rutina and isinstance(rutina, RutinaQuest):
-                return rutina.sprite
-            
-            return None
-        
-        def obtener_posicion_quest(self):
+            rutina = self._rutina_quest_vigente(npc_id)
+            return rutina.sprite if rutina else None
+
+        def obtener_posicion_quest(self, npc_id=None):
             """
             Obtiene la posición del sprite de la quest para el momento actual.
-            
+
             Returns:
                 tuple o None: (x, y) o None si no hay posición definida
             """
-            if not self.rutina_quest:
-                return None
-            
-            dia = getattr(store, 'dia_semana_actual', 0)
-            horario = getattr(store, 'horario_actual', 0)
-            
-            rutina = self.rutina_quest.get((dia, horario))
-            if rutina and isinstance(rutina, RutinaQuest):
-                return rutina.posicion
-            
-            return None
+            rutina = self._rutina_quest_vigente(npc_id)
+            return rutina.posicion if rutina else None
         
         def _restaurar_rutina_normal(self):
             """Restaura la rutina normal del NPC principal y NPCs adicionales."""
@@ -1416,20 +1447,51 @@ init python:
             return quest_activa.intentar_ejecutar()
         return (False, ["No hay quest activa."])
     
-    def obtener_sprite_quest_npc(npc_id):
+    def _buscar_rutina_quest_vigente(npc_id):
         """
-        Obtiene el sprite de quest para un NPC si está en una quest activa.
-        
-        Args:
-            npc_id: ID del NPC
-        
-        Returns:
-            str o None: Ruta del sprite o None
+        Busca entre las quests activas la RutinaQuest vigente para este NPC.
+
+        Mira DOS lugares, porque a un NPC lo puede reubicar tanto su propia quest
+        como la quest de otro personaje:
+        1. `rutina_quest` de la quest activa del propio NPC.
+        2. `rutinas_adicionales` de las quests de OTROS NPCs (ej: la quest 09_a
+        de Violet mueve a Monica). Sin este paso, esos NPCs se movian de
+        locacion pero se seguian dibujando con el sprite de su rutina normal,
+        que corresponde a otra habitacion — el mismo bug que E07.
+
+        Devuelve solo rutinas vigentes (el NPC parado donde la rutina dice), asi
+        que no hace falta desempatar por prioridad: un NPC esta en una sola
+        locacion, y como mucho una rutina puede coincidir.
         """
         quest = sistema_quests.obtener_quest_activa(npc_id)
         if quest:
-            return quest.obtener_sprite_quest()
+            rutina = quest._rutina_quest_vigente(npc_id)
+            if rutina:
+                return rutina
+
+        for q in sistema_quests.quests.values():
+            if not q.activa or q.npc_id == npc_id:
+                continue
+            if npc_id not in q.rutinas_adicionales:
+                continue
+            rutina = q._rutina_quest_vigente(npc_id)
+            if rutina:
+                return rutina
+
         return None
+
+    def obtener_sprite_quest_npc(npc_id):
+        """
+        Obtiene el sprite de quest para un NPC si está en una quest activa.
+
+        Args:
+            npc_id: ID del NPC
+
+        Returns:
+            str o None: Ruta del sprite o None
+        """
+        rutina = _buscar_rutina_quest_vigente(npc_id)
+        return rutina.sprite if rutina else None
     
     def obtener_posicion_quest_npc(npc_id):
         """
@@ -1441,10 +1503,8 @@ init python:
         Returns:
             tuple o None: (x, y) o None
         """
-        quest = sistema_quests.obtener_quest_activa(npc_id)
-        if quest:
-            return quest.obtener_posicion_quest()
-        return None
+        rutina = _buscar_rutina_quest_vigente(npc_id)
+        return rutina.posicion if rutina else None
     
     def actualizar_quests():
         """

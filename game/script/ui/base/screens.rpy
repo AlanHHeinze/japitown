@@ -740,11 +740,19 @@ screen file_slots(title):
 
                         add FileScreenshot(slot) xalign 0.5
 
-                        text FileTime(slot, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("empty slot")):
-                            style "slot_time_text"
+                        ## El "Día N" va PEGADO a la fecha, delante de la coma.
+                        ## FileSaveName lee el campo `_save_name` del save, que
+                        ## escriben la variable save_name (guardado manual) y
+                        ## config.auto_save_extra_info (autoguardado) — ambos
+                        ## salen de jp_nombre_guardado() en timesystem_core.rpy.
+                        ## Los saves viejos no tienen ese campo: ahí queda solo
+                        ## la fecha, sin coma suelta.
+                        $ _jp_slot_dia = FileSaveName(slot)
+                        $ _jp_slot_fecha = FileTime(slot, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("empty slot"))
+                        $ _jp_slot_linea = u"{}, {}".format(_jp_slot_dia, _jp_slot_fecha) if _jp_slot_dia else _jp_slot_fecha
 
-                        text FileSaveName(slot):
-                            style "slot_name_text"
+                        text "[_jp_slot_linea]":
+                            style "slot_time_text"
 
                         key "save_delete" action FileDelete(slot)
 

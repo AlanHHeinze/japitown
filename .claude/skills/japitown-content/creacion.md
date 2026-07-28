@@ -28,6 +28,25 @@
    `if modo_posicionamiento: action NullAction()` / `else: action ...`.
 7. **IDs únicos** en todo el proyecto. Convención: `{npc}_{tipo}_{numero}` /
    `{locacion}_{elemento}_{variante}`.
+8. **Texto que se muestra desde una variable → `renpy.translate_string()`.**
+   `_()` **NO traduce**: solo marca el string para el extractor y lo devuelve intacto.
+   En un `piensa "[var]"` Ren'Py busca la traducción del **literal** `"[var]"` y recién
+   después sustituye (`renpy/substitutions.py:328`), así que el contenido en español
+   nunca se busca en el diccionario y sale sin traducir — aunque el `old`/`new` exista.
+
+   ```renpy
+   $ _msg = renpy.translate_string(texto_en_espaniol)   # ✔
+   piensa "[_msg]"
+
+   $ _msg = _(texto_en_espaniol)                        # ✘ sale en español
+   piensa "[_msg]"
+   ```
+
+   Vale igual para **strings compuestos**: traducir las **partes** antes de armarlos
+   (el string ya concatenado con emojis, cantidades o `{}` nunca matchearía un `old`).
+   Diálogo escrito literal en el .rpy no necesita nada de esto — ese lo cubre la
+   traducción por id. Un `text _variable` en un **screen** tampoco: ahí el displayable
+   recibe el valor final y sí lo traduce.
 
 ---
 

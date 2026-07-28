@@ -37,6 +37,26 @@ init python:
         if con_fade:
             renpy.transition(Dissolve(1.5), layer="master")
 
+    def jp_nombre_guardado():
+        """
+        Texto que identifica la partida en los slots de Guardar/Cargar.
+
+        Va por DOS caminos distintos, por eso es una funcion y no un string:
+        - Guardados manuales: lo toman de la variable `save_name`, que Ren'Py
+        pasa como extra_info (00action_file.rpy:415). Hay que mantenerla al dia.
+        - Autoguardados: lo toman de config.auto_save_extra_info, que se evalua
+        en el momento de guardar, asi que siempre sale fresco.
+
+        Ambos terminan en el campo `_save_name` del save, que es lo que lee
+        FileSaveName() en la pantalla de slots.
+        """
+        return renpy.translate_string("Día {dia}").format(
+            dia=getattr(store, 'dias_totales', 1)
+        )
+
+    # Los autoguardados evaluan esto al guardar (loadsave.py:253).
+    config.auto_save_extra_info = jp_nombre_guardado
+
     def avanzar_horario():
         """
         Avanza el horario al siguiente estado.
@@ -108,19 +128,46 @@ init python:
         dormir(): si el checkpoint cayera sobre la linea que ejecuta dormir(),
         volveriamos a tener el riesgo de la doble ejecucion.
 
-        No hace falta chequear nada mas: force_autosave() ya se auto-cancela
-        solo si esta en el menu principal, en un replay, en rollback, o si
-        config.has_autosave / _autosave estan en False.
+        POR QUE SE REPLICAN LAS GUARDAS DE force_autosave():
+        esa funcion no devuelve nada y se cancela EN SILENCIO en 6 casos
+        distintos (loadsave.py:325-350). Sin replicar los chequeos no hay forma
+        de distinguir "guardo" de "no hizo nada": ni para avisarle al jugador sin
+        mentirle, ni para diagnosticar por que un dia no se guardo.
         """
         renpy.checkpoint()
-        renpy.force_autosave()
+
+        _motivo = None
+        if not config.has_autosave:
+            _motivo = "config.has_autosave=False"
+        elif not getattr(store, "_autosave", True):
+            _motivo = "_autosave=False"
+        elif renpy.game.after_rollback or renpy.in_rollback():
+            # Ren'Py no guarda mientras hay rollback pendiente (la pila de
+            # roll-forward se llena cuando el jugador rebobina con la rueda).
+            _motivo = "rollback pendiente"
+        elif getattr(store, "main_menu", False):
+            _motivo = "menu principal"
+        elif getattr(store, "_in_replay", None):
+            _motivo = "replay"
+
+        if _motivo:
+            if config.developer:
+                print("[Autosave] omitido al dormir: {}".format(_motivo))
+            return
+
+        # block=True (guarda en el hilo principal) a proposito. Con el modo
+        # background, autosave_thread_function() envuelve todo en
+        # `except Exception: pass`, asi que un fallo de guardado (ej. un
+        # PicklingError por un callable no picklable) seria COMPLETAMENTE
+        # invisible: ni error, ni partida guardada. Justo en el sistema que
+        # existe para recuperarse de crashes, eso es inaceptable — preferimos
+        # que reviente y se vea. Ademas evita la carrera del flag
+        # autosave_not_running, que descarta el guardado si el hilo anterior
+        # sigue corriendo. En web Ren'Py ya lo corre sincronico igual.
+        renpy.force_autosave(block=True)
 
         # Aviso al jugador (notificacion no bloqueante de la cola izquierda).
-        # Se chequea has_autosave/_autosave porque force_autosave() se cancela
-        # sola y en silencio si el autoguardado esta apagado: sin el chequeo le
-        # estariamos diciendo "Partida guardada" sin haber guardado nada.
-        if config.has_autosave and getattr(store, "_autosave", True):
-            notificar_partida_guardada()
+        notificar_partida_guardada()
 
     def dormir():
         """
@@ -148,6 +195,10 @@ init python:
         
         # Incrementar contador de dias totales (para quests)
         store.dias_totales += 1
+
+        # Refrescar la etiqueta de los slots de guardado (los guardados manuales
+        # leen `save_name` tal como esté en ese momento).
+        store.save_name = jp_nombre_guardado()
         
         # Verificar si se completa la estación
         if store.dia_actual > DIAS_POR_ESTACION:

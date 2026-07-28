@@ -369,8 +369,11 @@ init 5 python:
                 que_hacer="Darle un día",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista=_qc("vq04c_botonlisto_pista", lambda: "Violet se lo probo debería ir a hablar con ella" if store.sistema_mensajes.grupo_completado("violet_quest04c_chat") else "Violet me envió un mensaje, debería responderle."),
-                que_hacer=_qc("vq04c_botonlisto_quehacer", lambda: "Ir a ver a Violet" if store.sistema_mensajes.grupo_completado("violet_quest04c_chat") else "Responder mensaje de Violet"),
+                # Rama "todavía no llegó el mensaje": el chat de Violet llega de
+                # NOCHE, así que al despertar decía "responderle el mensaje" sin
+                # que hubiera mensaje. Ahora invita a esperar.
+                pista=_qc("vq04c_botonlisto_pista", lambda: "Violet se lo probo debería ir a hablar con ella" if store.sistema_mensajes.grupo_completado("violet_quest04c_chat") else "No voy a seguir molestando a Violet, por ahora podría esperar"),
+                que_hacer=_qc("vq04c_botonlisto_quehacer", lambda: "Ir a ver a Violet" if store.sistema_mensajes.grupo_completado("violet_quest04c_chat") else "Esperar que Violet nos envíe un mensaje"),
                 # Sin mensaje_despertar: el chat llega de noche como prioritario y se
                 # resuelve en el momento, no hace falta avisar al despertar.
                 trigger_mensaje=("violet_quest04c_chat", "violet"),
@@ -407,8 +410,11 @@ init 5 python:
                 mensaje_despertar="Violet dijo que tenía más fotos, quizás pueda lograr que me las envie",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista=_qc("vq04d_botonlisto_pista", lambda: "Violet ya me contestó, debería ir a hablar con ella" if store.sistema_mensajes.grupo_completado("violet_quest04d_chat") else "Violet me envió un mensaje, debería responderle"),
-                que_hacer=_qc("vq04d_botonlisto_quehacer", lambda: "Ir a ver a Violet" if store.sistema_mensajes.grupo_completado("violet_quest04d_chat") else "Responder mensaje de Violet"),
+                # Misma corrección que en la 04_c: el chat llega de NOCHE, así que
+                # hasta que llegue la pista invita a esperar en vez de pedir que
+                # respondas un mensaje que todavía no existe.
+                pista=_qc("vq04d_botonlisto_pista", lambda: "Violet ya me contestó, debería ir a hablar con ella" if store.sistema_mensajes.grupo_completado("violet_quest04d_chat") else "Ahora solo queda esperar el mensaje de Violet"),
+                que_hacer=_qc("vq04d_botonlisto_quehacer", lambda: "Ir a ver a Violet" if store.sistema_mensajes.grupo_completado("violet_quest04d_chat") else "Esperar el mensaje de Violet"),
                 # Sin mensaje_despertar: el chat llega de noche como prioritario.
                 trigger_mensaje=("violet_quest04d_chat", "violet"),
             ),
@@ -444,8 +450,11 @@ init 5 python:
                 mensaje_despertar="Esto de mejorar mi relación con Violet esta trayendo buenos resultados, me pregunto si podre conseguir algo más",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista=_qc("vq04e_botonlisto_pista", lambda: "Violet ya me contestó, debería ir a hablar con ella" if store.sistema_mensajes.grupo_completado("violet_quest04e_chat") else "Violet me envió un mensaje, debería responderle"),
-                que_hacer=_qc("vq04e_botonlisto_quehacer", lambda: "Ir a ver a Violet" if store.sistema_mensajes.grupo_completado("violet_quest04e_chat") else "Responder mensaje de Violet"),
+                # Misma corrección que en la 04_c y la 04_d: el chat llega de
+                # NOCHE, así que hasta que llegue la pista invita a esperar en vez
+                # de pedir que respondas un mensaje que todavía no existe.
+                pista=_qc("vq04e_botonlisto_pista", lambda: "Violet ya me contestó, debería ir a hablar con ella" if store.sistema_mensajes.grupo_completado("violet_quest04e_chat") else "Ahora solo queda esperar el mensaje de Violet"),
+                que_hacer=_qc("vq04e_botonlisto_quehacer", lambda: "Ir a ver a Violet" if store.sistema_mensajes.grupo_completado("violet_quest04e_chat") else "Esperar el mensaje de Violet"),
                 # Doble piensa al despertar, solo despues de responder el chat nocturno
                 # (antes de responderlo lo resuelve el mensaje prioritario en el momento).
                 mensaje_despertar=_qc("vq04e_botonlisto_despertar", lambda: [
@@ -934,9 +943,33 @@ init python:
         def _completado(grupo_id):
             return msgs.grupo_completado(grupo_id)
 
+        def _disparado(grupo_id):
+            """
+            True si el grupo YA SE DISPARO (no solo si existe).
+
+            Ojo: `_todos_grupos` se llena al REGISTRAR los grupos, en init, asi
+            que preguntar por la mera existencia (`if g4:`) daba siempre True y
+            la quest se quedaba clavada reportando la fase 4 (la dirección de
+            envio) desde el minuto cero, sin llegar nunca a las fases 3/2/1.
+
+            El estado por si solo no alcanza: "pendiente" es a la vez el estado
+            inicial de un grupo sin disparar Y el de uno ya entregado esperando
+            que el jugador lo abra. Por eso se desempata mirando si el grupo esta
+            en la bandeja del chat o en la cola de espera de entrega.
+            """
+            g = _grupo(grupo_id)
+            if not g:
+                return False
+            if g.estado in ("espera", "en_curso", "completado"):
+                return True
+            chat = msgs.chats.get(g.npc_id)
+            if chat and g in getattr(chat, 'grupos_pendientes', []):
+                return True
+            return g in getattr(msgs, '_grupos_en_espera', [])
+
         # Fase 4: dirección de envío
         g4 = _grupo("coxplay_q5a_g4")
-        if g4:
+        if _disparado("coxplay_q5a_g4"):
             if _completado("coxplay_q5a_g4"):
                 dias_restantes = max(0, getattr(store, 'coxplay_pedido_dia', 0) + 2 - getattr(store, 'dias_totales', 0))
                 if dias_restantes > 0:
@@ -966,24 +999,27 @@ init python:
                 "Hoy CoXplay puede confirmar la dirección de envío.",
             )
 
-        # Fase 3: pago
-        g3 = _grupo("coxplay_q5a_g3")
-        if g3 and not _completado("coxplay_q5a_g3"):
+        # Fase 3: pago — la cadena esta esperando que respondamos con el pago.
+        # Pista y que_hacer unicos para toda la fase: el texto ya contempla las
+        # dos situaciones (juntar la plata y responder el mensaje), asi que no
+        # hace falta partirlo segun cuanto dinero haya. Solo cambia el
+        # mensaje_despertar, que si distingue.
+        if _disparado("coxplay_q5a_g3") and not _completado("coxplay_q5a_g3"):
             if getattr(store, 'dinero', 0) >= 200:
                 return (
-                    "Tengo que confirmar el pago del cosplay.",
-                    "Confirmar pago ($200) en Tienda CoXplay",
+                    "Tienda Coxplay está esperando el pago",
+                    "Tener $200 en la cuenta y responder el mensaje de Tienda Coxplay",
                     "Hoy puedo confirmar el pago del cosplay en el chat.",
                 )
             return (
-                "Necesito $200 para pagar el cosplay.",
-                "Juntar $200 para abonar a CoXplay",
+                "Tienda Coxplay está esperando el pago",
+                "Tener $200 en la cuenta y responder el mensaje de Tienda Coxplay",
                 "Necesito ahorrar $200 para pagar el pedido a CoXplay.",
             )
 
         # Fase 2: conversacion principal
         g2 = _grupo("coxplay_q5a_g2")
-        if g2:
+        if _disparado("coxplay_q5a_g2"):
             if g2.estado in ["pendiente", "en_curso"]:
                 return (
                     "La tienda me respondió, tengo que continuar la conversación.",

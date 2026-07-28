@@ -151,9 +151,6 @@ translate english strings:
     old "La venta de entradas para la Japicon ya está disponible"
     new "Tickets for the Japicon are now on sale"
 
-    old "Tengo que comprar las entradas"
-    new "I have to buy the tickets"
-
     # =========================================================================
     # QUEST 06_B — Violet invita al MC a su habitación
     # =========================================================================

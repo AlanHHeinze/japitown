@@ -39,7 +39,7 @@ label interaccion_jasmine:
                 $ _npc_id_temp = "jasmine"
                 jump ejecutar_quest_activa
             elif mensajes:
-                $ _fallo_msg = mensajes[0]
+                $ _fallo_msg = renpy.translate_string(mensajes[0])
                 piensa "[_fallo_msg]"
 
     # Construir opciones extra

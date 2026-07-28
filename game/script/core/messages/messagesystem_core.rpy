@@ -483,6 +483,18 @@ init python:
                     renpy.translate_string("Foto de {npc}").format(npc=target_npc.capitalize())
                 )
 
+            # Grupo INFORMATIVO (sin pasos): es un aviso que no se responde.
+            # Se da por completado apenas se entrega, en vez de mandarlo a
+            # pendientes. Si entrara a pendientes quedaria trabado: la UI solo
+            # dibuja opciones si hay paso, y un grupo solo se completa desde
+            # responder(), que sin opciones nunca se llama — o sea, badge de
+            # "sin responder" para siempre y un grupo_activo que no se cierra.
+            if not grupo.pasos:
+                grupo.finalizar()
+                if hasattr(self, '_grupos_en_espera') and grupo in self._grupos_en_espera:
+                    self._grupos_en_espera.remove(grupo)
+                return
+
             # Agregar a pendientes del chat
             chat.grupos_pendientes.append(grupo)
 

@@ -48,9 +48,6 @@ translate english strings:
     old "Comprar dos entradas para la Japicon"
     new "Buy two tickets for the Japicon"
 
-    old "Comprar el casco VR y usarlo en tu habitación por la noche"
-    new "Buy the VR headset and use it in your room at night"
-
     old "Contarle a Violet de las entradas por la noche en su habitación"
     new "Tell Violet about the tickets at night in her room"
 
@@ -225,8 +222,25 @@ translate english strings:
     old "Revisar la notebook de Monica en mi habitación"
     new "Check Monica's laptop in my room"
 
-    old "Siempre quise un casco VR, ahora que esta disponible podría comprarlo"
-    new "I always wanted a VR headset, now that it's available I could buy it"
+    # Evento 01 (Casco VR) — pista y que_hacer dinámicas: comprar -> esperar la
+    # entrega -> usarlo. Reemplazan al par estático viejo, que quedó sin uso.
+    old "Siempre quise uno de estos debería comprarlo"
+    new "I always wanted one of these, I should buy it"
+
+    old "Comprar casco VR"
+    new "Buy a VR headset"
+
+    old "No veo la hora de que llegue y probarlo"
+    new "I can't wait for it to arrive so I can try it"
+
+    old "Esperar que llegue el casco VR"
+    new "Wait for the VR headset to arrive"
+
+    old "Podría probarlo a la noche cuando estoy en mi habitación"
+    new "I could try it at night when I'm in my room"
+
+    old "Usar el casco VR por la noche en tu habitación mientras Violet está disponible en la casa"
+    new "Use the VR headset at night in your room while Violet is available at home"
 
     old "Supongo que toca esperar"
     new "I guess it's time to wait"
