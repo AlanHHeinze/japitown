@@ -5,37 +5,10 @@
 ## ropero (caja/pijama) y cajonera (grande/normal/tanga).
 ## Todos los elementos usan sistema_pos para ser editables con la herramienta.
 
-# =============================================================================
-# SCREEN: Sillon en el Living
-# =============================================================================
-# Se muestra sobre el living sin ocultar HUD ni navegacion.
-# Click en el sillon dispara el label de la TV.
-
-screen vq4_sillon_living():
-
-    # Auto-ocultar si el jugador ya no esta en el living
-    if getattr(store, 'sistema_locaciones', None) and store.sistema_locaciones.locacion_actual and store.sistema_locaciones.locacion_actual.id != "casa_living":
-        on "show" action Hide("vq4_sillon_living")
-        timer 0.01 action Hide("vq4_sillon_living")
-    else:
-        # Posicion leida desde sistema_pos (editable con herramienta → tab Screen)
-        $ _sillon_elem = sistema_pos.obtener("casa_living_sillon_vq4")
-        $ _sillon_x = _sillon_elem.x if _sillon_elem else vq4_pos_sillon[0]
-        $ _sillon_y = _sillon_elem.y if _sillon_elem else vq4_pos_sillon[1]
-
-        imagebutton:
-            idle Transform("images/quest/violet/quest4/violet_quest04_interaccionsillon.png", alpha=0.0)
-            hover "images/quest/violet/quest4/violet_quest04_interaccionsillon.png"
-            xpos _sillon_x
-            ypos _sillon_y
-            xanchor 0.5
-            yanchor 1.0
-            mouse "hand"
-            if modo_posicionamiento:
-                action NullAction()
-            else:
-                action [Hide("vq4_sillon_living"), Jump("violet_quest4_mirando_tv")]
-
+# NOTA: acá vivía `screen vq4_sillon_living` (el sillón clickeable del living).
+# Se eliminó porque su único botón saltaba a `violet_quest4_mirando_tv`, un label
+# que NO EXISTE — tocarlo crasheaba con LabelNotFound. La screen tampoco se
+# mostraba desde ningún lado, así que era inalcanzable. Recuperable por git.
 
 # =============================================================================
 # SCREEN: Habitacion de Violet — Exploracion

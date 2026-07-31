@@ -134,6 +134,17 @@ style name_input_button_text is confirm_button_text:
     hover_color "#FFB74D"
 
 
+# Variables del ingreso de nombre. Con `default` por la misma razón que
+# `_jugar_intro` en intro_main.rpy: si el `renpy.call_screen` que asigna
+# `_nc_nombre` crashea y el jugador toca "Continuar", la ejecución sigue sin que
+# la variable exista y la línea siguiente (`_nc_nombre.strip()`) revienta con
+# NameError. Con "" el flujo termina en `mc_name = "Mc"`, que ya es el fallback
+# previsto para cuando no se escribe nada.
+default _nc_nombre = u""
+default _nc_previo = u""
+default _nc_error = u""
+
+
 label choose_name:
 
     $ _nc_previo = u""

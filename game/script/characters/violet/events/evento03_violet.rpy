@@ -5,6 +5,13 @@
 ## Se dispara desde el door access de la habitacion de Violet (sábado mañana)
 ## Disponible luego de completar la quest 03_a
 
+# Resultado del menú de opciones. Con `default` por la misma razón que
+# `_jugar_intro` en intro_main.rpy: si el `renpy.call_screen` que lo asigna
+# crashea y el jugador toca "Continuar", la ejecución sigue sin que la variable
+# exista y el `if _resultado_menu == "a"` revienta con NameError. Con None cae
+# al `jump violet_quest2_cierre` del final, que es un cierre válido.
+default _resultado_menu = None
+
 # =============================================================================
 # IMAGENES
 # =============================================================================

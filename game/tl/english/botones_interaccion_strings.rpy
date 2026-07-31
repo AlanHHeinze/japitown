@@ -66,6 +66,27 @@ translate english strings:
     old "Invitar a jugar VR"
     new "Invite her to play VR"
 
+    # -------------------------------------------------------------------------
+    # Botones de las quests que antes se auto-disparaban al clickear a Violet
+    # (2026-07-31). Al sacar ese atajo, cada quest necesitó su propio botón.
+    # "Pedirle perdón" no está acá: ya existía más arriba y se reutiliza.
+    # -------------------------------------------------------------------------
+
+    old "Preguntarle qué le pasa"
+    new "Ask her what's wrong"
+
+    old "Preguntarle por el cosplay"
+    new "Ask her about the cosplay"
+
+    old "Preguntarle por las fotos"
+    new "Ask her about the photos"
+
+    old "Mostrarle los cosplays"
+    new "Show her the cosplays"
+
+    old "Vine como me pediste"
+    new "I came like you asked"
+
     # =========================================================================
     # Jasmine — menú de interacción
     # =========================================================================

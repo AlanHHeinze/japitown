@@ -192,13 +192,21 @@
       "Bash(grep -rn -A 1 -F 'old \"Confirmar pago \\($200\\) en Tienda CoXplay\"' game/tl/english/)",
       "Bash(grep -rn -A 1 -F 'old \"Necesito $200 para pagar el cosplay.\"' game/tl/english/)",
       "Bash(grep -rn -A 1 -F 'old \"Juntar $200 para abonar a CoXplay\"' game/tl/english/)",
-      "Bash(python -c \"print\\(\\)\")"
+      "Bash(python -c \"print\\(\\)\")",
+      "Bash(awk 'NR<=628 && /^\\(init|label|    def |screen \\)/ {l=NR\": \"$0} END{}  {if\\(NR==628\\) print l}' game/script/tools/celular/ajuste_celular.rpy)",
+      "Bash(awk 'NR<=104 && /^\\(init|label|    def |screen \\)/ {l=NR\": \"$0} {if\\(NR==104\\) print l}' game/script/tools/position/herramienta_pos_simple.rpy)",
+      "Bash(awk 'NR<=206 && /^\\(init|label|    def |screen \\)/ {l=NR\": \"$0} {if\\(NR==206\\) print l}' game/script/core/utils/sistema_sentry.rpy)",
+      "Bash(awk 'index\\($0,\"label paqueterepartidor_quest01_violet:\"\\)==1{f=1} f&&/^label /&&!index\\($0,\"paqueterepartidor_quest01_violet\"\\){exit} f{print NR\": \"$0}' game/script/characters/violet/quests/violet_quest_01_a.rpy)",
+      "Bash(grep -nE \"^\\\\s*\\(return|jump game_loop\\)$\" game/script/characters/otros/repartidor/historia_repartidor.rpy)",
+      "Bash(awk '/^label game_loop:/{f=1} f&&/^label /&&!/game_loop/{exit} f{print NR\": \"$0}' game/script/characters/mc/quests/intro_main.rpy)",
+      "Bash(grep -nE \"^\\\\s*\\\\\\\\\\\\$ |activar_skin|talk|estado|rutina\" game/script/characters/monica/quests/monica_quest_0_b.rpy)"
     ],
     "additionalDirectories": [
       "c:\\Users\\Alan\\OneDrive\\Desktop\\Japitown\\.claude\\skills\\cambios",
       "C:\\Users\\Alan\\OneDrive\\Desktop\\Japitown\\game\\script\\ui\\menu*",
       "\\tmp",
-      "C:\\Users\\Alan\\OneDrive\\Desktop\\Japitown\\game"
+      "C:\\Users\\Alan\\OneDrive\\Desktop\\Japitown\\game",
+      "C:\\Users\\Alan\\OneDrive\\Desktop\\Japitown"
     ]
   },
   "hooks": {}

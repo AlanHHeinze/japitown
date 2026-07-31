@@ -20,21 +20,21 @@ label interaccion_monica:
     # Verificar si hay quest lista para ejecutar
     $ _quest_activa = sistema_quests.obtener_quest_activa("monica")
 
-    # Quests que NO se auto-disparan al hacer click:
-    #  - 0   : se inicia con el botón "Agradecerle" (a solas con Mónica).
-    #  - 0_b : se dispara solo al entrar al living (auto-trigger por locación).
-    # Gate has_label: no auto-ejecutar (ni avanzar etapa) quests sin label
-    # propio. Self-maintaining, no depende de la tupla (ver E03).
-    if (_quest_activa and _quest_activa.etapa_actual == 5 and
-            renpy.has_label("quest_" + _quest_activa.id) and
-            _quest_activa.id not in ("monica_questprincipal_0", "monica_questprincipal_0_b")):
-        $ exito, mensajes = _quest_activa.intentar_ejecutar()
-        if exito:
-            $ _npc_id_temp = "monica"
-            jump ejecutar_quest_activa
+    # NOTA DE ARQUITECTURA (2026-07-31): acá había un gate que auto-ejecutaba la
+    # quest activa y saltaba SIN abrir el menú. Se eliminó.
+    #
+    # El problema: el botón "Hablar" del sistema de talk vive DENTRO del menú, y
+    # el menú era la última línea de este label — así que cualquier quest que
+    # secuestrara el click hacía desaparecer Talk, aunque no tuviera nada que ver
+    # (ver E09: la quest 0_c dejaba a Mónica sin Hablar para siempre).
+    # Se mantenía con una lista negra de exclusiones cuyo default era inseguro:
+    # olvidarse de agregar una quest = secuestra el click.
+    #
+    # Ahora el menú SIEMPRE se abre, y las quests se inician con su propio botón
+    # (arriba de todo, antes de los eventos y de Hablar). Un disparador por quest,
+    # explícito y visible.
 
-    # Si no hay evento ni quest, mostrar menú de interacción
-    # Pasar opciones extra según contexto
+    # Opciones extra del menú, en orden: quest → evento → (Hablar lo agrega el screen)
     $ _opciones_extra_monica = []
 
     # Quest 0: botón "Agradecerle" — solo cuando la quest está lista y el MC

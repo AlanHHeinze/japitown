@@ -12,35 +12,22 @@ label interaccion_jasmine:
     if not _npc_actual:
         return
     
-    # Quest 0_b: Ropa Nueva — disponible despues de completar quest 0
-    $ _quest_j0b = sistema_quests.obtener_quest("jasmine_questprincipal_0_b")
-    if (_quest_j0b and _quest_j0b.activa and not _quest_j0b.completada and
-            _quest_j0b.etapa_actual == ETAPA_BOTON_LISTO and
-            sistema_locaciones.locacion_actual and
-            sistema_locaciones.locacion_actual.id == "casa_gym" and
-            horario_actual == 1):
-        $ _npc_id_temp = "jasmine"
-        $ _quest_id_temp = "jasmine_questprincipal_0_b"
-        jump ejecutar_quest_activa
-    
+    # (2026-07-31) Acá había un segundo auto-disparo, específico de la quest 0_b
+    # en el gym por la tarde, que también salteaba el menú. Se eliminó por la
+    # misma razón que el gate genérico — y era redundante: la 0_b YA tiene su
+    # botón ("¿Hay algo más que quieras decirme?", más abajo), con una condición
+    # incluso más amplia (sin restricción de lugar ni horario).
+
     # Verificar si hay quest lista para ejecutar
     # Quests con validacion_especial de lugar/hora se manejan via opciones_extra
     $ _quest_activa = sistema_quests.obtener_quest_activa("jasmine")
 
-    if _quest_activa and _quest_activa.etapa_actual == ETAPA_BOTON_LISTO:
-        # Las quests 0_a/0_b/0_c se manejan via opciones_extra y triggers especiales
-        # (lugar/hora), por eso NO deben auto-ejecutarse aqui.
-        # Gate has_label: no auto-ejecutar (ni avanzar etapa) quests sin label
-        # propio. Self-maintaining, no depende de la tupla (ver E03).
-        if (renpy.has_label("quest_" + _quest_activa.id) and
-                _quest_activa.id not in ("jasmine_questprincipal_0_a", "jasmine_questprincipal_0_b", "jasmine_questprincipal_0_c")):
-            $ exito, mensajes = _quest_activa.intentar_ejecutar()
-            if exito:
-                $ _npc_id_temp = "jasmine"
-                jump ejecutar_quest_activa
-            elif mensajes:
-                $ _fallo_msg = renpy.translate_string(mensajes[0])
-                piensa "[_fallo_msg]"
+    # NOTA DE ARQUITECTURA (2026-07-31): acá había un gate que auto-ejecutaba la
+    # quest activa y saltaba SIN abrir el menú. Se eliminó — ver la explicación
+    # completa en interactions_monica.rpy. El menú ahora se abre siempre y cada
+    # quest se inicia con su propio botón.
+    # Las quests de Jasmine ya usaban botones (0_a/0_b/0_c estaban excluidas),
+    # así que este cambio no le saca ningún disparador.
 
     # Construir opciones extra
     $ _opciones_extra_jasmine = []

@@ -22,6 +22,9 @@ init python:
     import time as _sentry_time
     import uuid as _sentry_uuid
     import re as _sentry_re
+    # builtins: para usar el set() nativo de Python en vez del RevertableSet que
+    # el store de Ren'Py pone bajo el nombre `set` (ver _jp_sentry_marcar_enviado).
+    import builtins as _sentry_builtins
 
     # DSN del proyecto (Settings → Projects → japitown → Client Keys).
     JP_SENTRY_DSN = "https://2c52aabfb9d63edc6419661323a5d475@o4511656803041280.ingest.us.sentry.io/4511796319551488"
@@ -34,8 +37,38 @@ init python:
     _JP_SENTRY_ENVELOPE = "https://o4511656803041280.ingest.us.sentry.io/api/4511796319551488/envelope/"
 
     # Dedup por sesión: no reenviar el mismo error N veces si el jugador sigue
-    # tocando "Continuar" sobre la misma excepción. (No se guarda: prefijo "_".)
-    _jp_sentry_enviados = set()
+    # tocando "Continuar" sobre la misma excepción.
+    #
+    # OJO — POR QUE VA EN renpy.session Y NO EN UN set() DEL STORE:
+    # en el store de Ren'Py, `set` ES `RevertableSet` (minstore.py:51), o sea que
+    # sus mutaciones las trackea el rollback. El handler de errores corre en un
+    # contexto nuevo (`renpy.call_in_new_context`), y al salir de ahi el rollback
+    # DESHACIA el .add() — el deduplicador quedaba vacio y cada crash repetido se
+    # reenviaba. En Sentry se veia como ~6 eventos por issue.
+    #
+    # `renpy.session` es un dict plano de Python: no se guarda, no lo toca el
+    # rollback, y se limpia solo al reiniciar el juego. Que es exactamente el
+    # alcance que queremos para un dedup "por sesion".
+    _JP_SENTRY_SESSION_KEY = "jp_sentry_enviados"
+
+    def _jp_sentry_ya_enviado(clave):
+        """True si esta clase de error ya se mando en esta sesion."""
+        try:
+            return clave in renpy.session.get(_JP_SENTRY_SESSION_KEY, ())
+        except Exception:
+            return False
+
+    def _jp_sentry_marcar_enviado(clave):
+        """Registra la clave como ya enviada (fuera del rollback)."""
+        try:
+            enviados = renpy.session.get(_JP_SENTRY_SESSION_KEY)
+            if enviados is None:
+                # set() nativo, no el RevertableSet del store.
+                enviados = _sentry_builtins.set()
+                renpy.session[_JP_SENTRY_SESSION_KEY] = enviados
+            enviados.add(clave)
+        except Exception:
+            pass
 
     def _jp_sentry_entorno():
         """Distingue web de escritorio para taggear el evento."""
@@ -62,21 +95,100 @@ init python:
             tags["renpy"] = getattr(renpy, "version_only", "?")
         except Exception:
             pass
+
+        # --- Contexto de plataforma -------------------------------------------
+        # Sin esto no se puede distinguir un crash de GPU movil de uno de
+        # escritorio: Sentry solo reporta "Emscripten wasm32" para TODO lo web.
+        # Fue el dato que falto para decidir sobre S04/S06 (renderer muerto).
+        try:
+            if renpy.variant("small") or renpy.variant("phone"):
+                tags["dispositivo"] = "movil"
+            elif renpy.variant("tablet") or renpy.variant("medium"):
+                tags["dispositivo"] = "tablet"
+            elif renpy.variant("web"):
+                tags["dispositivo"] = "escritorio_web"
+            else:
+                tags["dispositivo"] = "escritorio"
+        except Exception:
+            pass
+
+        # Renderer realmente en uso (lo setea set_mode). Clave para los errores
+        # de GL: dice si corrio gl2, y en web si hubo fallback.
+        try:
+            tags["renderer"] = str(renpy.session.get("renderer", "?"))
+        except Exception:
+            pass
+
+        # Ultimo disparador del game_loop que salto (diagnostico de S11:
+        # "Possible infinite loop"). Vacio = la vuelta se completo bien; con
+        # valor = ese disparador estaba activo cuando reventó.
+        try:
+            _glt = getattr(store, "_gl_ultimo_trigger", "")
+            if _glt:
+                tags["gl_trigger"] = str(_glt)
+        except Exception:
+            pass
+
+        # Navegador (solo web). Recortado: solo interesa identificar el motor.
+        try:
+            if renpy.emscripten:
+                import emscripten
+                ua = emscripten.run_script_string("navigator.userAgent") or ""
+                tags["navegador"] = ua[:120]
+        except Exception:
+            pass
+
         return tags
 
+    # Linea de excepcion de Python: un identificador (posiblemente con puntos)
+    # al inicio de linea, con mensaje opcional. Matchea tanto
+    # "AttributeError: 'NoneType' object has..." como
+    # "renpy.gl2.gl2shader.ShaderError" (sin mensaje).
+    _JP_SENTRY_RE_EXC = _sentry_re.compile(
+        r'^([A-Za-z_][A-Za-z0-9_.]*)(?::\s*(.*))?$'
+    )
+
     def _jp_sentry_parse(full, short):
-        """Extrae tipo y mensaje de la excepción de la última línea del traceback
-        (ej: 'renpy.script.LabelNotFound: could not find label ...')."""
-        linea = ""
-        for l in reversed((full or short or "").splitlines()):
-            if l.strip():
-                linea = l.strip()
-                break
-        tipo, valor = "Error", linea
-        if ": " in linea:
-            tipo, valor = linea.split(": ", 1)
-        elif linea:
-            valor = linea
+        """
+        Extrae (tipo, mensaje) de la excepción del traceback.
+
+        OJO — por que NO alcanza con tomar la ultima linea: Ren'Py agrega DESPUES
+        del traceback un bloque de plataforma/version/fecha:
+
+            AttributeError: 'NoneType' object has no attribute 'update'
+
+            Emscripten-3.1.67-wasm32-32bit wasm32
+            Ren'Py 8.5.2.26010301
+            Japitown 0.1.8f
+            Thu Jul 30 22:07:51 2026      <- ultima linea no vacia
+
+        La version anterior agarraba esa ultima linea, con lo cual el tipo era
+        siempre "Error" y el mensaje era el TIMESTAMP. Como el fingerprint se
+        arma con eso, cada evento tenia una huella unica y Sentry abria un issue
+        nuevo por cada ocurrencia en vez de agruparlas (bug real, visible en el
+        dashboard como `Fingerprint values: Error, Thu Jul 30 22:07:51 #`).
+
+        Ahora se busca hacia atras la ultima linea que REALMENTE parezca una
+        excepcion: sin indentar (los frames y el codigo van indentados) y con
+        forma de identificador. El bloque de metadata no matchea porque sus
+        lineas tienen espacios, guiones o apostrofes antes de cualquier ':'.
+        """
+        texto = full or short or ""
+        tipo, valor = "Error", ""
+
+        for l in reversed(texto.splitlines()):
+            linea = l.rstrip()
+            if not linea or linea[0].isspace():
+                continue                      # frames y codigo van indentados
+            if linea.startswith(("File ", "Traceback")):
+                continue
+            m = _JP_SENTRY_RE_EXC.match(linea)
+            if not m:
+                continue
+            tipo = m.group(1)
+            valor = (m.group(2) or "").strip()
+            break
+
         return tipo, valor
 
     def _jp_sentry_frames(full):
@@ -116,7 +228,7 @@ init python:
             tipo, valor = _jp_sentry_parse(full, short)
             fp = _jp_sentry_fingerprint(tipo, valor)
             clave = "|".join(fp)
-            if clave in _jp_sentry_enviados:
+            if _jp_sentry_ya_enviado(clave):
                 return
 
             event_id = _sentry_uuid.uuid4().hex
@@ -143,9 +255,13 @@ init python:
                 },
             }
 
+            # Se marca ANTES de enviar: si la red esta lenta o falla, no
+            # queremos reintentar en bucle sobre el mismo error — el jugador
+            # que sigue tocando "Continuar" generaria una avalancha.
+            _jp_sentry_marcar_enviado(clave)
+
             _args, _kwargs = _jp_sentry_armar(evento, timeout=8)
             renpy.fetch(*_args, **_kwargs)
-            _jp_sentry_enviados.add(clave)
         except Exception:
             pass
 

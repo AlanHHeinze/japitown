@@ -1,0 +1,3045 @@
+﻿* Bug ReporterAPP
+* —
+* 4:49
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 14:49:23 Contexto: loc=casa_pasilloarriba | dias_totales=9 | dia_semana_actual=1 | horario_actual=1 Excepción: Sat Jul 25 14:49:20 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_navigation.rpyc", line 13, in script call File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 80, in script call File "//game/tl…
+pyc", line 594, in script call
+  File "//game/script/characters/violet/quests/violet_quest_01_b.rpyc", line 331, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 14:49:20 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 03:51:38 Contexto: loc=casa_hmc | dias_totales=134 | dia_semana_actual=0 | horario_actual=0 Excepción: Sat Jul 25 03:51:33 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 80, in script call File "//game/tl/english/script/core/time/timesystem_core.rpyc", line 7, in script call File "//game…
+s/npcsystem_interactions.rpyc", line 80, in script call
+  File "//game/script/core/time/timesystem_core.rpyc", line 302, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 03:51:33 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 08:52:29 Contexto: loc=casa_cocina | dias_totales=4 | dia_semana_actual=3 | horario_actual=0 Excepción: Sat Jul 25 08:52:27 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/scrip…
+ons_violet.rpyc", line 111, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 08:52:27 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 09:52:56 Contexto: loc=casa_gym | dias_totales=4 | dia_semana_actual=3 | horario_actual=1 Excepción: Sat Jul 25 09:52:53 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script …
+all
+[Previous line repeated 3 more times]
+  File "//game/script/characters/jasmine/events/event_jasmine_01.rpyc", line 49, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 09:52:53 2026
+* Bug ReporterAPP
+* —
+* 5:07
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 10:07:25 Contexto: loc=casa_hmc | dias_totales=37 | dia_semana_actual=1 | horario_actual=3 Excepción: Sat Jul 25 10:07:23 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/scr…
+cs/npcsystem_interactions.rpyc", line 80, in script call
+  File "//game/script/core/time/timesystem_core.rpyc", line 302, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 10:07:23 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 03:06:22 Contexto: loc=casa_hviolet | dias_totales=3 | dia_semana_actual=2 | horario_actual=1 Excepción: Sat Jul 25 03:06:22 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/sc…
+Traceback (most recent call last):
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 69, in script call
+  File "//game/script/characters/violet/quests/violet_quest_0_b.rpyc", line 698, in script
+  File "renpy/ast.py", line 2079, in execute
+  File "renpy/python.py", line 1305, in py_eval
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/characters/violet/quests/violet_quest_0_b.rpy", line 698, in <module>
+    if _ruta_vq0 == "respeto":
+       ^^^^^^^^^              
+NameError: name '_ruta_vq0' is not defined
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 03:06:22 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 03:07:45 Contexto: loc=casa_living | dias_totales=20 | dia_semana_actual=5 | horario_actual=1 Excepción: Sat Jul 25 03:07:44 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call [Previous line re…
+i/hud/hud_stats.rpyc", line 700, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 595, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 03:07:44 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 10:07:46 Contexto: loc=casa_hmc | dias_totales=37 | dia_semana_actual=1 | horario_actual=3 Excepción: Sat Jul 25 10:07:43 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/scr…
+cs/npcsystem_interactions.rpyc", line 80, in script call
+  File "//game/script/core/time/timesystem_core.rpyc", line 302, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 10:07:43 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 03:07:46 Contexto: loc=casa_living | dias_totales=20 | dia_semana_actual=5 | horario_actual=1 Excepción: Sat Jul 25 03:07:44 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call [Previous line re…
+i/hud/hud_stats.rpyc", line 700, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 595, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 03:07:44 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 03:07:47 Contexto: loc=casa_living | dias_totales=20 | dia_semana_actual=5 | horario_actual=1 Excepción: Sat Jul 25 03:07:44 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call [Previous line re…
+i/hud/hud_stats.rpyc", line 700, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 595, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 03:07:44 2026
+* Bug ReporterAPP
+* —
+* 5:15
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 01:15:37 Contexto: loc=casa_hmc | dias_totales=15 | dia_semana_actual=0 | horario_actual=2 Excepción: Sat Jul 25 01:15:34 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/english/…
+cs/npcsystem_interactions.rpyc", line 80, in script call
+  File "//game/script/core/time/timesystem_core.rpyc", line 302, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 01:15:34 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 12:14:06 Contexto: loc=casa_living | dias_totales=6 | dia_semana_actual=5 | horario_actual=1 Excepción: Sat Jul 25 12:13:57 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/jasmine/interaction/interactions_jasmine.rpyc", line 102, in script ca…
+Traceback (most recent call last):
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/jasmine/interaction/interactions_jasmine.rpyc", line 102, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+[Previous line repeated 5 more times]
+  File "//game/script/core/quests/questsystem_core.rpyc", line 1495, in script
+  File "renpy/ast.py", line 1928, in execute
+  File "renpy/script.py", line 1201, in lookup
+renpy.script.LabelNotFound: could not find label 'quest_violet_questprincipal_01_a'. Did you mean: 'quest_violet_questprincipal_01_b'?
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 12:13:57 2026
+* Bug ReporterAPP
+* —
+* 5:23
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 04:23:48 Contexto: loc=casa_hmc | dias_totales=10 | dia_semana_actual=2 | horario_actual=3 Excepción: Sat Jul 25 04:23:41 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/scrip…
+cs/npcsystem_interactions.rpyc", line 80, in script call
+  File "//game/script/core/time/timesystem_core.rpyc", line 266, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 04:23:41 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 13:26:49 Contexto: loc=casa_gym | dias_totales=4 | dia_semana_actual=3 | horario_actual=1 Excepción: Sat Jul 25 13:26:46 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/scrip…
+ll
+[Previous line repeated 2 more times]
+  File "//game/script/characters/jasmine/events/event_jasmine_01.rpyc", line 279, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 13:26:46 2026
+* Bug ReporterAPP
+* —
+* 5:31
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 10:31:17 Contexto: loc=casa_cocina | dias_totales=8 | dia_semana_actual=0 | horario_actual=0 Excepción: Sat Jul 25 10:31:05 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/engli…
+ile "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call
+[Previous line repeated 5 more times]
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/jasmine/interaction/interactions_jasmine.rpyc", line 102, in script call
+  File "//game/script/characters/monica/interaction/interactions_monica.rpyc", line 89, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/violet/quests/violet_quest_01_b.rpyc", line 231, in script
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "game/script/characters/violet/quests/violet_quest_01_b.rpy", line 231, in <module>
+    $ del store.inventario["mangas_violet"]
+          ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/revertable.py", line 81, in do_mutation
+KeyError: 'mangas_violet'
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 10:31:05 2026
+* Bug ReporterAPP
+* —
+* 5:44
+* [Japitown 0.1.8a] Reporte de error Fecha: 2026-07-25 16:44:40 Contexto: loc=casa_living | dias_totales=37 | dia_semana_actual=1 | horario_actual=3 Excepción: Sat Jul 25 16:44:35 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script call [Previous line re…
+script call
+[Previous line repeated 17 more times]
+  File "//game/script/core/locations/viaje_rapido.rpyc", line 72, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.8a
+* Sat Jul 25 16:44:35 2026
+* [Japitown 0.1.8a] Reporte de error Fecha: 2026-07-25 16:44:41 Contexto: loc=casa_living | dias_totales=37 | dia_semana_actual=1 | horario_actual=3 Excepción: Sat Jul 25 16:44:35 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script call [Previous line re…
+script call
+[Previous line repeated 17 more times]
+  File "//game/script/core/locations/viaje_rapido.rpyc", line 72, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.8a
+* Sat Jul 25 16:44:35 2026
+* Bug ReporterAPP
+* —
+* 6:04
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 10:04:13 Contexto: loc=casa_hmc | dias_totales=33 | dia_semana_actual=4 | horario_actual=3 Excepción: Sat Jul 25 10:03:58 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/jasmine/interaction/interactions_jasmine.rpyc", line 102, in script ca…
+cs/npcsystem_interactions.rpyc", line 80, in script call
+  File "//game/script/core/time/timesystem_core.rpyc", line 302, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 10:03:58 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 10:04:14 Contexto: loc=casa_hmc | dias_totales=33 | dia_semana_actual=4 | horario_actual=3 Excepción: Sat Jul 25 10:03:58 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/jasmine/interaction/interactions_jasmine.rpyc", line 102, in script ca…
+cs/npcsystem_interactions.rpyc", line 80, in script call
+  File "//game/script/core/time/timesystem_core.rpyc", line 302, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 10:03:58 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 10:04:14 Contexto: loc=casa_hmc | dias_totales=33 | dia_semana_actual=4 | horario_actual=3 Excepción: Sat Jul 25 10:03:58 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/jasmine/interaction/interactions_jasmine.rpyc", line 102, in script ca…
+cs/npcsystem_interactions.rpyc", line 80, in script call
+  File "//game/script/core/time/timesystem_core.rpyc", line 302, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 10:03:58 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 11:07:46 Contexto: loc=casa_pasilloabajo | dias_totales=7 | dia_semana_actual=6 | horario_actual=2 Excepción: Sat Jul 25 11:07:45 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script …
+onica.rpyc", line 89, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 11:07:45 2026
+* Bug ReporterAPP
+* —
+* 6:12
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 04:12:08 Contexto: loc=casa_pasilloarriba | dias_totales=10 | dia_semana_actual=2 | horario_actual=2 Excepción: Sat Jul 25 04:12:03 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/locations/viaje_rapido.rpyc", line 7, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/…
+Traceback (most recent call last):
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/tl/english/script/core/locations/viaje_rapido.rpyc", line 7, in script call
+  File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call
+  File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call
+  File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call
+[Previous line repeated 6 more times]
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+[Previous line repeated 6 more times]
+  File "//game/script/core/quests/questsystem_core.rpyc", line 1495, in script
+  File "renpy/ast.py", line 1928, in execute
+  File "renpy/script.py", line 1201, in lookup
+renpy.script.LabelNotFound: could not find label 'quest_violet_questprincipal_01_a'. Did you mean: 'quest_violet_questprincipal_01_b'?
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 04:12:03 2026
+* [Japitown 0.1.8a] Reporte de error Fecha: 2026-07-25 17:17:08 Contexto: loc=casa_living | dias_totales=61 | dia_semana_actual=4 | horario_actual=3 Excepción: Sat Jul 25 17:17:05 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script call [Previous line re…
+tem_interactions.rpyc", line 182, in script call
+  File "//game/script/core/actions/actions_catalog.rpyc", line 313, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.8a
+* Sat Jul 25 17:17:05 2026
+* Bug ReporterAPP
+* —
+* 6:22
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 11:22:03 Contexto: loc=casa_cocina | dias_totales=14 | dia_semana_actual=6 | horario_actual=0 Excepción: Sat Jul 25 11:22:03 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script …
+Traceback (most recent call last):
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call
+  File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+[Previous line repeated 8 more times]
+  File "//game/script/core/quests/questsystem_core.rpyc", line 1495, in script
+  File "renpy/ast.py", line 1928, in execute
+  File "renpy/script.py", line 1201, in lookup
+renpy.script.LabelNotFound: could not find label 'quest_violet_questprincipal_01_a'. Did you mean: 'quest_violet_questprincipal_01_b'?
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 11:22:03 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 11:22:07 Contexto: loc=casa_cocina | dias_totales=14 | dia_semana_actual=6 | horario_actual=0 Excepción: Sat Jul 25 11:22:03 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script …
+Traceback (most recent call last):
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call
+  File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+[Previous line repeated 8 more times]
+  File "//game/script/core/quests/questsystem_core.rpyc", line 1495, in script
+  File "renpy/ast.py", line 1928, in execute
+  File "renpy/script.py", line 1201, in lookup
+renpy.script.LabelNotFound: could not find label 'quest_violet_questprincipal_01_a'. Did you mean: 'quest_violet_questprincipal_01_b'?
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 11:22:03 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 11:22:22 Contexto: loc=casa_cocina | dias_totales=13 | dia_semana_actual=5 | horario_actual=2 Excepción: Sat Jul 25 11:22:19 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script …
+ons_monica.rpyc", line 89, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 11:22:19 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 11:22:23 Contexto: loc=casa_cocina | dias_totales=13 | dia_semana_actual=5 | horario_actual=2 Excepción: Sat Jul 25 11:22:19 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script …
+ons_monica.rpyc", line 89, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 11:22:19 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 11:22:24 Contexto: loc=casa_cocina | dias_totales=13 | dia_semana_actual=5 | horario_actual=2 Excepción: Sat Jul 25 11:22:19 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script …
+ons_monica.rpyc", line 89, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 11:22:19 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 11:22:24 Contexto: loc=casa_cocina | dias_totales=13 | dia_semana_actual=5 | horario_actual=2 Excepción: Sat Jul 25 11:22:19 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script …
+ons_monica.rpyc", line 89, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 11:22:19 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 11:22:25 Contexto: loc=casa_cocina | dias_totales=13 | dia_semana_actual=5 | horario_actual=2 Excepción: Sat Jul 25 11:22:19 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script …
+ons_monica.rpyc", line 89, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 11:22:19 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 11:22:27 Contexto: loc=casa_cocina | dias_totales=13 | dia_semana_actual=5 | horario_actual=2 Excepción: Sat Jul 25 11:22:19 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script …
+ons_monica.rpyc", line 89, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 11:22:19 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 11:23:09 Contexto: loc=casa_cocina | dias_totales=13 | dia_semana_actual=5 | horario_actual=2 Excepción: Sat Jul 25 11:23:07 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script …
+ons_monica.rpyc", line 89, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 11:23:07 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 11:23:12 Contexto: loc=casa_cocina | dias_totales=13 | dia_semana_actual=5 | horario_actual=2 Excepción: Sat Jul 25 11:23:07 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script …
+ons_monica.rpyc", line 89, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 11:23:07 2026
+* Bug ReporterAPP
+* —
+* 6:29
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 04:29:42 Contexto: loc=casa_cocina | dias_totales=18 | dia_semana_actual=3 | horario_actual=1 Excepción: Sat Jul 25 04:29:40 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "/…
+ript call
+[Previous line repeated 4 more times]
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 595, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 04:29:40 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 04:29:44 Contexto: loc=casa_cocina | dias_totales=18 | dia_semana_actual=3 | horario_actual=1 Excepción: Sat Jul 25 04:29:40 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "/…
+ript call
+[Previous line repeated 4 more times]
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 595, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 04:29:40 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 04:29:47 Contexto: loc=casa_cocina | dias_totales=18 | dia_semana_actual=3 | horario_actual=1 Excepción: Sat Jul 25 04:29:40 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "/…
+ript call
+[Previous line repeated 4 more times]
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 595, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 04:29:40 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 12:31:27 Contexto: loc=casa_cocina | dias_totales=45 | dia_semana_actual=2 | horario_actual=1 Excepción: Sat Jul 25 12:31:26 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/scrip…
+tem_interactions.rpyc", line 53, in script call
+  File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 95, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 12:31:26 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 12:31:57 Contexto: loc=casa_cocina | dias_totales=45 | dia_semana_actual=2 | horario_actual=1 Excepción: Sat Jul 25 12:31:56 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/scrip…
+tem_interactions.rpyc", line 53, in script call
+  File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 95, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 12:31:56 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 10:34:00 Contexto: loc=casa_hmc | dias_totales=33 | dia_semana_actual=4 | horario_actual=3 Excepción: Sat Jul 25 10:33:57 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/jasmine/interaction/interactions_jasmine.rpyc", line 102, in script ca…
+cs/npcsystem_interactions.rpyc", line 80, in script call
+  File "//game/script/core/time/timesystem_core.rpyc", line 302, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 10:33:57 2026
+* Bug ReporterAPP
+* —
+* 6:37
+* [Japitown 0.1.8a] Reporte de error Fecha: 2026-07-25 17:37:30 Contexto: loc=casa_hviolet | dias_totales=67 | dia_semana_actual=3 | horario_actual=3 Excepción: Sat Jul 25 17:37:28 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script call [Previous line re…
+teractions_violet.rpyc", line 111, in script call
+  File "//game/script/core/locations/viaje_rapido.rpyc", line 72, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.8a
+* Sat Jul 25 17:37:28 2026
+* [Japitown 0.1.8a] Reporte de error Fecha: 2026-07-25 17:38:35 Contexto: loc=casa_living | dias_totales=61 | dia_semana_actual=4 | horario_actual=3 Excepción: Sat Jul 25 17:38:24 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script call [Previous line re…
+tem_interactions.rpyc", line 182, in script call
+  File "//game/script/core/actions/actions_catalog.rpyc", line 313, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.8a
+* Sat Jul 25 17:38:24 2026
+* Bug ReporterAPP
+* —
+* 6:56
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 19:26:42 Contexto: loc=casa_cocina | dias_totales=39 | dia_semana_actual=3 | horario_actual=1 Excepción: Sat Jul 25 19:26:39 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/scr…
+tem_interactions.rpyc", line 53, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 595, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 19:26:39 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 19:26:59 Contexto: loc=casa_pasilloabajo | dias_totales=39 | dia_semana_actual=3 | horario_actual=1 Excepción: Sat Jul 25 19:26:58 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/scr…
+teractions.rpyc", line 53, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 595, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 19:26:58 2026
+* Bug ReporterAPP
+* —
+* 7:08
+* [Japitown 0.1.8a] Reporte de error Fecha: 2026-07-25 07:08:37 Contexto: loc=casa_gym | dias_totales=107 | dia_semana_actual=1 | horario_actual=2 Excepción: Sat Jul 25 07:08:35 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 7, in script call File "//game/tl/english/script/ui/hud/hud_navigation.rpyc", line 13, in script call File …
+in script call
+[Previous line repeated 6 more times]
+  File "//game/script/core/locations/viaje_rapido.rpyc", line 72, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.8a
+* Sat Jul 25 07:08:35 2026
+* Bug ReporterAPP
+* —
+* 7:19
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 12:19:01 Contexto: loc=casa_hmc | dias_totales=116 | dia_semana_actual=3 | horario_actual=0 Excepción: Sat Jul 25 12:18:58 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 80, in script call File…
+ine 594, in script call
+[Previous line repeated 15 more times]
+  File "//game/script/ui/hud/hud_celular.rpyc", line 173, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 12:18:58 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 13:24:45 Contexto: loc=casa_sotano | dias_totales=2 | dia_semana_actual=1 | horario_actual=0 Excepción: Sat Jul 25 13:24:40 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 80, in script call File "//game/tl/english/script/core/time/timesystem_core.rpyc", line 7, in script call File "//game…
+File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 80, in script call
+  File "//game/tl/english/script/core/time/timesystem_core.rpyc", line 7, in script call
+  File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call
+  File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call
+  File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call
+[Previous line repeated 2 more times]
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script
+  File "renpy/ast.py", line 2241, in execute
+  File "renpy/ast.py", line 2195, in call
+  File "renpy/statements.py", line 381, in call
+  File "renpy/common/000statements.rpy", line 485, in execute_pause
+    renpy.pause()
+    ~~~~~~~~~~~^^
+  File "renpy/exports/statementexports.py", line 198, in pause
+  File "renpy/ui.py", line 306, in interact
+  File "renpy/display/core.py", line 2154, in interact
+  File "renpy/display/core.py", line 2776, in interact_core
+  File "renpy/webloader.py", line 226, in process_downloaded_resources
+OSError: Download error: network error ('images/bg/casa/bg_casa_mañana_living.jpg' > '//game/images/bg/casa/bg_casa_mañana_living.jpg')
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 13:24:40 2026
+* Bug ReporterAPP
+* —
+* 7:30
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 07:30:12 Contexto: loc=casa_living | dias_totales=58 | dia_semana_actual=1 | horario_actual=2 Excepción: Sat Jul 25 07:30:08 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 39, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 39, in script …
+s_jasmine.rpyc", line 102, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 07:30:08 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 05:31:17 Contexto: loc=casa_pasilloarriba | dias_totales=34 | dia_semana_actual=5 | horario_actual=2 Excepción: Sat Jul 25 05:31:14 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/engli…
+[Previous line repeated 14 more times]
+  File "//game/script/core/locations/door_access_system.rpyc", line 373, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 05:31:14 2026
+* Bug ReporterAPP
+* —
+* 7:48
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 12:48:22 Contexto: loc=casa_living | dias_totales=7 | dia_semana_actual=6 | horario_actual=1 Excepción: Sat Jul 25 12:48:16 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/scrip…
+l
+[Previous line repeated 2 more times]
+  File "//game/script/characters/monica/events/event_monica_01.rpyc", line 282, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 12:48:16 2026
+* Bug ReporterAPP
+* —
+* 8:30
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 17:30:52 Contexto: loc=casa_hmc | dias_totales=9 | dia_semana_actual=1 | horario_actual=3 Excepción: Sat Jul 25 17:30:50 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File…
+pcs/npcsystem_interactions.rpyc", line 80, in script call
+  File "//game/script/core/time/timesystem_core.rpyc", line 302, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 17:30:50 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 17:30:54 Contexto: loc=casa_hmc | dias_totales=9 | dia_semana_actual=1 | horario_actual=3 Excepción: Sat Jul 25 17:30:50 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File…
+pcs/npcsystem_interactions.rpyc", line 80, in script call
+  File "//game/script/core/time/timesystem_core.rpyc", line 302, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 17:30:50 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 13:33:45 Contexto: loc=casa_hviolet | dias_totales=26 | dia_semana_actual=4 | horario_actual=1 Excepción: Sat Jul 25 13:33:36 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/scr…
+Traceback (most recent call last):
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call
+  File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call
+  File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call
+  File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call
+  File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call
+  File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+[Previous line repeated 9 more times]
+  File "//game/script/core/quests/questsystem_core.rpyc", line 1495, in script
+  File "renpy/ast.py", line 1928, in execute
+  File "renpy/script.py", line 1201, in lookup
+renpy.script.LabelNotFound: could not find label 'quest_violet_questprincipal_01_a'. Did you mean: 'quest_violet_questprincipal_01_b'?
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 13:33:36 2026
+* Bug ReporterAPP
+* —
+* 8:38
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 07:38:50 Contexto: loc=casa_hmc | dias_totales=72 | dia_semana_actual=1 | horario_actual=3 Excepción: Sat Jul 25 07:38:47 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/monica/interaction/interactions_monica.rpyc", line 89, in script call …
+script call
+[Previous line repeated 4 more times]
+  File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 75, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 07:38:47 2026
+* Bug ReporterAPP
+* —
+* 9:04
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 14:04:47 Contexto: loc=casa_pasilloarriba | dias_totales=4 | dia_semana_actual=3 | horario_actual=1 Excepción: Sat Jul 25 14:04:42 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "/…
+ous line repeated 3 more times]
+  File "//game/script/characters/violet/quests/violet_quest_0_b.rpyc", line 107, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 14:04:42 2026
+* Bug ReporterAPP
+* —
+* 9:18
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 14:18:45 Contexto: loc=casa_hviolet | dias_totales=27 | dia_semana_actual=5 | horario_actual=2 Excepción: Sat Jul 25 14:18:43 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/scrip…
+s_violet.rpyc", line 111, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 14:18:43 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 15:22:16 Contexto: loc=casa_cocina | dias_totales=21 | dia_semana_actual=6 | horario_actual=1 Excepción: Sat Jul 25 15:22:14 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/scr…
+ud/hud_navigation.rpyc", line 7, in script call
+  File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 12, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 15:22:14 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 06:24:32 Contexto: loc=casa_pasilloabajo | dias_totales=5 | dia_semana_actual=4 | horario_actual=2 Excepción: Sat Jul 25 06:24:26 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/engli…
+onica.rpyc", line 89, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 06:24:26 2026
+* Bug ReporterAPP
+* —
+* 9:40
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 16:40:29 Contexto: loc=casa_pasilloarriba | dias_totales=12 | dia_semana_actual=4 | horario_actual=2 Excepción: Sat Jul 25 16:40:23 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/engli…
+in.rpyc", line 594, in script call
+  File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call
+  File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call
+  File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+[Previous line repeated 2 more times]
+  File "//game/script/characters/jasmine/interaction/interactions_jasmine.rpyc", line 102, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+[Previous line repeated 4 more times]
+  File "//game/script/core/quests/questsystem_core.rpyc", line 1495, in script
+  File "renpy/ast.py", line 1928, in execute
+  File "renpy/script.py", line 1201, in lookup
+renpy.script.LabelNotFound: could not find label 'quest_violet_questprincipal_01_a'. Did you mean: 'quest_violet_questprincipal_01_b'?
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 16:40:23 2026
+* Bug ReporterAPP
+* —
+* 10:19
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 22:19:23 Contexto: loc=casa_pasilloarriba | dias_totales=6 | dia_semana_actual=5 | horario_actual=0 Excepción: Sat Jul 25 22:19:19 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script …
+ine.rpyc", line 102, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 22:19:19 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 09:24:40 Contexto: loc=casa_cocina | dias_totales=10 | dia_semana_actual=2 | horario_actual=0 Excepción: Sat Jul 25 09:24:39 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/script/c…
+Traceback (most recent call last):
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call
+  File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/jasmine/interaction/interactions_jasmine.rpyc", line 102, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+[Previous line repeated 5 more times]
+  File "//game/script/characters/jasmine/interaction/interactions_jasmine.rpyc", line 102, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/core/quests/questsystem_core.rpyc", line 1495, in script
+  File "renpy/ast.py", line 1928, in execute
+  File "renpy/script.py", line 1201, in lookup
+renpy.script.LabelNotFound: could not find label 'quest_violet_questprincipal_01_a'. Did you mean: 'quest_violet_questprincipal_01_b'?
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 09:24:39 2026
+* Bug ReporterAPP
+* —
+* 10:36
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 15:36:23 Contexto: loc=casa_living | dias_totales=6 | dia_semana_actual=5 | horario_actual=1 Excepción: Sat Jul 25 15:36:20 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/scrip…
+ons_violet.rpyc", line 111, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 15:36:20 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 16:40:50 Contexto: loc=casa_cocina | dias_totales=10 | dia_semana_actual=2 | horario_actual=0 Excepción: Sat Jul 25 16:40:50 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/scr…
+n script call
+  File "//game/script/characters/jasmine/interaction/interactions_jasmine.rpyc", line 102, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+[Previous line repeated 1 more time]
+  File "//game/script/characters/jasmine/interaction/interactions_jasmine.rpyc", line 102, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+[Previous line repeated 3 more times]
+  File "//game/tl/english/script/ui/hud/hud_navigation.rpyc", line 13, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call
+  File "//game/script/core/quests/questsystem_core.rpyc", line 1495, in script
+  File "renpy/ast.py", line 1928, in execute
+  File "renpy/script.py", line 1201, in lookup
+renpy.script.LabelNotFound: could not find label 'quest_violet_questprincipal_01_a'. Did you mean: 'quest_violet_questprincipal_01_b'?
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 16:40:50 2026
+* Bug ReporterAPP
+* —
+* 10:48
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 15:48:53 Contexto: loc=casa_pasilloarriba | dias_totales=12 | dia_semana_actual=4 | horario_actual=2 Excepción: Sat Jul 25 15:48:34 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call [Previous line re…
+s line repeated 5 more times]
+  File "//game/script/characters/violet/quests/violet_quest_01_b.rpyc", line 331, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 15:48:34 2026
+* Bug ReporterAPP
+* —
+* 11:00
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 19:00:47 Contexto: loc=casa_pasilloarriba | dias_totales=51 | dia_semana_actual=1 | horario_actual=2 Excepción: Sat Jul 25 19:00:44 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/scrip…
+line repeated 25 more times]
+  File "//game/script/characters/violet/quests/violet_quest_06_b.rpyc", line 238, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 19:00:44 2026
+* Bug ReporterAPP
+* —
+* 11:09
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 16:09:50 Contexto: loc=casa_pasilloarriba | dias_totales=20 | dia_semana_actual=5 | horario_actual=1 Excepción: Sat Jul 25 16:09:45 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/scr…
+us line repeated 6 more times]
+  File "//game/script/characters/violet/quests/violet_quest_0_b.rpyc", line 107, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 16:09:45 2026
+* Bug ReporterAPP
+* —
+* 11:18
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 16:18:14 Contexto: loc=casa_pasilloarriba | dias_totales=6 | dia_semana_actual=5 | horario_actual=0 Excepción: Sat Jul 25 16:18:12 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call [Previous line re…
+ine.rpyc", line 102, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 16:18:12 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 16:20:14 Contexto: loc=casa_cocina | dias_totales=60 | dia_semana_actual=3 | horario_actual=1 Excepción: Sat Jul 25 16:20:11 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "/…
+ipt call
+[Previous line repeated 32 more times]
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 595, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 16:20:11 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 17:22:59 Contexto: loc=casa_hviolet | dias_totales=120 | dia_semana_actual=0 | horario_actual=2 Excepción: Sat Jul 25 17:22:55 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 80, in script call File…
+line repeated 14 more times]
+  File "//game/script/characters/violet/interaction/interactions_violet.rpyc", line 8, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 17:22:55 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 10:25:13 Contexto: loc=casa_pasilloarriba | dias_totales=23 | dia_semana_actual=1 | horario_actual=3 Excepción: Sat Jul 25 10:25:12 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/sc…
+l
+[Previous line repeated 15 more times]
+  File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 12, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 10:25:12 2026
+* Bug ReporterAPP
+* —
+* 11:29
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 16:29:19 Contexto: loc=casa_cocina | dias_totales=30 | dia_semana_actual=1 | horario_actual=0 Excepción: Sat Jul 25 16:29:16 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/scr…
+cript call
+[Previous line repeated 1 more time]
+  File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 12, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 16:29:16 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 16:29:48 Contexto: loc=casa_hmonica | dias_totales=63 | dia_semana_actual=6 | horario_actual=2 Excepción: Sat Jul 25 16:29:38 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/engli…
+ns_monica.rpyc", line 89, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 16:29:38 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 16:29:49 Contexto: loc=casa_hmonica | dias_totales=63 | dia_semana_actual=6 | horario_actual=2 Excepción: Sat Jul 25 16:29:38 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/engli…
+ns_monica.rpyc", line 89, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 16:29:38 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 16:29:50 Contexto: loc=casa_hmonica | dias_totales=63 | dia_semana_actual=6 | horario_actual=2 Excepción: Sat Jul 25 16:29:38 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/engli…
+ns_monica.rpyc", line 89, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 16:29:38 2026
+* [Japitown 0.1.8a] Reporte de error Fecha: 2026-07-25 11:30:33 Contexto: loc=casa_hmc | dias_totales=3 | dia_semana_actual=2 | horario_actual=0 Excepción: Sat Jul 25 11:30:26 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script File "game/script/core/utils/sistema_sentry.rpy", line 177, in jp_forzar_error_prueba raise Exception("Error de prueba forzado desde el panel de cheats (Sentry)") Exception: Error de prueb…
+.py", line 1281, in event
+  File "renpy/display/layout.py", line 1281, in event
+  File "renpy/display/screen.py", line 805, in event
+  File "renpy/display/layout.py", line 1281, in event
+  File "renpy/display/layout.py", line 1510, in event
+  File "renpy/display/layout.py", line 273, in event
+  File "renpy/display/layout.py", line 1281, in event
+  File "renpy/display/layout.py", line 273, in event
+  File "renpy/display/viewport.py", line 581, in event
+  File "renpy/display/layout.py", line 273, in event
+  File "renpy/display/layout.py", line 1510, in event
+  File "renpy/display/layout.py", line 273, in event
+  File "renpy/display/layout.py", line 1281, in event
+  File "renpy/display/behavior.py", line 1185, in event
+  File "renpy/display/behavior.py", line 1107, in handle_click
+  File "renpy/display/behavior.py", line 404, in run
+  File "renpy/display/behavior.py", line 411, in run
+  File "renpy/common/00action_other.rpy", line 618, in __call__
+    rv = self.callable(*self.args, **self.kwargs)
+         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "game/script/core/utils/sistema_sentry.rpy", line 177, in jp_forzar_error_prueba
+    raise Exception("Error de prueba forzado desde el panel de cheats (Sentry)")
+Exception: Error de prueba forzado desde el panel de cheats (Sentry)
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.8a
+* Sat Jul 25 11:30:26 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 16:32:06 Contexto: loc=casa_cocina | dias_totales=30 | dia_semana_actual=1 | horario_actual=0 Excepción: Sat Jul 25 16:32:04 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/scr…
+cript call
+[Previous line repeated 1 more time]
+  File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 12, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 16:32:04 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 16:32:07 Contexto: loc=casa_cocina | dias_totales=30 | dia_semana_actual=1 | horario_actual=0 Excepción: Sat Jul 25 16:32:04 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/scr…
+cript call
+[Previous line repeated 1 more time]
+  File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 12, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 16:32:04 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 16:32:08 Contexto: loc=casa_cocina | dias_totales=30 | dia_semana_actual=1 | horario_actual=0 Excepción: Sat Jul 25 16:32:04 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/scr…
+cript call
+[Previous line repeated 1 more time]
+  File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 12, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 16:32:04 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 16:32:08 Contexto: loc=casa_cocina | dias_totales=30 | dia_semana_actual=1 | horario_actual=0 Excepción: Sat Jul 25 16:32:04 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/scr…
+cript call
+[Previous line repeated 1 more time]
+  File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 12, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 16:32:04 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 16:32:09 Contexto: loc=casa_cocina | dias_totales=30 | dia_semana_actual=1 | horario_actual=0 Excepción: Sat Jul 25 16:32:04 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/script/ui/hud/hud_stats.rpyc", line 7, in script call File "//game/tl/english/scr…
+cript call
+[Previous line repeated 1 more time]
+  File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 12, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 16:32:04 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 11:32:35 Contexto: loc=casa_hmc | dias_totales=96 | dia_semana_actual=4 | horario_actual=1 Excepción: Sat Jul 25 11:32:33 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script call File "//game/tl/english/script/core/npcs/npcsystem_interactions.rpyc", line 13, in script …
+i/hud/hud_navigation.rpyc", line 7, in script call
+  File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 75, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 11:32:33 2026
+* [Japitown 0.1.8a] Reporte de error Fecha: 2026-07-25 11:34:49 Contexto: loc=casa_hmc | dias_totales=2 | dia_semana_actual=1 | horario_actual=0 Excepción: Sat Jul 25 11:34:45 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 612, in script File "game/script/core/utils/sistema_sentry.rpy", line 178, in jp_forzar_error_prueba raise Exception("Error de prueba forzado desde el panel de cheats (Sentry)") Exception: Error de prueb…
+.py", line 1281, in event
+  File "renpy/display/layout.py", line 1281, in event
+  File "renpy/display/screen.py", line 805, in event
+  File "renpy/display/layout.py", line 1281, in event
+  File "renpy/display/layout.py", line 1510, in event
+  File "renpy/display/layout.py", line 273, in event
+  File "renpy/display/layout.py", line 1281, in event
+  File "renpy/display/layout.py", line 273, in event
+  File "renpy/display/viewport.py", line 581, in event
+  File "renpy/display/layout.py", line 273, in event
+  File "renpy/display/layout.py", line 1510, in event
+  File "renpy/display/layout.py", line 273, in event
+  File "renpy/display/layout.py", line 1281, in event
+  File "renpy/display/behavior.py", line 1185, in event
+  File "renpy/display/behavior.py", line 1107, in handle_click
+  File "renpy/display/behavior.py", line 404, in run
+  File "renpy/display/behavior.py", line 411, in run
+  File "renpy/common/00action_other.rpy", line 618, in __call__
+    rv = self.callable(*self.args, **self.kwargs)
+         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "game/script/core/utils/sistema_sentry.rpy", line 178, in jp_forzar_error_prueba
+    raise Exception("Error de prueba forzado desde el panel de cheats (Sentry)")
+Exception: Error de prueba forzado desde el panel de cheats (Sentry)
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.8a
+* Sat Jul 25 11:34:45 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 17:34:41 Contexto: loc=casa_living | dias_totales=7 | dia_semana_actual=6 | horario_actual=2 Excepción: Sat Jul 25 17:34:37 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/script/c…
+ons_violet.rpyc", line 111, in script call
+  File "//game/script/core/npcs/npcsystem_interactions_basic.rpyc", line 15, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 17:34:37 2026
+* Bug ReporterAPP
+* —
+* 11:36
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 09:36:26 Contexto: loc=casa_living | dias_totales=43 | dia_semana_actual=0 | horario_actual=3 Excepción: Sat Jul 25 09:36:24 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 80, in script call File "//game/tl/english/script/core/time/timesystem_core.rpyc", line 7, in script call File "//game…
+ipt call
+[Previous line repeated 10 more times]
+  File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 12, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 09:36:24 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 09:37:21 Contexto: loc=casa_living | dias_totales=43 | dia_semana_actual=0 | horario_actual=3 Excepción: Sat Jul 25 09:37:19 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 80, in script call File "//game/tl/english/script/core/time/timesystem_core.rpyc", line 7, in script call File "//game…
+ipt call
+[Previous line repeated 10 more times]
+  File "//game/script/core/npcs/npcsystem_interactions.rpyc", line 12, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 09:37:19 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 15:37:37 Contexto: loc=casa_cocina | dias_totales=42 | dia_semana_actual=6 | horario_actual=0 Excepción: Sat Jul 25 15:37:32 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/engli…
+m_interactions_basic.rpyc", line 18, in script call
+  File "//game/script/core/talk/talksystem_labels.rpyc", line 201, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 15:37:32 2026
+* [Japitown 0.1.7] Reporte de error Fecha: 2026-07-25 15:40:13 Contexto: loc=casa_cocina | dias_totales=43 | dia_semana_actual=0 | horario_actual=0 Excepción: Sat Jul 25 15:40:09 2026 Error: While running game code: File "//game/script/characters/mc/quests/intro_main.rpyc", line 594, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/english/script/ui/hud/hud_celular.rpyc", line 69, in script call File "//game/tl/engli…
+ests/intro_main.rpyc", line 594, in script call
+  File "//game/script/characters/mc/quests/intro_main.rpyc", line 595, in script call
+  File "renpy/common/00start.rpy", line 114, in script
+    python hide:
+  File "renpy/ast.py", line 1187, in execute
+  File "renpy/python.py", line 1273, in py_exec_bytecode
+  File "renpy/common/00start.rpy", line 114, in <module>
+    python hide:
+  File "renpy/common/00start.rpy", line 119, in _execute_python_hide
+    _init_language()
+    ~~~~~~~~~~~~~~^^
+  File "renpy/common/00start.rpy", line 86, in _init_language
+    renpy.change_language(language, force=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/translation/__init__.py", line 837, in change_language
+  File "renpy/translation/__init__.py", line 800, in run_blocks
+  File "renpy/common/00gui.rpy", line 120, in _apply_rebuild
+    renpy.ast.redefine([ "store.gui" ])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "renpy/ast.py", line 783, in redefine
+  File "renpy/ast.py", line 2469, in redefine
+  File "renpy/ast.py", line 2475, in set
+  File "renpy/python.py", line 1298, in py_eval_bytecode
+  File "game/script/ui/base/options.rpy", line 35, in <module>
+    define gui.about = _p("""
+                       ~~^^^^
+    """)
+    ^^^^
+TypeError: 'str' object is not callable
+
+
+Emscripten-3.1.67-wasm32-32bit wasm32
+Ren'Py 8.5.2.26010301
+Japitown 0.1.7
+* Sat Jul 25 15:40:09 2026

@@ -6,6 +6,22 @@
 # Variable para controlar si ya se mostró la intro
 default intro_mostrada = False
 
+# Elección del menú de intro. Va con `default` y no solo con la asignación de
+# `$ _jugar_intro = renpy.call_screen(...)` porque si ESA línea crashea y el
+# jugador toca "Continuar" en la pantalla de error, la ejecución sigue en el
+# statement siguiente y la variable nunca llega a existir — 33 líneas después el
+# `if _jugar_intro:` reventaba con NameError (visto en 0.1.8f, tras la muerte del
+# renderer en web). Con el default, el peor caso es entrar al juego sin la intro.
+default _jugar_intro = False
+
+# DIAGNÓSTICO de "Possible infinite loop" en el game_loop (S11).
+# Guarda cuál de los 4 disparadores del loop hizo el último `jump`, y se limpia
+# al llegar al `pause` (o sea, cuando la vuelta se completó sin ciclar). Si el
+# guard de Ren'Py salta, este valor viaja a Sentry como tag `gl_trigger` y dice
+# QUÉ estaba ciclando — con dos reportes no se pudo deducir porque los cuatro
+# disparadores limpian su condición correctamente.
+default _gl_ultimo_trigger = ""
+
 # Fondos de la intro (definidos aqui desde que se unificó el archivo)
 image bg_intro_edificio       = "images/intro/backgrounds/bg_intro_edificio.jpg"
 image bg_intro_aeropuerto     = "images/intro/backgrounds/bg_intro_aeropuerto.jpg"
@@ -591,6 +607,7 @@ label game_loop:
     if (_quest_v09a_gl and _quest_v09a_gl.activa and not _quest_v09a_gl.completada and
             _quest_v09a_gl.etapa_actual == ETAPA_BOTON_LISTO and
             not getattr(store, 'violet_9a_piensa_mostrado', True)):
+        $ _gl_ultimo_trigger = "violet_09a_piensa"
         jump violet_quest09a_piensa_avisarle
 
     # Quest 0_b de Jasmine: disparar cuando acaba de iniciarse
@@ -601,12 +618,14 @@ label game_loop:
         $ store._jasmine_0b_iniciada = True
         # Disparar mensaje de Carl
         $ store.sistema_mensajes.disparar_por_trigger("quest", "carl_quest_j0b", "carl")
+        $ _gl_ultimo_trigger = "jasmine_0b"
         jump quest_jasmine_questprincipal_0_b
 
     # Quest 0 del MC: recorrido libre terminado (visito las 3 locaciones objetivo).
     # Se dispara desde aca y no desde los labels de entrada porque esos llegan por
     # call expression y deben retornar; este jump es frameless.
     if getattr(store, 'mc_q0_explorando', False) and mc_q0_exploracion_terminada():
+        $ _gl_ultimo_trigger = "mc_q0_exploracion"
         jump mc_q0_exploracion_completada
 
     # Quest 0b del MC: tutorial del celular en la habitacion del MC (dia 2+).
@@ -617,7 +636,12 @@ label game_loop:
     if (_quest_mc_0b and _quest_mc_0b.activa and not _quest_mc_0b.completada and not getattr(store, "mc_q0b_disparada", False)):
         $ _loc_actual_id = sistema_locaciones.locacion_actual.id if sistema_locaciones.locacion_actual else ""
         if _loc_actual_id == "casa_hmc" and dia_actual >= 2:
+            $ _gl_ultimo_trigger = "mc_q0b"
             jump mc_q0b_trigger
+
+    # Se llego al pause sin ciclar: se limpia el rastro del diagnostico
+    # de bucles (ver S11 en errores_sentry_registro.md).
+    $ _gl_ultimo_trigger = ""
 
     if not renpy.get_screen("navegacion_locaciones_con_hud"):
         show screen navegacion_locaciones_con_hud

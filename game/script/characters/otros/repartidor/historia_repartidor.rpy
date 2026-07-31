@@ -77,7 +77,11 @@ label entrega_repartidor_0:
 
     show screen hud_navegacion
     $ mostrar_hud()
-    return
+    # Terminal de contenido: se llega SIN frame (los dos botones usan
+    # Jump("interaccion_repartidor"), no Call), asi que un `return` aca
+    # vaciaba el call stack y mandaba al MENU PRINCIPAL. Igual que el
+    # cierre de paqueterepartidor_quest01_violet.
+    jump game_loop
 
 
 ################################################################################
@@ -119,7 +123,11 @@ label entrega_repartidor_1_5:
 
     show screen hud_navegacion
     $ mostrar_hud()
-    return
+    # Terminal de contenido: se llega SIN frame (los dos botones usan
+    # Jump("interaccion_repartidor"), no Call), asi que un `return` aca
+    # vaciaba el call stack y mandaba al MENU PRINCIPAL. Igual que el
+    # cierre de paqueterepartidor_quest01_violet.
+    jump game_loop
 
 
 ################################################################################
@@ -148,4 +156,8 @@ label entrega_repartidor_5_plus:
 
     show screen hud_navegacion
     $ mostrar_hud()
-    return
+    # Terminal de contenido: se llega SIN frame (los dos botones usan
+    # Jump("interaccion_repartidor"), no Call), asi que un `return` aca
+    # vaciaba el call stack y mandaba al MENU PRINCIPAL. Igual que el
+    # cierre de paqueterepartidor_quest01_violet.
+    jump game_loop

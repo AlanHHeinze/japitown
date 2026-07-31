@@ -99,6 +99,30 @@ screen menu_cheats():
 
                             text "💥 Forzar error (test Sentry)" size int(14 * _k) color "#ff8888" bold True
 
+                        # Diagnóstico de "cannot pickle X" al guardar: lista los
+                        # objetos del estado que no se pueden serializar y por
+                        # qué camino se llega a ellos (diagnostico_guardado.rpy).
+                        button:
+                            xfill True
+                            background "#1e3a5aCC"
+                            hover_background "#2a4a7aCC"
+                            padding (int(12 * _k), int(10 * _k))
+                            action Function(jp_reportar_no_picklables)
+
+                            text "🔍 Revisar guardado (no picklables)" size int(14 * _k) color "#88ccff" bold True
+
+                        # Repara una partida donde una variable del store tapó un
+                        # builtin (ej. escribir `int = 5` en la consola), que hace
+                        # crashear el HUD entero. Ver builtins_pisados.rpy.
+                        button:
+                            xfill True
+                            background "#1e3a5aCC"
+                            hover_background "#2a4a7aCC"
+                            padding (int(12 * _k), int(10 * _k))
+                            action Function(jp_limpiar_builtins_pisados)
+
+                            text "🧹 Limpiar builtins pisados" size int(14 * _k) color "#88ccff" bold True
+
                         # Toggle de recompensas
                         frame:
                             xfill True

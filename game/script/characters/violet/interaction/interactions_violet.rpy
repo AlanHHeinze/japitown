@@ -15,21 +15,12 @@ label interaccion_violet:
     # Verificar si hay quest lista para ejecutar
     $ _quest_activa = sistema_quests.obtener_quest_activa("violet")
 
-    if _quest_activa and _quest_activa.etapa_actual == 5:
-        # Quests que usan opciones_extra en vez de auto-trigger
-        # Quest 0_a: una vez hecho el intro (esperando_talk), no auto-ejecutar —
-        # el menú normal debe aparecer para que "Hablar" dispare el talk especial.
-        # El gate `renpy.has_label("quest_"+id)` evita auto-ejecutar (y avanzar
-        # de etapa) quests sin label propio — las que usan triggers custom, como
-        # 01_a. Es self-maintaining: no depende de acordarse de la tupla (fue
-        # justo olvidarse 01_a lo que causaba el crash E03).
-        if (renpy.has_label("quest_" + _quest_activa.id)
-                and _quest_activa.id not in ("violet_questprincipal_01_a", "violet_questprincipal_04_a", "violet_questprincipal_02_a", "violet_questprincipal_02_b", "violet_questprincipal_02_c", "violet_questprincipal_03_a", "violet_questprincipal_05_a", "violet_questprincipal_05_b", "violet_questprincipal_05_c", "violet_questprincipal_06_a", "violet_questprincipal_06_b", "violet_questprincipal_07_a", "violet_questprincipal_07_b", "violet_questprincipal_09_a")
-                and not (_quest_activa.id == "violet_questprincipal_0_a" and getattr(store, "violet_q0a_esperando_talk", False))):
-            $ exito, mensajes = _quest_activa.intentar_ejecutar()
-            if exito:
-                $ _npc_id_temp = "violet"
-                jump ejecutar_quest_activa
+    # NOTA DE ARQUITECTURA (2026-07-31): acá había un gate que auto-ejecutaba la
+    # quest activa y saltaba SIN abrir el menú. Se eliminó — ver la explicación
+    # completa en interactions_monica.rpy.
+    # Las quests que dependían de ese auto-disparo (0_b, 04_b, 04_c, 04_d, 04_e,
+    # 11, 12) tienen ahora su propio botón más abajo. La 07_c no lo necesita: se
+    # cierra sola con el accion_al_completar de su chat.
 
     # Quest 09_a: interacción especial cuando Violet está enferma en su habitacion
     $ _quest_v09a_int = sistema_quests.obtener_quest("violet_questprincipal_09_a")
@@ -107,6 +98,62 @@ label interaccion_violet:
     $ _quest_v07b = sistema_quests.obtener_quest("violet_questprincipal_07_b")
     if _quest_v07b and _quest_v07b.activa and not _quest_v07b.completada and _quest_v07b.etapa_actual == ETAPA_BOTON_LISTO:
         $ _opciones_extra_v.append({"texto": "Ya hablé con la tienda", "label": "violet_quest07b_hablar", "condicion": True})
+
+    # -------------------------------------------------------------------------
+    # Botones de las quests que antes se AUTO-DISPARABAN al clickear a Violet.
+    # Al sacar ese atajo (ver nota de arquitectura arriba) quedaban sin
+    # disparador, así que cada una recibe el suyo. Las condiciones replican lo
+    # que la quest ya pedía en su `que_hacer`, para que el botón solo aparezca
+    # cuando tiene sentido.
+    # -------------------------------------------------------------------------
+
+    # Quest 0_b: ¿Qué le pasa a Violet? — en su habitación, por la tarde.
+    # (También se puede disparar desde el door access con "Intentar hablar".)
+    $ _quest_v0b = sistema_quests.obtener_quest("violet_questprincipal_0_b")
+    if (_quest_v0b and _quest_v0b.activa and not _quest_v0b.completada and
+            _quest_v0b.etapa_actual == ETAPA_BOTON_LISTO and
+            _npc_actual.esta_en_locacion("casa_hviolet") and horario_actual == 1):
+        $ _opciones_extra_v.append({"texto": "Preguntarle qué le pasa", "label": "quest_violet_questprincipal_0_b", "condicion": True})
+
+    # La quest 04_b NO lleva botón: ya tiene disparador propio por LOCACIÓN
+    # (`violet_quest04b_check_locacion`, registrado en las 5 locaciones de Violet
+    # desde quest_violet.rpy). Se dispara al ENTRAR donde ella esté, así que un
+    # botón sería inalcanzable — nunca llegás a clickearla con la quest activa.
+
+    # Quests 04_c / 04_d / 04_e: solo tras responder el chat nocturno de Violet
+    # (antes de eso la pista dice "esperar el mensaje").
+    $ _quest_v04c = sistema_quests.obtener_quest("violet_questprincipal_04_c")
+    if (_quest_v04c and _quest_v04c.activa and not _quest_v04c.completada and
+            _quest_v04c.etapa_actual == ETAPA_BOTON_LISTO and
+            sistema_mensajes.grupo_completado("violet_quest04c_chat")):
+        $ _opciones_extra_v.append({"texto": "Preguntarle por el cosplay", "label": "quest_violet_questprincipal_04_c", "condicion": True})
+
+    $ _quest_v04d = sistema_quests.obtener_quest("violet_questprincipal_04_d")
+    if (_quest_v04d and _quest_v04d.activa and not _quest_v04d.completada and
+            _quest_v04d.etapa_actual == ETAPA_BOTON_LISTO and
+            sistema_mensajes.grupo_completado("violet_quest04d_chat")):
+        $ _opciones_extra_v.append({"texto": "Preguntarle por las fotos", "label": "quest_violet_questprincipal_04_d", "condicion": True})
+
+    $ _quest_v04e = sistema_quests.obtener_quest("violet_questprincipal_04_e")
+    if (_quest_v04e and _quest_v04e.activa and not _quest_v04e.completada and
+            _quest_v04e.etapa_actual == ETAPA_BOTON_LISTO and
+            sistema_mensajes.grupo_completado("violet_quest04e_chat")):
+        $ _opciones_extra_v.append({"texto": "Preguntarle por las fotos", "label": "quest_violet_questprincipal_04_e", "condicion": True})
+
+    # Quest 11: mostrarle los cosplays comprados — en su habitación, de noche.
+    $ _quest_v11 = sistema_quests.obtener_quest("violet_questprincipal_11")
+    if (_quest_v11 and _quest_v11.activa and not _quest_v11.completada and
+            _quest_v11.etapa_actual == ETAPA_BOTON_LISTO and
+            _npc_actual.esta_en_locacion("casa_hviolet") and horario_actual == 2):
+        $ _opciones_extra_v.append({"texto": "Mostrarle los cosplays", "label": "quest_violet_questprincipal_11", "condicion": True})
+
+    # Quest 12: visita nocturna — en su habitación, de noche, tras responder el chat.
+    $ _quest_v12 = sistema_quests.obtener_quest("violet_questprincipal_12")
+    if (_quest_v12 and _quest_v12.activa and not _quest_v12.completada and
+            _quest_v12.etapa_actual == ETAPA_BOTON_LISTO and
+            sistema_mensajes.grupo_completado("violet_quest12_chat") and
+            _npc_actual.esta_en_locacion("casa_hviolet") and horario_actual == 2):
+        $ _opciones_extra_v.append({"texto": "Vine como me pediste", "label": "quest_violet_questprincipal_12", "condicion": True})
 
     # Evento 1: Invitar a jugar VR
     if violet_evento1_completado and "casco_realidad_virtual" in inventario and not violet_evento1_repetir:

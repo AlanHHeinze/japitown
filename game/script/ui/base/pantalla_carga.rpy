@@ -167,6 +167,19 @@ label splashscreen:
     if _carga_total > 0:
         while _carga_idx < _carga_total:
 
+            # Avisarle a Ren'Py que este bucle largo es INTENCIONAL.
+            #
+            # Sin esto salta "Exception: Possible infinite loop": el guard
+            # (execution.py:45) cuenta statements y revienta cuando se acumulan
+            # 1000 Y ademas pasaron ~50 s desde el ultimo frame de interaccion.
+            # La precarga cumple las dos: son ~115 lotes x hasta 40 vueltas del
+            # busy-wait = casi 10.000 statements, y en web basta con que el
+            # jugador cambie de pestaña mientras carga (el navegador congela los
+            # frames) para que se cumpla la parte del tiempo.
+            # El contador `il_statements` NO se resetea con las interacciones,
+            # solo al llegar a 1000 — por eso no alcanza con los `pause 0.01`.
+            $ renpy.not_infinite_loop(30)
+
             # Cortar si el cache llego al tope: seguir solo descartaria la cola
             if carga_cache_lleno():
                 $ _carga_idx = _carga_total

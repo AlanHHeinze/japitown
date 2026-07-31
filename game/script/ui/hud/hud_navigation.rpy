@@ -427,12 +427,6 @@ screen hud_navegacion():
             vbox:
                 spacing 8
                 
-                # Botón de TEST: Crear checkpoint
-                textbutton "💾 TEST Checkpoint":
-                    action Jump("test_checkpoint")
-                    style "hud_button"
-                    text_color "#ff0000"
-                
                 # Botón de TEST SIMPLE
                 textbutton "🔢 TEST Simple ([test_contador])":
                     action SetVariable("test_contador", test_contador + 1)

@@ -486,27 +486,13 @@ init python:
 ## Labels del sistema de compras
 ################################################################################
 
-label verificar_entrega_mañana:
-    # Se llama despues de dormir, cuando es mañana
-    
-    $ entregas_hoy = sistema_compras.verificar_entregas_hoy()
-    
-    if entregas_hoy:
-        # Hay entregas - colocar repartidor en puerta
-        $ repartidor_presente = True
-        "El repartidor debería estar en la puerta con el pedido."
-    
-    return
-
-
-label repartidor_se_fue:
-    # Se llama cuando el jugador avanza el tiempo sin interactuar con el repartidor
-    
-    if repartidor_presente:
-        $ repartidor_presente = False
-        $ sistema_compras.colocar_paquete_en_habitacion()
-    
-    return
+# NOTA: acá vivían `verificar_entrega_mañana` y `repartidor_se_fue`. Se
+# eliminaron porque estaban MUERTOS: nadie los invocaba (ni por call/jump ni por
+# string), y su lógica ya había sido movida al sistema de tiempo —
+# `verificar_entrega_mañana` está inlineada en `accion_dormir` y
+# `repartidor_se_fue` en `avanzar_horario()` (colocar_paquete_en_habitacion).
+# Además ambos terminaban en `return`, así que si alguien los hubiera cableado
+# con un Jump habrían mandado al menú principal. Recuperables por git.
 
 
 label intentar_dormir_con_paquete:

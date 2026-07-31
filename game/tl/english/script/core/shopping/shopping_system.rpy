@@ -1,10 +1,8 @@
 # TODO: Translation updated at 2026-04-27
 
-# game/script/core/shopping/shopping_system.rpy:437
-translate english verificar_entrega_mañana_d5bd89e8:
-
-    # "El repartidor debería estar en la puerta con el pedido."
-    "The delivery guy should be at the door with the order."
+# NOTA: se quitó el bloque `verificar_entrega_mañana_d5bd89e8` al eliminarse ese
+# label (estaba muerto). Su línea sigue viva en accion_dormir y tiene su propia
+# traducción en tl/english/script/core/time/timesystem_core.rpy.
 
 # game/script/core/shopping/shopping_system.rpy:455
 translate english intentar_dormir_con_paquete_53279aa9:

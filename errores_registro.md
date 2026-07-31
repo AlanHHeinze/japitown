@@ -15,9 +15,9 @@
 
 ## Resumen
 
-| Reportes de bug (reales) | Clases únicas |
-|---|---|
-| ~84 | 6 (E01–E06) |
+| Reportes de bug (reales) | Clases únicas | Estado |
+|---|---|---|
+| ~84 | 9 (E01–E09) | E01–E07 y E09 corregidos · **E08 en observación** |
 
 > **Reconciliación (2026-07-25):** fuentes procesadas: pastes manuales +
 > `errores.txt` (60) + `errores2.txt` (86). Se solapan (todos del 25-07), así
@@ -429,3 +429,133 @@ No hace falta desempatar por prioridad: como solo se devuelven rutinas *vigentes
 puede coincidir.
 
 **Verificación:** lint limpio; firmas retrocompatibles (`npc_id` es opcional).
+
+---
+
+### E08 — TypeError: cannot pickle 'TextIOWrapper' instances (al guardar)
+
+- **Estado:** 🔍 **EN OBSERVACIÓN — no reproducido, 1 solo reporte**
+- **Veces:** 1
+- **Versión:** 0.1.8d · Windows 11
+- **Clave:** `TypeError|cannot pickle 'TextIOWrapper' instances`
+- **Contexto:** guardado **manual** desde el menú, estando en la quest 08_a
+  (escena del baño, línea `piensa "I could get a little closer..."`), después de
+  una cadena de mensajes de bloqueo. Jugando en **inglés**.
+- **Traceback (cola):**
+```
+  File "renpy/common/00action_file.rpy", line 415, in __call__
+    renpy.save(fn, extra_info=save_name)
+  File "renpy/loadsave.py", line 184, in save
+    dump((roots, renpy.game.log), logf)
+TypeError: cannot pickle 'TextIOWrapper' instances
+```
+
+**Impacto:** no es un crash de juego — falla el **guardado**. El jugador puede
+seguir jugando pero no puede guardar. Para una alfa igual es grave.
+
+#### 🔎 Investigación (2026-07-29)
+
+Un `TextIOWrapper` es un **archivo abierto**. Hay uno alcanzable desde lo que se
+serializa: las variables del store **o** el log de rollback (`renpy.save` guarda
+`(roots, renpy.game.log)` — las dos cosas).
+
+**Descartado por revisión de código:**
+- Solo hay **3 `open()`** en todo `game/` (ajuste_celular ×2, herramienta_pos_simple
+  ×1). Los tres usan `with` y están **dentro de un `def`**, así que la variable del
+  archivo queda local y nunca llega al store. (Si alguno hubiera estado en un
+  `python:` de label, la variable iría al store y explicaría el bug exacto.)
+- No hay `renpy.file()`, `io.open()`, `codecs.open()`, ni asignaciones de
+  `sys.stdout`/`sys.stderr` (que también son `TextIOWrapper`).
+- En Sentry y en el reporte de errores, los resultados de `renpy.fetch` y
+  `urlopen` son locales de función.
+- El proyecto no toca `config.log` ni el logger de Ren'Py directamente.
+
+**Diagnóstico en vivo:** se corrió `jp_reportar_no_picklables()` (botón
+🔍 "Revisar guardado" en el panel de cheats) al inicio de una partida →
+**"No hay objetos problematicos"**. O sea que el archivo **no está siempre**:
+aparece en algún momento puntual. Falta correr el botón **dentro de la quest
+08_a**, que es donde ocurrió el reporte.
+
+#### 💡 Pistas para cuando se retome
+
+1. **El propio `log.txt` de Ren'Py.** El motor lo mantiene **abierto** durante toda
+   la sesión (`renpy/log.py:247`) — es literalmente un `TextIOWrapper`. Si alguna
+   ruta de código llega a él (directa o transitivamente) y queda referenciado
+   desde el estado, da este error exacto.
+2. **El log de rollback.** El diagnóstico actual solo recorre las variables del
+   store. Si el archivo entró por `renpy.game.log` (snapshots de variables ya
+   cambiadas), no lo va a ver: hay que extender la búsqueda a esa mitad.
+3. **Herramientas de dev.** Los exports de `ajuste_celular` y del posicionador son
+   lo único que abre archivos. Vale reproducir usándolos antes de guardar.
+
+**NO usar `config.save_dump` para diagnosticar esto:** su `dump_paths()` asume que
+si `__getstate__` devuelve una tupla es `(state, slots)` y la desempaqueta a ciegas
+(`compat/pickle.py:143`). Acá algo devuelve una tupla de un elemento, así que
+revienta con `ValueError: not enough values to unpack` en **cada** guardado —
+incluido el autoguardado al dormir. Rompe el juego en vez de diagnosticarlo
+(comprobado en 0.1.8f y revertido). Usar el botón del panel de cheats.
+
+---
+
+### E09 — El botón "Hablar" desaparece con Mónica tras la quest 0_b
+
+- **Estado:** ✅ **CORREGIDO (2026-07-31)**
+- **Tipo:** bug de gameplay (no crashea, por eso no llegó a Sentry) — reporte manual
+- **Síntoma:** al completar la quest 0_a de Mónica, al día siguiente se dispara
+  la 0_b al entrar al living. **A partir de ahí, el botón "💬 Hablar" ya no
+  aparece al hacer click en Mónica.**
+
+#### 🔎 Diagnóstico
+
+El botón no "desaparecía": **el menú de interacción nunca se abría**.
+
+`interaccion_monica` tiene un gate que auto-ejecuta la quest activa antes de
+mostrar el menú:
+
+```renpy
+if (_quest_activa and _quest_activa.etapa_actual == 5 and
+        renpy.has_label("quest_" + _quest_activa.id) and
+        _quest_activa.id not in ("monica_questprincipal_0", "monica_questprincipal_0_b")):
+    $ exito, mensajes = _quest_activa.intentar_ejecutar()
+    if exito:
+        jump ejecutar_quest_activa      # <- se va sin abrir el menu
+```
+
+Al completarse la 0_b, se auto-inicia la **0_c** (`quest_anterior=0_b`), que
+queda activa en `ETAPA_BOTON_LISTO`. Y la 0_c:
+
+1. **Tiene label propio** (`quest_monica_questprincipal_0_c`) → pasa el gate `has_label`.
+2. **No estaba en la tupla de exclusión.**
+3. **Tiene `validacion_especial=[]`** → `intentar_ejecutar()` no valida nada y
+   devuelve `(True, [])` siempre (questsystem_core.rpy:585-592).
+
+Resultado: cada click en Mónica saltaba directo a la escena de la notebook y el
+menú nunca se abría. Encima esa escena está pensada para **la habitación del MC**
+(el item tiene `condicion_uso=_item_en_habitacion_mc` y
+`label_uso="revisar_notebook_monica"`), así que se disparaba fuera de contexto.
+
+#### 🔨 Arreglo
+
+Se agregó `"monica_questprincipal_0_c"` a la tupla de exclusión de
+`interaccion_monica`. Su disparador correcto es usar la notebook desde el
+inventario, en la habitación del MC.
+
+#### 🔁 Auditoría de la misma clase (los 3 NPCs)
+
+Se cruzaron **todas** las quests con label propio contra las tuplas de exclusión
+y contra sus disparadores alternativos:
+
+| NPC | Resultado |
+|---|---|
+| **Mónica** | Solo la 0_c. **Corregida.** |
+| **Jasmine** | Limpia (0_a, 0_b y 0_c ya estaban excluidas). |
+| **Violet** | `0_a`: mismo agujero (`validacion_especial=[]` + botón propio "Hablar (quest)" que quedaba muerto). **Agregada a la tupla.** |
+| **Violet** | `0_b`: tiene disparador propio (door access "Intentar hablar") pero **NO es bug**: su `validacion_especial` exige a Violet en su habitación y horario tarde, así que el auto-disparo solo puede ganar cuando el jugador ya pasó la puerta. Se deja como está. |
+
+#### 💡 Regla para quests nuevas
+
+Si una quest tiene un label `quest_<id>` **y además** otro disparador (item con
+`label_uso`, opción de puerta, auto-trigger por locación, botón del menú), hay
+que agregarla a la tupla de exclusión de su NPC. Si no, el click en el NPC le
+gana al disparador previsto — y si la quest no tiene `validacion_especial`, gana
+**siempre**.

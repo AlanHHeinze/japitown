@@ -49,6 +49,15 @@ define build.name = "Japitown"
 
 ## Autoguardado #################################################################
 
+## NO activar config.save_dump en este proyecto (config.save_dump = True).
+## Su dump_paths() asume que si __getstate__ devuelve una tupla, es (state,
+## slots) — y la desempaqueta a ciegas (compat/pickle.py:143). Algún objeto del
+## estado devuelve una tupla de UN elemento, así que revienta con
+## "ValueError: not enough values to unpack (expected 2, got 1)" en CADA
+## guardado, incluido el autoguardado al dormir. O sea: rompe el juego entero,
+## no solo el diagnóstico. Para cazar objetos no serializables hay que usar otra
+## vía (ver el bloque de diagnóstico manual más abajo).
+
 ## Se declara explicito (aunque True ya es el default de Ren'Py) porque de esto
 ## depende el autoguardado al dormir: force_autosave() no hace nada si esto es
 ## False. Ver autoguardar_partida() en core/time/timesystem_core.rpy.
