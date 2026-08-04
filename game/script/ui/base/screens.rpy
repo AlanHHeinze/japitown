@@ -434,38 +434,38 @@ screen main_menu():
             text "[config.version]":
                 style "main_menu_version"
 
-    ## Botones sociales (inferior izquierda): Discord arriba, Patreon abajo
-    $ _soc_k = 2.0 if renpy.variant("small") else 1.0
+    ## Botones sociales (inferior izquierda): alineados con menú
+    $ _soc_k = 1.3 if renpy.variant("small") else 1.1
 
     vbox:
-        xpos int(60 * _soc_k)
+        xpos 80
         yalign 1.0
-        yoffset int(-40 * _soc_k)
-        spacing int(16 * _soc_k)
+        yoffset -130
+        spacing 10
 
         hbox:
-            spacing int(14 * _soc_k)
+            spacing 12
             imagebutton:
-                idle Transform("images/hud/discord_logo.png", fit="contain", xysize=(int(56 * _soc_k), int(56 * _soc_k)), alpha=0.85)
-                hover Transform("images/hud/discord_logo.png", fit="contain", xysize=(int(56 * _soc_k), int(56 * _soc_k)), alpha=1.0)
+                idle Transform("images/hud/discord_logo.png", fit="contain", xysize=(int(52 * _soc_k), int(52 * _soc_k)), alpha=0.85)
+                hover Transform("images/hud/discord_logo.png", fit="contain", xysize=(int(52 * _soc_k), int(52 * _soc_k)), alpha=1.0)
                 action OpenURL("https://discord.gg/qz6REyW3Aw")
-            text "Discord" yalign 0.5 size int(28 * _soc_k) color "#ffffff" outlines [ (2, "#000000aa", 0, 0) ]
+            text "Discord" yalign 0.5 size 28 color "#ffffff" outlines [ (2, "#000000aa", 0, 0) ]
 
         hbox:
-            spacing int(14 * _soc_k)
+            spacing 12
             imagebutton:
-                idle Transform("images/hud/patreon_logo.png", fit="contain", xysize=(int(56 * _soc_k), int(56 * _soc_k)), alpha=0.85)
-                hover Transform("images/hud/patreon_logo.png", fit="contain", xysize=(int(56 * _soc_k), int(56 * _soc_k)), alpha=1.0)
+                idle Transform("images/hud/patreon_logo.png", fit="contain", xysize=(int(52 * _soc_k), int(52 * _soc_k)), alpha=0.85)
+                hover Transform("images/hud/patreon_logo.png", fit="contain", xysize=(int(52 * _soc_k), int(52 * _soc_k)), alpha=1.0)
                 action OpenURL("https://www.patreon.com/cw/Japitown")
-            text "Patreon" yalign 0.5 size int(28 * _soc_k) color "#ffffff" outlines [ (2, "#000000aa", 0, 0) ]
+            text "Patreon" yalign 0.5 size 28 color "#ffffff" outlines [ (2, "#000000aa", 0, 0) ]
 
         hbox:
-            spacing int(14 * _soc_k)
+            spacing 12
             imagebutton:
-                idle Transform("images/hud/itch_logo.png", fit="contain", xysize=(int(56 * _soc_k), int(56 * _soc_k)), alpha=0.85)
-                hover Transform("images/hud/itch_logo.png", fit="contain", xysize=(int(56 * _soc_k), int(56 * _soc_k)), alpha=1.0)
+                idle Transform("images/hud/itch_logo.png", fit="contain", xysize=(int(52 * _soc_k), int(52 * _soc_k)), alpha=0.85)
+                hover Transform("images/hud/itch_logo.png", fit="contain", xysize=(int(52 * _soc_k), int(52 * _soc_k)), alpha=1.0)
                 action OpenURL("https://ahhgames.itch.io/japitown")
-            text "itch.io" yalign 0.5 size int(28 * _soc_k) color "#ffffff" outlines [ (2, "#000000aa", 0, 0) ]
+            text "itch.io" yalign 0.5 size 28 color "#ffffff" outlines [ (2, "#000000aa", 0, 0) ]
 
 
 

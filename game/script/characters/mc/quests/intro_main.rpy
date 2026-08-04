@@ -228,6 +228,70 @@ screen menu_intro_choice():
                     padding (int(30 * _mic_k), int(14 * _mic_k))
 
 
+screen disclaimer_ficcion():
+    modal True
+
+    $ _disc_k = 1.8 if renpy.variant("small") else 1.0
+
+    add Solid("#000000")
+
+    frame:
+        xalign 0.5
+        yalign 0.5
+        background None
+        xmaximum int(950 * _disc_k)
+        padding (int(70 * _disc_k), int(60 * _disc_k))
+
+        vbox:
+            spacing int(25 * _disc_k)
+            xalign 0.5
+
+            if _preferences.language == "spanish":
+                text "AVISO LEGAL":
+                    size int(26 * _disc_k)
+                    color "#FFB74D"
+                    bold True
+                    xalign 0.5
+
+                null height int(15 * _disc_k)
+
+                text "Este juego es una obra de ficción. Todos los personajes, situaciones, eventos y diálogos presentados son completamente imaginarios y creados con fines de entretenimiento. Cualquier similitud con personas reales, vivas o fallecidas, es pura coincidencia.\n\nTodos los personajes involucrados en cualquier escena de contenido explícito o romántico son mayores de 18 años. Los desarrolladores no respaldan ni promueven ningún contenido que tenga lugar en este juego como aceptable en la realidad.":
+                    size int(16 * _disc_k)
+                    color "#E0E0E0"
+                    xalign 0.5
+                    text_align 0.5
+                    line_spacing 7
+
+            else:
+                text "LEGAL NOTICE":
+                    size int(26 * _disc_k)
+                    color "#FFB74D"
+                    bold True
+                    xalign 0.5
+
+                null height int(15 * _disc_k)
+
+                text "This game is a work of fiction. All characters, situations, events, and dialogues presented are completely imaginary and created for entertainment purposes. Any resemblance to real persons, living or deceased, is purely coincidental.\n\nAll characters involved in any scene of explicit or romantic content are 18 years of age or older. The developers do not endorse or promote any content that takes place in this game as acceptable in reality.":
+                    size int(16 * _disc_k)
+                    color "#E0E0E0"
+                    xalign 0.5
+                    text_align 0.5
+                    line_spacing 7
+
+            null height int(20 * _disc_k)
+
+            hbox:
+                xalign 0.5
+
+                textbutton _("Continuar"):
+                    action Return(True)
+                    text_size int(18 * _disc_k)
+                    text_color "#ffffff"
+                    background "#1565C0"
+                    hover_background "#1976D2"
+                    padding (int(50 * _disc_k), int(16 * _disc_k))
+
+
 label start:
 
     # Mostrar advertencia de contenido adulto en cada nueva partida
@@ -245,6 +309,9 @@ label start:
         # Si canceló sin escribir nada, usar nombre por defecto
         if not mc_name or mc_name.strip() == "":
             $ mc_name = "MC"
+
+        # Mostrar disclaimer de ficción y mayoría de edad
+        $ renpy.call_screen("disclaimer_ficcion")
 
         $ intro_mostrada = True
         $ inicializar_locaciones_casa()
@@ -602,46 +669,16 @@ label game_loop:
     # Validar eventos en cada iteración del loop
     $ validar_eventos()
 
-    # Quest 09_a: disparar piensa "Deberia avisarle a Violet" al llegar a ETAPA_BOTON_LISTO
-    $ _quest_v09a_gl = store.sistema_quests.obtener_quest("violet_questprincipal_09_a")
-    if (_quest_v09a_gl and _quest_v09a_gl.activa and not _quest_v09a_gl.completada and
-            _quest_v09a_gl.etapa_actual == ETAPA_BOTON_LISTO and
-            not getattr(store, 'violet_9a_piensa_mostrado', True)):
-        $ _gl_ultimo_trigger = "violet_09a_piensa"
-        jump violet_quest09a_piensa_avisarle
-
-    # Quest 0_b de Jasmine: disparar cuando acaba de iniciarse
-    $ _quest_j0b_gl = store.sistema_quests.obtener_quest("jasmine_questprincipal_0_b")
-    if (_quest_j0b_gl and _quest_j0b_gl.activa and not _quest_j0b_gl.completada and
-            _quest_j0b_gl.etapa_actual == ETAPA_BOTON_LISTO and
-            not getattr(store, '_jasmine_0b_iniciada', False)):
-        $ store._jasmine_0b_iniciada = True
-        # Disparar mensaje de Carl
-        $ store.sistema_mensajes.disparar_por_trigger("quest", "carl_quest_j0b", "carl")
-        $ _gl_ultimo_trigger = "jasmine_0b"
-        jump quest_jasmine_questprincipal_0_b
-
-    # Quest 0 del MC: recorrido libre terminado (visito las 3 locaciones objetivo).
-    # Se dispara desde aca y no desde los labels de entrada porque esos llegan por
-    # call expression y deben retornar; este jump es frameless.
-    if getattr(store, 'mc_q0_explorando', False) and mc_q0_exploracion_terminada():
-        $ _gl_ultimo_trigger = "mc_q0_exploracion"
-        jump mc_q0_exploracion_completada
-
-    # Quest 0b del MC: tutorial del celular en la habitacion del MC (dia 2+).
-    # Antes disparaba en casa_pasilloarriba, pero con el viaje rapido el jugador
-    # puede saltearse el pasillo y nunca verlo. La habitacion del MC no se puede
-    # esquivar: es donde despierta cada dia.
-    $ _quest_mc_0b = sistema_quests_mc.quests.get("mc_quest_0b")
-    if (_quest_mc_0b and _quest_mc_0b.activa and not _quest_mc_0b.completada and not getattr(store, "mc_q0b_disparada", False)):
-        $ _loc_actual_id = sistema_locaciones.locacion_actual.id if sistema_locaciones.locacion_actual else ""
-        if _loc_actual_id == "casa_hmc" and dia_actual >= 2:
-            $ _gl_ultimo_trigger = "mc_q0b"
-            jump mc_q0b_trigger
-
-    # Se llego al pause sin ciclar: se limpia el rastro del diagnostico
-    # de bucles (ver S11 en errores_sentry_registro.md).
-    $ _gl_ultimo_trigger = ""
+    # Triggers de contenido del loop (registro TRIGGERS_GAME_LOOP, refactor C6):
+    # cada quest registra su trigger desde SU archivo con
+    # registrar_trigger_game_loop(id, funcion, prioridad). El primero que
+    # devuelve label gana y se salta con jump frameless (por eso viven aca y no
+    # en labels de entrada que llegan por call expression y deben retornar).
+    # ejecutar_triggers_game_loop deja el id en _gl_ultimo_trigger (tag de
+    # Sentry, diagnostico S11) y lo limpia si ninguno disparo.
+    $ _gl_trigger_label = ejecutar_triggers_game_loop()
+    if _gl_trigger_label:
+        jump expression _gl_trigger_label
 
     if not renpy.get_screen("navegacion_locaciones_con_hud"):
         show screen navegacion_locaciones_con_hud
