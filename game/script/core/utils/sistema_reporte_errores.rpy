@@ -186,16 +186,25 @@ init python:
             store._jp_status = "copiar_fail"
         renpy.restart_interaction()
 
-    def jp_exception_handler(short, full, traceback_fn):
+    def jp_exception_handler(te):
         """
         Handler global de excepciones no controladas.
         Muestra la pantalla propia; si algo falla, devuelve False para que
         Ren'Py use su pantalla de error por defecto (nunca peor que el default).
+
+        Desde Ren'Py 8.4 el handler recibe UN objeto (TracebackException) con
+        .simple/.full, en vez de los tres strings de antes. Con la firma vieja
+        Ren'Py caía a su fallback de compatibilidad, y el TypeError que largaba
+        inspect.bind al descartar la firma nueva quedaba encadenado al error
+        real: el reporte mostraba ESE TypeError en vez de la excepción de
+        verdad, siempre apuntando al `pause` del game_loop.
         """
         if getattr(store, "_jp_handling", False):
             return False
         try:
             store._jp_handling = True
+            short = te.simple
+            full = te.full
             store._jp_short = short or ""
             # Versión segura para mostrar: forma de variable (no interpola []),
             # y escapamos {{ para que no se interpreten como tags de texto.
@@ -207,6 +216,16 @@ init python:
             # muestra una pantalla de "conexión" con Reintentar, en vez de la de
             # crash, para que el jugador no lo reporte como bug.
             store._jp_es_descarga = ("Download error" in (full or "")) or ("Download error" in (short or ""))
+            # Si el error reventó a mitad de construir una screen, la pila de
+            # widgets quedó abierta y el `call screen` de abajo moriría con
+            # "ui.interact called with non-empty widget/layer stack",
+            # tapando el error original. Lo que quedó en la pila es basura de
+            # una screen que ya falló, asi que descartarla es seguro (mismo
+            # criterio que el drenaje de call frames del game_loop).
+            try:
+                renpy.ui.reset()
+            except Exception:
+                pass
             resultado = renpy.call_in_new_context("_jp_error_context")
             if resultado == "ignore":
                 return True          # intentar continuar (como "Ignore")

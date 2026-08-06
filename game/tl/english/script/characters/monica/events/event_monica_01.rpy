@@ -267,3 +267,11 @@ translate english strings:
     # renpy.translate_string, por eso va como `strings`.
     old "Este evento se está retrabajando con la finalidad de mejorar la interacción y ofrecer escenas diferentes al evento original. Volverá en futuras actualizaciones."
     new "This event is being reworked to improve the interaction and offer scenes different from the original. It will return in future updates."
+# TODO: Translation updated at 2026-07-31 20:21
+
+# game/script/characters/monica/events/event_monica_01.rpy:393
+translate english event_monica_01_check_replay_6c74853b:
+
+    # "[_msg_rework_masaje]"
+    "[_msg_rework_masaje]"
+

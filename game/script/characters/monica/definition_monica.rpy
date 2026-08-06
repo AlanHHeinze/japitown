@@ -231,7 +231,7 @@ init python:
             sprite=None,
             posicion=None,
             probabilidad=0.25,
-            horarios=[0],
+            horarios=[2],
             nombre="Monica en la ducha"
         ))
 

@@ -41,6 +41,7 @@ Cada ruta se **corta en el primer paso que falla** y reporta el paso exacto: eso
 | `talk` | reasignación diaria de estados → estado activo por NPC | Sí (reasigna el día) |
 | `mapa` | puertas/tabla de acceso → viaje rápido vs locaciones reales | No |
 | `guardado` | picklabilidad de TODO el estado guardable (anti-PicklingError) | No |
+| `registros` | registros declarativos post-optimización: opciones/overrides/bloqueos de puerta, bloqueos del embudo, triggers de motor (labels existen, condiciones ejecutan, ids únicos) | No |
 
 **"Destructiva"** = muta la partida (avanza días, compra, activa restricciones). Correrlas
 solo en partidas descartables. Las no destructivas son de solo lectura (o repiten cosas que
@@ -70,13 +71,17 @@ Una quest atraviesa SIEMPRE esta secuencia — probar en este orden:
 4. **Rutina de quest**: en etapa 4-5 el NPC se mueve a la locación de la rutina (pisa su
    rutina normal, con vigencia por locación — fix E07).
    → *Automatizado: ruta `quests` paso 3 valida que la locación exista; que el NPC esté ahí es prueba jugada.*
-5. **Disparador**: según la quest, uno de estos (y solo uno — regla post-refactor):
+5. **Disparador**: según la quest, uno de estos (y solo uno — regla post-refactor).
+   Desde la optimización 2026-07-31 TODOS son registros declarativos que el contenido
+   puebla en `init 5` desde sus propios archivos (el motor solo itera):
    - **Botón del menú NPC** (`interactions_<npc>.rpy`) — clickear al NPC SIEMPRE abre menú.
    - **Entrada a locación** (`registrar_label_locacion`) — Mónica 0_b, Violet 04_b.
-   - **Opción de puerta** (door access) — cadena de Violet.
-   - **Al dormir/despertar** (`accion_dormir`) — Violet 08_a, 09_a.
-   - **game_loop** — Violet 09_a piensa, Jasmine 0_b.
+   - **Opción de puerta** (`registrar_opcion_puerta`, en `puertas_<npc>.rpy`) — cadena de Violet.
+   - **Al dormir/despertar** (`registrar_trigger_dormir`, fase "antes"/"despues") — Violet 08_a, 09_a, evento 2.
+   - **game_loop** (`registrar_trigger_game_loop`) — Violet 09_a piensa, Jasmine 0_b, MC q0/q0b.
+   - **Al avanzar horario** (`registrar_trigger_avanzar`) — MC q0 espera.
    - **Item / chat completado** — Mónica 0_c, Violet 07_c.
+   La ruta `registros` valida que todo lo registrado sea consistente.
 6. **Desarrollo (etapa 7)**: el label de contenido corre; si restringe el mundo usa
    `activar_restriccion(...)`. El label termina en `jump game_loop` (contenido) — nunca
    `return` frameless.

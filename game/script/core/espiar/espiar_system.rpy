@@ -10,13 +10,14 @@
 ##   - Los botones son AccionLocacion globales (locacion_id=None) que solo se
 ##     ven mientras hay sesión activa; el panel de acciones del HUD mantiene
 ##     la estética del resto del juego.
+##   - REQUISITO DE ACCESO: el NPC tiene que tener al menos ESPIAR_DESEO_MINIMO
+##     de deseo. El minijuego es parte de la tensión ya establecida entre los
+##     dos personajes, no un primer contacto: sin ese nivel la opción ni
+##     siquiera aparece en el menú del baño.
 ##   - "Abrir más": 20% base + 10% por punto de destreza - 20% por apertura ya
 ##     lograda (mínimo 1%). Fallo → el NPC se da cuenta (label de descubierto).
-##   - "Entrar" (destreza 10+): pasa a la instancia "entrar" (fondo propio y
-##     botones Unirse/Salir), o al label_entrar propio de la secuencia si tiene.
-##   - "Sacar foto" (inteligencia 5+): probabilidad segun apertura (1/33/66/99).
-##     Bien o mal, termina el minijuego. Las fotos se otorgan en orden y van a
-##     la galería del celular al completar la lista de la secuencia.
+##   - "Entrar" (destreza 10+): hoy avisa "contenido en desarrollo" y no avanza;
+##     si la secuencia define label_entrar, salta a esa escena propia.
 ##   - "Salir": vuelve al pasillo. Toda salida del minijuego avanza 1 horario.
 ##
 ## Para AGREGAR contenido (ver espiar_violet.rpy como ejemplo):
@@ -33,18 +34,12 @@
 # Interruptor maestro del minijuego. Mientras esté en False, el botón "Espiar"
 # del baño queda deshabilitado ("Contenido en desarrollo") en la versión jugable
 # — todo el sistema sigue acá, poner True lo re-activa de una.
-define ESPIAR_HABILITADO = False
+define ESPIAR_HABILITADO = True
 
 # Sesión activa del minijuego (None = no está corriendo). Dict plano picklable:
-# {"npc_id", "secuencia_id", "stage" (0-3 aperturas logradas), "instancia"
+# {"npc_id", "secuencia_id", "xoffset" (0, 100, 200, 300 px), "instancia"
 #  ("mirilla" | "entrar")}
 default espiar_sesion = None
-
-# Fotos otorgadas por secuencia: {secuencia_id: cantidad}
-default espiar_fotos_obtenidas = {}
-
-# Secuencias cuya lista de fotos ya se completó y pasó a la galería
-default espiar_secuencias_completadas = []
 
 # NPCs que ya descubrieron al jugador alguna vez: {npc_id: True}
 default espiar_descubierto_npc = {}
@@ -61,27 +56,152 @@ init python:
 
     # Imagenes de puerta por defecto (stage 0 → estado1 ... stage 3 → estado4).
     # Una secuencia puede traer las suyas con puertas=[...].
-    ESPIAR_PUERTAS_DEFAULT = [
-        "images/minijuegos/ducha_test/secuencias_placeholder_puerta_estado1.png",
-        "images/minijuegos/ducha_test/secuencias_placeholder_puerta_estado2.png",
-        "images/minijuegos/ducha_test/secuencias_placeholder_puerta_estado3.png",
-        "images/minijuegos/ducha_test/secuencias_placeholder_puerta_estado4.png",
-    ]
+    # Por ahora vacío — cada secuencia define sus propias puertas
+    ESPIAR_PUERTAS_DEFAULT = []
 
-    # Probabilidad de foto buena segun aperturas logradas (stage 0..3)
-    ESPIAR_PROB_FOTO = [1, 33, 66, 99]
+# =============================================================================
+# IMÁGENES DEL MINIJUEGO DE DUCHA
+# =============================================================================
+# Fondos y estructuras
+image ducha_mg_fondo           = "images/minijuegos/ducha/ducha_fondo.jpg"
+image ducha_mg_pared           = "images/minijuegos/ducha/ducha_pared.webp"
+image ducha_mg_puerta          = "images/minijuegos/ducha/ducha_puerta.webp"
+image ducha_mg_vidrio          = "images/minijuegos/ducha/ducha_vidrio.webp"
+
+# Capas de vapor
+image ducha_mg_vapor_fondo     = "images/minijuegos/ducha/ducha_vapor_fondo.webp"
+image ducha_mg_vapor_medio     = "images/minijuegos/ducha/ducha_vapor_medio.webp"
+image ducha_mg_vapor_exterior  = "images/minijuegos/ducha/ducha_vapor_exterior.webp"
+
+# Animación de lluvia (3 frames cada una)
+layeredimage ducha_mg_lluvia_fondo:
+    group secuencia:
+        attribute f1 default:
+            "images/minijuegos/ducha/ducha_lluvia_fondo_1.webp"
+        attribute f2:
+            "images/minijuegos/ducha/ducha_lluvia_fondo_2.webp"
+        attribute f3:
+            "images/minijuegos/ducha/ducha_lluvia_fondo_3.webp"
+
+layeredimage ducha_mg_lluvia_frente:
+    group secuencia:
+        attribute f1 default:
+            "images/minijuegos/ducha/ducha_lluvia_frente_1.webp"
+        attribute f2:
+            "images/minijuegos/ducha/ducha_lluvia_frente_2.webp"
+        attribute f3:
+            "images/minijuegos/ducha/ducha_lluvia_frente_3.webp"
+
+# Animación de lluvia: 75% de transparencia en las tres capas. Cada una va a
+# un x distinto y arranca en un frame distinto para que no caigan en bloque.
+image ducha_mg_lluvia_fondo_animado = Transform(
+    Animation(
+        "images/minijuegos/ducha/ducha_lluvia_fondo_1.webp", 0.16,
+        "images/minijuegos/ducha/ducha_lluvia_fondo_2.webp", 0.16,
+        "images/minijuegos/ducha/ducha_lluvia_fondo_3.webp", 0.16,
+        loop=True
+    ),
+    alpha=0.75, xoffset=-50
+)
+
+# Columna mas lejana: copia de la de fondo, 50px a la derecha de esta (o sea
+# centrada en 0) y arrancando en el frame 3 para no caer sincronizada con ella.
+image ducha_mg_lluvia_fondo_animado_alt = Transform(
+    Animation(
+        "images/minijuegos/ducha/ducha_lluvia_fondo_3.webp", 0.16,
+        "images/minijuegos/ducha/ducha_lluvia_fondo_1.webp", 0.16,
+        "images/minijuegos/ducha/ducha_lluvia_fondo_2.webp", 0.16,
+        loop=True
+    ),
+    alpha=0.75, xoffset=0
+)
+
+# Lluvia frente comienza en imagen 2 (desincronizada)
+image ducha_mg_lluvia_frente_animado = Transform(
+    Animation(
+        "images/minijuegos/ducha/ducha_lluvia_frente_2.webp", 0.11,
+        "images/minijuegos/ducha/ducha_lluvia_frente_3.webp", 0.11,
+        "images/minijuegos/ducha/ducha_lluvia_frente_1.webp", 0.11,
+        loop=True
+    ),
+    alpha=0.75
+)
+
+# Violet en la ducha: el orden de frames NO es lineal (se eligió a mano) y la
+# vuelta es en espejo. Cada cambio pasa por un dissolve, asi que se arma con
+# anim.TransitionAnimation — Animation() solo hace cortes secos.
+#
+# Va en `init 5` y no como `image` suelto porque usa sprite_normal, que define
+# options.rpy en init 0: este archivo se carga antes (script/core/ < script/ui/),
+# asi que a init 0 esa variable todavia no existe.
+init 5 python:
+
+    # Ida, y vuelta en espejo salteando los dos extremos: el pivote (4) y el
+    # frame inicial (5) quedarian el doble de tiempo en pantalla si se repitieran.
+    _ESP_VIOLET_IDA = [5, 8, 12, 9, 2, 14, 3, 1, 7, 10, 11, 13, 15, 4]
+    _ESP_VIOLET_CICLO = _ESP_VIOLET_IDA + _ESP_VIOLET_IDA[::-1][1:-1]
+
+    # TransitionAnimation toma (imagen, tiempo, transicion) repetido. La
+    # transicion que sigue a cada imagen es la que lleva A LA SIGUIENTE, y la
+    # ultima cierra el loop volviendo al primer frame — por eso van todas.
+    # El dissolve corre DENTRO del segundo de cada frame, no se le suma.
+    _esp_violet_args = []
+    for _esp_frame in _ESP_VIOLET_CICLO:
+        _esp_violet_args.append("images/minijuegos/ducha/ducha_violet_jabon_%d.webp" % _esp_frame)
+        _esp_violet_args.append(1.0)
+        _esp_violet_args.append(sprite_normal)
+
+    renpy.image("ducha_mg_violet_animado", anim.TransitionAnimation(*_esp_violet_args))
+
+# Layeredimage para compatibilidad con atributos (j1-j15)
+layeredimage ducha_mg_violet:
+    group jabon:
+        attribute j1 default:
+            "images/minijuegos/ducha/ducha_violet_jabon_1.webp"
+        attribute j2:
+            "images/minijuegos/ducha/ducha_violet_jabon_2.webp"
+        attribute j3:
+            "images/minijuegos/ducha/ducha_violet_jabon_3.webp"
+        attribute j4:
+            "images/minijuegos/ducha/ducha_violet_jabon_4.webp"
+        attribute j5:
+            "images/minijuegos/ducha/ducha_violet_jabon_5.webp"
+        attribute j6:
+            "images/minijuegos/ducha/ducha_violet_jabon_6.webp"
+        attribute j7:
+            "images/minijuegos/ducha/ducha_violet_jabon_7.webp"
+        attribute j8:
+            "images/minijuegos/ducha/ducha_violet_jabon_8.webp"
+        attribute j9:
+            "images/minijuegos/ducha/ducha_violet_jabon_9.webp"
+        attribute j10:
+            "images/minijuegos/ducha/ducha_violet_jabon_10.webp"
+        attribute j11:
+            "images/minijuegos/ducha/ducha_violet_jabon_11.webp"
+        attribute j12:
+            "images/minijuegos/ducha/ducha_violet_jabon_12.webp"
+        attribute j13:
+            "images/minijuegos/ducha/ducha_violet_jabon_13.webp"
+        attribute j14:
+            "images/minijuegos/ducha/ducha_violet_jabon_14.webp"
+        attribute j15:
+            "images/minijuegos/ducha/ducha_violet_jabon_15.webp"
+
+init python:
+    # Deseo minimo del NPC para que el minijuego este disponible. Es el
+    # requisito de acceso: por debajo de esto la opcion "Espiar" no se ofrece.
+    ESPIAR_DESEO_MINIMO = 20
 
     # Cuánto se puede arrastrar el fondo hacia cada lado desde su posición
     # inicial, en px. El fondo se muestra a tamaño nativo (sin zoom): el margen
     # se logra dándole al viewport un contenido más ancho que la pantalla, con
     # la imagen centrada. Solo hay desplazamiento horizontal — el alto del
     # contenido es igual al de la pantalla, asi que no hay scroll vertical.
-    ESPIAR_DRAG_MARGEN = 200
+    ESPIAR_DRAG_MARGEN = 50
 
     # Requisitos de stats para habilitar botones (si no se cumplen, el botón
     # igual se muestra, en gris)
     ESPIAR_DESTREZA_ENTRAR = 10
-    ESPIAR_INTELIGENCIA_FOTO = 5
 
     class SecuenciaEspiar(object):
         """
@@ -92,8 +212,6 @@ init python:
             npc_id: NPC al que pertenece
             nombre: nombre descriptivo (para debug/menus futuros)
             fondo: imagen de fondo de la mirilla (tamaño nativo, drag horizontal)
-            fotos: lista de {"ruta": str, "descripcion": str} que se otorgan en
-                   orden al sacar fotos buenas; al completarla van a la galería
             fondo_entrar: imagen de la instancia "entrar" (default: mismo fondo)
             label_entrar: si se define, "Entrar" salta a este label en vez de a
                           la instancia generica (escena propia de la secuencia)
@@ -105,7 +223,7 @@ init python:
             condicion: funcion de modulo → bool; si falla, la secuencia no entra
                        al sorteo (permite secuencias de quest/evento)
         """
-        def __init__(self, id, npc_id, fondo, nombre="", fotos=None,
+        def __init__(self, id, npc_id, fondo, nombre="",
                      fondo_entrar=None, label_entrar=None,
                      label_descubierto=None, puertas=None, margen_drag=None,
                      peso=1, condicion=None):
@@ -113,7 +231,6 @@ init python:
             self.npc_id = npc_id
             self.nombre = nombre
             self.fondo = fondo
-            self.fotos = list(fotos) if fotos else []
             self.fondo_entrar = fondo_entrar if fondo_entrar else fondo
             self.label_entrar = label_entrar
             self.label_descubierto = label_descubierto
@@ -165,6 +282,17 @@ init python:
         """True si el NPC tiene al menos una secuencia espiable (habilita el botón)."""
         return bool(obtener_secuencias_espiar(npc_id))
 
+    def npc_espiar_disponible(npc_id):
+        """
+        Requisito de acceso al minijuego: ademas de tener secuencias, el NPC
+        tiene que llegar a ESPIAR_DESEO_MINIMO de deseo. El minijuego es parte
+        de una tension ya establecida entre los dos personajes, asi que por
+        debajo de ese umbral la opcion directamente no se ofrece.
+        """
+        if not npc_tiene_espiar(npc_id):
+            return False
+        return obtener_stat2(npc_id) >= ESPIAR_DESEO_MINIMO
+
     def elegir_secuencia_espiar(npc_id):
         """Sortea una secuencia del pool válido, respetando pesos."""
         pool = obtener_secuencias_espiar(npc_id)
@@ -188,20 +316,11 @@ init python:
         return None
 
     def espiar_prob_abrir():
-        """20% base + 10% por destreza - 20% por apertura lograda, minimo 1%."""
-        aperturas = store.espiar_sesion["stage"] if store.espiar_sesion else 0
+        """20% base + 10% por destreza - 20% por cada 100px abierto, minimo 1%."""
+        xoffset = store.espiar_sesion.get("xoffset", 0) if store.espiar_sesion else 0
+        aperturas = xoffset // 100  # convertir px a número de aperturas
         destreza = getattr(store, 'mc_destreza', 0)
         return max(1, 20 + 10 * destreza - 20 * aperturas)
-
-    def espiar_prob_foto():
-        stage = store.espiar_sesion["stage"] if store.espiar_sesion else 0
-        return ESPIAR_PROB_FOTO[max(0, min(stage, len(ESPIAR_PROB_FOTO) - 1))]
-
-    def _espiar_fotos_restantes(secuencia):
-        if not secuencia or not secuencia.fotos:
-            return 0
-        obtenidas = store.espiar_fotos_obtenidas.get(secuencia.id, 0)
-        return max(0, len(secuencia.fotos) - obtenidas)
 
     def _espiar_reaccion_fallo(npc_id):
         """Rango de reacción que aplica segun el deseo actual del NPC."""
@@ -241,7 +360,7 @@ init python:
 
     def _esp_acc_abrir_visible():
         s = getattr(store, 'espiar_sesion', None)
-        return bool(s) and s.get("instancia") == "mirilla" and s.get("stage", 0) < 3
+        return bool(s) and s.get("instancia") == "mirilla" and s.get("xoffset", 0) < 300
 
     # "Entrar" y "Sacar foto" se muestran SIEMPRE durante la mirilla; si no se
     # cumplen sus requisitos aparecen en gris (condicion_habilitada), para que
@@ -253,15 +372,6 @@ init python:
 
     def _esp_acc_entrar_habilitada():
         return getattr(store, 'mc_destreza', 0) >= ESPIAR_DESTREZA_ENTRAR
-
-    def _esp_acc_foto_visible():
-        s = getattr(store, 'espiar_sesion', None)
-        return bool(s) and s.get("instancia") == "mirilla"
-
-    def _esp_acc_foto_habilitada():
-        if getattr(store, 'mc_inteligencia', 0) < ESPIAR_INTELIGENCIA_FOTO:
-            return False
-        return _espiar_fotos_restantes(_espiar_secuencia_actual()) > 0
 
     def _esp_acc_unirse_visible():
         s = getattr(store, 'espiar_sesion', None)
@@ -293,13 +403,6 @@ init 5 python:
         reseteo=None, condicion=_esp_acc_entrar_visible,
         condicion_habilitada=_esp_acc_entrar_habilitada,
         color="#8E24AA", color_hover="#AB47BC",
-    ))
-    sistema_acciones.registrar_accion(AccionLocacion(
-        id="espiar_foto", nombre="Sacar foto", icono=u"📷",
-        locacion_id=None, label_generico="accion_espiar_foto",
-        reseteo=None, condicion=_esp_acc_foto_visible,
-        condicion_habilitada=_esp_acc_foto_habilitada,
-        color="#1565C0", color_hover="#1E88E5",
     ))
     sistema_acciones.registrar_accion(AccionLocacion(
         id="espiar_unirse", nombre="Unirse", icono=u"🤝",
@@ -338,30 +441,33 @@ screen espiar_minijuego():
             add _esp_scr_sec.fondo_entrar
 
         else:
-            # Mirilla: fondo a tamaño nativo, arrastrable SOLO en horizontal y
-            # como máximo `margen` px hacia cada lado desde su posición inicial.
-            #
-            # Se consigue con el clamp propio del viewport en vez de calcular
-            # límites a mano: el contenido es `margen` px más ancho que la
-            # pantalla de cada lado y la imagen va centrada dentro. Asi el
-            # recorrido total es 2*margen y `xinitial 0.5` arranca justo en el
-            # medio (imagen en su posición nativa). El alto del contenido es
-            # igual al de la pantalla, por lo que no hay recorrido vertical y
-            # el arrastre en Y no hace nada. Funciona con mouse y touch.
-            $ _esp_scr_margen = _esp_scr_sec.obtener_margen_drag()
-
-            viewport:
-                xysize (1920, 1080)
-                draggable True
-                xinitial 0.5
-
-                fixed:
-                    xysize (1920 + 2 * _esp_scr_margen, 1080)
-                    add _esp_scr_sec.fondo xpos _esp_scr_margen ypos 0
-
-            # Puerta con rendija transparente (no captura el mouse: el drag
-            # pasa a traves hacia el viewport)
-            add _esp_scr_sec.puerta_por_stage(espiar_sesion.get("stage", 0))
+            # Mirilla: orden de capas (de atrás para adelante). Todas son
+            # 1920x1080 a pantalla completa, asi que van sin posicionar.
+            # Los nombres van entre comillas: `add` evalua una expresion Python
+            # y un nombre de imagen suelto seria una variable inexistente.
+            # 1. Fondo base
+            add "ducha_mg_fondo"
+            # 2. Vapor de fondo
+            add "ducha_mg_vapor_fondo"
+            # 3. Lluvia de fondo lejana (animada, comienza en frame 3)
+            add "ducha_mg_lluvia_fondo_animado_alt"
+            # 4. Lluvia de fondo (animada)
+            add "ducha_mg_lluvia_fondo_animado"
+            # 5. Violet animada en loop
+            add "ducha_mg_violet_animado"
+            # 6. Vapor intermedio
+            add "ducha_mg_vapor_medio"
+            # 7. Lluvia frontal (animada, comienza en frame 2)
+            add "ducha_mg_lluvia_frente_animado"
+            # 8. Vidrio frontal
+            add "ducha_mg_vidrio"
+            # 9. Vapor exterior
+            add "ducha_mg_vapor_exterior"
+            # 10. Pared frontal
+            add "ducha_mg_pared"
+            # 11. Puerta frontal (desplazada por xoffset)
+            $ _esp_scr_xoffset = espiar_sesion.get("xoffset", 0)
+            add Transform("ducha_mg_puerta", xoffset=_esp_scr_xoffset)
 
     # Botones del minijuego con la estética del panel de acciones del HUD
     use acciones_locacion(forzar=True)
@@ -384,7 +490,7 @@ label espiar_iniciar:
     $ espiar_sesion = {
         "npc_id": _espiar_npc_temp,
         "secuencia_id": _esp_sec_ini.id,
-        "stage": 0,
+        "xoffset": 0,
         "instancia": "mirilla",
     }
     show screen espiar_minijuego
@@ -400,8 +506,8 @@ label accion_espiar_abrir:
     $ _esp_pct_abrir = espiar_prob_abrir()
 
     if renpy.random.randint(1, 100) <= _esp_pct_abrir:
-        # Éxito: la puerta se abre un paso mas (dict nuevo, rollback-friendly)
-        $ espiar_sesion = dict(espiar_sesion, stage=espiar_sesion["stage"] + 1)
+        # Éxito: la puerta se desplaza 100px a la derecha (dict nuevo, rollback-friendly)
+        $ espiar_sesion = dict(espiar_sesion, xoffset=espiar_sesion.get("xoffset", 0) + 100)
         return
 
     # Fallo: el NPC se da cuenta
@@ -470,8 +576,17 @@ label accion_espiar_entrar:
         $ mostrar_hud()
         return
 
-    # Instancia generica: cambia el fondo y los botones (Unirse / Salir)
-    $ espiar_sesion = dict(espiar_sesion, instancia="entrar")
+    # Instancia generica: TODAVIA NO IMPLEMENTADA. Avisa y deja al jugador en
+    # la mirilla — no se entra ni se consume el horario. Cuando este lista, esto
+    # vuelve a ser: espiar_sesion = dict(espiar_sesion, instancia="entrar")
+    #
+    # El texto va interpolado, asi que NO lo traduce el bloque de dialogo con
+    # hash: lo traduce translate_string y el `old` vive en
+    # tl/english/espiar_strings.rpy
+    $ _esp_ent_msg = renpy.translate_string("(Contenido en desarrollo)")
+    window show
+    piensa "[_esp_ent_msg]"
+    window hide
     return
 
 
@@ -484,44 +599,6 @@ label accion_espiar_unirse:
     return
 
 
-# ── Sacar foto ───────────────────────────────────────────────────────────────
-label accion_espiar_foto:
-
-    if not espiar_sesion:
-        return
-
-    $ _esp_foto_sec = _espiar_secuencia_actual()
-    $ _esp_foto_npc_id = espiar_sesion["npc_id"]
-    $ _esp_foto_exito = renpy.random.randint(1, 100) <= espiar_prob_foto()
-
-    # Bien o mal, sacar la foto termina el minijuego
-    $ _espiar_cerrar_ui()
-
-    window show
-
-    if _esp_foto_exito and _esp_foto_sec:
-        # Otorgar la siguiente foto de la lista de la secuencia
-        $ _esp_foto_idx = espiar_fotos_obtenidas.get(_esp_foto_sec.id, 0)
-        if _esp_foto_idx < len(_esp_foto_sec.fotos):
-            $ espiar_fotos_obtenidas = dict(espiar_fotos_obtenidas, **{_esp_foto_sec.id: _esp_foto_idx + 1})
-
-            # Al completar la lista, todas las fotos pasan a la galería
-            if _esp_foto_idx + 1 >= len(_esp_foto_sec.fotos) and _esp_foto_sec.id not in espiar_secuencias_completadas:
-                python:
-                    for _esp_f in _esp_foto_sec.fotos:
-                        sistema_mensajes.agregar_foto_galeria(
-                            _esp_f["ruta"], _esp_foto_npc_id,
-                            _esp_f.get("descripcion", ""))
-                    espiar_secuencias_completadas = espiar_secuencias_completadas + [_esp_foto_sec.id]
-
-        piensa "Pude conseguir una buena foto."
-    else:
-        piensa "La foto no salió bien, debería intentarlo en otro momento."
-
-    window hide
-    $ avanzar_horario()
-    $ mostrar_hud()
-    return
 
 
 # ── Salir ────────────────────────────────────────────────────────────────────

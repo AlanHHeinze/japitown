@@ -12,12 +12,6 @@ translate english interaccion_puerta_npc_bbbd1a95:
     # piensa "Debe estar durmiendo, no voy a molestar."
     piensa "She must be asleep. I won't bother her."
 
-# game/script/core/locations/door_access_system.rpy:185
-translate english interaccion_puerta_npc_93fb1ac2:
-
-    # piensa "Violet debe estar dormida."
-    piensa "Violet must be asleep."
-
 translate english strings:
 
     ############################################################################
@@ -27,6 +21,13 @@ translate english strings:
     ## bloques de traducción por hash. Al pasarlas al dict se muestran por
     ## interpolación (monica "[_msg_adelante]"), que NO traduce: ahora las traduce
     ## mensaje_puerta_npc() y necesitan un `old` acá.
+
+    ## Bloqueos de golpe (BLOQUEOS_GOLPE_REGISTRO, refactor C8): antes era
+    ## dialogo literal (piensa "Violet debe estar dormida.") y estaba en un
+    ## bloque por hash; ahora se muestra por interpolacion y lo traduce
+    ## obtener_bloqueo_golpe() via translate_string — necesita un `old` aca.
+    old "Violet debe estar dormida."
+    new "Violet must be asleep."
 
     old "Estoy ocupada."
     new "I'm busy."
@@ -159,4 +160,12 @@ translate english interaccion_golpear_sale_pasillo_b2ec6ef6:
 
     # monica "[_msg_ahi_salgo]"
     monica "[_msg_ahi_salgo]"
+
+# TODO: Translation updated at 2026-07-31 20:21
+
+# game/script/core/locations/door_access_system.rpy:397
+translate english interaccion_puerta_npc_76c9d030:
+
+    # piensa "[_msg_bloqueo_golpe]"
+    piensa "[_msg_bloqueo_golpe]"
 

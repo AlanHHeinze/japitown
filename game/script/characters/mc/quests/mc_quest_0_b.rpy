@@ -16,6 +16,27 @@ default mc_q0b_esperando = False
 default mc_q0b_pistas_visitada = False
 
 
+# ── Trigger de game_loop ────────────────────────────────────────────────────
+# Tutorial del celular en la habitacion del MC (dia 2+). Dispara en la
+# habitacion y no en el pasillo porque con el viaje rapido el pasillo se puede
+# saltear; la habitacion del MC no (es donde despierta cada dia).
+
+init python:
+
+    def _gl_trigger_mc_q0b():
+        q = store.sistema_quests_mc.quests.get("mc_quest_0b")
+        if not (q and q.activa and not q.completada
+                and not getattr(store, "mc_q0b_disparada", False)):
+            return None
+        loc = store.sistema_locaciones.locacion_actual
+        if loc and loc.id == "casa_hmc" and store.dia_actual >= 2:
+            return "mc_q0b_trigger"
+        return None
+
+init 5 python:
+    registrar_trigger_game_loop("mc_q0b", _gl_trigger_mc_q0b, prioridad=10)
+
+
 ################################################################################
 ## Label principal — disparo automático en la habitacion del MC (dia 2+)
 ################################################################################

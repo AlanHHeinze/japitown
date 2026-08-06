@@ -12,12 +12,6 @@ translate english accion_avanzar_tiempo_fdb73a5a:
     # piensa "[_msg_restriccion]"
     piensa "[_msg_restriccion]"
 
-# game/script/core/npcs/npcsystem_interactions.rpy:87
-translate english accion_avanzar_tiempo_57c7a292:
-
-    # piensa "No puedes avanzar el tiempo ahora."
-    piensa "You can't advance time right now."
-
 # game/script/core/npcs/npcsystem_interactions.rpy:107
 translate english accion_ir_a_locacion_fdb73a5a:
 
@@ -62,8 +56,5 @@ translate english accion_hotspot_move_cf78c3b4:
 
 # TODO: Translation updated at 2026-06-25 23:12
 
-# game/script/core/npcs/npcsystem_interactions.rpy:117
-translate english accion_avanzar_tiempo_0b51825e:
-
-    # piensa "Debo responder el mensaje de [_npc_prioritario] antes de continuar"
-    piensa "I have to reply to [_npc_prioritario]'s message before continuing"
+# (El bloqueo por mensaje prioritario ahora lo compone accion_bloqueada() —
+#  ver tl/english/bloqueos_strings.rpy.)

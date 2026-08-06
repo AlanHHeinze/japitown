@@ -4,6 +4,25 @@
 ## El MC recibe un mensaje de Carl y debe responder
 ## Sistema de restricción: Solo puede acceder al celular/chat
 
+# ── Trigger de game_loop ────────────────────────────────────────────────────
+# Dispara la escena apenas la quest se inicia (una sola vez): manda el mensaje
+# de Carl y salta al tutorial. El flag _jasmine_0b_iniciada evita repetirlo.
+
+init python:
+
+    def _gl_trigger_jasmine_0b():
+        if (quest_lista_para_boton("jasmine_questprincipal_0_b")
+                and not getattr(store, '_jasmine_0b_iniciada', False)):
+            store._jasmine_0b_iniciada = True
+            store.sistema_mensajes.disparar_por_trigger(
+                "quest", "carl_quest_j0b", "carl")
+            return "quest_jasmine_questprincipal_0_b"
+        return None
+
+init 5 python:
+    registrar_trigger_game_loop("jasmine_0b", _gl_trigger_jasmine_0b, prioridad=30)
+
+
 label quest_jasmine_questprincipal_0_b:
     # Ocultar HUD temporalmente
     $ ocultar_hud()

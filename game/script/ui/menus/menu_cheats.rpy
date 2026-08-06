@@ -2,6 +2,40 @@
 ## Menú de Cheats
 ################################################################################
 
+init python:
+    def cheat_violet_al_bano():
+        """Fuerza a Violet al baño para testear el minijuego de espiar."""
+        # Guardar rutina original si no está guardada
+        if not hasattr(store, '_cheat_violet_rutina_original'):
+            store._cheat_violet_rutina_original = {}
+
+        violet = obtener_npc("violet")
+        horario = store.horario_actual
+
+        # Guardar rutina actual de este horario si no la tenemos
+        if horario not in store._cheat_violet_rutina_original:
+            store._cheat_violet_rutina_original[horario] = violet.locacion_actual
+
+        # Forzar a Violet al baño
+        violet.locacion_actual = "casa_banioarriba"
+
+        # Mensaje de confirmación
+        renpy.show_screen("say", who=None, what="Violet está en el baño ahora (cheat activado).")
+
+    def cheat_violet_restaurar():
+        """Restaura la rutina original de Violet."""
+        if hasattr(store, '_cheat_violet_rutina_original'):
+            violet = obtener_npc("violet")
+            horario = store.horario_actual
+
+            if horario in store._cheat_violet_rutina_original:
+                violet.locacion_actual = store._cheat_violet_rutina_original[horario]
+                # Limpiar el registro para este horario
+                del store._cheat_violet_rutina_original[horario]
+                renpy.show_screen("say", who=None, what="Rutina de Violet restaurada.")
+            else:
+                renpy.show_screen("say", who=None, what="No hay rutina original guardada para este horario.")
+
 screen menu_cheats():
     """Menú de cheats — App Cheats"""
 
@@ -98,6 +132,25 @@ screen menu_cheats():
                             ]
 
                             text "💥 Forzar error (test Sentry)" size int(14 * _k) color "#ff8888" bold True
+
+                        # Testeo del minijuego de espiar
+                        button:
+                            xfill True
+                            background "#3a2a5aCC"
+                            hover_background "#5a3a7aCC"
+                            padding (int(12 * _k), int(10 * _k))
+                            action Function(cheat_violet_al_bano)
+
+                            text "🚿 Violet al baño (minijuego)" size int(14 * _k) color "#FFB74D" bold True
+
+                        button:
+                            xfill True
+                            background "#3a2a5aCC"
+                            hover_background "#5a3a7aCC"
+                            padding (int(12 * _k), int(10 * _k))
+                            action Function(cheat_violet_restaurar)
+
+                            text "↩️ Restaurar rutina Violet" size int(14 * _k) color "#FFB74D" bold True
 
                         # Diagnóstico de "cannot pickle X" al guardar: lista los
                         # objetos del estado que no se pueden serializar y por

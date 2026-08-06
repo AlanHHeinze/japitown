@@ -120,6 +120,24 @@ init python:
         store.violet_quest1_entrega_pendiente = False
         store.violet_quest1_en_cama = False
 
+    def _bloqueo_dormir_quest1_violet():
+        """Con la entrega pendiente (repartidor o paquete en cama) no se duerme."""
+        return getattr(store, 'violet_quest1_entrega_pendiente', False)
+
+
+init 5 python:
+    # Suscripción al aviso del motor "el repartidor se fue sin ser atendido"
+    # (registro REPARTIDOR_AL_IRSE de timesystem_core; el motor ya no conoce
+    # esta quest por nombre).
+    REPARTIDOR_AL_IRSE.append(manejar_quest1_violet_no_recibido)
+
+    # Bloqueo de dormir mientras la entrega esta pendiente (embudo C11:
+    # antes era un if hardcodeado en accion_dormir). El `old` de la
+    # traduccion vive en tl/english/bloqueos_strings.rpy.
+    registrar_bloqueo_accion(
+        "dormir", _bloqueo_dormir_quest1_violet,
+        "Tengo cosas pendientes por hacer, no puedo dormir ahora")
+
 
 ################################################################################
 ## LABEL: Recibir paquete del repartidor

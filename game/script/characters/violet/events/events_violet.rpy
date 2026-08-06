@@ -13,9 +13,18 @@ init 10 python:
     # ===========================================================================
 
     def condicion_aparicion_evento01_violet():
-        """El evento aparece cuando la quest 0 de Violet está completada."""
+        """
+        Aparece con la quest 0 de Violet completada Y 20 de amor.
+
+        El requisito de relación va en la APARICIÓN y no en la activación: asi
+        el evento tampoco figura en el panel de pistas hasta que el vínculo esté
+        al nivel. La activación sigue devolviendo False a propósito — la dispara
+        el uso del casco (ver condicion_activacion_evento01_violet).
+        """
         quest = sistema_quests.obtener_quest("violet_questprincipal_0_b")
-        return quest is not None and quest.completada
+        if quest is None or not quest.completada:
+            return False
+        return obtener_stat1("violet") >= 20
 
     # ---------------------------------------------------------------------------
     # Evento 01 (Casco VR): pista y que_hacer segun en que punto esta el casco.

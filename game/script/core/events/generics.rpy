@@ -58,3 +58,71 @@ layeredimage ducha_gen_agua_atras:
             "images/eventos/ducha/ducha_secuencia_agua_atras8.webp"
         attribute f9:
             "images/eventos/ducha/ducha_secuencia_agua_atras9.webp"
+
+
+# Animaciones automáticas en loop para las capas de agua (50% transparencia, rápidas)
+# Primarias: columna derecha
+image ducha_agua_atras_animado = Transform(
+    Animation(
+        "images/eventos/ducha/ducha_secuencia_agua_atras1.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_atras2.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_atras3.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_atras4.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_atras5.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_atras6.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_atras7.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_atras8.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_atras9.webp", 0.05,
+        loop=True
+    ),
+    alpha=0.3
+)
+
+image ducha_agua_adelante_animado = Transform(
+    Animation(
+        "images/eventos/ducha/ducha_secuencia_agua_adelante1.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_adelante2.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_adelante3.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_adelante4.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_adelante5.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_adelante6.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_adelante7.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_adelante8.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_adelante9.webp", 0.05,
+        loop=True
+    ),
+    alpha=0.3
+)
+
+# Alternadas: columna izquierda (300px a la izquierda, comienzan en frame diferente para desincronización)
+image ducha_agua_atras_animado_alt = Transform(
+    Animation(
+        "images/eventos/ducha/ducha_secuencia_agua_atras5.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_atras6.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_atras7.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_atras8.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_atras9.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_atras1.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_atras2.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_atras3.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_atras4.webp", 0.05,
+        loop=True
+    ),
+    alpha=0.3, xoffset=-200
+)
+
+image ducha_agua_adelante_animado_alt = Transform(
+    Animation(
+        "images/eventos/ducha/ducha_secuencia_agua_adelante5.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_adelante6.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_adelante7.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_adelante8.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_adelante9.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_adelante1.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_adelante2.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_adelante3.webp", 0.05,
+        "images/eventos/ducha/ducha_secuencia_agua_adelante4.webp", 0.05,
+        loop=True
+    ),
+    alpha=0.3, xoffset=-200
+)

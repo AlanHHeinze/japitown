@@ -12,6 +12,27 @@
 # al `jump violet_quest2_cierre` del final, que es un cierre válido.
 default _resultado_menu = None
 
+
+# ── Trigger de dormir (fase "despues") ──────────────────────────────────────
+# Al dia siguiente de completar la quest 03_a, Monica manda el mensaje que
+# abre este evento. Solo efectos python: el sueño sigue normal.
+
+init python:
+
+    def _dormir_trigger_violet_ev03():
+        dia_pend = getattr(store, 'violet_ev03_pendiente_desde_dia', None)
+        if (dia_pend is not None
+                and not getattr(store, 'violet_ev03_mensaje_disparado', False)
+                and getattr(store, 'dias_totales', 0) > dia_pend):
+            store.sistema_mensajes.disparar_por_trigger(
+                "event_aparicion", "violet_quest2_chat_monica", "monica")
+            store.violet_ev03_mensaje_disparado = True
+        return None
+
+init 5 python:
+    registrar_trigger_dormir(
+        "violet_ev03_mensaje", "despues", _dormir_trigger_violet_ev03, prioridad=10)
+
 # =============================================================================
 # IMAGENES
 # =============================================================================

@@ -31,6 +31,41 @@ init python:
         pedido = getattr(store, 'violet_9a_pedido_actual', None)
         return renpy.translate_string(pedido) if pedido else ""
 
+    # --- Triggers de motor (registros de triggers_contenido) -----------------
+
+    def _gl_trigger_violet_09a_piensa():
+        # Piensa "Deberia avisarle a Violet" la primera vez que la quest queda
+        # lista (el label pone violet_9a_piensa_mostrado en True).
+        if (quest_lista_para_boton("violet_questprincipal_09_a")
+                and not getattr(store, 'violet_9a_piensa_mostrado', True)):
+            return "violet_quest09a_piensa_avisarle"
+        return None
+
+    def _dormir_trigger_violet_09a():
+        # Gestion diaria de la enfermedad: penaliza pedidos no entregados,
+        # resetea el estado del dia y al tercer dia decide el desenlace
+        # (buen cuidado -> escena 09_b; insuficiente -> completa 09_a).
+        if not quest_lista_para_boton("violet_questprincipal_09_a"):
+            return None
+        if (getattr(store, 'violet_9a_pedido_actual', None)
+                and not getattr(store, 'violet_9a_entrega_completada', False)):
+            store.violet_enferma_atencion -= 1
+        store.violet_9a_pedido_actual = None
+        store.violet_9a_tiene_entregable = False
+        store.violet_9a_entrega_completada = False
+        store.violet_9a_enfermedad_dia = getattr(store, 'violet_9a_enfermedad_dia', 0) + 1
+        if store.violet_9a_enfermedad_dia >= 3:
+            if getattr(store, 'violet_enferma_atencion', 0) >= 3:
+                return "violet_quest09b_despertar"
+            completar_quest_actual("violet")
+        return None
+
+init 5 python:
+    registrar_trigger_game_loop(
+        "violet_09a_piensa", _gl_trigger_violet_09a_piensa, prioridad=40)
+    registrar_trigger_dormir(
+        "violet_09a_diaria", "despues", _dormir_trigger_violet_09a, prioridad=20)
+
 ################################################################################
 ## LABELS
 ################################################################################

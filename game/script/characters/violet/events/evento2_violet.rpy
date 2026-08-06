@@ -35,6 +35,27 @@ layeredimage violet_evento_02:
 default violet_evento2_completado = False
 default violet_evento2_repetir = False
 
+
+# ── Trigger de dormir (fase "antes") ────────────────────────────────────────
+# El evento nocturno se dispara al dormir, 1 dia despues de completar la
+# quest 04_e (corre ANTES de dormir(): la escena maneja el avance del dia y
+# hace su propio autoguardado al salir).
+
+init python:
+
+    def _dormir_trigger_violet_evento2():
+        q4e = store.sistema_quests.obtener_quest("violet_questprincipal_04_e")
+        q5a = store.sistema_quests.obtener_quest("violet_questprincipal_05_a")
+        if (not store.violet_evento2_completado
+                and q4e and q4e.completada
+                and q5a and q5a.dia_inicio is not None
+                and getattr(store, 'dias_totales', 1) > q5a.dia_inicio):
+            return "evento2_violet"
+        return None
+
+init 5 python:
+    registrar_trigger_dormir("violet_evento2", "antes", _dormir_trigger_violet_evento2)
+
 ################################################################################
 ## Labels
 ################################################################################

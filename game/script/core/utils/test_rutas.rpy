@@ -49,19 +49,15 @@ init 999 python:
         return _jpt_ok("horario={} dia={}".format(h, d))
 
     def _jpt_tiempo_avanzar():
+        # Tras el refactor C2 no hay quests que congelen el motor: los bloqueos
+        # de tiempo van por restriccion (que frena el LABEL, no esta funcion).
         h0 = store.horario_actual
-        # La quest 0_b de Jasmine congela el horario (conexion C2 del relevamiento)
-        q_j0b = store.sistema_quests.obtener_quest("jasmine_questprincipal_0_b")
-        congelado = bool(q_j0b and q_j0b.activa and not q_j0b.completada)
-        esperado = h0 if (congelado or h0 >= 3) else h0 + 1
+        esperado = h0 if h0 >= 3 else h0 + 1
         avanzar_horario()
         h1 = store.horario_actual
         if h1 != esperado:
             return _jpt_fallo("horario {} -> {} (esperaba {})".format(h0, h1, esperado))
-        detalle = "horario {} -> {}".format(h0, h1)
-        if congelado:
-            detalle += " (congelado por jasmine 0_b, correcto)"
-        return _jpt_ok(detalle)
+        return _jpt_ok("horario {} -> {}".format(h0, h1))
 
     def _jpt_tiempo_dormir():
         d0 = store.dias_totales
@@ -430,6 +426,86 @@ init 999 python:
         return _jpt_ok("viaje rapido consistente con el mapa")
 
     # =========================================================================
+    # RUTA: registros — integridad de los registros declarativos (no destructiva)
+    # Cubre la arquitectura post-optimizacion: opciones/overrides/bloqueos de
+    # puerta, bloqueos de accion del embudo y triggers de motor. Las condiciones
+    # de puerta/bloqueo son lecturas puras y se ejecutan; las funciones de
+    # trigger NO se ejecutan (tienen efectos: marcan flags, disparan mensajes) —
+    # de ellas solo se valida estructura.
+    # =========================================================================
+
+    def _jpt_registros_puertas():
+        problemas = []
+        for npc_id, regs in OPCIONES_PUERTA_REGISTRO.items():
+            for reg in regs:
+                if not renpy.has_label(reg["label"]):
+                    problemas.append("puerta {}: label '{}' no existe".format(
+                        npc_id, reg["label"]))
+                if reg["condicion"] is not None:
+                    try:
+                        reg["condicion"]()
+                    except Exception as e:
+                        problemas.append("puerta {} '{}': condicion exploto: {!r}".format(
+                            npc_id, reg["texto"], e))
+        for npc_id, regs in OVERRIDES_PUERTA_REGISTRO.items():
+            for _cond, _lbl in regs:
+                if not renpy.has_label(_lbl):
+                    problemas.append("override {}: label '{}' no existe".format(
+                        npc_id, _lbl))
+                try:
+                    _cond()
+                except Exception as e:
+                    problemas.append("override {}: condicion exploto: {!r}".format(
+                        npc_id, e))
+        for npc_id, regs in BLOQUEOS_GOLPE_REGISTRO.items():
+            for _cond, _msg in regs:
+                try:
+                    _cond()
+                except Exception as e:
+                    problemas.append("bloqueo golpe {}: condicion exploto: {!r}".format(
+                        npc_id, e))
+        if problemas:
+            return _jpt_fallo("; ".join(problemas[:8]))
+        return _jpt_ok("registros de puerta validos")
+
+    def _jpt_registros_bloqueos_accion():
+        problemas = []
+        for accion_id, regs in BLOQUEOS_ACCION_REGISTRO.items():
+            for _cond, _msg in regs:
+                if not _msg:
+                    problemas.append("{}: bloqueo sin mensaje".format(accion_id))
+                try:
+                    _cond()
+                except Exception as e:
+                    problemas.append("{}: condicion exploto: {!r}".format(accion_id, e))
+        if problemas:
+            return _jpt_fallo("; ".join(problemas[:8]))
+        return _jpt_ok("bloqueos de accion del embudo validos")
+
+    def _jpt_registros_triggers():
+        problemas = []
+        vistos = set()
+        registros = (
+            ("game_loop", TRIGGERS_GAME_LOOP),
+            ("dormir_antes", TRIGGERS_DORMIR_ANTES),
+            ("dormir_despues", TRIGGERS_DORMIR_DESPUES),
+            ("avanzar", TRIGGERS_AVANZAR),
+        )
+        total = 0
+        for nombre_reg, registro in registros:
+            for _prio, _orden, _tid, _fn in registro:
+                total += 1
+                clave = (nombre_reg, _tid)
+                if clave in vistos:
+                    problemas.append("{}: id '{}' duplicado".format(nombre_reg, _tid))
+                vistos.add(clave)
+                if not callable(_fn):
+                    problemas.append("{}: '{}' no es callable".format(nombre_reg, _tid))
+        if problemas:
+            return _jpt_fallo("; ".join(problemas))
+        return _jpt_ok("{} triggers registrados, ids unicos, todos callables".format(total))
+
+    # =========================================================================
     # RUTA: guardado — picklabilidad de todo el estado (no destructiva)
     # =========================================================================
 
@@ -551,6 +627,16 @@ init 999 python:
             "destructiva": False,
             "pasos": [
                 ("todo picklable", _jpt_guardado_picklable),
+            ],
+        },
+        "registros": {
+            "nombre": "Integridad de los registros declarativos",
+            "sistemas": "door access, embudo de bloqueos, triggers de motor",
+            "destructiva": False,
+            "pasos": [
+                ("registros de puerta", _jpt_registros_puertas),
+                ("bloqueos de accion del embudo", _jpt_registros_bloqueos_accion),
+                ("triggers de motor", _jpt_registros_triggers),
             ],
         },
     }

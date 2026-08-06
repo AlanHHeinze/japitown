@@ -24,6 +24,12 @@ default dias_totales = 1  # Contador de dias totales (para quests)
 
 init python:
 
+    # Suscriptores a "el repartidor se fue sin ser atendido". El contenido se
+    # registra en init 5 (ej. violet_quest_01_a) con funciones de MODULO sin
+    # argumentos; el motor solo itera la lista y no conoce ninguna quest.
+    # (Refactor C3 de arquitectura_sistemas.md)
+    REPARTIDOR_AL_IRSE = []
+
     def actualizar_bg_master(con_fade=False):
         """Limpia el master layer y muestra el background de la locacion actual.
         Siempre limpia para eliminar sprites de quests que hayan quedado."""
@@ -61,23 +67,23 @@ init python:
         """
         Avanza el horario al siguiente estado.
         Si está en Trasnoche, no avanza más.
-        Si la quest 0_b de Jasmine está activa, no avanza el horario.
-        """
-        # Verificar si la quest 0_b de Jasmine está activa (restricción de horario)
-        if hasattr(store, 'sistema_quests'):
-            q_j0b = store.sistema_quests.obtener_quest("jasmine_questprincipal_0_b")
-            if q_j0b and q_j0b.activa and not q_j0b.completada:
-                return
 
+        NOTA (refactor C2): acá había un if que congelaba el horario mientras
+        la quest 0_b de Jasmine estuviera activa. Se eliminó porque era peso
+        muerto: la 0_b pasa de no-iniciada a BOTON_LISTO en un solo tick del
+        game_loop (dias_espera=0, sin requisitos) y su escena activa una
+        restricción que ya bloquea avanzar_tiempo, dormir y cheats. El motor
+        no debe conocer quests por nombre; los bloqueos van por restricción.
+        """
         # Usar store directamente en lugar de global
         if store.horario_actual < 3:  # Si no es Trasnoche
             # Si era mañana y el repartidor estaba presente, se va y deja paquete
             if store.horario_actual == 0 and store.repartidor_presente:
                 if hasattr(store, 'sistema_compras'):
                     store.sistema_compras.colocar_paquete_en_habitacion()
-                # Hook para entregas de quest no recibidas
-                if hasattr(store, 'manejar_quest1_violet_no_recibido'):
-                    store.manejar_quest1_violet_no_recibido()
+                # Avisar al contenido suscripto (entregas de quest no recibidas)
+                for _rep_fn in REPARTIDOR_AL_IRSE:
+                    _rep_fn()
                 store.repartidor_presente = False
             
             store.horario_actual += 1
@@ -164,7 +170,13 @@ init python:
         # que reviente y se vea. Ademas evita la carrera del flag
         # autosave_not_running, que descarta el guardado si el hilo anterior
         # sigue corriendo. En web Ren'Py ya lo corre sincronico igual.
-        renpy.force_autosave(block=True)
+        #
+        # Se llama a la funcion ORIGINAL, no a renpy.force_autosave: esa quedo
+        # pisada por core/utils/autosave_filtrado.rpy con una version que
+        # descarta todo, para que los disparadores del motor (menu principal,
+        # salir, cargar) no llenen los slots. Este es el UNICO camino que
+        # realmente guarda.
+        _jp_force_autosave_real(block=True)
 
         # Aviso al jugador (notificacion no bloqueante de la cola izquierda).
         notificar_partida_guardada()
@@ -322,34 +334,25 @@ label avanzar_tiempo:
     return
 
 label accion_dormir:
-    
-    # Verificar restricción de quest/evento
+
+    # Embudo unico de bloqueos (C11): restriccion + bloqueos de events +
+    # mensaje prioritario sin responder + bloqueos registrados por contenido
+    # (ej. la entrega pendiente de la quest 1 de Violet). Una sola consulta.
     $ _msg_restriccion = accion_bloqueada("dormir")
     if _msg_restriccion:
         $ _blk_guardar_toque()
         piensa "[_msg_restriccion]"
         return
 
-    # Verificar mensaje prioritario ya entregado — bloquea dormir hasta responder
-    $ _npc_prioritario = obtener_bloqueo_mensaje_prioritario()
-    if _npc_prioritario:
-        $ _blk_guardar_toque()
-        piensa "Debo responder el mensaje de [_npc_prioritario] antes de dormir"
-        return
-
-    # Verificar mensaje prioritario que llega mientras el jugador duerme — despertar anticipado
+    # Mensaje prioritario que llega mientras el jugador duerme — despertar
+    # anticipado. Es un flujo alternativo, no un bloqueo: por eso vive aca y
+    # no en el embudo.
     $ _horario_despertar = obtener_horario_despertar_prioritario()
     if _horario_despertar is not None:
         call screen animacion_dormir with dissolve
         $ avanzar_horario_multiple(_horario_despertar - horario_actual)
         $ _blk_guardar_toque()
         piensa "Me despertó un mensaje"
-        return
-
-    # Verificar si hay entrega de quest pendiente de Violet (repartidor o paquete en cama)
-    if getattr(store, 'violet_quest1_entrega_pendiente', False):
-        $ _blk_guardar_toque()
-        piensa "Tengo cosas pendientes por hacer, no puedo dormir ahora"
         return
 
     # Verificar si hay paquete bloqueando
@@ -383,19 +386,13 @@ label accion_dormir:
 
     # Llamar al screen como modal (espera a que el timer del screen haga Return())
     call screen animacion_dormir with dissolve
-    
-    # --- EVENTOS NOCTURNOS ---
 
-    # Evento 2 de Violet: Se dispara al dormir 1 dia despues de completar Quest 04_e
-    $ _quest_v04e = store.sistema_quests.obtener_quest("violet_questprincipal_04_e")
-    $ _quest_v05a = store.sistema_quests.obtener_quest("violet_questprincipal_05_a")
-    if (not violet_evento2_completado and
-            _quest_v04e and _quest_v04e.completada and
-            _quest_v05a and _quest_v05a.dia_inicio is not None and
-            getattr(store, 'dias_totales', 1) > _quest_v05a.dia_inicio):
-        jump evento2_violet
-
-
+    # Triggers de contenido ANTES de avanzar el dia (registro
+    # TRIGGERS_DORMIR fase "antes"; ej. eventos nocturnos como el evento 2
+    # de Violet). El motor no conoce quests ni eventos por nombre.
+    $ _trigger_dormir = ejecutar_triggers_dormir("antes")
+    if _trigger_dormir:
+        jump expression _trigger_dormir
 
     # Ejecutar lógica de cambio de dia
     $ dormir()
@@ -406,46 +403,14 @@ label accion_dormir:
     # — asi que si algo de eso crashea, el autosave es anterior al problema.
     $ autoguardar_partida()
 
-    # Hook Quest 0 del MC — primer sueño al finalizar la introducción
-    if getattr(store, 'mc_q0_final_sleep', False):
-        $ mc_q0_final_sleep = False
-        $ desactivar_restriccion()
-        $ sistema_quests_mc.completar_activa()
-        $ config_mostrar_accion_movimiento = False
-        $ visualizador_hotspot_activo = False
-
-    # Quest 08_a de Violet: auto-trigger al despertar cuando está en ETAPA_BOTON_LISTO
-    $ _quest_v08a = store.sistema_quests.obtener_quest("violet_questprincipal_08_a")
-    if _quest_v08a and _quest_v08a.activa and not _quest_v08a.completada and _quest_v08a.etapa_actual == ETAPA_BOTON_LISTO:
-        jump violet_quest08a_despertar
-
-    # Quest 09_a de Violet: gestión diaria de la enfermedad
-    $ _quest_v09a = store.sistema_quests.obtener_quest("violet_questprincipal_09_a")
-    if _quest_v09a and _quest_v09a.activa and not _quest_v09a.completada and _quest_v09a.etapa_actual == ETAPA_BOTON_LISTO:
-        # Penalizar si Violet pidió algo pero no se entregó antes de dormir
-        if getattr(store, 'violet_9a_pedido_actual', None) and not getattr(store, 'violet_9a_entrega_completada', False):
-            $ store.violet_enferma_atencion -= 1
-        # Resetear estado diario
-        $ store.violet_9a_pedido_actual = None
-        $ store.violet_9a_tiene_entregable = False
-        $ store.violet_9a_entrega_completada = False
-        # Avanzar contador de dias de enfermedad
-        $ store.violet_9a_enfermedad_dia = getattr(store, 'violet_9a_enfermedad_dia', 0) + 1
-        if store.violet_9a_enfermedad_dia >= 3:
-            if getattr(store, 'violet_enferma_atencion', 0) >= 3:
-                # Buen cuidado: disparar quest 09_b en lugar de dormir normalmente
-                jump violet_quest09b_despertar
-            else:
-                # Cuidado insuficiente: completar 09_a y continuar el sueño normal
-                $ completar_quest_actual("violet")
-
-    # Evento 03 de Violet: enviar mensaje de Monica al dia siguiente de completar quest 03_a
-    $ _ev03_dia_pendiente = getattr(store, 'violet_ev03_pendiente_desde_dia', None)
-    if (_ev03_dia_pendiente is not None and
-            not getattr(store, 'violet_ev03_mensaje_disparado', False) and
-            getattr(store, 'dias_totales', 0) > _ev03_dia_pendiente):
-        $ store.sistema_mensajes.disparar_por_trigger("event_aparicion", "violet_quest2_chat_monica", "monica")
-        $ store.violet_ev03_mensaje_disparado = True
+    # Triggers de contenido DESPUES del autosave (registro TRIGGERS_DORMIR
+    # fase "despues": hooks de fin de intro, escenas al despertar, gestion
+    # diaria de quests, mensajes diferidos). Si un trigger devuelve label se
+    # saltean los siguientes Y los mensajes al despertar — misma semantica
+    # que los jumps encadenados que reemplaza este registro.
+    $ _trigger_dormir = ejecutar_triggers_dormir("despues")
+    if _trigger_dormir:
+        jump expression _trigger_dormir
 
     # Mostrar mensajes al despertar (quests, eventos, pedidos nuevos)
     call mensajes_al_despertar from _call_mensajes_al_despertar

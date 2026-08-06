@@ -27,3 +27,7 @@
 
 # Carpeta temporal de Google Drive (basura de sync)
 .tmp.driveupload/
+
+# Claves de firma de Android — NUNCA al repo (permiten firmar builds como si fueran tuyos)
+/android.keystore
+/bundle.keystore

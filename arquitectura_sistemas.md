@@ -10,6 +10,11 @@ más limpia y menos invasiva.
 **Protocolo:** este documento solo ANALIZA. Ningún cambio se implementa sin decidirlo
 aparte, evaluando el daño colateral de cada fix (ver §6 para la priorización sugerida).
 
+> **ACTUALIZACIÓN 2026-07-31:** la tanda de refactors se APLICÓ. C2, C3, C5, C6, C7,
+> C8 y C11 están resueltas (C13 ya lo estaba). El detalle de cada cambio, su riesgo
+> evaluado y cómo verificarlo está en `optimizacion.md`. Las secciones de abajo
+> describen el estado ANTERIOR (sirven como registro del porqué de cada cambio).
+
 ---
 
 ## 1. Inventario de sistemas

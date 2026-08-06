@@ -65,6 +65,22 @@ default vq8a_bgs_originales = {}
 # actions_catalog.rpy; registrarlas en runtime rompía la quest al cargar un save)
 default vq8a_acciones_activas = False
 
+
+# ── Trigger de dormir ───────────────────────────────────────────────────────
+# La 08_a arranca sola al despertar cuando esta lista (fase "despues": corre
+# tras el autosave, asi el guardado queda ANTES de la escena).
+
+init python:
+
+    def _dormir_trigger_violet_08a():
+        if quest_lista_para_boton("violet_questprincipal_08_a"):
+            return "violet_quest08a_despertar"
+        return None
+
+init 5 python:
+    registrar_trigger_dormir(
+        "violet_08a_despertar", "despues", _dormir_trigger_violet_08a, prioridad=30)
+
 ################################################################################
 ## LABELS
 ################################################################################
@@ -413,10 +429,12 @@ screen vq8a_menu_bano():
 
 
 label violet_quest08a_entrar_baño:
-    scene ducha_gen_noche 
-    show ducha_gen_agua_atras f1
+    scene ducha_gen_noche
+    show ducha_agua_atras_animado
+    show ducha_agua_atras_animado_alt
     show violet_ducha_quest f1 at center
-    show ducha_gen_agua_adelante f1
+    show ducha_agua_adelante_animado
+    show ducha_agua_adelante_animado_alt
     show ducha_gen_capa_densa
 
     window show
@@ -438,125 +456,104 @@ label violet_quest08a_entrar_baño:
 
 
 label violet_quest08a_baño_irse:
+    window show
     piensa "Si me acerco mas me va a ver y me va a matar"
     piensa "Puedo disfrutar un poco desde aquí"
+    window hide
 
-    show ducha_gen_agua_atras f2 
+    # El agua sigue animándose automáticamente; personaje cambia con transición sprite_fast
     show violet_ducha_quest f2 with sprite_normal
-    show ducha_gen_agua_adelante 
-    pause 0.5
-    show ducha_gen_agua_atras f3 
+    pause 0.1
     show violet_ducha_quest f3 with sprite_normal
-    show ducha_gen_agua_adelante f3 
-    pause 0.5
-    show ducha_gen_agua_atras f4 
+    pause 0.1
     show violet_ducha_quest f2 with sprite_normal
-    show ducha_gen_agua_adelante f4 
-    pause 0.5
-    show ducha_gen_agua_atras f5 
+    pause 0.1
     show violet_ducha_quest f3 with sprite_normal
-    show ducha_gen_agua_adelante f5 
-    pause 0.5
-    show ducha_gen_agua_atras f6 
+    pause 0.1
     show violet_ducha_quest f4 with sprite_normal
-    show ducha_gen_agua_adelante f6
-    pause 0.5
+    pause 0.1
 
+    window show
     piensa "Me parece que me vio"
+    window hide
 
-    show ducha_gen_agua_atras f7 
-    show violet_ducha_quest b_hablando_4 o_molesta_4 
+    show violet_ducha_quest b_hablando_4 o_molesta_4 with sprite_normal
+    window show
     violet "¿Qué haces ahí?"
-    show violet_ducha_quest b_none
-    show ducha_gen_agua_adelante f7 
+    window hide
+    show violet_ducha_quest b_none with sprite_normal
 
-    show ducha_gen_agua_atras f8 
+    window show
     mc "Te traje la ropa"
-    show ducha_gen_agua_adelante 
+    window hide
 
-    show ducha_gen_agua_atras f9 
     show violet_ducha_quest f5 o_molesta_tapada with sprite_normal
-    show ducha_gen_agua_adelante f9 
-    pause 0.5
-    show ducha_gen_agua_atras f1 
+    pause 0.1
     show violet_ducha_quest f6 with sprite_normal
-    show ducha_gen_agua_adelante 
     pause 0.5
 
-    show ducha_gen_agua_atras 
-    show violet_ducha_quest b_hablando_tapada 
+    window show
+    show violet_ducha_quest b_hablando_tapada with sprite_normal
     violet "Podrias haberlo dejado afuera"
-    show violet_ducha_quest b_none
-    show ducha_gen_agua_adelante 
+    show violet_ducha_quest b_none with sprite_normal
+    window hide
 
-    show ducha_gen_agua_atras 
+    window show
     mc "Lo siento, no me di cuenta"
-    show ducha_gen_agua_adelante 
-
+    window hide
 
     jump violet_quest08a_cierre_desarrollo
 
 
 label violet_quest08a_baño_acercarse:
-    
-    
-    show ducha_gen_capa_normal 
+    show ducha_gen_capa_normal
     hide ducha_gen_capa_densa with dissolve
-    
+
+    window show
     piensa "De aca veo un poco mejor"
     piensa "El riesgo valio la pena"
+    window hide
 
-    show ducha_gen_agua_atras f2 
+    # El agua sigue animándose automáticamente; solo actualiza el personaje
     show violet_ducha_quest f2 with sprite_normal
-    show ducha_gen_agua_adelante 
-    pause 0.5
-    show ducha_gen_agua_atras f3 
+    pause 0.1
     show violet_ducha_quest f3 with sprite_normal
-    show ducha_gen_agua_adelante f3 
-    pause 0.5
-    show ducha_gen_agua_atras f4 
+    pause 0.1
     show violet_ducha_quest f2 with sprite_normal
-    show ducha_gen_agua_adelante f4 
-    pause 0.5
-    show ducha_gen_agua_atras f5 
+    pause 0.1
     show violet_ducha_quest f3 with sprite_normal
-    show ducha_gen_agua_adelante f5 
-    pause 0.5
-    show ducha_gen_agua_atras f6 
+    pause 0.1
     show violet_ducha_quest f4 with sprite_normal
-    show ducha_gen_agua_adelante f6
-    pause 0.5
+    pause 0.1
 
+    window show
     piensa "Me parece que me vio"
+    window hide
 
-    show ducha_gen_agua_atras f7 
-    show violet_ducha_quest b_hablando_4 o_molesta_4 
+    show violet_ducha_quest b_hablando_4 o_molesta_4 with sprite_normal
+    window show
     violet "¿Qué haces ahí?"
+    window hide
     show violet_ducha_quest b_none
-    show ducha_gen_agua_adelante f7 
 
-    show ducha_gen_agua_atras f8 
+    window show
     mc "Te traje la ropa"
-    show ducha_gen_agua_adelante 
+    window hide
 
-    show ducha_gen_agua_atras f9 
     show violet_ducha_quest f5 o_molesta_tapada with sprite_normal
-    show ducha_gen_agua_adelante f9 
-    pause 0.5
-    show ducha_gen_agua_atras f1 
+    pause 0.1
     show violet_ducha_quest f6 with sprite_normal
-    show ducha_gen_agua_adelante 
     pause 0.5
 
-    show ducha_gen_agua_atras 
-    show violet_ducha_quest b_hablando_tapada 
+    window show
+    show violet_ducha_quest b_hablando_tapada
     violet "Podrias haberlo dejado afuera"
     show violet_ducha_quest b_none
-    show ducha_gen_agua_adelante 
+    window hide
 
-    show ducha_gen_agua_atras 
+    window show
     mc "Lo siento, no me di cuenta"
-    show ducha_gen_agua_adelante 
+    window hide
 
     jump violet_quest08a_cierre_desarrollo
 

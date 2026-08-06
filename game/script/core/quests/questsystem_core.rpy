@@ -1506,6 +1506,19 @@ init python:
         rutina = _buscar_rutina_quest_vigente(npc_id)
         return rutina.posicion if rutina else None
     
+    def quest_lista_para_boton(quest_id):
+        """
+        True si la quest esta activa, sin completar y en ETAPA_BOTON_LISTO.
+
+        Es EL predicado estandar de los disparadores manuales (botones del menu
+        de interaccion, opciones de puerta, triggers de dormir/game_loop). Las
+        condiciones registradas por el contenido deben usarlo en vez de repetir
+        la cadena `activa and not completada and etapa == ...` a mano.
+        """
+        q = store.sistema_quests.obtener_quest(quest_id)
+        return bool(q and q.activa and not q.completada and
+                    q.etapa_actual == ETAPA_BOTON_LISTO)
+
     def actualizar_quests():
         """
         Actualiza el estado de todas las quests activas.

@@ -11,8 +11,10 @@ default _locacion_temp = None
 
 label accion_hotspot_move:
 
-    # Verificar si el destino es habitacion de NPC (door_access system)
-    if _hotspot_temp and _hotspot_temp.destino in ["casa_hmonica", "casa_hviolet", "casa_hjasmine"]:
+    # Verificar si el destino es habitacion de NPC (door_access system).
+    # La lista sale de HABITACION_NPC (door_access_system.rpy) — unica fuente;
+    # agregar un NPC con habitacion es agregarlo ahi y nada mas. (Refactor C7)
+    if _hotspot_temp and _hotspot_temp.destino in HABITACION_NPC:
 
         # PRIORIDAD 1: Verificar restriccion de movimiento — tiene precedencia sobre el door access
         $ _msg_restriccion_puerta = accion_bloqueada_movimiento(_hotspot_temp.destino)
@@ -96,33 +98,22 @@ label accion_hotspot_action:
 
 
 label accion_avanzar_tiempo:
-    
-    # Verificar restricción de quest/evento
+
+    # Embudo unico de bloqueos (C11): restriccion + events + mensaje
+    # prioritario + bloqueos registrados por contenido, en una sola consulta.
     $ _msg_restriccion = accion_bloqueada("avanzar_tiempo")
     if _msg_restriccion:
         $ _blk_guardar_toque()
         piensa "[_msg_restriccion]"
         return
 
-    # Verificar si hay bloqueo de evento
-    if hasattr(store, 'sistema_events') and sistema_events.hay_bloqueo("avanzar_tiempo"):
-        $ _blk_guardar_toque()
-        piensa "No puedes avanzar el tiempo ahora."
-        return
-
-    # Verificar mensaje prioritario pendiente de respuesta
-    $ _npc_prioritario = obtener_bloqueo_mensaje_prioritario()
-    if _npc_prioritario:
-        $ _blk_guardar_toque()
-        piensa "Debo responder el mensaje de [_npc_prioritario] antes de continuar"
-        return
-
     $ avanzar_horario()
 
-    # Hook Quest 0 del MC — al avanzar horario en la etapa de espera
-    if getattr(store, 'mc_q0_esperar_horario', False):
-        $ mc_q0_esperar_horario = False
-        jump mc_q0_stage_b
+    # Triggers de contenido tras avanzar el horario (registro TRIGGERS_AVANZAR;
+    # el motor no conoce quests por nombre).
+    $ _trigger_avanzar = ejecutar_triggers_avanzar()
+    if _trigger_avanzar:
+        jump expression _trigger_avanzar
 
     return
 

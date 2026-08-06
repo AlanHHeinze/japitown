@@ -253,20 +253,73 @@ init python:
             return False
         return getattr(r, 'mensajes_bloqueados', False)
     
+    # ==========================================================================
+    # Embudo unico de bloqueos (refactor C11)
+    #
+    # accion_bloqueada() es LA UNICA puerta para saber si una accion esta
+    # bloqueada. Consulta las cuatro fuentes en orden fijo; los labels hacen un
+    # solo `if accion_bloqueada(...)` y no replican chequeos por su cuenta.
+    # El contenido agrega bloqueos propios con registrar_bloqueo_accion()
+    # (condicion = funcion de MODULO), nunca con ifs en los labels del motor.
+    #
+    # Los mensajes se traducen aca via translate_string; los `old` viven en
+    # tl/english/bloqueos_strings.rpy.
+    # ==========================================================================
+
+    BLOQUEOS_ACCION_REGISTRO = {}  # {accion_id: [(condicion, mensaje)]}
+
+    MENSAJES_BLOQUEO_EVENTS = {
+        "avanzar_tiempo": "No puedes avanzar el tiempo ahora.",
+    }
+    MENSAJE_BLOQUEO_EVENTS_DEFAULT = "No puedo hacer eso ahora."
+    MENSAJE_BLOQUEO_PRIORITARIO = "Debo responder el mensaje de {npc} antes de continuar"
+
+    def registrar_bloqueo_accion(accion_id, condicion, mensaje):
+        """
+        Registra un bloqueo de contenido para una accion (ej. una quest que
+        impide dormir mientras tiene una entrega pendiente). `condicion` es una
+        funcion de modulo sin argumentos; `mensaje` se muestra como pensamiento.
+        """
+        BLOQUEOS_ACCION_REGISTRO.setdefault(accion_id, []).append(
+            (condicion, mensaje))
+
     def accion_bloqueada(accion_id):
         """
-        Verifica si una accion está bloqueada por la restricción activa.
+        Verifica si una accion esta bloqueada. Consulta EN ORDEN:
+        1. la restriccion de quest activa,
+        2. los bloqueos declarados por events (sistema_events.hay_bloqueo),
+        3. mensajes prioritarios sin responder (solo dormir/avanzar_tiempo),
+        4. los bloqueos registrados por contenido.
 
         Returns:
-            str: Mensaje de bloqueo, o None si la accion está permitida.
+            str: Mensaje de bloqueo (ya traducido), o None si esta permitida.
         """
+        # 1. Restriccion de quest activa
         r = store.restriccion_quest_activa
-        if r is None or not r.activa:
-            return None
-        msg = r.obtener_bloqueo_accion(accion_id)
-        if msg is None:
-            return None
-        return renpy.translate_string(msg)
+        if r is not None and r.activa:
+            msg = r.obtener_bloqueo_accion(accion_id)
+            if msg is not None:
+                return renpy.translate_string(msg)
+
+        # 2. Bloqueos de events
+        if hasattr(store, 'sistema_events') and store.sistema_events.hay_bloqueo(accion_id):
+            plantilla = MENSAJES_BLOQUEO_EVENTS.get(
+                accion_id, MENSAJE_BLOQUEO_EVENTS_DEFAULT)
+            return renpy.translate_string(plantilla)
+
+        # 3. Mensaje prioritario ya entregado y sin responder
+        if accion_id in ("dormir", "avanzar_tiempo") and hasattr(store, 'sistema_mensajes'):
+            npc_prio = obtener_bloqueo_mensaje_prioritario()
+            if npc_prio:
+                return renpy.translate_string(
+                    MENSAJE_BLOQUEO_PRIORITARIO).format(npc=npc_prio)
+
+        # 4. Bloqueos registrados por el contenido
+        for _cond, _msg in BLOQUEOS_ACCION_REGISTRO.get(accion_id, []):
+            if _cond():
+                return renpy.translate_string(_msg)
+
+        return None
     
     def accion_bloqueada_movimiento(destino_id):
         """

@@ -27,6 +27,72 @@ define MENSAJES_AUSENTE = {
 
 init python:
 
+    # ==========================================================================
+    # Registro declarativo de contenido de puerta (refactor C8).
+    #
+    # El contenido (quests/eventos) se registra en init 5 desde los archivos del
+    # personaje (ej. characters/violet/interaction/puertas_violet.rpy). El motor
+    # solo itera los registros: NO conoce ninguna quest por nombre. Las
+    # condiciones son funciones de MODULO (regla anti-pickle del proyecto).
+    #
+    # Tres registros, segun el momento de la puerta que interceptan:
+    # - OPCIONES_PUERTA_REGISTRO: botones del menu de puerta (con condicion).
+    # - OVERRIDES_PUERTA_REGISTRO: reemplazan TODO el flujo de puerta con un
+    #   label propio (ej. la gestion de enfermedad de la 09_a).
+    # - BLOQUEOS_GOLPE_REGISTRO: al elegir "Golpear", muestran un pensamiento y
+    #   cortan (ej. "Violet debe estar dormida." los sabados a la mañana).
+    #   El mensaje se traduce con renpy.translate_string: el `old` vive en
+    #   tl/english/script/core/locations/door_access_system.rpy.
+    # ==========================================================================
+
+    OPCIONES_PUERTA_REGISTRO = {}   # {npc_id: [dict opcion]}
+    OVERRIDES_PUERTA_REGISTRO = {}  # {npc_id: [(condicion, label)]}
+    BLOQUEOS_GOLPE_REGISTRO = {}    # {npc_id: [(condicion, mensaje)]}
+
+    def registrar_opcion_puerta(npc_id, texto, label, condicion,
+                                ocultar_golpear=False, tipo=None):
+        """
+        Registra un boton del menu de puerta de un NPC. El orden de registro es
+        el orden en el menu. `condicion` es una funcion de modulo sin argumentos
+        que decide si el boton aparece (None = siempre).
+        """
+        OPCIONES_PUERTA_REGISTRO.setdefault(npc_id, []).append({
+            "texto": texto,
+            "label": label,
+            "condicion": condicion,
+            "ocultar_golpear": ocultar_golpear,
+            "tipo": tipo,
+        })
+
+    def registrar_override_puerta(npc_id, condicion, label):
+        """
+        Registra un label que reemplaza el flujo completo de la puerta cuando
+        su condicion da True (se chequea antes del menu; el primero que matchea
+        gana). El label recibe el control con jump.
+        """
+        OVERRIDES_PUERTA_REGISTRO.setdefault(npc_id, []).append((condicion, label))
+
+    def registrar_bloqueo_golpe(npc_id, condicion, mensaje):
+        """
+        Registra un bloqueo de la accion "Golpear la puerta": si la condicion da
+        True, se muestra `mensaje` como pensamiento y no pasa nada mas.
+        """
+        BLOQUEOS_GOLPE_REGISTRO.setdefault(npc_id, []).append((condicion, mensaje))
+
+    def obtener_override_puerta(npc_id):
+        """Primer override cuya condicion da True, o None."""
+        for _condicion, _label in OVERRIDES_PUERTA_REGISTRO.get(npc_id, []):
+            if _condicion():
+                return _label
+        return None
+
+    def obtener_bloqueo_golpe(npc_id):
+        """Mensaje (ya traducido) del primer bloqueo de golpe activo, o None."""
+        for _condicion, _mensaje in BLOQUEOS_GOLPE_REGISTRO.get(npc_id, []):
+            if _condicion():
+                return renpy.translate_string(_mensaje)
+        return None
+
     def obtener_npc_habitacion(destino_id):
         """
         Obtiene el ID del NPC dueño de una habitacion.
@@ -64,86 +130,27 @@ init python:
 
     def obtener_opciones_puerta(npc_id):
         """
-        Construye las opciones especiales del menu de puerta para un NPC.
+        Construye las opciones especiales del menu de puerta para un NPC
+        iterando el registro declarativo (el orden de registro es el orden
+        del menu). El contenido se registra con registrar_opcion_puerta()
+        desde los archivos del personaje.
 
         Returns:
             list: Lista de dicts {"texto": str, "label": str, "ocultar_golpear": bool}
+            (mas "tipo" si la opcion lo declaro, ej. "evento")
         """
         opciones = []
-
-        if npc_id == "violet":
-            # Quest 0: Intentar hablar (solo por la tarde)
-            quest_v0 = store.sistema_quests.obtener_quest("violet_questprincipal_0_b")
-            if quest_v0 and quest_v0.activa and not quest_v0.completada and store.horario_actual == 1:
-                opciones.append({"texto": "Intentar hablar", "label": "quest_violet_questprincipal_0_b", "ocultar_golpear": True})
-
-            # Quest 2: Dar paquete
-            if "mangas_violet" in store.inventario and store.inventario.get("mangas_violet", 0) > 0:
-                opciones.append({"texto": "Dar paquete", "label": "dar_paquete_quest02_violet"})
-
-            # Quest 02_a: Pedir mangas prestados
-            quest_v02a = store.sistema_quests.obtener_quest("violet_questprincipal_02_a")
-            if quest_v02a and quest_v02a.activa and not quest_v02a.completada and quest_v02a.etapa_actual == ETAPA_BOTON_LISTO:
-                if not getattr(store, 'violet_quest02a_primer_intento_hecho', False) or obtener_stat1("violet") >= 10:
-                    opciones.append({"texto": "Pedir mangas prestados", "label": "quest_violet_questprincipal_02_a", "ocultar_golpear": True})
-
-            # Quest 03_a: Devolver mangas (Violet en su habitacion)
-            quest_v03a = store.sistema_quests.obtener_quest("violet_questprincipal_03_a")
-            if quest_v03a and quest_v03a.activa and not quest_v03a.completada and quest_v03a.etapa_actual == ETAPA_BOTON_LISTO:
-                if "mangas_violet_mc" in store.inventario and store.inventario.get("mangas_violet_mc", 0) > 0:
-                    opciones.append({"texto": "Devolver mangas", "label": "quest_violet_questprincipal_03_a", "ocultar_golpear": True})
-
-            # Quest 02_b: Vengo por los mangas (por la noche)
-            quest_v02b = store.sistema_quests.obtener_quest("violet_questprincipal_02_b")
-            if quest_v02b and quest_v02b.activa and not quest_v02b.completada and quest_v02b.etapa_actual == ETAPA_BOTON_LISTO and store.horario_actual == 2:
-                opciones.append({"texto": "Vengo por los mangas", "label": "quest_violet_questprincipal_02_b", "ocultar_golpear": True})
-
-            # Quest 04_b: Violet sale al pasillo cuando el MC golpea
-            quest_v04b = store.sistema_quests.obtener_quest("violet_questprincipal_04_b")
-            if quest_v04b and quest_v04b.activa and not quest_v04b.completada and quest_v04b.etapa_actual == ETAPA_BOTON_LISTO:
-                opciones.append({"texto": "Golpear la puerta", "label": "violet_quest04b_puerta", "ocultar_golpear": True})
-
-            # Quest 05_a: Hablar con Violet sobre los cosplays (sale al pasillo)
-            quest_v05a = store.sistema_quests.obtener_quest("violet_questprincipal_05_a")
-            if quest_v05a and quest_v05a.activa and not quest_v05a.completada and quest_v05a.etapa_actual == ETAPA_BOTON_LISTO:
-                if store.sistema_mensajes.grupo_completado("coxplay_q5a_g4"):
-                    opciones.append({"texto": "Ya compré los cosplay", "label": "violet_quest05a_puerta", "ocultar_golpear": True})
-
-            # Quest 05_b: Dar la Coxplay Box a Violet (sale al pasillo)
-            quest_v05b = store.sistema_quests.obtener_quest("violet_questprincipal_05_b")
-            if quest_v05b and quest_v05b.activa and not quest_v05b.completada and quest_v05b.etapa_actual == ETAPA_BOTON_LISTO:
-                opciones.append({"texto": "Llegaron los cosplay", "label": "violet_quest05b_puerta", "ocultar_golpear": True})
-
-            # Quest 05_c: Pedirle perdón a Violet (entra a la habitacion)
-            quest_v05c = store.sistema_quests.obtener_quest("violet_questprincipal_05_c")
-            if quest_v05c and quest_v05c.activa and not quest_v05c.completada and quest_v05c.etapa_actual == ETAPA_BOTON_LISTO:
-                opciones.append({"texto": "Pedirle perdón", "label": "violet_quest05c_puerta", "ocultar_golpear": True})
-
-            # Quest 06_a: Contarle de las entradas (Violet en habitacion, de noche)
-            quest_v06a = store.sistema_quests.obtener_quest("violet_questprincipal_06_a")
-            if quest_v06a and quest_v06a.activa and not quest_v06a.completada and quest_v06a.etapa_actual == ETAPA_BOTON_LISTO and store.horario_actual == 2:
-                opciones.append({"texto": "Tengo las entradas", "label": "violet_quest06a_puerta", "ocultar_golpear": True})
-
-            # Quest 06_b: Me pediste que pasara (solo de noche)
-            quest_v06b = store.sistema_quests.obtener_quest("violet_questprincipal_06_b")
-            if quest_v06b and quest_v06b.activa and not quest_v06b.completada and quest_v06b.etapa_actual == ETAPA_BOTON_LISTO and store.horario_actual == 2:
-                opciones.append({"texto": "Me pediste que pasara", "label": "violet_quest06b_puerta", "ocultar_golpear": True})
-
-            # Quest 07_a: Preguntar por el cosplay
-            quest_v07a = store.sistema_quests.obtener_quest("violet_questprincipal_07_a")
-            if quest_v07a and quest_v07a.activa and not quest_v07a.completada and quest_v07a.etapa_actual == ETAPA_BOTON_LISTO:
-                opciones.append({"texto": "Preguntar por el cosplay", "label": "violet_quest07a_puerta", "ocultar_golpear": True})
-
-            # Quest 07_b: Ya hablé con la tienda
-            quest_v07b = store.sistema_quests.obtener_quest("violet_questprincipal_07_b")
-            if quest_v07b and quest_v07b.activa and not quest_v07b.completada and quest_v07b.etapa_actual == ETAPA_BOTON_LISTO:
-                opciones.append({"texto": "Ya hablé con la tienda", "label": "violet_quest07b_puerta", "ocultar_golpear": True})
-
-            # Evento 03: Despertar a Violet para limpiar (sabado mañana)
-            event_limpieza = store.sistema_events.obtener_event("violet_evento_03")
-            if event_limpieza and event_limpieza.estado == ESTADO_EVENT_ACTIVO and store.dia_semana_actual == 5 and store.horario_actual == 0:
-                opciones.append({"texto": "Despertar a Violet para limpiar", "label": "evento03_violet", "ocultar_golpear": True, "tipo": "evento"})
-
+        for _reg in OPCIONES_PUERTA_REGISTRO.get(npc_id, []):
+            if _reg["condicion"] is not None and not _reg["condicion"]():
+                continue
+            _op = {
+                "texto": _reg["texto"],
+                "label": _reg["label"],
+                "ocultar_golpear": _reg["ocultar_golpear"],
+            }
+            if _reg["tipo"]:
+                _op["tipo"] = _reg["tipo"]
+            opciones.append(_op)
         return opciones
 
     def obtener_trigger_habitacion_directo(npc_id):
@@ -253,18 +260,23 @@ screen menu_banio_npc(npc_id, bg_path=None):
             style "choice_button"
             action [Hide("menu_banio_npc"), Return("golpear")]
 
-        # Espiar: minijuego (core/espiar). Requiere el interruptor maestro
-        # ESPIAR_HABILITADO (hoy False: en desarrollo) Y que el NPC tenga
-        # secuencias registradas. Con el flag en False queda deshabilitado.
+        # Espiar: minijuego (core/espiar). Tres estados:
+        #   - Sin secuencias registradas (o ESPIAR_HABILITADO en False):
+        #     "Contenido en desarrollo", en gris.
+        #   - Con secuencias pero sin el deseo suficiente: se muestra en gris
+        #     CON el requisito a la vista, para que el jugador sepa que la
+        #     opcion existe y que es lo que la habilita.
+        #   - Con el requisito cumplido: queda "Espiar" a secas, clickeable.
         if ESPIAR_HABILITADO and npc_tiene_espiar(npc_id):
-            textbutton "Espiar":
-                style "choice_button"
-                action [Hide("menu_banio_npc"), Return("espiar")]
-        else:
-            textbutton "Espiar (Contenido en desarrollo)":
-                style "choice_button"
-                sensitive False
-                action NullAction()
+            if npc_espiar_disponible(npc_id):
+                textbutton "Espiar":
+                    style "choice_button"
+                    action [Hide("menu_banio_npc"), Return("espiar")]
+            else:
+                textbutton "Espiar (requiere [ESPIAR_DESEO_MINIMO] 💋)":
+                    style "choice_button"
+                    sensitive False
+                    action NullAction()
 
         textbutton "Entrar (Contenido en desarrollo)":
             style "choice_button"
@@ -295,12 +307,12 @@ label interaccion_puerta_npc:
     $ _habitacion_id = "casa_h" + _npc_habitacion
     $ _npc_presente = _npc_obj and _npc_obj.esta_en_locacion(_habitacion_id)
 
-    # Quest 09_a: interacción de puerta especial durante la enfermedad de Violet
-    $ _quest_v09a_door = store.sistema_quests.obtener_quest("violet_questprincipal_09_a")
-    if (_quest_v09a_door and _quest_v09a_door.activa and not _quest_v09a_door.completada and
-            _quest_v09a_door.etapa_actual == ETAPA_BOTON_LISTO and
-            _npc_habitacion == "violet"):
-        jump violet_quest09a_manejo_puerta
+    # Overrides registrados por contenido: reemplazan TODO el flujo de puerta
+    # (ej. la gestion de enfermedad de la quest 09_a de Violet). El primero
+    # cuya condicion da True gana.
+    $ _override_puerta = obtener_override_puerta(_npc_habitacion)
+    if _override_puerta:
+        jump expression _override_puerta
 
     # Trasnoche: ingreso_noche requiere que el NPC esté presente
     if store.horario_actual == 3:
@@ -382,10 +394,12 @@ label interaccion_puerta_npc:
         play sound "audio/sfx/door_knock_3.ogg"
         pause 0.5
 
-        # Caso especial: Violet los sabados por la mañana esta dormida
-        if _npc_habitacion == "violet" and store.dia_semana_actual == 5 and store.horario_actual == 0:
+        # Bloqueos de golpe registrados por contenido (ej. Violet dormida los
+        # sabados a la mañana). El mensaje ya viene traducido.
+        $ _msg_bloqueo_golpe = obtener_bloqueo_golpe(_npc_habitacion)
+        if _msg_bloqueo_golpe:
             $ _blk_guardar_toque()
-            piensa "Violet debe estar dormida."
+            piensa "[_msg_bloqueo_golpe]"
             $ mostrar_hud()
             return
 

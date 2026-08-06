@@ -19,10 +19,15 @@ init 10 python:
 
     def condicion_aparicion_event1_jasmine():
         """
-        Aparece (VISIBLE) 1 día después de completar la quest 0_c de Jasmine.
+        Aparece (VISIBLE) 1 día después de completar la quest 0_c de Jasmine y
+        con 10 de deseo.
 
         La espera evita que el evento de "volver a ver" aparezca el mismo día en
         que acabás de ver el conjunto. Mismo patrón que el evento 1 de Mónica.
+
+        El requisito de relación va en la APARICIÓN y no en la activación: asi el
+        evento tampoco figura en el panel de pistas hasta que el vínculo esté al
+        nivel.
         """
         q = sistema_quests.obtener_quest("jasmine_questprincipal_0_c")
         if not q or not q.completada:
@@ -30,7 +35,10 @@ init 10 python:
 
         dia_completada = getattr(store, 'jasmine_quest_0c_dia_completada', 0)
         dias_totales = getattr(store, 'dias_totales', 1)
-        return dias_totales - dia_completada >= 1
+        if dias_totales - dia_completada < 1:
+            return False
+
+        return obtener_stat2("jasmine") >= 10
 
     def condicion_activacion_event1_jasmine():
         """El evento NO se auto-activa por tiempo: lo dispara el botón

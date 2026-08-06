@@ -13,7 +13,13 @@ init 10 python:
     # ===========================================================================
 
     def condicion_aparicion_event1_monica():
-        """El evento aparece 2 días después de completar la quest 0 de Mónica."""
+        """
+        Aparece 2 días después de completar la quest 0 de Mónica Y con 10 de deseo.
+
+        El requisito de relación va en la APARICIÓN y no en la activación: asi el
+        evento tampoco figura en el panel de pistas hasta que el vínculo esté al
+        nivel.
+        """
         quest = sistema_quests.obtener_quest("monica_questprincipal_0")
         if not quest or not quest.completada:
             return False
@@ -21,7 +27,10 @@ init 10 python:
         # Verificar que hayan pasado al menos 2 dias desde la completación
         dia_completada = getattr(store, 'monica_quest_0_dia_completada', 0)
         dias_totales = getattr(store, 'dias_totales', 1)
-        return dias_totales - dia_completada >= 2
+        if dias_totales - dia_completada < 2:
+            return False
+
+        return obtener_stat2("monica") >= 10
 
     def condicion_activacion_event1_monica():
         """El evento NO se auto-activa por tiempo: lo dispara la interacción con

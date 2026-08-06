@@ -199,14 +199,22 @@
       "Bash(awk 'index\\($0,\"label paqueterepartidor_quest01_violet:\"\\)==1{f=1} f&&/^label /&&!index\\($0,\"paqueterepartidor_quest01_violet\"\\){exit} f{print NR\": \"$0}' game/script/characters/violet/quests/violet_quest_01_a.rpy)",
       "Bash(grep -nE \"^\\\\s*\\(return|jump game_loop\\)$\" game/script/characters/otros/repartidor/historia_repartidor.rpy)",
       "Bash(awk '/^label game_loop:/{f=1} f&&/^label /&&!/game_loop/{exit} f{print NR\": \"$0}' game/script/characters/mc/quests/intro_main.rpy)",
-      "Bash(grep -nE \"^\\\\s*\\\\\\\\\\\\$ |activar_skin|talk|estado|rutina\" game/script/characters/monica/quests/monica_quest_0_b.rpy)"
+      "Bash(grep -nE \"^\\\\s*\\\\\\\\\\\\$ |activar_skin|talk|estado|rutina\" game/script/characters/monica/quests/monica_quest_0_b.rpy)",
+      "Bash(cd \"c:/Users/Alan/OneDrive/Desktop/Japitown/.claude/skills/japitown-content\" && rm creacion.md funcionamiento.md creacion_screens.md expresiones_referencia.md && ls -la)",
+      "Bash(awk '{s+=$1} END {printf \" %.1f MB en %d archivos\\\\n\", s/1048576, NR}')",
+      "Bash(awk '{printf \"  %.1f MB  %s\\\\n\", $1/1048576, $2}')",
+      "Bash(grep -n \"\\\\$.*int\\\\s*=\" game/script/ui/hud/hud_stats.rpy)",
+      "Bash(grep -rn \"^\\\\s*int\\\\s*=\\\\|^\\\\s*\\\\$\\\\s*int\\\\s*=\" game/script/ --include=\"*.rpy\")",
+      "Bash(grep -n \"^\\\\s*\\\\$\\\\|^\\\\s*for\\\\|^\\\\s*int\")",
+      "Bash(grep -n \"^\\\\s*\\\\$\\\\s*int\\\\s*=\" game/script/ui/hud/hud_navigation.rpy)"
     ],
     "additionalDirectories": [
       "c:\\Users\\Alan\\OneDrive\\Desktop\\Japitown\\.claude\\skills\\cambios",
       "C:\\Users\\Alan\\OneDrive\\Desktop\\Japitown\\game\\script\\ui\\menu*",
       "\\tmp",
       "C:\\Users\\Alan\\OneDrive\\Desktop\\Japitown\\game",
-      "C:\\Users\\Alan\\OneDrive\\Desktop\\Japitown"
+      "C:\\Users\\Alan\\OneDrive\\Desktop\\Japitown",
+      "c:\\Users\\Alan\\OneDrive\\Desktop\\Japitown\\.claude\\skills\\japitown-content"
     ]
   },
   "hooks": {}

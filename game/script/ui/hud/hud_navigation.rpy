@@ -623,6 +623,17 @@ style hud_button_text is button_text:
     bold True
 
 ################################################################################
+## Efectos decorativos de locación
+################################################################################
+
+# Vapor que asoma por la puerta del baño de arriba cuando hay alguien adentro.
+# Es DECORATIVO: se dibuja con `add` y no como imagebutton (a diferencia de los
+# idles de _IDLE_MOV_IMGS) justamente para que no sea focusable y no le robe el
+# click al hotspot de la puerta, que queda debajo.
+image idle_vapor_pasilloarriba = "images/bg/casa/idle_otros/idle_vapor_pasilloarriba.webp"
+
+
+################################################################################
 ## Screen de navegación actualizado con HUD
 ################################################################################
 
@@ -646,6 +657,15 @@ screen navegacion_locaciones_con_hud():
             ysize 1080
             background None
             action NullAction()
+
+        # Vapor del baño de arriba: sale por la puerta mientras haya alguien
+        # adentro. Va acá, antes de los hotspots, para quedar por detrás de
+        # ellos; igual no puede robarles el click porque `add` no crea un
+        # displayable focusable (ver la definición de la imagen más arriba).
+        # La imagen tiene el alto de la pantalla: pegada al borde izquierdo
+        # (xpos 0) y centrada en vertical (yalign 0.5).
+        if sistema_locaciones.locacion_actual.id == "casa_pasilloarriba" and obtener_npc_en_banio("casa_banioarriba"):
+            add "idle_vapor_pasilloarriba" xpos 0 yalign 0.5
 
         # Obtener NPCs presentes (necesario antes de hotspots y sprites)
         $ npcs_aqui = npcs_en_locacion_actual()

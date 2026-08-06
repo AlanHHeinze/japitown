@@ -87,6 +87,34 @@ init python:
         """True cuando ya se visitaron las 3 locaciones objetivo."""
         return MC_Q0_LOCS_OBJETIVO.issubset(store.mc_q0_locaciones_exploradas)
 
+    # --- Triggers de motor de la quest 0 (registros de triggers_contenido) ---
+
+    def _gl_trigger_mc_q0_exploracion():
+        # Recorrido libre terminado (visito las 3 locaciones objetivo). Vive en
+        # el game_loop y no en los labels de entrada porque esos llegan por
+        # call expression y deben retornar; este jump es frameless.
+        if getattr(store, 'mc_q0_explorando', False) and mc_q0_exploracion_terminada():
+            return "mc_q0_exploracion_completada"
+        return None
+
+    def _avanzar_trigger_mc_q0():
+        # Al avanzar horario en la etapa de espera de la quest 0.
+        if getattr(store, 'mc_q0_esperar_horario', False):
+            store.mc_q0_esperar_horario = False
+            return "mc_q0_stage_b"
+        return None
+
+    def _dormir_trigger_mc_q0_final():
+        # Primer sueño al finalizar la introduccion: cierra la quest 0 y apaga
+        # las ayudas visuales. Solo efectos python, el sueño sigue normal.
+        if getattr(store, 'mc_q0_final_sleep', False):
+            store.mc_q0_final_sleep = False
+            desactivar_restriccion()
+            store.sistema_quests_mc.completar_activa()
+            store.config_mostrar_accion_movimiento = False
+            store.visualizador_hotspot_activo = False
+        return None
+
     # El area de texto muestra 4 lineas, por eso el aviso de entrada va partido en
     # dos mensajes: primero donde estas (1 linea) y despues que falta (cabecera +
     # hasta 3 objetivos = 4 lineas justas).
@@ -568,3 +596,18 @@ label mc_q0_siguiente_etapa:
 
     $ mc_q0_final_sleep = True
     jump game_loop
+
+
+################################################################################
+## Registro de triggers de motor (triggers_contenido.rpy)
+################################################################################
+
+init 5 python:
+    # Prioridades: replican el orden de los ifs que estos registros reemplazan
+    # (game_loop: violet_09a=40, jasmine_0b=30, exploracion=20, mc_q0b=10;
+    # dormir "despues": mc_q0_final=40 corre primero).
+    registrar_trigger_game_loop(
+        "mc_q0_exploracion", _gl_trigger_mc_q0_exploracion, prioridad=20)
+    registrar_trigger_avanzar("mc_q0_espera", _avanzar_trigger_mc_q0)
+    registrar_trigger_dormir(
+        "mc_q0_final", "despues", _dormir_trigger_mc_q0_final, prioridad=40)

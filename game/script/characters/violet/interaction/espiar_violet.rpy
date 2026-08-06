@@ -16,33 +16,7 @@ init 6 python:
         id="violet_espiar_ducha",
         npc_id="violet",
         nombre="Violet en la ducha",
-        fondo="images/minijuegos/ducha_test/secuencias_placeholder_ducha_fondo.jpg",
-        fotos=[
-            {"ruta": "images/minijuegos/ducha_test/foto_ducha_ducha_1.jpg",
-             "descripcion": "Violet en la ducha"},
-        ],
-    ))
-
-    registrar_secuencia_espiar(SecuenciaEspiar(
-        id="violet_espiar_tanga",
-        npc_id="violet",
-        nombre="Violet en tanga",
-        fondo="images/minijuegos/ducha_test/secuencias_placeholder_tanga_fondo.jpg",
-        fotos=[
-            {"ruta": "images/minijuegos/ducha_test/foto_ducha_tanga_1.jpg",
-             "descripcion": "Violet en tanga"},
-        ],
-    ))
-
-    registrar_secuencia_espiar(SecuenciaEspiar(
-        id="violet_espiar_descambiada",
-        npc_id="violet",
-        nombre="Violet descambiada",
-        fondo="images/minijuegos/ducha_test/secuencias_placeholder_descambiada_fondo.jpg",
-        fotos=[
-            {"ruta": "images/minijuegos/ducha_test/foto_ducha_descambiada_1.jpg",
-             "descripcion": "Violet descambiada"},
-        ],
+        fondo="images/minijuegos/ducha/ducha_fondo.jpg",
     ))
 
     # ── Reacciones al ser descubierto ────────────────────────────────────────
