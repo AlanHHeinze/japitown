@@ -30,3 +30,11 @@ translate english accion_espiar_foto_fc500acb:
     # piensa "La foto no salió bien, debería intentarlo en otro momento."
     piensa "The photo didn't come out right, I should try again another time."
 
+# TODO: Translation updated at 2026-08-11 22:00
+
+# game/script/core/espiar/espiar_system.rpy:588
+translate english accion_espiar_entrar_fa29e8c5:
+
+    # piensa "[_esp_ent_msg]"
+    piensa ""
+

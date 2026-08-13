@@ -71,7 +71,7 @@ label violet_quest05b_hablar:
     show violet_parada b_none
 
     $ inventario["coxplay_box"] = max(0, inventario.get("coxplay_box", 0) - 1)
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_05_b")
     window hide
     $ mostrar_hud()
     jump game_loop
@@ -139,7 +139,7 @@ label violet_quest05b_puerta:
     show violet_parada b_none
 
     $ inventario["coxplay_box"] = max(0, inventario.get("coxplay_box", 0) - 1)
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_05_b")
     window hide
     $ mostrar_hud()
     jump game_loop

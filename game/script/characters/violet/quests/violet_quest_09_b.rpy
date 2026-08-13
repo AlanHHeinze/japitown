@@ -6,7 +6,9 @@
 ################################################################################
 
 label violet_quest09b_despertar:
-    $ completar_quest_actual("violet")
+    # OJO: el archivo se llama 09_b pero la quest que cierra es la 09_a — este
+    # label es su desenlace, no hay ninguna quest "09_b" registrada.
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_09_a")
     call mensajes_al_despertar from _call_quest09b_despertar_msgs
     $ renpy.restart_interaction()
     $ mostrar_hud()

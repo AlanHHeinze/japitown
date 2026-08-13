@@ -10,7 +10,7 @@ init 6 python:
         Violet después. Al completarla arranca la 08_a con su espera de 3 días.
         Función de MÓDULO (no lambda/anidada): se guarda en el save vía el grupo."""
         if hasattr(store, 'completar_quest_actual'):
-            store.completar_quest_actual("violet")
+            store.completar_quest_actual("violet", quest_id="violet_questprincipal_07_c")
 
     def set_vq6_rama_a(): store.vq6_rama_a = True; return ""
     def set_vq6_rama_b(): store.vq6_rama_b = True; return ""
@@ -491,43 +491,6 @@ init 6 python:
         ]
     )
     sistema_mensajes.registrar_grupo("violet", chat_violet_quest8)
-
-    # =========================================================================
-    # QUEST 12 — Chat visita nocturna
-    # =========================================================================
-
-    chat_violet_quest12 = GrupoMensajes(
-        id="violet_quest12_chat",
-        npc_id="violet",
-        mensaje_inicial="Placeholder: Hola, cuando puedas pasate por mi habitación a la noche...",
-        trigger_id="violet_quest12_chat",
-        momento_locacion="casa_hviolet",
-        momento_horario=1,
-        tabla_recompensas=TablaRecompensas({
-            "amor": [
-                RangoRecompensa(1, 99, {"tipo": "amor", "valor": 1}),
-            ],
-        }),
-        pasos=[
-            PasoConversacion(
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto="Placeholder: Dale, paso a la noche",
-                        respuesta_npc="Placeholder: Genial, te espero",
-                        puntos={},
-                        saltar_a_paso=-1
-                    ),
-                    OpcionRespuesta(
-                        texto="Placeholder: Esta todo bien?",
-                        respuesta_npc="Placeholder: Si, tranquilo, solo quiero mostrarte algo",
-                        puntos={},
-                        saltar_a_paso=-1
-                    ),
-                ]
-            ),
-        ]
-    )
-    sistema_mensajes.registrar_grupo("violet", chat_violet_quest12)
 
     # =========================================================================
     # QUEST 05_C — Violet le escribe al MC (noche, Violet en su habitacion)

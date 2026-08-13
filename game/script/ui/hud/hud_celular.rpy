@@ -31,7 +31,8 @@ screen menu_celular():
             ("comprar", "🛒", "Tienda", Show("panel_tienda"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
             ("mensajes", "💬", "Chat", [Function(sistema_mensajes.verificar_mensajes_en_espera), Show("lista_contactos_mensajes")], "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
             ("galeria", "🖼️", "Galería", Show("panel_galeria"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
-            ("tracker", "📍", "Tracker", Show("panel_tracker"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
+            # Sin app Tracker: la ubicacion de cada NPC ya la muestra su fila en
+            # Relaciones, asi que era una segunda pantalla para el mismo dato.
             ("hot", "🔥", "Hot", Call("narrar_mensaje", "Contenido en desarrollo"), "#2a1a10CC", "#3d2a1aCC", "#888888"),
             ("banco", "🏦", "Banco", Call("narrar_mensaje", "Contenido en desarrollo"), "#2a1a10CC", "#3d2a1aCC", "#888888"),
             ("configuracion", u"⚙️", "Configuración", Show("panel_configuracion"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
@@ -42,7 +43,7 @@ screen menu_celular():
     # Fondo del celular
     use _celular_fondo()
 
-    # Bloqueador exterior + botón ✕ para cerrar (compartido con las apps)
+    # Bloqueador exterior + botón de cerrar (compartido con las apps)
     use _celular_cerrar_exterior("menu_celular")
 
     # Panel del celular — constrainido al area de trabajo
@@ -206,7 +207,7 @@ screen menu_celular():
                         yalign 0.5
                         spacing 40
 
-                        textbutton "○":
+                        textbutton "×":
                             action [SetVariable("menu_celular_abierto", False), Hide("menu_celular"), Call("_validar_estado_tras_celular")]
                             text_size 24
                             text_color "#666666"

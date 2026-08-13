@@ -40,7 +40,7 @@ screen _celular_fondo():
 ################################################################################
 ## Clickear FUERA del celular lo cierra. Clickear DENTRO (zonas vacías entre
 ## botones, márgenes) no hace nada: un bloqueador cubre el rectángulo del
-## celular y traga esos clicks. También hay un botón ✕ en la esquina.
+## celular y traga esos clicks. También hay un botón de cerrar en la esquina.
 
 screen _celular_cerrar_exterior(screen_actual):
 
@@ -74,7 +74,11 @@ screen _celular_cerrar_exterior(screen_actual):
             xysize (ajuste_cel_area_w + 60, ajuste_cel_area_h)
             action NullAction()
 
-        # Botón cerrar ✕ — junto a la esquina superior derecha del celular
+        # Botón cerrar — junto a la esquina superior derecha del celular.
+        # Dice "X" (letra) y no "✕" (U+2715): ese es un dingbat que las fuentes
+        # del juego no traen y salia como cuadradito de glifo faltante. Es el
+        # mismo criterio que ya usaba el boton de cerrar de la variante tactil,
+        # mas abajo en este archivo.
         button:
             xpos (ajuste_cel_area_x + ajuste_cel_area_w + 42)
             ypos (ajuste_cel_area_y + 8)
@@ -85,7 +89,7 @@ screen _celular_cerrar_exterior(screen_actual):
                 action NullAction()
             else:
                 action [Hide(screen_actual), SetVariable("menu_celular_abierto", False), Hide("menu_celular"), Call("_validar_estado_tras_celular")]
-            text "✕" size 26 color "#ffffff" xalign 0.5 yalign 0.5
+            text "X" size 26 color "#ffffff" bold True xalign 0.5 yalign 0.5
 
 
 ################################################################################

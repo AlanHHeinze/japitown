@@ -399,12 +399,28 @@ init 999 python:
         for npc_id, loc_id in PASILLO_NPC.items():
             if store.sistema_locaciones.obtener_locacion(loc_id) is None:
                 problemas.append("pasillo '{}' de {} no existe".format(loc_id, npc_id))
+        # El acceso a habitaciones ya no sale de TABLA_ACCESO_HABITACION (se
+        # eliminó): lo otorgan las ventajas de los Hitos de relacion. Se valida
+        # que cada NPC con habitacion tenga algun hito que le de acceso, y de
+        # paso se corre el chequeo de coherencia del sistema de hitos.
+        _ventajas_puerta = (
+            "puerta_sale_pasillo", "puerta_dejar_pasar",
+            "puerta_ingreso_diurno", "puerta_ingreso_noche",
+        )
         for npc_id in HABITACION_NPC.values():
-            if npc_id not in TABLA_ACCESO_HABITACION:
-                problemas.append("'{}' sin fila en TABLA_ACCESO_HABITACION".format(npc_id))
+            _tiene = False
+            for _h in obtener_hitos_npc(npc_id):
+                if any(_v in _h.ventajas for _v in _ventajas_puerta):
+                    _tiene = True
+                    break
+            if not _tiene:
+                problemas.append("'{}' sin ningun hito que otorgue acceso a su habitacion".format(npc_id))
+
+        problemas.extend(verificar_coherencia_hitos())
+
         if problemas:
             return _jpt_fallo("; ".join(problemas))
-        return _jpt_ok("puertas, pasillos y tabla de acceso consistentes")
+        return _jpt_ok("puertas, pasillos e hitos de acceso consistentes")
 
     def _jpt_mapa_viaje_rapido():
         problemas = []

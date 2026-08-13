@@ -155,6 +155,8 @@ layeredimage mc_parado_base:
             "images/characters/mc/base/mc_base_cuerpo_rbase_cajacoxplay.webp"
         attribute c_rbase_mangas:
             "images/characters/mc/base/mc_base_cuerpo_rbase_mangas.webp"
+        attribute c_rbase_bolsamadera:
+            "images/characters/mc/base/mc_base_cuerpo_bolsamadera.webp"
         attribute c_rbase_tanga:
             "images/characters/mc/base/mc_base_cuerpo_tanga.webp"
         attribute c_rbase_leyendocyberpunk:

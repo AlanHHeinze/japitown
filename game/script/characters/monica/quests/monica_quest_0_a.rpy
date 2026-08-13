@@ -537,12 +537,12 @@ label quest_monica_0_cierre:
     
     # Evaluar ruta elegida y aplicar stats
     if _ruta_mq0 == "familia":
-        $ obtener_npc("monica").modificar_stat1(4)
+        $ obtener_npc("monica").modificar_stat1(2, reserva=True)
     elif _ruta_mq0 == "cercania":
-        $ obtener_npc("monica").modificar_stat2(2)
+        $ obtener_npc("monica").modificar_stat2(2, reserva=True)
     elif _ruta_mq0 == "independencia":
-        $ obtener_npc("monica").modificar_stat1(2)
-        $ obtener_npc("monica").modificar_stat2(1)
+        $ obtener_npc("monica").modificar_stat1(1, reserva=True)
+        $ obtener_npc("monica").modificar_stat2(1, reserva=True)
 
     # Avanzar horario
     $ avanzar_horario()
@@ -551,7 +551,7 @@ label quest_monica_0_cierre:
     $ store.monica_quest_0_dia_completada = getattr(store, 'dias_totales', 1)
 
     # Completar quest
-    $ completar_quest_actual("monica")
+    $ completar_quest_actual("monica", quest_id="monica_questprincipal_0")
     $ activar_estado_especial_npc("monica", "monica_feliz")
 
     jump game_loop

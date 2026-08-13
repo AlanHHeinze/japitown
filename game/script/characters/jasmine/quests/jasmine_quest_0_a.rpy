@@ -435,16 +435,16 @@ label quest_jasmine_0_regalo:
     
     # Evaluar ruta elegida y aplicar stats
     if _ruta_jq0 == "perdon":
-        $ obtener_npc("jasmine").modificar_stat1(4)
+        $ obtener_npc("jasmine").modificar_stat1(2, reserva=True)
     elif _ruta_jq0 == "deseo":
-        $ obtener_npc("jasmine").modificar_stat2(2)
+        $ obtener_npc("jasmine").modificar_stat2(2, reserva=True)
     elif _ruta_jq0 == "realidad":
-        $ obtener_npc("jasmine").modificar_stat1(2)
-        $ obtener_npc("jasmine").modificar_stat2(1)
+        $ obtener_npc("jasmine").modificar_stat1(1, reserva=True)
+        $ obtener_npc("jasmine").modificar_stat2(1, reserva=True)
 
     # Avanzar horario
     $ avanzar_horario()
-    $ completar_quest_actual("jasmine")
+    $ completar_quest_actual("jasmine", quest_id="jasmine_questprincipal_0_a")
     $ activar_estado_especial_npc("jasmine", "jasmine_feliz")
 
     # Desbloquear skin de ropa deportiva

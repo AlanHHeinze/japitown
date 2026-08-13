@@ -62,7 +62,7 @@ label quest_monica_questprincipal_0_c:
     $ stock_tienda["bateria_nt520"] = 1
 
     # Completar la quest
-    $ completar_quest_actual("monica")
+    $ completar_quest_actual("monica", quest_id="monica_questprincipal_0_c")
 
     $ mostrar_hud()
     jump game_loop

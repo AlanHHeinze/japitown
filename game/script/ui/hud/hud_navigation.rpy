@@ -481,7 +481,7 @@ screen panel_debug_labels():
             hbox:
                 xfill True
                 text "🎯 Saltar a Label" size 24 color "#FFD700" bold True
-                textbutton "✕ Cerrar":
+                textbutton "× Cerrar":
                     action Hide("panel_debug_labels")
                     xalign 1.0
                     text_size 16
@@ -790,7 +790,7 @@ screen navegacion_locaciones_con_hud():
                         hbox:
                             spacing 5
                             text "✏️ Nombre:" size 11 color "#FFD700" bold True
-                            textbutton "✕":
+                            textbutton "×":
                                 action SetVariable("modo_crear_hotspot", False)
                                 text_size 10
                                 background "#F44336"
@@ -1001,7 +1001,9 @@ screen navegacion_locaciones_con_hud():
                         elif npc_interactuable(npc.id):
                             action Call("interaccion_" + npc.id)
                         else:
-                            action Call("pensar_mensaje", mensaje_npc_bloqueado())
+                            # Se pasa el npc_id para que el mensaje distinga
+                            # "esta durmiendo" de un bloqueo de quest.
+                            action Call("pensar_mensaje", mensaje_npc_bloqueado(npc.id))
         
         # =====================================================================
         # CAPA 2.5: Elementos dinámicos de quest/evento

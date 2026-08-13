@@ -247,22 +247,8 @@ init python:
             nombre="Violet en la ducha"
         ))
 
-        # =====================================================================
-        # DESBLOQUEOS DE RELACIÓN
-        # =====================================================================
-
-        # Amor
-        violet.agregar_desbloqueo("amor", 15, "💬", "Conversación Especial Buen Humor",
-            "Violet puede aparecer de buen humor durante la conversación diaria.")
-        violet.agregar_desbloqueo("amor", 15, "💬", "Conversación Especial Muy Buen Humor",
-            "Violet puede aparecer de muy buen humor durante la conversación diaria.")
-        violet.agregar_desbloqueo("amor", 30, "🚪", "Ingreso Habitación",
-            "Violet te deja entrar a su cuarto durante el día.")
-        # Deseo
-        violet.agregar_desbloqueo("deseo", 30, "💬", "Conversación Especial Caliente",
-            "Violet puede aparecer en un estado especial durante la conversación diaria.")
-        violet.agregar_desbloqueo("deseo", 60, "🌙", "Ingreso Nocturno",
-            "Puedes entrar a la habitación de Violet de noche.")
+        # Los desbloqueos de relación ya no se declaran acá: son HITOS y viven en
+        # characters/violet/hitos_violet.rpy.
 
         # =====================================================================
         # REGISTRAR EN EL SISTEMA

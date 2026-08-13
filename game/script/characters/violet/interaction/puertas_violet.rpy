@@ -43,6 +43,24 @@ init python:
     def _puerta_v_04b():
         return quest_lista_para_boton("violet_questprincipal_04_b")
 
+    def _puerta_v_favores_noche():
+        # Cadena de los favores (04_d2 → 04_d6): de noche se le puede preguntar
+        # desde la puerta, pero Violet solo contesta — no abre. La condicion
+        # entera vive en violet_quest_04_favores.rpy.
+        return violet_favores_puerta_de_noche()
+
+    def _puerta_v_04d6_cierre():
+        # Cierre del arco de los favores: avisarle que ya limpio todo. Va
+        # tambien en la puerta porque si Violet esta en su cuarto no hay otra
+        # forma de llegar a ella.
+        return quest_lista_para_boton("violet_questprincipal_04_d6")
+
+    def _puerta_v_04d4_avisar():
+        # Arco de los favores: avisarle que la pizza esta lista. Solo despues de
+        # cocinarla (la charla pasa en el pasillo, no adentro).
+        return (quest_lista_para_boton("violet_questprincipal_04_d4")
+                and getattr(store, 'vq4d4_pizza_cocinada', False))
+
     def _puerta_v_05a():
         return (quest_lista_para_boton("violet_questprincipal_05_a")
                 and store.sistema_mensajes.grupo_completado("coxplay_q5a_g4"))
@@ -102,6 +120,16 @@ init 5 python:
                             ocultar_golpear=True)
     registrar_opcion_puerta("violet", "Golpear la puerta",
                             "violet_quest04b_puerta", _puerta_v_04b,
+                            ocultar_golpear=True)
+    # Sin ocultar_golpear: contesta sin abrir, asi que "Golpear la puerta" sigue
+    # teniendo sentido y queda disponible al lado.
+    registrar_opcion_puerta("violet", "Preguntarle si necesita algo",
+                            "violet_q4dfav_de_noche_puerta", _puerta_v_favores_noche)
+    registrar_opcion_puerta("violet", "Ya está la comida",
+                            "violet_q4d4_avisar", _puerta_v_04d4_avisar,
+                            ocultar_golpear=True)
+    registrar_opcion_puerta("violet", "Ya terminé de limpiar",
+                            "violet_q4d6_cierre", _puerta_v_04d6_cierre,
                             ocultar_golpear=True)
     registrar_opcion_puerta("violet", "Ya compré los cosplay",
                             "violet_quest05a_puerta", _puerta_v_05a,

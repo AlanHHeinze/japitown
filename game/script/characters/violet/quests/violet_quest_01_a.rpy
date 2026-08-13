@@ -190,7 +190,7 @@ label paqueterepartidor_quest01_violet:
     hide mc_parado_base with dissolve
 
     # Completar quest
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_01_a")
 
     window hide
     $ mostrar_hud()
@@ -228,7 +228,7 @@ label paquetecama_quest01_violet:
     hide mc_parado_base with dissolve
 
     # Completar quest
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_01_a")
 
     window hide
     $ mostrar_hud()

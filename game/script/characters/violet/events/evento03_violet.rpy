@@ -661,8 +661,8 @@ label violet_quest2_opcion_a:
     violet "Otra vez escapando"
     show violet_parada b_none
 
-    $ cambiar_stat1("violet", 2)
-    $ cambiar_stat2("violet", 1)
+    $ cambiar_stat1("violet", 1, reserva=True)
+    $ cambiar_stat2("violet", 1, reserva=True)
 
     jump violet_quest2_cierre
 
@@ -729,7 +729,7 @@ label violet_quest2_opcion_b:
     violet "Yo también"
     show violet_parada b_none
 
-    $ cambiar_stat1("violet", 4)
+    $ cambiar_stat1("violet", 2, reserva=True)
 
     jump violet_quest2_cierre
 
@@ -818,7 +818,7 @@ label violet_quest2_opcion_c:
     violet "¿Debilidades...?"
     show violet_parada b_none
 
-    $ cambiar_stat2("violet", 2)
+    $ cambiar_stat2("violet", 2, reserva=True)
 
     jump violet_quest2_cierre
 

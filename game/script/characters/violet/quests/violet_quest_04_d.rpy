@@ -73,12 +73,12 @@ label quest_violet_questprincipal_04_d:
     hide violet_parada with dissolve
 
     piensa "Es muy divertido molestarla pero no sé que tan buena idea es, a este paso no la voy a poder convencer de que use el cosplay"
-    piensa "Le queda muy bien y lo que dice de su trasero es solo un complejo"
-    piensa "Tengo que lograr que se sienta comoda y no lo vea como algo malo"
+    piensa "Todavia quedan fotos que no vi, podria portarme bien y hacer cosas por ella"
+    piensa "Puede que asi logre que me mande las fotos"
 
     hide mc_parado_base with dissolve
 
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_04_d")
 
     # Terminal de contenido: jump game_loop (si el camino hasta aca vino con
     # frames, los drena el inicio del game_loop).

@@ -342,18 +342,84 @@ init python:
             return False
         return r.es_npc_oculto(npc_id)
     
+    # ── Trasnoche: los NPC duermen ───────────────────────────────────────────
+    # Regla GENERAL del juego, no de una quest: de madrugada nadie se deja
+    # molestar. La puerta ya lo resolvia por su lado (door_access_system corta
+    # el trasnoche salvo con la ventaja de ingreso), pero faltaba el click
+    # directo sobre el NPC: si lograbas estar en la misma locacion que el,
+    # se abria el menu de interaccion como a cualquier hora.
+    #
+    # Se sale del bloqueo por DOS vias, las dos declarativas:
+    #   1. La ventaja "npc_interaccion_trasnoche" — para cuando un hito habilite
+    #      hablarle de madrugada. Hoy no la otorga ninguno.
+    #   2. registrar_excepcion_trasnoche(fn) — para el contenido que necesita
+    #      la escena igual (una quest que te hace despertarla, por ejemplo).
+    #
+    # Ojo si se agrega contenido nocturno: sin excepcion registrada, el NPC no
+    # se puede clickear en trasnoche.
+
+    MENSAJE_NPC_DURMIENDO = "Debe estar durmiendo, no voy a molestar."
+
+    # [fn(npc_id) -> bool]. True = se puede interactuar igual.
+    EXCEPCIONES_TRASNOCHE = []
+
+    def registrar_excepcion_trasnoche(fn):
+        """
+        Registra una excepcion al bloqueo de trasnoche. `fn` recibe el npc_id y
+        devuelve True si con ESE NPC se puede interactuar igual.
+
+        Funcion de MODULO, nunca lambda: queda en una lista de init (regla
+        anti-PicklingError del proyecto).
+        """
+        EXCEPCIONES_TRASNOCHE.append(fn)
+
+    def npc_durmiendo(npc_id):
+        """True si el NPC esta durmiendo y no corresponde molestarlo."""
+        if getattr(store, 'horario_actual', 0) != HORARIO_TRASNOCHE:
+            return False
+
+        # Ventaja de hito (el catalogo puede no estar cargado en un save viejo)
+        try:
+            if npc_tiene_ventaja(npc_id, "npc_interaccion_trasnoche"):
+                return False
+        except Exception:
+            pass
+
+        for _fn_exc in EXCEPCIONES_TRASNOCHE:
+            try:
+                if _fn_exc(npc_id):
+                    return False
+            except Exception:
+                pass
+
+        return True
+
     def npc_interactuable(npc_id):
         """
         Verifica si se puede interactuar con un NPC.
-        Si hay restricción activa, por defecto NINGÚN NPC es interactuable.
+        De trasnoche duermen; despues, si hay restricción activa, por defecto
+        NINGÚN NPC es interactuable.
         """
+        if npc_durmiendo(npc_id):
+            return False
+
         r = store.restriccion_quest_activa
         if r is None or not r.activa:
             return True
         return r.es_npc_interactuable(npc_id)
-    
-    def mensaje_npc_bloqueado():
-        """Obtiene el mensaje de NPC bloqueado de la restricción activa."""
+
+    def mensaje_npc_bloqueado(npc_id=None):
+        """
+        Mensaje al intentar interactuar con un NPC bloqueado.
+
+        `npc_id` es opcional por compatibilidad, pero conviene pasarlo: sin el
+        no se puede distinguir "esta durmiendo" de un bloqueo de quest, y si el
+        bloqueo es solo por el horario no hay restricción activa de la que sacar
+        texto — devolveria "" y saldria un pensamiento vacio.
+        """
+        if npc_id is not None and npc_durmiendo(npc_id):
+            return renpy.translate_string(MENSAJE_NPC_DURMIENDO)
+
         r = store.restriccion_quest_activa
         if r is None:
             return ""

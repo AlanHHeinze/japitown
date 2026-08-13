@@ -164,6 +164,7 @@ funciones de módulo). El motor itera los registros; jamás se edita un archivo 
 | Trigger al dormir | `registrar_trigger_dormir(id, "antes"/"despues", funcion, prioridad)` | idem | `accion_dormir` |
 | Trigger al avanzar horario | `registrar_trigger_avanzar(id, funcion)` | idem | `accion_avanzar_tiempo` |
 | Bloqueo de una acción | `registrar_bloqueo_accion(accion_id, condicion, mensaje)` | idem | embudo `accion_bloqueada` |
+| Excepción al bloqueo de trasnoche | `registrar_excepcion_trasnoche(funcion)` — `fn(npc_id) → bool` | archivo de la quest/evento | `npc_durmiendo` → `npc_interactuable` |
 | Label al entrar a una locación (bajo restricción) | `restriccion_quest_activa.registrar_label_locacion(loc, label)` | label de la quest (runtime, vive en la restricción) | `accion_hotspot_move` |
 | Aviso "repartidor se fue sin atender" | `REPARTIDOR_AL_IRSE.append(funcion)` | archivo de la quest | `avanzar_horario` |
 | Acción de locación / interceptor | `sistema_acciones.registrar_accion` / `registrar_listener` | `actions_catalog.rpy` (¡SIEMPRE en init, nunca en labels!) | `accion_locacion_ejecutar` |
@@ -318,6 +319,10 @@ El **embudo `accion_bloqueada`** vive acá (§4). Un bloqueo de horario/tiempo s
 con restricción (`acciones_bloqueadas=["avanzar_tiempo", ...]`), NUNCA con ifs en el
 motor de tiempo.
 
+También vive acá el bloqueo de **trasnoche** (`npc_durmiendo`,
+`registrar_excepcion_trasnoche`), que es la otra regla general sobre los NPCs y no
+depende de ninguna restricción activa — ver §5.14.
+
 ### 5.9 Mensajes / Chat — `messagesystem_core.rpy`
 
 `GrupoMensajes(id, npc_id, mensaje_inicial, pasos, trigger_id, tabla_recompensas,
@@ -365,6 +370,26 @@ Orden fijo del menú: **quest → evento → Hablar**. El label arma
 agrega el tag `" (Quest)"`/`" (Evento)"` y traduce con translate_string) →
 `call screen menu_interaccion_npc_completo` → `("opcion_especial", label)` →
 `jump expression`.
+
+**El click pasa por `npc_interactuable(npc_id)`** (`restriccion_quest_system.rpy`),
+que evalúa en orden: (1) `npc_durmiendo()` → (2) restricción de quest activa. Si da
+False, sale `mensaje_npc_bloqueado(npc_id)` como pensamiento — **pasarle siempre el
+npc_id**: sin él no distingue "duerme" de un bloqueo de quest y, cuando el bloqueo es
+solo por horario, no hay restricción de la que sacar texto y devuelve `""`.
+
+**De TRASNOCHE (horario 3) ningún NPC es clickeable**: duermen y no se los molesta
+(`MENSAJE_NPC_DURMIENDO`). Es regla general del juego, no de una quest — la puerta ya
+lo hacía por su lado (`door_access_system` corta el trasnoche salvo con la ventaja
+`puerta_ingreso_noche`, que deja **entrar** pero no hablar). Se sale del bloqueo por
+dos vías, las dos declarativas:
+
+- **ventaja** `npc_interaccion_trasnoche` — para cuando un hito habilite hablarle de
+  madrugada (hoy no la otorga ninguno);
+- **`registrar_excepcion_trasnoche(fn)`** — `fn(npc_id) → bool`, función de módulo,
+  para el contenido que necesita la escena igual (una quest que te hace despertarla).
+
+⚠️ **Contenido nuevo en trasnoche: sin excepción registrada el NPC no se puede
+clickear.** Es el error fácil al escribir una escena de madrugada.
 
 ### 5.15 Persistencia, autosave y utilidades
 

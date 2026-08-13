@@ -85,7 +85,7 @@ label violet_quest07a_outcome_a:
     mc "Voy a hablar con la tienda para pedir el cambio"
     show mc_parado_base b_none
 
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_07_a")
     window hide
     $ mostrar_hud()
     jump game_loop
@@ -113,7 +113,7 @@ label violet_quest07a_outcome_c:
     mc "Voy a hablar con la tienda para pedir el cambio"
     show mc_parado_base b_none
 
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_07_a")
     window hide
     $ mostrar_hud()
     jump game_loop

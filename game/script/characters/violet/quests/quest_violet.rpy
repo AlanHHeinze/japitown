@@ -178,13 +178,13 @@ init 5 python:
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista=_qc("vq02a_botonlisto_pista", lambda: (
-                    "Podría intentar nuevamente" if getattr(store, 'violet_quest02a_primer_intento_hecho', False) and obtener_stat1("violet") >= 10
+                    "Podría intentar nuevamente" if getattr(store, 'violet_quest02a_primer_intento_hecho', False) and violet_presta_mangas()
                     else "Tengo que mejorar la relación con Violet" if getattr(store, 'violet_quest02a_primer_intento_hecho', False)
                     else "Podría hablar con Violet a ver si me presta algún manga"
                 )),
                 que_hacer=_qc("vq02a_botonlisto_quehacer", lambda: (
-                    "Pedirle los mangas a Violet" if getattr(store, 'violet_quest02a_primer_intento_hecho', False) and obtener_stat1("violet") >= 10
-                    else "Requisito ❤️ 10" if getattr(store, 'violet_quest02a_primer_intento_hecho', False)
+                    "Pedirle los mangas a Violet" if getattr(store, 'violet_quest02a_primer_intento_hecho', False) and violet_presta_mangas()
+                    else violet_mangas_requisito_texto() if getattr(store, 'violet_quest02a_primer_intento_hecho', False)
                     else "Hablar con Violet"
                 )),
                 mensaje_despertar="Podría preguntarle a Violet si tiene algún manga para prestarme, quizás eso me ayude a mejorar mi relación con ella",
@@ -395,7 +395,10 @@ init 5 python:
         dias_espera=0,
         quest_anterior="violet_questprincipal_04_c",
         requisitos=[
-            Requisito("deseo", "Necesitas 10 💋 con Violet", npc_id="violet", valor=10),
+            # Por hito y no por "deseo >= 10": el jugador lee un nombre y sabe
+            # que le falta, en vez de perseguir un numero.
+            Requisito("hito", "Necesitas avanzar en la línea de deseo con Violet",
+                npc_id="violet", hito_id="violet_hito_deseo_01"),
         ],
         validacion_especial=[
             Requisito("mensaje", "Responder el mensaje de Violet", grupo_id="violet_quest04d_chat"),
@@ -404,8 +407,8 @@ init 5 python:
         config_etapas={
             ETAPA_CONDICIONES: ConfigEtapa(
                 pista="Tengo que mejorar mi relación con Violet para que me muestre más del cosplay",
-                que_hacer=_qc("vq04d_condiciones_quehacer", lambda: renpy.translate_string("Subir deseo 💋 con Violet ({}/{})").format(
-                    getattr(store, 'violet_deseo', 0), 10
+                que_hacer=_qc("vq04d_condiciones_quehacer", lambda: renpy.translate_string("Alcanzar {}").format(
+                    texto_hito_corto("violet_hito_deseo_01")
                 )),
                 mensaje_despertar="Violet dijo que tenía más fotos, quizás pueda lograr que me las envie",
             ),
@@ -423,6 +426,228 @@ init 5 python:
     sistema_quests.registrar_quest(quest_violet_04_d)
 
     # =========================================================================
+    # QUEST 04_D2 - Hacer algo por ella (paso intermedio 04_d -> 04_e)
+    # =========================================================================
+    # Se inserta ENTRE la 04_d y la 04_e sin renumerar la cadena: por eso el id
+    # lleva "d2" en vez de un numero nuevo.
+    #
+    # numero_quest queda en 9, igual que la 04_d. Solo lo lee la herramienta de
+    # dev para ordenar la lista, y ese sort es estable, asi que el orden de
+    # registro alcanza para que d -> d2 -> d3 se vean en secuencia.
+    #
+    # Arranca sola al completar la 04_d y queda un dia en ETAPA_ESPERA
+    # (dias_espera=1): el jugador la ve recien al despertar del dia siguiente.
+
+    quest_violet_04_d2 = Quest(
+        id="violet_questprincipal_04_d2",
+        npc_id="violet",
+        nombre="Algo por ella",
+        descripcion="Violet dijo que tenía más fotos, quizás pueda conseguirlas haciendo algo por ella",
+        numero_quest=9,
+        dias_espera=1,
+        quest_anterior="violet_questprincipal_04_d",
+        requisitos=[],
+        validacion_especial=[],
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_ESPERA: ConfigEtapa(
+                pista="Violet dijo que tenía más fotos, tengo que pensar cómo conseguirlas",
+                que_hacer="Darle un día",
+            ),
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista="Violet dijo que tenía más fotos, debería haber alguna forma para que me las mande",
+                que_hacer="Ofrecerle ayuda a Violet",
+                # Lista y no string: el sistema de despertar acepta varios
+                # pensamientos seguidos y los muestra como piensa encadenados.
+                mensaje_despertar=[
+                    "Violet dijo que tenía más fotos, debería haber alguna forma para que me las mande",
+                    "Quizás si hago cosas por ella lo consiga",
+                ],
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_04_d2)
+
+    # =========================================================================
+    # ARCO DE LOS FAVORES — quests 04_D3 a 04_D6
+    # =========================================================================
+    # Violet le pide tres cosas al MC (golosinas, cocinar, limpiar) y despues
+    # viene el cierre. Va en CUATRO quests encadenadas y no en una sola por dos
+    # razones, las dos sobre los textos del panel de pistas:
+    #
+    #  1. La espera de un dia solo existe al INICIO de una quest (dias_espera se
+    #     evalua en ETAPA_ESPERA y nada mas). En una quest unica habria que
+    #     llevar tres relojes a mano contra dias_totales.
+    #  2. config_etapas se indexa por ETAPA, no por objetivo: una quest sola
+    #     tendria un unico ETAPA_BOTON_LISTO para los cuatro favores, o sea cada
+    #     pista/que_hacer/despertar seria un _qc de cuatro ramas.
+    #
+    # Las cuatro son LINEA_PRINCIPAL y encadenan, asi que nunca hay dos activas
+    # a la vez: el panel muestra una sola.
+    #
+    # Los flags (vq4d3_pedido_hecho, etc.), el helper de quest activa y el
+    # despachador del boton viven en violet_quest_04_favores.rpy.
+
+    # --- 04_D3: las golosinas ------------------------------------------------
+
+    quest_violet_04_d3 = Quest(
+        id="violet_questprincipal_04_d3",
+        npc_id="violet",
+        nombre="Las golosinas",
+        descripcion="Violet me pidió unas golosinas, es lo menos que puedo hacer",
+        numero_quest=9,
+        dias_espera=1,
+        quest_anterior="violet_questprincipal_04_d2",
+        requisitos=[],
+        validacion_especial=[],
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_ESPERA: ConfigEtapa(
+                pista="Violet no necesita nada por hoy",
+                que_hacer="Esperar al día siguiente",
+            ),
+            # Tres estados: todavia no le pregunte / me pidio golosinas y no las
+            # tengo / ya las tengo. El texto sigue al inventario solo.
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista=_qc("vq04d3_pista", lambda: (
+                    "Ya tengo las golosinas que me pidió" if store.vq4d3_pedido_hecho and store.inventario.get("golosinas", 0) > 0
+                    else "Violet me pidió unas golosinas" if store.vq4d3_pedido_hecho
+                    else "Podría ver si Violet necesita algo"
+                )),
+                que_hacer=_qc("vq04d3_quehacer", lambda: (
+                    "Darle las golosinas a Violet" if store.vq4d3_pedido_hecho and store.inventario.get("golosinas", 0) > 0
+                    else "Conseguir golosinas" if store.vq4d3_pedido_hecho
+                    else "Hablar con Violet"
+                )),
+                mensaje_despertar=_qc("vq04d3_despertar", lambda: (
+                    "Tengo las golosinas, hoy se las puedo dar" if store.vq4d3_pedido_hecho and store.inventario.get("golosinas", 0) > 0
+                    else "Tengo que conseguirle las golosinas a Violet" if store.vq4d3_pedido_hecho
+                    else "Debo estar atento por si Violet necesita algo"
+                )),
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_04_d3)
+
+    # --- 04_D4: la pizza -----------------------------------------------------
+
+    quest_violet_04_d4 = Quest(
+        id="violet_questprincipal_04_d4",
+        npc_id="violet",
+        nombre="La pizza",
+        # Ojo: la descripcion NO puede repetir la pista ("Violet quiere volver a
+        # cenar pizza") — dos `old` iguales en tl rompen el lint.
+        descripcion="Violet quiere que le cocine una pizza para la cena",
+        numero_quest=9,
+        dias_espera=1,
+        quest_anterior="violet_questprincipal_04_d3",
+        requisitos=[],
+        validacion_especial=[],
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_ESPERA: ConfigEtapa(
+                pista="Violet no necesita nada por hoy",
+                que_hacer="Esperar al día siguiente",
+            ),
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista=_qc("vq04d4_pista", lambda: (
+                    "La pizza ya está lista" if store.vq4d4_pizza_cocinada
+                    else "Violet quiere volver a cenar pizza" if store.vq4d4_pedido_hecho
+                    else "Podría ver si Violet necesita algo"
+                )),
+                que_hacer=_qc("vq04d4_quehacer", lambda: (
+                    "Avisarle a Violet en su habitación" if store.vq4d4_pizza_cocinada
+                    else "Cocinar la pizza de noche" if store.vq4d4_pedido_hecho
+                    else "Hablar con Violet"
+                )),
+                mensaje_despertar=_qc("vq04d4_despertar", lambda: (
+                    "La pizza quedó lista, tengo que avisarle a Violet" if store.vq4d4_pizza_cocinada
+                    else "Violet quiere pizza, tengo que cocinarla esta noche" if store.vq4d4_pedido_hecho
+                    else "Debo estar atento por si Violet necesita algo"
+                )),
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_04_d4)
+
+    # --- 04_D5: la limpieza --------------------------------------------------
+
+    quest_violet_04_d5 = Quest(
+        id="violet_questprincipal_04_d5",
+        npc_id="violet",
+        nombre="La limpieza",
+        descripcion="Violet me pidió que limpie algunas partes de la casa",
+        numero_quest=9,
+        # DOS dias, no uno: acá el MC se da por vencido con las fotos y es
+        # VIOLET la que lo busca. La espera es parte de la narrativa.
+        dias_espera=2,
+        quest_anterior="violet_questprincipal_04_d4",
+        requisitos=[],
+        validacion_especial=[],
+        # Rutina especial: el dia que se cumple la espera, Violet pasa la TARDE
+        # en el pasillo de arriba en vez de su lugar habitual — es su forma de
+        # cruzarse con el MC. Va para los 7 dias porque no sabemos en cual cae.
+        # La rutina se aplica al pasar a ETAPA_RUTINA (o sea, cuando termina la
+        # espera) y la levanta violet_q4d5_pedido apenas hablan.
+        rutina_quest={
+            (dia, 1): RutinaQuest(locacion="casa_pasilloarriba")
+            for dia in range(7)
+        },
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            ETAPA_ESPERA: ConfigEtapa(
+                pista="No se como conseguir la foto, me rindo",
+                que_hacer="Esperar a que Violet te busque",
+            ),
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista=_qc("vq04d5_pista", lambda: (
+                    "Violet me pidió que limpie el living, el comedor y la cocina" if store.vq4d5_pedido_hecho
+                    else "Podría ver si Violet necesita algo"
+                )),
+                # Contador: el jugador ve cuanto le falta sin tener que recordar
+                # en que locaciones ya estuvo.
+                que_hacer=_qc("vq04d5_quehacer", lambda: (
+                    renpy.translate_string("Limpiar la casa ({}/3)").format(violet_favores_limpiezas_hechas())
+                    if store.vq4d5_pedido_hecho else "Hablar con Violet"
+                )),
+                mensaje_despertar=_qc("vq04d5_despertar", lambda: (
+                    "Tengo que limpiar el living, el comedor y la cocina" if store.vq4d5_pedido_hecho
+                    else "Debo estar atento por si Violet necesita algo"
+                )),
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_04_d5)
+
+    # --- 04_D6: el cierre ----------------------------------------------------
+
+    quest_violet_04_d6 = Quest(
+        id="violet_questprincipal_04_d6",
+        npc_id="violet",
+        nombre="Todo lo que me pidió",
+        descripcion="Ya hice los tres favores que Violet me pidió",
+        numero_quest=9,
+        # Sin espera: apenas termina la tercera limpieza el MC puede ir a
+        # cobrarse el favor. Hacerlo esperar un dia contradecia el "avisame
+        # cuando esté todo listo" de la propia Violet.
+        dias_espera=0,
+        quest_anterior="violet_questprincipal_04_d5",
+        requisitos=[],
+        validacion_especial=[],
+        retorno=ConfiguracionRetorno(avanzar_dia=False),
+        config_etapas={
+            # Sin ETAPA_ESPERA: con dias_espera=0 la quest la atraviesa sin
+            # detenerse y esos textos no se verian nunca.
+            ETAPA_BOTON_LISTO: ConfigEtapa(
+                pista="Hice todo lo que Violet me pidió",
+                que_hacer="Hablar con Violet en su habitación",
+                mensaje_despertar="Hice todo lo que Violet me pidió, tengo que ir a hablar con ella",
+            ),
+        },
+    )
+    sistema_quests.registrar_quest(quest_violet_04_d6)
+
+    # =========================================================================
     # QUEST 04_E - El cosplay de Violet IV (deseo 15)
     # =========================================================================
 
@@ -433,10 +658,12 @@ init 5 python:
         descripcion="Quizás si sigo mejorando mi relación con Violet me muestre un poco más",
         numero_quest=10,
         dias_espera=0,
-        quest_anterior="violet_questprincipal_04_d",
-        requisitos=[
-            Requisito("deseo", "Necesitas 15 de deseo con Violet", npc_id="violet", valor=15),
-        ],
+        quest_anterior="violet_questprincipal_04_d6",
+        # Sin requisito de stat: la llave ahora es haber terminado el arco de los
+        # favores (04_d6). El "15 de deseo" era del esquema viejo, cuando la 04_e
+        # colgaba directo de la 04_d y no existia la cadena de favores; dejarlo
+        # sumaba una segunda condicion que ya no representa nada.
+        requisitos=[],
         validacion_especial=[
             Requisito("mensaje", "Responder el mensaje de Violet", grupo_id="violet_quest04e_chat"),
         ],
@@ -803,10 +1030,9 @@ init 5 python:
         descripcion="Violet se pescó una gripe, tengo que cuidarla.",
         numero_quest=20,
         dias_espera=1,
-        # BLOQUEADA temporalmente: contenido en desarrollo. La quest queda
-        # registrada pero NO se auto-inicia al completar la 08_a. Para reactivar,
-        # volver a poner quest_anterior="violet_questprincipal_08_a".
-        quest_anterior=None,
+        # Ultima quest de la linea principal de Violet: arranca al completarse la
+        # 08_a y no encadena a ninguna (las viejas 11 y 12 se eliminaron).
+        quest_anterior="violet_questprincipal_08_a",
         requisitos=[
             Requisito("mensaje", "Leer el mensaje de Tienda Coxplay", grupo_id="tienda_coxplay_q9a_g1"),
         ],
@@ -845,78 +1071,6 @@ init 5 python:
         },
     )
     sistema_quests.registrar_quest(quest_violet_09_a)
-
-    # =========================================================================
-    # QUEST 11 - Los ruidos nocturnos
-    # =========================================================================
-
-    quest_violet_11 = Quest(
-        id="violet_questprincipal_11",
-        npc_id="violet",
-        nombre="Los ruidos nocturnos",
-        descripcion="Violet me dijo que estaba intentando hacer cosplays, debería comprarle algunos.",
-        numero_quest=11,
-        dias_espera=3,
-        quest_anterior="violet_questprincipal_09_a",
-        requisitos=[
-            Requisito("item", "Me falta el conjunto de cosplays", item_id="conjunto_cosplays", cantidad=1),
-        ],
-        validacion_especial=[
-            Requisito("npc_presente", "Violet debe estar en su habitacion", npc_id="violet", locacion_id="casa_hviolet"),
-            Requisito("horario", "Debe ser por la noche", horario_id=2),
-        ],
-        retorno=ConfiguracionRetorno(avanzar_dia=False),
-        config_etapas={
-            ETAPA_ESPERA: ConfigEtapa(
-                pista="Todo tranquilo por ahora, debería esperar unos días.",
-                que_hacer=_qc("vq11_espera_quehacer", lambda: vq_esperar_texto("violet_questprincipal_11", 3)),
-            ),
-            ETAPA_CONDICIONES: ConfigEtapa(
-                pista="Podría conseguir algunos cosplay para que Violet se pruebe",
-                que_hacer="Comprar el ítem conjunto de cosplay",
-            ),
-            ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista="Podría ir a la habitación de violet por la noche a ver si le gusta lo que compré",
-                que_hacer="Ir a la habitación de violet por la noche",
-                mensaje_despertar="Podría mostrarle a violet los cosplays que conseguí.",
-            ),
-        },
-    )
-    sistema_quests.registrar_quest(quest_violet_11)
-
-    # =========================================================================
-    # QUEST 12 - Visita nocturna
-    # =========================================================================
-
-    quest_violet_12 = Quest(
-        id="violet_questprincipal_12",
-        npc_id="violet",
-        nombre="Visita nocturna",
-        descripcion="Violet me pidió que pase por su habitación a la noche.",
-        numero_quest=12,
-        dias_espera=3,
-        quest_anterior="violet_questprincipal_11",
-        requisitos=[],
-        validacion_especial=[
-            Requisito("mensaje", "Responder el mensaje de Violet", grupo_id="violet_quest12_chat"),
-            Requisito("npc_presente", "Violet debe estar en su habitacion", npc_id="violet", locacion_id="casa_hviolet"),
-            Requisito("horario", "Debe ser por la noche", horario_id=2),
-        ],
-        retorno=ConfiguracionRetorno(avanzar_dia=False),
-        config_etapas={
-            ETAPA_ESPERA: ConfigEtapa(
-                pista="Debería esperar unos días.",
-                que_hacer=_qc("vq12_espera_quehacer", lambda: vq_esperar_texto("violet_questprincipal_12", 3)),
-            ),
-            ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista=_qc("vq12_botonlisto_pista", lambda: "Violet me pidió que pase por su habitación, debería ir a la noche." if store.sistema_mensajes.grupo_completado("violet_quest12_chat") else "Violet me envió un mensaje, debería responderle."),
-                que_hacer=_qc("vq12_botonlisto_quehacer", lambda: "Ir a la habitacion de Violet por la noche." if store.sistema_mensajes.grupo_completado("violet_quest12_chat") else "Responder mensaje de Violet"),
-                mensaje_despertar=_qc("vq12_botonlisto_despertar", lambda: "Violet me pidió que pase por su habitación a la noche." if store.sistema_mensajes.grupo_completado("violet_quest12_chat") else "Violet me envió un mensaje, debería responderle"),
-                trigger_mensaje=("violet_quest12_chat", "violet"),
-            ),
-        },
-    )
-    sistema_quests.registrar_quest(quest_violet_12)
 
 
 ################################################################################

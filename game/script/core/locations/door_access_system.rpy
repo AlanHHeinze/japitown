@@ -225,7 +225,7 @@ screen menu_puerta_npc(npc_id, opciones_especiales, bg_path=None):
 
         # Opciones especiales de quest/evento
         for opcion in opciones_especiales:
-            $ _tag_opcion = " (Evento)" if opcion.get("tipo") == "evento" else " (Quest)"
+            $ _tag_opcion = tag_opcion_quest(opcion.get("label"), opcion.get("tipo") == "evento")
             textbutton (renpy.translate_string(opcion.get("texto", "Opcion")) + _tag_opcion):
                 style "choice_button"
                 action [Hide("menu_puerta_npc"),

@@ -116,7 +116,7 @@ label quest_jasmine_questprincipal_0_c:
     $ activar_skin("jasmine", "jasmine_entrenamiento_deportiva")
 
     # Completar quest
-    $ completar_quest_actual("jasmine")
+    $ completar_quest_actual("jasmine", quest_id="jasmine_questprincipal_0_c")
 
     # Guardar el día para el evento "Volver a ver", que recién aparece 1 día
     # después (ver condicion_aparicion_event1_jasmine en events_jasmine.rpy).

@@ -70,7 +70,7 @@ label usar_mangas_violet_mc:
         piensa "Uff... duro...  El final duele pero se siente como la única forma posible de cerrar todo"
         piensa "La verdad supero espectativas, ahora quiero hablar con Violet y seahogar algunas cosas"
         $ mangas_violet_terminadas = True
-        $ completar_quest_actual("violet")
+        $ completar_quest_actual("violet", quest_id="violet_questprincipal_02_c")
 
     hide mc_parado_base with dissolve
     $ avanzar_horario()

@@ -250,7 +250,7 @@ label violet_quest04a_continua:
 
 
 
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_04_a")
 
     
     window hide

@@ -249,7 +249,7 @@ label violet_quest06b_puerta:
 
 label violet_quest06b_fin:
 
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_06_b")
     $ sistema_locaciones.mover_a_locacion("casa_pasilloarriba")
     $ _loc_pasillo = sistema_locaciones.obtener_locacion("casa_pasilloarriba")
     $ _bg_pasillo = _loc_pasillo.background if _loc_pasillo else "#1a1a1a"

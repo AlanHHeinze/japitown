@@ -141,20 +141,6 @@ init python:
             "reposicion": 0,
         },
         
-        # Ropa - Entrega media
-        "conjunto_cosplays": {
-            "nombre": "Conjunto de cosplays",
-            "emoji": "👗",
-            "precio": 200,
-            "dias_entrega": 2,
-            "descripcion": "Quizás a Violet le guste alguno de estos",
-            "usable": False,
-            "vendible": False,
-            "stock": 1,
-            "reposicion": 0,
-            "icono": "images/ui/shopping/caja_cerrada.png", # Se asume una imagen genérica si no existe
-        },
-
         # Entrada Japicon — disponible en tienda, stock 0 hasta completar quest 05_c
         "entrada_japicon": {
             "nombre": "Entrada Japicon",

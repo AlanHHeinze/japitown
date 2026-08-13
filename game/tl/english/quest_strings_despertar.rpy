@@ -296,6 +296,117 @@ translate english strings:
     old "Violet dijo que tenía más fotos, quizás pueda lograr que me las envie"
     new "Violet said she had more photos, maybe I can get her to send them to me"
 
+    # Quest 04_d2 — los dos primeros van juntos como mensaje_despertar (lista)
+    old "Violet dijo que tenía más fotos, debería haber alguna forma para que me las mande"
+    new "Violet said she had more photos, there has to be some way to get her to send them"
+
+    old "Quizás si hago cosas por ella lo consiga"
+    new "Maybe if I do things for her I'll manage it"
+
+    old "Violet dijo que tenía más fotos, tengo que pensar cómo conseguirlas"
+    new "Violet said she had more photos, I have to figure out how to get them"
+
+    old "Ofrecerle ayuda a Violet"
+    new "Offer Violet some help"
+
+    # =========================================================================
+    # Violet — Líneas de relación (amor / deseo)
+    # =========================================================================
+    # Pistas de las 12 quests de línea. El "qué hacer" de cada etapa ya está en
+    # otros archivos: los contadores en textos_compuestos_strings.rpy y
+    # "Hablar con Violet" en quest_strings.rpy.
+
+    old "Puedo seguir acercandome a Violet."
+    new "I can keep getting closer to Violet."
+
+    old "Es buen momento para hablar con Violet."
+    new "It's a good moment to talk to Violet."
+
+    old "Todavia hay margen para que esto avance."
+    new "There's still room for this to go further."
+
+    old "Es momento de hablar con Violet."
+    new "It's time to talk to Violet."
+
+    # =========================================================================
+    # Violet — Arco de los favores (quests 04_d3 a 04_d6)
+    # =========================================================================
+    # Pistas, qué hacer y mensajes de despertar de las cuatro quests.
+    # "Hablar con Violet", "Esperar al día siguiente", "Cocinar" y "Limpiar" ya
+    # están traducidos en otros archivos — no repetirlos acá.
+
+    # Compartido por las esperas de un día entre favor y favor
+    old "Violet no necesita nada por hoy"
+    new "Violet doesn't need anything today"
+
+    old "Podría ver si Violet necesita algo"
+    new "I could see if Violet needs anything"
+
+    old "Debo estar atento por si Violet necesita algo"
+    new "I should keep an eye out in case Violet needs anything"
+
+    # 04_d3 — las golosinas
+    old "Violet me pidió unas golosinas"
+    new "Violet asked me for some candy"
+
+    old "Conseguir golosinas"
+    new "Get some candy"
+
+    old "Tengo que conseguirle las golosinas a Violet"
+    new "I have to get Violet that candy"
+
+    old "Ya tengo las golosinas que me pidió"
+    new "I already have the candy she asked for"
+
+    old "Darle las golosinas a Violet"
+    new "Give Violet the candy"
+
+    old "Tengo las golosinas, hoy se las puedo dar"
+    new "I have the candy, I can give it to her today"
+
+    # 04_d4 — la pizza
+    old "Violet quiere volver a cenar pizza"
+    new "Violet wants pizza for dinner again"
+
+    old "Cocinar la pizza de noche"
+    new "Cook the pizza at night"
+
+    old "Violet quiere pizza, tengo que cocinarla esta noche"
+    new "Violet wants pizza, I have to cook it tonight"
+
+    old "La pizza ya está lista"
+    new "The pizza is ready"
+
+    old "Avisarle a Violet en su habitación"
+    new "Let Violet know at her room"
+
+    old "La pizza quedó lista, tengo que avisarle a Violet"
+    new "The pizza turned out ready, I have to let Violet know"
+
+    # 04_d5 — la limpieza
+    old "Violet me pidió que limpie el living, el comedor y la cocina"
+    new "Violet asked me to clean the living room, the dining room and the kitchen"
+
+    old "Limpiar la casa ({}/3)"
+    new "Clean the house ({}/3)"
+
+    old "Tengo que limpiar el living, el comedor y la cocina"
+    new "I have to clean the living room, the dining room and the kitchen"
+
+    # 04_d5 — los dos dias de espera antes de que Violet lo busque
+    old "No se como conseguir la foto, me rindo"
+    new "I don't know how to get that photo. I give up"
+
+    old "Esperar a que Violet te busque"
+    new "Wait for Violet to come find you"
+
+    # 04_d6 — el cierre
+    old "Hice todo lo que Violet me pidió"
+    new "I did everything Violet asked me for"
+
+    old "Hice todo lo que Violet me pidió, tengo que ir a hablar con ella"
+    new "I did everything Violet asked me for, I have to go talk to her"
+
     old "Violet me pidió que la visite por la noche"
     new "Violet asked me to visit her at night"
 

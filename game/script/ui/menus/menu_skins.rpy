@@ -70,9 +70,9 @@ screen menu_skins_npc(npc):
                     hbox:
                         spacing 10
                         if skin_activo is None:
-                            text "✓" size 20 color "#ffffff"
+                            text "✅" size 20
                         else:
-                            text "○" size 20 color "#CE93D8"
+                            text "⚪" size 20
                         vbox:
                             text "Skin Base" size 18 color "#ffffff" bold True
                             text "Apariencia original" size 14 color "#E1BEE7"
@@ -100,9 +100,9 @@ screen menu_skins_npc(npc):
                         hbox:
                             spacing 10
                             if es_activo:
-                                text "✓" size 20 color "#ffffff"
+                                text "✅" size 20
                             else:
-                                text "○" size 20 color "#CE93D8"
+                                text "⚪" size 20
                             vbox:
                                 text "[skin.nombre]" size 18 color "#ffffff" bold True
                                 if skin.descripcion:

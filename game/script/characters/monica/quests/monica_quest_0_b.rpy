@@ -131,7 +131,7 @@ label quest_monica_questprincipal_0_b:
     window hide
 
     # Completar la quest
-    $ completar_quest_actual("monica")
+    $ completar_quest_actual("monica", quest_id="monica_questprincipal_0_b")
 
     $ mostrar_hud()
     jump game_loop

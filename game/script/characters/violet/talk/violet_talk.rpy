@@ -28,14 +28,18 @@ init 10 python:
 
     # Condiciones de estados de talk — funciones de módulo (NO lambdas locales),
     # porque los EstadoTalk se guardan en el save y las lambdas locales no se pueden picklear.
+    #
+    # Antes leian el stat directo (violet_amor >= 15). Ahora consultan la ventaja
+    # que otorga el Hito: el umbral vive en un solo lugar, characters/violet/
+    # hitos_violet.rpy, y no puede desfasarse del que ve el jugador en el panel.
     def _violet_cond_buen_humor():
-        return store.violet_amor >= 15
+        return npc_tiene_ventaja("violet", "talk_estado_buen_humor")
 
     def _violet_cond_muy_buen_humor():
-        return store.violet_amor >= 15
+        return npc_tiene_ventaja("violet", "talk_estado_muy_buen_humor")
 
     def _violet_cond_caliente():
-        return store.violet_deseo >= 30
+        return npc_tiene_ventaja("violet", "talk_estado_caliente")
 
     def inicializar_talk_violet():
 

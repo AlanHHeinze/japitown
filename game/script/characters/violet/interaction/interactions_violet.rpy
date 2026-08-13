@@ -55,7 +55,9 @@ label interaccion_violet:
     # Quest 02_a: Pedir mangas
     $ _quest_v02a = sistema_quests.obtener_quest("violet_questprincipal_02_a")
     if _quest_v02a and _quest_v02a.activa and not _quest_v02a.completada and _quest_v02a.etapa_actual == ETAPA_BOTON_LISTO:
-        if not getattr(store, 'violet_quest02a_primer_intento_hecho', False) or obtener_stat1("violet") >= 10:
+        # Tras el primer intento el boton vuelve solo cuando ya se tiene el hito
+        # que habilita el prestamo (mismo criterio que el router de la quest).
+        if not getattr(store, 'violet_quest02a_primer_intento_hecho', False) or violet_presta_mangas():
             $ _opciones_extra_v.append({"texto": "Pedir mangas", "label": "quest_violet_questprincipal_02_a", "condicion": True})
 
     # Quest 03_a: Devolver mangas (fuera de la habitacion — solo da pista)
@@ -134,26 +136,58 @@ label interaccion_violet:
             sistema_mensajes.grupo_completado("violet_quest04d_chat")):
         $ _opciones_extra_v.append({"texto": "Preguntarle por las fotos", "label": "quest_violet_questprincipal_04_d", "condicion": True})
 
+    # Quest 04_d2: ofrecerle ayuda a Violet. Disparador unico de la quest; sin
+    # condicion extra, alcanza con que este lista (activa + BOTON_LISTO).
+    if quest_lista_para_boton("violet_questprincipal_04_d2"):
+        $ _opciones_extra_v.append({"texto": "¿Puedo hacer algo por vos?", "label": "quest_violet_questprincipal_04_d2", "condicion": True})
+
+    # Arco de los favores: UN solo boton, con el TEXTO segun el punto del arco
+    # ("Preguntarle si necesita algo" antes del pedido, "¿Que necesitabas?"
+    # despues) y que en varios tramos no va — entre ellos los dias de espera.
+    # Toda esa logica vive en violet_favores_boton_texto(); si devuelve None, no
+    # hay boton. El despachador violet_favores_boton decide a que label va.
+    $ _txt_favores = violet_favores_boton_texto()
+    if _txt_favores:
+        $ _opciones_extra_v.append({"texto": _txt_favores, "label": "violet_favores_boton", "condicion": True})
+
+    # Boton extra de la 04_d3: solo cuando ya pidio las golosinas y el MC las tiene.
+    if quest_lista_para_boton("violet_questprincipal_04_d3") and vq4d3_pedido_hecho and inventario.get("golosinas", 0) > 0:
+        $ _opciones_extra_v.append({"texto": "Darle las golosinas", "label": "violet_q4d3_entregar", "condicion": True})
+
+    # Cierre del arco (04_d6): avisarle que la limpieza esta terminada. Reemplaza
+    # al boton generico — la d6 esta fuera de VIOLET_FAVORES_QUESTS justamente
+    # para que no aparezcan los dos.
+    #
+    # SOLO dentro de la habitacion de Violet: la escena de cierre pasa ahi. Si
+    # la cruzas en otro lado, el camino es la opcion de puerta, que te hace
+    # entrar primero.
+    if (quest_lista_para_boton("violet_questprincipal_04_d6")
+            and sistema_locaciones.locacion_actual
+            and sistema_locaciones.locacion_actual.id == "casa_hviolet"):
+        $ _opciones_extra_v.append({"texto": "Ya terminé de limpiar", "label": "violet_q4d6_cierre", "condicion": True})
+
     $ _quest_v04e = sistema_quests.obtener_quest("violet_questprincipal_04_e")
     if (_quest_v04e and _quest_v04e.activa and not _quest_v04e.completada and
             _quest_v04e.etapa_actual == ETAPA_BOTON_LISTO and
             sistema_mensajes.grupo_completado("violet_quest04e_chat")):
         $ _opciones_extra_v.append({"texto": "Preguntarle por las fotos", "label": "quest_violet_questprincipal_04_e", "condicion": True})
 
-    # Quest 11: mostrarle los cosplays comprados — en su habitación, de noche.
-    $ _quest_v11 = sistema_quests.obtener_quest("violet_questprincipal_11")
-    if (_quest_v11 and _quest_v11.activa and not _quest_v11.completada and
-            _quest_v11.etapa_actual == ETAPA_BOTON_LISTO and
-            _npc_actual.esta_en_locacion("casa_hviolet") and horario_actual == 2):
-        $ _opciones_extra_v.append({"texto": "Mostrarle los cosplays", "label": "quest_violet_questprincipal_11", "condicion": True})
+    # ── LINEAS DE RELACION (amor / deseo) ────────────────────────────────────
+    # Un boton por quest de linea (disparador unico, regla 10 del skill).
+    # quest_lista_para_boton() ya chequea activa + no completada + BOTON_LISTO.
+    # Se recorren TODAS las quests de cada linea: como encadenan, a lo sumo una
+    # por linea esta lista a la vez — pero el boton tiene que existir para
+    # todas, o la cadena se muere en la primera sin boton (bug real: las 03-06
+    # llegaban a BOTON_LISTO y no habia forma de dispararlas).
+    python:
+        for _vq_rel_n in range(1, 7):
+            _vq_rel_id = "violet_amor_{:02d}".format(_vq_rel_n)
+            if quest_lista_para_boton(_vq_rel_id):
+                _opciones_extra_v.append({"texto": "Charlar un rato", "label": "quest_" + _vq_rel_id, "condicion": True})
 
-    # Quest 12: visita nocturna — en su habitación, de noche, tras responder el chat.
-    $ _quest_v12 = sistema_quests.obtener_quest("violet_questprincipal_12")
-    if (_quest_v12 and _quest_v12.activa and not _quest_v12.completada and
-            _quest_v12.etapa_actual == ETAPA_BOTON_LISTO and
-            sistema_mensajes.grupo_completado("violet_quest12_chat") and
-            _npc_actual.esta_en_locacion("casa_hviolet") and horario_actual == 2):
-        $ _opciones_extra_v.append({"texto": "Vine como me pediste", "label": "quest_violet_questprincipal_12", "condicion": True})
+            _vq_rel_id = "violet_deseo_{:02d}".format(_vq_rel_n)
+            if quest_lista_para_boton(_vq_rel_id):
+                _opciones_extra_v.append({"texto": "Buscar un momento a solas", "label": "quest_" + _vq_rel_id, "condicion": True})
 
     # Evento 1: Invitar a jugar VR
     if violet_evento1_completado and "casco_realidad_virtual" in inventario and not violet_evento1_repetir:

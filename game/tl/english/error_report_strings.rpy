@@ -30,8 +30,8 @@ translate english strings:
     old "📋 Copiar"
     new "📋 Copy"
 
-    old "↻ Reintentar"
-    new "↻ Retry"
+    old "🔄 Reintentar"
+    new "🔄 Retry"
 
     old "Continuar"
     new "Continue"

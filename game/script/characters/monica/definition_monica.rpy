@@ -235,17 +235,9 @@ init python:
             nombre="Monica en la ducha"
         ))
 
-        # =====================================================================
-        # DESBLOQUEOS DE RELACIÓN
-        # =====================================================================
-
-        # Amor
-        monica.agregar_desbloqueo("amor", 30, "🚪", "Ingreso Habitación",
-            "Mónica te deja entrar a su cuarto durante el día.")
-
-        # Deseo
-        monica.agregar_desbloqueo("deseo", 60, "🌙", "Ingreso Nocturno",
-            "Puedes entrar a la habitación de Mónica de noche.")
+        # Los desbloqueos de relación ya no se declaran acá: son HITOS. Mónica
+        # todavía no tiene los suyos (falta characters/monica/hitos_monica.rpy),
+        # así que por ahora no otorga ninguna ventaja.
 
         # =====================================================================
         # REGISTRAR EN EL SISTEMA

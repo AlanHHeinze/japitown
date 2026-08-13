@@ -23,6 +23,12 @@ translate english strings:
     old " (Quest)"
     new " (Quest)"
 
+    # Variante con el icono de la linea de la quest (⭐ principal, ❤️ amor,
+    # 💋 deseo). La arma tag_opcion_quest() en questsystem_core; el {icono} se
+    # sustituye DESPUES de traducir, asi que el `new` tiene que conservarlo.
+    old " ({icono} Quest)"
+    new " ({icono} Quest)"
+
     old " (Evento)"
     new " (Event)"
 
@@ -38,6 +44,14 @@ translate english strings:
 
     old "Pedir mangas"
     new "Ask for manga"
+
+    # Lineas de relacion (amor / deseo): el mismo texto sirve para las 6 quests
+    # de cada linea — el boton es generico, la quest concreta la elige el motor.
+    old "Charlar un rato"
+    new "Chat for a while"
+
+    old "Buscar un momento a solas"
+    new "Find a moment alone"
 
     old "Pedir mangas prestados"
     new "Ask to borrow manga"
@@ -80,6 +94,26 @@ translate english strings:
 
     old "Preguntarle por las fotos"
     new "Ask her about the photos"
+
+    old "¿Puedo hacer algo por vos?"
+    new "Can I do something for you?"
+
+    # Arco de los favores (04_d3 → 04_d6)
+    old "Preguntarle si necesita algo"
+    new "Ask if she needs anything"
+
+    # Mismo boton que el anterior, ya con el pedido hecho
+    old "¿Que necesitabas?"
+    new "What was it you needed?"
+
+    old "Darle las golosinas"
+    new "Give her the candy"
+
+    old "Ya está la comida"
+    new "Dinner's ready"
+
+    old "Ya terminé de limpiar"
+    new "I'm done cleaning"
 
     old "Mostrarle los cosplays"
     new "Show her the cosplays"

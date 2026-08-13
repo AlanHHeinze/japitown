@@ -499,7 +499,7 @@ label vq3a_final_escena:
 
     $ vq3a_fase2_activa = False
     $ desactivar_restriccion()
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_03_a")
     $ sistema_locaciones.mover_a_locacion("casa_hmc")
     $ avanzar_horario()
 

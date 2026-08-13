@@ -71,6 +71,18 @@ init 999 python:
             _ps_merge_dict(
                 _SISTEMAS_FRESCOS["sistema_quests"].quests,
                 store.sistema_quests.quests, "quests")
+
+            # Reconstruir el indice por NPC desde .quests, que es la fuente real.
+            # _ps_merge_dict solo llena .quests; quests_por_npc se arma en
+            # registrar_quest() y por eso queda desactualizado al cargar. Sin este
+            # rebuild, en un save viejo las quests nuevas (p.ej. las lineas de
+            # amor/deseo) existen en .quests pero NO aparecen en
+            # obtener_quests_npc() ni en obtener_quests_disponibles().
+            # Es idempotente: se rearma entero en cada carga.
+            _ps_idx_npc = {}
+            for _q_idx in store.sistema_quests.quests.values():
+                _ps_idx_npc.setdefault(_q_idx.npc_id, []).append(_q_idx)
+            store.sistema_quests.quests_por_npc = _ps_idx_npc
         except Exception:
             pass
 

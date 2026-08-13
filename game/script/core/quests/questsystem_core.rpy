@@ -15,6 +15,17 @@ define ETAPA_DESARROLLO = 7
 define ETAPA_MEMORIAS = 8
 define ETAPA_FINALIZACION = 9
 
+# Lineas de quest. Cada NPC puede tener una quest activa por linea al mismo
+# tiempo; el campo `linea` de Quest usa estos valores.
+#   principal → la historia del personaje
+#   amor / deseo → las lineas de relacion, atadas a los Hitos (core/hitos/)
+# Vivian en core/quests/lineas_relacion.rpy, que se absorbio en el sistema de
+# Hitos: ese archivo describia quest → umbral → desbloqueo, que es exactamente
+# lo que ahora declara el Hito.
+define LINEA_PRINCIPAL = "principal"
+define LINEA_AMOR = "amor"
+define LINEA_DESEO = "deseo"
+
 init python:
 
     # -------------------------------------------------------------------------
@@ -113,14 +124,24 @@ init python:
         def __init__(self, tipo, mensaje, **params):
             """
             Args:
-                tipo: Tipo de requisito ("amor", "deseo", "stat", "item", "dinero", "memoria")
+                tipo: uno de los tipos soportados por verificar() (ver abajo).
+                    OJO: un tipo desconocido da el requisito por NO cumplido y
+                    avisa por consola en modo desarrollador.
                 mensaje: Mensaje personalizado para mostrar en pistas si no se cumple
                 **params: Parámetros específicos según el tipo:
+                    - hito: npc_id, hito_id      ← preferido sobre amor/deseo
                     - amor/deseo: npc_id, valor
-                    - stat: stat_id, valor
+                    - stat: stat_id, valor        (stat del MC, no del NPC)
                     - item: item_id, cantidad (default 1)
                     - dinero: valor
                     - memoria: categoria, clave, valor (opcional)
+                    - locacion: locacion_id
+                    - horario: horario_id
+                    - dia: dia_id
+                    - mensaje: grupo_id
+                    - npc_presente: npc_id, locacion_id
+                    - quest_mc: quest_id
+                    - condicion: condicion (callable picklable o _qc(...))
             """
             self.tipo = tipo
             self.mensaje = mensaje
@@ -144,7 +165,16 @@ init python:
                 npc_id = self.params.get("npc_id")
                 valor_requerido = self.params.get("valor", 0)
                 return obtener_stat2(npc_id) >= valor_requerido
-            
+
+            # Hito de relacion alcanzado (core/hitos/). Preferir SIEMPRE este
+            # tipo sobre amor/deseo con numero suelto: el hito es la fuente de
+            # verdad del progreso y le muestra al jugador un nombre en vez de
+            # un umbral.
+            elif self.tipo == "hito":
+                npc_id = self.params.get("npc_id")
+                hito_id = self.params.get("hito_id")
+                return tiene_hito(npc_id, hito_id)
+
             elif self.tipo == "stat":
                 stat_id = self.params.get("stat_id")
                 valor_requerido = self.params.get("valor", 0)
@@ -216,7 +246,15 @@ init python:
                 except Exception:
                     return False
 
-            return True  # Tipo desconocido, asumir cumplido
+            # Tipo desconocido → NO cumplido.
+            #
+            # Antes devolvia True ("asumir cumplido") y eso hacia que un typo en
+            # el nombre del tipo diera el requisito por bueno EN SILENCIO: la
+            # quest avanzaba sola y no habia forma de notarlo. Con False el fallo
+            # es visible (la quest se traba) y ademas avisa por consola.
+            if config.developer:
+                print("[Quests] Requisito de tipo desconocido: '{}' — se toma como NO cumplido".format(self.tipo))
+            return False
     
     
     class RutinaQuest:
@@ -371,7 +409,7 @@ init python:
                     rutina_quest=None, rutinas_adicionales=None, prioridad_rutina=0,
                     mensaje_pista="", retorno=None,
                     mostrar_en_menu=True, quest_anterior=None, mensaje_despertar="",
-                    config_etapas=None, config_fallo=None):
+                    config_etapas=None, config_fallo=None, linea="principal"):
             """
             Args:
                 id: ID único de la quest
@@ -393,6 +431,14 @@ init python:
                 mensaje_despertar: Mensaje para mostrar al despertar (fallback)
                 config_etapas: Dict {ETAPA_X: ConfigEtapa} para overrides por etapa
                 config_fallo: ConfigFallo para condiciones de fallo repetible
+                linea: "principal" | "amor" | "deseo". Un NPC puede tener una quest
+                    activa por linea al mismo tiempo. Va al final de la firma y con
+                    default para no tocar las ~40 definiciones ya existentes.
+
+                    OJO al leerlo: las Quest deserializadas de un save ANTERIOR a
+                    este campo NO tienen el atributo (el merge de after_load agrega
+                    claves faltantes, no campos nuevos en instancias existentes).
+                    Usar siempre getattr(q, "linea", "principal"), nunca q.linea.
             """
             self.id = id
             self.npc_id = npc_id
@@ -401,6 +447,7 @@ init python:
             self.numero_quest = numero_quest
             self.mostrar_en_menu = mostrar_en_menu
             self.quest_anterior = quest_anterior
+            self.linea = linea
             
             # Configuración de etapas
             self.dias_espera = dias_espera
@@ -738,6 +785,17 @@ init python:
                 valor = req.params.get("valor", 0)
                 return renpy.translate_string("Tener {valor} de Deseo con {npc}").format(
                     valor=valor, npc=npc_id.capitalize()
+                )
+
+            elif req.tipo == "hito":
+                # Se muestra el NOMBRE del hito, no el umbral: el sentido del
+                # sistema es que el jugador lea "Buena relación" y no "10 de amor".
+                npc_id = req.params.get("npc_id", "")
+                hito_id = req.params.get("hito_id", "")
+                _h_req = obtener_hito(hito_id)
+                _h_nombre = renpy.translate_string(_h_req.nombre) if _h_req else hito_id
+                return renpy.translate_string("Alcanzar {hito} con {npc}").format(
+                    hito=_h_nombre, npc=npc_id.capitalize()
                 )
 
             elif req.tipo == "stat":
@@ -1078,9 +1136,13 @@ init python:
             
             # Avanzar numero de quest global
             store.quest_actual += 1
-            
 
-            
+            # NOTA: acá había un hook aplicar_desbloqueo_relacion(self.id) del
+            # sistema lineas_relacion, que se absorbió en los Hitos. Ya no hace
+            # falta enganchar nada al completar: si esta quest otorga un hito,
+            # el trigger de game_loop lo detecta por su quest_id en la vuelta
+            # siguiente (ver core/hitos/hitos_main.rpy → actualizar_hitos).
+
             # Disparar mensaje de chat si existe
             if hasattr(store, 'sistema_mensajes'):
                 store.sistema_mensajes.disparar_por_trigger("quest", self.id, self.npc_id)
@@ -1110,13 +1172,21 @@ init python:
                 sistema_locaciones.mover_a_locacion(self.retorno.locacion)
         
         def _iniciar_siguiente_quest(self):
-            """Busca e inicia la siguiente quest del mismo NPC."""
-            # Buscar quests del mismo NPC que tengan esta como quest_anterior
+            """
+            Inicia TODAS las quests del mismo NPC que declaran esta como anterior.
+
+            Antes cortaba con un `break` en la primera coincidencia. Con las lineas
+            eso rompia el encadenamiento: si la Principal y la primera de Amor
+            encadenan de la misma quest, solo arrancaba la registrada primero y la
+            otra quedaba dormida PARA SIEMPRE, porque nadie vuelve a evaluar el
+            encadenamiento despues.
+
+            Sigue filtrando por npc_id: una quest no abre la linea de otro NPC.
+            """
             for quest in sistema_quests.quests.values():
                 if quest.npc_id == self.npc_id and quest.quest_anterior == self.id:
                     if quest.puede_iniciar():
                         quest.iniciar()
-                        break
         
         def obtener_mensaje_despertar_actual(self):
             """
@@ -1273,28 +1343,82 @@ init python:
         
         def obtener_quest_activa(self, npc_id=None):
             """
-            Obtiene la quest activa.
-            
+            Obtiene la quest activa, PRIORIZANDO la de la linea principal.
+
             Args:
                 npc_id: Si se especifica, busca quest activa de ese NPC
-            
+
             Returns:
                 Quest activa o None
+
+            POR QUE PRIORIZA LA PRINCIPAL:
+            desde que existen las lineas (principal / amor / deseo) un NPC tiene
+            varias quests activas a la vez. Esta funcion devolvia la PRIMERA por
+            orden de registro, y los archivos de linea (characters/violet/amor/,
+            .../deseo/) se cargan ANTES que characters/violet/quests/ por orden
+            alfabetico — asi que "la quest activa de Violet" pasaba a ser
+            violet_amor_01 y los botones que preguntan por una quest principal
+            dejaban de aparecer (bug real: el boton de la 04_a en la cocina).
+
+            "La quest activa" de un NPC es la de su HISTORIA. Las de relacion se
+            piden aparte con obtener_quests_activas_npc(npc_id, linea).
             """
+            fallback = None
+
             for quest in self.quests.values():
-                if quest.activa:
-                    if npc_id is None or quest.npc_id == npc_id:
-                        return quest
-            return None
+                if not quest.activa:
+                    continue
+                if npc_id is not None and quest.npc_id != npc_id:
+                    continue
+
+                # getattr: las Quest de un save anterior al campo `linea` no lo
+                # tienen y cuentan como principales.
+                if getattr(quest, "linea", LINEA_PRINCIPAL) == LINEA_PRINCIPAL:
+                    return quest
+
+                # Solo de relacion activa: se devuelve igual, para no romper a
+                # quien esperaba "alguna quest" (ej. el indicador del HUD).
+                if fallback is None:
+                    fallback = quest
+
+            return fallback
         
         def obtener_quests_activas(self):
             """
             Obtiene todas las quests activas.
-            
+
             Returns:
                 Lista de quests activas
             """
             return [q for q in self.quests.values() if q.activa]
+
+        def obtener_quests_activas_npc(self, npc_id, linea=None):
+            """
+            Todas las quests activas de un NPC, opcionalmente filtradas por linea.
+
+            Complementa a obtener_quest_activa(), que devuelve SOLO una (la de
+            la linea principal) y por eso no alcanza cuando hace falta ver las
+            de relacion corriendo en paralelo.
+
+            Se construye sobre self.quests y NO sobre quests_por_npc a proposito:
+            en un save viejo el merge de after_load llena .quests pero deja
+            quests_por_npc sin las quests nuevas, asi que las lineas nuevas serian
+            invisibles en partidas existentes.
+
+            La linea se lee con getattr: las Quest deserializadas de un save
+            anterior al campo no tienen el atributo.
+
+            Returns:
+                Lista de quests activas (puede estar vacia)
+            """
+            rv = []
+            for q in self.quests.values():
+                if not q.activa or q.npc_id != npc_id:
+                    continue
+                if linea is not None and getattr(q, "linea", "principal") != linea:
+                    continue
+                rv.append(q)
+            return rv
         
         def hay_quest_activa(self):
             """Verifica si hay alguna quest activa"""
@@ -1394,30 +1518,48 @@ init python:
             return quest.iniciar()
         return False
     
-    def completar_quest_actual(npc_id=None, recuerdos=None):
+    def completar_quest_actual(npc_id=None, recuerdos=None, quest_id=None):
         """
-        Completa la quest activa.
+        Completa una quest activa.
 
         Args:
-            npc_id: ID del NPC (opcional, para buscar su quest activa)
+            npc_id: ID del NPC (completa su PRIMERA quest activa)
             recuerdos: Dict con recuerdos a guardar
+            quest_id: ID exacto de la quest a completar. Tiene prioridad sobre npc_id.
+
+        POR QUE EXISTE quest_id:
+        con las lineas (principal / amor / deseo) un mismo NPC puede tener varias
+        quests activas a la vez. Buscar "la activa del NPC" devuelve la PRIMERA por
+        orden de registro, asi que el label de una quest de Amor completaria la
+        Principal — disparando su chat, su `retorno`, el progreso del NPC y el
+        arranque de la quest siguiente de esa otra linea.
+
+        REGLA: TODO label de contenido pasa quest_id. Ya estan migrados los 40
+        callsites del juego (violet, monica, jasmine y los chats de carl/violet).
+        El fallback por npc_id queda SOLO para la herramienta de desarrollo
+        (tools/quests/herramienta_quests.rpy), que completa "la activa de este
+        NPC" sin saber cual es.
         """
         # Bloquear rollback para que el jugador no pueda volver a entrar a la quest
         renpy.block_rollback()
 
-        quest_activa = None
-        
-        if npc_id:
+        quest_a_completar = None
+
+        if quest_id:
+            _q = sistema_quests.obtener_quest(quest_id)
+            if _q and _q.activa:
+                quest_a_completar = _q
+        elif npc_id:
             # Buscar la quest activa del NPC específico
             for quest in sistema_quests.quests.values():
                 if quest.activa and quest.npc_id == npc_id:
-                    quest_activa = quest
+                    quest_a_completar = quest
                     break
         else:
-            quest_activa = sistema_quests.obtener_quest_activa()
-        
-        if quest_activa:
-            quest_activa.completar(recuerdos)
+            quest_a_completar = sistema_quests.obtener_quest_activa()
+
+        if quest_a_completar:
+            quest_a_completar.completar(recuerdos)
     
     def guardar_recuerdo_quest(clave, valor):
         """
@@ -1463,12 +1605,15 @@ init python:
         que no hace falta desempatar por prioridad: un NPC esta en una sola
         locacion, y como mucho una rutina puede coincidir.
         """
-        quest = sistema_quests.obtener_quest_activa(npc_id)
-        if quest:
+        # 1. Rutina propia. Se recorren TODAS las quests activas del NPC y no solo
+        #    la primera: con varias lineas en paralelo, la que define la rutina
+        #    puede no ser la primera por orden de registro.
+        for quest in sistema_quests.obtener_quests_activas_npc(npc_id):
             rutina = quest._rutina_quest_vigente(npc_id)
             if rutina:
                 return rutina
 
+        # 2. rutinas_adicionales de quests de OTROS NPCs
         for q in sistema_quests.quests.values():
             if not q.activa or q.npc_id == npc_id:
                 continue
@@ -1519,6 +1664,41 @@ init python:
         return bool(q and q.activa and not q.completada and
                     q.etapa_actual == ETAPA_BOTON_LISTO)
 
+    # Icono por linea, para los tags de los botones. Mismos emojis que usa el
+    # panel de Pistas en sus pestañas, asi el jugador los asocia.
+    _ICONO_LINEA_QUEST = {
+        LINEA_PRINCIPAL: "⭐",
+        LINEA_AMOR:      "❤️",
+        LINEA_DESEO:     "💋",
+    }
+
+    def tag_opcion_quest(label, es_evento=False):
+        """
+        Tag que va al final de un boton del menu de NPC o de puerta.
+
+        Devuelve " (Evento)" o " (<icono> Quest)" segun la LINEA de la quest,
+        que se deduce del propio label: los labels de quest se llaman
+        "quest_<quest_id>", asi que se busca la quest y se lee su `linea`. Se
+        hace asi y no con un campo extra en el dict de la opcion para que valga
+        automaticamente para las ~40 opciones ya existentes, sin tocar ninguna.
+
+        Si el label no corresponde a una quest registrada (labels propios,
+        eventos, contenido suelto), cae al " (Quest)" de siempre.
+        """
+        if es_evento:
+            return renpy.translate_string(" (Evento)")
+
+        _linea = None
+        if label and label.startswith("quest_"):
+            _q_tag = store.sistema_quests.obtener_quest(label[len("quest_"):])
+            if _q_tag is not None:
+                _linea = getattr(_q_tag, "linea", LINEA_PRINCIPAL)
+
+        _icono = _ICONO_LINEA_QUEST.get(_linea)
+        if _icono:
+            return renpy.translate_string(" ({icono} Quest)").format(icono=_icono)
+        return renpy.translate_string(" (Quest)")
+
     def actualizar_quests():
         """
         Actualiza el estado de todas las quests activas.
@@ -1538,23 +1718,25 @@ init python:
     
     def inicializar_todas_las_quests():
         """
-        Inicializa las quests de todos los NPCs.
-        Inicia las quest 0 de cada NPC automáticamente.
+        Arranca la primera quest de CADA linea de cada NPC.
+
+        "Primera de la linea" = la que no declara quest_anterior: si nadie la
+        encadena, es una apertura. Con eso alcanza para las tres lineas
+        (principal / amor / deseo) sin que el motor conozca ningun id.
+
+        Antes esto hardcodeaba las tres quests iniciales por nombre, lo que
+        rompia la regla de que el motor no conoce contenido: agregar una linea
+        obligaba a editar este archivo. Ahora agregar una linea es solo definir
+        su primera quest sin quest_anterior.
+
+        puede_iniciar() ya filtra las que estan activas o completadas, asi que
+        es seguro llamarla en cada arranque.
         """
-        # Iniciar quest 0 de Monica
-        quest_monica = sistema_quests.obtener_quest("monica_questprincipal_0")
-        if quest_monica and quest_monica.puede_iniciar():
-            quest_monica.iniciar()
-
-        # Iniciar quest 0_a de Jasmine (primera quest, sin dependencias)
-        quest_jasmine_0a = sistema_quests.obtener_quest("jasmine_questprincipal_0_a")
-        if quest_jasmine_0a and quest_jasmine_0a.puede_iniciar():
-            quest_jasmine_0a.iniciar()
-
-        # Iniciar quest 0_a de Violet (primera quest, sin dependencias)
-        quest_violet_0a = sistema_quests.obtener_quest("violet_questprincipal_0_a")
-        if quest_violet_0a and quest_violet_0a.puede_iniciar():
-            quest_violet_0a.iniciar()
+        for _quest in sistema_quests.quests.values():
+            if _quest.quest_anterior:
+                continue
+            if _quest.puede_iniciar():
+                _quest.iniciar()
 
 
 ################################################################################

@@ -98,7 +98,7 @@ screen herramienta_quests():
                                     xfill True
                                     background "#0f2b0fCC"
                                     padding (14, 10)
-                                    text ("✓  " + _dq_label) size 15 color "#4CAF50"
+                                    text ("•  " + _dq_label) size 15 color "#4CAF50"
 
                             elif _dq_activa:
                                 textbutton ("▶  " + _dq_label + "  — Completar"):
@@ -117,4 +117,4 @@ screen herramienta_quests():
                                     xfill True
                                     background "#111122CC"
                                     padding (14, 10)
-                                    text ("○  " + _dq_label) size 15 color "#555577"
+                                    text ("·  " + _dq_label) size 15 color "#555577"

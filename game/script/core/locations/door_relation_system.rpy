@@ -15,39 +15,20 @@
 ## (espiar_system.rpy) y "Entrar" sigue en desarrollo.
 
 ################################################################################
-## TABLA DE ACCESO A HABITACIONES
+## De dónde salen ahora los umbrales
 ################################################################################
-## Editar los valores de "umbral" para ajustar la progresión por NPC.
+## Antes había acá una TABLA_ACCESO_HABITACION con los umbrales por NPC. Se
+## eliminó: los 4 niveles pasaron a ser VENTAJAS otorgadas por los Hitos de
+## relación (core/hitos/). Los umbrales viven en characters/<npc>/hitos_<npc>.rpy.
 ##
-## stat: "stat1" → Amor (stat principal, todos los NPCs)
-##       "stat2" → Deseo (stat secundario, todos los NPCs)
-
-define TABLA_ACCESO_HABITACION = {
-
-    # Violet — requiere Amor mínimo para cada nivel (0-9 = ninguna respuesta)
-    "violet": {
-        "ingreso_noche":  {"stat": "stat2", "umbral": 50},   # Deseo 50+ → entra de trasnoche
-        "ingreso_diurno": {"stat": "stat1", "umbral": 50},   # Amor  50+ → entra de dia
-        "dejar_pasar":    {"stat": "stat1", "umbral": 30},   # Amor  30+ → "Adelante"
-        "sale_pasillo":   {"stat": "stat1", "umbral": 10},   # Amor  10+ → "Ahi salgo"
-    },                                                        # Amor  0-9 → sin respuesta ("ocupada")
-
-    # Jasmine — sale al pasillo desde 0; a partir de 15 dice que pase
-    "jasmine": {
-        "ingreso_noche":  {"stat": "stat2", "umbral": 50},   # Deseo 50+ → entra de trasnoche
-        "ingreso_diurno": {"stat": "stat1", "umbral": 40},   # Amor  40+ → entra de dia
-        "dejar_pasar":    {"stat": "stat1", "umbral": 15},   # Amor  15+ → "Adelante"
-        "sale_pasillo":   {"stat": "stat1", "umbral": 0},    # Amor   0+ → "Ahi salgo"
-    },
-
-    # Monica — sale al pasillo desde 0; a partir de 15 dice que pase
-    "monica": {
-        "ingreso_noche":  {"stat": "stat2", "umbral": 50},   # Deseo 50+ → entra de trasnoche
-        "ingreso_diurno": {"stat": "stat1", "umbral": 40},   # Amor  40+ → entra de dia
-        "dejar_pasar":    {"stat": "stat1", "umbral": 15},   # Amor  15+ → "Adelante"
-        "sale_pasillo":   {"stat": "stat1", "umbral": 0},    # Amor   0+ → "Ahi salgo"
-    },
-}
+## El motivo del cambio: los umbrales estaban escritos dos veces —acá y en los
+## `agregar_desbloqueo` que alimentaban el panel de Relaciones— y ya se habían
+## desfasado (el panel prometía ingreso diurno con amor 30 y esta tabla pedía 50).
+## Con una sola fuente eso no puede volver a pasar.
+##
+## Ids de las ventajas (registradas en core/hitos/hitos_ventajas.rpy):
+##   "puerta_ingreso_noche"   ·  "puerta_ingreso_diurno"
+##   "puerta_dejar_pasar"     ·  "puerta_sale_pasillo"
 
 
 ################################################################################
@@ -105,54 +86,52 @@ init python:
 
 init python:
 
-    def _stat_acceso_npc(npc_id, conf):
-        """
-        Helper interno: retorna el valor del stat indicado por conf para el NPC.
-        conf["stat"] puede ser "stat1" o "stat2".
-        """
-        if conf.get("stat") == "stat2":
-            return obtener_stat2(npc_id)
-        return obtener_stat1(npc_id)
-
     def verificar_nivel_acceso_habitacion(npc_id):
         """
         Retorna el nivel de acceso más alto que cumple el jugador para
         la habitacion del NPC, teniendo en cuenta el horario actual.
 
         Jerarquía evaluada de mayor a menor:
-            "ingreso_noche"   → horario == 3 y stat2 >= umbral
-            "ingreso_diurno"  → horario in (0,1,2) y stat1 >= umbral
-            "dejar_pasar"     → stat1 >= umbral
-            "sale_pasillo"    → stat1 >= umbral
+            "ingreso_noche"   → horario == 3 y tiene la ventaja
+            "ingreso_diurno"  → horario in (0,1,2) y tiene la ventaja
+            "dejar_pasar"     → tiene la ventaja
+            "sale_pasillo"    → tiene la ventaja
             None              → ningun nivel alcanzado
+
+        NOMBRE Y CONTRATO SIN CAMBIOS a proposito: door_access_system.rpy la
+        llama en dos lugares y compara contra estos mismos strings, asi que la
+        migracion a Hitos no lo toca. Lo unico que cambio es de donde sale el
+        permiso: antes se leia un stat contra un umbral de TABLA_ACCESO_HABITACION,
+        ahora se pregunta si el NPC tiene la ventaja otorgada por algun hito.
+
+        La regla de HORARIO se queda acá y no en el hito: el hito dice "puede
+        entrar de noche", el momento del dia es otra cosa.
 
         Returns:
             str | None
         """
-        tabla = TABLA_ACCESO_HABITACION.get(npc_id)
-        if not tabla:
-            return None
-
         horario = getattr(store, "horario_actual", 0)
 
         # ingreso_noche — solo si es trasnoche
-        conf = tabla.get("ingreso_noche")
-        if conf and horario == 3 and _stat_acceso_npc(npc_id, conf) >= conf["umbral"]:
+        if horario == 3 and npc_tiene_ventaja(npc_id, "puerta_ingreso_noche"):
             return "ingreso_noche"
 
         # ingreso_diurno — solo si no es trasnoche
-        conf = tabla.get("ingreso_diurno")
-        if conf and horario != 3 and _stat_acceso_npc(npc_id, conf) >= conf["umbral"]:
+        if horario != 3 and npc_tiene_ventaja(npc_id, "puerta_ingreso_diurno"):
             return "ingreso_diurno"
 
-        # dejar_pasar
-        conf = tabla.get("dejar_pasar")
-        if conf and _stat_acceso_npc(npc_id, conf) >= conf["umbral"]:
+        if npc_tiene_ventaja(npc_id, "puerta_dejar_pasar"):
             return "dejar_pasar"
 
-        # sale_pasillo
-        conf = tabla.get("sale_pasillo")
-        if conf and _stat_acceso_npc(npc_id, conf) >= conf["umbral"]:
+        # sale_pasillo: la ventaja generica vale a cualquier hora; las variantes
+        # acotadas solo en su momento del dia. Asi una linea puede abrir el
+        # acceso de a poco (primero de tarde, mas adelante tambien de noche).
+        # Horarios: 0 mañana · 1 tarde · 2 noche · 3 trasnoche.
+        if npc_tiene_ventaja(npc_id, "puerta_sale_pasillo"):
+            return "sale_pasillo"
+        if horario == 1 and npc_tiene_ventaja(npc_id, "puerta_sale_pasillo_tarde"):
+            return "sale_pasillo"
+        if horario == 2 and npc_tiene_ventaja(npc_id, "puerta_sale_pasillo_noche"):
             return "sale_pasillo"
 
         return None

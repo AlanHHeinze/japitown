@@ -181,8 +181,8 @@ label violet_quest05c_opcion_a:
     # La tienda lee stock_tienda (default, persiste en el save). No mutar
     # CATALOGO_ITEMS: es dato de init y los cambios no sobreviven save/load.
     $ stock_tienda["entrada_japicon"] = 2
-    $ cambiar_stat1("violet", 6)
-    $ completar_quest_actual("violet", recuerdos={"eleccion_05c": vq5c_eleccion})
+    $ cambiar_stat1("violet", 3, reserva=True)
+    $ completar_quest_actual("violet", recuerdos={"eleccion_05c": vq5c_eleccion}, quest_id="violet_questprincipal_05_c")
     $ notificar_recordara("violet")
 
     $ sistema_locaciones.mover_a_locacion("casa_pasilloarriba")
@@ -226,9 +226,9 @@ label violet_quest05c_opcion_b:
     # La tienda lee stock_tienda (default, persiste en el save). No mutar
     # CATALOGO_ITEMS: es dato de init y los cambios no sobreviven save/load.
     $ stock_tienda["entrada_japicon"] = 2
-    $ cambiar_stat1("violet", 6)
-    $ cambiar_stat2("violet", 3)
-    $ completar_quest_actual("violet", recuerdos={"eleccion_05c": vq5c_eleccion})
+    $ cambiar_stat1("violet", 3, reserva=True)
+    $ cambiar_stat2("violet", 3, reserva=True)
+    $ completar_quest_actual("violet", recuerdos={"eleccion_05c": vq5c_eleccion}, quest_id="violet_questprincipal_05_c")
     $ notificar_recordara("violet")
 
     $ sistema_locaciones.mover_a_locacion("casa_pasilloarriba")

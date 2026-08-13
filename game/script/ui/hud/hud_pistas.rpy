@@ -6,6 +6,18 @@
 # Variable para alternar entre pistas y qué hacer
 default mostrar_que_hacer = False
 
+# Pestaña de linea activa en el panel: "principal" | "amor" | "deseo".
+# Filtra que pistas se ven; arranca en la principal.
+default pistas_linea_filtro = "principal"
+
+# Pestañas del panel: (id_de_linea, icono, color activo). El color coincide con
+# el del titulo de cada quest para que la pestaña y el bloque se lean juntos.
+define _PISTAS_TABS = [
+    ("principal", "⭐", "#FFD700"),
+    ("amor",      "❤️", "#FF6B9D"),
+    ("deseo",     "💋", "#E040FB"),
+]
+
 screen panel_pistas():
     """Panel que muestra las quests y eventos activos — App Pistas"""
 
@@ -41,6 +53,28 @@ screen panel_pistas():
             # Header de app
             use _celular_app_header(_("Pistas"), "📋", [Hide("panel_pistas"), Show("menu_celular")], "panel_pistas")
 
+            # Pestañas por linea de quest (principal / amor / deseo)
+            frame:
+                xfill True
+                background "#0d0d1fCC"
+                padding (int(10 * _k), int(6 * _k))
+
+                hbox:
+                    xalign 0.5
+                    spacing int(4 * _k)
+
+                    for _lf_id, _lf_icono, _lf_color in _PISTAS_TABS:
+                        textbutton _lf_icono:
+                            action SetVariable("pistas_linea_filtro", _lf_id)
+                            text_size int(18 * _k)
+                            if pistas_linea_filtro == _lf_id:
+                                background _lf_color
+                                text_color "#ffffff"
+                            else:
+                                background "#1e1e3aCC"
+                                text_color "#777777"
+                            padding (int(24 * _k), int(6 * _k))
+
             # Toggle entre Pistas y Qué hacer
             frame:
                 xfill True
@@ -75,13 +109,41 @@ screen panel_pistas():
 
             # Contenido scrollable — organizado por NPC
             python:
-                _quests_activas = sistema_quests.obtener_quests_activas()
-                _eventos_activos = sistema_events.obtener_events_visibles()
+                # Filtrado por pestaña: cada linea muestra solo sus quests.
+                # getattr: las Quest de un save anterior al campo `linea` no lo
+                # tienen y cuentan como principales.
+                _quests_activas = [
+                    _q for _q in sistema_quests.obtener_quests_activas()
+                    if getattr(_q, "linea", "principal") == pistas_linea_filtro
+                ]
 
-                # Mapa npc_id → (quest, [eventos])
+                # La quest del MC y los eventos NO tienen linea (el sistema de
+                # eventos sigue siendo el viejo). Se muestran en la pestaña
+                # principal; al migrarlos a lineas esto se filtra igual que las
+                # quests y este caso especial desaparece.
+                _es_tab_principal = (pistas_linea_filtro == "principal")
+                _eventos_activos = sistema_events.obtener_events_visibles() if _es_tab_principal else []
+
+                # Mapa npc_id → [quests]. Es una LISTA porque un NPC puede tener
+                # una quest activa por linea (principal / amor / deseo) al mismo
+                # tiempo; con la asignacion directa de antes, la ultima pisaba a
+                # las anteriores y solo se veia una.
                 _quests_por_npc = {}
                 for _q in _quests_activas:
-                    _quests_por_npc[_q.npc_id] = _q
+                    _quests_por_npc.setdefault(_q.npc_id, []).append(_q)
+
+                # Etiqueta y color por linea. getattr: las Quest de un save
+                # anterior al campo `linea` no tienen el atributo.
+                _PISTAS_LINEA_TAG = {
+                    "principal": "(Quest)",
+                    "amor": "(Amor)",
+                    "deseo": "(Deseo)",
+                }
+                _PISTAS_LINEA_COLOR = {
+                    "principal": "#FFD700",
+                    "amor": "#FF6B9D",
+                    "deseo": "#E040FB",
+                }
 
                 _eventos_por_npc = {}
                 for _e in _eventos_activos:
@@ -115,8 +177,8 @@ screen panel_pistas():
 
                         if _hay_algo:
 
-                            # ── Quest activa del MC ──
-                            $ _quest_mc_activa = sistema_quests_mc.obtener_activa()
+                            # ── Quest activa del MC (solo en la pestaña principal) ──
+                            $ _quest_mc_activa = sistema_quests_mc.obtener_activa() if _es_tab_principal else None
                             if _quest_mc_activa:
                                 frame:
                                     background "#1e1e3aCC"
@@ -149,11 +211,11 @@ screen panel_pistas():
 
                             # ── Un bloque por NPC conocido ──
                             for _npc_p in _npcs_conocidos:
-                                $ _npc_quest = _quests_por_npc.get(_npc_p.id)
+                                $ _npc_quests = _quests_por_npc.get(_npc_p.id, [])
                                 $ _npc_eventos = _eventos_por_npc.get(_npc_p.id, [])
 
-                                # Bloque de quest (si tiene quest activa)
-                                if _npc_quest:
+                                # Un bloque por cada linea activa del NPC
+                                for _npc_quest in _npc_quests:
                                     frame:
                                         background "#1e1e3aCC"
                                         padding (int(15 * _k), int(12 * _k))
@@ -175,8 +237,9 @@ screen panel_pistas():
                                             vbox:
                                                 spacing int(5 * _k)
 
-                                                $ _qtitulo = renpy.translate_string(_npc_quest.nombre) + " " + renpy.translate_string("(Quest)")
-                                                text "[_qtitulo]" size int(16 * _k) color "#FFD700" bold True
+                                                $ _qlinea = getattr(_npc_quest, "linea", "principal")
+                                                $ _qtitulo = renpy.translate_string(_npc_quest.nombre) + " " + renpy.translate_string(_PISTAS_LINEA_TAG.get(_qlinea, "(Quest)"))
+                                                text "[_qtitulo]" size int(16 * _k) color _PISTAS_LINEA_COLOR.get(_qlinea, "#FFD700") bold True
 
                                                 $ _qmsg = _npc_quest.obtener_mensajes()
                                                 $ _qmsg_txt = _qmsg["que_hacer"] if mostrar_que_hacer else _qmsg["pista"]
@@ -188,8 +251,8 @@ screen panel_pistas():
                                                     $ _etapa_txt = "Etapa {}: {}".format(_npc_quest.etapa_actual, _etapa_nombres.get(_npc_quest.etapa_actual, "?"))
                                                     text "[[" + _etapa_txt + "]]" size int(11 * _k) color "#888888"
 
-                                # Bloque "sin quest" (siempre que no haya quest activa)
-                                else:
+                                # Bloque "sin quest": solo si NINGUNA linea esta activa
+                                if not _npc_quests:
                                     frame:
                                         background "#1e1e3aCC"
                                         padding (int(15 * _k), int(12 * _k))

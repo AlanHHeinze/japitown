@@ -27,10 +27,13 @@ label talk_iniciar:
     $ _t_estado = sistema_talk.obtener_estado_activo(_npc_id_temp)
     $ _t_especiales = _t_config.obtener_opciones_especiales_disponibles()
 
-    # Carisma ≥2: preview de una opción desconocida en el menú
+    # Preview de una opción desconocida en el menú. Lo habilita el carisma del
+    # MC (≥2) O la ventaja "talk_preview_resultado" de un hito con ese NPC: la
+    # intuición puede venir de ser encantador o de conocer bien a la persona.
     $ _t_preview_opcion = None
     $ _t_preview_resultado = None
-    if store.mc_carisma >= 2 and _t_estado:
+    $ _t_puede_preview = store.mc_carisma >= 2 or npc_tiene_ventaja(_npc_id_temp, "talk_preview_resultado")
+    if _t_puede_preview and _t_estado:
         $ _t_sin_mem = [
             o for o in OPCIONES_BASE_IDS
             if sistema_talk.consultar_memoria_mc(_npc_id_temp, _t_estado.id, o) is None

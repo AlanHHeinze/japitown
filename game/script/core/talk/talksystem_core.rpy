@@ -15,26 +15,39 @@ init python:
     }
 
     # Mapeo resultado_id → (stat, cantidad)
+    #
+    # REBALANCEO 1:1 — amor y deseo rinden lo mismo. Antes el amor daba el doble
+    # (2 y hasta 4 por opcion) contra 1-2 de deseo, asi que la linea de amor
+    # avanzaba al doble de velocidad.
+    #
+    # OJO: los IDS quedaron con el nombre viejo ("+2_amor" ahora otorga 1). No se
+    # renombraron a proposito: los usan los `efectos` de cada EstadoTalk y las
+    # claves de `estados_posteriores` en los tres personajes, asi que renombrar
+    # obligaria a tocar decenas de lugares y romperia los estados posteriores.
+    # EL VALOR DE ESTA TABLA ES EL QUE MANDA, no el nombre del id.
     RESULTADO_A_STAT = {
         "+1_amor":  ("amor",  1),
-        "+2_amor":  ("amor",  2),
-        "+4_amor":  ("amor",  4),
+        "+2_amor":  ("amor",  1),   # era 2
+        "+4_amor":  ("amor",  2),   # era 4
         "+1_deseo": ("deseo", 1),
         "+2_deseo": ("deseo", 2),
-        "-2_amor":  ("amor", -2),
+        "-2_amor":  ("amor", -1),   # era -2
         "-1_deseo": ("deseo", -1),
         "nada":     None,
     }
 
     # Forma compacta: numero + emoji (sin la palabra amor/deseo).
     # "sin efecto" es texto y se traduce via translate_string en los usos.
+    #
+    # Tiene que reflejar el valor REAL de RESULTADO_A_STAT: es lo que el jugador
+    # ve como recompensa de la opcion, y si no coincide le estariamos mintiendo.
     RESULTADO_TEXTO = {
         "+1_amor":  "+1 ❤️",
-        "+2_amor":  "+2 ❤️",
-        "+4_amor":  "+4 ❤️",
+        "+2_amor":  "+1 ❤️",
+        "+4_amor":  "+2 ❤️",
         "+1_deseo": "+1 💋",
         "+2_deseo": "+2 💋",
-        "-2_amor":  "-2 ❤️",
+        "-2_amor":  "-1 ❤️",
         "-1_deseo": "-1 💋",
         "nada":     "sin efecto",
     }

@@ -11,6 +11,13 @@
 
 translate english strings:
 
+    # Trasnoche: sale al clickear a un NPC que esta durmiendo
+    # (MENSAJE_NPC_DURMIENDO en core/quests/restriccion_quest_system.rpy).
+    # El mismo texto existe como `piensa` en door_access_system y en la 09_a,
+    # pero por hash: los dos sistemas de traduccion no se pisan.
+    old "Debe estar durmiendo, no voy a molestar."
+    new "She must be asleep, I'm not going to bother her."
+
     old "Debo responder el mensaje de {npc} antes de continuar"
     new "I have to reply to {npc}'s message before continuing"
 

@@ -75,7 +75,7 @@ label violet_quest07b_conversacion:
     mc "Perfecto"
     show mc_parado_base b_none
 
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_07_b")
     window hide
     $ mostrar_hud()
     jump game_loop

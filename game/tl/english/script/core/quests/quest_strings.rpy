@@ -33,6 +33,96 @@ translate english strings:
     old "El cosplay de Violet IV"
     new "Violet's Cosplay IV"
 
+    # Pasos intermedios entre la 04_d y la 04_e
+    old "Algo por ella"
+    new "Something for her"
+
+    old "Violet dijo que tenía más fotos, quizás pueda conseguirlas haciendo algo por ella"
+    new "Violet said she had more photos, maybe I can get them by doing something for her"
+
+    # ── Líneas de relación de Violet (amor / deseo) ──────────────────────────
+    # Nombres y descripciones de las 12 quests de línea. Faltan solo las que no
+    # comparten texto con un hito: "Buena relación", "Como antes", "Algo nos
+    # pasa", "Me atrae", "Confesión" y "Un paso más allá" ya están traducidas
+    # como nombres de hito en relaciones_strings.rpy y comparten entrada.
+
+    # Amor
+    old "Un acercamiento"
+    new "Getting closer"
+
+    old "Empiezo a llevarme mejor con Violet."
+    new "I'm starting to get along better with Violet."
+
+    old "La relacion con Violet se afianza."
+    new "Things with Violet are settling in."
+
+    old "Mas confianza"
+    new "More trust"
+
+    old "Violet se abre un poco mas."
+    new "Violet is opening up a little more."
+
+    old "Volvemos a estar como estabamos."
+    new "We're back to how we used to be."
+
+    old "Mas cerca"
+    new "Closer"
+
+    old "Cada vez pasamos mas tiempo juntos."
+    new "We're spending more and more time together."
+
+    old "Hay algo entre nosotros dificil de negar."
+    new "There's something between us that's hard to deny."
+
+    # Deseo
+    old "Otra mirada"
+    new "A different look"
+
+    old "Algo cambio en como Violet me mira."
+    new "Something changed in the way Violet looks at me."
+
+    old "Sin disimular"
+    new "No more hiding it"
+
+    old "Ya casi no lo escondemos."
+    new "We barely hide it anymore."
+
+    old "Nos dijimos lo que estaba pasando."
+    new "We told each other what was going on."
+
+    old "Sin rodeos"
+    new "No beating around the bush"
+
+    old "Con Violet ya no hace falta rodear nada."
+    new "With Violet there's no need to dance around it anymore."
+
+    # Arco de los favores — nombres y descripciones de las 4 quests.
+    # Las descripciones NO repiten ninguna pista a proposito: dos `old` iguales
+    # rompen el lint.
+    old "Las golosinas"
+    new "The candy"
+
+    old "Violet me pidió unas golosinas, es lo menos que puedo hacer"
+    new "Violet asked me for some candy, it's the least I can do"
+
+    old "La pizza"
+    new "The pizza"
+
+    old "Violet quiere que le cocine una pizza para la cena"
+    new "Violet wants me to cook her a pizza for dinner"
+
+    old "La limpieza"
+    new "The cleaning"
+
+    old "Violet me pidió que limpie algunas partes de la casa"
+    new "Violet asked me to clean a few parts of the house"
+
+    old "Todo lo que me pidió"
+    new "Everything she asked for"
+
+    old "Ya hice los tres favores que Violet me pidió"
+    new "I already did the three favors Violet asked me for"
+
     old "Los ruidos nocturnos"
     new "Night Noises"
 

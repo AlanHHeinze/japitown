@@ -571,7 +571,7 @@ label violet_quest08a_cierre_desarrollo:
     # Limpiar restricción y ocultar acciones de exploración
     $ desactivar_restriccion()
     $ vq8a_acciones_activas = False
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_08_a")
 
     # 1. Adelantar el tiempo 2 veces (queda de noche)
     $ avanzar_horario_multiple(2)
@@ -618,12 +618,15 @@ label test_quest08a_violet:
     $ vq8a_ropero_visto = False
     $ vq8a_cajonera_vista = False
 
-    # Forzar la 08_a como la ÚNICA quest activa de Violet, en ETAPA_BOTON_LISTO
-    # (asi el cierre la completa correctamente con completar_quest_actual("violet"))
+    # Dejar la 08_a activa y en ETAPA_BOTON_LISTO para entrar directo al
+    # contenido; el cierre la completa por quest_id y encadena normalmente.
+    #
+    # Antes aca habia un bucle que desactivaba las OTRAS quests activas de
+    # Violet. Venia de cuando completar_quest_actual("violet") agarraba "la
+    # primera activa" y habia que forzar que quedara una sola. Ya no aplica: el
+    # cierre pasa quest_id explicito y el motor soporta varias lineas activas
+    # por NPC, asi que apagarlas romperia el estado de las otras lineas.
     python:
-        for _q in sistema_quests.quests.values():
-            if _q.npc_id == "violet" and _q.activa and _q.id != "violet_questprincipal_08_a":
-                _q.activa = False
         _q08a = sistema_quests.obtener_quest("violet_questprincipal_08_a")
         if _q08a:
             _q08a.completada = False

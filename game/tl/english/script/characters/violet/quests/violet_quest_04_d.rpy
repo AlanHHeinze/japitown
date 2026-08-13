@@ -66,3 +66,17 @@ translate english quest_violet_questprincipal_04_d_286b42e4:
     # piensa "Tengo que lograr que se sienta comoda y no lo vea como algo malo"
     piensa "I have to get her to feel comfortable and not see it as something bad"
 
+# TODO: Translation updated at 2026-08-11 22:00
+
+# game/script/characters/violet/quests/violet_quest_04_d.rpy:76
+translate english quest_violet_questprincipal_04_d_70e468e5:
+
+    # piensa "Todavia quedan fotos que no vi, podria portarme bien y hacer cosas por ella"
+    piensa "There are still photos I haven't seen. I could behave and do things for her"
+
+# game/script/characters/violet/quests/violet_quest_04_d.rpy:77
+translate english quest_violet_questprincipal_04_d_cd23dfa9:
+
+    # piensa "Puede que asi logre que me mande las fotos"
+    piensa "Maybe that way I can get her to send me the photos"
+

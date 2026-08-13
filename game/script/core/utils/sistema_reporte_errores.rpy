@@ -333,7 +333,7 @@ screen jp_error_screen():
                         text_size 22 text_color "#ffffff"
                         background "#444466" hover_background "#555588" padding (22, 14)
 
-                    textbutton "↻ Reintentar":
+                    textbutton "🔄 Reintentar":
                         action Function(renpy.utter_restart)
                         text_size 22 text_color "#ffffff"
                         background "#444466" hover_background "#555588" padding (22, 14)

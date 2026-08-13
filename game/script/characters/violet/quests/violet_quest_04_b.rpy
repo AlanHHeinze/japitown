@@ -101,7 +101,7 @@ label quest_violet_questprincipal_04_b:
     hide violet_parada with dissolve
     hide mc_parado_base with dissolve
 
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_04_b")
 
     # Devolver a Violet a su rutina base (sale del pasillo para siempre)
     python:

@@ -57,7 +57,7 @@ init python:
         if store.violet_9a_enfermedad_dia >= 3:
             if getattr(store, 'violet_enferma_atencion', 0) >= 3:
                 return "violet_quest09b_despertar"
-            completar_quest_actual("violet")
+            completar_quest_actual("violet", quest_id="violet_questprincipal_09_a")
         return None
 
 init 5 python:
@@ -340,7 +340,7 @@ label accion_violet_toalla:
 ################################################################################
 
 label quest_violet_questprincipal_09_a:
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_09_a")
     window hide
     $ mostrar_hud()
     jump game_loop

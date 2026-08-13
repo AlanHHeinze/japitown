@@ -69,8 +69,24 @@ translate english strings:
     old "Tengo que mejorar la relación con Violet"
     new "I have to improve my relationship with Violet"
 
-    old "Requisito ❤️ 10"
-    new "Requirement ❤️ 10"
+    # ── Etiqueta de linea, al lado del nombre de la quest ────────────────────
+    # Salen de _PISTAS_LINEA_TAG (hud_pistas.rpy). Van acá y no en el archivo
+    # generado tl/english/script/ui/hud/hud_pistas.rpy —donde viven "(Quest)" y
+    # "(Evento)"— porque son valores de un dict que pasa por
+    # renpy.translate_string(): el extractor no los ve y nunca los va a generar.
+    old "(Amor)"
+    new "(Love)"
+
+    old "(Deseo)"
+    new "(Desire)"
+
+    # Requisitos por HITO: el {} lo rellena texto_hito_corto() con el icono y el
+    # nombre del hito ya traducidos ("❤️ Buena relación").
+    old "Requisito {}"
+    new "Requirement {}"
+
+    old "Alcanzar {}"
+    new "Reach {}"
 
     # =========================================================================
     # Violet — Quest 02 (los mangas)

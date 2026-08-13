@@ -7,7 +7,7 @@
 ################################################################################
 
 label quest_violet_questprincipal_07_c:
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_07_c")
     # Terminal de contenido: jump game_loop (si el camino hasta aca vino con
     # frames, los drena el inicio del game_loop).
     window hide

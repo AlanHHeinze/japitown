@@ -702,14 +702,14 @@ label quest_violet_0_puerta:
 
     # Evaluar ruta elegida y aplicar stats
     if vq0b_ruta == "respeto":
-        $ obtener_npc("violet").modificar_stat1(4)
+        $ obtener_npc("violet").modificar_stat1(2, reserva=True)
     elif vq0b_ruta == "confrontar":
-        $ obtener_npc("violet").modificar_stat2(2)
+        $ obtener_npc("violet").modificar_stat2(2, reserva=True)
 
     # Finalizar Quest
     $ avanzar_horario()
     $ sistema_locaciones.mover_a_locacion("casa_hmc")
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_0_b")
     $ activar_estado_especial_npc("violet", "violet_feliz")
     $ post_completar_violet_quest0()
 

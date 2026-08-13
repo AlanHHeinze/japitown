@@ -2,6 +2,13 @@
 
 translate english strings:
 
+    # nombre_menu de un ListenerAccion. Solo se ve cuando DOS listeners compiten
+    # por la misma accion; lo traduce accion_locacion_ejecutar
+    # (npcsystem_interactions.rpy), porque renpy.display_menu() con tuplas no
+    # pasa por el sistema de traduccion.
+    old "Preparar las pizzas"
+    new "Make the pizzas"
+
     # Accion global del visualizador de hotspots (visualizador_hotspot.rpy):
     # el boton del ojo que resalta las salidas de la locacion.
     old "Ver salidas"

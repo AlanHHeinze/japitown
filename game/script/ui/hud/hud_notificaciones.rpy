@@ -48,6 +48,12 @@ init python:
         "progreso": "#FFC107",
     }
 
+    # Nombre visible de cada stat de relacion, para los mensajes al jugador.
+    _NOTIF_NOMBRE_STAT = {
+        "amor":  "Amor",
+        "deseo": "Deseo",
+    }
+
     def notificar_cambio_stat(tipo, cantidad, npc_nombre=None):
         """
         Agrega una notificación de cambio de stat a la cola.
@@ -87,6 +93,53 @@ init python:
         store._notificaciones_stats.append(notif)
 
         # Limitar cola a 6 notificaciones máximo
+        if len(store._notificaciones_stats) > 6:
+            store._notificaciones_stats.pop(0)
+
+    def notificar_stat_bloqueado(tipo, npc_nombre=None):
+        """
+        Avisa que un stat no pudo subir porque llegó a su tope de hitos.
+
+        El tope lo pone el sistema de Hitos (core/hitos/): el stat se frena en el
+        umbral del próximo hito hasta que el jugador complete la quest de relación
+        de ese nivel. Sin este aviso el número simplemente deja de moverse y
+        parece un bug.
+
+        Args:
+            tipo: ID del stat ("amor" / "deseo")
+            npc_nombre: Nombre del NPC, para que se vea de quién se trata
+        """
+        # Se traduce el nombre CAPITALIZADO ("Amor"/"Deseo"), que ya tiene
+        # entrada en tl/english/relaciones_strings.rpy. Traducir el id crudo
+        # obligaria a un `old "amor"` suelto, que pisaria esa palabra en
+        # cualquier otro texto del juego.
+        _nombre_stat = renpy.translate_string(_NOTIF_NOMBRE_STAT.get(tipo, tipo))
+        texto = renpy.translate_string("Incremento de {stat} bloqueado").format(
+            stat=_nombre_stat
+        )
+        if npc_nombre:
+            texto = "{} — {}".format(npc_nombre, texto)
+
+        notif = {
+            "texto": texto,
+            "icono": "🔒",
+            "color": _NOTIF_COLORES.get(tipo, "#ffffff"),
+            "timestamp": _time_module.time(),
+            "positivo": False,
+            "id_str": "bloqueado_{}_{}".format(tipo, _time_module.time()),
+            "delay": len(store._notificaciones_stats) * 0.15,
+        }
+
+        _limpiar_notificaciones_expiradas()
+
+        # Una sola por stat a la vez: sin esto, topeado y en una conversación
+        # que da puntos en varios pasos, se apilarían varias iguales.
+        if any(n.get("id_str", "").startswith("bloqueado_" + tipo)
+               for n in store._notificaciones_stats):
+            return
+
+        store._notificaciones_stats.append(notif)
+
         if len(store._notificaciones_stats) > 6:
             store._notificaciones_stats.pop(0)
 

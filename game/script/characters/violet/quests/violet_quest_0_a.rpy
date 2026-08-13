@@ -230,9 +230,9 @@ label violet_q0a_golosinas:
     # Quitar golosinas del inventario
     $ inventario["golosinas"] = max(0, inventario.get("golosinas", 0) - 1)
 
-    # Recompensa exacta del sistema Talk: +2 Amor + +1 Deseo
-    $ obtener_npc("violet").modificar_stat1(2)
-    $ obtener_npc("violet").modificar_stat2(1)
+    # Recompensa exacta del sistema Talk: +1 Amor + +1 Deseo
+    $ obtener_npc("violet").modificar_stat1(1, reserva=True)
+    $ obtener_npc("violet").modificar_stat2(1, reserva=True)
 
     show violet_parada at personaje_salir_izquierda
     pause 1.0
@@ -250,7 +250,7 @@ label violet_q0a_golosinas:
     $ hablar_desbloqueado = True
 
     # Completar la quest (auto-inicia la 0_b)
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_0_a")
 
     window hide
     $ mostrar_hud()

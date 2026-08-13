@@ -188,8 +188,12 @@ label accion_locacion_ejecutar:
         call expression _ale_listeners[0].label from _call_ale_listener_unico
         return
 
-    # 6. Múltiples listeners → menú de elección del jugador
-    $ _ale_opciones = [(_ale_l.nombre_menu, _ale_l) for _ale_l in _ale_listeners]
+    # 6. Múltiples listeners → menú de elección del jugador.
+    #    El nombre_menu se traduce acá: renpy.display_menu() con tuplas NO pasa
+    #    por el sistema de traduccion (a diferencia del statement `menu:`), asi
+    #    que sin esto el menu saldria en español aunque el juego este en ingles.
+    #    Sus `old` van a mano en tl (no los ve el extractor).
+    $ _ale_opciones = [(renpy.translate_string(_ale_l.nombre_menu), _ale_l) for _ale_l in _ale_listeners]
     $ _ale_elegido = renpy.display_menu(_ale_opciones)
     $ sistema_acciones.post_ejecutar(_accion_locacion_temp_id, _ale_elegido)
     call expression _ale_elegido.label from _call_ale_listener_menu

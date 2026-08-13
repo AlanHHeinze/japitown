@@ -224,7 +224,7 @@ screen herramienta_pos_simple():
                         SetVariable("_hpos_menu_abierto", None),
                         Hide("herramienta_pos_simple"),
                     ]
-                    text "✕" size 18 color "#ffffff" yalign 0.5
+                    text "×" size 18 color "#ffffff" yalign 0.5
 
     # ── 5. Dropdown Fondos ────────────────────────────────────────────────────
     if _hpos_menu_abierto == "fondos":

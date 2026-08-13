@@ -88,9 +88,6 @@ init python:
             # Atributos personalizables
             self.atributos = {}
 
-            # Lista de desbloqueos por stat (amor/deseo)
-            self.desbloqueos = []
-
             # Quests relacionadas con este NPC
             self.quests = []
             
@@ -125,18 +122,6 @@ init python:
                 clave = (dia_semana, horario)
                 self.rutinas[clave] = locacion_id
         
-        def agregar_desbloqueo(self, stat, umbral, icono, nombre, desc="",
-                               condicion_extra=None, nombre_pendiente=None):
-            self.desbloqueos.append({
-                "stat":             stat,
-                "umbral":           umbral,
-                "icono":            icono,
-                "nombre":           nombre,
-                "desc":             desc,
-                "condicion_extra":  condicion_extra,
-                "nombre_pendiente": nombre_pendiente,
-            })
-
         def agregar_rutina_especial(self, rutina_especial):
             if not hasattr(self, 'rutinas_especiales'):
                 self.rutinas_especiales = []
@@ -283,31 +268,92 @@ init python:
             """Obtiene un atributo personalizado del NPC"""
             return self.atributos.get(clave, default)
         
-        def modificar_stat1(self, cantidad):
-            """Modifica el stat principal del NPC y sincroniza con variables default"""
-            self.estado[self.nombre_stat1] += cantidad
-            self.estado[self.nombre_stat1] = max(0, min(100, self.estado[self.nombre_stat1]))
-            
-            # Sincronizar con variable default guardable: {npc_id}_{nombre_stat1}
-            var_name = f"{self.id}_{self.nombre_stat1}"
-            setattr(store, var_name, self.estado[self.nombre_stat1])
-            
-            # Notificación visual
-            if hasattr(store, 'notificar_cambio_stat'):
-                notificar_cambio_stat(self.nombre_stat1, cantidad, self.nombre)
-        
-        def modificar_stat2(self, cantidad):
-            """Modifica el stat secundario del NPC y sincroniza con variables default"""
-            self.estado[self.nombre_stat2] += cantidad
-            self.estado[self.nombre_stat2] = max(0, min(100, self.estado[self.nombre_stat2]))
+        def _aplicar_cambio_stat(self, nombre_stat, cantidad, reserva=False):
+            """
+            Motor comun de modificar_stat1/2: aplica el cambio respetando el
+            TOPE de hitos y devuelve el delta REALMENTE aplicado.
 
-            # Sincronizar con variable default guardable: {npc_id}_{nombre_stat2}
-            var_name = f"{self.id}_{self.nombre_stat2}"
-            setattr(store, var_name, self.estado[self.nombre_stat2])
-            
-            # Notificación visual
-            if hasattr(store, 'notificar_cambio_stat'):
-                notificar_cambio_stat(self.nombre_stat2, cantidad, self.nombre)
+            El tope sale de tope_stat() (core/hitos/): es el umbral del primer
+            hito todavia no otorgado, o sea que el stat se frena ahi hasta que
+            el jugador complete la quest de relacion de ese nivel.
+
+            Solo topea las SUBIDAS: una penalizacion tiene que poder bajar el
+            stat aunque este topeado.
+
+            Este es el embudo real de todo el juego (talk, chat, quests, eventos,
+            espiar, acciones y los botones +/-1 de cheats pasan por aca), asi que
+            con topear aca alcanza. `establecer_stat1/2` queda afuera a proposito:
+            lo usan solo los botones Max/0 del menu de cheats, y saltarse el tope
+            ahi es lo que permite testear contenido de umbrales altos.
+
+            Returns:
+                int: delta aplicado (0 si el tope lo bloqueo por completo)
+            """
+            anterior = self.estado[nombre_stat]
+            nuevo = anterior + cantidad
+            _a_reserva = 0
+
+            if cantidad > 0:
+                # Guard defensivo: si el sistema de hitos no cargo, no topea.
+                try:
+                    _tope = tope_stat(self.id, nombre_stat)
+                    if nuevo > _tope:
+                        # Con reserva=True (recompensa de quest) los puntos que
+                        # no entran se guardan y se cobran cuando se libere el
+                        # tramo. Sin reserva (talk, chat, acciones) se pierden:
+                        # el tope existe justamente para que no se pueda seguir
+                        # subiendo por esas vias.
+                        #
+                        # Con tope 100 no se reserva nada: no hay tramo futuro
+                        # que libere esos puntos y quedarian en la reserva para
+                        # siempre.
+                        if reserva and _tope < 100:
+                            _a_reserva = nuevo - _tope
+                        nuevo = _tope
+                except Exception:
+                    pass
+
+            nuevo = max(0, min(100, nuevo))
+            self.estado[nombre_stat] = nuevo
+
+            # Sincronizar con variable default guardable: {npc_id}_{nombre_stat}
+            setattr(store, f"{self.id}_{nombre_stat}", nuevo)
+
+            aplicado = nuevo - anterior
+
+            if _a_reserva:
+                try:
+                    sumar_sobrante(self.id, nombre_stat, _a_reserva)
+                except Exception:
+                    _a_reserva = 0
+
+            # Notificación visual. Se avisa el delta REAL, no el pedido: antes
+            # se pasaba `cantidad` y ya mentia al clampear en 100.
+            #
+            # Lo reservado cuenta como ganado para el jugador: el contador del
+            # panel lo muestra (stat + reserva), asi que la notificacion tiene
+            # que coincidir con lo que ve ahi.
+            _avisar = aplicado + _a_reserva
+            if _avisar and hasattr(store, 'notificar_cambio_stat'):
+                notificar_cambio_stat(nombre_stat, _avisar, self.nombre)
+            elif cantidad > 0 and not _avisar and hasattr(store, 'notificar_stat_bloqueado'):
+                # Queria subir y no pudo: el tope de hitos lo freno.
+                notificar_stat_bloqueado(nombre_stat, self.nombre)
+
+            return aplicado
+
+        def modificar_stat1(self, cantidad, reserva=False):
+            """
+            Modifica el stat principal del NPC y sincroniza con variables default.
+
+            reserva=True: es una recompensa de QUEST. Lo que no entre por el tope
+            se guarda y se cobra al liberarse el tramo, en vez de perderse.
+            """
+            return self._aplicar_cambio_stat(self.nombre_stat1, cantidad, reserva)
+
+        def modificar_stat2(self, cantidad, reserva=False):
+            """Modifica el stat secundario del NPC y sincroniza con variables default"""
+            return self._aplicar_cambio_stat(self.nombre_stat2, cantidad, reserva)
 
         def modificar_stat(self, stat, cantidad):
             """Dispatcher: modifica el stat indicado por nombre"""

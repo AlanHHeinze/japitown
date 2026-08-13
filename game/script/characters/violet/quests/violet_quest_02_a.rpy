@@ -2,8 +2,13 @@
 ## Violet Quest 02_A — Un manga prestado
 ################################################################################
 ## El jugador le pide a Violet que le preste mangas para leer.
-## Si tiene 10+ de amor: Violet acepta de entrada (o tras una primera negativa).
-## Si tiene menos de 10: Violet rechaza y el botón desaparece hasta llegar al umbral.
+## Con el hito "Buena relación": Violet acepta (de entrada o tras una primera
+## negativa). Sin el hito: rechaza, y el botón desaparece hasta conseguirlo.
+##
+## El requisito es el HITO, no el stat suelto. Los hitos son la moneda visible
+## de la progresión: el jugador ve en Relaciones qué le falta y por qué, en vez
+## de tener que adivinar un número. En la línea principal funcionan a veces como
+## requisito (este caso) y a veces como bonus.
 
 # =============================================================================
 # VARIABLES
@@ -11,6 +16,26 @@
 
 # True despues del primer intento (sea exitoso o no)
 default violet_quest02a_primer_intento_hecho = False
+
+
+init python:
+
+    # Hito que habilita el préstamo — "Buena relación" (linea de amor, umbral 10,
+    # se otorga al completar violet_amor_02).
+    VQ02A_HITO_REQUERIDO = "violet_hito_amor_01"
+
+    def violet_presta_mangas():
+        """
+        Criterio UNICO de la quest de los mangas. Lo consultan el boton del menu
+        de Violet, el router de la quest y los textos de pista/que_hacer, para
+        que los tres digan siempre lo mismo.
+        """
+        return tiene_hito("violet", VQ02A_HITO_REQUERIDO)
+
+    def violet_mangas_requisito_texto():
+        """Texto del que_hacer cuando falta el hito."""
+        return renpy.translate_string("Requisito {}").format(
+            texto_hito_corto(VQ02A_HITO_REQUERIDO))
 
 
 ################################################################################
@@ -30,12 +55,12 @@ label quest_violet_questprincipal_02_a:
 
     if not violet_quest02a_primer_intento_hecho:
         $ violet_quest02a_primer_intento_hecho = True
-        if obtener_stat1("violet") >= 10:
+        if violet_presta_mangas():
             jump violet_quest02a_acepta_directo
         else:
             jump violet_quest02a_rechaza
     else:
-        if obtener_stat1("violet") >= 10:
+        if violet_presta_mangas():
             jump violet_quest02a_acepta_insiste
         else:
             jump violet_quest02a_rechaza_insiste
@@ -220,7 +245,7 @@ label violet_quest02a_acepta_directo:
     
     hide mc_parado_base with dissolve
 
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_02_a")
 
     window hide
     $ mostrar_hud()
@@ -295,7 +320,7 @@ label violet_quest02a_acepta_insiste:
 
     hide mc_parado_base with dissolve
 
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_02_a")
 
     window hide
     $ mostrar_hud()

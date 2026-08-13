@@ -11,7 +11,7 @@ init 6 python:
             store.desactivar_restriccion()
         # Completar la quest
         if hasattr(store, 'completar_quest_actual'):
-            store.completar_quest_actual("jasmine")
+            store.completar_quest_actual("jasmine", quest_id="jasmine_questprincipal_0_b")
 
     # =========================================================================
     # Chat Quest 0_b de Jasmine - Carl pregunta cómo te fue

@@ -172,7 +172,7 @@ label violet_quest06a_camino_amor:
     mc "Bueno nos vemos luego"
     show mc_parado_base b_none
 
-    $ cambiar_stat1("violet", 8)
+    $ cambiar_stat1("violet", 4, reserva=True)
     jump violet_quest06a_cierre
 
 
@@ -224,7 +224,7 @@ label violet_quest06a_camino_deseo:
     mc "Bueno nos vemos luego"
     show mc_parado_base b_none
 
-    $ cambiar_stat2("violet", 4)
+    $ cambiar_stat2("violet", 4, reserva=True)
     jump violet_quest06a_cierre
 
 
@@ -248,7 +248,7 @@ label violet_quest06a_cierre:
     piensa "Ahora voy a estar a la espectativa de la reaccion de Violet"
 
     # Completar la quest
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_06_a")
 
     window hide
     $ mostrar_hud()
@@ -278,7 +278,7 @@ label test_quest06a_violet:
     $ desactivar_restriccion()
 
     # Forzar la 06_a como la ÚNICA quest activa de Violet, en ETAPA_BOTON_LISTO
-    # (asi el cierre la completa correctamente con completar_quest_actual("violet"))
+    # (asi el cierre la completa correctamente con completar_quest_actual("violet", quest_id="violet_questprincipal_06_a"))
     python:
         for _q in sistema_quests.quests.values():
             if _q.npc_id == "violet" and _q.activa and _q.id != "violet_questprincipal_06_a":

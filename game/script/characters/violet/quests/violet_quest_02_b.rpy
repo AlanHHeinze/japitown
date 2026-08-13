@@ -321,14 +321,14 @@ label violet_quest02b_fin:
 
     # Evaluar ruta elegida y aplicar stats
     if violet_recuerdo_mangas == "deseo":
-        $ obtener_npc("violet").modificar_stat2(2)
+        $ obtener_npc("violet").modificar_stat2(2, reserva=True)
     elif violet_recuerdo_mangas == "amor":
-        $ obtener_npc("violet").modificar_stat1(4)
+        $ obtener_npc("violet").modificar_stat1(2, reserva=True)
 
     # Mover al pasillo, avanzar tiempo y completar quest
     $ sistema_locaciones.mover_a_locacion("casa_pasilloarriba")
     $ avanzar_horario()
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_02_b")
     $ desbloquear_skin("violet_pijama_base")
 
     window hide

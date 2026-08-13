@@ -97,7 +97,7 @@ screen menu_interaccion_npc_completo(npc, opciones_extra=None):
                     # El texto se COMPONE (opcion + tag), asi que hay que traducir
                     # cada parte por separado: el string ya concatenado nunca
                     # matchearia un `old`. Mismo criterio que en door_access_system.
-                    $ _tag_extra = renpy.translate_string(" (Evento)") if opcion.get("tipo") == "evento" else renpy.translate_string(" (Quest)")
+                    $ _tag_extra = tag_opcion_quest(opcion.get("label"), opcion.get("tipo") == "evento")
                     $ _texto_extra = renpy.translate_string(opcion.get("texto", "Opción")) + _tag_extra
                     button:
                         xfill True

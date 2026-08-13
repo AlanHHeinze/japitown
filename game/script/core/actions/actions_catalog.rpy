@@ -125,6 +125,87 @@ init 5 python:
         condicion=_ev03_limpiar_pasillo_activa,
     ))
 
+    # =========================================================================
+    # VIOLET — Arco de los favores (quests 04_d4 y 04_d5)
+    # =========================================================================
+    # La LIMPIEZA usa acciones propias (no existe una accion generica de
+    # limpiar), pero la PIZZA usa un LISTENER sobre la accion "cocinar" —
+    # mismo patron que la quest 0_b.
+    #
+    # Por que listener y no una accion propia: con una accion aparte quedaban
+    # DOS botones de Cocinar en la cocina, el generico y el de la quest. El
+    # listener intercepta el que ya existe y no agrega ninguno.
+    #
+    # Y no hace falta preocuparse por el "ya cocinaste hoy": el ejecutor
+    # (accion_locacion_ejecutar) chequea los listeners ANTES que el bloqueo por
+    # accion usada, asi que con listener valido la quest siempre pasa. Ademas el
+    # boton nunca queda gris, porque "cocinar" tiene mensaje_reintento.
+    #
+    # DIFERENCIA CON LA 0_b: alla el listener se registra en runtime, dentro del
+    # label. Eso se pierde al cargar la partida (sistema_acciones es `define`).
+    # Acá va en init con condicion por flag, que es la regla del proyecto.
+
+    def _vq4d4_cocinar_visible():
+        # Solo de noche: la pizza es para la cena.
+        return (getattr(store, 'vq4d4_pedido_hecho', False)
+                and not getattr(store, 'vq4d4_pizza_cocinada', False)
+                and store.horario_actual == 2)
+
+    def _vq4d5_limpiar_living_visible():
+        return (getattr(store, 'vq4d5_pedido_hecho', False)
+                and not getattr(store, 'vq4d5_limpio_living', False))
+
+    def _vq4d5_limpiar_comedor_visible():
+        return (getattr(store, 'vq4d5_pedido_hecho', False)
+                and not getattr(store, 'vq4d5_limpio_comedor', False))
+
+    def _vq4d5_limpiar_cocina_visible():
+        return (getattr(store, 'vq4d5_pedido_hecho', False)
+                and not getattr(store, 'vq4d5_limpio_cocina', False))
+
+    # La pizza NO agrega boton: intercepta el de "Cocinar" que ya esta en la
+    # cocina. unico=False a proposito — post_ejecutar() borraria el listener de
+    # la lista, y esa mutacion se pierde al cargar la partida; el que lo apaga
+    # es el flag vq4d4_pizza_cocinada, que si se guarda.
+    sistema_acciones.registrar_listener(ListenerAccion(
+        accion_id="cocinar",
+        label="violet_q4d4_cocinar",
+        nombre_menu="Preparar las pizzas",
+        prioridad="quest",
+        condicion=_vq4d4_cocinar_visible,
+        unico=False,
+    ))
+
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="vq4d5_limpiar_living",
+        nombre="Limpiar",
+        icono=u"🧹",
+        locacion_id="casa_living",
+        label_generico="violet_q4d5_limpiar_living",
+        reseteo=None,
+        condicion=_vq4d5_limpiar_living_visible,
+    ))
+
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="vq4d5_limpiar_comedor",
+        nombre="Limpiar",
+        icono=u"🧹",
+        locacion_id="casa_comedor",
+        label_generico="violet_q4d5_limpiar_comedor",
+        reseteo=None,
+        condicion=_vq4d5_limpiar_comedor_visible,
+    ))
+
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="vq4d5_limpiar_cocina",
+        nombre="Limpiar",
+        icono=u"🧹",
+        locacion_id="casa_cocina",
+        label_generico="violet_q4d5_limpiar_cocina",
+        reseteo=None,
+        condicion=_vq4d5_limpiar_cocina_visible,
+    ))
+
     sistema_acciones.registrar_accion(AccionLocacion(
         id="cocinar",
         nombre="Cocinar",

@@ -54,6 +54,11 @@ translate english strings:
     old "Tener {valor} de {stat}"
     new "Have {valor} {stat}"
 
+    # Requisito por hito (Requisito("hito", ...)). Lo arma
+    # obtener_texto_requisito(); {hito} llega con el nombre ya traducido.
+    old "Alcanzar {hito} con {npc}"
+    new "Reach {hito} with {npc}"
+
     old "Tener {cantidad}x {item}"
     new "Have {cantidad}x {item}"
 
@@ -91,6 +96,9 @@ translate english strings:
 
     old "Subir deseo 💋 con Violet ({}/{})"
     new "Raise Desire 💋 with Violet ({}/{})"
+
+    old "Subir amor ❤️ con Violet ({}/{})"
+    new "Raise Love ❤️ with Violet ({}/{})"
 
     # =========================================================================
     # Quest 02 de Violet — limpieza del living (violet_quest02_screens.rpy)

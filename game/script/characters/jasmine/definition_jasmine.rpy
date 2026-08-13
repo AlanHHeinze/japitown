@@ -238,17 +238,9 @@ init python:
             nombre="Jasmine en la ducha"
         ))
 
-        # =====================================================================
-        # DESBLOQUEOS DE RELACIÓN
-        # =====================================================================
-
-        # Amor
-        jasmine.agregar_desbloqueo("amor", 30, "🚪", "Ingreso Habitación",
-            "Jasmine te deja entrar a su cuarto durante el día.")
-
-        # Deseo
-        jasmine.agregar_desbloqueo("deseo", 60, "🌙", "Ingreso Nocturno",
-            "Puedes entrar a la habitación de Jasmine de noche.")
+        # Los desbloqueos de relación ya no se declaran acá: son HITOS. Jasmine
+        # todavía no tiene los suyos (falta characters/jasmine/hitos_jasmine.rpy),
+        # así que por ahora no otorga ninguna ventaja.
 
         # =====================================================================
         # REGISTRAR EN EL SISTEMA

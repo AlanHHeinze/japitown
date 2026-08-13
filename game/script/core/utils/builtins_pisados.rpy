@@ -24,8 +24,17 @@ init -100 python:
     # Builtins que nunca deberían existir como variable del store. No se
     # incluyen `_`, `__` ni `_p`: esos SÍ son del store en Ren'Py (traducción y
     # formato de párrafos), así que borrarlos rompería el juego.
+    #
+    # TAMPOCO van `list`, `dict` ni `set` (ni `object`): Ren'Py los reemplaza A
+    # PROPOSITO en el store por sus versiones revertibles —RevertableList,
+    # RevertableDict, RevertableSet (renpy/minstore.py:41,45,53)— para que el
+    # rollback trackee las mutaciones. Son distintos del builtin por diseño, asi
+    # que la comparación de abajo los daba por "pisados" y los BORRABA del store.
+    # Resultado: al cambiar de idioma, clean_data() hace renpy.store.list() y
+    # revienta con "'StoreModule' object has no attribute 'list'". Bug real,
+    # 2026-08-06.
     JP_BUILTINS_PROTEGIDOS = (
-        "int", "str", "float", "bool", "list", "dict", "set", "tuple",
+        "int", "str", "float", "bool", "tuple",
         "len", "min", "max", "abs", "round", "sum", "sorted", "range",
         "type", "id", "print", "open", "getattr", "setattr", "hasattr",
         "isinstance", "enumerate", "zip", "map", "filter", "any", "all",

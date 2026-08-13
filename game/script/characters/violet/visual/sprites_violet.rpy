@@ -158,6 +158,8 @@ layeredimage violet_parada:
             "images/characters/casa/violet/violet_parada_cuerpo_rbase_saludando.webp"
         attribute c_rbase_mangas:
             "images/characters/casa/violet/violet_parada_cuerpo_rbase_mangas.webp"
+        attribute c_rbase_bolsamadera:
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_bolsamadera.webp"
 
         # Pijama
         attribute c_pijama_base:
@@ -204,6 +206,8 @@ layeredimage violet_parada:
             "images/characters/casa/violet/violet_parada_cuerpo_pijama_mangas.webp"
         attribute c_pijama_cajacosplay:
             "images/characters/casa/violet/violet_parada_cuerpo_pijama_cajacoxplay.webp"
+        attribute c_pijama_bolsamadera:
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_bolsamadera.webp"
 
         attribute c_none:
             Null()

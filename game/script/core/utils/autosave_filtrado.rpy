@@ -35,12 +35,21 @@ init -50 python:
     # Marca para reconocer la version ya pisada (ver el guard de abajo)
     _jp_autosave_descartado._jp_filtrado = True
 
-    # Guardar la ORIGINAL una sola vez. Sin este guard, un reload de Ren'Py
-    # (Shift+R en desarrollo) volveria a ejecutar este init, capturaria la
-    # version YA pisada como "original" y el autoguardado al dormir se
-    # convertiria en una llamada que no guarda nada.
-    if not getattr(renpy.loadsave.force_autosave, "_jp_filtrado", False):
-        _jp_force_autosave_real = renpy.loadsave.force_autosave
+    # Guardar la ORIGINAL una sola vez, COMO ATRIBUTO DEL MODULO renpy.loadsave
+    # y no como variable del store.
+    #
+    # Por que no en el store (bug real, 2026-08-11 — NameError al dormir):
+    # un reload de Ren'Py (Shift+R en desarrollo) arranca un store NUEVO pero NO
+    # recarga los modulos de Python. Entonces en el segundo init
+    # renpy.loadsave.force_autosave ya era la version pisada, el guard daba
+    # False, y la variable del store nunca se volvia a crear: al dormir,
+    # autoguardar_partida() reventaba con NameError.
+    #
+    # En el modulo el valor sobrevive a los reloads, y el hasattr garantiza que
+    # se capture la ORIGINAL una unica vez por proceso — que es justo lo que el
+    # guard viejo intentaba proteger.
+    if not hasattr(renpy.loadsave, "_jp_force_autosave_real"):
+        renpy.loadsave._jp_force_autosave_real = renpy.loadsave.force_autosave
 
     # Hay que pisar las DOS rutas: renpy.force_autosave es una referencia
     # importada en exports/__init__.py:194, asi que pisar solo renpy.loadsave

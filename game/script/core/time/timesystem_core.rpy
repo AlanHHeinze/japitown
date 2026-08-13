@@ -10,6 +10,11 @@ init python:
     DIAS_SEMANA = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
     HORARIOS = ["Mañana", "Tarde", "Noche", "Trasnoche"]
 
+    # Indice del ultimo horario del dia. Se usa por nombre en vez de escribir 3
+    # suelto donde la regla es "de madrugada": asi se lee que la condicion habla
+    # del trasnoche y no de un numero cualquiera.
+    HORARIO_TRASNOCHE = 3
+
 # Variables del sistema de tiempo
 default dia_actual = 1  # Dia del mes (1-31)
 default estacion_actual = 0  # Índice de la estación (0=Primavera, 1=Verano, 2=Otoño, 3=Invierno)
@@ -176,7 +181,21 @@ init python:
         # descarta todo, para que los disparadores del motor (menu principal,
         # salir, cargar) no llenen los slots. Este es el UNICO camino que
         # realmente guarda.
-        _jp_force_autosave_real(block=True)
+        #
+        # Vive como atributo del MODULO renpy.loadsave (no en el store) para que
+        # sobreviva a los reloads de desarrollo — ver la explicacion completa en
+        # autosave_filtrado.rpy.
+        _real = getattr(renpy.loadsave, "_jp_force_autosave_real", None)
+        if _real is None:
+            # No deberia pasar nunca: el init de autosave_filtrado lo define
+            # antes que nada. Si igual falta, se avisa y NO se guarda, en vez de
+            # tirar NameError encima del dormir: perder un autosave es molesto,
+            # cortar la partida al dia siguiente es peor.
+            if config.developer:
+                print("[Autosave] ERROR: falta renpy.loadsave._jp_force_autosave_real; no se guardo")
+            return
+
+        _real(block=True)
 
         # Aviso al jugador (notificacion no bloqueante de la cola izquierda).
         notificar_partida_guardada()

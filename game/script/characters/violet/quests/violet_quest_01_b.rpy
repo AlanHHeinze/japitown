@@ -545,15 +545,15 @@ label dar_paquete_quest02_violet_b2:
 label dar_paquete_violet_cierre:
 
     if vq01b_ruta == "a":
-        $ obtener_npc("violet").modificar_stat1(4)
+        $ obtener_npc("violet").modificar_stat1(2, reserva=True)
     elif vq01b_ruta == "b1":
-        $ obtener_npc("violet").modificar_stat1(2)
-        $ obtener_npc("violet").modificar_stat2(1)
+        $ obtener_npc("violet").modificar_stat1(1, reserva=True)
+        $ obtener_npc("violet").modificar_stat2(1, reserva=True)
     elif vq01b_ruta == "b2":
-        $ obtener_npc("violet").modificar_stat2(2)
+        $ obtener_npc("violet").modificar_stat2(2, reserva=True)
 
     # Completar quest
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_01_b")
 
     window hide
     $ mostrar_hud()

@@ -75,7 +75,7 @@ label violet_quest05a_hablar:
     violet "Está bien, avisame cuando llegue el pedido."
     show violet_parada b_none
 
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_05_a")
     window hide
     $ mostrar_hud()
     jump game_loop
@@ -145,7 +145,7 @@ label violet_quest05a_puerta:
     violet "Está bien, avisame cuando llegue el pedido."
     show violet_parada b_none
 
-    $ completar_quest_actual("violet")
+    $ completar_quest_actual("violet", quest_id="violet_questprincipal_05_a")
     window hide
     $ mostrar_hud()
     jump game_loop
