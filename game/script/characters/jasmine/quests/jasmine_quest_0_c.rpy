@@ -19,6 +19,11 @@ label quest_jasmine_questprincipal_0_c:
     hide screen hud_navegacion
 
     # Mostrar background: Patio/Gym
+    # Fija el cuadro de dialogo en todo el tramo: sin esto cada `scene` lo
+    # esconde y la linea siguiente lo reaparece. Ver la nota de config.window
+    # en ui/base/options.rpy.
+    window show
+
     scene bg_casa_tarde_gym_zoom with fade
 
     # Mostrar personajes: MC a la izquierda, Jasmine a la derecha con ropa deportiva

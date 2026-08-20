@@ -3,9 +3,9 @@
 #------------------------------------------------Voces ------------------------------------------------
 
 #Prota pensando
-# El estilo (gris + italica + comillas) vive en piensa_base
+# El estilo del TEXTO (gris + italica + comillas) vive en piensa_base
 # (script/_init/config_globals.rpy); acá solo va el nombre.
-define piensa = Character("[mc_name] (Pensamiento)", kind=piensa_base)
+define piensa = Character("[mc_name]", kind=piensa_base, color=MC_COLOR)
 
 
 #------------------------------------------------Layer------------------------------------------------

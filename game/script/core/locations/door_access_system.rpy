@@ -260,22 +260,27 @@ screen menu_banio_npc(npc_id, bg_path=None):
             style "choice_button"
             action [Hide("menu_banio_npc"), Return("golpear")]
 
-        # Mirar: solo aparece si el NPC dejo la puerta entreabierta. Eso lo
-        # decide su ventaja de Provocación, no este screen — acá solo se
-        # pregunta (npc_puerta_banio_abierta, core/espiar).
+        # Mirar y Entrar aparecen JUNTAS y solo si el NPC dejo la puerta
+        # entreabierta. Eso lo decide su ventaja de Provocación, no este screen
+        # — acá solo se pregunta (npc_puerta_banio_abierta, core/espiar).
         #
-        # Con la puerta cerrada la opcion NO se muestra en gris: el jugador no
-        # tiene que enterarse de que a veces esta abierta. La sorpresa es la
-        # gracia de la provocacion.
+        # Con la puerta cerrada NO se muestran en gris: el jugador no tiene que
+        # enterarse de que a veces esta abierta (la sorpresa es la gracia de la
+        # provocacion), y "Entrar" en gris con la puerta cerrada seria doblemente
+        # confuso — no se puede entrar porque esta cerrada, no porque falte
+        # contenido.
+        #
+        # "Entrar" queda en gris igual: la escena de adentro todavia no existe.
+        # Se deja a la vista para que se entienda que es el paso que sigue.
         if ESPIAR_HABILITADO and npc_tiene_espiar(npc_id) and npc_puerta_banio_abierta(npc_id):
             textbutton "Mirar":
                 style "choice_button"
                 action [Hide("menu_banio_npc"), Return("espiar")]
 
-        textbutton "Entrar (Contenido en desarrollo)":
-            style "choice_button"
-            sensitive False
-            action NullAction()
+            textbutton "Entrar (Contenido en desarrollo)":
+                style "choice_button"
+                sensitive False
+                action NullAction()
 
         textbutton "Volver":
             style "choice_button"

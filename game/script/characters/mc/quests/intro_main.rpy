@@ -352,6 +352,11 @@ label start:
 # ---------------------------------------------------------
 label intro_principal:
 
+    # Fija el cuadro de dialogo en todo el tramo: sin esto cada `scene` lo
+    # esconde y la linea siguiente lo reaparece. Ver la nota de config.window
+    # en ui/base/options.rpy.
+    window show
+
     scene bg_intro_edificio
     show mc_parado_base ddimensiones ca_cabeza o_abajonm b_aburrida xnone c_rbase_celular at center
 
@@ -366,6 +371,10 @@ label intro_principal:
     
 
     # Viaje al aeropuerto
+    # El modo auto esta apagado desde el `window show` de arriba, asi que el
+    # cuadro no se va solo: sin este hide queda uno vacio sobre el intertitulo.
+    window hide
+
     scene black with fade
     show text Text(renpy.translate_string("30 minutos más tarde"), size=50, color="#FFFFFF",
         outlines=[(2, "#000000", 0, 0)]) at truecenter
@@ -376,6 +385,11 @@ label intro_principal:
 
 
 label intro_conversacion_padre:
+
+    # Fija el cuadro de dialogo en todo el tramo: sin esto cada `scene` lo
+    # esconde y la linea siguiente lo reaparece. Ver la nota de config.window
+    # en ui/base/options.rpy.
+    window show
 
     scene bg_intro_aeropuerto_zoom
     show mc_parado_base ddimensiones ca_cabeza o_base b_aburrida xnone c_rbase_base at mc_izquierda
@@ -489,6 +503,10 @@ label intro_conversacion_padre:
 
 label intro_llegada_casa:
 
+    # El modo auto esta apagado desde el `window show` de arriba, asi que el
+    # cuadro no se va solo: sin este hide queda uno vacio sobre el intertitulo.
+    window hide
+
     scene black with fade
 
     show text Text(renpy.translate_string("Más tarde..."), size=50, color="#FFFFFF",
@@ -497,6 +515,11 @@ label intro_llegada_casa:
     hide text with dissolve
 
     # Frente de la casa — horario mañana (inicio del juego)
+    # Fija el cuadro de dialogo en todo el tramo: sin esto cada `scene` lo
+    # esconde y la linea siguiente lo reaparece. Ver la nota de config.window
+    # en ui/base/options.rpy.
+    window show
+
     scene expression "images/bg/casa/bg_casa_manana_frente.jpg" with fade
 
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda

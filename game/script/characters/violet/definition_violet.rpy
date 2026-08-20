@@ -5,13 +5,17 @@
 
 
 # Violet
-define violet = Character("Violet", color="#956db3")
+# El color va como constante: lo usan el personaje, su susurro y su
+# pensamiento. Asi los tres no se pueden desfasar.
+define VIOLET_COLOR = "#956db3"
+
+define violet = Character("Violet", color=VIOLET_COLOR)
 
     # Violet - Susurro (texto en itálica y más claro para dar efecto de susurro)
-define violet_susurro = Character("Violet", color="#956db3", what_prefix="{i}{color=#c8c8c8}", what_suffix="{/color}{/i}")
+define violet_susurro = Character("Violet", color=VIOLET_COLOR, what_prefix="{i}{color=#c8c8c8}", what_suffix="{/color}{/i}")
 
-    # Violet - Pensando (texto en itálica con color diferente para pensamientos)
-define violet_piensa = Character("Violet (Pensamiento)", kind=piensa_base)
+    # Violet - Pensamiento (mismo nombre y color, texto en gris e itálica)
+define violet_piensa = Character("Violet", kind=piensa_base, color=VIOLET_COLOR)
 
 init python:
 

@@ -58,6 +58,11 @@ label quest_monica_questprincipal_0:
     hide screen hud_navegacion
     
     # Mostrar background
+    # Fija el cuadro de dialogo en todo el tramo: sin esto cada `scene` lo
+    # esconde y la linea siguiente lo reaparece. Ver la nota de config.window
+    # en ui/base/options.rpy.
+    window show
+
     scene bg_casa_tarde_living_zoom with dissolve
     
     # Mostrar personajes: MC a la izquierda (usando transform con flip), Monica a la derecha

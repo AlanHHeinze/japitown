@@ -169,8 +169,31 @@ default _hud_estacion_hover = False
 screen hud_navegacion():
     """HUD que se muestra durante la navegación por locaciones"""
 
-    # Ocultar el cuadro de diálogo de Ren'Py
-    $ renpy.hide_screen("say")
+    # ⚠️ NUNCA PONER EFECTOS SECUNDARIOS EN EL CUERPO DE UNA SCREEN.
+    #
+    # Acá vivía un `$ renpy.hide_screen("say")` para sacar el cuadro de diálogo
+    # al navegar. Se quitó el 2026-08-20: rompía el textbox en todo flujo de
+    # diálogo que corriera con el HUD escondido (mensajes al despertar, tutorial
+    # de la app de pistas, mensajes de bloqueo).
+    #
+    # Ren'Py PREDICE las screens que podrían mostrarse pronto para precargarles
+    # las imágenes, y predecir una screen significa EJECUTAR SU CUERPO — esté o
+    # no en pantalla. La predicción corre en `idle_frame`, o sea cuando la
+    # interacción queda ociosa: justo después de que el texto termina de
+    # tipearse. Resultado: la screen `say` viva se destruía sola a mitad de la
+    # línea, y con ella todo lo que cuelga de `screen say` (la botonera del
+    # textbox, en ui/hud/textbox_control.rpy). Lo que quedaba en pantalla era un
+    # render viejo, y el primer click lo borraba.
+    #
+    # Solo pasaba con el HUD escondido porque Ren'Py no predice lo que ya está
+    # mostrado: con el HUD visible la línea nunca se disparaba.
+    #
+    # Es redundante ademas: el `game_loop` ya hace `window hide` en su primera
+    # instrucción (characters/mc/quests/intro_main.rpy). Si alguna vez queda un
+    # cuadro colgado, la solución va en el LABEL que corresponda (`window hide`),
+    # nunca acá adentro.
+    #
+    # Registro completo de la investigación y cómo revertir: fix_textbox_say.md
 
     # Escala del HUD superior. En celular los iconos de 96 px son casi
     # intocables, asi que se agrandan; en PC/tablet queda 1.0 (sin cambios).

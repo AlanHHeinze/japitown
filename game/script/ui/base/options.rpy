@@ -178,6 +178,22 @@ define sprite_slow = Dissolve(1, alpha=True)      # Lento - cambios dramáticos
 
 define config.window = "auto"
 
+## ⚠️ "auto" ESCONDE EL CUADRO EN CADA `scene`, Y ESO SE VE.
+##
+## config.window_auto_hide trae `scene` adentro por defecto. Combinado con los
+## Dissolve(.2) de aca abajo, un `scene` entre dos lineas de dialogo hace que el
+## cuadro se funda para afuera y la linea siguiente lo funda para adentro: un
+## pestañeo en cada cambio de imagen.
+##
+## Por eso todo label de contenido con `scene` entre dialogos abre con
+## `window show` y cierra con `window hide`. `window show` pone
+## _window_auto = False y desactiva el automatismo para todo el tramo (ver
+## execute_window_show en renpy/common/000window.rpy).
+##
+## La contra de fijarlo: el cuadro tampoco se va solo en los intertitulos
+## (texto sobre negro). Ahi va un `window hide` explicito antes del `scene
+## black`, como en la intro, o queda un cuadro vacio encima.
+
 
 ## Transitions used to show and hide the dialogue window
 

@@ -4,13 +4,17 @@
 ## Definición completa del personaje Mónica
 
     #Mónica
-define monica = Character("Mónica", color="#d10b0b")
+# El color va como constante: lo usan el personaje, su susurro y su
+# pensamiento. Asi los tres no se pueden desfasar.
+define MONICA_COLOR = "#d10b0b"
+
+define monica = Character("Mónica", color=MONICA_COLOR)
 
     # Mónica - Susurro (texto en itálica y más claro para dar efecto de susurro)
-define monica_susurro = Character("Mónica", color="#d10b0b", what_prefix="{i}{color=#c8c8c8}", what_suffix="{/color}{/i}")
+define monica_susurro = Character("Mónica", color=MONICA_COLOR, what_prefix="{i}{color=#c8c8c8}", what_suffix="{/color}{/i}")
 
-    # Mónica - Pensando (texto en itálica con color diferente para pensamientos)
-define monica_piensa = Character("Mónica (Pensamiento)", kind=piensa_base)
+    # Mónica - Pensamiento (mismo nombre y color, texto en gris e itálica)
+define monica_piensa = Character("Mónica", kind=piensa_base, color=MONICA_COLOR)
 
 init python:
     

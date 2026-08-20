@@ -15,6 +15,11 @@ label event_jasmine_01_repetir:
     hide screen hud_navegacion
     
     # Escena en el gym
+    # Fija el cuadro de dialogo en todo el tramo: sin esto cada `scene` lo
+    # esconde y la linea siguiente lo reaparece. Ver la nota de config.window
+    # en ui/base/options.rpy.
+    window show
+
     scene bg_casa_tarde_gym_zoom with fade
     
     # Mostrar background: Patio/Gym
@@ -207,6 +212,11 @@ label event_jasmine_01_repetir_alternativo:
     hide screen hud_navegacion
     
     # Escena en el gym
+    # Fija el cuadro de dialogo en todo el tramo: sin esto cada `scene` lo
+    # esconde y la linea siguiente lo reaparece. Ver la nota de config.window
+    # en ui/base/options.rpy.
+    window show
+
     scene bg_casa_tarde_gym_zoom with fade
     
     # Mostrar background: Patio/Gym

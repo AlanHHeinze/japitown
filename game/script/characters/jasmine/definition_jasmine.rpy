@@ -4,13 +4,17 @@
 ## Definición completa del personaje Jasmine
 
     # Jasmine
-define jasmine = Character("Jasmine", color="#D4A574")
+# El color va como constante: lo usan el personaje, su susurro y su
+# pensamiento. Asi los tres no se pueden desfasar.
+define JASMINE_COLOR = "#D4A574"
+
+define jasmine = Character("Jasmine", color=JASMINE_COLOR)
 
     # Jasmine - Susurro (texto en itálica y más claro para dar efecto de susurro)
-define jasmine_susurro = Character("Jasmine", color="#D4A574", what_prefix="{i}{color=#c8c8c8}", what_suffix="{/color}{/i}")
+define jasmine_susurro = Character("Jasmine", color=JASMINE_COLOR, what_prefix="{i}{color=#c8c8c8}", what_suffix="{/color}{/i}")
 
-    # Jasmine - Pensando (texto en itálica con color diferente para pensamientos)
-define jasmine_piensa = Character("Jasmine (Pensamiento)", kind=piensa_base)
+    # Jasmine - Pensamiento (mismo nombre y color, texto en gris e itálica)
+define jasmine_piensa = Character("Jasmine", kind=piensa_base, color=JASMINE_COLOR)
 
 init python:
     

@@ -26,6 +26,11 @@ label interaccion_repartidor:
 label entrega_repartidor_0:
     # Primera vez que el jugador recibe un paquete
     
+    # Fija el cuadro de dialogo en todo el tramo: sin esto cada `scene` lo
+    # esconde y la linea siguiente lo reaparece. Ver la nota de config.window
+    # en ui/base/options.rpy.
+    window show
+
     scene bg_casa_manana_frente with fade
     
     show repartidor_parado c_base at right
@@ -91,6 +96,11 @@ label entrega_repartidor_0:
 label entrega_repartidor_1_5:
     # El repartidor ya conoce al jugador
     
+    # Fija el cuadro de dialogo en todo el tramo: sin esto cada `scene` lo
+    # esconde y la linea siguiente lo reaparece. Ver la nota de config.window
+    # en ui/base/options.rpy.
+    window show
+
     scene bg_casa_manana_frente with fade
     
     show repartidor_parado c_base at right
@@ -137,6 +147,11 @@ label entrega_repartidor_1_5:
 label entrega_repartidor_5_plus:
     # El repartidor y el jugador ya se conocen bien
     
+    # Fija el cuadro de dialogo en todo el tramo: sin esto cada `scene` lo
+    # esconde y la linea siguiente lo reaparece. Ver la nota de config.window
+    # en ui/base/options.rpy.
+    window show
+
     scene bg_casa_tarde_frente with fade
     
     show repartidor_parado c_hablando at right

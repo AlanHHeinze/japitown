@@ -42,6 +42,11 @@ label quest_violet_questprincipal_0_b:
     # =========================================================================
     # ESCENA 1: Pasillo (Puerta Cerrada)
     # =========================================================================
+    # Fija el cuadro de dialogo en todo el tramo (cierra con el `window hide`
+    # del final): sin esto cada `scene` lo esconde y la linea siguiente lo
+    # reaparece. Ver la nota de config.window en ui/base/options.rpy.
+    window show
+
     scene quest0_violet_puertahabitacion with fade
 
     # (Mc espalda brazos cruzados)
@@ -268,6 +273,11 @@ label quest_violet_0_opcion_entrar:
     mc "1"
 
     # Cambio de escena: Cuarto Violet
+    # Fija el cuadro de dialogo en todo el tramo (cierra con el `window hide`
+    # del final): sin esto cada `scene` lo esconde y la linea siguiente lo
+    # reaparece. Ver la nota de config.window en ui/base/options.rpy.
+    window show
+
     scene quest0_violet with fade
 
     # (Violet cuerpo brazos cruzados ojos enojada boca aburrida)
@@ -616,6 +626,11 @@ label quest_violet_0_cierre:
     hide screen hud_navegacion
 
     # Mc hace pizzas
+    # Fija el cuadro de dialogo en todo el tramo (cierra con el `window hide`
+    # del final): sin esto cada `scene` lo esconde y la linea siguiente lo
+    # reaparece. Ver la nota de config.window en ui/base/options.rpy.
+    window show
+
     scene bg_casa_noche_cocina with fade
 
     mc "Debería ponerme a cocinar"
@@ -671,6 +686,11 @@ label quest_violet_0_puerta:
 
     $ ocultar_hud()
     hide screen hud_navegacion
+
+    # Fija el cuadro de dialogo en todo el tramo (cierra con el `window hide`
+    # del final): sin esto cada `scene` lo esconde y la linea siguiente lo
+    # reaparece. Ver la nota de config.window en ui/base/options.rpy.
+    window show
 
     scene quest0_violet_puertahabitacion with fade
 
