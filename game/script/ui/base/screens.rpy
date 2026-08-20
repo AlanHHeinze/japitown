@@ -100,6 +100,19 @@ screen say(who, what):
     window:
         id "window"
 
+        # Opacidad y ocultado del cuadro — los maneja el controlador de
+        # ui/hud/textbox_control.rpy, con sus botones al pie de esta screen.
+        #
+        # Dos propiedades para dos cosas distintas:
+        #  - background: la opacidad graduable, que toca SOLO el fondo. Un
+        #    Transform sobre el window entero atenuaria tambien el texto, y el
+        #    texto atenuado es ilegible justo cuando se quiere despejar la
+        #    pantalla para mirar algo.
+        #  - at Transform: el ocultado, que si tiene que llevarse todo (fondo,
+        #    nombre y texto). Vale 1.0 salvo cuando el cuadro esta oculto.
+        background jp_tb_fondo()
+        at Transform(alpha=jp_tb_alpha_general())
+
         if who is not None:
 
             window:
@@ -121,6 +134,11 @@ screen say(who, what):
     ## the phone variant - there's no room.
     if not renpy.variant("small"):
         add SideImage() xalign 0.0 yalign 1.0
+
+    ## Botones de opacidad / ocultar. Van FUERA del `window` a proposito: si
+    ## colgaran de el heredarian su alpha y al ocultar el cuadro se irian
+    ## tambien, dejando al jugador sin forma de traerlo de vuelta.
+    use jp_textbox_controles()
 
 
 ## Make the namebox available for styling through the Character object.
@@ -448,7 +466,7 @@ screen main_menu():
             imagebutton:
                 idle Transform("images/hud/discord_logo.png", fit="contain", xysize=(int(52 * _soc_k), int(52 * _soc_k)), alpha=0.85)
                 hover Transform("images/hud/discord_logo.png", fit="contain", xysize=(int(52 * _soc_k), int(52 * _soc_k)), alpha=1.0)
-                action OpenURL("https://discord.gg/qz6REyW3Aw")
+                action OpenURL(JP_URL_DISCORD)
             text "Discord" yalign 0.5 size 28 color "#ffffff" outlines [ (2, "#000000aa", 0, 0) ]
 
         hbox:

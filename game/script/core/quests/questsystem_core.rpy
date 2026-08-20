@@ -1672,11 +1672,12 @@ init python:
         LINEA_DESEO:     "💋",
     }
 
-    def tag_opcion_quest(label, es_evento=False):
+    def tag_opcion_quest(label, es_evento=False, tipo=None):
         """
         Tag que va al final de un boton del menu de NPC o de puerta.
 
-        Devuelve " (Evento)" o " (<icono> Quest)" segun la LINEA de la quest,
+        Devuelve "" para tipo "ventaja", " (Evento)" para eventos, o
+        " (<icono> Quest)" segun la LINEA de la quest,
         que se deduce del propio label: los labels de quest se llaman
         "quest_<quest_id>", asi que se busca la quest y se lee su `linea`. Se
         hace asi y no con un campo extra en el dict de la opcion para que valga
@@ -1685,6 +1686,12 @@ init python:
         Si el label no corresponde a una quest registrada (labels propios,
         eventos, contenido suelto), cae al " (Quest)" de siempre.
         """
+        # Las opciones de VENTAJA no llevan tag: no son contenido puntual que
+        # aparece y se va, son capacidades permanentes del vinculo — se leen
+        # como "Hablar", no como una quest pendiente.
+        if tipo == "ventaja":
+            return ""
+
         if es_evento:
             return renpy.translate_string(" (Evento)")
 

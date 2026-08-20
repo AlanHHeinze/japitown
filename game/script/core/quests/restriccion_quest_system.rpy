@@ -268,6 +268,18 @@ init python:
 
     BLOQUEOS_ACCION_REGISTRO = {}  # {accion_id: [(condicion, mensaje)]}
 
+    # Bloqueos que valen para CUALQUIER accion, no para una lista de ids.
+    # Para las situaciones de "mientras pase esto no se puede hacer nada" — por
+    # ejemplo una conversacion de chat abierta que hay que contestar primero.
+    #
+    # Se usa esto y no un registro por id para cada accion porque la lista de
+    # acciones que gastan tiempo crece: `avanzar_tiempo`, `dormir`, `entrenar`,
+    # `trabajar`, `hablar`, `usar_item`, y todas las AccionLocacion (cocinar,
+    # ver_tv, las de quest...). Enumerarlas seria una lista a mantener que se
+    # desactualiza sola en cuanto se agrega una accion nueva; asi, la accion
+    # nueva queda cubierta sin tocar nada.
+    BLOQUEOS_GLOBALES = []  # [(condicion, mensaje)]
+
     MENSAJES_BLOQUEO_EVENTS = {
         "avanzar_tiempo": "No puedes avanzar el tiempo ahora.",
     }
@@ -282,6 +294,20 @@ init python:
         """
         BLOQUEOS_ACCION_REGISTRO.setdefault(accion_id, []).append(
             (condicion, mensaje))
+
+    def registrar_bloqueo_global(condicion, mensaje):
+        """
+        Registra un bloqueo que aplica a TODAS las acciones.
+
+        `condicion` es una funcion de modulo sin argumentos; `mensaje` se muestra
+        como pensamiento. Se evalua ultimo en accion_bloqueada(), asi que un
+        bloqueo mas especifico (restriccion de quest, evento, por accion) le gana
+        y puede dar un texto mejor.
+
+        OJO: bloquea de verdad TODO. Solo para situaciones de las que el jugador
+        pueda salir por su cuenta — si no, se traba la partida.
+        """
+        BLOQUEOS_GLOBALES.append((condicion, mensaje))
 
     def accion_bloqueada(accion_id):
         """
@@ -316,6 +342,11 @@ init python:
 
         # 4. Bloqueos registrados por el contenido
         for _cond, _msg in BLOQUEOS_ACCION_REGISTRO.get(accion_id, []):
+            if _cond():
+                return renpy.translate_string(_msg)
+
+        # 5. Bloqueos GLOBALES: valen para cualquier accion_id.
+        for _cond, _msg in BLOQUEOS_GLOBALES:
             if _cond():
                 return renpy.translate_string(_msg)
 

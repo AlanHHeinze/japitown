@@ -374,7 +374,13 @@ init python:
         def actualizar_memoria_mc(self, npc_id, estado_id, opcion_id, resultado_id):
             """
             Guarda la interacción en la memoria del MC.
-            Límite: mc_inteligencia entradas por NPC.
+
+            Límite: mc_inteligencia entradas por NPC — y como mc_inteligencia
+            arranca en 0, por defecto es UNA sola combinación (estado, opción).
+
+            EXCEPCIÓN: con la ventaja "talk_memoria_total" (hito de deseo 10) no
+            hay tope para ese NPC y todo lo que se probó queda recordado. El
+            tope es por NPC, así que la ventaja de una no afecta a las otras.
             """
             if not hasattr(store, 'talk_memoria'):
                 store.talk_memoria = {}
@@ -391,6 +397,16 @@ init python:
                 "opcion": opcion_id,
                 "resultado": resultado_id,
             })
+
+            # La ventaja saltea el recorte. El try cubre el save viejo cuyo
+            # catalogo de hitos todavia no esta cargado — mismo criterio que
+            # npc_durmiendo() con npc_tiene_ventaja.
+            try:
+                if npc_tiene_ventaja(npc_id, "talk_memoria_total"):
+                    return
+            except Exception:
+                pass
+
             store.talk_memoria[npc_id] = store.talk_memoria[npc_id][:limite]
 
         def consultar_memoria_mc(self, npc_id, estado_id, opcion_id):

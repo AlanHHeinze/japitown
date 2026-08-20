@@ -10,7 +10,7 @@ define jasmine = Character("Jasmine", color="#D4A574")
 define jasmine_susurro = Character("Jasmine", color="#D4A574", what_prefix="{i}{color=#c8c8c8}", what_suffix="{/color}{/i}")
 
     # Jasmine - Pensando (texto en itálica con color diferente para pensamientos)
-define jasmine_pensando = Character("Jasmine", color="#D4A574", what_prefix="{i}{color=#a8b4c4}", what_suffix="{/color}{/i}")
+define jasmine_piensa = Character("Jasmine (Pensamiento)", kind=piensa_base)
 
 init python:
     

@@ -47,8 +47,8 @@ translate english strings:
     # como nombres de hito en relaciones_strings.rpy y comparten entrada.
 
     # Amor
-    old "Un acercamiento"
-    new "Getting closer"
+    old "¿Mejor?"
+    new "Better?"
 
     old "Empiezo a llevarme mejor con Violet."
     new "I'm starting to get along better with Violet."
@@ -56,45 +56,77 @@ translate english strings:
     old "La relacion con Violet se afianza."
     new "Things with Violet are settling in."
 
-    old "Mas confianza"
-    new "More trust"
+    # Amor 15. "Portatil Boy" se adapta ("Portable Boy"): es un nombre parodia
+    # y "Portatil" es palabra comun en español — sin traducir se pierde el
+    # chiste. Mismo criterio en chat_violet_strings.rpy.
+    old "Juegos Viejos"
+    new "Old Games"
 
-    old "Violet se abre un poco mas."
-    new "Violet is opening up a little more."
+    old "Violet quiere su vieja Portatil Boy."
+    new "Violet wants her old Portable Boy."
 
-    old "Volvemos a estar como estabamos."
-    new "We're back to how we used to be."
+    # Amor 20. El nombre ya no coincide con el del hito ("Como antes", que se
+    # traduce en relaciones_strings.rpy y no se toca): la quest es el evento,
+    # el hito es el estado de la relacion.
+    old "Jugando juntos"
+    new "Playing together"
 
-    old "Mas cerca"
-    new "Closer"
+    old "Violet y yo terminamos jugando lo mismo."
+    new "Violet and I ended up playing the same game."
 
-    old "Cada vez pasamos mas tiempo juntos."
-    new "We're spending more and more time together."
+    # Amor 25. NO se traduce como "Home Alone": ese nombre ya lo tiene la quest
+    # principal "Solo en casa" (arriba). El de acá es plural — son los dos.
+    old "Solos en casa"
+    new "Alone in the house"
 
-    old "Hay algo entre nosotros dificil de negar."
-    new "There's something between us that's hard to deny."
+    old "Un domingo entero con Violet y nadie mas."
+    new "A whole Sunday with Violet and nobody else."
+
+    # Deseo 30 (las de umbral 30 se intercambiaron entre lineas). El hito de
+    # amor 30 sigue llamandose "Algo nos pasa" y el de deseo 30 "Un paso más
+    # allá"; los dos se traducen en relaciones_strings.rpy y no se tocan.
+    # La pista "Esperar" ya esta traducida mas abajo, en los mensajes genericos.
+    old "Noche de amigas"
+    new "Girls' night"
+
+    old "Violet me hizo lugar entre sus amigas."
+    new "Violet made room for me among her friends."
 
     # Deseo
-    old "Otra mirada"
-    new "A different look"
+    old "Atracción"
+    new "Attraction"
 
     old "Algo cambio en como Violet me mira."
     new "Something changed in the way Violet looks at me."
 
-    old "Sin disimular"
-    new "No more hiding it"
+    # Deseo 15
+    old "Anime en estreno"
+    new "Anime premiere"
 
-    old "Ya casi no lo escondemos."
-    new "We barely hide it anymore."
+    old "Estrenan el anime que los dos queriamos ver."
+    new "The anime we both wanted to watch is premiering."
 
-    old "Nos dijimos lo que estaba pasando."
-    new "We told each other what was going on."
+    # Deseo 20. Igual que en amor 20, el nombre ya no coincide con el del hito
+    # ("Confesión", en relaciones_strings.rpy, que no se toca).
+    old "Pensando en Violet"
+    new "Thinking about Violet"
 
-    old "Sin rodeos"
-    new "No beating around the bush"
+    old "No me la puedo sacar de la cabeza."
+    new "I can't get her out of my head."
 
-    old "Con Violet ya no hace falta rodear nada."
-    new "With Violet there's no need to dance around it anymore."
+    # Amor 30.
+    old "¿Que me pongo?"
+    new "What should I wear?"
+
+    old "Violet quiere mi opinion sobre como se ve."
+    new "Violet wants my opinion on how she looks."
+
+    # Deseo 25
+    old "En su habitacion"
+    new "In her room"
+
+    old "Un capitulo de anime en la pieza de Violet."
+    new "An anime episode in Violet's room."
 
     # Arco de los favores — nombres y descripciones de las 4 quests.
     # Las descripciones NO repiten ninguna pista a proposito: dos `old` iguales

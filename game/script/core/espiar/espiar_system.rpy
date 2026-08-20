@@ -1,63 +1,47 @@
 ################################################################################
 ## Sistema de Espiar en el Baño — Motor
 ################################################################################
-## Minijuego de espiar por la puerta entreabierta cuando un NPC está en el baño.
+## Lo que ve el jugador cuando Violet deja la puerta del baño entreabierta y el
+## MC MIRA. Es la primera situacion de la ventaja "Provocación" (hito de deseo
+## 30): la puerta esta asi porque ELLA la dejo asi.
 ##
-## Cómo funciona:
-##   - Al elegir "Espiar" en el menú del baño se sortea una SecuenciaEspiar del
-##     catálogo del NPC (peso + condicion) y se muestra el screen del minijuego:
-##     fondo arrastrable en horizontal (viewport) + imagen de puerta con rendija.
-##   - Los botones son AccionLocacion globales (locacion_id=None) que solo se
-##     ven mientras hay sesión activa; el panel de acciones del HUD mantiene
-##     la estética del resto del juego.
-##   - REQUISITO DE ACCESO: el NPC tiene que tener al menos ESPIAR_DESEO_MINIMO
-##     de deseo. El minijuego es parte de la tensión ya establecida entre los
-##     dos personajes, no un primer contacto: sin ese nivel la opción ni
-##     siquiera aparece en el menú del baño.
-##   - "Abrir más": 20% base + 10% por punto de destreza - 20% por apertura ya
-##     lograda (mínimo 1%). Fallo → el NPC se da cuenta (label de descubierto).
-##   - "Entrar" (destreza 10+): hoy avisa "contenido en desarrollo" y no avanza;
-##     si la secuencia define label_entrar, salta a esa escena propia.
-##   - "Salir": vuelve al pasillo. Toda salida del minijuego avanza 1 horario.
+## QUE HACE:
+##   - Muestra la escena de la ducha por la rendija, con la puerta en su
+##     posicion mas abierta. No hay nada que abrir ni nada que fallar.
+##   - Dos botones, AccionLocacion globales (locacion_id=None) que solo existen
+##     mientras hay sesion: "Entrar" (en gris, contenido en desarrollo) y
+##     "Salir". Salir avanza 1 horario.
 ##
-## Para AGREGAR contenido (ver espiar_violet.rpy como ejemplo):
-##   - registrar_secuencia_espiar(SecuenciaEspiar(...))   → nueva secuencia
-##   - registrar_espiar_npc(npc_id, label_primera_vez, reacciones) → reacciones
-##   - SecuenciaEspiar(label_entrar=...) → escena propia al entrar
-##   - SecuenciaEspiar(label_descubierto=...) → reacción especial al fallar
-##   - SecuenciaEspiar(condicion=funcion_de_modulo) → secuencias de quest/evento
+## QUIEN DECIDE SI SE PUEDE MIRAR: no este archivo. El estado de la puerta lo
+## sortea characters/violet/ventajas/provocacion/provocacion_violet.rpy, y el
+## menu del baño (core/locations/door_access_system) muestra "Mirar" solo si dio
+## abierta.
+##
+## SE ELIMINO (era del viejo "espiar", donde el MC forzaba la situacion):
+##   - "Abrir mas" con su tirada contra la destreza y sus etapas de apertura
+##   - todo el "te descubrieron" (reacciones por deseo, primera vez, stats)
+##   - el requisito ESPIAR_DESEO_MINIMO — ahora habilita la ventaja
+##   - la instancia "entrar" y su boton "Unirse"
+##
+## Para AGREGAR una escena: registrar_secuencia_espiar(SecuenciaEspiar(...)) —
+## ver espiar_violet.rpy.
 
 ################################################################################
 ## Estado guardable
 ################################################################################
 
-# Interruptor maestro del minijuego. Mientras esté en False, el botón "Espiar"
-# del baño queda deshabilitado ("Contenido en desarrollo") en la versión jugable
-# — todo el sistema sigue acá, poner True lo re-activa de una.
+# Interruptor maestro. Mientras este en False la opcion "Mirar" no aparece
+# aunque la puerta este abierta — todo el sistema sigue acá, poner True lo
+# re-activa de una.
 define ESPIAR_HABILITADO = True
 
-# Sesión activa del minijuego (None = no está corriendo). Dict plano picklable:
-# {"npc_id", "secuencia_id", "xoffset" (0, 100, 200, 300 px), "instancia"
-#  ("mirilla" | "entrar")}
+# Sesion activa (None = no esta corriendo). Dict plano picklable:
+# {"npc_id", "secuencia_id"}
 default espiar_sesion = None
-
-# NPCs que ya descubrieron al jugador alguna vez: {npc_id: True}
-default espiar_descubierto_npc = {}
 
 # NPC objetivo al iniciar (lo setea interaccion_banio_ocupado)
 default _espiar_npc_temp = None
 
-
-################################################################################
-## Clases y catálogo
-################################################################################
-
-init python:
-
-    # Imagenes de puerta por defecto (stage 0 → estado1 ... stage 3 → estado4).
-    # Una secuencia puede traer las suyas con puertas=[...].
-    # Por ahora vacío — cada secuencia define sus propias puertas
-    ESPIAR_PUERTAS_DEFAULT = []
 
 # =============================================================================
 # IMÁGENES DEL MINIJUEGO DE DUCHA
@@ -188,9 +172,9 @@ layeredimage ducha_mg_violet:
             "images/minijuegos/ducha/ducha_violet_jabon_15.webp"
 
 init python:
-    # Deseo minimo del NPC para que el minijuego este disponible. Es el
-    # requisito de acceso: por debajo de esto la opcion "Espiar" no se ofrece.
-    ESPIAR_DESEO_MINIMO = 20
+    # Desplazamiento de la puerta, en px. Es la posicion mas abierta — la que
+    # antes se alcanzaba tras tres "Abrir mas" exitosos (3 x 100px).
+    ESPIAR_PUERTA_ABIERTA_X = 300
 
     # Cuánto se puede arrastrar el fondo hacia cada lado desde su posición
     # inicial, en px. El fondo se muestra a tamaño nativo (sin zoom): el margen
@@ -212,29 +196,21 @@ init python:
             npc_id: NPC al que pertenece
             nombre: nombre descriptivo (para debug/menus futuros)
             fondo: imagen de fondo de la mirilla (tamaño nativo, drag horizontal)
-            fondo_entrar: imagen de la instancia "entrar" (default: mismo fondo)
-            label_entrar: si se define, "Entrar" salta a este label en vez de a
-                          la instancia generica (escena propia de la secuencia)
-            label_descubierto: si se define, reemplaza la reacción estándar al
-                               ser descubierto durante esta secuencia
-            puertas: lista de 4 imagenes de puerta propias (default compartidas)
+            label_entrar: si se define, "Entrar" salta a este label (escena
+                          propia de la secuencia). Sin el, "Entrar" queda en gris.
             margen_drag: px arrastrables a cada lado (default ESPIAR_DRAG_MARGEN)
             peso: peso relativo en el sorteo aleatorio (default 1)
             condicion: funcion de modulo → bool; si falla, la secuencia no entra
                        al sorteo (permite secuencias de quest/evento)
         """
         def __init__(self, id, npc_id, fondo, nombre="",
-                     fondo_entrar=None, label_entrar=None,
-                     label_descubierto=None, puertas=None, margen_drag=None,
+                     label_entrar=None, margen_drag=None,
                      peso=1, condicion=None):
             self.id = id
             self.npc_id = npc_id
             self.nombre = nombre
             self.fondo = fondo
-            self.fondo_entrar = fondo_entrar if fondo_entrar else fondo
             self.label_entrar = label_entrar
-            self.label_descubierto = label_descubierto
-            self.puertas = list(puertas) if puertas else None
             self.margen_drag = margen_drag
             self.peso = peso
             self._condicion = condicion
@@ -248,31 +224,15 @@ init python:
                 return True
             return self._condicion()
 
-        def puerta_por_stage(self, stage):
-            puertas = self.puertas or ESPIAR_PUERTAS_DEFAULT
-            return puertas[max(0, min(stage, len(puertas) - 1))]
-
     # Catálogo de secuencias por NPC. Vive en init (no se guarda): la sesión
     # solo referencia secuencias por id, igual que las quests con su catálogo.
     CATALOGO_ESPIAR = {}
-
-    # Configuración de reacción al ser descubierto, por NPC:
-    # {npc_id: {"label_primera_vez": str|None, "reacciones": [rango, ...]}}
-    # Cada rango: {"min": 0, "max": 100, "amor": delta, "deseo": delta}
-    # (claves opcionales; se evalua el deseo actual del NPC contra min/max)
-    CONFIG_ESPIAR_NPC = {}
 
     def registrar_secuencia_espiar(secuencia):
         CATALOGO_ESPIAR.setdefault(secuencia.npc_id, [])
         CATALOGO_ESPIAR[secuencia.npc_id] = [
             s for s in CATALOGO_ESPIAR[secuencia.npc_id] if s.id != secuencia.id
         ] + [secuencia]
-
-    def registrar_espiar_npc(npc_id, label_primera_vez=None, reacciones=None):
-        CONFIG_ESPIAR_NPC[npc_id] = {
-            "label_primera_vez": label_primera_vez,
-            "reacciones": list(reacciones) if reacciones else [],
-        }
 
     def obtener_secuencias_espiar(npc_id):
         """Secuencias del NPC cuya condicion se cumple ahora."""
@@ -282,16 +242,34 @@ init python:
         """True si el NPC tiene al menos una secuencia espiable (habilita el botón)."""
         return bool(obtener_secuencias_espiar(npc_id))
 
-    def npc_espiar_disponible(npc_id):
+    # ── Estado de la puerta ──────────────────────────────────────────────────
+    # El motor NO decide si la puerta esta abierta: pregunta. Cada NPC registra
+    # su funcion desde su contenido (para Violet, la ventaja Provocación en
+    # characters/violet/ventajas/provocacion/). Sin funcion registrada, cerrada.
+    PUERTA_BANIO_REGISTRO = {}   # {npc_id: fn() -> bool}
+
+    def registrar_puerta_banio(npc_id, funcion):
         """
-        Requisito de acceso al minijuego: ademas de tener secuencias, el NPC
-        tiene que llegar a ESPIAR_DESEO_MINIMO de deseo. El minijuego es parte
-        de una tension ya establecida entre los dos personajes, asi que por
-        debajo de ese umbral la opcion directamente no se ofrece.
+        Registra quien decide si ESE NPC deja la puerta del baño entreabierta.
+        `funcion` es de MODULO, sin argumentos, y devuelve bool.
         """
-        if not npc_tiene_espiar(npc_id):
+        PUERTA_BANIO_REGISTRO[npc_id] = funcion
+
+    def npc_puerta_banio_abierta(npc_id):
+        """
+        ¿Dejo la puerta entreabierta? Lo consulta el menu del baño para decidir
+        si ofrece "Mirar".
+
+        Envuelto en try porque lo llama una screen: una excepcion ahi rompe el
+        menu entero. Ante la duda, cerrada.
+        """
+        _fn = PUERTA_BANIO_REGISTRO.get(npc_id)
+        if _fn is None:
             return False
-        return obtener_stat2(npc_id) >= ESPIAR_DESEO_MINIMO
+        try:
+            return bool(_fn())
+        except Exception:
+            return False
 
     def elegir_secuencia_espiar(npc_id):
         """Sortea una secuencia del pool válido, respetando pesos."""
@@ -315,22 +293,6 @@ init python:
                 return s
         return None
 
-    def espiar_prob_abrir():
-        """20% base + 10% por destreza - 20% por cada 100px abierto, minimo 1%."""
-        xoffset = store.espiar_sesion.get("xoffset", 0) if store.espiar_sesion else 0
-        aperturas = xoffset // 100  # convertir px a número de aperturas
-        destreza = getattr(store, 'mc_destreza', 0)
-        return max(1, 20 + 10 * destreza - 20 * aperturas)
-
-    def _espiar_reaccion_fallo(npc_id):
-        """Rango de reacción que aplica segun el deseo actual del NPC."""
-        conf = CONFIG_ESPIAR_NPC.get(npc_id, {})
-        deseo = obtener_stat2(npc_id)
-        for rango in conf.get("reacciones", []):
-            if rango.get("min", 0) <= deseo <= rango.get("max", 100):
-                return rango
-        return None
-
     def _espiar_cerrar_ui():
         """
         Cierra el minijuego dejando la pantalla lista para un cutscene limpio:
@@ -352,30 +314,16 @@ init python:
         renpy.hide_screen("hud_navegacion")
         ocultar_hud()
 
-    def _esp_nombre_abrir():
-        """Etiqueta de "Abrir más" con el % de exito actual (cae 20% por stage)."""
-        return u"%s (%d%%)" % (renpy.translate_string("Abrir más"), espiar_prob_abrir())
-
-    # ── Condiciones de visibilidad de las acciones (funciones de modulo) ─────
-
-    def _esp_acc_abrir_visible():
-        s = getattr(store, 'espiar_sesion', None)
-        return bool(s) and s.get("instancia") == "mirilla" and s.get("xoffset", 0) < 300
-
-    # "Entrar" y "Sacar foto" se muestran SIEMPRE durante la mirilla; si no se
-    # cumplen sus requisitos aparecen en gris (condicion_habilitada), para que
-    # el jugador vea que la opción existe y qué le falta.
+    # "Entrar" se muestra siempre pero EN GRIS: la escena de adentro todavia no
+    # existe. Se deja a la vista para que el jugador sepa que la opcion va a
+    # estar. Una secuencia con label_entrar propio si la habilita.
 
     def _esp_acc_entrar_visible():
-        s = getattr(store, 'espiar_sesion', None)
-        return bool(s) and s.get("instancia") == "mirilla"
+        return bool(getattr(store, 'espiar_sesion', None))
 
     def _esp_acc_entrar_habilitada():
-        return getattr(store, 'mc_destreza', 0) >= ESPIAR_DESTREZA_ENTRAR
-
-    def _esp_acc_unirse_visible():
-        s = getattr(store, 'espiar_sesion', None)
-        return bool(s) and s.get("instancia") == "entrar"
+        _sec = _espiar_secuencia_actual()
+        return bool(_sec and _sec.label_entrar)
 
     def _esp_acc_salir_visible():
         return bool(getattr(store, 'espiar_sesion', None))
@@ -391,24 +339,11 @@ init python:
 init 5 python:
 
     sistema_acciones.registrar_accion(AccionLocacion(
-        id="espiar_abrir", nombre="Abrir más", icono=u"🚪",
-        locacion_id=None, label_generico="accion_espiar_abrir",
-        reseteo=None, condicion=_esp_acc_abrir_visible,
-        color="#E65100", color_hover="#FF9800",
-        nombre_dinamico=_esp_nombre_abrir,
-    ))
-    sistema_acciones.registrar_accion(AccionLocacion(
         id="espiar_entrar", nombre="Entrar", icono=u"🚶",
         locacion_id=None, label_generico="accion_espiar_entrar",
         reseteo=None, condicion=_esp_acc_entrar_visible,
         condicion_habilitada=_esp_acc_entrar_habilitada,
         color="#8E24AA", color_hover="#AB47BC",
-    ))
-    sistema_acciones.registrar_accion(AccionLocacion(
-        id="espiar_unirse", nombre="Unirse", icono=u"🤝",
-        locacion_id=None, label_generico="accion_espiar_unirse",
-        reseteo=None, condicion=_esp_acc_unirse_visible,
-        color="#C62828", color_hover="#EF5350",
     ))
     sistema_acciones.registrar_accion(AccionLocacion(
         id="espiar_salir", nombre="Salir", icono=u"❌",
@@ -436,12 +371,8 @@ screen espiar_minijuego():
 
     if _esp_scr_sec and espiar_sesion:
 
-        if espiar_sesion.get("instancia") == "entrar":
-            # Instancia "entrar": fondo propio a pantalla completa
-            add _esp_scr_sec.fondo_entrar
-
-        else:
-            # Mirilla: orden de capas (de atrás para adelante). Todas son
+        if True:
+            # Orden de capas (de atrás para adelante). Todas son
             # 1920x1080 a pantalla completa, asi que van sin posicionar.
             # Los nombres van entre comillas: `add` evalua una expresion Python
             # y un nombre de imagen suelto seria una variable inexistente.
@@ -465,9 +396,10 @@ screen espiar_minijuego():
             add "ducha_mg_vapor_exterior"
             # 10. Pared frontal
             add "ducha_mg_pared"
-            # 11. Puerta frontal (desplazada por xoffset)
-            $ _esp_scr_xoffset = espiar_sesion.get("xoffset", 0)
-            add Transform("ducha_mg_puerta", xoffset=_esp_scr_xoffset)
+            # 11. Puerta frontal, FIJA en su posicion mas abierta. Antes se
+            # corria de a 100px con el boton "Abrir mas"; ahora la puerta esta
+            # asi porque Violet la dejo asi, no hay nada que forzar.
+            add Transform("ducha_mg_puerta", xoffset=ESPIAR_PUERTA_ABIERTA_X)
 
     # Botones del minijuego con la estética del panel de acciones del HUD
     use acciones_locacion(forzar=True)
@@ -490,72 +422,8 @@ label espiar_iniciar:
     $ espiar_sesion = {
         "npc_id": _espiar_npc_temp,
         "secuencia_id": _esp_sec_ini.id,
-        "xoffset": 0,
-        "instancia": "mirilla",
     }
     show screen espiar_minijuego
-    return
-
-
-# ── Abrir más ────────────────────────────────────────────────────────────────
-label accion_espiar_abrir:
-
-    if not espiar_sesion:
-        return
-
-    $ _esp_pct_abrir = espiar_prob_abrir()
-
-    if renpy.random.randint(1, 100) <= _esp_pct_abrir:
-        # Éxito: la puerta se desplaza 100px a la derecha (dict nuevo, rollback-friendly)
-        $ espiar_sesion = dict(espiar_sesion, xoffset=espiar_sesion.get("xoffset", 0) + 100)
-        return
-
-    # Fallo: el NPC se da cuenta
-    jump espiar_descubierto
-
-
-# ── Descubierto (fallo de Abrir más) ─────────────────────────────────────────
-label espiar_descubierto:
-
-    $ _esp_desc_sec = _espiar_secuencia_actual()
-    $ _esp_desc_npc_id = espiar_sesion["npc_id"]
-    $ _esp_desc_npc = obtener_npc(_esp_desc_npc_id)
-    $ _esp_desc_nombre = _esp_desc_npc.nombre if _esp_desc_npc else _esp_desc_npc_id
-    $ _esp_desc_conf = CONFIG_ESPIAR_NPC.get(_esp_desc_npc_id, {})
-
-    # Cerrar el minijuego ANTES de la reacción — sin ningún mensaje intermedio,
-    # el label de descubierto se dispara directo (ver _espiar_cerrar_ui).
-    $ _espiar_cerrar_ui()
-
-    if _esp_desc_sec and _esp_desc_sec.label_descubierto:
-        # Reacción especial propia de la secuencia (quest/evento)
-        call expression _esp_desc_sec.label_descubierto from _call_espiar_desc_secuencia
-
-    elif not espiar_descubierto_npc.get(_esp_desc_npc_id) and _esp_desc_conf.get("label_primera_vez"):
-        # Primera vez: secuencia especial del NPC — reemplaza la reacción por
-        # deseo (sin resta ni suma de stats)
-        $ espiar_descubierto_npc = dict(espiar_descubierto_npc, **{_esp_desc_npc_id: True})
-        call expression _esp_desc_conf["label_primera_vez"] from _call_espiar_desc_primera_vez
-
-    else:
-        # Reacción estándar segun el deseo actual del NPC
-        $ espiar_descubierto_npc = dict(espiar_descubierto_npc, **{_esp_desc_npc_id: True})
-        $ _esp_desc_reaccion = _espiar_reaccion_fallo(_esp_desc_npc_id)
-        if _esp_desc_reaccion:
-            $ _esp_d_amor = _esp_desc_reaccion.get("amor", 0)
-            $ _esp_d_deseo = _esp_desc_reaccion.get("deseo", 0)
-            if _esp_d_amor:
-                $ cambiar_stat1(_esp_desc_npc_id, _esp_d_amor)
-            if _esp_d_deseo:
-                $ cambiar_stat2(_esp_desc_npc_id, _esp_d_deseo)
-            if _esp_d_amor < 0:
-                "[_esp_desc_nombre] se enfadó contigo."
-            elif _esp_d_deseo > 0:
-                "A [_esp_desc_nombre] no pareció molestarle... al contrario."
-
-    window hide
-    $ avanzar_horario()
-    $ mostrar_hud()
     return
 
 
@@ -576,9 +444,9 @@ label accion_espiar_entrar:
         $ mostrar_hud()
         return
 
-    # Instancia generica: TODAVIA NO IMPLEMENTADA. Avisa y deja al jugador en
-    # la mirilla — no se entra ni se consume el horario. Cuando este lista, esto
-    # vuelve a ser: espiar_sesion = dict(espiar_sesion, instancia="entrar")
+    # Sin escena propia no se entra: se avisa y el jugador sigue mirando — no
+    # se consume el horario. La accion ya aparece en gris (condicion_habilitada),
+    # asi que llegar acá es raro; queda como red de seguridad.
     #
     # El texto va interpolado, asi que NO lo traduce el bloque de dialogo con
     # hash: lo traduce translate_string y el `old` vive en
@@ -588,17 +456,6 @@ label accion_espiar_entrar:
     piensa "[_esp_ent_msg]"
     window hide
     return
-
-
-# ── Unirse (instancia entrar) ────────────────────────────────────────────────
-label accion_espiar_unirse:
-
-    window show
-    piensa "(Contenido en desarrollo)"
-    window hide
-    return
-
-
 
 
 # ── Salir ────────────────────────────────────────────────────────────────────

@@ -196,6 +196,16 @@ transform mover_al_centro_lento:
 transform mover_al_centro_horizontal:
     easein 1.0 xalign 0.5
 
+# Del centro (mirando a la derecha) hasta right, girando al llegar para quedar
+# mirando a la izquierda. Para cuando un personaje que hablaba con alguien a su
+# derecha se corre y se da vuelta hacia el MC.
+transform centro_a_right_y_giro:
+    xalign 0.5
+    yalign 1.0
+    xzoom -1.0
+    ease 1.0 xalign 1.0
+    xzoom 1.0
+
 
 # =============================================================================
 # EFECTOS VISUALES

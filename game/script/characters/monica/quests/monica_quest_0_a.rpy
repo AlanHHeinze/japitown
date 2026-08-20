@@ -100,7 +100,7 @@ label quest_monica_questprincipal_0:
     
     #Monica Piensa
     show monica_parada o_arribanm
-    monica_pensando "Violet y Jasmine deben estar más que felices en este momento..."
+    monica_piensa "Violet y Jasmine deben estar más que felices en este momento..."
     show monica_parada o_base
 
     # Monica habla
@@ -123,7 +123,7 @@ label quest_monica_questprincipal_0:
 
     #Monica Piensa
     show monica_parada o_arribanm
-    monica_pensando "Creo saber el motivo..."
+    monica_piensa "Creo saber el motivo..."
     show monica_parada o_base
 
     # Monica habla
@@ -494,7 +494,7 @@ label quest_monica_0_cierre:
     hide monica_quest_0_monica_perfume_brazocostado
     show monica_quest_0_monica_perfume_mirando
     pause 0.5
-    monica_pensando "Tan inocente es... No estaría mal aprovecharme"
+    monica_piensa "Tan inocente es... No estaría mal aprovecharme"
     
     show monica_quest_0_monica_mirando_enojada
     show monica_quest_0_monica_mirando_hablando
@@ -531,8 +531,8 @@ label quest_monica_0_cierre:
     hide monica_quest_0_monica_mirando_riendo
     hide monica_quest_0_monica_perfume_mirando
     pause 0.3 
-    monica_pensando "Jajaja... Se veia tan tierno estando nervioso"
-    monica_pensando "Hace mucho no me reía así"
+    monica_piensa "Jajaja... Se veia tan tierno estando nervioso"
+    monica_piensa "Hace mucho no me reía así"
     hide monica_quest_0_monica_carcajada with fade
     
     # Evaluar ruta elegida y aplicar stats

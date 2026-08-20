@@ -10,7 +10,7 @@ define monica = Character("Mónica", color="#d10b0b")
 define monica_susurro = Character("Mónica", color="#d10b0b", what_prefix="{i}{color=#c8c8c8}", what_suffix="{/color}{/i}")
 
     # Mónica - Pensando (texto en itálica con color diferente para pensamientos)
-define monica_pensando = Character("Mónica", color="#d10b0b", what_prefix="{i}{color=#a8b4c4}", what_suffix="{/color}{/i}")
+define monica_piensa = Character("Mónica (Pensamiento)", kind=piensa_base)
 
 init python:
     

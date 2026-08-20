@@ -209,6 +209,19 @@ layeredimage violet_parada:
         attribute c_pijama_bolsamadera:
             "images/characters/casa/violet/violet_parada_cuerpo_pijama_bolsamadera.webp"
 
+        # Tanga — ropa interior. Se usa con ca_base (la cabeza de la ropa de
+        # siempre), NO con ca_pijama: no es un atuendo de dormir completo.
+        #
+        # Va como seccion del grupo `cuerpo` y no como grupo propio a proposito:
+        # dos grupos se dibujarian superpuestos y se le veria el pijama debajo.
+        # Es la misma forma en que conviven rbase y pijama.
+        #
+        # ⚠️ ARTE PENDIENTE. Apunta al cuerpo base para que la escena se pueda
+        # probar; al llegar la imagen real, cambiar SOLO esta ruta por
+        # "images/characters/casa/violet/violet_parada_cuerpo_tanga_base.webp".
+        attribute c_tanga_base:
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_base.webp"
+
         attribute c_none:
             Null()
     
@@ -225,10 +238,15 @@ layeredimage violet_parada:
 
 layeredimage violet_espalda:
 
-    # Grupo skin base — placeholder para imágenes futuras
+    # Grupo skin base — Violet de espaldas con su ropa de siempre.
+    # Era un placeholder vacio hasta que llegó la primera imagen; NO se creó un
+    # grupo aparte para la ropa base porque este ya lo era, y dos grupos para el
+    # mismo atuendo se dibujarian como dos capas superpuestas.
     group skinbase:
         attribute sb_none default:
             Null()
+        attribute sb_celular:
+            "images/characters/casa/violet/violet_parada_espalda_rbase_celular.webp"
 
     # Grupo pijama — imágenes de espalda con skin pijama
     group pijama:

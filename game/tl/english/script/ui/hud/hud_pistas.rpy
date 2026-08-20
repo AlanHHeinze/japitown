@@ -40,6 +40,9 @@ translate english strings:
     old "Entendido"
     new "Got it"
 
+    # Un solo `old` para los dos usos: el cartel del panel cuando un NPC no
+    # tiene nada activo en esa pestaña, y la descripcion de los hitos
+    # "Próximamente".
     old "Nuevo contenido en futuras actualizaciones."
     new "New content in future updates."
 

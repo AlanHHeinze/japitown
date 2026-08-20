@@ -27,6 +27,23 @@ init python:
     TRIGGERS_DORMIR_DESPUES = []  # idem — corren DESPUES del autosave
     TRIGGERS_AVANZAR = []         # idem — corren tras avanzar el horario
 
+    # Condiciones que CONGELAN los triggers de game_loop mientras dan True. Sirve
+    # para cortar de raiz los inicios de quest y las escenas automaticas cuando
+    # el juego esta esperando algo del jugador — por ejemplo una conversacion de
+    # chat sin contestar.
+    #
+    # Congela TODOS los triggers, no solo los inicios: una transicion de fase a
+    # mitad de camino tambien es una escena que interrumpe. Solo registrar
+    # condiciones de las que el jugador pueda salir por su cuenta.
+    CONGELAMIENTOS_TRIGGER = []   # [condicion]
+
+    def registrar_congelamiento_triggers(condicion):
+        """
+        Registra una condicion que congela los triggers de game_loop.
+        `condicion` es funcion de MODULO sin argumentos (regla anti-pickle).
+        """
+        CONGELAMIENTOS_TRIGGER.append(condicion)
+
     def _registrar_trigger(registro, trigger_id, funcion, prioridad):
         registro.append((prioridad, len(registro), trigger_id, funcion))
 
@@ -70,6 +87,17 @@ init python:
         return None
 
     def ejecutar_triggers_game_loop():
+        """
+        Evalua los triggers del game_loop, salvo que alguien los tenga
+        congelados (ver registrar_congelamiento_triggers).
+        """
+        for _fn_cong in CONGELAMIENTOS_TRIGGER:
+            try:
+                if _fn_cong():
+                    store._gl_ultimo_trigger = ""
+                    return None
+            except Exception:
+                pass
         return _ejecutar_triggers(TRIGGERS_GAME_LOOP, marcar_gl=True)
 
     def ejecutar_triggers_dormir(fase):

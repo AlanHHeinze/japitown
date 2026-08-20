@@ -55,12 +55,6 @@ translate english quest_monica_questprincipal_0_0d62c856:
     mc "But Violet, not so much."
 
 # game/script/characters/monica/quests/monica_quest_0.rpy:109
-translate english quest_monica_questprincipal_0_77bf2eb6:
-
-    # monica_pensando "Creo saber el motivo..."
-    monica_pensando "I think I know why..."
-
-# game/script/characters/monica/quests/monica_quest_0.rpy:114
 translate english quest_monica_questprincipal_0_c3057fcf:
 
     # monica "No te preocupes por eso, es un cambio grande para todas y cada una lo procesa a su manera."
@@ -325,12 +319,6 @@ translate english quest_monica_0_cierre_eecdec5f:
     monica "Hmm..."
 
 # game/script/characters/monica/quests/monica_quest_0.rpy:465
-translate english quest_monica_0_cierre_f831a4ad:
-
-    # monica_pensando "Tan inocente es... No estaría mal aprovecharme"
-    monica_pensando "He's so innocent... it wouldn't hurt to take advantage of that."
-
-# game/script/characters/monica/quests/monica_quest_0.rpy:474
 translate english quest_monica_0_cierre_559fb087:
 
     # mc "No es lo que parece"
@@ -355,17 +343,6 @@ translate english quest_monica_0_cierre_16de7328:
     monica "Haha."
 
 # game/script/characters/monica/quests/monica_quest_0.rpy:502
-translate english quest_monica_0_cierre_99cd407b:
-
-    # monica_pensando "Jajaja... Se veia tan tierno estando nervioso"
-    monica_pensando "Ha... he looked so adorable when he was nervous."
-
-# game/script/characters/monica/quests/monica_quest_0.rpy:503
-translate english quest_monica_0_cierre_74b5ff24:
-
-    # monica_pensando "Hace mucho no me reía así"
-    monica_pensando "I haven't laughed like that in a long time."
-
 translate english strings:
 
     # game/script/characters/monica/quests/monica_quest_0.rpy:147

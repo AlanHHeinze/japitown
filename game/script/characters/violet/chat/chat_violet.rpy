@@ -16,9 +16,8 @@ init 6 python:
     def set_vq6_rama_b(): store.vq6_rama_b = True; return ""
     def set_vq6_rama_c(): store.vq6_rama_c = True; return ""
     
-    def set_vq7_rama_a(): store.vq7_rama_a = True; return ""
-    def set_vq7_rama_b(): store.vq7_rama_b = True; return ""
-    def set_vq7_rama_c(): store.vq7_rama_c = True; return ""
+    # Las set_vq7_rama_* se eliminaron con el chat de la 04_E: ese chat ya no
+    # tiene ramas, y los flags que prendian (vq7_rama_a/b/c) no los leia nadie.
 
 
     # =========================================================================
@@ -321,10 +320,19 @@ init 6 python:
     # QUEST 04_E — Chat hacer un trato
     # =========================================================================
 
+    # Violet cumple su parte del trato del arco de los favores: manda la foto
+    # sin negociar nada. Ya no hay trato que cerrar — eso pasó cara a cara en la
+    # 04_d6 — asi que la conversacion es una sola linea, sin ramas.
+    #
+    # La UNICA eleccion real es como responde el MC a lo del trasero: una
+    # opcion suma deseo y la otra amor. Por eso la tabla tiene las dos
+    # categorias; cada opcion carga 1 punto en la suya y el rango 1-99 lo
+    # convierte en +1 del stat correspondiente.
     chat_violet_quest8 = GrupoMensajes(
         id="violet_quest04e_chat",
         npc_id="violet",
-        mensaje_inicial="Tengo un trato",
+        mensaje_inicial="Aca esta mi parte del trato",
+        foto_inicial="images/chat/violet/violet_chat_foto_03.jpg",
         trigger_id="violet_quest04e_chat",
         momento_locacion="casa_hviolet",
         momento_horario=3,
@@ -333,159 +341,73 @@ init 6 python:
             "amor": [
                 RangoRecompensa(1, 99, {"tipo": "amor", "valor": 1}),
             ],
+            "deseo": [
+                RangoRecompensa(1, 99, {"tipo": "deseo", "valor": 1}),
+            ],
         }),
         pasos=[
-            # Paso 0: Inicio
+            # Paso 0: el MC le reconoce que tenia razon
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Tienes toda mi atención",
-                        respuesta_npc=["Me había sacado una foto más...", "Te la puedo pasar, pero con una condición"],
-                        puntos={},
-                        saltar_a_paso=1
-                    ),
-                    OpcionRespuesta(
-                        texto="Mmm... esto me preocupa",
-                        respuesta_npc=["Me había sacado una foto más...", "Te la puedo pasar, pero con una condición"],
+                        texto="Tenias razon con que me iba a buscar",
+                        respuesta_npc=["Y era obvio", "Cada vez que puedes hablas de mi trasero"],
                         puntos={},
                         saltar_a_paso=1
                     ),
                 ]
             ),
-            # Paso 1
+            # Paso 1: LA eleccion — deseo o amor
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Esto suena peligroso",
-                        respuesta_npc=["Peligroso es para mí que sigas hablando de mi trasero por toda la casa", "Te la paso así estás feliz, pero dejas de estar por toda la casa hablando de mi trasero", "Trato?"],
-                        puntos={},
+                        texto="Es que me encanta",
+                        respuesta_npc=["😳", "Quiero pedirte algo"],
+                        puntos={"deseo": 1},
                         saltar_a_paso=2
                     ),
                     OpcionRespuesta(
-                        texto="Depende de la foto",
-                        respuesta_npc=["Una de espalda", "😳", "Te la paso así estás feliz, pero dejas de estar por toda la casa hablando de mi trasero", "Trato?"],
-                        puntos={},
+                        texto="No es lo unico que me gusta",
+                        respuesta_npc=["😳", "Quiero pedirte algo"],
+                        puntos={"amor": 1},
                         saltar_a_paso=2
-                    )
-                ]
-            ),
-            # Paso 2: Mensaje previo luego division
-            PasoConversacion(
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto="Podría ser...",
-                        respuesta_npc=["Listo, nada de podría ser", "Ya esta"],
-                        foto_respuesta="images/chat/violet/violet_chat_foto_03.jpg",
-                        puntos={},
-                        saltar_a_paso=3 # Rama A
-                    ),
-                    OpcionRespuesta(
-                        texto="Es un trato justo",
-                        respuesta_npc="Bueno tenemos un trato",
-                        foto_respuesta="images/chat/violet/violet_chat_foto_03.jpg",
-                        puntos={},
-                        saltar_a_paso=5 # Rama B
-                    ),
-                    OpcionRespuesta(
-                        texto="Primero tendría que ver la foto",
-                        respuesta_npc="...",
-                        foto_respuesta="images/chat/violet/violet_chat_foto_03.jpg",
-                        puntos={},
-                        saltar_a_paso=7 # Rama C
                     ),
                 ]
             ),
-            # ======================== RAMA A ========================
-            # Paso 3: Rama A inicio
+            # Paso 2: el pedido de Violet
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Woooow",
+                        texto="Dime",
+                        respuesta_npc=["Quiero que dejes de andar hablando de mi trasero por toda la casa", "Si tienes algo que decirme lo haces en privado"],
+                        puntos={},
+                        saltar_a_paso=3
+                    ),
+                ]
+            ),
+            # Paso 3: el MC contesta en dos mensajes. Van en dos pasos con
+            # respuesta_npc vacia porque `texto` es un solo globo: asi salen
+            # como dos mensajes suyos seguidos, que es como se leyo el guion.
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Voy a intentar contenerme",
                         respuesta_npc="",
                         puntos={},
                         saltar_a_paso=4
-                    )
+                    ),
                 ]
             ),
-            # Paso 4: Rama A final
-            PasoConversacion(
-                mensaje_npc="",
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto="Está bien prometo",
-                        respuesta_npc=set_vq7_rama_a,
-                        puntos={},
-                        saltar_a_paso=-1
-                    )
-                ]
-            ),
-            # ======================== RAMA B ========================
-            # Paso 5: Rama B inicio
+            # Paso 4: cierre. Violet no contesta — se queda con la ultima
+            # palabra el MC y la conversacion termina ahi.
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Woooow",
+                        texto="Pero me lo pones dificil",
                         respuesta_npc="",
                         puntos={},
-                        saltar_a_paso=6
-                    )
-                ]
-            ),
-            # Paso 6: Rama B final
-            PasoConversacion(
-                mensaje_npc="",
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto="Tenemos un trato",
-                        respuesta_npc=set_vq7_rama_b,
-                        puntos={},
                         saltar_a_paso=-1
-                    )
-                ]
-            ),
-            # ======================== RAMA C ========================
-            # Paso 7: Rama C inicio
-            PasoConversacion(
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto="No hay trato",
-                        respuesta_npc=["Pero te mande la foto", "😡"],
-                        puntos={},
-                        saltar_a_paso=8
-                    )
-                ]
-            ),
-            # Paso 8
-            PasoConversacion(
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto="Pero te dije que lo iba a pensar segun la foto",
-                        respuesta_npc="¿Qué tiene de malo la foto?",
-                        puntos={},
-                        saltar_a_paso=9
-                    )
-                ]
-            ),
-            # Paso 9
-            PasoConversacion(
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto="Nada, pero con ese trasero más ganas me dan de hablar jajaja",
-                        respuesta_npc="eres un idiota",
-                        puntos={},
-                        saltar_a_paso=10
-                    )
-                ]
-            ),
-            # Paso 10
-            PasoConversacion(
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto="No te enojes, prometo no andar por la casa hablando de tu trasero",
-                        respuesta_npc=set_vq7_rama_c,
-                        puntos={},
-                        saltar_a_paso=-1
-                    )
+                    ),
                 ]
             ),
         ]
@@ -812,3 +734,122 @@ init 6 python:
         ],
     )
     sistema_mensajes.registrar_grupo("tienda_coxplay", chat_tienda_coxplay_q9a_g1)
+
+    # =========================================================================
+    # AMOR 15 ("Juegos Viejos") — Violet pide la Portatil Boy
+    # =========================================================================
+    # Lo dispara el trigger de game_loop de violet_amor_15.rpy al llegar a 15 de
+    # amor. La UNICA condicion de entrega es que no esten en la misma locacion:
+    # si estan cara a cara, escribirse por chat no tendria sentido, asi que el
+    # grupo queda EN ESPERA y sale solo cuando el jugador se aparta.
+    #
+    # Las dos primeras lineas de Violet van en una sola burbuja porque
+    # mensaje_inicial es un unico mensaje (la API solo permite varias burbujas
+    # seguidas del NPC via respuesta_npc, que va DESPUES de una respuesta del
+    # jugador). Si se prefieren separadas hay que mover la segunda a un paso.
+
+    chat_violet_amor03 = GrupoMensajes(
+        id="violet_amor03_chat",
+        npc_id="violet",
+        mensaje_inicial="Hola, estaba con ganas de jugar al Pocketmonster y mi vieja Portatil Boy no anda\n¿Todavia tienes la tuya para prestarmela?",
+        trigger_id="violet_amor03_chat",
+        condicion_entrega=_va15_chat_separados,
+        accion_al_completar=_va15_chat_completado,
+        pasos=[
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Debe haber quedado aqui en algun lado",
+                        respuesta_npc="",
+                        saltar_a_paso=1,
+                    ),
+                ]
+            ),
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="No me la lleve cuando me fui",
+                        respuesta_npc=["Debe estar en el altillo entonces",
+                                       "Luego la busco"],
+                        saltar_a_paso=2,
+                    ),
+                ]
+            ),
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="OK",
+                        respuesta_npc="",
+                        saltar_a_paso=-1,
+                    ),
+                ]
+            ),
+        ],
+    )
+    sistema_mensajes.registrar_grupo("violet", chat_violet_amor03)
+
+    # =========================================================================
+    # DESEO 20 ("Pensando en Violet") — el MC le escribe
+    # =========================================================================
+    # LA QUEST ENTERA. Lo habilita el trigger_mensaje de ETAPA_BOTON_LISTO al
+    # llegar a 20 de deseo, y al terminar la conversacion _vd20_chat_completado
+    # cierra la quest (violet_deseo_20.rpy).
+    #
+    # mensaje_inicial="" a proposito: el que escribe primero es el JUGADOR, asi
+    # que no hay burbuja de Violet antes de las opciones.
+    #
+    # ⚠️ TEXTOS PLACEHOLDER ("a" y "b"). Al escribir la conversacion real hay
+    # que agregar sus old/new en tl/english/chat_violet_strings.rpy.
+
+    chat_violet_deseo04 = GrupoMensajes(
+        id="violet_deseo04_chat",
+        npc_id="violet",
+        mensaje_inicial="",
+        trigger_id="violet_deseo04_chat",
+        momento_locacion="casa_hviolet",
+        condicion_entrega=_vd20_mc_afuera,
+        accion_al_completar=_vd20_chat_completado,
+        pasos=[
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="a",
+                        respuesta_npc="b",
+                        saltar_a_paso=-1,
+                    ),
+                ]
+            ),
+        ],
+    )
+    sistema_mensajes.registrar_grupo("violet", chat_violet_deseo04)
+
+    # =========================================================================
+    # AMOR 30 ("¿Que me pongo?") — Violet lo cita para la noche
+    # =========================================================================
+    # Lo habilita el trigger de game_loop de violet_amor_30.rpy al llegar a 30
+    # de amor. Sale una TARDE (momento_horario) en que ella este en casa y el
+    # MC no este con ella (condicion_entrega).
+    #
+    # Responderlo es un Requisito de la quest, asi que hasta que el jugador
+    # conteste no aparece el boton de la escena.
+
+    chat_violet_amor06 = GrupoMensajes(
+        id="violet_amor06_chat",
+        npc_id="violet",
+        mensaje_inicial="En algun momento que puedas ven a la noche a mi habitacion, necesito tu opinion con algo",
+        trigger_id="violet_amor06_chat",
+        momento_horario=1,
+        condicion_entrega=_va30_chat_condiciones,
+        pasos=[
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Ok",
+                        respuesta_npc="",
+                        saltar_a_paso=-1,
+                    ),
+                ]
+            ),
+        ],
+    )
+    sistema_mensajes.registrar_grupo("violet", chat_violet_amor06)

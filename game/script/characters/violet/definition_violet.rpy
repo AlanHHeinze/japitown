@@ -11,7 +11,7 @@ define violet = Character("Violet", color="#956db3")
 define violet_susurro = Character("Violet", color="#956db3", what_prefix="{i}{color=#c8c8c8}", what_suffix="{/color}{/i}")
 
     # Violet - Pensando (texto en itálica con color diferente para pensamientos)
-define violet_pensando = Character("Violet", color="#956db3", what_prefix="{i}{color=#a8b4c4}", what_suffix="{/color}{/i}")
+define violet_piensa = Character("Violet (Pensamiento)", kind=piensa_base)
 
 init python:
 

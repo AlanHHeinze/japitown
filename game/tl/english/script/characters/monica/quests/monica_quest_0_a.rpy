@@ -1,12 +1,6 @@
 ﻿# TODO: Translation updated at 2026-06-25 23:12
 
 # game/script/characters/monica/quests/monica_quest_0_a.rpy:103
-translate english quest_monica_questprincipal_0_0e6ed7de:
-
-    # monica_pensando "Violet y Jasmine deben estar más que felices en este momento..."
-    monica_pensando "Violet and Jasmine must be thrilled right now..."
-
-# game/script/characters/monica/quests/monica_quest_0_a.rpy:140
 translate english quest_monica_questprincipal_0_1b0e41ff:
 
     # monica "Pero sé que es para bien... tengo fe que las cosas volveran a ser como antes."
@@ -95,4 +89,36 @@ translate english quest_monica_0_cierre_a610c1fb:
 
     # mc "Perdón Monica no era mi intencion de verdad"
     mc "Sorry Monica, I really didn't mean to."
+
+# TODO: Translation updated at 2026-08-20 11:16
+
+# game/script/characters/monica/quests/monica_quest_0_a.rpy:103
+translate english quest_monica_questprincipal_0_2e4dbe60:
+
+    # monica_piensa "Violet y Jasmine deben estar más que felices en este momento..."
+    monica_piensa "Violet and Jasmine must be thrilled right now..."
+
+# game/script/characters/monica/quests/monica_quest_0_a.rpy:126
+translate english quest_monica_questprincipal_0_fabd76fc:
+
+    # monica_piensa "Creo saber el motivo..."
+    monica_piensa "I think I know why..."
+
+# game/script/characters/monica/quests/monica_quest_0_a.rpy:497
+translate english quest_monica_0_cierre_d5e33c81:
+
+    # monica_piensa "Tan inocente es... No estaría mal aprovecharme"
+    monica_piensa "He's so innocent... it wouldn't hurt to take advantage of that."
+
+# game/script/characters/monica/quests/monica_quest_0_a.rpy:534
+translate english quest_monica_0_cierre_91400796:
+
+    # monica_piensa "Jajaja... Se veia tan tierno estando nervioso"
+    monica_piensa "Ha... he looked so adorable when he was nervous."
+
+# game/script/characters/monica/quests/monica_quest_0_a.rpy:535
+translate english quest_monica_0_cierre_0b95f286:
+
+    # monica_piensa "Hace mucho no me reía así"
+    monica_piensa "I haven't laughed like that in a long time."
 

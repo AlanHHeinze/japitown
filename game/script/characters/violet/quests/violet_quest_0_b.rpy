@@ -711,7 +711,10 @@ label quest_violet_0_puerta:
     $ sistema_locaciones.mover_a_locacion("casa_hmc")
     $ completar_quest_actual("violet", quest_id="violet_questprincipal_0_b")
     $ activar_estado_especial_npc("violet", "violet_feliz")
-    $ post_completar_violet_quest0()
+    # Acá se llamaba post_completar_violet_quest0(), que abria el stock del
+    # casco VR y avisaba por Libre Mercado. Los dos efectos se movieron al
+    # trigger de ventajas/juegosnuevos/jn_cascovr.rpy: ahora el casco sale a la
+    # venta recien con el hito de amor 20, que es cuando Violet lo menciona.
 
     # Restaurar HUD y devolver control al jugador
     window hide

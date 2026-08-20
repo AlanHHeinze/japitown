@@ -260,23 +260,17 @@ screen menu_banio_npc(npc_id, bg_path=None):
             style "choice_button"
             action [Hide("menu_banio_npc"), Return("golpear")]
 
-        # Espiar: minijuego (core/espiar). Tres estados:
-        #   - Sin secuencias registradas (o ESPIAR_HABILITADO en False):
-        #     "Contenido en desarrollo", en gris.
-        #   - Con secuencias pero sin el deseo suficiente: se muestra en gris
-        #     CON el requisito a la vista, para que el jugador sepa que la
-        #     opcion existe y que es lo que la habilita.
-        #   - Con el requisito cumplido: queda "Espiar" a secas, clickeable.
-        if ESPIAR_HABILITADO and npc_tiene_espiar(npc_id):
-            if npc_espiar_disponible(npc_id):
-                textbutton "Espiar":
-                    style "choice_button"
-                    action [Hide("menu_banio_npc"), Return("espiar")]
-            else:
-                textbutton "Espiar (requiere [ESPIAR_DESEO_MINIMO] 💋)":
-                    style "choice_button"
-                    sensitive False
-                    action NullAction()
+        # Mirar: solo aparece si el NPC dejo la puerta entreabierta. Eso lo
+        # decide su ventaja de Provocación, no este screen — acá solo se
+        # pregunta (npc_puerta_banio_abierta, core/espiar).
+        #
+        # Con la puerta cerrada la opcion NO se muestra en gris: el jugador no
+        # tiene que enterarse de que a veces esta abierta. La sorpresa es la
+        # gracia de la provocacion.
+        if ESPIAR_HABILITADO and npc_tiene_espiar(npc_id) and npc_puerta_banio_abierta(npc_id):
+            textbutton "Mirar":
+                style "choice_button"
+                action [Hide("menu_banio_npc"), Return("espiar")]
 
         textbutton "Entrar (Contenido en desarrollo)":
             style "choice_button"

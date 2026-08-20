@@ -310,6 +310,18 @@ translate english strings:
     new "Offer Violet some help"
 
     # =========================================================================
+    # Violet — Deseo 5 ("Atracción")
+    # =========================================================================
+    # Textos propios de su ETAPA_BOTON_LISTO: la quest tiene disparador propio,
+    # asi que la pista dice donde y cuando pasa la escena.
+
+    old "Un encuentro casual con Violet"
+    new "A chance encounter with Violet"
+
+    old "Ingresar en el pasillo arriba por la tarde"
+    new "Go into the upstairs hallway in the afternoon"
+
+    # =========================================================================
     # Violet — Líneas de relación (amor / deseo)
     # =========================================================================
     # Pistas de las 12 quests de línea. El "qué hacer" de cada etapa ya está en
@@ -446,3 +458,136 @@ translate english strings:
 
     old "Hoy CoXplay puede responder a mi consulta."
     new "Today CoXplay can reply to my inquiry."
+
+    # =========================================================================
+    # Violet — Amor 15 ("Juegos Viejos")
+    # =========================================================================
+    # Textos de sus etapas. La quest tiene disparador propio (un trigger de
+    # game_loop), asi que el "que hacer" dice donde y cuando pasa la escena en
+    # vez del generico "Hablar con Violet".
+    #
+    # La pista de CONDICIONES no repite la descripcion de la quest a proposito:
+    # dos `old` con el mismo texto rompen el lint.
+
+    old "Tengo que ver si aparece la Portatil Boy."
+    new "I have to see if the Portable Boy turns up."
+
+    # "Esperar el mensaje de Violet" NO va acá: ya esta en pistas_strings.rpy
+    # con esta misma traduccion, y un `old` repetido rompe el lint.
+
+    old "Darle tiempo para que la busque"
+    new "Give her time to look for it"
+
+    old "¿Violet habra podido encontrar la consola?"
+    new "Was Violet able to find the console?"
+
+    old "Entrar al pasillo arriba/altillo por la noche"
+    new "Go into the upstairs hallway/attic at night"
+
+    # =========================================================================
+    # Violet — Deseo 10 ("Encuentro nocturno")
+    # =========================================================================
+    # Su disparador es dormir, asi que el "que hacer" lo dice literalmente.
+
+    old "Deberia descansar bien"
+    new "I should get a good night's sleep"
+
+    # =========================================================================
+    # Violet — Deseo 15 ("Anime en estreno")
+    # =========================================================================
+    # La dispara la accion "Ver TV" del sotano, asi que el "que hacer" nombra
+    # la accion y la locacion.
+
+    old "Podria usar el sotano para ver el nuevo anime"
+    new "I could use the basement to watch the new anime"
+
+    old "Hacer la accion ver tv en el sotano"
+    new "Use the watch TV action in the basement"
+
+    # =========================================================================
+    # Violet — Amor 20 ("Jugando juntos")
+    # =========================================================================
+    # La quest se queda en BOTON_LISTO durante sus tres tramos y los textos
+    # cambian con va20_fase. "Hablar con Violet" (el del primer tramo) ya esta
+    # traducido en quest_strings.rpy.
+
+    old "No se que jugar podria preguntarle a Violet"
+    new "I don't know what to play, I could ask Violet"
+
+    old "Violet me recomendo un juego, tendria que conseguirlo"
+    new "Violet recommended me a game, I should get it"
+
+    old "Comprar el juego en mi habitacion"
+    new "Buy the game in my room"
+
+    old "Ya tengo el juego, ahora falta jugarlo con ella"
+    new "I have the game now, all that's left is playing it with her"
+
+    old "Jugar de noche en mi habitacion"
+    new "Play at night in my room"
+
+    # =========================================================================
+    # Violet — Deseo 20 ("Pensando en Violet")
+    # =========================================================================
+    # La quest pasa entera en el chat, asi que el "que hacer" manda al celular.
+
+    old "Estoy pensando mucho en Violet ultimamente podria escribirle"
+    new "I've been thinking about Violet a lot lately, I could write to her"
+
+    old "Enviarle un mensaje a Violet"
+    new "Send Violet a message"
+
+    # =========================================================================
+    # Violet — Amor 25 ("Solos en casa")
+    # =========================================================================
+    # El domingo es un Requisito, asi que la quest se queda en CONDICIONES
+    # contando. "Esperar {} dias" es una PLANTILLA: translate_string traduce la
+    # plantilla y despues se hace .format(), asi que el `new` conserva el {}.
+    # El singular va aparte porque en ingles tampoco sirve el plural.
+
+    old "Esperar algunos dias"
+    new "Wait a few days"
+
+    old "Esperar 1 dia"
+    new "Wait 1 day"
+
+    old "Esperar {} dias"
+    new "Wait {} days"
+
+    # =========================================================================
+    # Violet — Deseo 25 ("En su habitacion")
+    # =========================================================================
+    # Tiene dos disparadores (boton de Violet y opcion de puerta), asi que el
+    # "que hacer" nombra la accion sin atarla a un lugar.
+
+    old "Podria ver un capitulo de anime con Violet"
+    new "I could watch an anime episode with Violet"
+
+    old "Accion de anime"
+    new "Anime action"
+
+    # =========================================================================
+    # Violet — Deseo 30 ("Noche de amigas")
+    # =========================================================================
+    # La pista es "Esperar", que ya esta traducida en quest_strings.rpy.
+
+    old "Esperar hasta la noche"
+    new "Wait until night"
+
+    # =========================================================================
+    # Violet — Amor 30 ("¿Que me pongo?")
+    # =========================================================================
+    # Responder el chat es un Requisito, asi que la etapa de CONDICIONES manda
+    # a esperar el mensaje y la de BOTON_LISTO a su habitacion.
+
+    old "Tengo que esperar por ahora"
+    new "I have to wait for now"
+
+    old "Esperar que violet te escriba"
+    new "Wait for Violet to text you"
+
+    old "Violet quiere mi opinion sobre algo"
+    new "Violet wants my opinion on something"
+
+    old "Ir a su habitacion por la noche"
+    new "Go to her room at night"

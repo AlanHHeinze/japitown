@@ -222,3 +222,86 @@ translate english strings:
 
     old "Placeholder: Hola, cuando puedas pasate por mi habitación a la noche..."
     new "Placeholder: Hey, come by my room at night whenever you can..."
+
+    # =========================================================================
+    # AMOR 15 ("Juegos Viejos") — Violet pide la Portatil Boy
+    # =========================================================================
+    # El mensaje inicial son dos lineas en una sola burbuja: el \n se conserva
+    # en el `new` o las dos frases quedan pegadas.
+    #
+    # "Pocketmonster" y "Portatil Boy" son nombres propios parodia. El primero
+    # queda igual; el segundo se adapta porque "Portatil" es una palabra comun
+    # en español y el chiste ("Portable Boy") solo funciona traducido.
+
+    old "Hola, estaba con ganas de jugar al Pocketmonster y mi vieja Portatil Boy no anda\n¿Todavia tienes la tuya para prestarmela?"
+    new "Hey, I was in the mood to play Pocketmonster and my old Portable Boy is dead\nDo you still have yours so you can lend it to me?"
+
+    old "Debe haber quedado aqui en algun lado"
+    new "It must have stayed around here somewhere"
+
+    old "No me la lleve cuando me fui"
+    new "I didn't take it with me when I left"
+
+    old "Debe estar en el altillo entonces"
+    new "It must be in the attic then"
+
+    old "Luego la busco"
+    new "I'll look for it later"
+
+    # =========================================================================
+    # DESEO 30 ("¿Que me pongo?") — Violet lo cita para la noche
+    # =========================================================================
+    # La respuesta del jugador es "Ok", que ya esta traducida en otro archivo.
+
+    old "En algun momento que puedas ven a la noche a mi habitacion, necesito tu opinion con algo"
+    new "Whenever you get a chance, come to my room tonight, I need your opinion on something"
+
+    # =========================================================================
+    # MENSAJEAR (ventaja del hito de deseo 20)
+    # =========================================================================
+    # El saludo que manda el jugador para abrir cualquier conversacion.
+    # Los \n separan burbujas escritas como un solo mensaje: se conservan.
+
+    old "¿Todo bien?"
+    new "Everything okay?"
+
+    # --- Respuesta generica -------------------------------------------------
+    old "Que raro que me estes escribiendo\n¿Necesitas algo?"
+    new "Weird that you're texting me\nDo you need something?"
+
+    old "No solo queria hablar un rato"
+    new "No, I just wanted to talk for a bit"
+
+    old "Ahora estoy con otra cosa"
+    new "I'm busy with something right now"
+
+    old "Hablamos despues"
+    new "Talk later"
+
+    # --- Aburrida -----------------------------------------------------------
+    old "Aburrida\n¿Vos?"
+    new "Bored\nYou?"
+
+    old "Si yo tambien\nPero no tengo ganas de hacer nada, asi que me merezco el aburrimiento"
+    new "Yeah, me too\nBut I don't feel like doing anything, so I deserve the boredom"
+
+    old "Jajaja"
+    new "Hahaha"
+
+    old "Si suele pasar"
+    new "Yeah, it happens"
+
+    old "¿Y vos por que no estas haciendo nada?"
+    new "And why aren't you doing anything?"
+
+    old "Estoy esperando a que se conecten unas amigas para jugar"
+    new "I'm waiting for some friends to come online to play"
+
+    old "Envia una foto"
+    new "Sends a photo"
+
+    old "🔥\nEstas linda"
+    new "🔥\nYou look pretty"
+
+    old "Ahi me hablaron de que ya estan conectadas"
+    new "They just messaged me, they're online now"

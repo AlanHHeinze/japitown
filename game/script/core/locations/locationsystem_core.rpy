@@ -70,7 +70,23 @@ init python:
             # Mapeo de índices de horario a nombres
             horarios_nombres = ["manana", "tarde", "noche", "trasnoche"]
             
-            # Usar horario especificado o el actual
+            # Orden de prioridad del horario visual:
+            #   1. el que pide quien llama (horario_override)
+            #   2. el override GLOBAL `horario_visual_override`
+            #   3. el horario real
+            #
+            # El override global existe para las escenas que necesitan que TODA
+            # la casa se vea a otra hora sin que el reloj cambie — un corte de
+            # luz, un sueño, un flashback. Es un mecanismo del motor y no sabe
+            # de ninguna quest: el contenido lo prende y lo apaga, y mientras
+            # tanto `horario_actual` sigue siendo el de verdad (las rutinas, los
+            # bloqueos y las condiciones lo siguen leyendo sin enterarse).
+            #
+            # ⚠️ Quien lo prende TIENE que apagarlo (ponerlo en None) al cerrar
+            # la escena, o la casa queda pintada de esa hora para siempre.
+            if horario_override is None:
+                horario_override = getattr(store, 'horario_visual_override', None)
+
             if horario_override is not None:
                 horario_idx = horario_override
             else:
@@ -212,6 +228,11 @@ init python:
 
 # Instancia global del sistema de locaciones
 default sistema_locaciones = SistemaLocaciones()
+
+# Horario con el que se PINTAN los fondos, sin tocar el reloj. None = el horario
+# real. Lo usa el contenido para escenas tipo corte de luz / sueño / flashback
+# (ver obtener_background_por_horario). Quien lo prende debe apagarlo.
+default horario_visual_override = None
 
 ################################################################################
 ## Funciones de utilidad

@@ -38,6 +38,9 @@ init 10 python:
     def _violet_cond_muy_buen_humor():
         return npc_tiene_ventaja("violet", "talk_estado_muy_buen_humor")
 
+    def _violet_cond_insinuante():
+        return npc_tiene_ventaja("violet", "talk_estado_insinuante")
+
     def _violet_cond_caliente():
         return npc_tiene_ventaja("violet", "talk_estado_caliente")
 
@@ -217,10 +220,35 @@ init 10 python:
                 },
             ),
 
+            # Escalon previo a "Hot": da lo mismo elijas lo que elijas.
+            # La gracia es justamente esa — todavia no hay lectura tactica, y la
+            # que aparece al desbloquear Caliente (premiar provocarla) se siente
+            # como un paso adelante. Lo otorga el hito de deseo 10.
             EstadoTalk(
+                id="violet_insinuante",
+                nombre="Insinuante",
+                intro="Violet parece estar insinuante hoy.",
+                efectos={
+                    "complacerla": "+1_deseo",
+                    "provocarla":  "+1_deseo",
+                    "escucharla":  "+1_deseo",
+                    "hablarle":    "+1_deseo",
+                    "adularla":    "+1_deseo",
+                },
+                mensaje="ella estaba insinuante.",
+                condicion=_violet_cond_insinuante,
+                estados_posteriores={
+                    "+1_deseo": "posterior_hot",
+                },
+            ),
+
+            EstadoTalk(
+                # El ID no se toca: lo referencian _violet_cond_caliente,
+                # estados_generales_ids y los estados_posteriores. Lo que cambio
+                # es lo que ve el jugador.
                 id="violet_caliente",
-                nombre="Caliente",
-                intro="Violet parece estar en un estado de ánimo especial hoy.",
+                nombre="Hot",
+                intro="Violet parece estar muy hot hoy.",
                 efectos={
                     "complacerla": "+1_deseo",
                     "provocarla":  "+2_deseo",
@@ -228,7 +256,7 @@ init 10 python:
                     "hablarle":    "+1_deseo",
                     "adularla":    "+2_deseo",
                 },
-                mensaje="ella estaba en un estado de ánimo especial.",
+                mensaje="ella estaba muy hot.",
                 condicion=_violet_cond_caliente,
                 estados_posteriores={
                     "+1_deseo": "posterior_hot",
@@ -272,6 +300,7 @@ init 10 python:
             "violet_sumisa",
             "violet_buen_humor",
             "violet_muy_buen_humor",
+            "violet_insinuante",
             "violet_caliente",
         ]
 

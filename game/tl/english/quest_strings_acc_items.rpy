@@ -161,3 +161,21 @@ translate english strings:
     old "Una caja con tres cosplay. Debería dársela a Violet."
     new "A box with three cosplays. I should give it to Violet."
 
+
+    # Violet Amor 25 — nombre_menu de los tres listeners de accion
+    old "Comer algo"
+    new "Grab a bite"
+
+    old "Ver algo"
+    new "Watch something"
+
+    old "Hacer la cena"
+    new "Make dinner"
+
+    # Violet Amor 20 — mensaje_reintento de la accion Jugar (una vez por dia)
+    old "Ya jugué suficiente por hoy"
+    new "I've played enough for today"
+
+    # Violet Deseo 20 — mensaje_reintento de Ver Anime (una vez por dia)
+    old "Ya vi suficiente por hoy"
+    new "I've watched enough for today"

@@ -89,6 +89,21 @@ init python:
         "Si golpeás, te abre y te deja pasar a su habitación.",
     )
 
+    # Variantes acotadas por horario, calcadas de las de sale_pasillo de mas
+    # abajo. Amor abre el dia, deseo abre la noche: las otorgan los hitos de
+    # amor 20 y deseo 20.
+    registrar_ventaja(
+        "puerta_dejar_pasar_tarde",
+        "Pasar (Tarde)",
+        "Podremos ingresar a su habitación por la tarde.",
+    )
+
+    registrar_ventaja(
+        "puerta_dejar_pasar_noche",
+        "Pasar (Noche)",
+        "Podremos ingresar a su habitación por la noche.",
+    )
+
     registrar_ventaja(
         "puerta_sale_pasillo",
         "Sale al pasillo cuando golpeás la puerta",
@@ -98,16 +113,21 @@ init python:
     # Variantes acotadas por momento del dia. Sirven para que una linea abra el
     # acceso de a poco: primero sale de tarde, mas adelante tambien de noche.
     # verificar_nivel_acceso_habitacion() las cruza con el horario actual.
+    #
+    # EL MARCADOR {npc}: obtener_desbloqueos_stat lo reemplaza por el nombre del
+    # NPC al pintar el panel (core/relationships/relationship_unlocks.rpy), asi
+    # que UNA entrada sirve para los tres — "Violet no me ignora", "Mónica no me
+    # ignora". Se conserva tal cual en el `new` de la traduccion.
     registrar_ventaja(
         "puerta_sale_pasillo_tarde",
-        "Sale al pasillo si golpeás por la tarde",
-        "Por la tarde sale a hablar al pasillo cuando golpeás. A otras horas no atiende.",
+        "{npc} no me ignora (Tarde)",
+        "Al interactuar con su puerta por la tarde, {npc} responde y sale al pasillo a hablar.",
     )
 
     registrar_ventaja(
         "puerta_sale_pasillo_noche",
-        "Sale al pasillo si golpeás por la noche",
-        "Por la noche sale a hablar al pasillo cuando golpeás. A otras horas no atiende.",
+        "{npc} no me ignora (Noche)",
+        "Al interactuar con su puerta por la noche, {npc} responde y sale al pasillo a hablar.",
     )
 
     # De trasnoche todos los NPC duermen y no se los puede clickear (ver
@@ -129,26 +149,106 @@ init python:
     # nombre de la ventaja para que la relacion sea evidente al leer el hito.
     registrar_ventaja(
         "talk_estado_buen_humor",
-        "Puede estar de buen humor",
-        "Se suma «Buen Humor» a sus estados de ánimo posibles del día. En ese estado las conversaciones dan más puntos.",
+        "Estado Buen Humor",
+        "Al hablar con ella puede tener este estado asignado, que garantiza +1 ❤️ en todas las opciones.",
     )
 
     registrar_ventaja(
         "talk_estado_muy_buen_humor",
-        "Puede estar de muy buen humor",
-        "Se suma «Muy Buen Humor» a sus estados posibles. Es el estado que más recompensa da al conversar.",
+        "Estado Muy Buen Humor",
+        "Al hablar con ella puede tener este estado asignado, que garantiza ❤️ en todas las opciones: algunas dan +1 y otras +2.",
+    )
+
+    # Los dos estados de deseo son un escalon: primero "Insinuante", que da lo
+    # mismo elijas lo que elijas, y despues "Hot", que rinde mas y ademas
+    # premia provocarla. Por eso los otorgan hitos distintos (deseo 10 y 30).
+    registrar_ventaja(
+        "talk_estado_insinuante",
+        "Estado Insinuante",
+        "Al hablar con ella puede tener este estado asignado, que garantiza +1 💋 en todas las opciones.",
     )
 
     registrar_ventaja(
         "talk_estado_caliente",
-        "Puede estar en un estado de ánimo especial",
-        "Se suma un estado de ánimo nuevo, con opciones de conversación que antes no aparecían.",
+        "Estado Hot",
+        "Al hablar con ella puede tener este estado asignado, que garantiza 💋 en todas las opciones: algunas dan +1 y otras +2.",
     )
 
     # Muestra el resultado de una opcion al azar antes de elegir. El motor ya
     # tenia esto atado a mc_carisma >= 2; ahora tambien lo puede dar un hito.
     registrar_ventaja(
         "talk_preview_resultado",
-        "Intuís el resultado de una de las opciones",
-        "Antes de elegir, una de las opciones de la conversación te muestra qué resultado va a dar.",
+        "Conocerla",
+        "Al hablar con ella siempre vemos el resultado de una de las respuestas.",
+    )
+
+    # Memoria sin tope para ese NPC. Sin esta ventaja el MC recuerda
+    # max(1, mc_inteligencia) combinaciones (estado, opcion) — y mc_inteligencia
+    # arranca en 0, o sea UNA. La consulta actualizar_memoria_mc()
+    # (core/talk/talksystem_core.rpy), que es donde se hace el recorte.
+    #
+    # Se lleva bien con "Conocerla" en vez de pisarla: el preview solo elige
+    # entre las opciones que NO estan en memoria, asi que a medida que el
+    # jugador prueba las cinco de un estado deja de haber algo que adivinar.
+    registrar_ventaja(
+        "talk_memoria_total",
+        "Recordar",
+        "Al hablar con ella siempre vemos el resultado de nuestra elección pasada con ese estado.",
+    )
+
+
+    # =========================================================================
+    # VENTAJAS DE CONTENIDO — sistemas propios del NPC
+    # =========================================================================
+    # Estas dos NO las consume el motor: las consume contenido que vive en
+    # characters/<npc>/ventajas/. Se registran igual acá para que el panel de
+    # Desbloqueos las muestre y para que verificar_coherencia_hitos() las valide
+    # como a cualquier otra.
+
+    registrar_ventaja(
+        "accion_jugar",
+        "Jugar",
+        "Al hacer uso de la acción Jugar, {npc} se puede unir y mejora la relación en +2 ❤️.",
+    )
+
+    registrar_ventaja(
+        "juegos_nuevos",
+        "Juegos Nuevos",
+        "Al interactuar con {npc} tendremos la opción de jugar un juego nuevo; son escenas especiales con ella.",
+    )
+
+    registrar_ventaja(
+        "accion_ver_anime",
+        "Ver Anime",
+        "Al hacer uso de la acción Ver Anime, {npc} se puede unir y mejora la relación en +2 💋.",
+    )
+
+    registrar_ventaja(
+        "mensajear",
+        "Mensajear",
+        "Ahora podremos escribirle a {npc} por el chat cuando queramos y tener conversaciones especiales con ella.",
+    )
+
+    registrar_ventaja(
+        "accion_beso_amor",
+        "Beso (Amor)",
+        "En el menú de {npc} tendremos la opción de besarla, una vez por día.",
+    )
+
+    registrar_ventaja(
+        "ropa_nueva",
+        "Ropa Nueva",
+        "Estando en su habitación, {npc} nos puede mostrar cómo le queda algo nuevo.",
+    )
+
+    registrar_ventaja(
+        "accion_beso_deseo",
+        "Beso (Deseo)",
+        "En el menú de {npc} tendremos otra forma de besarla, una vez por día.",
+    )
+
+    registrar_ventaja(
+        "provocacion",
+        "Provocación",
+        "En distintos momentos {npc} nos va a estar provocando; son escenas especiales que aparecen solas.",
     )

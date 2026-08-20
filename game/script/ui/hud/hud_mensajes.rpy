@@ -408,11 +408,33 @@ screen pantalla_chat(npc_id="monica"):
                     spacing int(10 * _k)
 
                     $ _puede_responder = _chat and _chat.puede_responder() and not _msg_escribiendo and not _msg_respuestas_pendientes
-                    $ _bg_color = "#4CAF50CC" if _puede_responder else "#1e1e3a66"
-                    $ _hover_color = "#66BB6ACC" if _puede_responder else "#1e1e3a66"
+
+                    # "Hablar" (ventaja Mensajear): el jugador escribe primero.
+                    # RESPONDER LE GANA SIEMPRE — si hay algo sin contestar ese
+                    # es el boton, y esa precedencia es lo que impide arrancar
+                    # una conversacion estando en otra.
+                    $ _puede_hablar = (not _puede_responder
+                                       and not _msg_escribiendo
+                                       and not _msg_respuestas_pendientes
+                                       and mensajear_puede_hablar(npc_id))
+
+                    if _puede_responder:
+                        $ _bg_color = "#4CAF50CC"
+                        $ _hover_color = "#66BB6ACC"
+                    elif _puede_hablar:
+                        $ _bg_color = "#FFC107CC"
+                        $ _hover_color = "#FFD54FCC"
+                    else:
+                        $ _bg_color = "#1e1e3a66"
+                        $ _hover_color = "#1e1e3a66"
 
                     button:
-                        action (Function(_abrir_selector_respuesta, npc_id) if _puede_responder else NullAction())
+                        if _puede_responder:
+                            action Function(_abrir_selector_respuesta, npc_id)
+                        elif _puede_hablar:
+                            action Function(mensajear_iniciar, npc_id)
+                        else:
+                            action NullAction()
                         xfill True
                         ysize int(76 * _k)
                         background _bg_color
@@ -428,6 +450,9 @@ screen pantalla_chat(npc_id="monica"):
                             if _puede_responder:
                                 text "📝" size int(36 * _k) yalign 0.5
                                 text _("Escribe un mensaje...") size int(28 * _k) color "#ffffff" yalign 0.5
+                            elif _puede_hablar:
+                                text "💬" size int(36 * _k) yalign 0.5
+                                text _("Hablar") size int(28 * _k) color "#1a1a1a" yalign 0.5
                             elif _chat and _chat.tiene_pendientes() and not _msg_escribiendo:
                                 text _("[_nombre] responderá más tarde.") size int(26 * _k) color "#888888" yalign 0.5
                             else:

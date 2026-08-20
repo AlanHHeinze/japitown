@@ -152,105 +152,45 @@ translate english strings:
     new "hahaha just a little"
 
     ############################################################################
-    ## Quest 8 — Chat trato
+    ## Quest 04_E — Violet cumple su parte del trato
     ############################################################################
+    ## Reescrito con la narrativa del arco de los favores: ya no se negocia
+    ## nada, ella manda la foto y despues le pide algo.
+    ## El mensaje que es solo emoji no lleva entrada (ver la nota del header de
+    ## chat_violet_strings.rpy).
 
-    old "Tengo un trato"
-    new "I have a deal"
+    old "Aca esta mi parte del trato"
+    new "Here's my part of the deal"
 
-    old "Tienes toda mi atencion"
-    new "You have my full attention"
+    old "Tenias razon con que me iba a buscar"
+    new "You were right that you'd come looking for me"
 
-    old "Mmm... esto me preocupa"
-    new "Hmm... this worries me"
+    old "Y era obvio"
+    new "Well, obviously"
 
-    old "Me había sacado una foto más..."
-    new "I had taken one more photo..."
+    old "Cada vez que puedes hablas de mi trasero"
+    new "Every chance you get you talk about my butt"
 
-    old "Te la puedo pasar, pero con una condición"
-    new "I can send it to you, but with one condition"
+    old "Es que me encanta"
+    new "It's just that I love it"
 
-    old "Esto suena peligroso"
-    new "This sounds dangerous"
+    old "No es lo unico que me gusta"
+    new "It's not the only thing I like"
 
-    old "Peligroso es para mí que sigas hablando de mi trasero por toda la casa"
-    new "Dangerous for me is you going around the house talking about my butt"
+    old "Quiero pedirte algo"
+    new "I want to ask you something"
 
-    old "Te la paso así estás feliz, pero dejas de estar por toda la casa hablando de mi trasero"
-    new "I'll send it so you're happy, but you stop going around the house talking about my butt"
+    old "Dime"
+    new "Tell me"
 
-    old "Trato?"
-    new "Deal?"
+    old "Quiero que dejes de andar hablando de mi trasero por toda la casa"
+    new "I want you to stop going around the house talking about my butt"
 
-    old "Depende de la foto"
-    new "Depends on the photo"
+    old "Si tienes algo que decirme lo haces en privado"
+    new "If you have something to say to me, you say it in private"
 
-    old "Una de espalda"
-    new "One from behind"
+    old "Voy a intentar contenerme"
+    new "I'll try to hold back"
 
-    old "Podria ser..."
-    new "Could be..."
-
-    old "Listo, nada de podria ser"
-    new "Alright, no 'could be'"
-
-    old "Ya esta"
-    new "Done"
-
-    old "Es un trato justo"
-    new "It's a fair deal"
-
-    old "Bueno tenemos un trato"
-    new "Alright, we have a deal"
-
-    old "Primero tendría que ver la foto"
-    new "I'd have to see the photo first"
-
-    old "Woooow"
-    new "Woooow"
-
-    old "Esta bien prometo"
-    new "Alright I promise"
-
-    old "Tenemos un trato"
-    new "We have a deal"
-
-    old "No hay trato"
-    new "No deal"
-
-    old "Pero te mande la foto"
-    new "But I sent you the photo"
-
-    old "Pero te dije que lo iba a pensar segun la foto"
-    new "But I told you I'd think about it depending on the photo"
-
-    old "¿Qué tiene de malo la foto?"
-    new "What's wrong with the photo?"
-
-    old "Nada, pero con ese trasero mas ganas me dan de hablar jajaja"
-    new "Nothing, but that butt makes me want to talk about it even more hahaha"
-
-    old "eres un idiota"
-    new "you're an idiot"
-
-    old "No te enojes, prometo no andar por la casa hablando de tu trasero"
-    new "Don't get mad, I promise not to go around the house talking about your butt"
-
-    ############################################################################
-    ## Quest 12 — Chat visita nocturna (placeholder)
-    ############################################################################
-
-    old "Placeholder: Hola, cuando puedas pasate por mi habitacion a la noche..."
-    new "Placeholder: Hey, come by my room tonight when you can..."
-
-    old "Placeholder: Dale, paso a la noche"
-    new "Placeholder: Sure, I'll come by tonight"
-
-    old "Placeholder: Genial, te espero"
-    new "Placeholder: Great, I'll be waiting"
-
-    old "Placeholder: Esta todo bien?"
-    new "Placeholder: Is everything okay?"
-
-    old "Placeholder: Si, tranquilo, solo quiero mostrarte algo"
-    new "Placeholder: Yes, don't worry, I just want to show you something"
+    old "Pero me lo pones dificil"
+    new "But you make it hard for me"

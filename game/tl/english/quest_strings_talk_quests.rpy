@@ -68,8 +68,8 @@ translate english strings:
     old "Violet parece estar de muy buen humor hoy."
     new "Violet seems to be in a very good mood today."
 
-    old "Violet parece estar en un estado de ánimo especial hoy."
-    new "Violet seems to be in a special mood today."
+    old "Violet parece estar muy hot hoy."
+    new "Violet seems really hot today."
 
     old "Violet y el Cosplay"
     new "Violet and the Cosplay"
@@ -98,9 +98,16 @@ translate english strings:
     old "ella estaba de buen humor."
     new "she was in a good mood."
 
-    old "ella estaba en un estado de ánimo especial."
-    new "she was in a special mood."
+    old "ella estaba muy hot."
+    new "she was really hot."
 
     old "¿Mangas prestados?"
     new "Borrowed Manga?"
 
+
+    # Estado "Insinuante" de Violet — intro del dia y cierre de la charla
+    old "Violet parece estar insinuante hoy."
+    new "Violet seems to be flirty today."
+
+    old "ella estaba insinuante."
+    new "she was feeling flirty."

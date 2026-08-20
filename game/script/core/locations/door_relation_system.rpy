@@ -120,7 +120,14 @@ init python:
         if horario != 3 and npc_tiene_ventaja(npc_id, "puerta_ingreso_diurno"):
             return "ingreso_diurno"
 
+        # dejar_pasar: la ventaja generica vale a cualquier hora; la acotada solo
+        # en su momento del dia. Mismo esquema que sale_pasillo mas abajo, para
+        # que una linea pueda abrir el ingreso de a poco.
         if npc_tiene_ventaja(npc_id, "puerta_dejar_pasar"):
+            return "dejar_pasar"
+        if horario == 1 and npc_tiene_ventaja(npc_id, "puerta_dejar_pasar_tarde"):
+            return "dejar_pasar"
+        if horario == 2 and npc_tiene_ventaja(npc_id, "puerta_dejar_pasar_noche"):
             return "dejar_pasar"
 
         # sale_pasillo: la ventaja generica vale a cualquier hora; las variantes

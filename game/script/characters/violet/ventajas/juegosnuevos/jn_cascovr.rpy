@@ -1,12 +1,23 @@
 ################################################################################
-## Evento 1 de Violet - Casco VR
+## Juego Nuevo — CASCO VR
 ################################################################################
-## Al completar quest 0 de Violet, se desbloquea el casco VR en la tienda y
-## el contacto "Libre Mercado" envia un mensaje avisando.
-## Cuando el jugador usa el casco de noche en su habitacion y Violet esta en
-## la suya, se dispara este evento.
-## Despues de la primera vez, el jugador puede invitar a Violet desde el menu
-## de interaccion para activar la repeticion.
+## Primer juego del sistema "Juegos Nuevos" (ventaja del hito de amor 20).
+##
+## ANTES ERA UN EVENTO (`violet_evento_01`, en events/evento1_violet.rpy) que
+## aparecia a los 20 de amor y se disparaba usando el item. El sistema de Juegos
+## Nuevos cubre ese rol mejor, asi que el Event se retiro y todo su contenido
+## —imagenes, escenas, el uso del item y el desbloqueo de la tienda— vive acá.
+##
+## COMO SE JUEGA: Violet lo menciona en la charla de "Juegos Nuevos" mientras no
+## se haya jugado. El casco se compra en la tienda (el stock lo abre el hito de
+## amor 20, mas abajo) y se usa de NOCHE en la habitacion del MC — ahi arranca
+## la escena. Despues de la primera vez se la puede invitar desde su menu.
+##
+## ⚠️ LOS FLAGS CONSERVAN EL NOMBRE VIEJO (`violet_evento1_*`) A PROPOSITO.
+## Renombrar un `default` no migra el valor: una partida a mitad del casco
+## volveria a cero y el juego figuraria como no jugado. Se leen desde
+## _jn_cascovr_jugado().
+
 
 ################################################################################
 ## Imagenes
@@ -80,20 +91,61 @@ default violet_evento1_completado = False
 default violet_evento1_repetir = False
 
 ################################################################################
-## Funcion post-completar quest 0
+## Registro en Juegos Nuevos + apertura de la tienda
 ################################################################################
+
+# True cuando ya se abrio el stock. Es `default` y no se deriva del hito porque
+# el jugador puede comprar el casco y venderlo: sin este flag, el trigger le
+# repondria stock cada vuelta del loop.
+default jn_cascovr_tienda_abierta = False
+
 
 init python:
 
-    def post_completar_violet_quest0():
-        """Se llama al completar quest 0 de Violet.
-        Envia mensaje de Libre Mercado y desbloquea stock del casco VR."""
+    def _jn_cascovr_jugado():
+        """
+        True si el casco ya se jugo con Violet.
+
+        Lee el flag VIEJO del evento a proposito (ver la nota del encabezado):
+        renombrarlo dejaria en cero a toda partida que ya lo hubiera jugado.
+        """
+        return getattr(store, 'violet_evento1_completado', False)
+
+    def _jn_cascovr_trigger_tienda():
+        """
+        Trigger de game_loop: abre el casco en la tienda al llegar el hito de
+        amor 20, y avisa por el chat de Libre Mercado.
+
+        ANTES lo hacia post_completar_violet_quest0() al cerrar la quest 0 de
+        Violet. Se movio acá porque ahora el casco es contenido de "Juegos
+        Nuevos": no tiene sentido que este a la venta antes de que ella lo
+        mencione. Devuelve siempre None — efecto python, el loop sigue.
+        """
+        if store.jn_cascovr_tienda_abierta:
+            return None
+        if not npc_tiene_ventaja("violet", "juegos_nuevos"):
+            return None
+
+        store.jn_cascovr_tienda_abierta = True
+        store.stock_tienda["casco_realidad_virtual"] = 1
         sistema_mensajes.inicializar_chat("libre_mercado")
         sistema_mensajes.chats["libre_mercado"].agregar_mensaje(
             "libre_mercado",
             "El casco VR de su lista de deseados ahora esta disponible"
         )
-        store.stock_tienda["casco_realidad_virtual"] = 1
+        return None
+
+
+init 5 python:
+
+    registrar_juego_nuevo(
+        "cascovr",
+        "Siempre quise probar un casco de realidad virtual",
+        _jn_cascovr_jugado,
+    )
+
+    registrar_trigger_game_loop("jn_cascovr_tienda", _jn_cascovr_trigger_tienda)
+
 
 ################################################################################
 ## Labels
@@ -294,9 +346,9 @@ label evento1_violet:
     hide mc_parado_base
 
     $ avanzar_horario()
+    # Marca el juego como jugado: a partir de acá Violet deja de proponerlo en
+    # la charla de "Juegos Nuevos" (lo lee _jn_cascovr_jugado).
     $ violet_evento1_completado = True
-    $ _ev1 = sistema_events.obtener_event("violet_evento_01")
-    $ _ev1 and _ev1.completar()
     jump game_loop
 
 
@@ -463,4 +515,112 @@ label invitar_violet_vr:
     $ violet_evento1_repetir = True
     $ ocultar_hud()
     piensa "La invite a jugar con el casco de realidad virtual esta noche."
+    jump game_loop
+
+
+label usar_casco_vr:
+
+    # Ocultar HUD
+    $ ocultar_hud()
+    hide screen hud_navegacion
+
+    # Si el evento 1 ya se completo
+    if violet_evento1_completado:
+        # Con invitacion activa → directo al evento repetir
+        if violet_evento1_repetir:
+            $ violet_evento1_repetir = False
+            jump evento1_violet_repetir
+        # Sin invitacion → narrativa corta de jugar solo
+        jump usar_casco_vr_repetir
+
+    # Primera vez: narrativa completa del casco VR
+    scene bg_casa_noche_hmc_zoom with fade
+    show mc_parado_base c_rbase_base o_base b_seria at center with dissolve
+    show mc_parado_base c_rbase_mochila1 with sprite_normal
+    pause 0.3
+    show mc_parado_base c_rbase_mochila2 with sprite_normal
+    pause 0.3
+    show mc_parado_base c_rbase_mochila3 with sprite_normal
+    pause 0.3
+    show mc_parado_base c_rbase_mochila4 with sprite_normal
+    pause 0.3
+    show mc_parado_base c_rbase_vr with sprite_normal
+    pause 0.3
+
+    show mc_parado_base b_hablando 
+    mc "Al fin lo tengo"
+    show mc_parado_base b_none
+    pause 0.3
+    show mc_parado_base b_hablando 
+    mc "Voy a probar el X Fighters"
+    show mc_parado_base b_none
+    
+    hide mc_parado_base with dissolve
+    show mc_base_parado_vr vr1 at center with dissolve
+    piensa "Tendria que ver como configurar esto"
+    show mc_base_parado_vr vr2 at center with dissolve
+    piensa "Creo que voy entendiendo"
+    show mc_base_parado_vr vr3 at center with dissolve
+    piensa "Ahí esta"
+    show mc_base_parado_vr vr2 at center with dissolve
+    pause 0.3
+    show mc_base_parado_vr vr1 at center with dissolve
+    
+    scene black with fade
+    pause 1.0
+    centered "{color=#FFFFFF}Un tiempo mas tarde...{/color}"
+    scene bg_casa_noche_hmc_zoom with fade
+
+    show violet_evento_01_jugandosolo j1 with dissolve
+    piensa "Ya casi lo tengo, un golpe mas y destruyo al terrible Majin Freazing Cell Z"
+    show violet_evento_01_jugandosolo j2 with dissolve
+    piensa "¡Muereeeeeee!"
+    show violet_evento_01_jugandosolo j3 with dissolve
+    mc "AHHHHHHHH"
+    show violet_evento_01_jugandosolo j4 with dissolve
+    pause 0.3
+    show violet_evento_01_jugandosolo j5 with dissolve
+    pause 0.3
+    show violet_evento_01_jugandosolo j6 with dissolve
+    pause 0.3
+    show violet_evento_01_jugandosolo j7 with dissolve
+    pause 0.3
+    mc "Estoy bien..."
+    mc "Pero ya es suficiente de esto"
+    mc "Me duele todo"
+    hide violet_evento_01_jugandosolo with dissolve
+
+    # Ocultar MC VR
+    hide mc_base_parado_vr with dissolve
+
+    # Post-narrativa primera vez: comprobar si Violet esta en su habitacion
+    $ _violet_vr = obtener_npc("violet")
+    if _violet_vr and _violet_vr.locacion_actual == "casa_hviolet":
+        jump evento1_violet
+
+    # Violet no esta → volver al game loop
+    $ mostrar_hud()
+    jump game_loop
+
+
+################################################################################
+## Label: Casco VR — Repetir (jugar solo, sin evento)
+################################################################################
+
+label usar_casco_vr_repetir:
+
+    scene bg_casa_noche_hmc_zoom with fade
+
+    show mc_base_parado_vr vr1 at center with dissolve
+    piensa "Placeholder: Voy a jugar un rato con el casco."
+
+    scene black with fade
+    pause 1.0
+    centered "{color=#FFFFFF}Un tiempo mas tarde...{/color}"
+
+    show violet_evento_01_jugandosolo j1 with dissolve
+    piensa "Placeholder: Estuvo bien la sesion de hoy."
+    hide violet_evento_01_jugandosolo with dissolve
+
+    $ mostrar_hud()
     jump game_loop

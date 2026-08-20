@@ -72,9 +72,14 @@ init python:
             quest_id: quest de relacion que OTORGA este hito. Llegar al umbral
                 no alcanza: habilita la quest, y el hito se gana al completarla.
                 None = hito sin quest, se otorga con solo alcanzar el umbral.
+            proximamente: marcador de contenido que todavia no existe. NUNCA se
+                otorga, asi que el panel lo muestra siempre en gris. Sirve para
+                que el jugador vea que la linea sigue. Un hito asi no lleva
+                ventajas ni quest_id.
         """
         def __init__(self, id, npc_id, stat, umbral, nombre,
-                     descripcion="", ventajas=None, icono="⭐", quest_id=None):
+                     descripcion="", ventajas=None, icono="⭐", quest_id=None,
+                     proximamente=False):
             self.id          = id
             self.npc_id      = npc_id
             self.stat        = stat
@@ -84,6 +89,7 @@ init python:
             self.ventajas    = list(ventajas) if ventajas else []
             self.icono       = icono
             self.quest_id    = quest_id
+            self.proximamente = proximamente
 
         def valor_actual(self):
             """Valor que lleva hoy el stat que desbloquea este hito."""
@@ -108,7 +114,10 @@ init python:
             Con quest: manda la quest completada — el umbral solo habilita la
             quest y frena el stat, no otorga nada por si mismo.
             Sin quest: alcanza con llegar al umbral.
+            Marcado como proximamente: nunca, es solo un cartel.
             """
+            if getattr(self, 'proximamente', False):
+                return False
             if self.quest_id:
                 return self.quest_completada()
             return self.umbral_cumplido()
@@ -198,6 +207,21 @@ init python:
                 return _req.params.get("valor", 0)
         return None
 
+    # Topes provisorios: hasta donde llega el contenido de una linea mientras la
+    # proxima quest todavia no exista. Sin esto, terminada la ultima quest el
+    # stat queda libre hasta 100 y el jugador sube sin nada que desbloquear.
+    # {(npc_id, stat): valor}
+    TOPES_PROVISORIOS = {}
+
+    def registrar_tope_provisorio(npc_id, stat, valor):
+        """
+        Declara hasta donde puede subir un stat mientras no haya mas quests.
+
+        Lo registra el contenido junto a su linea (ej. quests_amor_violet.rpy).
+        Al crear la quest que falta, se sube el valor o se borra la linea.
+        """
+        TOPES_PROVISORIOS[(npc_id, stat)] = valor
+
     def tope_stat(npc_id, stat):
         """
         Hasta donde puede subir hoy ese stat.
@@ -227,6 +251,14 @@ init python:
             _u = _umbral_quest_relacion(_q)
             if _u is not None:
                 _pendientes.append(_u)
+
+        # El tope provisorio entra al min como una quest mas: si todavia quedan
+        # quests por delante manda la mas cercana, y cuando no queda ninguna
+        # queda el provisorio en vez del 100 de "sin tope".
+        _prov = TOPES_PROVISORIOS.get((npc_id, stat))
+        if _prov is not None:
+            _pendientes.append(_prov)
+
         return min(_pendientes) if _pendientes else 100
 
     def stat_topeado(npc_id, stat):

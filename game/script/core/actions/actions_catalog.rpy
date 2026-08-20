@@ -206,6 +206,115 @@ init 5 python:
         condicion=_vq4d5_limpiar_cocina_visible,
     ))
 
+    # ── Violet Amor 25 — el domingo solos en casa ────────────────────────────
+    # No agrega botones nuevos: intercepta "cocinar" y "ver_tv", que ya existen.
+    # Los tres listeners son excluyentes (los separa la fase), asi que nunca hay
+    # dos compitiendo por la misma accion.
+    #
+    # unico=False a proposito: post_ejecutar() borraria el listener de la lista,
+    # y esa mutacion se pierde al cargar la partida. Los apaga la condicion, que
+    # lee un flag `default` y si se guarda. (Mismo criterio que la pizza 04_d4.)
+    sistema_acciones.registrar_listener(ListenerAccion(
+        accion_id="cocinar",
+        label="violet_amor_25_pasar_cocina",
+        nombre_menu="Comer algo",
+        prioridad="quest",
+        condicion=_va25_listener_pasatiempo,
+        unico=False,
+    ))
+    sistema_acciones.registrar_listener(ListenerAccion(
+        accion_id="ver_tv",
+        label="violet_amor_25_pasar_tv",
+        nombre_menu="Ver algo",
+        prioridad="quest",
+        condicion=_va25_listener_pasatiempo,
+        unico=False,
+    ))
+    sistema_acciones.registrar_listener(ListenerAccion(
+        accion_id="cocinar",
+        label="violet_amor_25_cocinar",
+        nombre_menu="Hacer la cena",
+        prioridad="quest",
+        condicion=_va25_listener_cena,
+        unico=False,
+    ))
+
+    # ── Violet Amor 20 — comprar el juego y jugarlo ──────────────────────────
+    # Las dos son excluyentes (fase 1 y fase 2), asi que nunca conviven en el
+    # panel. Las condiciones viven en violet_amor_20.rpy y leen va20_fase.
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="va20_comprar_juego",
+        nombre="Comprar juego",          # lo pisa nombre_dinamico (lleva el precio)
+        nombre_dinamico=_va20_nombre_comprar,
+        icono=u"🎮",
+        locacion_id="casa_hmc",
+        label_generico="violet_amor_20_comprar",
+        reseteo=None,
+        condicion=_va20_comprar_visible,
+    ))
+
+    # La pone primero la quest de amor 20 y despues, para siempre, la ventaja
+    # "accion_jugar" de su hito. reseteo diario + mensaje_reintento resuelven el
+    # "una vez por dia" de la ventaja sin flag propio; durante la quest no
+    # molestan porque usarla con exito la completa.
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="va20_jugar",
+        nombre="Jugar",
+        icono=u"🎮",
+        locacion_id="casa_hmc",
+        label_generico="violet_amor_20_jugar",
+        reseteo="diario",
+        mensaje_reintento=u"Ya jugué suficiente por hoy",
+        condicion=_va20_jugar_visible,
+    ))
+
+    # ── Violet Deseo 15 — el estreno del anime en el sotano ──────────────────
+    # Es una accion PROPIA y no un listener sobre el "ver_tv" del living: son
+    # dos televisores en dos locaciones distintas. Existe solo mientras la quest
+    # esta lista (la condicion vive en violet_deseo_15.rpy).
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="vd15_ver_tv_sotano",
+        nombre="Ver TV",
+        icono=u"📺",
+        locacion_id="casa_sotano",
+        label_generico="violet_deseo_15_ver_tv",
+        reseteo="diario",
+        mensaje_reintento=u"Ya vi suficiente por hoy",
+        condicion=_vd15_ver_tv_visible,
+        color="#4527A0",
+        color_hover="#7E57C2",
+    ))
+
+    # ── Violet Amor 15 — revolver el altillo buscando la Portatil Boy ────────
+    # Solo existe mientras dura la busqueda. La condicion vive en
+    # violet_amor_15.rpy y lee el flag va15_fase.
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="va15_buscar",
+        nombre="Buscar",
+        icono=u"🔍",
+        locacion_id="casa_altillo",
+        label_generico="quest_violet_amor_03",
+        reseteo=None,
+        condicion=_va15_buscar_visible,
+    ))
+
+    # ── Violet Deseo 10 — el vaso de agua de madrugada ───────────────────────
+    # Solo existe entre el despertar con sed y la escena. La condicion vive en
+    # violet_deseo_10.rpy y lee el flag vd10_sed_activa.
+    #
+    # Registrada acá y no en runtime desde el label: sistema_acciones es
+    # `define` y no se guarda, asi que un registro hecho en runtime desaparece
+    # al cargar la partida y dejaria la quest trabada sin forma de dispararla.
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="vd10_tomar_agua",
+        nombre="Tomar agua",
+        icono=u"🥤",
+        locacion_id="casa_cocina",
+        label_generico="quest_violet_deseo_02",
+        reseteo=None,
+        condicion=_vd10_tomar_agua_visible,
+    ))
+
     sistema_acciones.registrar_accion(AccionLocacion(
         id="cocinar",
         nombre="Cocinar",

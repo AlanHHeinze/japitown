@@ -86,39 +86,41 @@ translate english strings:
     old "Si golpeás, sale a hablar al pasillo, pero todavía no te deja entrar."
     new "If you knock, she comes out to talk in the hallway, but won't let you in yet."
 
-    old "Sale al pasillo si golpeás por la tarde"
-    new "She comes out to the hallway if you knock in the afternoon"
+    # El marcador {npc} se conserva en el `new`: no es un placeholder de Ren'Py,
+    # lo sustituye obtener_desbloqueos_stat DESPUES de traducir.
+    old "{npc} no me ignora (Tarde)"
+    new "{npc} doesn't ignore me (Afternoon)"
 
-    old "Por la tarde sale a hablar al pasillo cuando golpeás. A otras horas no atiende."
-    new "In the afternoon she comes out to talk when you knock. At other times she doesn't answer."
+    old "Al interactuar con su puerta por la tarde, {npc} responde y sale al pasillo a hablar."
+    new "If you interact with her door in the afternoon, {npc} answers and comes out to the hallway to talk."
 
-    old "Sale al pasillo si golpeás por la noche"
-    new "She comes out to the hallway if you knock at night"
+    old "{npc} no me ignora (Noche)"
+    new "{npc} doesn't ignore me (Night)"
 
-    old "Por la noche sale a hablar al pasillo cuando golpeás. A otras horas no atiende."
-    new "At night she comes out to talk when you knock. At other times she doesn't answer."
+    old "Al interactuar con su puerta por la noche, {npc} responde y sale al pasillo a hablar."
+    new "If you interact with her door at night, {npc} answers and comes out to the hallway to talk."
 
     # Conversación
-    old "Puede estar de buen humor"
-    new "She can be in a good mood"
+    old "Estado Buen Humor"
+    new "Good Mood state"
 
-    old "Se suma «Buen Humor» a sus estados de ánimo posibles del día. En ese estado las conversaciones dan más puntos."
-    new "\"Good Mood\" is added to her possible moods for the day. In that mood conversations give more points."
+    old "Al hablar con ella puede tener este estado asignado, que garantiza +1 ❤️ en todas las opciones."
+    new "When you talk to her she can be in this mood, which guarantees +1 ❤️ on every option."
 
-    old "Puede estar de muy buen humor"
-    new "She can be in a great mood"
+    old "Estado Muy Buen Humor"
+    new "Great Mood state"
 
-    old "Se suma «Muy Buen Humor» a sus estados posibles. Es el estado que más recompensa da al conversar."
-    new "\"Great Mood\" is added to her possible moods. It's the mood that rewards conversation the most."
+    old "Al hablar con ella puede tener este estado asignado, que garantiza ❤️ en todas las opciones: algunas dan +1 y otras +2."
+    new "When you talk to her she can be in this mood, which guarantees ❤️ on every option: some give +1 and others +2."
 
-    old "Puede estar en un estado de ánimo especial"
-    new "She can be in a special mood"
+    old "Estado Hot"
+    new "Hot state"
 
-    old "Se suma un estado de ánimo nuevo, con opciones de conversación que antes no aparecían."
-    new "A new mood is added, with conversation options that didn't show up before."
+    old "Al hablar con ella puede tener este estado asignado, que garantiza 💋 en todas las opciones: algunas dan +1 y otras +2."
+    new "When you talk to her she can be in this mood, which guarantees 💋 on every option: some give +1 and others +2."
 
-    old "Intuís el resultado de una de las opciones"
-    new "You sense the outcome of one of the options"
+    old "Conocerla"
+    new "Knowing her"
 
     # Trasnoche
     old "Podés hablarle de madrugada"
@@ -127,8 +129,15 @@ translate english strings:
     old "Aunque sea de madrugada te atiende en vez de estar durmiendo."
     new "Even in the middle of the night she'll talk to you instead of being asleep."
 
-    old "Antes de elegir, una de las opciones de la conversación te muestra qué resultado va a dar."
-    new "Before you choose, one of the conversation options shows you what result it will give."
+    old "Al hablar con ella siempre vemos el resultado de una de las respuestas."
+    new "When you talk to her you always see the outcome of one of the replies."
+
+    # Memoria sin tope — ventaja del hito de deseo 10
+    old "Recordar"
+    new "Remembering"
+
+    old "Al hablar con ella siempre vemos el resultado de nuestra elección pasada con ese estado."
+    new "When you talk to her you always see the outcome of your past choice in that mood."
 
     # ── Hitos de Violet — nombre y descripcion ───────────────────────────────
     # Los pasa por renpy.translate_string() obtener_desbloqueos_stat()
@@ -199,8 +208,9 @@ translate english strings:
     old "Muy Buen Humor"
     new "Great Mood"
 
-    old "Caliente"
-    new "Turned On"
+    # El nombre del estado "Hot" NO lleva entrada acá: ya esta traducido en
+    # tl/english/script/ui/hud/hud_celular.rpy (la app "Hot" del celular usa el
+    # mismo texto) y un `old` repetido rompe el lint.
 
     # ── Estados de animo — Jasmine ───────────────────────────────────────────
     old "Provocativa"
@@ -237,3 +247,97 @@ translate english strings:
 
     old "Feliz"
     new "Happy"
+
+    # Estado "Insinuante" — escalon previo a "Caliente" (hito de deseo 10).
+    # Las comillas angulares del original van como \" en el `new`, igual que en
+    # las otras descripciones de estado.
+    old "Insinuante"
+    new "Flirty"
+
+    old "Estado Insinuante"
+    new "Flirty state"
+
+    old "Al hablar con ella puede tener este estado asignado, que garantiza +1 💋 en todas las opciones."
+    new "When you talk to her she can be in this mood, which guarantees +1 💋 on every option."
+
+    # =========================================================================
+    # Ventajas del hito de amor 20
+    # =========================================================================
+    # "Jugar" (el nombre de la ventaja) NO lleva entrada acá: ya esta traducido
+    # en actionsystem_strings.rpy como nombre de la accion, y comparten texto.
+
+    old "Pasar (Tarde)"
+    new "Come in (Afternoon)"
+
+    old "Podremos ingresar a su habitación por la tarde."
+    new "We'll be able to go into her room in the afternoon."
+
+    old "Al hacer uso de la acción Jugar, {npc} se puede unir y mejora la relación en +2 ❤️."
+    new "When you use the Play action, {npc} may join in and the relationship improves by +2 ❤️."
+
+    old "Juegos Nuevos"
+    new "New Games"
+
+    old "Al interactuar con {npc} tendremos la opción de jugar un juego nuevo; son escenas especiales con ella."
+    new "When you interact with {npc} you'll have the option to play a new game; they're special scenes with her."
+
+    # =========================================================================
+    # Ventajas del hito de deseo 20
+    # =========================================================================
+
+    old "Pasar (Noche)"
+    new "Come in (Night)"
+
+    old "Podremos ingresar a su habitación por la noche."
+    new "We'll be able to go into her room at night."
+
+    old "Ver Anime"
+    new "Watch Anime"
+
+    old "Al hacer uso de la acción Ver Anime, {npc} se puede unir y mejora la relación en +2 💋."
+    new "When you use the Watch Anime action, {npc} may join in and the relationship improves by +2 💋."
+
+    old "Mensajear"
+    new "Texting"
+
+    old "Ahora podremos escribirle a {npc} por el chat cuando queramos y tener conversaciones especiales con ella."
+    new "Now we can text {npc} whenever we want and have special conversations with her."
+
+    # =========================================================================
+    # Ventajas del hito de amor 30
+    # =========================================================================
+    # El NOMBRE "Ropa Nueva" no lleva entrada acá: ya esta traducido en
+    # quest_strings.rpy como nombre de evento y comparten texto. Solo va su
+    # descripcion, que si es nueva.
+
+    old "Beso (Amor)"
+    new "Kiss (Love)"
+
+    old "En el menú de {npc} tendremos la opción de besarla, una vez por día."
+    new "{npc}'s menu will have the option to kiss her, once per day."
+
+    old "Estando en su habitación, {npc} nos puede mostrar cómo le queda algo nuevo."
+    new "While she's in her room, {npc} can show us how something new looks on her."
+
+    # =========================================================================
+    # Ventajas del hito de deseo 30
+    # =========================================================================
+    # "Beso (Deseo)" es a la vez el nombre de la ventaja y el texto del boton:
+    # una sola entrada sirve para los dos.
+
+    old "Beso (Deseo)"
+    new "Kiss (Desire)"
+
+    old "En el menú de {npc} tendremos otra forma de besarla, una vez por día."
+    new "{npc}'s menu will have another way to kiss her, once per day."
+
+    old "Provocación"
+    new "Teasing"
+
+    old "En distintos momentos {npc} nos va a estar provocando; son escenas especiales que aparecen solas."
+    new "At different moments {npc} will be teasing us; they're special scenes that show up on their own."
+
+    # Hitos marcador de fin de linea (proximamente=True). Su descripcion
+    # comparte el `old` que ya vive en el tl de hud_pistas.
+    old "Próximamente"
+    new "Coming soon"

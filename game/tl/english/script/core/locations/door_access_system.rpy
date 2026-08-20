@@ -26,6 +26,10 @@ translate english strings:
     ## dialogo literal (piensa "Violet debe estar dormida.") y estaba en un
     ## bloque por hash; ahora se muestra por interpolacion y lo traduce
     ## obtener_bloqueo_golpe() via translate_string — necesita un `old` aca.
+    # Violet Amor 25 — bloqueo de golpe durante el dia libre
+    old "Violet esta durmiendo"
+    new "Violet is sleeping"
+
     old "Violet debe estar dormida."
     new "Violet must be asleep."
 
@@ -168,4 +172,3 @@ translate english interaccion_puerta_npc_76c9d030:
 
     # piensa "[_msg_bloqueo_golpe]"
     piensa "[_msg_bloqueo_golpe]"
-

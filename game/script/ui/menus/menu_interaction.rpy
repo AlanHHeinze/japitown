@@ -83,9 +83,14 @@ screen menu_interaccion_npc_completo(npc, opciones_extra=None):
             # Se arma UNA lista ya ordenada y filtrada por condición, y se recorre
             # en un solo vbox: así, si una opción no está disponible, la siguiente
             # sube de lugar en vez de dejar un hueco vacío.
-            $ _opciones_quest = [o for o in (opciones_extra or []) if o.get("condicion", True) and o.get("tipo") != "evento"]
-            $ _opciones_evento = [o for o in (opciones_extra or []) if o.get("condicion", True) and o.get("tipo") == "evento"]
-            $ _opciones_ordenadas = _opciones_quest + _opciones_evento
+            # Las de tipo "ventaja" (capacidades permanentes que otorga un hito)
+            # van ULTIMAS de las extra, pegadas a Hablar: se parecen mas a eso
+            # que a una quest pendiente, y ademas no llevan tag.
+            $ _opciones_visibles = [o for o in (opciones_extra or []) if o.get("condicion", True)]
+            $ _opciones_quest = [o for o in _opciones_visibles if o.get("tipo") not in ("evento", "ventaja")]
+            $ _opciones_evento = [o for o in _opciones_visibles if o.get("tipo") == "evento"]
+            $ _opciones_ventaja = [o for o in _opciones_visibles if o.get("tipo") == "ventaja"]
+            $ _opciones_ordenadas = _opciones_quest + _opciones_evento + _opciones_ventaja
             $ puede_hablar = npc.puede_interactuar("hablar") if hablar_desbloqueado else False
 
             vbox:
@@ -97,7 +102,7 @@ screen menu_interaccion_npc_completo(npc, opciones_extra=None):
                     # El texto se COMPONE (opcion + tag), asi que hay que traducir
                     # cada parte por separado: el string ya concatenado nunca
                     # matchearia un `old`. Mismo criterio que en door_access_system.
-                    $ _tag_extra = tag_opcion_quest(opcion.get("label"), opcion.get("tipo") == "evento")
+                    $ _tag_extra = tag_opcion_quest(opcion.get("label"), opcion.get("tipo") == "evento", opcion.get("tipo"))
                     $ _texto_extra = renpy.translate_string(opcion.get("texto", "Opción")) + _tag_extra
                     button:
                         xfill True

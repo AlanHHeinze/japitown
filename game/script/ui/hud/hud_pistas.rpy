@@ -251,7 +251,10 @@ screen panel_pistas():
                                                     $ _etapa_txt = "Etapa {}: {}".format(_npc_quest.etapa_actual, _etapa_nombres.get(_npc_quest.etapa_actual, "?"))
                                                     text "[[" + _etapa_txt + "]]" size int(11 * _k) color "#888888"
 
-                                # Bloque "sin quest": solo si NINGUNA linea esta activa
+                                # Bloque "sin quest": ese NPC no tiene nada activo
+                                # en esta pestaña. Cubre los dos casos con el
+                                # mismo cartel — la cadena termino, o todavia no
+                                # hay contenido de esa linea para ese NPC.
                                 if not _npc_quests:
                                     frame:
                                         background "#1e1e3aCC"
@@ -277,7 +280,7 @@ screen panel_pistas():
                                                 $ _ntitulo = renpy.translate_string(_npc_p.nombre)
                                                 text "[_ntitulo]" size int(16 * _k) color "#888888" bold True
 
-                                                text _("Contenido en desarrollo") size int(13 * _k) color "#666666" italic True
+                                                text _("Nuevo contenido en futuras actualizaciones.") size int(13 * _k) color "#666666" italic True
 
                                 # Bloques de eventos (uno por evento, independiente de si hay quest)
                                 for _ev in _npc_eventos:

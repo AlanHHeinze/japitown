@@ -6,8 +6,55 @@
 ################################################################################
 default MODO_DEV = False
 
+
+################################################################################
+## ENLACES EXTERNOS
+################################################################################
+## Van acá y no inline en la pantalla que los usa porque quedan CONGELADOS en
+## cada build: el jugador que descargó una version vieja se queda con la URL de
+## esa version para siempre, y no hay parche que lo alcance.
+##
+## La invitacion de Discord esta creada con caducidad "Nunca" y usos ilimitados
+## (por defecto Discord las vence a los 30 dias). Aun asi sigue siendo un punto
+## unico de falla: si algun dia se revoca o cambia el servidor, lo ideal es que
+## esto apunte a un redirect propio (itch, dominio corto) en vez de a discord.gg
+## directo — asi se actualiza el destino sin sacar build nuevo.
+define JP_URL_DISCORD = "https://discord.gg/XHeUH3FXqf"
+
 default mc_name = ""
 define mc = Character("[mc_name]", color="#56b6c2")
+
+
+################################################################################
+## PENSAMIENTOS — estilo compartido
+################################################################################
+## Todo pensamiento del juego (el del MC y el de cada NPC) sale igual: el nombre
+## con el sufijo "(Pensamiento)" en gris, y el texto en italica entre comillas.
+##
+## Cada personaje hereda de acá con `kind=`, que es el mecanismo de Ren'Py para
+## exactamente esto: una sola definicion del estilo y una linea por personaje.
+## Cambiar el color o sacar las comillas se hace UNA vez, acá.
+##
+##     define violet_piensa = Character("Violet (Pensamiento)", kind=piensa_base)
+##
+## Va con prioridad -10 para que exista antes que los `define` de los personajes
+## (que corren en prioridad 0, y el orden entre archivos no esta garantizado).
+##
+## SOBRE LA ITALICA: el proyecto solo trae Roboto-Bold.ttf, sin archivo italic.
+## Ren'Py la sintetiza inclinando los glifos, asi que `what_italic` funciona
+## igual. Si algun dia se agrega Roboto-BoldItalic.ttf, se declara con
+## config.font_replacement_map y esto la toma sin cambios.
+##
+## EL SUFIJO SE TRADUCE SOLO: Ren'Py pasa el nombre de un Character por los
+## bloques `translate <lang> strings`, asi que alcanza con un old/new por
+## personaje en tl/english/personajes_strings.rpy.
+define -10 piensa_base = Character(
+    None,
+    color="#AAAAAA",
+    what_italic=True,
+    what_prefix="«",
+    what_suffix="»",
+)
 # what_size fijo en 33 ignora el bump de gui.text_size que aplica en pantalla
 # chica (ver @gui.variant small() en gui.rpy) — por eso el texto del tutorial
 # se veía chico ahi. Se lo hace seguir al mismo tamaño que el diálogo general.

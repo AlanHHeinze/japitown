@@ -46,12 +46,32 @@ init python:
         Una ventaja con id inexistente se saltea — ya la reporta
         verificar_coherencia_hitos(), el panel no tiene por que romperse.
 
+        LA PLANTILLA {npc}: los textos de una ventaja pueden traer el marcador
+        literal `{npc}`, que acá se reemplaza por el nombre del NPC. Sirve para
+        que una sola entrada del catalogo — que es compartido por los tres —
+        diga "Violet no me ignora" o "Mónica no me ignora" segun a quien se le
+        este mirando la ficha.
+
+        Va DESPUES de translate_string a proposito: el marcador se conserva en
+        el `new` del tl y se sustituye recien al pintar. Y se hace con
+        .replace() y no con .format() porque no hay otros campos que sustituir:
+        asi una llave suelta en un texto no puede romper el panel.
+
         Returns:
             (list[dict], list[dict]) — cada dict con icono/nombre/desc/umbral/id
             y "ventajas": [{"id", "nombre", "desc"}, ...]
         """
         desbloqueados = []
         bloqueados    = []
+
+        _npc_obj = obtener_npc(npc_id)
+        _npc_nombre = _npc_obj.nombre if _npc_obj else npc_id.capitalize()
+
+        def _con_npc(texto):
+            """Reemplaza el marcador {npc} por el nombre del NPC."""
+            if not texto:
+                return texto
+            return texto.replace("{npc}", _npc_nombre)
 
         for _h in obtener_hitos_npc(npc_id, stat):
             _ventajas = []
@@ -61,8 +81,8 @@ init python:
                     continue
                 _ventajas.append({
                     "id":     _vid,
-                    "nombre": renpy.translate_string(_v["nombre"]),
-                    "desc":   renpy.translate_string(_v["descripcion"]) if _v.get("descripcion") else "",
+                    "nombre": _con_npc(renpy.translate_string(_v["nombre"])),
+                    "desc":   _con_npc(renpy.translate_string(_v["descripcion"])) if _v.get("descripcion") else "",
                 })
 
             _item = {

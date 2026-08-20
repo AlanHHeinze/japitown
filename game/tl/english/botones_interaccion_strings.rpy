@@ -115,6 +115,10 @@ translate english strings:
     old "Ya terminé de limpiar"
     new "I'm done cleaning"
 
+    # Opcion de puerta de la quest de amor 5 ("¿Mejor?")
+    old "Llamarla"
+    new "Call out to her"
+
     old "Mostrarle los cosplays"
     new "Show her the cosplays"
 
@@ -160,7 +164,7 @@ translate english strings:
     # Puerta — opciones en desarrollo
     # =========================================================================
 
-    old "Espiar"
+    old "Mirar"
     new "Peek"
 
     old "Espiar (Contenido en desarrollo)"
@@ -219,3 +223,30 @@ translate english strings:
 
     old "Completar instalación e iniciar diagnostico del sistema"
     new "Finish installation and run a system diagnostic"
+
+    # Violet Amor 20 ("Jugando juntos") — primer tramo
+    old "Pedirle recomendacion de juegos"
+    new "Ask her for a game recommendation"
+
+    # Violet Amor 25 ("Solos en casa") — el domingo por la tarde en el living
+    old "Matar el tiempo"
+    new "Kill some time"
+
+    # Violet Deseo 25 ("En su habitacion"). UNA sola entrada para los DOS
+    # botones — el del menu de Violet y el de su puerta comparten texto, y un
+    # `old` repetido rompe el lint.
+    old "Ver anime"
+    new "Watch anime"
+
+    # Violet Deseo 30 ("¿Que me pongo?"). UNA entrada para los DOS botones:
+    # el de su puerta y el de su menu comparten texto.
+    old "Necesitabas ayuda con algo"
+    new "You needed help with something"
+
+    # Ventajas de los hitos de 30. "Ropa Nueva" (el otro boton) comparte el
+    # `old` que ya existe en quest_strings.rpy; "Beso (Amor)" y "Beso (Deseo)"
+    # comparten el suyo con el NOMBRE de la ventaja, en relaciones_strings.rpy.
+
+    # Prendas del sistema Ropa Nueva
+    old "Vestido"
+    new "Dress"

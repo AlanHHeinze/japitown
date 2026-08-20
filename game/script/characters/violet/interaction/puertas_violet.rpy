@@ -49,6 +49,17 @@ init python:
         # entera vive en violet_quest_04_favores.rpy.
         return violet_favores_puerta_de_noche()
 
+    def _puerta_v_amor_01():
+        # "¿Mejor?" — unico disparador de la quest de amor 5. Solo por la tarde
+        # y con Violet en su habitacion: el MC la llama desde el pasillo y ella
+        # sale, asi que si no esta adentro no hay a quien llamar.
+        if not quest_lista_para_boton("violet_amor_01"):
+            return False
+        if store.horario_actual != 1:
+            return False
+        _v = obtener_npc("violet")
+        return bool(_v and _v.esta_en_locacion("casa_hviolet"))
+
     def _puerta_v_04d6_cierre():
         # Cierre del arco de los favores: avisarle que ya limpio todo. Va
         # tambien en la puerta porque si Violet esta en su cuarto no hay otra
@@ -130,6 +141,9 @@ init 5 python:
                             ocultar_golpear=True)
     registrar_opcion_puerta("violet", "Ya terminé de limpiar",
                             "violet_q4d6_cierre", _puerta_v_04d6_cierre,
+                            ocultar_golpear=True)
+    registrar_opcion_puerta("violet", "Llamarla",
+                            "quest_violet_amor_01", _puerta_v_amor_01,
                             ocultar_golpear=True)
     registrar_opcion_puerta("violet", "Ya compré los cosplay",
                             "violet_quest05a_puerta", _puerta_v_05a,

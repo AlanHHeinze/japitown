@@ -22,6 +22,14 @@ label interaccion_violet:
     # 11, 12) tienen ahora su propio botón más abajo. La 07_c no lo necesita: se
     # cierra sola con el accion_al_completar de su chat.
 
+    # Amor 15: mientras revuelven el altillo, clickearla NO abre el menú —
+    # contesta una línea y listo (y a la quinta vez se abre una escena). Es la
+    # excepción a "el click siempre abre el menú": durante la búsqueda todo lo
+    # que ofrecería el menú está bloqueado por la restricción, así que sería un
+    # menú de una sola opción inútil.
+    if getattr(store, 'va15_fase', 0) == 2 and quest_lista_para_boton("violet_amor_03"):
+        jump violet_amor_15_molestar
+
     # Quest 09_a: interacción especial cuando Violet está enferma en su habitacion
     $ _quest_v09a_int = sistema_quests.obtener_quest("violet_questprincipal_09_a")
     if (_quest_v09a_int and _quest_v09a_int.activa and not _quest_v09a_int.completada and
@@ -172,6 +180,30 @@ label interaccion_violet:
             sistema_mensajes.grupo_completado("violet_quest04e_chat")):
         $ _opciones_extra_v.append({"texto": "Preguntarle por las fotos", "label": "quest_violet_questprincipal_04_e", "condicion": True})
 
+    # Amor 20 ("Jugando juntos"): boton propio para el primer tramo. Los otros
+    # dos tramos son acciones de la habitacion del MC, asi que este boton
+    # desaparece solo en cuanto la charla pasa (va20_fase deja de ser 0).
+    if _va20_boton_recomendacion():
+        $ _opciones_extra_v.append({"texto": "Pedirle recomendacion de juegos", "label": "violet_amor_20_recomendacion", "condicion": True})
+
+    # Amor 25 ("Solos en casa"): el domingo por la tarde, con Violet en el
+    # living. La condicion entera vive en violet_amor_25.rpy.
+    if _va25_boton_matar_tiempo():
+        $ _opciones_extra_v.append({"texto": "Matar el tiempo", "label": "violet_amor_25_matar_tiempo", "condicion": True})
+
+    # Deseo 25 ("En su habitacion"): a cualquier hora. El label reparte segun
+    # el horario — de dia se lo propone, de noche empieza la escena.
+    # (La opcion equivalente de la puerta, solo de noche, se registra en
+    # violet_deseo_25.rpy.)
+    if _vd25_boton_violet():
+        $ _opciones_extra_v.append({"texto": "Ver anime", "label": "violet_deseo_25_pedir", "condicion": True})
+
+    # Amor 30 ("¿Que me pongo?"): mismo momento que la opcion de su puerta,
+    # pero visto desde adentro de la habitacion. Nunca conviven: si estas en el
+    # pasillo ves la de la puerta, si ya entraste ves esta.
+    if _va30_boton_violet():
+        $ _opciones_extra_v.append({"texto": "Necesitabas ayuda con algo", "label": "quest_violet_amor_06", "condicion": True})
+
     # ── LINEAS DE RELACION (amor / deseo) ────────────────────────────────────
     # Un boton por quest de linea (disparador unico, regla 10 del skill).
     # quest_lista_para_boton() ya chequea activa + no completada + BOTON_LISTO.
@@ -182,16 +214,57 @@ label interaccion_violet:
     python:
         for _vq_rel_n in range(1, 7):
             _vq_rel_id = "violet_amor_{:02d}".format(_vq_rel_n)
-            if quest_lista_para_boton(_vq_rel_id):
+            # NINGUNA de las 6 usa este boton: todas tienen disparador propio
+            # (trigger de locacion, de dormir, accion, boton con texto propio).
+            # El bucle se deja igual para que la linea siga teniendo su boton de
+            # respaldo el dia que se agregue una quest sin disparador — sin el,
+            # una quest asi llegaria a BOTON_LISTO sin forma de dispararse (bug
+            # real de las 03-06 antes de escribirlas).
+            _VA_SIN_BOTON = ("violet_amor_01", "violet_amor_02", "violet_amor_03",
+                             "violet_amor_04", "violet_amor_05", "violet_amor_06")
+            if _vq_rel_id not in _VA_SIN_BOTON and quest_lista_para_boton(_vq_rel_id):
                 _opciones_extra_v.append({"texto": "Charlar un rato", "label": "quest_" + _vq_rel_id, "condicion": True})
 
             _vq_rel_id = "violet_deseo_{:02d}".format(_vq_rel_n)
-            if quest_lista_para_boton(_vq_rel_id):
+            # NINGUNA de las 6 usa este boton: todas tienen disparador propio
+            # (trigger de locacion, de dormir, accion, chat, boton con texto
+            # propio). Ojo con la 04 ("Pensando en Violet"), que pasa entera en
+            # el chat: con boton generico el jugador la cerraria sin conversar.
+            # El bucle se deja igual como respaldo para una quest futura sin
+            # disparador — sin el llegaria a BOTON_LISTO sin forma de dispararse.
+            _VD_SIN_BOTON = ("violet_deseo_01", "violet_deseo_02", "violet_deseo_03",
+                             "violet_deseo_04", "violet_deseo_05", "violet_deseo_06")
+            if _vq_rel_id not in _VD_SIN_BOTON and quest_lista_para_boton(_vq_rel_id):
                 _opciones_extra_v.append({"texto": "Buscar un momento a solas", "label": "quest_" + _vq_rel_id, "condicion": True})
 
-    # Evento 1: Invitar a jugar VR
+    # ── VENTAJAS DE HITO ─────────────────────────────────────────────────────
+    # Sin tag y al final de las extra: son capacidades permanentes del vinculo,
+    # no contenido pendiente.
+
+    # Juegos Nuevos (hito de amor 20). La condicion vive en
+    # ventajas/juegosnuevos/juegosnuevos_violet.rpy.
+    if _violet_boton_juegos_nuevos():
+        $ _opciones_extra_v.append({"texto": "Juegos Nuevos", "label": "violet_juegos_nuevos", "condicion": True, "tipo": "ventaja"})
+
+    # Besos (hitos de amor 30 y deseo 30). Son DOS ventajas independientes con
+    # su propio limite diario: teniendo las dos se pueden hacer las dos el mismo
+    # dia. Sin condicion de locacion — los cortes (compañia y una vez por dia)
+    # los resuelve cada label (ventajas/beso_violet.rpy, beso_deseo_violet.rpy).
+    if _violet_beso_disponible():
+        $ _opciones_extra_v.append({"texto": "Beso (Amor)", "label": "violet_beso_amor", "condicion": True, "tipo": "ventaja"})
+
+    if _violet_beso_deseo_disponible():
+        $ _opciones_extra_v.append({"texto": "Beso (Deseo)", "label": "violet_beso_deseo", "condicion": True, "tipo": "ventaja"})
+
+    # Ropa Nueva (hito de amor 30). Solo con ella en su habitacion; la condicion
+    # vive en ventajas/ropanueva/ropanueva_violet.rpy.
+    if _violet_boton_ropa_nueva():
+        $ _opciones_extra_v.append({"texto": "Ropa Nueva", "label": "violet_ropa_nueva", "condicion": True, "tipo": "ventaja"})
+
+    # Casco VR: invitarla a repetir. Era del evento 01, que se retiro — ahora es
+    # el primer juego de Juegos Nuevos (ventajas/juegosnuevos/jn_cascovr.rpy).
     if violet_evento1_completado and "casco_realidad_virtual" in inventario and not violet_evento1_repetir:
-        $ _opciones_extra_v.append({"texto": "Invitar a jugar VR", "label": "invitar_violet_vr", "condicion": True, "tipo": "evento"})
+        $ _opciones_extra_v.append({"texto": "Invitar a jugar VR", "label": "invitar_violet_vr", "condicion": True, "tipo": "ventaja"})
 
     # Mostrar menú de interacción
     call screen menu_interaccion_npc_completo(_npc_actual, opciones_extra=_opciones_extra_v if _opciones_extra_v else None)

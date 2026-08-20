@@ -12,70 +12,6 @@ init 10 python:
     # Funciones de condición para eventos de Violet (module-level para pickle)
     # ===========================================================================
 
-    def condicion_aparicion_evento01_violet():
-        """
-        Aparece con la quest 0 de Violet completada Y 20 de amor.
-
-        El requisito de relación va en la APARICIÓN y no en la activación: asi
-        el evento tampoco figura en el panel de pistas hasta que el vínculo esté
-        al nivel. La activación sigue devolviendo False a propósito — la dispara
-        el uso del casco (ver condicion_activacion_evento01_violet).
-        """
-        quest = sistema_quests.obtener_quest("violet_questprincipal_0_b")
-        if quest is None or not quest.completada:
-            return False
-        return obtener_stat1("violet") >= 20
-
-    # ---------------------------------------------------------------------------
-    # Evento 01 (Casco VR): pista y que_hacer segun en que punto esta el casco.
-    # Van como def de modulo (no lambdas): el evento se guarda en el save y una
-    # lambda rompe el pickle. Los textos se traducen solos — ConfigEtapa._resolver
-    # les pasa renpy.translate_string() al devolverlos.
-    # ---------------------------------------------------------------------------
-
-    def condicion_activacion_evento01_violet():
-        """
-        El evento NO se auto-activa: lo dispara el jugador al USAR el casco de
-        noche en su habitación (label_uso del item), y ahí mismo se completa.
-
-        Devolver False es imprescindible, no cosmético. Sin `condicion_activacion`,
-        verificar_activacion() devuelve True y el evento salta OCULTO → VISIBLE →
-        ACTIVO en la misma pasada de validar_eventos(). Como config_etapas solo
-        define ESTADO_EVENT_VISIBLE, en ACTIVO no hay override y obtener_mensajes()
-        cae al fallback `mensaje_pista or descripcion or nombre` — o sea mostraba
-        "Casco VR" en el panel de pistas en vez de la pista real.
-        Mismo patrón que el evento 1 de Jasmine.
-        """
-        return False
-
-    def _evento01_violet_tiene_casco():
-        """El casco ya esta en el inventario."""
-        try:
-            return store.inventario.get("casco_realidad_virtual", 0) > 0
-        except Exception:
-            return False
-
-    def _evento01_violet_casco_en_camino():
-        """Comprado pero todavia no entregado."""
-        try:
-            return cantidad_en_camino("casco_realidad_virtual") > 0
-        except Exception:
-            return False
-
-    def pista_evento01_violet():
-        if _evento01_violet_tiene_casco():
-            return "Podría probarlo a la noche cuando estoy en mi habitación"
-        if _evento01_violet_casco_en_camino():
-            return "No veo la hora de que llegue y probarlo"
-        return "Siempre quise uno de estos debería comprarlo"
-
-    def quehacer_evento01_violet():
-        if _evento01_violet_tiene_casco():
-            return "Usar el casco VR por la noche en tu habitación mientras Violet está disponible en la casa"
-        if _evento01_violet_casco_en_camino():
-            return "Esperar que llegue el casco VR"
-        return "Comprar casco VR"
-
     def condicion_aparicion_evento03_violet():
         """El evento aparece cuando la quest 03_a de Violet está completada."""
         quest = sistema_quests.obtener_quest("violet_questprincipal_0_b3_a")
@@ -108,34 +44,10 @@ init 10 python:
     def inicializar_events_violet():
         """Inicializa todos los eventos de Violet."""
 
-        # =====================================================================
-        # EVENTO 01: Casco VR
-        # =====================================================================
-        # Aparece al completar la quest 0 de Violet (el casco se desbloquea en tienda)
-        # Se dispara manualmente al usar el casco de noche con Violet en su habitacion
-
-        evento01_violet = Event(
-            id="violet_evento_01",
-            nombre="Casco VR",
-            tipo=TIPO_EVENT_ESPORADICO,
-            prioridad=5,
-            condicion_aparicion=condicion_aparicion_evento01_violet,
-            condicion_activacion=condicion_activacion_evento01_violet,
-            npc_id="violet",
-            # Fallbacks estáticos: si algún día el evento queda en un estado sin
-            # entrada en config_etapas, el panel muestra esto y no el nombre.
-            mensaje_pista="Siempre quise uno de estos debería comprarlo",
-            mensaje_que_hacer="Comprar casco VR",
-            config_etapas={
-                ESTADO_EVENT_VISIBLE: ConfigEtapa(
-                    # Dinámicas: comprar -> esperar la entrega -> usarlo.
-                    pista=pista_evento01_violet,
-                    que_hacer=quehacer_evento01_violet,
-                ),
-            },
-        )
-
-        sistema_events.registrar_event(evento01_violet)
+        # El EVENTO 01 (Casco VR) se retiro: paso a ser el primer juego del
+        # sistema "Juegos Nuevos" (ventaja del hito de amor 20). Todo su
+        # contenido vive ahora en
+        # characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy.
 
         # =====================================================================
         # EVENTO 03: Limpieza del Sábado
