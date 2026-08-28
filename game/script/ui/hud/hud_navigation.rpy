@@ -90,8 +90,31 @@ define _IDLE_MOV_FLECHAS = {
 
 init python:
     def ocultar_hud():
-        """Oculta el contenido visual del HUD sin destruir el screen."""
+        """
+        Oculta el contenido visual del HUD sin destruir el screen.
+
+        EL hide_screen NO ES REDUNDANTE. `hud_navegacion` puede estar en pantalla
+        por DOS vias:
+
+          1. `use hud_navegacion` dentro de navegacion_locaciones_con_hud, que
+             cuelga de `if hud_contenido_visible` — esa la apaga la linea de
+             abajo.
+          2. `show screen hud_navegacion` SUELTO, que hacen una decena de
+             archivos de contenido al cerrar sus escenas (el repartidor, los
+             eventos de Monica y Jasmine, varias quests de Violet). Esa copia es
+             independiente del flag y sobrevive a todo.
+
+        Sin el hide, bastaba con haber jugado cualquiera de esos contenidos para
+        que la barra superior quedara pegada en TODAS las escenas posteriores
+        que solo llamaran a ocultar_hud(). Se veia como un bug puntual de una
+        quest, pero afectaba a las ~8 que no acompañan el ocultar_hud con un
+        `hide screen` a mano.
+
+        No rompe a los que la muestran sueltos: cuando el HUD tiene que volver,
+        lo dibuja igual el `use` de navegacion_locaciones_con_hud.
+        """
         store.hud_contenido_visible = False
+        renpy.hide_screen("hud_navegacion")
         renpy.restart_interaction()
 
     def mostrar_hud():

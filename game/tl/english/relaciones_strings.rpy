@@ -152,9 +152,6 @@ translate english strings:
     old "Violet me tiene confianza y se muestra mas abierta."
     new "Violet trusts me and is more open with me."
 
-    old "Como antes"
-    new "Like before"
-
     old "Volvimos a tener la relacion que teniamos."
     new "We're back to how we used to be."
 
@@ -165,8 +162,8 @@ translate english strings:
     new "There's something between us we can't ignore anymore."
 
     # Deseo
-    old "Me atrae"
-    new "I'm drawn to her"
+    old "Me calienta"
+    new "She turns me on"
 
     old "Hay una tension distinta entre los dos."
     new "There's a different kind of tension between us."

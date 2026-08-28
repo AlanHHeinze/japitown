@@ -35,9 +35,14 @@ define mc = Character("[mc_name]", color=MC_COLOR)
 ## PENSAMIENTOS — estilo compartido
 ################################################################################
 ## Todo pensamiento del juego (el del MC y el de cada NPC) sale igual: el TEXTO
-## en gris e italica entre comillas, y el nombre tal cual, con el color propio
+## en blanco e italica entre comillas, y el nombre tal cual, con el color propio
 ## del personaje — el pensamiento no es otro personaje, es el mismo hablando
 ## para adentro.
+##
+## El texto va BLANCO, igual que el dialogo normal. Estuvo un tiempo en gris
+## (#AAAAAA y despues #B4B4B4) y se descarto: el gris se lee como "esto esta
+## apagado / deshabilitado" y no como "esto es un pensamiento". Lo que tiene que
+## distinguir al pensamiento son las comillas y la italica, no la intensidad.
 ##
 ## OJO CON LOS DOS PARAMETROS DE COLOR: `color` es el del NOMBRE y `what_color`
 ## el del TEXTO. Acá va solo `what_color`; el `color` lo pasa cada personaje al
@@ -53,14 +58,50 @@ define mc = Character("[mc_name]", color=MC_COLOR)
 ## Va con prioridad -10 para que exista antes que los `define` de los personajes
 ## (que corren en prioridad 0, y el orden entre archivos no esta garantizado).
 ##
-## SOBRE LA ITALICA: el proyecto solo trae Roboto-Bold.ttf, sin archivo italic.
-## Ren'Py la sintetiza inclinando los glifos, asi que `what_italic` funciona
-## igual. Si algun dia se agrega Roboto-BoldItalic.ttf, se declara con
-## config.font_replacement_map y esto la toma sin cambios.
+## SOBRE LA ITALICA: el proyecto trae el par completo de Roboto —
+## Roboto-Bold.ttf (familia Roboto, estilo Bold) y Roboto-BoldItalic.ttf
+## (familia Roboto, estilo Bold Italic). El mapeo de abajo hace que `what_italic`
+## use el archivo italic REAL.
+##
+## Sin ese mapeo Ren'Py sintetiza la italica inclinando los glifos del Bold, que
+## es lo que habia antes: se notaba poco y quedaba sucia, porque una inclinacion
+## mecanica no dibuja las formas propias de la cursiva (en Roboto la `a` y la `e`
+## cambian de forma, no solo de angulo).
+
+init python:
+
+    # Cuando alguien pide Roboto-Bold en italica, usar el archivo italic real.
+    # La clave es (fuente, bold, italic) y el valor tambien.
+    #
+    # LOS DOS FLAGS DEL DESTINO SON DISTINTOS, Y A PROPOSITO:
+    #
+    #   bold=False   el archivo YA es bold. En True, Ren'Py le engrosaria los
+    #                trazos encima y el pensamiento saldria mas pesado que el
+    #                dialogo normal.
+    #
+    #   italic=True  el archivo YA es italic, pero aca SI queremos el extra:
+    #                Ren'Py le suma su inclinacion sintetica ARRIBA de la cursiva
+    #                real. Las dos cosas se acumulan y la italica queda mas
+    #                marcada, que es el efecto buscado.
+    #                Es un valor fijo del motor y no hay forma de graduarlo: si
+    #                resulta excesivo se pone en False y queda solo la cursiva
+    #                del archivo, que ya de por si es una italica de verdad.
+    #
+    # No hay recursion: get_font hace UN solo lookup en el mapa
+    # (renpy/text/font.py:712), asi que el destino no se vuelve a mapear.
+    #
+    # Se registran las dos variantes de `bold` en la CLAVE porque el estilo del
+    # dialogo no pide bold (la negrita viene del archivo) pero algunos textos de
+    # HUD si.
+    for _bold in (False, True):
+        config.font_replacement_map["fonts/Roboto-Bold.ttf", _bold, True] = (
+            "fonts/Roboto-BoldItalic.ttf", False, True)
 
 define -10 piensa_base = Character(
     None,
-    what_color="#AAAAAA",
+    # Blanco, el mismo que gui.text_color: el pensamiento se distingue por las
+    # comillas y la italica, no por ser mas tenue.
+    what_color="#FFFFFF",
     what_italic=True,
     what_prefix="«",
     what_suffix="»",

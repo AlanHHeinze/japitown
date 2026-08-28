@@ -93,7 +93,11 @@ init 5 python:
     _VIOLET_AMOR_QUESTS = [
         (1,  5,  "¿Mejor?",          "Empiezo a llevarme mejor con Violet.",      None),
         (2,  10, "Buena relación",   "La relacion con Violet se afianza.",        "violet_amor_01"),
-        (3,  15, "Juegos Viejos",    "Violet quiere su vieja Portatil Boy.",      "violet_amor_02"),
+        # ⚠️ NOMBRE Y DESCRIPCION PROVISORIOS: el arco viejo ("Juegos Viejos",
+        # la Portatil Boy) se mudo a jn_pocketboy.rpy y esta quest se rehizo.
+        # Estos textos describen la escena nueva pero conviene reemplazarlos al
+        # escribir el dialogo — se ven en el panel de pistas.
+        (3,  15, "La visita",        "Violet vino a verme a mi habitacion.",      "violet_amor_02"),
         (4,  20, "Jugando juntos",   "Violet y yo terminamos jugando lo mismo.",  "violet_amor_03"),
         (5,  25, "Solos en casa",    "Un domingo entero con Violet y nadie mas.", "violet_amor_04"),
         (6,  30, "¿Que me pongo?",   "Violet quiere mi opinion sobre como se ve.", "violet_amor_05"),
@@ -121,23 +125,9 @@ init 5 python:
         },
     }
 
-    # amor_03 ("Juegos Viejos"): mientras la quest esta lista, Violet se pasa
-    # las NOCHES en el altillo revolviendo cajas. La rutina se aplica sola al
-    # llegar a ETAPA_RUTINA — o sea recien cuando ya paso el chat y el dia de
-    # espera — y el motor la restaura al completar la quest.
-    #
-    # ⚠️ SPRITE PLACEHOLDER: es el idle de pijama de su habitacion, que no pega
-    # con el fondo del altillo. Cambiar la ruta (y afinar la posicion con la
-    # herramienta P) cuando llegue el arte.
-    _VIOLET_AMOR_RUTINAS[3] = {
-        "rutina_quest": {
-            (dia, 2): RutinaQuest(
-                locacion="casa_altillo",
-                sprite="images/characters/casa/idle/idle_violet_casa_hviolet_noche_rutinabase_grupopijama_skinbase.jpg",
-                posicion=(960, 1000),
-            ) for dia in range(7)
-        },
-    }
+    # (amor_03 no define rutina: la que mandaba a Violet al altillo se fue con
+    # el arco viejo a ventajas/juegosnuevos/jn_pocketboy.rpy. La quest 15 nueva
+    # declara la suya si la necesita.)
 
     # amor_05 ("Solos en casa"): el domingo Monica y Jasmine se van de la casa y
     # Violet se queda — su habitacion a la mañana y a la noche, el living por la
@@ -179,21 +169,27 @@ init 5 python:
 
     # Textos y requisitos propios de las quests que no usan el boton generico.
     _VIOLET_AMOR_TEXTOS = {
+        1: {
+            # El disparador NO es el boton generico de hablar: es la opcion
+            # "Llamarla" del menu de PUERTA, que solo aparece por la tarde y con
+            # Violet dentro de su habitacion (_puerta_v_amor_01, en
+            # interaction/puertas_violet.rpy). Con el texto generico ("Hablar
+            # con Violet") el jugador la buscaba en cualquier lado y a cualquier
+            # hora, y la opcion no le aparecia nunca.
+            "pista_listo": "Podria pasar por su habitacion a la tarde.",
+            "que_hacer_listo": "Llamarla desde la puerta de su habitacion por la tarde",
+        },
         3: {
-            # El umbral de amor NO alcanza para pasar de etapa: primero llega el
-            # chat, y despues tiene que pasar un dia para que Violet la busque.
-            # Van como requisitos (frenan el avance de etapa) y no como
-            # validacion_especial (que solo frena el disparo del boton).
-            "requisitos_extra": [
-                Requisito("mensaje", "Esperar el mensaje de Violet",
-                          grupo_id="violet_amor03_chat"),
-                Requisito("condicion", "Dejar que Violet la busque",
-                          condicion=_va15_paso_un_dia),
-            ],
-            "pista_condiciones": _pista_va15_condiciones,
-            "que_hacer_condiciones": _quehacer_va15_condiciones,
-            "pista_listo": "¿Violet habra podido encontrar la consola?",
-            "que_hacer_listo": "Entrar al pasillo arriba/altillo por la noche",
+            # La escena salta SOLA con el MC en su propia habitacion por la
+            # tarde (violet_amor_15.rpy). Los textos genericos —"Es buen momento
+            # para hablar con Violet" / "Hablar con Violet"— mandarian al
+            # jugador a buscarla, que es exactamente lo contrario: hay que
+            # quedarse quieto en el cuarto propio y esperar.
+            #
+            # No dicen que viene Violet a proposito: la gracia de la escena es
+            # que aparece sin avisar, y la pista no tiene por que spoilearla.
+            "pista_listo": "Podria pasar un rato en mi habitacion a la tarde.",
+            "que_hacer_listo": "Estar en mi habitacion por la tarde",
         },
         4: {
             # La quest se queda en BOTON_LISTO durante sus tres tramos, asi que

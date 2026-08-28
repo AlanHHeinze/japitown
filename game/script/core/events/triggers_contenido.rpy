@@ -26,6 +26,7 @@ init python:
     TRIGGERS_DORMIR_ANTES = []    # idem — corren ANTES de dormir()
     TRIGGERS_DORMIR_DESPUES = []  # idem — corren DESPUES del autosave
     TRIGGERS_AVANZAR = []         # idem — corren tras avanzar el horario
+    TRIGGERS_SALIR_CELULAR = []   # idem — corren al cerrar el celular
 
     # Condiciones que CONGELAN los triggers de game_loop mientras dan True. Sirve
     # para cortar de raiz los inicios de quest y las escenas automaticas cuando
@@ -68,6 +69,16 @@ init python:
         """Registra un trigger evaluado tras avanzar el horario con el boton."""
         _registrar_trigger(TRIGGERS_AVANZAR, trigger_id, funcion, prioridad)
 
+    def registrar_trigger_salir_celular(trigger_id, funcion, prioridad=0):
+        """
+        Registra un trigger evaluado al CERRAR el celular.
+
+        Es el enganche para el contenido que le pide algo al jugador adentro
+        del celular (leer una app, contestar un chat) y sigue la escena cuando
+        sale. El label destino es CONTENIDO: termina en `jump game_loop`.
+        """
+        _registrar_trigger(TRIGGERS_SALIR_CELULAR, trigger_id, funcion, prioridad)
+
     def _ejecutar_triggers(registro, marcar_gl=False):
         """
         Evalua los triggers de un registro en orden de prioridad (mayor
@@ -106,3 +117,6 @@ init python:
 
     def ejecutar_triggers_avanzar():
         return _ejecutar_triggers(TRIGGERS_AVANZAR)
+
+    def ejecutar_triggers_salir_celular():
+        return _ejecutar_triggers(TRIGGERS_SALIR_CELULAR)

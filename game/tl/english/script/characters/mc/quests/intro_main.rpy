@@ -252,6 +252,16 @@ translate english strings:
     old "Este juego contiene material explícito no apto para menores de 18 años. Todos los personajes, nombres y eventos retratados en esta obra son completamente ficticios. Cualquier parecido con personas reales, vivas o muertas, es pura coincidencia.\n\nTodos los personajes involucrados en escenas de contenido sexual tienen 18 años o más al momento de los hechos representados"
     new "This game contains explicit material not suitable for minors under 18 years of age. All characters, names and events portrayed in this work are entirely fictional. Any resemblance to real persons, living or dead, is purely coincidental.\n\nAll characters involved in scenes of a sexual nature are 18 years of age or older at the time of the depicted events."
 
+    # disclaimer_ficcion — antes la screen tenía las dos versiones escritas a
+    # mano y elegía con `if _preferences.language == "spanish"`, que nunca daba
+    # verdadero (en el idioma base `language` vale None), así que el aviso salía
+    # en inglés en los dos idiomas.
+    old "AVISO LEGAL"
+    new "LEGAL NOTICE"
+
+    old "Este juego es una obra de ficción. Todos los personajes, situaciones, eventos y diálogos presentados son completamente imaginarios y creados con fines de entretenimiento. Cualquier similitud con personas reales, vivas o fallecidas, es pura coincidencia.\n\nTodos los personajes involucrados en cualquier escena de contenido explícito o romántico son mayores de 18 años. Los desarrolladores no respaldan ni promueven ningún contenido que tenga lugar en este juego como aceptable en la realidad."
+    new "This game is a work of fiction. All characters, situations, events, and dialogues presented are completely imaginary and created for entertainment purposes. Any resemblance to real persons, living or deceased, is purely coincidental.\n\nAll characters involved in any scene of explicit or romantic content are 18 years of age or older. The developers do not endorse or promote any content that takes place in this game as acceptable in reality."
+
     # game/script/characters/mc/quests/intro_main.rpy:167
     old "La misma presenta el comienzo de la historia, presentacion de personajes iniciales y incluye el tutorial de las funciones mas basicas.\n\nSi es tu primera vez en Japitonw te recomendamos jugar la introduccion "
     new "It presents the beginning of the story, the introduction of the initial characters, and includes the tutorial for the most basic features.\n\nIf this is your first time in Japitown, we recommend playing the introduction"

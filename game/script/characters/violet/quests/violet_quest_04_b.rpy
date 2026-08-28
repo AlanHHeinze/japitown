@@ -124,12 +124,44 @@ label quest_violet_questprincipal_04_b:
 ## CHECK LOCACIÓN — Auto-trigger al entrar en locación donde esté Violet
 ################################################################################
 
-label violet_quest04b_check_locacion:
-    $ _violet_npc_04b = obtener_npc("violet")
-    $ _loc_actual_04b = sistema_locaciones.locacion_actual.id if sistema_locaciones.locacion_actual else None
-    if _violet_npc_04b and _violet_npc_04b.locacion_actual == _loc_actual_04b:
-        jump quest_violet_questprincipal_04_b
-    return
+## DISPARO DE LA QUEST — trigger de game_loop, registrado en init.
+##
+## Antes esto era `label violet_quest04b_check_locacion`, al que se llegaba por
+## los registros que setup_restriccion_violet_quest04b metia en el objeto de
+## restriccion. Ese objeto es un slot global unico (`restriccion_quest_activa`):
+## cualquier `activar_restriccion` lo reemplaza entero y cualquier
+## `desactivar_restriccion` lo borra — y hay decenas de llamadas a las dos en el
+## proyecto. Como accion_al_entrar corre UNA sola vez, al pasar de etapa, el
+## primer contenido que corriera despues se llevaba el disparo puesto y la quest
+## quedaba muerta para siempre en el panel de pistas. Mismo bug que reportaron
+## los jugadores en la 0_b de Monica.
+##
+## La condicion es la misma de antes: estar en la misma locacion que Violet,
+## dentro de la lista de locaciones donde puede estar.
+
+init python:
+
+    _VQ04B_LOCACIONES = ["casa_hviolet", "casa_pasilloarriba", "casa_cocina",
+                         "casa_living", "casa_gym"]
+
+    def _gl_trigger_violet_04b():
+        q = store.sistema_quests.obtener_quest("violet_questprincipal_04_b")
+        if not (q and q.activa and not q.completada
+                and q.etapa_actual == ETAPA_BOTON_LISTO):
+            return None
+
+        loc = store.sistema_locaciones.locacion_actual
+        if not loc or loc.id not in _VQ04B_LOCACIONES:
+            return None
+
+        npc = store.obtener_npc("violet")
+        if npc and npc.locacion_actual == loc.id:
+            return "quest_violet_questprincipal_04_b"
+        return None
+
+
+init 5 python:
+    registrar_trigger_game_loop("violet_04b", _gl_trigger_violet_04b)
 
 
 ################################################################################

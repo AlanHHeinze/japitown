@@ -4,5 +4,5 @@
 translate english accion_espiar_entrar_fa29e8c5:
 
     # piensa "[_esp_ent_msg]"
-    piensa ""
+    piensa "[_esp_ent_msg]"
 

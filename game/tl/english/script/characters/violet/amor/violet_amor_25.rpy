@@ -4,7 +4,7 @@
 translate english violet_amor_25_despertar_47cdf1d9:
 
     # piensa "Hoy tengo el dia libre pero no tengo planes, vere que puedo hacer"
-    piensa "Hoy tengo el dia libre pero no tengo planes, vere que puedo hacer"
+    piensa "I've got the day off but no plans. Let's see what I can do"
 
 # game/script/characters/violet/amor/violet_amor_25.rpy:222
 translate english violet_amor_25_despertar_b900cf9b:
@@ -16,7 +16,7 @@ translate english violet_amor_25_despertar_b900cf9b:
 translate english violet_amor_25_despertar_14d0c076:
 
     # piensa "Tengo una llamada perdida de Monica, voy a ver que quiere"
-    piensa "Tengo una llamada perdida de Monica, voy a ver que quiere"
+    piensa "I've got a missed call from Monica. Let's see what she wants"
 
 # game/script/characters/violet/amor/violet_amor_25.rpy:273
 translate english violet_amor_25_living_b0b3e56a:
@@ -46,13 +46,13 @@ translate english violet_amor_25_living_d2a3c18b:
 translate english violet_amor_25_pasar_cocina_54352cf6:
 
     # piensa "Podria comer algo para pasar el tiempo"
-    piensa "Podria comer algo para pasar el tiempo"
+    piensa "I could eat something to pass the time"
 
 # game/script/characters/violet/amor/violet_amor_25.rpy:341
 translate english violet_amor_25_pasar_tv_362af088:
 
     # piensa "Podria ver algo para pasar el tiempo"
-    piensa "Podria ver algo para pasar el tiempo"
+    piensa "I could watch something to pass the time"
 
 # game/script/characters/violet/amor/violet_amor_25.rpy:372
 translate english violet_amor_25_matar_tiempo_22aaadff:
@@ -70,7 +70,7 @@ translate english violet_amor_25_matar_tiempo_2b35b6fe:
 translate english violet_amor_25_noche_90837c7f:
 
     # piensa "Me tengo que encargar de la cena"
-    piensa "Me tengo que encargar de la cena"
+    piensa "I need to take care of dinner"
 
 # game/script/characters/violet/amor/violet_amor_25.rpy:448
 translate english violet_amor_25_cocinar_d2a3c18b:

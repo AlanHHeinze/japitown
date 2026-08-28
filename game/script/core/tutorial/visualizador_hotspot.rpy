@@ -18,18 +18,8 @@ init python:
     def _cond_accion_movimiento():
         return getattr(store, 'config_mostrar_accion_movimiento', False)
 
-init 5 python:
-    sistema_acciones.registrar_accion(AccionLocacion(
-        id="visualizador_hotspot",
-        nombre="Ver salidas",
-        icono=u"👁",
-        locacion_id=None,
-        label_generico="visualizador_hotspot_toggle",
-        reseteo=None,
-        condicion=_cond_accion_movimiento,
-        color="#37474F",
-        color_hover="#546E7A",
-    ))
+# (La accion se registra en core/actions/actions_catalog.rpy, con el
+# resto. Su condicion (_cond_accion_movimiento) sigue viviendo acá.)
 
 
 ################################################################################

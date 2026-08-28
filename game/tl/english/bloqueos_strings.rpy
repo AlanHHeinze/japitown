@@ -96,3 +96,31 @@ translate english strings:
 
     old "Debo responderle primero a Violet"
     new "I should reply to Violet first"
+
+    # =========================================================================
+    # Violet — Deseo 20 ("Pensando en Violet")
+    # =========================================================================
+    # Bloqueo GLOBAL de la fase 1: sale en cualquier accion mientras no le
+    # escriba. Tambien es el mensaje de movimiento y el de NPC bloqueado de la
+    # restriccion, que lo repiten con el mismo texto a proposito.
+
+    old "Deberia escribirle a Violet"
+    new "I should text Violet"
+
+    # =========================================================================
+    # Violet — Deseo 25 ("En su habitacion")
+    # =========================================================================
+    # Fase 1: lo planto en el sotano y sube a buscarla. Un solo texto para las
+    # dos mitades del recorte — el movimiento (no puede salir de la casa) y las
+    # acciones (no puede adelantar el tiempo ni dormir).
+
+    old "Primero voy a ver que paso con Violet"
+    new "First I'm going to see what happened with Violet"
+
+    # Ventajas de amor 20 / deseo 15: la accion se corta si Violet no esta, para
+    # que el jugador no gaste el horario al pedo.
+    old "Violet no esta conectada ahora"
+    new "Violet isn't online right now"
+
+    old "Violet no esta en casa ahora"
+    new "Violet isn't home right now"

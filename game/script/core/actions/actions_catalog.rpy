@@ -285,17 +285,39 @@ init 5 python:
         color_hover="#7E57C2",
     ))
 
-    # ── Violet Amor 15 — revolver el altillo buscando la Portatil Boy ────────
-    # Solo existe mientras dura la busqueda. La condicion vive en
-    # violet_amor_15.rpy y lee el flag va15_fase.
+    # ── Violet Deseo 25 — el planton en el sotano ────────────────────────────
+    # No agrega boton: intercepta el "Ver TV" del sotano de acá arriba, que para
+    # cuando esta quest esta lista ya existe como la ventaja "Ver Anime" del
+    # hito de deseo 20. Un segundo boton en la misma locacion seria un "Ver TV"
+    # al lado del otro.
+    #
+    # El listener corre ANTES de los bloqueos y del "ya la usaste hoy", asi que
+    # la quest arranca aunque el jugador ya haya visto anime esa noche.
+    #
+    # unico=False a proposito: post_ejecutar() borraria el listener de la lista,
+    # y esa mutacion se pierde al cargar la partida. Lo apaga la condicion, que
+    # lee vd25_fase — un flag `default`, que si se guarda.
+    sistema_acciones.registrar_listener(ListenerAccion(
+        accion_id="vd15_ver_tv_sotano",
+        label="violet_deseo_25_sotano",
+        nombre_menu="Ver TV",
+        prioridad="quest",
+        condicion=_vd25_listener_sotano,
+        unico=False,
+    ))
+
+    # ── Juego Nuevo "Pocket Boy" — revolver el altillo (arco PARKEADO) ───────
+    # El contenido vive en ventajas/juegosnuevos/jn_pocketboy.rpy, pero la
+    # accion se registra acá como todas. Hoy no aparece nunca: su condicion mira
+    # jnpb_fase, que ese arco no mueve porque esta apagado.
     sistema_acciones.registrar_accion(AccionLocacion(
-        id="va15_buscar",
+        id="jnpb_buscar",
         nombre="Buscar",
         icono=u"🔍",
         locacion_id="casa_altillo",
-        label_generico="quest_violet_amor_03",
+        label_generico="jn_pocketboy_cierre",
         reseteo=None,
-        condicion=_va15_buscar_visible,
+        condicion=_jnpb_buscar_visible,
     ))
 
     # ── Violet Deseo 10 — el vaso de agua de madrugada ───────────────────────
@@ -504,3 +526,42 @@ label accion_ver_tv:
     $ avanzar_horario()
     $ mostrar_hud()
     return
+
+
+################################################################################
+## Acciones mudadas desde otros archivos
+################################################################################
+## Vivian en el archivo de su propio sistema. Se trajeron acá para que TODAS las
+## acciones del juego esten en un solo lugar (ver la cabecera). Sus funciones de
+## condicion siguen viviendo en el archivo de origen, que corre en `init python`
+## (prioridad 0) y por lo tanto antes que este `init 5`.
+
+init 5 python:
+
+    # ── Espiar — botones del minijuego (globales, locacion_id=None) ──
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="espiar_entrar", nombre="Entrar", icono=u"🚶",
+        locacion_id=None, label_generico="accion_espiar_entrar",
+        reseteo=None, condicion=_esp_acc_entrar_visible,
+        condicion_habilitada=_esp_acc_entrar_habilitada,
+        color="#8E24AA", color_hover="#AB47BC",
+    ))
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="espiar_salir", nombre="Salir", icono=u"❌",
+        locacion_id=None, label_generico="accion_espiar_salir",
+        reseteo=None, condicion=_esp_acc_salir_visible,
+        color="#37474F", color_hover="#546E7A",
+    ))
+
+    # ── Herramienta de dev — ver salidas de la locacion ──
+    sistema_acciones.registrar_accion(AccionLocacion(
+        id="visualizador_hotspot",
+        nombre="Ver salidas",
+        icono=u"👁",
+        locacion_id=None,
+        label_generico="visualizador_hotspot_toggle",
+        reseteo=None,
+        condicion=_cond_accion_movimiento,
+        color="#37474F",
+        color_hover="#546E7A",
+    ))

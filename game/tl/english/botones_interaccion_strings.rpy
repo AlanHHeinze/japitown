@@ -224,19 +224,20 @@ translate english strings:
     old "Completar instalación e iniciar diagnostico del sistema"
     new "Finish installation and run a system diagnostic"
 
-    # Violet Amor 20 ("Jugando juntos") — primer tramo
-    old "Pedirle recomendacion de juegos"
-    new "Ask her for a game recommendation"
+    # Violet Amor 20 ("Jugando juntos") — primer y ultimo tramo
+    old "Algo para jugar"
+    new "Something to play"
+
+    old "Hablar del juego"
+    new "Talk about the game"
 
     # Violet Amor 25 ("Solos en casa") — el domingo por la tarde en el living
     old "Matar el tiempo"
     new "Kill some time"
 
-    # Violet Deseo 25 ("En su habitacion"). UNA sola entrada para los DOS
-    # botones — el del menu de Violet y el de su puerta comparten texto, y un
-    # `old` repetido rompe el lint.
-    old "Ver anime"
-    new "Watch anime"
+    # (Violet Deseo 25 "En su habitacion" ya no tiene botones: perdio el del
+    # menu y el de la puerta cuando paso a dispararse con la accion del sotano
+    # y a seguir por un override de puerta. Su "Ver anime" se borro de acá.)
 
     # Violet Deseo 30 ("¿Que me pongo?"). UNA entrada para los DOS botones:
     # el de su puerta y el de su menu comparten texto.

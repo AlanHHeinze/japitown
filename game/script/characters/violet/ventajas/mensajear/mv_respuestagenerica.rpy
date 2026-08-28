@@ -19,6 +19,10 @@ init 6 python:
         _g = store.sistema_mensajes._grupos_registrados.get("violet_mv_generica")
         if _g is not None:
             _g.estado = "pendiente"
+            # Los DOS: disparar_por_trigger mira una marca propia ademas del
+            # estado (messagesystem_core), asi que bajar solo el estado dejaria
+            # la conversacion sin poder repetirse.
+            _g._disparado = False
 
     # Sin momento_horario / momento_locacion / condicion_entrega: los grupos de
     # Mensajear no llevan condiciones de entrega (ver mensajear_violet.rpy).

@@ -76,7 +76,9 @@ label quest_violet_deseo_01:
     # esa sensacion de movimiento.
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda with sprite_normal
 
+    show mc_parado_base c_rbase_pensando o_abajonm with sprite_fast
     piensa "Si hay algo que me esta llamando mucho la atencion desde que llegue es el trasero de Violet"
+    show mc_parado_base c_rbase_avergonzado o_arribanm with sprite_fast
     piensa "De a poco me esta empezando a tentar y cada vez me cuesta mas dejar de mirarlo"
     piensa "..."
 
@@ -87,7 +89,7 @@ label quest_violet_deseo_01:
     violet "¿Que pasa?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
+    show mc_parado_base b_hablando c_rbase_asustado o_base with sprite_fast
     mc "Nada ¿Por?"
     show mc_parado_base b_none c_rbase_base with sprite_fast
 

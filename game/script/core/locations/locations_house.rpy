@@ -225,5 +225,32 @@ init python:
         )
         loc_baniomonica.agregar_hotspot(Hotspot("casa_baniomonica_casa_hmonica", "MOVE", 732, 980, 450, 100, destino="casa_hmonica", nombre="Volver"))
         sistema_locaciones.registrar_locacion(loc_baniomonica)
+
+
+################################################################################
+## Cupo de NPCs por locación
+################################################################################
+## Los baños entran de a uno. Sin esto, dos NPCs con rutina de ducha la misma
+## noche quedaban los dos adentro del mismo baño y `obtener_npc_en_banio`
+## devolvía el primero del diccionario — el otro quedaba invisible: sin vapor
+## propio, sin menú de puerta y sin secuencia de espiar.
+##
+## Lo hace respetar la pasada global de rutinas (SistemaNPCs._aplicar_cupos, en
+## core/npcs/npcsystem_core.rpy): si un día se pasan de cupo, deja a uno al azar
+## y manda al resto a su rutina base.
+##
+## Para agregar una locación con cupo alcanza con una línea acá; el motor no
+## conoce ninguna por nombre. En 0.2, con el mapa de ciudad, van a vivir acá los
+## lugares con aforo ("máximo 2 en el café").
+
+init 5 python:
+
+    registrar_cupo_locacion("casa_banioarriba", 1)
+    registrar_cupo_locacion("casa_baniomonica", 1)
+
+    # Todavía ninguna rutina lo usa, pero ya figura entre las locaciones con
+    # cooldown de baño en npcsystem_core: se registra para que el día que alguna
+    # rutina lo tome no haya que acordarse de esto.
+    registrar_cupo_locacion("casa_banioabajo", 1)
         
         

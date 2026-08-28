@@ -478,11 +478,39 @@ translate english strings:
     old "Darle tiempo para que la busque"
     new "Give her time to look for it"
 
+    # Cartel de elipsis de la escena de cierre (violet_amor_15.rpy). Va por
+    # renpy.translate_string porque se dibuja con `show text Text(...)`, que el
+    # extractor de Ren'Py no ve.
+    old "Luego de algunos minutos"
+    new "A few minutes later"
+
+    # Cartel de elipsis de la escena de deseo 15 (violet_deseo_15.rpy). Va por
+    # renpy.translate_string igual que el de arriba: se dibuja con
+    # `show text Text(...)`, que el extractor de Ren'Py no ve.
+    old "Unos minutos mas tarde"
+    new "A few minutes later..."
+
     old "¿Violet habra podido encontrar la consola?"
     new "Was Violet able to find the console?"
 
     old "Entrar al pasillo arriba/altillo por la noche"
     new "Go into the upstairs hallway/attic at night"
+
+    # Violet — Amor 5 ("¿Mejor?"). Se dispara desde el menu de PUERTA, por la
+    # tarde y con ella adentro, asi que la pista tiene que decir donde y cuando.
+    old "Podria pasar por su habitacion a la tarde."
+    new "I could stop by her room in the afternoon."
+
+    old "Llamarla desde la puerta de su habitacion por la tarde"
+    new "Call her from her bedroom door in the afternoon"
+
+    # Violet — Amor 15 ("La visita"). La escena salta sola con el MC en su
+    # propia habitacion por la tarde, asi que la pista dice donde quedarse.
+    old "Podria pasar un rato en mi habitacion a la tarde."
+    new "I could spend some time in my room in the afternoon."
+
+    old "Estar en mi habitacion por la tarde"
+    new "Be in my room in the afternoon"
 
     # =========================================================================
     # Violet — Deseo 10 ("Encuentro nocturno")
@@ -523,19 +551,31 @@ translate english strings:
     old "Ya tengo el juego, ahora falta jugarlo con ella"
     new "I have the game now, all that's left is playing it with her"
 
+    # Ultimo tramo: ya jugaron y falta comentarselo.
+    old "Estuvo bueno el juego, deberia decirselo"
+    new "The game was good, I should tell her"
+
+    # Cartel de elipsis de la partida (violet_amor_20.rpy). Va por
+    # renpy.translate_string: se dibuja con `show text Text(...)`, que el
+    # extractor de Ren'Py no ve.
+    old "Algunas partidas mas tarde"
+    new "A few matches later"
+
     old "Jugar de noche en mi habitacion"
     new "Play at night in my room"
 
     # =========================================================================
     # Violet — Deseo 20 ("Pensando en Violet")
     # =========================================================================
-    # La quest pasa entera en el chat, asi que el "que hacer" manda al celular.
+    # La escena arranca sola al entrar de noche a su habitacion; de ahi en mas
+    # la quest pasa adentro del celular, asi que el "que hacer" manda al cuarto
+    # y no al chat.
 
     old "Estoy pensando mucho en Violet ultimamente podria escribirle"
     new "I've been thinking about Violet a lot lately, I could write to her"
 
-    old "Enviarle un mensaje a Violet"
-    new "Send Violet a message"
+    old "Ir de noche a mi habitacion"
+    new "Go to my room at night"
 
     # =========================================================================
     # Violet — Amor 25 ("Solos en casa")
@@ -557,14 +597,14 @@ translate english strings:
     # =========================================================================
     # Violet — Deseo 25 ("En su habitacion")
     # =========================================================================
-    # Tiene dos disparadores (boton de Violet y opcion de puerta), asi que el
-    # "que hacer" nombra la accion sin atarla a un lugar.
+    # Disparador unico: la accion "Ver TV" del sotano, de noche. El "que hacer"
+    # nombra las tres cosas porque las tres hacen falta y ninguna es obvia.
 
     old "Podria ver un capitulo de anime con Violet"
     new "I could watch an anime episode with Violet"
 
-    old "Accion de anime"
-    new "Anime action"
+    old "Ver TV en el sotano por la noche"
+    new "Watch TV in the basement at night"
 
     # =========================================================================
     # Violet — Deseo 30 ("Noche de amigas")

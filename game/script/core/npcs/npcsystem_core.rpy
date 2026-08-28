@@ -5,6 +5,53 @@
 
 init python:
 
+    ############################################################################
+    ## Cupo de locaciones y reglas de la pasada global
+    ############################################################################
+    ## El sorteo de rutinas especiales es INDIVIDUAL: cada NPC tira los dados sin
+    ## saber donde cayeron los demas. Despues corre una PASADA GLOBAL que mira a
+    ## todos juntos y corrige lo que no puede convivir
+    ## (SistemaNPCs._resolver_rutinas_del_dia).
+    ##
+    ## Los dos registros de abajo son el enganche contenido -> motor de esa
+    ## pasada: el motor no conoce ninguna locacion ni ningun NPC por nombre.
+
+    # locacion_id -> cuantos NPCs entran a la vez.
+    #
+    # Va como registro y no como campo de Locacion a proposito: sistema_locaciones
+    # es un `default` y se guarda entero, asi que un campo nuevo obligaria a
+    # migrar saves. Esto vive en init y no se guarda nunca.
+    CUPOS_LOCACION = {}
+
+    def registrar_cupo_locacion(locacion_id, cupo=1):
+        """
+        Declara cuantos NPCs pueden estar a la vez en una locacion.
+
+        Si un dia quedan mas de `cupo`, la pasada global deja a `cupo` al azar y
+        manda al resto a su rutina base. Se llama desde el archivo donde se
+        declara la locacion, en init 5.
+        """
+        CUPOS_LOCACION[locacion_id] = cupo
+
+    # Reglas extra de la pasada global: [(prioridad, fn)], mayor prioridad primero.
+    # Cada fn recibe (sistema_npcs, dia, horario) y puede reasignar rutinas.
+    #
+    # Arranca vacio. Es el lugar para los casos de 0.2 que no se resuelven con un
+    # simple cupo ("si X salio, Y se queda en casa", "no mas de N en la plaza de
+    # noche"), sin tener que tocar el motor.
+    REGLAS_RUTINAS = []
+
+    def registrar_regla_rutinas(fn, prioridad=0):
+        """Registra una regla de la pasada global. `fn(sistema_npcs, dia, horario)`."""
+        REGLAS_RUTINAS.append((prioridad, fn))
+        REGLAS_RUTINAS.sort(key=lambda par: -par[0])
+
+    # Locaciones con cooldown de 2 dias entre repeticiones. Es lo unico que el
+    # motor todavia conoce por nombre en este sistema; se mantiene como estaba.
+    RUTINA_LOC_FUERA = "fuera"
+    RUTINA_LOCS_BANIO = {"casa_banioarriba", "casa_baniomonica", "casa_banioabajo"}
+
+
     class RutinaEspecial:
         """
         Actividad opcional que un NPC puede realizar en un slot de horario dado.
@@ -170,10 +217,48 @@ init python:
                     for h in slots_banio:
                         self._rutina_especial_dia[h] = None
 
-            # Registrar cooldown para las rutinas "fuera"/"baño" que quedaron activas
-            for rutina in self._rutina_especial_dia.values():
-                if rutina and (rutina.locacion == _loc_fuera or rutina.locacion in _loc_banio):
+            # OJO: el cooldown NO se registra aca. Lo hace
+            # registrar_cooldowns_rutinas(), que SistemaNPCs llama despues de la
+            # pasada global — ver el porque en esa funcion.
+
+        def registrar_cooldowns_rutinas(self, dias_hoy=None):
+            """
+            Marca el cooldown de 2 dias de las rutinas "fuera"/"baño" asignadas.
+
+            Va separado del sorteo y se llama DESPUES de la pasada global, no
+            antes: si un NPC queda desviado por un conflicto de cupo, esa rutina
+            nunca ocurrio y no tiene que gastarle el cooldown. Antes esto se
+            hacia al final del sorteo individual y el desviado perdia el turno Y
+            ademas esperaba 2 dias por una ducha que no se dio.
+            """
+            if dias_hoy is None:
+                dias_hoy = getattr(store, 'dias_totales', 0)
+
+            if not hasattr(self, '_rutina_cooldown'):
+                self._rutina_cooldown = {}
+
+            for rutina in getattr(self, '_rutina_especial_dia', {}).values():
+                if rutina and (rutina.locacion == RUTINA_LOC_FUERA
+                               or rutina.locacion in RUTINA_LOCS_BANIO):
                     self._rutina_cooldown[rutina.id] = dias_hoy
+
+        def locacion_viene_de_rutina_especial(self, dia_semana, horario):
+            """
+            True si a este NPC lo pone donde esta su RUTINA ESPECIAL.
+
+            False si lo fija un override de evento o una rutina de quest, que
+            mandan sobre la especial (mismo orden que obtener_locacion_rutina).
+            La pasada global lo usa para saber a quien puede desviar: a los que
+            estan por quest o evento no se los toca nunca.
+            """
+            if hasattr(store, 'sistema_events'):
+                if store.sistema_events.obtener_override_rutina(self.id, dia_semana, horario):
+                    return False
+
+            if (dia_semana, horario) in getattr(self, 'rutinas_quest', {}):
+                return False
+
+            return self.obtener_rutina_especial_actual(horario) is not None
 
         def obtener_rutina_especial_actual(self, horario=None):
             if horario is None and hasattr(store, 'horario_actual'):
@@ -427,26 +512,81 @@ init python:
                 npc.actualizar_ubicacion()
 
         def evaluar_todas_rutinas_especiales_dia(self, dia):
-            """Evalúa las rutinas especiales de todos los NPCs y resuelve conflictos."""
+            """
+            Arma las rutinas especiales del dia para TODOS los NPCs, en 3 etapas.
+
+            El orden importa y es la razon de que esto no sea un solo loop:
+
+            1. Sorteo individual: cada NPC tira los dados sin saber donde
+               cayeron los demas.
+            2. Pasada global: recien con todo asignado se puede ver que dos
+               fueron a parar al mismo lugar y corregirlo.
+            3. Cooldowns: se marcan al final, sobre lo que REALMENTE quedo, para
+               que a un NPC desviado en el paso 2 no se le gaste el cooldown de
+               una rutina que nunca ocurrio.
+            """
             for npc in self.npcs.values():
                 npc.evaluar_rutinas_especiales_dia(dia)
-            self._resolver_conflictos_banio()
 
-        def _resolver_conflictos_banio(self):
-            """Si Violet y Jasmine tienen ducha asignada al mismo horario, solo una la usa."""
-            violet = self.npcs.get("violet")
-            jasmine = self.npcs.get("jasmine")
-            if not violet or not jasmine:
-                return
+            self._resolver_rutinas_del_dia(dia)
+
+            dias_hoy = getattr(store, 'dias_totales', 0)
+            for npc in self.npcs.values():
+                npc.registrar_cooldowns_rutinas(dias_hoy)
+
+        def _resolver_rutinas_del_dia(self, dia):
+            """
+            Pasada global: mira donde quedaron TODOS los NPCs y corrige.
+
+            Corre por horario porque los conflictos son por slot: dos NPCs en el
+            mismo baño a la noche chocan, pero uno a la tarde y otro a la noche
+            no.
+            """
             for horario in range(4):
-                v_rutina = getattr(violet, '_rutina_especial_dia', {}).get(horario)
-                j_rutina = getattr(jasmine, '_rutina_especial_dia', {}).get(horario)
-                if (v_rutina and v_rutina.locacion == "casa_banioarriba" and
-                        j_rutina and j_rutina.locacion == "casa_banioarriba"):
-                    if renpy.random.random() < 0.5:
-                        violet._rutina_especial_dia[horario] = None
-                    else:
-                        jasmine._rutina_especial_dia[horario] = None
+                self._aplicar_cupos(dia, horario)
+
+                # Reglas de contenido. No se envuelven en try/except a proposito:
+                # una regla rota tiene que verse, porque su efecto silencioso
+                # seria que los NPCs aparezcan donde no corresponde.
+                for _prioridad, regla in REGLAS_RUTINAS:
+                    regla(self, dia, horario)
+
+        def _aplicar_cupos(self, dia, horario):
+            """
+            Hace respetar CUPOS_LOCACION en un horario dado.
+
+            Si una locacion queda pasada de cupo, se quedan `cupo` NPCs al azar y
+            al resto se les cancela la rutina especial de ese slot. No hace falta
+            reasignarlos a mano: obtener_locacion_rutina cae sola a la rutina
+            base, que es su prioridad 4.
+
+            Se cuenta la locacion EFECTIVA (obtener_locacion_rutina) y no la
+            rutina especial cruda, asi que quien este ahi por evento o por quest
+            tambien ocupa lugar. Pero a esos no se los desvia nunca: mandan sobre
+            las especiales. Si el cupo se pasa solo con ellos, la locacion queda
+            excedida a proposito — eso es un choque entre contenidos, y taparlo
+            aca escondería el bug.
+            """
+            if not CUPOS_LOCACION:
+                return
+
+            ocupacion = {}
+            for npc in self.npcs.values():
+                loc = npc.obtener_locacion_rutina(dia, horario)
+                if loc in CUPOS_LOCACION:
+                    ocupacion.setdefault(loc, []).append(npc)
+
+            for loc, presentes in ocupacion.items():
+                sobran = len(presentes) - CUPOS_LOCACION[loc]
+                if sobran <= 0:
+                    continue
+
+                desviables = [npc for npc in presentes
+                              if npc.locacion_viene_de_rutina_especial(dia, horario)]
+                renpy.random.shuffle(desviables)
+
+                for npc in desviables[:sobran]:
+                    npc._rutina_especial_dia[horario] = None
         
         def obtener_npcs_en_locacion(self, locacion_id):
             """Obtiene lista de NPCs en una locación específica"""

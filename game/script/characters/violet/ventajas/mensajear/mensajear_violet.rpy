@@ -14,6 +14,10 @@
 ##     ├── mv_respuestagenerica.rpy   ← la de descarte
 ##     └── mv_aburrida.rpy            ← la primera especial
 ##
+## Hay una conversacion registrada FUERA de esta carpeta: la de la quest de
+## deseo 20 (deseo/violet_deseo_20.rpy), que se queda con su quest porque es la
+## quest entera. Va con `forzada=True` — ver el parametro mas abajo.
+##
 ## ⚠️ LOS GRUPOS DE ESTE SISTEMA NO LLEVAN CONDICIONES DE ENTREGA
 ## (momento_horario, momento_locacion, condicion_entrega). Un grupo con
 ## condiciones se va a "espera" en vez de a pendientes y seleccionar_grupo() no
@@ -41,11 +45,15 @@ init python:
     # el color lo pone la respuesta de ella, no el saludo.
     MENSAJEAR_SALUDO_VIOLET = "¿Todo bien?"
 
-    # [(prioridad, orden, conv_id, grupo_id, fn_condicion)]
+    # Indices de cada campo del registro, para no leer _reg[5] a ciegas.
+    MV_PRIO, MV_ORDEN, MV_CONVID, MV_GRUPO, MV_COND, MV_SALUDO, MV_FORZADA = range(7)
+
+    # [(prioridad, orden, conv_id, grupo_id, fn_condicion, saludo, forzada)]
     MENSAJEAR_VIOLET = []
 
     def registrar_conversacion_mensajear(conv_id, grupo_id, condicion=None,
-                                         prioridad=1):
+                                         prioridad=1, saludo=None,
+                                         forzada=False):
         """
         Registra una conversacion que Violet puede tener si el jugador le
         escribe.
@@ -56,9 +64,17 @@ init python:
             condicion: funcion de MODULO sin argumentos → bool. None = siempre.
                 Acá van horario, locacion, mood, lo que sea.
             prioridad: mayor gana. Si empatan varias, se sortea entre ellas.
+            saludo: con que abre el jugador. None = MENSAJEAR_SALUDO_VIOLET.
+                Para el contenido que necesita que escriba otra cosa.
+            forzada: True = esta conversacion PRENDE el boton "Hablar" por su
+                cuenta, sin la ventaja, sin gastar el uso diario y sin exigir
+                que Violet este en otra locacion de la casa. Es para el
+                contenido que mete al jugador adentro del celular a escribirle
+                — ahi el boton TIENE que estar, o queda trabado. Con forzada la
+                `condicion` es la unica puerta: que sea lo bastante estrecha.
         """
         MENSAJEAR_VIOLET.append((prioridad, len(MENSAJEAR_VIOLET),
-                                 conv_id, grupo_id, condicion))
+                                 conv_id, grupo_id, condicion, saludo, forzada))
 
     def _mv_grupo_disponible(grupo_id):
         """
@@ -78,7 +94,9 @@ init python:
 
     def _mv_elegir():
         """
-        Elige que conversacion se arma, o None si no hay ninguna.
+        Elige que conversacion se arma, o None si no hay ninguna. Devuelve el
+        REGISTRO entero (no el grupo_id): quien la use necesita tambien el
+        saludo y el flag de forzada.
 
         Filtra por condicion y por disponible, se queda con las de PRIORIDAD MAS
         ALTA, y entre esas sortea. Una condicion que revienta descarta esa
@@ -86,27 +104,29 @@ init python:
         """
         _candidatas = []
         _mejor = None
-        for _prio, _reg, _cid, _gid, _cond in MENSAJEAR_VIOLET:
-            if not _mv_grupo_disponible(_gid):
+        for _reg in MENSAJEAR_VIOLET:
+            if not _mv_grupo_disponible(_reg[MV_GRUPO]):
                 continue
+            _cond = _reg[MV_COND]
             if _cond is not None:
                 try:
                     if not _cond():
                         continue
                 except Exception:
                     continue
+            _prio = _reg[MV_PRIO]
             if _mejor is None or _prio > _mejor:
                 _mejor = _prio
-                _candidatas = [_gid]
+                _candidatas = [_reg]
             elif _prio == _mejor:
-                _candidatas.append(_gid)
+                _candidatas.append(_reg)
 
         if not _candidatas:
             return None
         return renpy.random.choice(_candidatas)
 
     def _mv_ids_registrados():
-        return set(_c[3] for _c in MENSAJEAR_VIOLET)
+        return set(_c[MV_GRUPO] for _c in MENSAJEAR_VIOLET)
 
     def _mv_hay_conversacion_abierta():
         """
@@ -133,6 +153,15 @@ init python:
         No chequea si hay otra conversacion abierta: de eso se encarga la UI,
         que le da precedencia al boton de Responder.
         """
+        # Que haya algo que contestar. Va PRIMERO porque una conversacion
+        # forzada se saltea todo lo demas: es contenido que necesita el boton
+        # prendido si o si (el jugador puede estar encerrado en el celular).
+        _reg = _mv_elegir()
+        if _reg is None:
+            return False
+        if _reg[MV_FORZADA]:
+            return True
+
         if not npc_tiene_ventaja("violet", "mensajear"):
             return False
 
@@ -150,30 +179,31 @@ init python:
         if _loc_mc is None or _loc_mc.id == _loc_v:
             return False
 
-        # Y que haya algo que contestar. Con la generica registrada siempre lo
-        # hay, pero el chequeo evita que el boton dispare en falso si alguna vez
-        # todas quedan sin cumplir condiciones.
-        return _mv_elegir() is not None
+        return True
 
     def _mv_iniciar():
         """
         Arranca la conversacion: mete el mensaje del jugador, arma el grupo
         elegido y lo deja activo para que pueda responder.
         """
-        _gid = _mv_elegir()
-        if _gid is None:
+        _reg = _mv_elegir()
+        if _reg is None:
             return
+        _gid = _reg[MV_GRUPO]
 
         store.sistema_mensajes.inicializar_chat("violet")
         store.sistema_mensajes.chats["violet"].agregar_mensaje(
-            "jugador", renpy.translate_string(MENSAJEAR_SALUDO_VIOLET))
+            "jugador",
+            renpy.translate_string(_reg[MV_SALUDO] or MENSAJEAR_SALUDO_VIOLET))
 
         store.sistema_mensajes.disparar_por_trigger("manual", _gid, "violet")
         store.sistema_mensajes.seleccionar_grupo("violet", _gid)
 
         # El uso se gasta al ESCRIBIR, no segun lo que ella conteste: la generica
-        # tambien lo consume.
-        store.mensajear_usado_dia["violet"] = getattr(store, 'dias_totales', 0)
+        # tambien lo consume. Una forzada NO lo gasta: no es el jugador el que
+        # decidio escribirle, y ademas puede no tener todavia la ventaja.
+        if not _reg[MV_FORZADA]:
+            store.mensajear_usado_dia["violet"] = getattr(store, 'dias_totales', 0)
 
 
 init 5 python:

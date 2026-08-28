@@ -46,7 +46,7 @@ init 6 python:
         stat="amor",
         umbral=20,
         quest_id="violet_amor_04",          # la quest de umbral 20
-        nombre="Como antes",
+        nombre="Jugando juntos",
         descripcion="Volvimos a tener la relacion que teniamos.",
         icono="❤️",
         ventajas=[
@@ -98,7 +98,7 @@ init 6 python:
         stat="deseo",
         umbral=10,
         quest_id="violet_deseo_02",         # la quest de umbral 10
-        nombre="Me atrae",
+        nombre="Me calienta",
         descripcion="Hay una tension distinta entre los dos.",
         icono="💋",
         ventajas=[

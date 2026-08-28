@@ -9,10 +9,15 @@
 ## se queda en ETAPA_BOTON_LISTO todo el tiempo; el que distingue el tramo es
 ## el flag `va20_fase`, y la pista del panel va cambiando con el:
 ##
-##   fase 0 · boton en el menu de Violet — "Pedirle recomendacion de juegos"
+##   fase 0 · boton en el menu de Violet — "Algo para jugar"
 ##   fase 1 · accion en casa_hmc — "Comprar juego ($200)"
 ##   fase 2 · accion en casa_hmc — "Jugar" (de noche y con Violet en casa)
-##   fase 3 · quest completada
+##   fase 3 · boton en el menu de Violet — "Hablar del juego"
+##   fase 4 · quest completada
+##
+## LA PARTIDA NO CIERRA LA QUEST. Deja al MC de trasnoche en su habitacion y
+## devuelve el control: el jugador puede dormir. La quest se cierra al dia
+## siguiente (o cuando quiera) hablando con ella del juego.
 ##
 ## ESTO NO ROMPE LA REGLA DE "UN SOLO DISPARADOR": los tres son excluyentes —
 ## cada uno solo existe en su fase, asi que en ningun momento hay dos formas de
@@ -37,7 +42,8 @@ define VA20_PRECIO_JUEGO = 200
 ## Estado
 ################################################################################
 
-# 0 = falta la recomendacion · 1 = falta comprarlo · 2 = falta jugar · 3 = listo
+# 0 = falta la recomendacion · 1 = falta comprarlo · 2 = falta jugar ·
+# 3 = jugaron, falta comentarselo · 4 = listo
 default va20_fase = 0
 
 
@@ -52,7 +58,9 @@ init python:
             return renpy.translate_string("No se que jugar podria preguntarle a Violet")
         if _f == 1:
             return renpy.translate_string("Violet me recomendo un juego, tendria que conseguirlo")
-        return renpy.translate_string("Ya tengo el juego, ahora falta jugarlo con ella")
+        if _f == 2:
+            return renpy.translate_string("Ya tengo el juego, ahora falta jugarlo con ella")
+        return renpy.translate_string("Estuvo bueno el juego, deberia decirselo")
 
     def _quehacer_va20_listo():
         """Que hacer en ETAPA_BOTON_LISTO — idem."""
@@ -61,7 +69,9 @@ init python:
             return renpy.translate_string("Hablar con Violet")
         if _f == 1:
             return renpy.translate_string("Comprar el juego en mi habitacion")
-        return renpy.translate_string("Jugar de noche en mi habitacion")
+        if _f == 2:
+            return renpy.translate_string("Jugar de noche en mi habitacion")
+        return renpy.translate_string("Hablar con Violet")
 
     # ── Condiciones de los disparadores ──────────────────────────────────────
 
@@ -69,6 +79,16 @@ init python:
         """Boton del menu de Violet (interactions_violet.rpy)."""
         return (quest_lista_para_boton("violet_amor_04")
                 and getattr(store, 'va20_fase', 0) == 0)
+
+    def _va20_boton_hablar():
+        """
+        Boton del menu de Violet para el ultimo tramo (interactions_violet.rpy).
+
+        Sin restriccion de hora ni de locacion: se le comenta cuando el jugador
+        la cruce, sea donde sea.
+        """
+        return (quest_lista_para_boton("violet_amor_04")
+                and getattr(store, 'va20_fase', 0) == 3)
 
     def _va20_comprar_visible():
         """Condicion de la AccionLocacion 'Comprar juego' (actions_catalog)."""
@@ -155,25 +175,55 @@ label violet_amor_20_recomendacion:
         show violet_parada c_rbase_base ca_base o_base b_none at right
     with sprite_normal
 
-    # =========================================================================
-    # CONTENIDO — le pide una recomendacion y ella le nombra un juego
-    # =========================================================================
 
-    # (Mc boca hablando)
     show mc_parado_base b_hablando
-    mc "..."
-    # (Mc boca neutral)
+    mc "Necesito una recomendacion de tu parte"
     show mc_parado_base b_none
 
-    # (Violet boca hablando)
-    show violet_parada b_hablando
-    violet "..."
-    # (Violet boca neutral)
+    show violet_parada b_hablando c_rbase_pensando with sprite_fast
+    violet "¿Sobre que?"
     show violet_parada b_none
 
-    # =========================================================================
-    # FIN DEL CONTENIDO
-    # =========================================================================
+    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_fast
+    mc "Estoy buscando algo que jugar y no se me ocurre que"
+    show mc_parado_base b_none c_rbase_base with sprite_fast
+
+    show violet_parada b_hablando
+    violet "¿Que genero?"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando c_rbase_idea with sprite_fast
+    mc "Algo de accion, muchos tiros y explosiones si puede ser"
+    show mc_parado_base b_none c_rbase_idea with sprite_fast
+
+    show violet_parada b_hablando c_rbase_base with sprite_fast
+    violet "Con unos amigos estamos jugando al Infernodivers II"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando
+    mc "¿De que trata?"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando
+    violet "De impartir democracia a lo largo del universo y salvar niños"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_fast
+    mc "¿Y eso es de accion?"
+    show mc_parado_base b_none c_rbase_base with sprite_fast
+
+    show violet_parada b_hablando
+    violet "De la buena"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando
+    mc "Bueno tendria que comprarlo"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando
+    violet "Cuando lo tengas y escribime para jugar juntos"
+    show violet_parada b_none
+
 
     hide mc_parado_base
     hide violet_parada
@@ -213,16 +263,8 @@ label violet_amor_20_comprar:
     # (Mc cuerpo pensando ojos base boca neutral)
     show mc_parado_base c_rbase_pensando o_base b_none at center with sprite_normal
 
-    # =========================================================================
-    # CONTENIDO — lo compra y piensa en como proponerselo
-    # =========================================================================
-
-    piensa "..."
-    piensa "..."
-
-    # =========================================================================
-    # FIN DEL CONTENIDO
-    # =========================================================================
+    piensa "Bueno ya tengo el juego, costo una buena moneda pero en los videos se veia prometedor"
+    piensa "Podria probarlo"
 
     hide mc_parado_base with dissolve
 
@@ -275,12 +317,26 @@ label violet_amor_20_jugar:
 
 label violet_jugar_suelto:
 
-    $ sistema_acciones.marcar_usada("va20_jugar")
-
     # tracker_locacion_npc es la fuente de verdad de "se puede ubicar al NPC":
     # devuelve None si esta fuera de casa o si una restriccion la escondio.
+    # Para jugar online tiene que estar EN SU HABITACION, que es donde tiene la
+    # compu — no alcanza con que este en la casa.
     $ _vj_disponible = (tracker_locacion_npc("violet") == "casa_hviolet")
-    $ _vj_se_une = _vj_disponible and renpy.random.random() < 0.5
+
+    # Si no esta, la accion NO se hace: se avisa y se sale sin gastar el horario
+    # ni el uso diario. Antes se jugaba igual, el MC perdia la noche solo y el
+    # jugador se enteraba despues de que ya no habia con quien.
+    #
+    # Va ANTES de marcar_usada a proposito: el intento fallido no consume nada,
+    # asi que puede volver a probar mas tarde el mismo dia.
+    if not _vj_disponible:
+        $ _blk_guardar_toque()
+        piensa "Violet no esta conectada ahora"
+        return
+
+    $ sistema_acciones.marcar_usada("va20_jugar")
+
+    $ _vj_se_une = renpy.random.random() < 0.5
 
     $ ocultar_hud()
     window show
@@ -303,27 +359,79 @@ label violet_jugar_suelto:
 
 label quest_violet_amor_04:
 
+    # Se va el boton de jugar; el de hablar aparece recien al final del label.
     $ va20_fase = 3
 
     $ ocultar_hud()
     window show
 
-    # =========================================================================
-    # CONTENIDO — LA ESCENA ENTERA VA ACA (todavia sin escribir)
-    # =========================================================================
-    # Juegan juntos, cada uno en su habitacion. Al escribirla, arrancar con el
-    # `scene` que corresponda: la locacion actual es casa_hmc de noche.
-
-    piensa "..."
-
-    # =========================================================================
-    # FIN DEL CONTENIDO
-    # =========================================================================
-
-    $ completar_quest_actual("violet", quest_id="violet_amor_04")
-
-    # Se les fue la noche jugando: el horario avanza uno (noche → trasnoche).
     $ avanzar_horario()
+
+    scene black with fade
+    show text Text(renpy.translate_string("Algunas partidas mas tarde"),
+                   size=50, color="#FFFFFF",
+                   outlines=[(2, "#000000", 0, 0)]) at truecenter
+    pause 2.0
+    hide text with dissolve
+
+    # El MC solo en su habitacion, ya de trasnoche.
+    $ _va20_bg_final = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
+    scene expression _va20_bg_final
+    # (Mc cuerpo base ojos base boca neutral)
+    show mc_parado_base c_rbase_base o_base b_none at center
+    with fade
+
+    piensa "Eso estuvo intenso, pero no pare de morirme"
+    piensa "Violet y sus amigos ya jugaban muy bien, voy a tener que practicar"
+
+    hide mc_parado_base with dissolve
+
+    window hide
+    $ mostrar_hud()
+    jump game_loop
+
+
+
+label violet_amor_20_hablar:
+
+    $ ocultar_hud()
+    window show
+
+    $ _va20_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
+    scene expression _va20_bg
+
+    show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
+
+    # cuerpo_activo() para no asumir la ropa: de noche esta en pijama.
+    $ _va20_cuerpo = cuerpo_activo("violet")
+    if _va20_cuerpo == "c_pijama":
+        # (Violet cuerpo pijama ojos base boca neutral)
+        show violet_parada c_pijama_base ca_pijama o_base b_none at right
+    else:
+        # (Violet cuerpo base ojos base boca neutral)
+        show violet_parada c_rbase_base ca_base o_base b_none at right
+    with sprite_normal
+
+    # =========================================================================
+    # CONTENIDO — le dice que le gusto y ella propone repetir
+    # =========================================================================
+
+    show mc_parado_base b_hablando
+    mc "Me encanto el juego, lleno de enemigos por todos lados, tiros, las explosiones son geniales"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando
+    violet "Jajaja se te ve emocionado"
+    show violet_parada b_hablandochica
+    violet "Cuando quieras podemos volver a jugar"
+    show violet_parada b_none
+
+    hide mc_parado_base
+    hide violet_parada
+    with dissolve
+
+    $ va20_fase = 4
+    $ completar_quest_actual("violet", quest_id="violet_amor_04")
 
     window hide
     $ mostrar_hud()

@@ -59,7 +59,7 @@ init python:
 init 5 python:
 
     registrar_trigger_dormir("violet_deseo_10_sed", "antes",
-                             _vd10_trigger_dormir)
+                            _vd10_trigger_dormir)
 
 
 ################################################################################
@@ -95,9 +95,9 @@ label violet_deseo_10_despertar:
     # el efecto de aparecer de la nada.
     $ activar_restriccion(
         locaciones_permitidas=["casa_pasilloarriba", "casa_living",
-                               "casa_pasilloabajo", "casa_cocina"],
+                            "casa_pasilloabajo", "casa_cocina"],
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar",
-                             "usar_item", "comprar", "cocinar", "ver_tv"],
+                            "usar_item", "comprar", "cocinar", "ver_tv"],
         mensaje_movimiento=_("Primero voy a tomar algo, me estoy muriendo de sed"),
         mensaje_accion_default=_("Primero voy a tomar algo, me estoy muriendo de sed"),
         npcs_ocultos=["violet", "monica", "jasmine"],
@@ -132,32 +132,178 @@ label quest_violet_deseo_02:
     $ _vd10_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
     scene expression _vd10_bg
 
-    show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
+    show violet_tanga_qd10 c_tanga b_none at right with sprite_normal
 
-    # =========================================================================
-    # CONTENIDO — acá va la narrativa
-    # =========================================================================
-    # Violet entra en tanga. c_tanga_base con ca_base (la cabeza de la ropa de
-    # siempre) y NO ca_pijama: no viene de dormir vestida.
+    show mc_parado_base c_rbase_base o_base b_none at mc_izquierda with sprite_normal
 
-    piensa "..."
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
+    mc "Ehhh... Hola"
+    show mc_parado_base b_none c_rbase_base with sprite_fast
 
-    show violet_parada c_tanga_base ca_base o_base b_none at right with sprite_normal
+    show violet_tanga_qd10 b_hablando
+    violet "Hola"
+    show violet_tanga_qd10 b_hablandochica
+    violet "¿Tambien con sed?"
+    show violet_tanga_qd10 b_none
+    
+    piensa "Se ve que esta dormida y no se dio que esta en tanga"
 
-    show violet_parada b_hablando
-    violet "..."
-    show violet_parada b_none
 
-    # =========================================================================
-    # FIN DEL CONTENIDO
-    # =========================================================================
+    show violet_tanga_qd10 c_tomando with sprite_fast
+    pause 0.5
+    show violet_tanga_qd10 c_tanga with sprite_fast
+    pause 0.5
 
-    hide violet_parada with dissolve
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
+    mc "Si, me tengo que acostumbrar a llevarme agua antes de dormir"
+    show mc_parado_base b_none c_rbase_base with sprite_fast
+
+    show violet_tanga_qd10 b_hablando
+    violet "Yo tengo una botella pero siempre olvido de llenarmela"
+    show violet_tanga_qd10 b_none
+
+    show mc_parado_base b_hablando 
+    mc "No es una mala idea, pero tampoco es tanto problema levantarse"
+    show mc_parado_base b_none
+
+    show violet_tanga_qd10 b_hablando
+    violet "Para mi si porque me puedo desvelar y me cuesta mucho volver a dormir"
+    show violet_tanga_qd10 b_hablandochica
+    violet "¿Sabes que hora es?"
+    show violet_tanga_qd10 b_none
+    
+    piensa "Esta mas habladora de lo habitual tambien, parece otra persona"
+
+    show mc_parado_base b_hablando c_rbase_celu o_abajonm with sprite_fast
+    mc "Son las 5 am"
+    show mc_parado_base b_none c_rbase_base o_base with sprite_fast
+
+    show violet_tanga_qd10 b_hablando
+    violet "¿A ti te cuesta dormirte tambien cuando te levantas?"
+    show violet_tanga_qd10 b_none
+
+    show violet_tanga_qd10 c_tomando with sprite_fast
+    pause 0.5
+    show violet_tanga_qd10 c_tanga with sprite_fast
+    pause 0.5
+
+    show mc_parado_base b_hablando c_rbase_pensando o_arribanm with sprite_fast
+    mc "En la mayoria de los casos me vuelvo a dormir rapido"
+    show mc_parado_base b_none c_rbase_base o_base with sprite_fast
+
+    show violet_tanga_qd10 b_hablando
+    violet "Que envidia"
+    show violet_tanga_qd10 b_hablandochica
+    violet "¿Te puedo hacer una pregunta?"
+    show violet_tanga_qd10 b_none
+
+    show mc_parado_base b_hablando
+    mc "Si, ¿Que pasa?"
+    show mc_parado_base b_none
+
+    show violet_tanga_qd10 b_hablando
+    violet "¿Por que me estas mirando tanto?"
+    show violet_tanga_qd10 b_none
+
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
+    mc "Ehh... no te estaba mirando"
+    show mc_parado_base b_none c_rbase_base with sprite_fast
+
+    piensa "Me es imposible no mirarla, no se que espera"
+
+    show violet_tanga_qd10 b_hablando ot_colorada
+    violet "Aunque me imagino..."
+    show violet_tanga_qd10 b_hablandochica
+    violet "Si me dices que miras y por que te puedo dar una recompensa"
+    show violet_tanga_qd10 b_sonrisa
+
+    piensa "Sabe por que la estoy mirando, no se a donde quiere llegar y no conozco esta faceta suya"
+    piensa "No le quiero decir, pero me voy a arrepentir mas de perderme esa recompensa"
+
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
+    mc "Te estoy mirando a vos"
+    show mc_parado_base b_none
+
+    show violet_tanga_qd10 b_hablando
+    violet "¿Y por que?"
+    show violet_tanga_qd10 b_sonrisa
+
+    show mc_parado_base b_hablando
+    mc "Porque tenerte adelante en tanga me calienta un poco, no voy a mentirte"
+    show mc_parado_base b_none
+
+    show violet_tanga_qd10 b_hablando
+    violet "Asi que te volviste un pervertido"
+    show violet_tanga_qd10 b_sonrisa
+
+    show mc_parado_base b_hablando
+    mc "Es una reaccion natural, soy un hombre"
+    show mc_parado_base b_none
+
+    show violet_tanga_qd10 b_hablando
+    violet "¿Te pones asi asi solo por una tanga o cambia porque sea yo?"
+    show violet_tanga_qd10 b_sonrisa
+
+    show mc_parado_base b_hablando
+    mc "Creo que ya te respondi lo que me preguntaste y no vi mi recompensa"
+    show mc_parado_base b_none
+
+    show violet_tanga_qd10 b_hablando
+    violet "Depende de tu respuesta ahora puede mejorar o empeorar"
+    show violet_tanga_qd10 b_sonrisa
+
+    show mc_parado_base b_hablando
+    mc "Supongo que es por la situacion y por que seas vos"
+    show mc_parado_base b_none
+
+    show violet_tanga_qd10 b_hablando
+    violet "Muy bien... honesto"
+    show violet_tanga_qd10 b_hablandochica
+    violet "Bueno, me voy a dormir antes de terminar de desvelarme"
+    show violet_tanga_qd10 b_sonrisa
+
+    show mc_parado_base b_hablando
+    mc "¿Y mi recompensa?"
+    show mc_parado_base b_none
+
+    show violet_tanga_qd10 b_hablando
+    violet "Nunca dije que iba a ser ahora"
+    show violet_tanga_qd10 b_hablandochica
+    violet "¿Que estabas esperando?"
+    show violet_tanga_qd10 b_sonrisa
+
+    piensa "Cai completamente... no le voy a seguir mas el juego"
+
+    show mc_parado_base b_hablando
+    mc "Nada, me voy a dormir, tampoco me quiero desvelar"
+    show mc_parado_base b_none
+
+    show violet_tanga_qd10 b_hablando
+    violet "Nos vemos"
+    show violet_tanga_qd10 b_sonrisa
+
+    hide violet_tanga_qd10
+    hide mc_parado_base
+    with dissolve
+
+
+    $ sistema_locaciones.mover_a_locacion("casa_hmc")
+    $ _vd10_bg_final = sistema_locaciones.locacion_actual.background
+    scene expression _vd10_bg_final with fade
+
+    show mc_parado_base c_rbase_pensando o_base b_none at center with sprite_normal
+
+    piensa "Violet siempre me atrajo, quizas porque teniamos miles de cosas en comun"
+    piensa "Pero ahora es distinto, me cuesta no mirarla con otros ojos y este tipo de situaciones no ayudan"
+    piensa "Que ella lo sepa no se si es bueno o es malo, pero ahora no voy a ganar nada con pensarlo"
+    piensa "Mejor me voy a dormir"
+
+    hide mc_parado_base with dissolve
 
     $ completar_quest_actual("violet", quest_id="violet_deseo_02")
 
-    # El jugador vuelve al loop donde estaba: la cocina, de trasnoche y ya sin
-    # restriccion, asi que puede subir a dormir cuando quiera.
+    # El jugador vuelve al loop en su habitacion, de trasnoche y ya sin
+    # restriccion, asi que puede dormir cuando quiera.
     window hide
     $ mostrar_hud()
     jump game_loop

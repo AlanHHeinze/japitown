@@ -751,8 +751,17 @@ screen file_slots(title):
 
                     $ slot = i + 1
 
+                    ## Compatibilidad entre versiones — core/utils/compatibilidad_saves.rpy.
+                    ## En CARGAR un slot de otra generación no se puede tocar; en
+                    ## GUARDAR sí, para poder pisar partidas viejas y recuperar
+                    ## el espacio. `action None` deja el botón insensible (gris)
+                    ## en vez de invisible: el jugador ve que su partida sigue
+                    ## ahí y por qué no puede usarla.
+                    $ _jp_compat = jp_slot_compatible(slot)
+                    $ _jp_bloqueado = (not _jp_compat) and CurrentScreenName() == "load"
+
                     button:
-                        action FileAction(slot)
+                        action (None if _jp_bloqueado else FileAction(slot))
 
                         has vbox
 
@@ -769,8 +778,17 @@ screen file_slots(title):
                         $ _jp_slot_fecha = FileTime(slot, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("empty slot"))
                         $ _jp_slot_linea = u"{}, {}".format(_jp_slot_dia, _jp_slot_fecha) if _jp_slot_dia else _jp_slot_fecha
 
-                        text "[_jp_slot_linea]":
-                            style "slot_time_text"
+                        ## El aviso REEMPLAZA a la fecha en vez de sumarse: el
+                        ## slot tiene alto fijo (gui.slot_button_height) y una
+                        ## línea de más lo desborda.
+                        if _jp_compat:
+                            text "[_jp_slot_linea]":
+                                style "slot_time_text"
+                        else:
+                            $ _jp_slot_ver = jp_slot_version(slot)
+                            text _("v[_jp_slot_ver] · incompatible"):
+                                style "slot_time_text"
+                                color "#FF5252"
 
                         key "save_delete" action FileDelete(slot)
 

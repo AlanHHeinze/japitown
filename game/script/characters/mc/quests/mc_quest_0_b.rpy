@@ -33,8 +33,21 @@ init python:
             return "mc_q0b_trigger"
         return None
 
+    def _cel_trigger_mc_q0b():
+        """
+        Trigger de salir del celular: cierra la quest si el jugador ya paso por
+        la app de Pistas. Antes esto era un `if` hardcodeado en el label
+        _validar_estado_tras_celular; vive acá desde que ese punto de enganche
+        tiene registro propio.
+        """
+        if (getattr(store, "mc_q0b_esperando", False)
+                and getattr(store, "mc_q0b_pistas_visitada", False)):
+            return "mc_q0b_completar"
+        return None
+
 init 5 python:
     registrar_trigger_game_loop("mc_q0b", _gl_trigger_mc_q0b, prioridad=10)
+    registrar_trigger_salir_celular("mc_q0b_pistas", _cel_trigger_mc_q0b)
 
 
 ################################################################################

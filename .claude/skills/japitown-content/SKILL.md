@@ -165,10 +165,55 @@ funciones de módulo). El motor itera los registros; jamás se edita un archivo 
 | Trigger al avanzar horario | `registrar_trigger_avanzar(id, funcion)` | idem | `accion_avanzar_tiempo` |
 | Bloqueo de una acción | `registrar_bloqueo_accion(accion_id, condicion, mensaje)` | idem | embudo `accion_bloqueada` |
 | Excepción al bloqueo de trasnoche | `registrar_excepcion_trasnoche(funcion)` — `fn(npc_id) → bool` | archivo de la quest/evento | `npc_durmiendo` → `npc_interactuable` |
-| Label al entrar a una locación (bajo restricción) | `restriccion_quest_activa.registrar_label_locacion(loc, label)` | label de la quest (runtime, vive en la restricción) | `accion_hotspot_move` |
+| Label al entrar a una locación, **solo dentro de una secuencia ya en curso** (⚠ nunca como disparador de quest — ver abajo) | `restriccion_quest_activa.registrar_label_locacion(loc, label)` | label de la quest (runtime, vive en la restricción) | `accion_hotspot_move` |
 | Aviso "repartidor se fue sin atender" | `REPARTIDOR_AL_IRSE.append(funcion)` | archivo de la quest | `avanzar_horario` |
-| Acción de locación / interceptor | `sistema_acciones.registrar_accion` / `registrar_listener` | `actions_catalog.rpy` (¡SIEMPRE en init, nunca en labels!) | `accion_locacion_ejecutar` |
+| Acción de locación / interceptor | `sistema_acciones.registrar_accion` / `registrar_listener` | **`core/actions/actions_catalog.rpy`, SIEMPRE — ver abajo** | `accion_locacion_ejecutar` |
 | Quest / Evento / Skin / Chat / Pensamiento | `registrar_quest` / `registrar_event` / `registrar_skin` / `registrar_grupo` / `registrar_pensamiento` | archivos del NPC | sus sistemas |
+
+> ### ⚠️ El disparador de una quest NUNCA va en `registrar_label_locacion`
+>
+> Para "cuando el jugador llegue a tal locación, arrancá la quest" va
+> **`registrar_trigger_game_loop`** con una función que chequea locación + etapa.
+> Nunca `registrar_label_locacion`.
+>
+> **Por qué:** ese registro vive dentro de `restriccion_quest_activa`, que es **un
+> slot global único**. `activar_restriccion` lo reemplaza entero y
+> `desactivar_restriccion` lo borra — y hay decenas de llamadas a las dos en el
+> proyecto. Si además se registra desde `accion_al_entrar`, que corre **una sola
+> vez** al cambiar de etapa, el primer contenido que corra después se lleva el
+> disparo puesto y **la quest queda muerta para siempre** en el panel de pistas.
+>
+> Bug real reportado por jugadores (2026-08-20): la 0_b de Mónica no arrancaba al
+> día siguiente de la 0_a. La 04_b de Violet tenía el mismo defecto y era peor,
+> porque su restricción no bloqueaba nada y no daba ningún síntoma. Las dos se
+> pasaron a `registrar_trigger_game_loop`.
+>
+> `registrar_label_locacion` **sí** sirve dentro de una secuencia en curso, donde
+> el mismo contenido pone y saca la restricción y la ventana es corta (los pasos
+> del tutorial de `mc_quest_0_a`, las escenas de `evento03_violet`). La regla es:
+> si entre el registro y el disparo el jugador puede irse a hacer otra cosa, no
+> sirve.
+
+> ### ⚠️ TODAS las acciones de locación viven en `actions_catalog.rpy`
+>
+> Sin excepción, incluidas las de un sistema propio (espiar), las de una
+> herramienta de dev y las de contenido parkeado. **Ningún archivo de contenido
+> registra acciones**, aunque eso lo deje menos autocontenido.
+>
+> **Por qué:** una acción se busca por "¿qué botón aparece en esta locación?",
+> no por "¿de qué quest era?". Repartidas por el proyecto había que abrir
+> decenas de archivos para responder eso, y era fácil registrar dos veces el
+> mismo botón en la misma locación sin notarlo.
+>
+> **Qué va en cada lado:** la `AccionLocacion` en el catálogo; su función de
+> condición en el archivo del contenido. El catálogo corre en `init 5` y las
+> condiciones en `init python` (prioridad 0), así que siempre existen antes.
+>
+> **Y NUNCA desde un label** (`$ sistema_acciones.registrar_accion(...)` /
+> `registrar_listener(...)`). `sistema_acciones` es un `define`: no se guarda,
+> así que un registro hecho en runtime desaparece al cargar la partida y deja la
+> quest sin disparador. La quest solo prende y apaga un flag `default`; la
+> condición registrada lo lee. Casos reales: vq3a y vq8a.
 
 ### Semántica de los triggers de motor (`triggers_contenido.rpy`)
 
@@ -761,7 +806,8 @@ error/exception/traceback/already exists.
 ### Nueva Quest
 - [ ] `Quest(...)` + `registrar_quest()` en `quest_<npc>.rpy`; labels en archivo propio
 - [ ] Cero lambdas crudas (def de módulo o `_qc`); requisitos solo con tipos válidos
-- [ ] UN disparador, registrado según §4 (botón / puerta / trigger / locación / item / chat)
+- [ ] UN disparador, registrado según §4 (botón / puerta / trigger / locación / item / chat).
+      Si es por locación → `registrar_trigger_game_loop`, nunca `registrar_label_locacion`
 - [ ] Textos de botones nuevos con `old/new` en su archivo de strings
 - [ ] `ocultar_hud()`+`window show` al iniciar; `mostrar_hud()`+`jump game_loop` al cerrar
 - [ ] `desactivar_restriccion()` + `completar_quest_actual()` al finalizar

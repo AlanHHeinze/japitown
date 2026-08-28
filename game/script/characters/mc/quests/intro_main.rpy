@@ -246,37 +246,32 @@ screen disclaimer_ficcion():
             spacing int(25 * _disc_k)
             xalign 0.5
 
-            if _preferences.language == "spanish":
-                text "AVISO LEGAL":
-                    size int(26 * _disc_k)
-                    color "#FFB74D"
-                    bold True
-                    xalign 0.5
+            ## El idioma NO se pregunta acá. El texto va UNA vez en español, que
+            ## es el idioma base del proyecto (tl/None), y Ren'Py resuelve la
+            ## versión inglesa desde tl/english como con todo el resto.
+            ##
+            ## Antes esto era un `if _preferences.language == "spanish":` con las
+            ## dos versiones escritas a mano, y esa comparación NO ERA NUNCA
+            ## verdadera: en el idioma base `language` vale None, no el nombre
+            ## del idioma (se ve en el selector de idioma de ui/base/screens.rpy,
+            ## que usa `_preferences.language is None` para el español). Caía
+            ## siempre en el `else`, así que el aviso salía en inglés en los dos
+            ## idiomas. Las traducciones viven en
+            ## tl/english/script/story/intro/intro_main.rpy.
+            text _("AVISO LEGAL"):
+                size int(26 * _disc_k)
+                color "#FFB74D"
+                bold True
+                xalign 0.5
 
-                null height int(15 * _disc_k)
+            null height int(15 * _disc_k)
 
-                text "Este juego es una obra de ficción. Todos los personajes, situaciones, eventos y diálogos presentados son completamente imaginarios y creados con fines de entretenimiento. Cualquier similitud con personas reales, vivas o fallecidas, es pura coincidencia.\n\nTodos los personajes involucrados en cualquier escena de contenido explícito o romántico son mayores de 18 años. Los desarrolladores no respaldan ni promueven ningún contenido que tenga lugar en este juego como aceptable en la realidad.":
-                    size int(16 * _disc_k)
-                    color "#E0E0E0"
-                    xalign 0.5
-                    text_align 0.5
-                    line_spacing 7
-
-            else:
-                text "LEGAL NOTICE":
-                    size int(26 * _disc_k)
-                    color "#FFB74D"
-                    bold True
-                    xalign 0.5
-
-                null height int(15 * _disc_k)
-
-                text "This game is a work of fiction. All characters, situations, events, and dialogues presented are completely imaginary and created for entertainment purposes. Any resemblance to real persons, living or deceased, is purely coincidental.\n\nAll characters involved in any scene of explicit or romantic content are 18 years of age or older. The developers do not endorse or promote any content that takes place in this game as acceptable in reality.":
-                    size int(16 * _disc_k)
-                    color "#E0E0E0"
-                    xalign 0.5
-                    text_align 0.5
-                    line_spacing 7
+            text _("Este juego es una obra de ficción. Todos los personajes, situaciones, eventos y diálogos presentados son completamente imaginarios y creados con fines de entretenimiento. Cualquier similitud con personas reales, vivas o fallecidas, es pura coincidencia.\n\nTodos los personajes involucrados en cualquier escena de contenido explícito o romántico son mayores de 18 años. Los desarrolladores no respaldan ni promueven ningún contenido que tenga lugar en este juego como aceptable en la realidad."):
+                size int(16 * _disc_k)
+                color "#E0E0E0"
+                xalign 0.5
+                text_align 0.5
+                line_spacing 7
 
             null height int(20 * _disc_k)
 
@@ -293,6 +288,11 @@ screen disclaimer_ficcion():
 
 
 label start:
+
+    # Generacion de guardado de esta partida (core/utils/compatibilidad_saves.rpy).
+    # Va aca y no en el `default` porque el default (-1) tiene que quedar
+    # reservado para los saves anteriores a ese sistema, que son incompatibles.
+    $ jp_gen_partida = JP_SAVE_GEN
 
     # Mostrar advertencia de contenido adulto en cada nueva partida
     if not intro_mostrada:
@@ -714,6 +714,14 @@ label game_loop:
 
 
 label after_load:
+
+    # Corte por generacion de guardado (core/utils/compatibilidad_saves.rpy).
+    # Va PRIMERO: si la partida es de una version incompatible no tiene sentido
+    # tocarle nada mas. Cubre las cargas que no pasan por la pantalla de Cargar
+    # (carga rapida, sync); las que si pasan ya salen deshabilitadas de ahi.
+    if not jp_partida_compatible():
+        jump jp_save_incompatible
+
     $ actualizar_bg_master()
     return
 

@@ -97,9 +97,7 @@ label quest_violet_amor_01:
     mc "Vas a tener que vivir con eso"
     show mc_parado_base b_none
 
-    show violet_parada b_hablando
     violet "..."
-    show violet_parada b_none
 
     show mc_parado_base b_hablando
     mc "¿No vas a decir nada?"
@@ -115,7 +113,8 @@ label quest_violet_amor_01:
     mc "Nos vemos en el proximo intento"
     show mc_parado_base b_none
 
-    hide mc_parado_base
+    hide mc_parado_base with dissolve
+    hide violet_parada with dissolve
 
     #violet pensando
 

@@ -41,10 +41,15 @@ translate english strings:
     new "Violet said she had more photos, maybe I can get them by doing something for her"
 
     # ── Líneas de relación de Violet (amor / deseo) ──────────────────────────
-    # Nombres y descripciones de las 12 quests de línea. Faltan solo las que no
-    # comparten texto con un hito: "Buena relación", "Como antes", "Algo nos
-    # pasa", "Me atrae", "Confesión" y "Un paso más allá" ya están traducidas
-    # como nombres de hito en relaciones_strings.rpy y comparten entrada.
+    # Nombres y descripciones de las 12 quests de línea.
+    #
+    # Los nombres de HITO que no coinciden con el de su quest se traducen en
+    # relaciones_strings.rpy: "Buena relación", "Algo nos pasa", "Me calienta",
+    # "Confesión" y "Un paso más allá".
+    #
+    # "Jugando juntos" es la excepción: desde 2026-08-26 la quest de amor 20 y su
+    # hito se llaman igual, así que comparten el `old` de más abajo. Un segundo
+    # `old` con el mismo texto rompería el lint.
 
     # Amor
     old "¿Mejor?"
@@ -65,9 +70,10 @@ translate english strings:
     old "Violet quiere su vieja Portatil Boy."
     new "Violet wants her old Portable Boy."
 
-    # Amor 20. El nombre ya no coincide con el del hito ("Como antes", que se
-    # traduce en relaciones_strings.rpy y no se toca): la quest es el evento,
-    # el hito es el estado de la relacion.
+    # Amor 20. Este `old` cubre DOS usos: el nombre de la quest y el del hito de
+    # amor 20, que desde 2026-08-26 se llama igual. Las traducciones se resuelven
+    # por contenido del string, no por contexto, asi que alcanza con este — y de
+    # hecho un segundo `old` con el mismo texto romperia el lint.
     old "Jugando juntos"
     new "Playing together"
 

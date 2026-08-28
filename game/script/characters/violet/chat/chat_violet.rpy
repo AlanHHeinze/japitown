@@ -735,93 +735,14 @@ init 6 python:
     )
     sistema_mensajes.registrar_grupo("tienda_coxplay", chat_tienda_coxplay_q9a_g1)
 
-    # =========================================================================
-    # AMOR 15 ("Juegos Viejos") — Violet pide la Portatil Boy
-    # =========================================================================
-    # Lo dispara el trigger de game_loop de violet_amor_15.rpy al llegar a 15 de
-    # amor. La UNICA condicion de entrega es que no esten en la misma locacion:
-    # si estan cara a cara, escribirse por chat no tendria sentido, asi que el
-    # grupo queda EN ESPERA y sale solo cuando el jugador se aparta.
-    #
-    # Las dos primeras lineas de Violet van en una sola burbuja porque
-    # mensaje_inicial es un unico mensaje (la API solo permite varias burbujas
-    # seguidas del NPC via respuesta_npc, que va DESPUES de una respuesta del
-    # jugador). Si se prefieren separadas hay que mover la segunda a un paso.
+    # (Acá estaba el chat de la quest de amor 15. Ese arco se mudo entero a
+    # ventajas/juegosnuevos/jn_pocketboy.rpy, donde vive ahora el grupo con
+    # el resto de sus piezas.)
 
-    chat_violet_amor03 = GrupoMensajes(
-        id="violet_amor03_chat",
-        npc_id="violet",
-        mensaje_inicial="Hola, estaba con ganas de jugar al Pocketmonster y mi vieja Portatil Boy no anda\n¿Todavia tienes la tuya para prestarmela?",
-        trigger_id="violet_amor03_chat",
-        condicion_entrega=_va15_chat_separados,
-        accion_al_completar=_va15_chat_completado,
-        pasos=[
-            PasoConversacion(
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto="Debe haber quedado aqui en algun lado",
-                        respuesta_npc="",
-                        saltar_a_paso=1,
-                    ),
-                ]
-            ),
-            PasoConversacion(
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto="No me la lleve cuando me fui",
-                        respuesta_npc=["Debe estar en el altillo entonces",
-                                       "Luego la busco"],
-                        saltar_a_paso=2,
-                    ),
-                ]
-            ),
-            PasoConversacion(
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto="OK",
-                        respuesta_npc="",
-                        saltar_a_paso=-1,
-                    ),
-                ]
-            ),
-        ],
-    )
-    sistema_mensajes.registrar_grupo("violet", chat_violet_amor03)
-
-    # =========================================================================
-    # DESEO 20 ("Pensando en Violet") — el MC le escribe
-    # =========================================================================
-    # LA QUEST ENTERA. Lo habilita el trigger_mensaje de ETAPA_BOTON_LISTO al
-    # llegar a 20 de deseo, y al terminar la conversacion _vd20_chat_completado
-    # cierra la quest (violet_deseo_20.rpy).
-    #
-    # mensaje_inicial="" a proposito: el que escribe primero es el JUGADOR, asi
-    # que no hay burbuja de Violet antes de las opciones.
-    #
-    # ⚠️ TEXTOS PLACEHOLDER ("a" y "b"). Al escribir la conversacion real hay
-    # que agregar sus old/new en tl/english/chat_violet_strings.rpy.
-
-    chat_violet_deseo04 = GrupoMensajes(
-        id="violet_deseo04_chat",
-        npc_id="violet",
-        mensaje_inicial="",
-        trigger_id="violet_deseo04_chat",
-        momento_locacion="casa_hviolet",
-        condicion_entrega=_vd20_mc_afuera,
-        accion_al_completar=_vd20_chat_completado,
-        pasos=[
-            PasoConversacion(
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto="a",
-                        respuesta_npc="b",
-                        saltar_a_paso=-1,
-                    ),
-                ]
-            ),
-        ],
-    )
-    sistema_mensajes.registrar_grupo("violet", chat_violet_deseo04)
+    # (El chat de la quest de deseo 20 —"violet_deseo04_chat"— NO esta acá. En
+    # esa quest el que escribe primero es el MC, o sea que es una conversacion
+    # del sistema Mensajear y no un chat reactivo: vive con el resto de la
+    # quest en deseo/violet_deseo_20.rpy.)
 
     # =========================================================================
     # AMOR 30 ("¿Que me pongo?") — Violet lo cita para la noche

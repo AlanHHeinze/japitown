@@ -132,6 +132,8 @@ layeredimage violet_parada:
             "images/characters/casa/violet/violet_parada_cuerpo_rbase_gestito.webp"
         attribute c_rbase_idea:
             "images/characters/casa/violet/violet_parada_cuerpo_rbase_idea.webp"
+        attribute c_rbase_live:
+            "images/characters/casa/violet/violet_parada_cuerpo_rbase_live.webp"
         attribute c_rbase_notok:
             "images/characters/casa/violet/violet_parada_cuerpo_rbase_notok.webp"
         attribute c_rbase_ok:
@@ -209,18 +211,9 @@ layeredimage violet_parada:
         attribute c_pijama_bolsamadera:
             "images/characters/casa/violet/violet_parada_cuerpo_pijama_bolsamadera.webp"
 
-        # Tanga — ropa interior. Se usa con ca_base (la cabeza de la ropa de
-        # siempre), NO con ca_pijama: no es un atuendo de dormir completo.
-        #
-        # Va como seccion del grupo `cuerpo` y no como grupo propio a proposito:
-        # dos grupos se dibujarian superpuestos y se le veria el pijama debajo.
-        # Es la misma forma en que conviven rbase y pijama.
-        #
-        # ⚠️ ARTE PENDIENTE. Apunta al cuerpo base para que la escena se pueda
-        # probar; al llegar la imagen real, cambiar SOLO esta ruta por
-        # "images/characters/casa/violet/violet_parada_cuerpo_tanga_base.webp".
-        attribute c_tanga_base:
-            "images/characters/casa/violet/violet_parada_cuerpo_rbase_base.webp"
+        # (Acá vivía el placeholder `c_tanga_base`, que apuntaba al cuerpo base.
+        # La tanga pasó a ser su propio layeredimage `violet_tanga`, al final de
+        # este archivo, junto con `violet_mojada`.)
 
         attribute c_none:
             Null()
@@ -307,3 +300,124 @@ layeredimage violet_mojada:
             "images/characters/casa/violet/violet_parada_boca_sonrisaleve.webp"
         attribute b_sorprendida:
             "images/characters/casa/violet/violet_parada_boca_abiertachica.webp"
+
+
+################################################################################
+## Layeredimage: violet_tanga_qd10
+################################################################################
+## Violet en ropa interior. Antes era `c_tanga_base`, una sección del grupo
+## `cuerpo` de `violet_parada`; se separó a layeredimage propio para que su arte
+## no tenga que encajar con los atributos de la ropa de siempre.
+##
+## El sufijo `_qd10` es a propósito: por ahora este arte se usa SOLO en la quest
+## de deseo 10. Si más adelante aparece en otras escenas, ahí sí conviene
+## renombrarlo a algo genérico y actualizar los `show`.
+##
+## NO tiene grupo de ojos: el arte del cuerpo ya los trae dibujados. Solo la boca
+## va aparte, y su grupo se declara DESPUÉS del cuerpo para que se dibuje encima
+## (en un layeredimage el orden de los grupos es el orden de las capas). Por lo
+## mismo `otros` va ÚLTIMO: el rubor tiene que quedar sobre todas las demás.
+##
+## Los seis assets son de 680x1080, el mismo lienzo, así que las capas alinean
+## sin offsets.
+
+layeredimage violet_tanga_qd10:
+
+    group cuerpo:
+        attribute c_tanga default:
+            "images/characters/casa/violet/violet_tanga_qd10_cuerpo.webp"
+        attribute c_tomando:
+            "images/characters/casa/violet/violet_tanga_qd10_cuerpotomando.webp"
+
+    # Después del cuerpo = encima del cuerpo. El default es Null: boca cerrada.
+    group boca:
+        attribute b_none default:
+            Null()
+        attribute b_hablando:
+            "images/characters/casa/violet/violet_tanga_qd10_bocahablando.webp"
+        attribute b_hablandochica:
+            "images/characters/casa/violet/violet_tanga_qd10_bocahablandochica.webp"
+        attribute b_sonrisa:
+            "images/characters/casa/violet/violet_tanga_qd10_bocasonrisa.webp"
+
+    # Otros (efectos adicionales). Último grupo = capa de más arriba.
+    group otros:
+        attribute ot_none default:
+            Null()
+        attribute ot_colorada:
+            "images/characters/casa/violet/violet_tanga_qd10_rubor.webp"
+
+
+################################################################################
+## (Las imagenes de la quest de amor 15 se mudaron)
+################################################################################
+## Los fondos y los layeredimage de sus escenas (primer plano, caida, Violet
+## sentada) vivian acá. El arco entero paso a
+## ventajas/juegosnuevos/jn_pocketboy.rpy y quedo parkeado, asi que sus
+## imagenes se declaran ahi junto al contenido que las usa.
+
+
+################################################################################
+## Layeredimage: violet_magica
+################################################################################
+## Violet disfrazada de maga. Es un layeredimage propio y no un grupo de
+## `violet_parada` porque el disfraz trae su propia cabeza dibujada: no combina
+## con los grupos `cabeza` ni `ojos` del sprite normal.
+##
+## DOS GRUPOS DE BOCA, y hay que elegir el que corresponde al cuerpo:
+##   - de frente (c_base, c_mostrando, c_1..c_5) -> grupo `boca_frente`
+##   - de espaldas (c_espalda)                   -> grupo `boca_espalda`
+## Son archivos distintos porque la boca cae en otro lugar segun para donde
+## mire. Los dos arrancan en Null: boca cerrada.
+##
+## Al cambiar de un cuerpo de frente a c_espalda hay que bajar la boca de frente
+## a bf_none y subir la de espalda (y al revés), o quedarian las dos puestas.
+##
+## Los 12 assets son 680x1080, el mismo lienzo que el resto de los sprites de
+## Violet, asi que se muestra con las mismas posiciones (`at right`, etc).
+
+layeredimage violet_magica:
+
+    group cuerpo:
+        attribute c_base default:
+            "images/characters/casa/violet/violet_parada_cuerpo_magica_base.webp"
+        attribute c_espalda:
+            "images/characters/casa/violet/violet_parada_cuerpo_magica_espalda.webp"
+        attribute c_mostrando:
+            "images/characters/casa/violet/violet_parada_cuerpo_magica_mostrando.webp"
+
+    # Ojos. UN solo grupo con las dos versiones, no dos grupos: los ojos SIEMPRE
+    # se ven (no hay estado "sin ojos"), asi que dos grupos con imagen por
+    # defecto dibujarian los dos pares a la vez. Con un grupo unico se ve
+    # exactamente uno, y `o_base` —la version de frente— es el default.
+    #
+    # Al girar hay que cambiarlo a mano, igual que la boca.
+    group ojos:
+        attribute o_base default:
+            "images/characters/casa/violet/violet_parada_ojos_magica_base.webp"
+        attribute o_espalda:
+            "images/characters/casa/violet/violet_parada_ojos_magica_espaldabase.webp"
+
+    # Boca para los cuerpos de FRENTE.
+    group boca_frente:
+        attribute bf_none default:
+            Null()
+        attribute bf_hablando:
+            "images/characters/casa/violet/violet_parada_boca_magica_hablando_frente.webp"
+        attribute bf_hablandochica:
+            "images/characters/casa/violet/violet_parada_boca_magica_hablandochica_frente.webp"
+
+    # Boca para el cuerpo de ESPALDAS.
+    #
+    # `be_sonrisa` es la boca "en reposo" de espaldas: al girar va esa, no
+    # be_none. Se vuelve a ella al terminar cada linea, igual que en los cuerpos
+    # de frente se vuelve a bf_none.
+    group boca_espalda:
+        attribute be_none default:
+            Null()
+        attribute be_sonrisa:
+            "images/characters/casa/violet/violet_parada_boca_magica_espaldasonrisa.webp"
+        attribute be_hablando:
+            "images/characters/casa/violet/violet_parada_boca_magica_hablando_espalda.webp"
+        attribute be_hablandochica:
+            "images/characters/casa/violet/violet_parada_boca_magica_hablandochica_espalda.webp"

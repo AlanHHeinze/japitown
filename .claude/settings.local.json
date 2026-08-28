@@ -206,7 +206,10 @@
       "Bash(grep -n \"\\\\$.*int\\\\s*=\" game/script/ui/hud/hud_stats.rpy)",
       "Bash(grep -rn \"^\\\\s*int\\\\s*=\\\\|^\\\\s*\\\\$\\\\s*int\\\\s*=\" game/script/ --include=\"*.rpy\")",
       "Bash(grep -n \"^\\\\s*\\\\$\\\\|^\\\\s*for\\\\|^\\\\s*int\")",
-      "Bash(grep -n \"^\\\\s*\\\\$\\\\s*int\\\\s*=\" game/script/ui/hud/hud_navigation.rpy)"
+      "Bash(grep -n \"^\\\\s*\\\\$\\\\s*int\\\\s*=\" game/script/ui/hud/hud_navigation.rpy)",
+      "Bash(grep -viE \"door_knock_3|limpiando_alacena|orphan|^\\\\s+\\\\*|^game/tl/|^$\")",
+      "Bash(PYTHONIOENCODING=utf-8 python mover_pocketboy.py)",
+      "Bash(PYTHONIOENCODING=utf-8 python tl_lote3.py)"
     ],
     "additionalDirectories": [
       "c:\\Users\\Alan\\OneDrive\\Desktop\\Japitown\\.claude\\skills\\cambios",

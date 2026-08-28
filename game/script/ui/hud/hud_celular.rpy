@@ -249,15 +249,16 @@ label mostrar_bloqueo_accion(mensaje=""):
 ################################################################################
 ## Validar estado despues de cerrar el celular
 ################################################################################
-## Se ejecuta al cerrar el celular para verificar si hay eventos pendientes
-## (similar a lo que ocurre al cambiar de locación o adelantar tiempo)
+## Cuarto punto de enganche del motor, junto a game_loop / dormir / avanzar: el
+## contenido que le pide algo al jugador adentro del celular sigue la escena
+## cuando sale. Se registra con registrar_trigger_salir_celular desde el archivo
+## del contenido (ver triggers_contenido.rpy); acá no hay ninguna quest por
+## nombre.
 
 label _validar_estado_tras_celular:
 
-    # Quest 0b del MC: completar si el jugador ya visitó la app de pistas
-    if getattr(store, "mc_q0b_esperando", False) and getattr(store, "mc_q0b_pistas_visitada", False):
-        jump mc_q0b_completar
-
-    # (Aqui pueden agregarse futuras validaciones tras cerrar el celular)
+    $ _cel_trigger_label = ejecutar_triggers_salir_celular()
+    if _cel_trigger_label:
+        jump expression _cel_trigger_label
 
     return

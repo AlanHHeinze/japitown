@@ -4,7 +4,7 @@
 translate english violet_deseo_30_aviso_91bcd4cf:
 
     # piensa "Violet me pidio ayuda con algo en el sotano"
-    piensa "Violet me pidio ayuda con algo en el sotano"
+    piensa "Violet asked me for help with something in the basement"
 
 # game/script/characters/violet/deseo/violet_deseo_30.rpy:202
 translate english quest_violet_deseo_06_22aaadff:

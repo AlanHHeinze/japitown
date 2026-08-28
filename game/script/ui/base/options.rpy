@@ -26,7 +26,10 @@ define gui.show_name = True
 
 ## The version of the game.
 
-define config.version = "0.1.8.5"
+## ⚠️ Al cambiarla hay que agregarle su fila a JP_HISTORIAL_SAVES
+## (core/utils/compatibilidad_saves.rpy), diciendo si rompe o no los saves de la
+## version anterior. Si falta, el juego no arranca en desarrollo y te avisa.
+define config.version = "0.1.9"
 
 
 ## Text that is placed on the game's about screen. Place the text between the

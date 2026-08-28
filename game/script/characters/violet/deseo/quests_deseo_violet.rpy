@@ -118,16 +118,16 @@ init 5 python:
             "que_hacer_listo": "Hacer la accion ver tv en el sotano",
         },
         4: {
+            # La escena arranca sola al entrar de noche a la habitacion del MC
+            # (trigger de game_loop en violet_deseo_20.rpy) y de ahi en mas la
+            # quest pasa adentro del celular. NO lleva trigger_mensaje: el chat
+            # no se entrega, lo abre el jugador con el boton "Hablar".
             "pista_listo": "Estoy pensando mucho en Violet ultimamente podria escribirle",
-            "que_hacer_listo": "Enviarle un mensaje a Violet",
-            # El chat se habilita al ENTRAR a BOTON_LISTO, o sea justo al llegar
-            # a 20 de deseo. Es toda la quest: se cierra sola al terminarlo
-            # (accion_al_completar del grupo, en violet_deseo_20.rpy).
-            "trigger_mensaje_listo": ("violet_deseo04_chat", "violet"),
+            "que_hacer_listo": "Ir de noche a mi habitacion",
         },
         5: {
             "pista_listo": "Podria ver un capitulo de anime con Violet",
-            "que_hacer_listo": "Accion de anime",
+            "que_hacer_listo": "Ver TV en el sotano por la noche",
             # Mientras la quest esta activa Violet pasa la noche en su pieza.
             # De lunes a sabado ya lo hacia por rutina base; el unico dia que
             # cambia algo es el domingo (que normalmente estaria en el living).

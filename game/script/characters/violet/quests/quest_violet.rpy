@@ -1275,13 +1275,21 @@ init python:
 
     def setup_restriccion_violet_quest04b():
         """
-        Activa la restricción de auto-trigger para la quest 04_b de Violet.
-        Se llama como accion_al_entrar cuando la quest alcanza ETAPA_BOTON_LISTO.
-        Registra labels en todas las locaciones posibles de Violet.
-        Los NPCs siguen siendo interactuables normalmente.
+        accion_al_entrar de ETAPA_BOTON_LISTO. Los NPCs siguen interactuables.
+
+        OJO: aca NO se registra el disparo de la quest. Antes terminaba con un
+        loop de `r.registrar_label_locacion(...)` sobre las 5 locaciones de
+        Violet, y eso la rompia igual que a la 0_b de Monica: el registro vivia
+        en `restriccion_quest_activa`, que es un slot global unico que cualquier
+        `activar_restriccion` reemplaza y cualquier `desactivar_restriccion`
+        borra. Como accion_al_entrar corre UNA sola vez, la quest quedaba muerta.
+        Era peor que el caso de Monica: esta restriccion no bloquea NADA, asi
+        que el jugador podia irse a hacer cualquier contenido sin ningun aviso.
+
+        El disparo ahora es un trigger de game_loop registrado en init, en
+        violet_quest_04_b.rpy. La llamada de abajo se mantiene tal cual para no
+        cambiar el comportamiento de interaccion con NPCs.
         """
-        r = activar_restriccion(
+        activar_restriccion(
             npcs_interactuables=["violet", "jasmine", "monica"],
         )
-        for loc_id in ["casa_hviolet", "casa_pasilloarriba", "casa_cocina", "casa_living", "casa_gym"]:
-            r.registrar_label_locacion(loc_id, "violet_quest04b_check_locacion")

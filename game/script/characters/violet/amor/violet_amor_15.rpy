@@ -1,197 +1,176 @@
 ################################################################################
-## Violet — Amor 15 · "Juegos Viejos"
+## Violet — Amor 15 · "La visita"
 ################################################################################
 ##     archivo   violet_amor_15.rpy
-##     quest     violet_amor_03           (quests_amor_violet.rpy)
-##     label     quest_violet_amor_03     (lo fija el motor: "quest_" + id)
+##     quest     violet_amor_03          (quests_amor_violet.rpy)
+##     label     quest_violet_amor_03    (lo fija el motor: "quest_" + id)
 ##
-## La quest tiene TRES tramos y por eso hay varios labels. El orden es:
+## Violet va a la habitacion del MC por la tarde. El MC ya esta ahi —es SU
+## habitacion, no tiene que ir a ningun lado— asi que la escena arranca sola en
+## cuanto se dan las condiciones.
 ##
-##   1. Amor 15 → un trigger de game_loop dispara el chat. Solo llega cuando el
-##      MC y Violet NO estan en la misma locacion (condicion del grupo).
-##   2. Chat completo → hay que esperar UN DIA. Los dos tramos son requisitos de
-##      la propia quest, asi que hasta que se cumplan la quest no sale de
-##      ETAPA_CONDICIONES y la pista va contando en que fase esta.
-##   3. Cumplidos los requisitos, la quest pasa por ETAPA_RUTINA (que manda a
-##      Violet al altillo por las noches) y queda en ETAPA_BOTON_LISTO. Ahi el
-##      trigger de game_loop dispara las escenas.
+## DISPARADOR UNICO: un trigger de game_loop. No hay boton, y por eso la quest
+## esta en la lista _VA_SIN_BOTON de interactions_violet.rpy: si tuviera boton
+## quedaria inalcanzable igual (nunca llegarias a clickearla antes de que salte
+## la escena).
 ##
-## DISPARADOR UNICO: el trigger de game_loop. No hay boton — por eso la quest
-## esta excluida del "Charlar un rato" del menu de interaccion.
+## LAS CUATRO CONDICIONES, y por que cada una:
+##   1. La quest lista (ETAPA_BOTON_LISTO), o sea 15 de amor cumplidos.
+##   2. Horario TARDE.
+##   3. El MC en su habitacion. Es la locacion del jugador, no la de Violet:
+##      ella VIENE, asi que de donde salga da igual.
+##   4. Violet libre: en la casa, sin rutina especial y sin bloqueos. Sin esto
+##      podria "visitarlo" mientras esta afuera o bañandose, que es justo lo
+##      que no tiene que pasar.
 ##
-## POR QUE EL DIA DE ESPERA NO ES `dias_espera`: ese parametro solo gobierna
-## ETAPA_ESPERA, que es el arranque de la quest. Una espera en el MEDIO se hace
-## con un Requisito("condicion") que compara dias_totales, como acá.
-##
-## LAS DOS ESCENAS DE ENTRADA SON SECUENCIALES, no alternativas: al altillo solo
-## se llega desde el pasillo de arriba, asi que el jugador ve primero la llamada
-## y despues, al subir, la charla.
-
-
-################################################################################
-## Estado
-################################################################################
-
-# Dia (dias_totales) en que se completo el chat. None = todavia no paso.
-default va15_dia_chat = None
-
-# 0 = nada · 1 = Violet ya lo llamo desde el pasillo · 2 = charla hecha, buscando
-default va15_fase = 0
-
-# Veces que el jugador clickeo a Violet mientras buscan. Se acumula acá y no en
-# una variable de escena porque entre click y click el jugador esta suelto en el
-# loop y puede guardar la partida.
-default va15_clicks_violet = 0
+## PUESTA EN ESCENA: el MC ya esta en su posicion cuando arranca —entra sin
+## transicion, porque no acaba de llegar— y Violet aparece con sprite_normal,
+## que es la que se usa para "alguien entra". Ella lleva su ropa de siempre
+## pero con el cuerpo `c_rbase_live` en vez del base.
 
 
 init python:
 
-    # ── Requisitos y textos de la quest (los usa quests_amor_violet.rpy) ─────
-
-    def _va15_paso_un_dia():
-        """
-        True cuando paso al menos un dia desde que se completo el chat.
-
-        dias_totales es el contador absoluto (sube en cada dormir()), asi que
-        compararlo evita todo el enredo de fin de mes o de semana.
-        """
-        _dia = getattr(store, 'va15_dia_chat', None)
-        if _dia is None:
-            return False
-        return getattr(store, 'dias_totales', 0) > _dia
-
-    def _pista_va15_condiciones():
-        """Pista de ETAPA_CONDICIONES — cambia segun el tramo."""
-        if obtener_stat1("violet") < 15:
-            return renpy.translate_string("Puedo seguir acercandome a Violet.")
-        # NO repetir acá la descripcion de la quest: dos `old` con el mismo
-        # texto en el tl rompen el lint.
-        return renpy.translate_string("Tengo que ver si aparece la Portatil Boy.")
-
-    def _quehacer_va15_condiciones():
-        """Que hacer en ETAPA_CONDICIONES — los tres tramos, en orden."""
-        if obtener_stat1("violet") < 15:
-            return _quehacer_amor_violet(15)
-        if not store.sistema_mensajes.grupo_completado("violet_amor03_chat"):
-            return renpy.translate_string("Esperar el mensaje de Violet")
-        return renpy.translate_string("Darle tiempo para que la busque")
-
-    # ── Chat ─────────────────────────────────────────────────────────────────
-
-    def _va15_chat_separados():
-        """
-        condicion_entrega del chat: que NO esten en la misma locacion.
-
-        Si Violet esta fuera de casa tracker_locacion_npc devuelve None, que
-        nunca va a coincidir con la locacion del MC — o sea que estando ella
-        afuera el mensaje tambien llega, que es lo correcto.
-        """
-        _loc_mc = store.sistema_locaciones.locacion_actual
-        if _loc_mc is None:
-            return False
-        return tracker_locacion_npc("violet") != _loc_mc.id
-
-    def _va15_chat_completado():
-        """
-        accion_al_completar del chat: anota el dia para empezar a contar la
-        espera. Funcion de MODULO — se guarda en el save via el grupo.
-        """
-        store.va15_dia_chat = getattr(store, 'dias_totales', 0)
-
-    # ── Disparadores ─────────────────────────────────────────────────────────
-
     def _gl_trigger_violet_amor_15():
         """
-        Trigger de game_loop. Hace dos trabajos distintos segun la etapa:
+        Trigger de game_loop: Violet visita al MC en su habitacion.
 
-        - En ETAPA_CONDICIONES con amor >= 15: dispara el chat y devuelve None
-          (efecto python, el loop sigue normal). disparar_por_trigger ignora los
-          grupos que ya no estan "pendiente", asi que llamarlo en cada vuelta es
-          inofensivo y no hace falta un flag de "ya disparado".
-
-        - En ETAPA_BOTON_LISTO: devuelve el label de la escena que toque.
+        Devuelve el label o None. Las condiciones van de la mas barata a la mas
+        cara: primero los dos enteros (etapa y horario) y recien despues las
+        consultas al sistema de NPCs.
         """
-        _q = store.sistema_quests.obtener_quest("violet_amor_03")
-        if _q is None or not _q.activa or _q.completada:
+        if not quest_lista_para_boton("violet_amor_03"):
             return None
 
-        if _q.etapa_actual == ETAPA_CONDICIONES:
-            if obtener_stat1("violet") >= 15:
-                store.sistema_mensajes.disparar_por_trigger(
-                    "manual", "violet_amor03_chat", "violet")
+        if store.horario_actual != 1:          # Tarde
             return None
 
-        if _q.etapa_actual != ETAPA_BOTON_LISTO:
+        _loc_a15 = store.sistema_locaciones.locacion_actual
+        if _loc_a15 is None or _loc_a15.id != "casa_hmc":
             return None
 
-        # La charla del altillo ya paso: de acá en mas manda la accion Buscar.
-        if store.va15_fase >= 2:
+        _v_a15 = obtener_npc("violet")
+        if _v_a15 is None:
             return None
 
-        if store.horario_actual != 2:
+        # En la casa. "fuera" es el valor que usa el motor para "salio", asi que
+        # alcanza con descartarlo: cualquier otra locacion es adentro.
+        if not _v_a15.locacion_actual or _v_a15.locacion_actual == "fuera":
             return None
 
-        _loc = store.sistema_locaciones.locacion_actual
-        if _loc is None:
+        # Libre. La rutina especial cubre de una la ducha y la salida — las dos
+        # son "esta ocupada con otra cosa".
+        if _v_a15.obtener_rutina_especial_actual() is not None:
             return None
 
-        if _loc.id == "casa_altillo":
-            return "violet_amor_15_altillo"
+        # Y que no la esté tapando otro contenido: una restriccion de quest
+        # puede tenerla oculta o no interactuable aunque este en casa y libre.
+        if npc_esta_oculto("violet") or not npc_interactuable("violet"):
+            return None
 
-        if store.va15_fase == 0 and _loc.id == "casa_pasilloarriba":
-            return "violet_amor_15_pasillo"
-
-        return None
-
-    def _va15_buscar_visible():
-        """
-        Condicion de la AccionLocacion 'Buscar' (actions_catalog).
-
-        Es `== 2` y no `>= 2`: la escena de cierre sube la fase a 3 antes de
-        empezar, y con `>=` el boton habria quedado en el altillo para siempre
-        despues de terminar la quest.
-        """
-        return getattr(store, 'va15_fase', 0) == 2
+        return "quest_violet_amor_03"
 
 
 init 5 python:
 
-    registrar_trigger_game_loop("violet_amor_15_consola",
+    registrar_trigger_game_loop("violet_amor_15_visita",
                                 _gl_trigger_violet_amor_15)
 
 
 ################################################################################
-## 1 · EL PASILLO — Violet lo llama desde arriba, sin aparecer
+## LA ESCENA
 ################################################################################
 
-label violet_amor_15_pasillo:
+label quest_violet_amor_03:
 
     $ ocultar_hud()
     window show
 
+    # La habitacion del MC con el fondo de la tarde: el trigger solo salta
+    # estando ahi y a esa hora, asi que la locacion actual ya es la correcta.
     $ _va15_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
     scene expression _va15_bg
 
-    # (Mc cuerpo base ojos base boca neutral)
-    show mc_parado_base c_rbase_base o_base b_none at center with sprite_normal
+    # El MC ya estaba: entra sin transicion.
+    show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
-    # =========================================================================
-    # CONTENIDO — Violet habla SIN sprite: esta arriba, en el altillo
-    # =========================================================================
-
-    violet "..."
-
-    # (Mc ojos arriba)
-    show mc_parado_base o_arribanm b_hablando
-    mc "..."
-    # (Mc ojos base boca neutral)
-    show mc_parado_base o_base b_none
-
-    violet "..."
+    "Tok Tok Tok"
 
     show mc_parado_base b_hablando
-    mc "..."
+    mc "Pasa"
     show mc_parado_base b_none
+
+    # Violet llega. sprite_normal es la transicion de "alguien entra en escena".
+    # Cuerpo `c_rbase_live` (no el base) con su cabeza y ojos de siempre.
+    show violet_parada c_rbase_live ca_base o_base b_none at right with sprite_normal
+
+    
+    show violet_parada b_hablando
+    violet "Estaba en el altillo buscando mi vieja Pocket Boy y miral o que encontr"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_fast
+    mc "Uhhh... el LIVE... debe ser uno de los primeros juegos que jugue"
+    show mc_parado_base b_none c_rbase_base with sprite_fast
+
+    show violet_parada b_hablando
+    violet "¿Jugamos?"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
+    mc "Mmmm no se si hoy en dia lo jugaria, si quieres jugar un juego de mesa tengo muchas opciones"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando 
+    violet "Pero yo queria jugar este, antes te encantaba"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
+    mc "La verdad nunca me gusto mucho ese juego jajaja"
+    show mc_parado_base b_none c_rbase_base with sprite_fast
+
+    show violet_parada b_hablando
+    violet "Recuerdo que siempre me decias de jugarlo"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando c_rbase_pensando o_arribanm with sprite_fast
+    mc "Supongo que era para pasar un tiempo juntos y como era tu juego favorito decia que si"
+    show mc_parado_base b_abiertachica o_base
+    mc "En ese momento me daba algo de verguenza porque siempre nos casabamos en el juego y teniamos hijos"
+    show mc_parado_base b_none c_rbase_base with sprite_fast
+
+    show violet_parada 
+    violet "..."
+    
+    show mc_parado_base b_hablando
+    mc "Pero si tienes muchas ganas de que nos volvamos a casar y tener hijos, puedo hacer un sacrificio jajaja"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando
+    violet "No era por eso..."
+    show violet_parada b_hablandochica
+    violet "Me dio nostalgia y queria jugar"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_fast
+    mc "¿Y ahora por que cambiaste de opinion?"
+    show mc_parado_base b_none c_rbase_base with sprite_fast
+
+    show violet_parada b_hablando
+    violet "Me acorde que en un rato tengo algo que hacer y este es un juego largo"
+    show violet_parada b_hablandochica
+    violet "Mejor me voy"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando c_rbase_confianza with sprite_fast
+    mc "Bueno cuando quieras que vivamos felices por siempre me avisas"
+    show mc_parado_base b_none c_rbase_base with sprite_fast
+
+    hide violet_parada with dissolve
+
+    show mc_parado_base c_rbase_pensando o_arribanm with sprite_fast
+    piensa "Jajajaja ahora le dan verguenza ese tipo de cosas"
+    piensa "Me gustaria igual volver a jugar una partida, en algun momento se podria dar"
 
     # =========================================================================
     # FIN DEL CONTENIDO
@@ -199,251 +178,7 @@ label violet_amor_15_pasillo:
 
     hide mc_parado_base with dissolve
 
-    # Quedo en ir a ayudarla: hasta subir al altillo no se hace otra cosa.
-    $ activar_restriccion(
-        locaciones_permitidas=["casa_altillo"],
-        acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar",
-                             "usar_item", "comprar", "cocinar", "ver_tv"],
-        mensaje_movimiento=_("Le dije que la iba a ayudar, primero subo al altillo"),
-        mensaje_accion_default=_("Le dije que la iba a ayudar, primero subo al altillo"),
-        celular_bloqueado=True,
-        mensaje_celular=_("Le dije que la iba a ayudar, primero subo al altillo"),
-    )
-
-    $ va15_fase = 1
-
-    window hide
-    $ mostrar_hud()
-    jump game_loop
-
-
-################################################################################
-## 2 · EL ALTILLO — la charla, y arranca la busqueda
-################################################################################
-
-label violet_amor_15_altillo:
-
-    $ ocultar_hud()
-    window show
-
-    $ _va15_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
-    scene expression _va15_bg
-
-    # (Mc cuerpo base ojos base boca neutral)
-    show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
-    # (Violet cuerpo pijama ojos base boca neutral)
-    show violet_parada c_pijama_base ca_pijama o_base b_none at right
-    with sprite_normal
-
-    # =========================================================================
-    # CONTENIDO — la charla en el altillo antes de ponerse a buscar
-    # =========================================================================
-
-    # (Violet boca hablando)
-    show violet_parada b_hablando
-    violet "..."
-    # (Violet boca neutral)
-    show violet_parada b_none
-
-    # (Mc boca hablando)
-    show mc_parado_base b_hablando
-    mc "..."
-    # (Mc boca neutral)
-    show mc_parado_base b_none
-
-    # =========================================================================
-    # FIN DEL CONTENIDO
-    # =========================================================================
-
-    hide mc_parado_base
-    hide violet_parada
-    with dissolve
-
-    # Encerrado en el altillo hasta encontrar la consola. Violet SI queda
-    # interactuable (npcs_interactuables): el click en su sprite es medio
-    # disparador de la quest — lo atiende violet_amor_15_molestar.
-    $ activar_restriccion(
-        locaciones_permitidas=["casa_altillo"],
-        acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar",
-                             "usar_item", "comprar", "cocinar", "ver_tv"],
-        mensaje_movimiento=_("No me puedo ir hasta encontrarla"),
-        mensaje_accion_default=_("No me puedo ir hasta encontrarla"),
-        npcs_interactuables=["violet"],
-        celular_bloqueado=True,
-        mensaje_celular=_("No me puedo ir hasta encontrarla"),
-    )
-
-    # Recien acá aparece la accion "Buscar" en el altillo.
-    $ va15_fase = 2
-
-    window hide
-    $ mostrar_hud()
-    jump game_loop
-
-
-################################################################################
-## 3 · MOLESTARLA — click en el sprite de Violet mientras buscan
-################################################################################
-## Entra por el jump del principio de `interaccion_violet`: en vez de abrir el
-## menu, Violet contesta una linea y el jugador vuelve al loop. Es la excepcion
-## a "clickear al NPC siempre abre el menu" — durante la busqueda no hay nada
-## que elegir (talk, quests y evento estan todos bloqueados por la restriccion).
-##
-## A la QUINTA vez se abre una escena. Despues el contador vuelve a cero, asi
-## que el ciclo se puede repetir mientras la quest siga abierta.
-
-label violet_amor_15_molestar:
-
-    $ va15_clicks_violet += 1
-
-    if va15_clicks_violet >= 5:
-        $ va15_clicks_violet = 0
-        jump violet_amor_15_charla
-
-    $ ocultar_hud()
-    window show
-
-    if va15_clicks_violet >= 3:
-        violet "Basta de molestarme"
-    else:
-        violet "Vamos, ponte a buscar vos tambien"
-
-    window hide
-    $ mostrar_hud()
-    jump game_loop
-
-
-################################################################################
-## 4 · LA CHARLA DE LA QUINTA VEZ — escena suelta, la quest sigue abierta
-################################################################################
-
-label violet_amor_15_charla:
-
-    $ ocultar_hud()
-    window show
-
-    $ _va15_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
-    scene expression _va15_bg
-
-    # (Mc cuerpo base ojos base boca neutral)
-    show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
-    # (Violet cuerpo pijama ojos base boca neutral)
-    show violet_parada c_pijama_base ca_pijama o_base b_none at right
-    with sprite_normal
-
-    # =========================================================================
-    # CONTENIDO — de tanto interrumpirla, terminan hablando de otra cosa
-    # =========================================================================
-
-    # (Violet boca hablando)
-    show violet_parada b_hablando
-    violet "..."
-    # (Violet boca neutral)
-    show violet_parada b_none
-
-    # (Mc boca hablando)
-    show mc_parado_base b_hablando
-    mc "..."
-    # (Mc boca neutral)
-    show mc_parado_base b_none
-
-    # =========================================================================
-    # FIN DEL CONTENIDO
-    # =========================================================================
-
-    hide mc_parado_base
-    hide violet_parada
-    with dissolve
-
-    # La quest NO se completa acá: la consola sigue sin aparecer.
-    window hide
-    $ mostrar_hud()
-    jump game_loop
-
-
-################################################################################
-## 5 · BUSCAR — cierre de la quest (accion de locacion del altillo)
-################################################################################
-
-label quest_violet_amor_03:
-
-    # Levantar la restriccion primero: si la escena se cortara mas adelante, el
-    # jugador quedaria encerrado en el altillo para siempre.
-    $ va15_fase = 3
-    $ desactivar_restriccion()
-
-    $ ocultar_hud()
-    window show
-
-    $ _va15_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
-    scene expression _va15_bg
-
-    # (Mc cuerpo base ojos base boca neutral)
-    show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
-    # (Violet cuerpo pijama ojos base boca neutral)
-    show violet_parada c_pijama_base ca_pijama o_base b_none at right
-    with sprite_normal
-
-    # =========================================================================
-    # CONTENIDO — PARTE A · aparece la consola, todavia en el altillo
-    # =========================================================================
-
-    # (Violet boca hablando)
-    show violet_parada b_hablando
-    violet "..."
-    # (Violet boca neutral)
-    show violet_parada b_none
-
-    # (Mc boca hablando)
-    show mc_parado_base b_hablando
-    mc "..."
-    # (Mc boca neutral)
-    show mc_parado_base b_none
-
-    # =========================================================================
-    # CONTENIDO — PARTE B · siguen la charla en la habitacion de Violet
-    # =========================================================================
-
-    hide mc_parado_base
-    hide violet_parada
-    with dissolve
-
-    $ _va15_loc_hviolet = sistema_locaciones.obtener_locacion("casa_hviolet")
-    $ _va15_bg_hviolet = _va15_loc_hviolet.background if _va15_loc_hviolet else "#1a1a1a"
-    scene expression _va15_bg_hviolet with fade
-
-    # (Mc cuerpo base ojos base boca neutral)
-    show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
-    # (Violet cuerpo pijama ojos base boca neutral)
-    show violet_parada c_pijama_base ca_pijama o_base b_none at right
-    with sprite_normal
-
-    # (Violet boca hablando)
-    show violet_parada b_hablando
-    violet "..."
-    # (Violet boca neutral)
-    show violet_parada b_none
-
-    # (Mc boca hablando)
-    show mc_parado_base b_hablando
-    mc "..."
-    # (Mc boca neutral)
-    show mc_parado_base b_none
-
-    # =========================================================================
-    # FIN DEL CONTENIDO
-    # =========================================================================
-
-    hide mc_parado_base
-    hide violet_parada
-    with dissolve
-
     $ completar_quest_actual("violet", quest_id="violet_amor_03")
-
-    # El MC sale de la habitacion y se le fue la noche buscando: vuelve al
-    # pasillo y el horario avanza (noche → trasnoche).
-    $ sistema_locaciones.mover_a_locacion("casa_pasilloarriba")
-    $ avanzar_horario()
 
     window hide
     $ mostrar_hud()

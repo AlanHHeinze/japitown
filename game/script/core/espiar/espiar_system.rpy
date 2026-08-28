@@ -336,21 +336,9 @@ init python:
 ## minijuego. obtener_acciones_locacion filtra para que, con sesión activa, el
 ## panel muestre EXCLUSIVAMENTE estas (ver actionsystem_core).
 
-init 5 python:
-
-    sistema_acciones.registrar_accion(AccionLocacion(
-        id="espiar_entrar", nombre="Entrar", icono=u"🚶",
-        locacion_id=None, label_generico="accion_espiar_entrar",
-        reseteo=None, condicion=_esp_acc_entrar_visible,
-        condicion_habilitada=_esp_acc_entrar_habilitada,
-        color="#8E24AA", color_hover="#AB47BC",
-    ))
-    sistema_acciones.registrar_accion(AccionLocacion(
-        id="espiar_salir", nombre="Salir", icono=u"❌",
-        locacion_id=None, label_generico="accion_espiar_salir",
-        reseteo=None, condicion=_esp_acc_salir_visible,
-        color="#37474F", color_hover="#546E7A",
-    ))
+# (Las dos acciones del minijuego —Entrar y Salir— se registran en
+# core/actions/actions_catalog.rpy, con el resto. Sus condiciones
+# (_esp_acc_*) siguen viviendo acá.)
 
 
 ################################################################################

@@ -305,3 +305,113 @@ translate english strings:
 
     old "Ahi me hablaron de que ya estan conectadas"
     new "They just messaged me, they're online now"
+
+    # --- Deseo 20 ("Pensando en Violet") ------------------------------------
+    # Tambien es una conversacion de Mensajear, aunque viva con su quest en
+    # deseo/violet_deseo_20.rpy: aca el que escribe primero es el MC.
+    #
+    # "Hablamos despues" a secas NO se repite: ya esta mas arriba (respuesta
+    # generica) y la traduccion se resuelve por contenido del string, asi que un
+    # segundo `old` rompe el lint. La version con la manito si es otro string.
+    #
+    # Los \n separan burbujas escritas como un solo mensaje: se conservan.
+
+    old "¿Como estas?"
+    new "How are you?"
+
+    old "En la cama\nAburrida"
+    new "In bed\nBored"
+
+    # Rama a: el MC se hace el gracioso.
+    old "¿Es una propuesta? jajaja"
+    new "Is that an offer? hahaha"
+
+    old "Ultimamente todo para vos es una propuesta"
+    new "Lately everything is an offer to you"
+
+    old "Mala mia supongo\nSe me esta haciendo dificil"
+    new "My bad I guess\nIt's getting hard for me"
+
+    old "¿Que cosa se te esta haciendo dificil?"
+    new "What's getting hard for you?"
+
+    old "Ver eso dando vueltas todo el dia por la casa"
+    new "Seeing that walking around the house all day"
+
+    # Rama b: el MC se planta.
+    old "Si queres te puedo decir que hacer"
+    new "If you want I can tell you what to do"
+
+    old "Me imagino tu sugerencia"
+    new "I can imagine your suggestion"
+
+    old "A ver"
+    new "Let's hear it"
+
+    old "¿Que clase de peticion es esa?"
+    new "What kind of request is that?"
+
+    old "Una muy comun supongo"
+    new "A pretty common one I guess"
+
+    # Tronco unico, desde la foto.
+    old "No me lo esperaba 😲"
+    new "I wasn't expecting that 😲"
+
+    old "¿Que cosa?"
+    new "Expecting what?"
+
+    old "Una foto de mi cosa favorita"
+    new "A photo of my favorite thing"
+
+    old "¿Ahora soy tu cosa favorita?"
+    new "So now I'm your favorite thing?"
+
+    # La confesion. El "eso" del segundo renglon apunta a lo que ella acaba de
+    # decir, no a la foto: en ingles hace falta el "that" explicito para que no
+    # se lea como que la esta desmintiendo a ella.
+    old "Siempre fuiste mi cosa favorita\nPero no hablaba de eso ahora"
+    new "You were always my favorite thing\nBut that's not what I meant just now"
+
+    old "¿Y de que hablabas?"
+    new "Then what did you mean?"
+
+    old "De mi otra cosa favorita"
+    new "My other favorite thing"
+
+    old "¿Los slimes?"
+    new "The slimes?"
+
+    old "Pista dos\nEs algo redondo que dan ganas de morder"
+    new "Hint two\nIt's something round that makes you want to bite it"
+
+    old "Jajaja no te hagas"
+    new "Hahaha don't play dumb"
+
+    # El premio que quedo prometido en la quest de deseo 10.
+    old "Bueno, con esto ya no te debo nada"
+    new "Well, now I don't owe you anything"
+
+    old "No recuerdo que me debias"
+    new "I don't remember you owing me"
+
+    old "El premio de la cocina"
+    new "The prize from the kitchen"
+
+    old "Nunca pense que ibas a cumplir, estabas dormida y lo hacias para molestarme"
+    new "I never thought you'd follow through, you were half asleep and just messing with me"
+
+    old "Si a ambas cosas, pero siempre cumplo"
+    new "Yes to both, but I always follow through"
+
+    old "Entonces voy a tener que hacerte prometer mas cosas"
+    new "Then I'm going to have to make you promise more things"
+
+    old "Depende solo de vos lograr eso"
+    new "That's entirely up to you"
+
+    old "Ahi se conectaron mis amigos para la partida"
+    new "My friends just came online for the match"
+
+    old "Hablamos despues 👋"
+    new "Talk later 👋"

@@ -22,13 +22,12 @@ label interaccion_violet:
     # 11, 12) tienen ahora su propio botón más abajo. La 07_c no lo necesita: se
     # cierra sola con el accion_al_completar de su chat.
 
-    # Amor 15: mientras revuelven el altillo, clickearla NO abre el menú —
-    # contesta una línea y listo (y a la quinta vez se abre una escena). Es la
-    # excepción a "el click siempre abre el menú": durante la búsqueda todo lo
-    # que ofrecería el menú está bloqueado por la restricción, así que sería un
-    # menú de una sola opción inútil.
-    if getattr(store, 'va15_fase', 0) == 2 and quest_lista_para_boton("violet_amor_03"):
-        jump violet_amor_15_molestar
+    # (Acá estaba el enganche del click durante la búsqueda del altillo, de la
+    # quest de amor 15: clickearla no abría el menú, contestaba una línea, y a
+    # la quinta vez se abría una escena. Ese arco se mudó entero a
+    # ventajas/juegosnuevos/jn_pocketboy.rpy y quedó parkeado. El enganche se
+    # sacó porque contenido inalcanzable no debe interceptar el click al NPC;
+    # cómo reponerlo está en la cabecera de ese archivo.)
 
     # Quest 09_a: interacción especial cuando Violet está enferma en su habitacion
     $ _quest_v09a_int = sistema_quests.obtener_quest("violet_questprincipal_09_a")
@@ -126,9 +125,9 @@ label interaccion_violet:
         $ _opciones_extra_v.append({"texto": "Preguntarle qué le pasa", "label": "quest_violet_questprincipal_0_b", "condicion": True})
 
     # La quest 04_b NO lleva botón: ya tiene disparador propio por LOCACIÓN
-    # (`violet_quest04b_check_locacion`, registrado en las 5 locaciones de Violet
-    # desde quest_violet.rpy). Se dispara al ENTRAR donde ella esté, así que un
-    # botón sería inalcanzable — nunca llegás a clickearla con la quest activa.
+    # (`_gl_trigger_violet_04b`, trigger de game_loop en violet_quest_04_b.rpy).
+    # Se dispara estando donde ella esté, así que un botón sería inalcanzable —
+    # nunca llegás a clickearla con la quest activa.
 
     # Quests 04_c / 04_d / 04_e: solo tras responder el chat nocturno de Violet
     # (antes de eso la pista dice "esperar el mensaje").
@@ -180,23 +179,25 @@ label interaccion_violet:
             sistema_mensajes.grupo_completado("violet_quest04e_chat")):
         $ _opciones_extra_v.append({"texto": "Preguntarle por las fotos", "label": "quest_violet_questprincipal_04_e", "condicion": True})
 
-    # Amor 20 ("Jugando juntos"): boton propio para el primer tramo. Los otros
-    # dos tramos son acciones de la habitacion del MC, asi que este boton
-    # desaparece solo en cuanto la charla pasa (va20_fase deja de ser 0).
+    # Amor 20 ("Jugando juntos"): dos de sus cuatro tramos son botones de este
+    # menu, el primero y el ultimo. Los del medio son acciones de la habitacion
+    # del MC (comprar y jugar), asi que cada boton desaparece solo en cuanto
+    # va20_fase deja de ser el suyo. Nunca conviven: las condiciones son
+    # excluyentes por fase.
     if _va20_boton_recomendacion():
-        $ _opciones_extra_v.append({"texto": "Pedirle recomendacion de juegos", "label": "violet_amor_20_recomendacion", "condicion": True})
+        $ _opciones_extra_v.append({"texto": "Algo para jugar", "label": "violet_amor_20_recomendacion", "condicion": True})
+
+    if _va20_boton_hablar():
+        $ _opciones_extra_v.append({"texto": "Hablar del juego", "label": "violet_amor_20_hablar", "condicion": True})
 
     # Amor 25 ("Solos en casa"): el domingo por la tarde, con Violet en el
     # living. La condicion entera vive en violet_amor_25.rpy.
     if _va25_boton_matar_tiempo():
         $ _opciones_extra_v.append({"texto": "Matar el tiempo", "label": "violet_amor_25_matar_tiempo", "condicion": True})
 
-    # Deseo 25 ("En su habitacion"): a cualquier hora. El label reparte segun
-    # el horario — de dia se lo propone, de noche empieza la escena.
-    # (La opcion equivalente de la puerta, solo de noche, se registra en
-    # violet_deseo_25.rpy.)
-    if _vd25_boton_violet():
-        $ _opciones_extra_v.append({"texto": "Ver anime", "label": "violet_deseo_25_pedir", "condicion": True})
+    # (Deseo 25 "En su habitacion" NO tiene boton acá. Se dispara sola con la
+    # accion "Ver TV" del sotano y sigue por un override de su puerta, los dos
+    # registrados desde violet_deseo_25.rpy.)
 
     # Amor 30 ("¿Que me pongo?"): mismo momento que la opcion de su puerta,
     # pero visto desde adentro de la habitacion. Nunca conviven: si estas en el

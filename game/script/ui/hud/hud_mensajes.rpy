@@ -347,8 +347,9 @@ screen pantalla_chat(npc_id="monica"):
                                                     action Show("vista_foto_ampliada", foto=_msg.foto)
                                                     at transform:
                                                         zoom (0.3 * _k)
-                                            $ _texto_jugador = renpy.substitute(renpy.translate_string(_msg.texto))
-                                            text "[_texto_jugador]" size int(13 * _k) color "#ffffff" xalign 1.0
+                                            if _msg.texto:
+                                                $ _texto_jugador = renpy.substitute(renpy.translate_string(_msg.texto))
+                                                text "[_texto_jugador]" size int(13 * _k) color "#ffffff" xalign 1.0
                             else:
                                 # Burbuja del NPC (izquierda)
                                 hbox:
@@ -371,8 +372,9 @@ screen pantalla_chat(npc_id="monica"):
                                                     action Show("vista_foto_ampliada", foto=_msg.foto)
                                                     at transform:
                                                         zoom (0.3 * _k)
-                                            $ _texto_npc = renpy.substitute(renpy.translate_string(_msg.texto))
-                                            text "[_texto_npc]" size int(13 * _k) color "#dddddd"
+                                            if _msg.texto:
+                                                $ _texto_npc = renpy.substitute(renpy.translate_string(_msg.texto))
+                                                text "[_texto_npc]" size int(13 * _k) color "#dddddd"
 
                                     null
                     else:
@@ -791,14 +793,16 @@ init python:
         store._msg_foto_pendiente = resultado.get("foto")
         store._msg_resultado_pendiente = resultado
 
-        if respuestas_filtradas:
-            # Calcular tiempo del primer mensaje y activar escribiendo
-            store._msg_tiempo_escribiendo = calcular_tiempo_escribiendo(respuestas_filtradas[0])
+        if respuestas_filtradas or store._msg_foto_pendiente:
+            # Una foto sin texto tambien pasa por "escribiendo...": la burbuja
+            # es solo la imagen, pero aparecer de golpe se nota como un salto.
+            _primero = respuestas_filtradas[0] if respuestas_filtradas else ""
+            store._msg_tiempo_escribiendo = calcular_tiempo_escribiendo(_primero)
             store._msg_timer_id += 1
             store._msg_escribiendo = True
             renpy.restart_interaction()
         else:
-            # Sin respuestas de texto, finalizar directamente
+            # Sin respuestas de texto ni foto, finalizar directamente
             _finalizar_escribiendo(npc_id)
 
     def _finalizar_escribiendo(npc_id):
@@ -823,6 +827,15 @@ init python:
                 store._msg_foto_pendiente = None  # Ya se usó la foto
 
             chat.agregar_mensaje(npc_id, texto_actual, msg_foto)
+            chat.mensajes_sin_leer = max(0, chat.mensajes_sin_leer - 1)
+
+        elif foto:
+            # Foto SIN texto: burbuja de solo imagen. Sin esta rama la foto se
+            # perdia — la unica linea que la posteaba estaba adentro del `if`
+            # de arriba, asi que un foto_respuesta con respuesta_npc="" no
+            # llegaba nunca al chat.
+            store._msg_foto_pendiente = None
+            chat.agregar_mensaje(npc_id, "", foto)
             chat.mensajes_sin_leer = max(0, chat.mensajes_sin_leer - 1)
 
         store._msg_respuestas_pendientes = respuestas

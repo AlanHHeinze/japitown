@@ -9,11 +9,14 @@ init python:
 
     def setup_restriccion_monica_quest0b():
         """
-        accion_al_entrar de ETAPA_BOTON_LISTO: bloquea avanzar tiempo y dormir,
-        y registra el auto-trigger de la quest al entrar al living.
-        El movimiento y la interacción con NPCs siguen permitidos.
+        accion_al_entrar de ETAPA_BOTON_LISTO: bloquea avanzar tiempo y dormir.
+        El movimiento y la interaccion con NPCs siguen permitidos.
+
+        OJO: aca NO se registra el disparo de la quest. Antes terminaba con
+        `r.registrar_label_locacion("casa_living", ...)` y eso era el bug —
+        ver el comentario del trigger, abajo.
         """
-        r = activar_restriccion(
+        activar_restriccion(
             acciones_bloqueadas=["avanzar_tiempo", "dormir"],
             mensajes_acciones={
                 "avanzar_tiempo": "Deberia ver que le pasa a Monica",
@@ -21,19 +24,50 @@ init python:
             },
             npcs_interactuables=["violet", "monica", "jasmine"],
         )
-        r.registrar_label_locacion("casa_living", "monica_q0b_check_living")
 
 
-################################################################################
-## CHECK LOCACIÓN — Auto-trigger al entrar al living
-################################################################################
+    ############################################################################
+    ## DISPARO DE LA QUEST
+    ############################################################################
+    ## Trigger de game_loop registrado en init, y NO colgado del objeto de
+    ## restriccion, que era como estaba antes:
+    ##
+    ##     r.registrar_label_locacion("casa_living", "monica_q0b_check_living")
+    ##
+    ## POR QUE ROMPIA: `restriccion_quest_activa` es UN SOLO slot global.
+    ## `activar_restriccion` lo reemplaza entero y `desactivar_restriccion` lo
+    ## borra — y en el proyecto hay 32 llamadas a la primera y 22 a la segunda.
+    ## Como `accion_al_entrar` corre UNA sola vez (en la transicion de etapa),
+    ## cualquier contenido que corriera despues se llevaba puesto el disparo y la
+    ## quest quedaba muerta para siempre en el panel de pistas. Era facil de
+    ## alcanzar: la restriccion bloquea dormir y avanzar tiempo pero NO el
+    ## movimiento, asi que el jugador se iba a hacer contenido de Violet o
+    ## Jasmine y ese contenido terminaba con desactivar_restriccion(). Bug real
+    ## reportado por jugadores: a algunos la 0_b no les arrancaba nunca al dia
+    ## siguiente de la 0_a.
+    ##
+    ## La restriccion se mantiene (bloquear dormir/avanzar): perderla es
+    ## inofensivo. Lo que no puede depender de ella es el disparo.
+    ##
+    ## Efecto secundario bueno: el trigger tambien dispara si el jugador YA esta
+    ## en el living cuando la quest queda lista. El registro por locacion pedia
+    ## salir y volver a entrar.
 
-label monica_q0b_check_living:
-    $ _q_m0b = sistema_quests.obtener_quest("monica_questprincipal_0_b")
-    if (_q_m0b and _q_m0b.activa and not _q_m0b.completada and
-            _q_m0b.etapa_actual == ETAPA_BOTON_LISTO):
-        jump quest_monica_questprincipal_0_b
-    return
+    def _gl_trigger_monica_q0b():
+        q = store.sistema_quests.obtener_quest("monica_questprincipal_0_b")
+        if not (q and q.activa and not q.completada
+                and q.etapa_actual == ETAPA_BOTON_LISTO):
+            return None
+        loc = store.sistema_locaciones.locacion_actual
+        if loc and loc.id == "casa_living":
+            return "quest_monica_questprincipal_0_b"
+        return None
+
+
+init 5 python:
+    # 25: por encima del tutorial de exploracion (20), para que un gate que
+    # bloquea dormir no quede postergado, y por debajo de jasmine_0b (30).
+    registrar_trigger_game_loop("monica_q0b", _gl_trigger_monica_q0b, prioridad=25)
 
 
 ################################################################################

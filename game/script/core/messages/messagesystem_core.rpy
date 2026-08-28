@@ -192,6 +192,11 @@ init python:
 
             # Estado: pendiente / espera / en_curso / completado
             self.estado = "pendiente"
+            # "Este grupo ya fue disparado por su trigger". Va aparte del estado
+            # porque _entregar_grupo devuelve el estado a "pendiente" y si no
+            # el trigger lo re-entregaria (ver disparar_por_trigger).
+            # Los grupos repetibles lo bajan junto con el estado.
+            self._disparado = False
             self.paso_actual = 0
             self.puntos_acumulados = {}  # {categoria: total}
             self.recompensas_otorgadas = []  # Lista de recompensas aplicadas
@@ -330,6 +335,8 @@ init python:
         def resetear(self):
             """Resetea el grupo para poder volver a jugarlo (si fuera necesario)."""
             self.estado = "pendiente"
+            # Sin esto el trigger no lo volveria a disparar nunca.
+            self._disparado = False
             self.paso_actual = 0
             self.puntos_acumulados = {}
             self.recompensas_otorgadas = []
@@ -438,9 +445,32 @@ init python:
             if not grupo:
                 return False
 
-            # Verificar que no esté ya disparado
+            # Verificar que no esté ya disparado.
+            #
+            # NO alcanza con mirar `estado`: _entregar_grupo devuelve el grupo a
+            # "pendiente" a proposito, para que seleccionar_grupo lo pueda pasar
+            # a "en_curso". O sea que un grupo YA entregado vuelve a verse como
+            # "sin disparar", y cualquier llamador que insista lo re-entrega.
+            #
+            # Con un trigger que corre en CADA vuelta del game_loop (violet
+            # amor 15) eso lo re-entregaba una vez por accion del jugador, con
+            # dos efectos encadenados:
+            #   1. El mensaje inicial se agregaba al historial N veces — el
+            #      duplicado que se ve en el chat.
+            #   2. El grupo quedaba N veces en chat.grupos_pendientes. Como
+            #      seleccionar_grupo saca UNA sola copia, al reabrir el chat
+            #      pisaba el "completado" con "en_curso", y toda quest que
+            #      esperara ese grupo (Requisito "mensaje") se trababa para
+            #      siempre.
+            #
+            # Por eso la marca va aparte del estado.
+            if getattr(grupo, '_disparado', False):
+                return False
+
             if grupo.estado != "pendiente":
                 return False
+
+            grupo._disparado = True
 
             target_npc = grupo.npc_id or npc_id
             self.inicializar_chat(target_npc)
@@ -495,8 +525,14 @@ init python:
                     self._grupos_en_espera.remove(grupo)
                 return
 
-            # Agregar a pendientes del chat
-            chat.grupos_pendientes.append(grupo)
+            # Agregar a pendientes del chat.
+            #
+            # El `not in` es una segunda red: seleccionar_grupo saca UNA sola
+            # copia de la lista, asi que un grupo repetido queda ahi como
+            # pendiente fantasma y al reabrirlo pisa su propio "completado".
+            # La primera red es la marca _disparado de disparar_por_trigger.
+            if grupo not in chat.grupos_pendientes:
+                chat.grupos_pendientes.append(grupo)
 
             # Restaurar estado para que seleccionar_grupo lo pase a en_curso
             if grupo.estado == "espera":
