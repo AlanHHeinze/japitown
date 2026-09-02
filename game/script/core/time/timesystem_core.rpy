@@ -252,6 +252,15 @@ init python:
         # Resetear interacciones diarias de NPCs
         if hasattr(store, 'resetear_interacciones_todos_npcs'):
             store.resetear_interacciones_todos_npcs()
+
+        # Arranca el dia nuevo para el registro de "hoy hice algo con ella"
+        # (core/npcs/npc_contacto.rpy). Va ACA y no antes: los triggers de
+        # dormir en fase "antes" ya corrieron, y son los que leen el dia que
+        # termina — la quest de deseo 30 de Violet cuenta ahi sus dias
+        # ignorandola. Resetear primero le borraria el dato justo antes de
+        # mirarlo.
+        if hasattr(store, 'resetear_contacto_npcs'):
+            store.resetear_contacto_npcs()
         
         # Evaluar rutinas especiales del nuevo dia (antes de actualizar ubicaciones)
         if hasattr(store, 'sistema_npcs'):

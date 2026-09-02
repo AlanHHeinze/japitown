@@ -42,6 +42,11 @@ default espiar_sesion = None
 # NPC objetivo al iniciar (lo setea interaccion_banio_ocupado)
 default _espiar_npc_temp = None
 
+# Ids de las secuencias que el jugador ya vio alguna vez. Lo consume el catalogo
+# de contenido de la ventaja "Provocación" (el ojo del panel de Desbloqueos).
+# Lista y no set porque se guarda en el save y una lista se lee mejor en un dump.
+default espiar_vistas = []
+
 
 # =============================================================================
 # IMÁGENES DEL MINIJUEGO DE DUCHA
@@ -228,6 +233,16 @@ init python:
     # solo referencia secuencias por id, igual que las quests con su catálogo.
     CATALOGO_ESPIAR = {}
 
+    def espiar_secuencia_vista(secuencia_id):
+        """
+        True si el jugador ya vio esa secuencia alguna vez.
+
+        La marca la pone `espiar_iniciar` al arrancar la sesion, no al
+        terminarla: si la abrio, la vio — que despues entre o se vaya es otra
+        cosa. Lo consume el catalogo de contenido de la ventaja.
+        """
+        return secuencia_id in getattr(store, 'espiar_vistas', [])
+
     def registrar_secuencia_espiar(secuencia):
         CATALOGO_ESPIAR.setdefault(secuencia.npc_id, [])
         CATALOGO_ESPIAR[secuencia.npc_id] = [
@@ -411,6 +426,11 @@ label espiar_iniciar:
         "npc_id": _espiar_npc_temp,
         "secuencia_id": _esp_sec_ini.id,
     }
+
+    # Queda marcada como vista para el catalogo de contenido de la ventaja.
+    if _esp_sec_ini.id not in espiar_vistas:
+        $ espiar_vistas.append(_esp_sec_ini.id)
+
     show screen espiar_minijuego
     return
 

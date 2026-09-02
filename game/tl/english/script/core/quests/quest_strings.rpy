@@ -44,8 +44,8 @@ translate english strings:
     # Nombres y descripciones de las 12 quests de línea.
     #
     # Los nombres de HITO que no coinciden con el de su quest se traducen en
-    # relaciones_strings.rpy: "Buena relación", "Algo nos pasa", "Me calienta",
-    # "Confesión" y "Un paso más allá".
+    # relaciones_strings.rpy: "Buena relación", "Algo nos pasa", "Me calienta"
+    # y "Confesión".
     #
     # "Jugando juntos" es la excepción: desde 2026-08-26 la quest de amor 20 y su
     # hito se llaman igual, así que comparten el `old` de más abajo. Un segundo
@@ -88,15 +88,19 @@ translate english strings:
     old "Un domingo entero con Violet y nadie mas."
     new "A whole Sunday with Violet and nobody else."
 
-    # Deseo 30 (las de umbral 30 se intercambiaron entre lineas). El hito de
-    # amor 30 sigue llamandose "Algo nos pasa" y el de deseo 30 "Un paso más
-    # allá"; los dos se traducen en relaciones_strings.rpy y no se tocan.
-    # La pista "Esperar" ya esta traducida mas abajo, en los mensajes genericos.
-    old "Noche de amigas"
-    new "Girls' night"
+    # Deseo 30 (las de umbral 30 se intercambiaron entre lineas).
+    # El hito de amor 30 sigue llamandose "Algo nos pasa" y se traduce en
+    # relaciones_strings.rpy. El de deseo 30 NO: desde 2026-08-31 la quest y su
+    # hito se llaman los dos "Sinceridad" y comparten este `old`. Un segundo
+    # `old` con el mismo texto rompe el lint.
+    old "Sinceridad"
+    new "Honesty"
 
-    old "Violet me hizo lugar entre sus amigas."
-    new "Violet made room for me among her friends."
+    # La descripcion se ve en Pistas MIENTRAS la quest esta activa, asi que
+    # cuenta el arranque y no el final: que ella recapacite y lo vaya a buscar
+    # es el premio, no el enunciado.
+    old "Le dije lo que me pasa y se hizo la desinteresada."
+    new "I told her how I feel and she acted like she didn't care."
 
     # Deseo
     old "Atracción"

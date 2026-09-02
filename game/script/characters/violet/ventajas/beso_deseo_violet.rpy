@@ -29,6 +29,16 @@ init python:
     def _violet_beso_deseo_usado_hoy():
         return store.violet_beso_deseo_ultimo_dia == getattr(store, 'dias_totales', 0)
 
+    def _violet_beso_deseo_visto():
+        """
+        True si ya la beso asi alguna vez. Predicado del catalogo de contenido
+        (el ojo del panel de Desbloqueos).
+
+        Mismo truco que en el beso de amor: `violet_beso_deseo_ultimo_dia`
+        arranca en None y solo se escribe al besarla.
+        """
+        return getattr(store, 'violet_beso_deseo_ultimo_dia', None) is not None
+
     def _violet_beso_deseo_hay_companiia():
         """
         True si hay OTRO NPC en la locacion, ademas de Violet.
@@ -52,6 +62,17 @@ init python:
 ################################################################################
 ## La escena
 ################################################################################
+
+init 5 python:
+
+    registrar_contenido_ventaja(
+        "accion_beso_deseo", "beso_deseo", "violet",
+        "El otro beso",
+        "Elegí Beso (Deseo) en su menú, con ella a solas. Una vez por día.",
+        vista=_violet_beso_deseo_visto,
+        orden=10,
+    )
+
 
 label violet_beso_deseo:
 

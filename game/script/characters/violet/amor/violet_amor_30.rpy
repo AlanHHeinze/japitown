@@ -3,23 +3,28 @@
 ################################################################################
 ##     archivo   violet_amor_30.rpy
 ##     quest     violet_amor_06          (quests_amor_violet.rpy)
-##     grupo     violet_amor06_chat      (chat/chat_violet.rpy)
 ##     label     quest_violet_amor_06    (lo fija el motor: "quest_" + id)
 ##
-## Ultima quest de la linea. Dos tramos:
+## Ultima quest de la linea. DISPARADOR UNICO: un trigger de game_loop — con la
+## quest lista, la proxima vez que el MC pase por el pasillo de arriba por la
+## TARDE con Violet libre en su habitacion, ella lo llama.
 ##
-##   1. Al llegar a 30 de amor, Violet escribe. El mensaje sale una TARDE en
-##      que ella este en casa y el MC no este con ella — mientras no se den las
-##      tres cosas, el grupo queda en espera.
-##   2. Con el chat respondido aparece el boton "Necesitabas ayuda con algo",
-##      de noche, en su puerta y tambien en ella si estas adentro.
+## No hay boton ni opcion de puerta: por eso violet_amor_06 esta en la lista
+## _VA_SIN_BOTON de interactions_violet.rpy.
 ##
-## EL CHAT ES UN REQUISITO DE LA QUEST, no un paso suelto: hasta responderlo la
-## quest se queda en ETAPA_CONDICIONES y la pista dice que hay que esperar.
+## LA ESCENA ES UNA SOLA, sin devolver el control en el medio: arranca en el
+## pasillo (ella llama de adentro, sin sprite) y sigue adentro de la pieza. El
+## jugador no puede irse a hacer otra cosa entre una cosa y la otra, asi que no
+## hace falta ninguna restriccion.
 ##
-## LOS DOS BOTONES NO ROMPEN LA REGLA DE "UN SOLO DISPARADOR": son el mismo
-## momento visto desde los dos lados de la puerta. Si estas en el pasillo la
-## opcion esta en la puerta; si ya entraste, en ella. Nunca se ven los dos.
+## USA EL LAYEREDIMAGE `violet_q30a` (visual/sprites_violet.rpy) y no
+## `violet_parada`: ese arte trae la cabeza y la cara dibujadas. Dos ropas en el
+## mismo grupo `cuerpo` —jeanblanco y jean— y las bocas de frente y de espaldas
+## tambien juntas en `boca`.
+##
+## ⚠️ AL GIRARLA HAY QUE CAMBIAR LA BOCA. Con un cuerpo `_espalda` va `be_*`;
+## con los de frente, `bf_*`. Como comparten grupo, dejar una `bf_` sobre un
+## cuerpo de espaldas deja la boca flotando en el aire.
 
 
 init python:
@@ -30,79 +35,58 @@ init python:
     # ── Textos de ETAPA_CONDICIONES ──────────────────────────────────────────
 
     def _pista_va30_condiciones():
-        if obtener_stat1("violet") < 30:
-            return renpy.translate_string("Puedo seguir acercandome a Violet.")
-        return renpy.translate_string("Tengo que esperar por ahora")
+        return renpy.translate_string("Puedo seguir acercandome a Violet.")
 
     def _quehacer_va30_condiciones():
-        if obtener_stat1("violet") < 30:
-            return _quehacer_amor_violet(30)
-        return renpy.translate_string("Esperar que violet te escriba")
+        return _quehacer_amor_violet(30)
 
-    # ── Chat ─────────────────────────────────────────────────────────────────
+    # ── Disparador ───────────────────────────────────────────────────────────
 
-    def _va30_chat_condiciones():
+    def _va30_violet_libre():
         """
-        condicion_entrega: Violet en casa y el MC en otra locacion.
+        Violet en su habitacion y sin nada encima.
 
-        El horario (la tarde) NO se chequea acá — lo cubre momento_horario, que
-        es la via declarativa que el motor ya consulta.
-
-        tracker_locacion_npc devuelve None si esta fuera de casa o si una
-        restriccion la escondio, asi que "esta en casa" y "no la escondieron"
-        salen de la misma consulta.
+        La locacion ya descarta casi todo (si se baña esta en el baño, si salio
+        esta afuera), pero se chequean igual la rutina especial y los bloqueos:
+        una rutina de quest puede tenerla en su pieza metida en otra cosa.
         """
-        _loc_v = tracker_locacion_npc("violet")
-        if _loc_v is None:
+        if tracker_locacion_npc("violet") != "casa_hviolet":
             return False
-        _loc_mc = store.sistema_locaciones.locacion_actual
-        if _loc_mc is None:
+
+        _v30 = obtener_npc("violet")
+        if _v30 is None or _v30.obtener_rutina_especial_actual() is not None:
             return False
-        return _loc_mc.id != _loc_v
 
-    def _va30_disparar_chat():
-        """
-        Trigger de game_loop: habilita el chat al llegar a 30 de amor.
+        return not npc_esta_oculto("violet") and npc_interactuable("violet")
 
-        Devuelve None SIEMPRE — hace su efecto en python y el loop sigue. No
-        hace falta un flag de "ya disparado": disparar_por_trigger ignora los
-        grupos que ya no estan "pendiente", asi que llamarlo en cada vuelta es
-        inofensivo.
+    def _gl_trigger_violet_amor_30():
         """
-        _q = store.sistema_quests.obtener_quest("violet_amor_06")
-        if _q is None or not _q.activa or _q.completada:
+        Trigger de game_loop: el MC pasa por el pasillo de arriba y ella lo
+        llama desde adentro.
+
+        Las condiciones van de la mas barata a la mas cara: los dos enteros
+        primero y las consultas al sistema de NPCs al final.
+        """
+        if not _va30_activa():
             return None
-        if _q.etapa_actual != ETAPA_CONDICIONES:
+
+        if store.horario_actual != 1:          # Tarde
             return None
-        if obtener_stat1("violet") >= 30:
-            store.sistema_mensajes.disparar_por_trigger(
-                "manual", "violet_amor06_chat", "violet")
-        return None
 
-    # ── Disparadores de la escena ────────────────────────────────────────────
+        _loc = store.sistema_locaciones.locacion_actual
+        if _loc is None or _loc.id != "casa_pasilloarriba":
+            return None
 
-    def _va30_puerta_ayuda():
-        """Opcion de puerta. Solo de noche, que es cuando quedaron."""
-        return _va30_activa() and store.horario_actual == 2
+        if not _va30_violet_libre():
+            return None
 
-    def _va30_boton_violet():
-        """
-        Boton del menu de Violet: lo mismo, pero desde adentro. Pide que ella
-        este en su habitacion — si te la cruzas en otro lado, la charla no es
-        ahi.
-        """
-        return (_va30_activa()
-                and store.horario_actual == 2
-                and tracker_locacion_npc("violet") == "casa_hviolet")
+        return "quest_violet_amor_06"
 
 
 init 5 python:
 
-    registrar_trigger_game_loop("violet_amor_30_chat", _va30_disparar_chat)
-
-    registrar_opcion_puerta("violet", "Necesitabas ayuda con algo",
-                            "quest_violet_amor_06", _va30_puerta_ayuda,
-                            ocultar_golpear=True)
+    registrar_trigger_game_loop("violet_amor_30_llamado",
+                                _gl_trigger_violet_amor_30)
 
 
 ################################################################################
@@ -114,47 +98,289 @@ label quest_violet_amor_06:
     $ ocultar_hud()
     window show
 
-    # Su habitacion explicitamente y no locacion_actual: acá se llega desde el
-    # pasillo (opcion de puerta) o desde adentro (click en ella), y la escena
-    # pasa siempre en su pieza.
-    $ _va30_loc_hv = sistema_locaciones.obtener_locacion("casa_hviolet")
-    $ _va30_bg = _va30_loc_hv.background if _va30_loc_hv else "#1a1a1a"
+    # ── EL PASILLO — lo llama de adentro ─────────────────────────────────────
+    # El trigger solo salta estando ahi, asi que la locacion actual ya es la
+    # correcta.
+
+    $ _va30_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
     scene expression _va30_bg
 
     # (Mc cuerpo base ojos base boca neutral)
-    show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
-    # (Violet cuerpo pijama ojos base boca neutral)
-    show violet_parada c_pijama_base ca_pijama o_base b_none at right
-    with sprite_normal
+    show mc_parado_base c_rbase_base o_base b_none at center with sprite_normal
 
-    # =========================================================================
-    # CONTENIDO — le pide opinion sobre que ponerse
-    # =========================================================================
+    # Ella habla del otro lado de la puerta: SIN sprite, a proposito.
+    violet "[mc_name] ¿Me podes ayudar en algo?"
 
-    # (Violet boca hablando)
-    show violet_parada b_hablando
-    violet "..."
-    # (Violet boca neutral)
-    show violet_parada b_none
-
-    # (Mc boca hablando)
     show mc_parado_base b_hablando
-    mc "..."
-    # (Mc boca neutral)
+    mc "Emmmm si ¿Que pasa?"
     show mc_parado_base b_none
 
-    # =========================================================================
-    # FIN DEL CONTENIDO
-    # =========================================================================
+    violet "Entra por favor"
+
+    hide mc_parado_base with dissolve
+
+    # ── SU HABITACION — el pantalon blanco ───────────────────────────────────
+    # El movimiento es de verdad y no solo un cambio de fondo: el cierre lo
+    # devuelve al pasillo, asi que el motor tiene que saber que estuvo adentro.
+
+    $ sistema_locaciones.mover_a_locacion("casa_hviolet")
+
+    $ _va30_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
+    scene expression _va30_bg with fade
+
+   
+    # (Violet cuerpo jean blanco base boca neutral)
+    show violet_q30a c_jeanblanco_base b_none at right
+    pause 0.3
+    show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
+    with sprite_normal
+
+    show mc_parado_base b_hablando
+    mc "¿Que tengo que hacer?"
+    show mc_parado_base b_none
+
+    show violet_q30a bf_hablando
+    violet "Necesito que me des una opinion y quiero que seas objetivo"
+    show violet_q30a b_none
+
+    show mc_parado_base b_hablando
+    mc "¿Sobre que?"
+    show mc_parado_base b_none
+
+    show violet_q30a be_hablando
+    violet "Sobre mi trasero y el pantalon que me voy a poner"
+    show violet_q30a b_hablandochica
+    violet "Creo que tu pasatiempo de mirarme el trasero todo el tiempo puede ser util"
+    show violet_q30a b_none
+
+    show mc_parado_base b_hablando
+    mc "Veo que es un tema serio que va a requerir toda mi atencion"
+    show mc_parado_base b_abiertachica
+    mc "Adelante"
+    show mc_parado_base b_none
+
+    show violet_q30a bf_hablando
+    violet "Voy a salir por un cumpleaños y estoy entre dos pantalones, no quiero algo muy llamativo"
+    show violet_q30a b_none
+
+    show mc_parado_base b_hablando
+    mc "Va a ser dificil porque caminas con algo llamativo"
+    show mc_parado_base b_none
+
+    show violet_q30a bf_hablando
+    violet "Dijiste que ibas a ser serio..." 
+    show violet_q30a b_hablandochica
+    violet "Esta es una de las opciones, lo siento bastante ajustado"
+    show violet_q30a b_none
+
+    show mc_parado_base b_hablando
+    mc "Date vuelta"
+    show mc_parado_base b_none
+
+    # Se da vuelta y se toca el pantalon. Va de corrido: cada cuadro entra con
+    # sprite_normal y se sostiene medio segundo. Sin boca — no habla mientras.
+    show violet_q30a c_jeanblanco_espalda with sprite_normal
+    pause 0.5
+
+    show violet_q30a c_jeanblanco_tocando1 with sprite_normal
+    pause 0.5
+
+    show violet_q30a c_jeanblanco_tocando2 with sprite_normal
+    pause 0.5
+
+    show violet_q30a c_jeanblanco_tocando3 with sprite_normal
+    pause 0.5
+
+    show violet_q30a c_jeanblanco_tocando4 with sprite_normal
+    pause 0.5
+
+    # Y vuelve a mirarlo.
+    show violet_q30a c_jeanblanco_base with sprite_normal
+    pause 0.5
+
+    show violet_q30a bf_hablando
+    violet "¿Que opinas?"
+    show violet_q30a b_none
+
+    show mc_parado_base b_hablando
+    mc "Es hermoso..."
+    show mc_parado_base b_none
+
+    show violet_q30a bf_hablando
+    violet "De verdad... necesito colaboracion y me da verguenza preguntarle a Jasmine o a Monica"
+    show violet_q30a b_none
+
+    show mc_parado_base b_hablando
+    mc "Bueno a ver la otra opcion"
+    show mc_parado_base b_none
+
+    violet "..."
+
+    show violet_q30a bf_hablando
+    violet "Por lo menos date la vuelta"
+    show violet_q30a b_none
+
+    # ── A OSCURAS — el MC cierra los ojos ────────────────────────────────────
+    # La charla sigue sin nadie en pantalla: se van los dos sprites junto con el
+    # fondo, y las lineas se leen sobre negro.
+
+    scene black with fade
+
+    mc "Tengo que admitir que la situacion es bastante exitante"
+
+    violet "No es el momento para eso"
+
+    mc "¿Ya esta?"
+
+    violet "Listo"
+
+    # ── SU HABITACION — el jean ──────────────────────────────────────────────
+    # Vuelve a abrir los ojos y ella ya se cambio.
+
+    $ _va30_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
+    scene expression _va30_bg with fade
+
+    # (Mc cuerpo base ojos base boca neutral)
+    show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
+    # (Violet cuerpo jean base boca neutral)
+    show violet_q30a c_jean_base b_none at right
+    with sprite_normal
+
+    show violet_q30a bf_hablando
+    violet "Este es el otro"
+    show violet_q30a b_none
+
+    show mc_parado_base b_hablando
+    mc "A ver atras"
+    show mc_parado_base b_none
+
+    # Se da vuelta. ACÁ SI HABLA DE ESPALDAS: la boca pasa a `be_*`, que es la
+    # que esta dibujada para esa vista.
+    show violet_q30a c_jean_espalda with sprite_normal
+    pause 0.5
+
+    show violet_q30a be_hablando
+    violet "Creo que es mas ajustado"
+    show violet_q30a b_none
+
+    show mc_parado_base b_hablando
+    mc "Si parece un poco mas ajustado"
+    show mc_parado_base b_none
+
+    # Se toca el jean.
+    show violet_q30a c_jean_tocando1 with sprite_normal
+    pause 0.5
+
+    show violet_q30a c_jean_tocando2 with sprite_normal
+    pause 0.5
+
+    show violet_q30a c_jean_tocando3 with sprite_normal
+    pause 0.5
+
+    show violet_q30a be_hablando
+    violet "¿Y?"
+    show violet_q30a b_none
+
+    show mc_parado_base b_hablando
+    mc "Este te marca mas el trasero, pero es menos llamativo que el otro, el blanco se ve a kilometros"
+    show mc_parado_base b_none
+
+    show violet_q30a be_hablando
+    violet "Entonces me quedo con este"
+    show violet_q30a b_hablandochica
+    violet "Gracias por ayudarme"
+    show violet_q30a b_none
+
+    violet "..."
+
+    show violet_q30a be_hablando
+    violet "¿Estas esperando algo?"
+    show violet_q30a b_none
+
+    show mc_parado_base b_hablando
+    mc "Perdon me quede perdido en la imaginacion"
+    show mc_parado_base b_none
+
+    show violet_q30a be_sonrisa
+
+    show violet_q30a be_hablando
+    violet "¿Tanto te gusta?"
+    show violet_q30a be_sonrisa
+
+    show mc_parado_base b_hablando
+    mc "No lo puedo evitar"
+    show mc_parado_base b_none
+
+    show violet_q30a be_hablando
+    violet "¿Se mira y no se toca?"
+    show violet_q30a be_sonrisa
+
+    show mc_parado_base b_hablando
+    mc "Me pedis imposibles"
+    show mc_parado_base b_none
+
+    show violet_q30a be_hablando
+    violet "¿Eso nada?"
+    show violet_q30a be_sonrisa
+
+    show mc_parado_base b_hablando
+    mc "Me voy a controlar"
+    show mc_parado_base b_none
+
+    # Y se lo empieza a bajar.
+    show violet_q30a c_jean_bajando1 with sprite_normal
+    pause 0.5
+
+    show violet_q30a c_jean_bajando2 with sprite_normal
+    pause 0.5
+
+    show violet_q30a c_jean_bajando3 with sprite_normal
+    pause 0.5
+
+    show violet_q30a c_jean_bajando4 with sprite_normal
+    pause 0.5
+
+    show violet_q30a c_jean_bajando5 with sprite_normal
+    pause 0.5
+
+    show mc_parado_base b_hablando
+    mc "No le puedo creer"
+    show mc_parado_base b_hablandochica
+    mc "Cuando vuelvas a necesitar ayuda para elegir ropa, llamame"
+    show mc_parado_base b_none
+
+    show violet_q30a be_hablando
+    violet "Jajajajaja no creo que vuelvas a tener tanta suerte"
+    show violet_q30a b_hablandochica
+    violet "Bueno se termino la exhibicion, me voy a cambiar y salir"
+    show violet_q30a be_sonrisa
+
+    show mc_parado_base b_hablando
+    mc "Pasala bien en el cumpleaños"
+    show mc_parado_base b_none
 
     hide mc_parado_base
-    hide violet_parada
+    hide violet_q30a
     with dissolve
+
+    # ── EL PASILLO — solo, rumiando ──────────────────────────────────────────
+
+    $ sistema_locaciones.mover_a_locacion("casa_pasilloarriba")
+
+    $ _va30_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
+    scene expression _va30_bg with fade
+
+    # (Mc cuerpo pensando ojos base boca neutral)
+    show mc_parado_base c_rbase_pensando o_base b_none at center with sprite_normal
+
+    piensa "No pude hablar sobre el beso, pero siento que la relacion con Violet esta un poco mas intima, voy por un buen camino"
+    piensa "Y lo del cambio de ropa me dejo pensando que podria ser una excusa para otro momento asi, podria pensar en algo que quiera que use o se pruebe"
+
+    hide mc_parado_base with dissolve
 
     $ completar_quest_actual("violet", quest_id="violet_amor_06")
 
-    # Sale al pasillo. El horario NO avanza: la escena es corta.
-    $ sistema_locaciones.mover_a_locacion("casa_pasilloarriba")
+    # El horario NO avanza: la escena pasa en un rato.
 
     window hide
     $ mostrar_hud()

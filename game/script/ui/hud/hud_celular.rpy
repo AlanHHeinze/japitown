@@ -9,8 +9,8 @@ default menu_celular_abierto = False
 
 init python:
     def _ejecutar_accion_celular_validada(accion_id):
-        """Muestra mensaje de acción bloqueada."""
-        _msg = accion_bloqueada(accion_id)
+        """Muestra el mensaje de por que esa app esta cerrada."""
+        _msg = app_celular_bloqueada(accion_id)
         if _msg:
             renpy.call("mostrar_bloqueo_accion", _msg)
 
@@ -94,7 +94,7 @@ screen menu_celular():
                                     if _btn_idx < len(_botones_cel):
                                         $ _btn_id, _btn_emoji, _btn_label, _btn_action, _btn_bg, _btn_hover, _btn_text_color = _botones_cel[_btn_idx]
                                         button:
-                                            action If(accion_bloqueada(_btn_id), Function(_ejecutar_accion_celular_validada, _btn_id), _btn_action)
+                                            action If(app_celular_bloqueada(_btn_id), Function(_ejecutar_accion_celular_validada, _btn_id), _btn_action)
                                             frame:
                                                 xysize (_cel_btn_size, _cel_btn_size)
                                                 background _btn_bg
@@ -163,7 +163,7 @@ screen menu_celular():
                                         $ _btn_id, _btn_emoji, _btn_label, _btn_action, _btn_bg, _btn_hover, _btn_text_color = _botones_cel[_btn_idx]
                                         $ _e_btn = sistema_ajuste_cel.elementos.get("menu_celular_btn_{}".format(_btn_id)) if _ajc else None
                                         button:
-                                            action If(accion_bloqueada(_btn_id), Function(_ejecutar_accion_celular_validada, _btn_id), _btn_action)
+                                            action If(app_celular_bloqueada(_btn_id), Function(_ejecutar_accion_celular_validada, _btn_id), _btn_action)
                                             xoffset (_e_btn.xoffset if _e_btn else 0)
                                             yoffset (_e_btn.yoffset if _e_btn else 0)
                                             frame:

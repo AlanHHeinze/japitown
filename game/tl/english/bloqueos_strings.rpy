@@ -18,6 +18,17 @@ translate english strings:
     old "Debe estar durmiendo, no voy a molestar."
     new "She must be asleep, I'm not going to bother her."
 
+    # Generico de DISPONIBILIDAD (core/npcs/npc_disponibilidad.rpy): sale al
+    # insistir con un NPC que el contenido saco de juego sin dar un motivo
+    # propio. Si el contenido dio uno, gana el suyo.
+    old "No es momento para eso"
+    new "This isn't the time for that"
+
+    # Quest 09_b: el motivo con el que Violet queda fuera de juego. Sale como
+    # `piensa` en su puerta y tambien como motivo de la disponibilidad.
+    old "Monica pidio que no la molestemos"
+    new "Monica asked us not to bother her"
+
     old "Debo responder el mensaje de {npc} antes de continuar"
     new "I have to reply to {npc}'s message before continuing"
 
@@ -74,19 +85,16 @@ translate english strings:
     new "With no power I can't do any of that"
 
     # =========================================================================
-    # Violet — Amor 30 ("Noche de amigas")
+    # Violet — Deseo 30 ("Sinceridad")
     # =========================================================================
+    # Etapa 1: sale de su cuarto a buscarla y hasta llegar no hace otra cosa.
+    # Un solo texto para el movimiento y para las acciones.
+    #
+    # La etapa 2 (ignorarla tres dias) no tiene mensajes: no bloquea nada, solo
+    # cuenta.
 
-    old "Violet me esta esperando, no me voy a ir de casa"
-    new "Violet is waiting for me, I'm not leaving the house"
-
-    old "Primero voy a ver que necesita Violet"
-    new "First I'm going to see what Violet needs"
-
-    # Encerrado en su pieza tras la escena del sotano: lo unico habilitado es
-    # dormir, que es el disparador de la ultima parte.
-    old "No tengo ganas de nada, mejor me acuesto"
-    new "I don't feel like doing anything, I'd better lie down"
+    old "Tengo que hablar con Violet"
+    new "I need to talk to Violet"
 
     # =========================================================================
     # Ventaja "Mensajear" (hito de deseo 20)

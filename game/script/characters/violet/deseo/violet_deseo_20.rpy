@@ -102,6 +102,10 @@ init python:
         """
         store.vd20_fase = 2
 
+    def _vd20_chat_visto():
+        """Predicado del catalogo de contenido de "Mensajear" (el ojo del panel)."""
+        return mensaje_completado("violet_deseo04_chat")
+
     def _cel_trigger_violet_deseo_20():
         """
         Trigger de salir del celular: ya converso, ahora el cierre.
@@ -139,11 +143,12 @@ init 6 python:
     # de quest sino una conversacion del sistema Mensajear (ver el encabezado).
     #
     # El saludo del jugador lo manda _mv_iniciar con el `saludo` del registro;
-    # `mensaje_inicial` es la PRIMERA respuesta de ella.
+    # `mensaje_inicial` es la PRIMERA respuesta de ella, y va como LISTA porque
+    # son dos burbujas seguidas ("En la cama" / "Aburrida").
     #
-    # Varios mensajes seguidos del jugador van en UNA burbuja separados por \n:
-    # la API manda un solo `texto` por opcion. Del lado del NPC si se pueden
-    # varias burbujas, con respuesta_npc como lista.
+    # Varios mensajes seguidos —de cualquiera de los dos— van como LISTA:
+    # `texto`, `respuesta_npc` y `mensaje_inicial` aceptan las tres formas (str,
+    # lista o callable) y cada elemento sale como una burbuja propia.
     #
     # LA FOTO llega sola, sin texto: es el `foto_respuesta` de los pasos 3 y 4
     # con respuesta_npc="". Eso recien funciona desde el arreglo de
@@ -162,7 +167,7 @@ init 6 python:
     grupo_violet_deseo04 = GrupoMensajes(
         id="violet_deseo04_chat",
         npc_id="violet",
-        mensaje_inicial="En la cama\nAburrida",
+        mensaje_inicial=["En la cama", "Aburrida"],
         trigger_id="violet_deseo04_chat",
         accion_al_completar=_vd20_chat_completado,
         pasos=[
@@ -185,7 +190,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Mala mia supongo\nSe me esta haciendo dificil",
+                        texto=["Mala mia supongo", "Se me esta haciendo dificil"],
                         respuesta_npc="¿Que cosa se te esta haciendo dificil?",
                         saltar_a_paso=3,
                     ),
@@ -249,7 +254,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Siempre fuiste mi cosa favorita\nPero no hablaba de eso ahora",
+                        texto=["Siempre fuiste mi cosa favorita", "Pero no hablaba de eso ahora"],
                         respuesta_npc=["😊", "¿Y de que hablabas?"],
                         saltar_a_paso=8,
                     ),
@@ -260,7 +265,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="De mi otra cosa favorita",
+                        texto=["De mi otra cosa favorita", "Lo tenes atras"],
                         respuesta_npc="¿Los slimes?",
                         saltar_a_paso=9,
                     ),
@@ -269,7 +274,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Pista dos\nEs algo redondo que dan ganas de morder",
+                        texto=["Pista dos", "Es algo redondo que dan ganas de morder"],
                         respuesta_npc="¿Los slimes?",
                         saltar_a_paso=10,
                     ),
@@ -334,6 +339,16 @@ init 6 python:
         prioridad=100,                 # le gana a cualquier otra mientras dure
         saludo="¿Como estas?",
         forzada=True,
+    )
+
+    # Aparece en el ojo de "Mensajear" como una charla mas, aunque sea de quest:
+    # para el jugador es una conversacion del chat como cualquier otra.
+    registrar_contenido_ventaja(
+        "mensajear", "deseo20", "violet",
+        "Pensando en Violet",
+        "Es la quest de 20 💋. Entrá de noche a tu habitación y escribile desde el celular.",
+        vista=_vd20_chat_visto,
+        orden=1,
     )
 
 

@@ -682,19 +682,80 @@ Jump("label")]`. Salir → `[Hide, Jump("label_verificar")]`.
             show screen vq4_screen_ropero
 ```
 
-Dentro del loop: `hide screen` antes de diálogos; el screen usa `action Return(...)`.
+El screen usa `action Return(...)`. El `hide screen` antes de cada diálogo que
+se ve arriba **funciona pero parpadea** — para algo con muchos diálogos, ver el
+Patrón E.
 
 **Patrón D — Verificación de salida:** label que chequea el objetivo; si falta,
 pensamiento + volver a mostrar el screen; si está, continuar.
 
-**Posiciones editables:** registrar el elemento en `sistema_pos` (herramienta P) y en
-el screen leer `sistema_pos.obtener(id)` con fallback a la tupla default.
+**Patrón E — Minijuego** (modelo: `violet_quest_09_minijuego.rpy`). Es el
+Patrón C llevado a una escena entera con muchas piezas y muchos diálogos. Los
+seis puntos que costaron sangre, en orden de aparición:
 
-```renpy
-sistema_pos.registrar(id="hviolet_compu_vq4", imagen="...", nombre="...",
-    grupo="quest_elemento", screen="vq4_habitacion_violet",
-    x=1636, y=775, xanchor=0.5, yanchor=1.0)
+1. **`zorder` negativo, NO modal.** El textbox de Ren'Py vive en zorder 0.
+   Con la screen arriba hay que bajarla en cada diálogo, y en el hueco entre el
+   `hide` y el `show` se ve un frame de la capa master (el fondo de la escena
+   anterior): eso es el pestañeo. Con `zorder -5` el textbox queda arriba solo y
+   la screen no se baja nunca. Y **sin `modal True`**: un modal se come el click
+   que hace avanzar el diálogo y el texto no pasa nunca.
+2. **Un flag `hablando`** para apagar lo interactivo mientras corre un diálogo.
+   Es lo que reemplaza al `hide screen`: `if not vq9_hablando:` envuelve zonas y
+   botones, la escena se sigue viendo y nada roba el click.
+3. **El orden de los botones es el orden de dibujo.** El último hijo queda
+   arriba y se lleva el click. Si la ropa se dibuja sobre los sudores, su botón
+   también tiene que ir después — al revés, el botón del sudor tapado se come el
+   click de la prenda que lo cubre.
+4. **Alpha por pieza ⇒ NO es layeredimage.** Los atributos de un layeredimage
+   solo se prenden y se apagan; no tienen opacidad individual. Si una pieza
+   tiene que ir desvaneciéndose, la escena se compone en la screen con un `add`
+   por pieza leyendo el estado. El layeredimage sí sirve para grupos
+   excluyentes sin alpha (la boca).
+5. **Los `show` van a la capa master, o sea DEBAJO de la screen.** Un
+   `show vq9_boca b_hablando` no se ve. Lo que se dibuja sobre la escena de un
+   minijuego se maneja como estado (`vq9_boca_estado`) y lo pinta la screen.
+6. **Los botones devuelven, no llaman.** `Call(...)` desde una screen mostrada
+   con `show screen` + `pause` corta ese pause, y al terminar el handler el
+   flujo sigue en la línea de después — que suele ser `jump game_loop`. Con
+   `Return((tipo, dato))` + `ui.interact()` el control vuelve al bucle.
+
+**Cursor propio** (una mano, una herramienta): `config.mouse_displayable`.
+Esconde el puntero del sistema y dibuja por encima de todo, textbox incluido.
+Dos avisos: **no lo mueve** —lo agrega en (0,0), hay que posicionarlo con un
+`Transform(function=...)` que lea `renpy.get_mouse_pos()`— y **no corre** si el
+jugador activó la preferencia "cursor del sistema". Zoom, ancla y rotación van
+como constantes arriba del archivo: se ajustan mirando la pantalla, no
+calculando.
+
+**Posiciones de las piezas.** `sistema_pos` **es un stub sin efecto**
+(`posicionamiento_elementos.rpy`): sus métodos no hacen nada y llamarlos no
+rompe pero tampoco sirve. El flujo real es la **tecla P** (`MODO_DEV`), que
+tiene tres listas excluyentes:
+
+| lista | qué muestra |
+|---|---|
+| **Fondos** | `images/bg/` + las bases de escena (nombre con `fondo`) |
+| **Sprites** | idles de personaje, de movimiento y de quest |
+| **Assets** | las piezas sueltas de quests y minijuegos |
+| **Zonas** | rectángulos invisibles: se crean, arrastran y redimensionan |
+
+Se arrastra, **Guardar** escribe en `posiciones_idle.txt` (append, nunca pisa) y
+de ahí se pega a una tabla en el archivo del contenido:
+
+```python
+VQ9_POS = {
+    "sudor_pelo": (159, 324),
+    ...
+}
 ```
+
+La herramienta exporta con **el mismo anclaje que usa la screen**
+(`xanchor 0.0 yanchor 0.0` para todo lo que no sea idle de personaje), así que
+el par se copia tal cual. Las piezas de 1920x1080 no llevan entrada: van en 0,0.
+
+**Assets del minijuego:** con alpha → WebP; sin alpha → JPG (§1 regla 9). Las
+zonas de interacción son imágenes que en el juego van invisibles
+(`Transform(img, alpha=0.0)`): solo aportan su rectángulo clickeable.
 
 ---
 

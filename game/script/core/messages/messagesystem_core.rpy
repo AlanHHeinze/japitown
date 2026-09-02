@@ -28,6 +28,30 @@ init python:
             )
     
     
+    def mensaje_partes(texto):
+        """
+        Normaliza el texto de un mensaje a una LISTA de burbujas.
+
+        Acepta las tres formas con las que el contenido puede declarar un
+        mensaje: un str (una burbuja), una lista de str (varias seguidas) o un
+        callable que devuelve cualquiera de las dos.
+
+        Lo usan los tres lugares que tocan estos textos —el historial del chat,
+        el selector de respuesta y el preview de un grupo pendiente—, asi que
+        agregar la forma de lista se hizo una sola vez y en un solo lado.
+
+        Returns:
+            list[str] — sin los elementos vacios.
+        """
+        if callable(texto):
+            texto = texto()
+        if texto is None:
+            return []
+        if not isinstance(texto, list):
+            texto = [texto]
+        return [_p for _p in texto if _p]
+
+
     class OpcionRespuesta:
         """
         Opción de respuesta disponible para el jugador en un paso de conversacion.
@@ -163,7 +187,9 @@ init python:
             Args:
                 id: ID único del grupo
                 npc_id: ID del NPC que envía el mensaje
-                mensaje_inicial: Primer mensaje del NPC (None o "" = no muestra mensaje inicial)
+                mensaje_inicial: Primer mensaje del NPC (None o "" = no muestra
+                    mensaje inicial). Acepta str o LISTA de str; una lista sale
+                    como varias burbujas seguidas, igual que respuesta_npc.
                 pasos: Lista de PasoConversacion
                 trigger_id: ID del trigger que lo dispara (quest_id o event_id)
                 foto_inicial: Foto adjunta al primer mensaje (o None)
@@ -250,6 +276,10 @@ init python:
                 Lista de recompensas otorgadas
             """
             self.estado = "completado"
+
+            # Terminar una conversacion cuenta como contacto con ese NPC.
+            if hasattr(store, 'marcar_contacto_npc'):
+                store.marcar_contacto_npc(self.npc_id)
 
             if self.tabla_recompensas:
                 self.recompensas_otorgadas = self.tabla_recompensas.calcular_recompensas(
@@ -391,6 +421,10 @@ init python:
             """Verifica si el jugador puede responder algo."""
             if getattr(self, 'bloqueado', False):
                 return False
+            # NPC fuera de juego: no contesta nada
+            # (core/npcs/npc_disponibilidad.rpy).
+            if not npc_disponible(self.npc_id):
+                return False
             # Tiene grupo activo con paso disponible y horario válido
             if self.grupo_activo and self.grupo_activo.obtener_paso_actual():
                 return self._horario_valido(self.grupo_activo)
@@ -498,13 +532,16 @@ init python:
             self.inicializar_chat(target_npc)
             chat = self.chats[target_npc]
 
-            # Agregar mensaje inicial al historial (omitir si está vacío — el jugador inicia)
-            if grupo.mensaje_inicial:
-                chat.agregar_mensaje(
-                    target_npc,
-                    grupo.mensaje_inicial,
-                    grupo.foto_inicial
-                )
+            # Agregar mensaje inicial al historial (omitir si está vacío — el
+            # jugador inicia).
+            #
+            # Acepta str o LISTA de str, igual que respuesta_npc: una lista sale
+            # como varias burbujas seguidas. La foto va con la primera, que es
+            # el mismo criterio que usa _finalizar_escribiendo del lado de la UI.
+            _foto_pendiente = grupo.foto_inicial
+            for _texto_ini in mensaje_partes(grupo.mensaje_inicial):
+                chat.agregar_mensaje(target_npc, _texto_ini, _foto_pendiente)
+                _foto_pendiente = None
 
             # Si la foto inicial existe, agregarla a la galería
             if grupo.foto_inicial:
@@ -554,6 +591,12 @@ init python:
                 return False
 
             target_npc = grupo.npc_id
+
+            # NPC fuera de juego: no manda mensajes nuevos. El grupo se queda
+            # en espera y se entrega cuando vuelva
+            # (core/npcs/npc_disponibilidad.rpy).
+            if not npc_disponible(target_npc):
+                return False
 
             if mensajes_estan_bloqueados():
                 return False
@@ -712,9 +755,11 @@ init python:
             
             opcion = paso.opciones_jugador[opcion_idx]
             
-            # Agregar mensaje del jugador al historial (texto puede ser callable)
-            texto_jugador = opcion.texto() if callable(opcion.texto) else opcion.texto
-            chat.agregar_mensaje("jugador", texto_jugador)
+            # Agregar mensaje(s) del jugador al historial. `texto` acepta str,
+            # lista o callable: una lista sale como varias burbujas seguidas,
+            # igual que del lado del NPC.
+            for _texto_jugador in mensaje_partes(opcion.texto):
+                chat.agregar_mensaje("jugador", _texto_jugador)
             
             # Acumular puntos
             grupo.acumular_puntos(opcion.puntos)

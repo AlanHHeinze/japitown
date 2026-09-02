@@ -229,6 +229,16 @@ init python:
         "Ahora podremos escribirle a {npc} por el chat cuando queramos y tener conversaciones especiales con ella.",
     )
 
+    # Segundo escalon de "Mensajear": no cambia el boton, cambia lo que ella
+    # puede llegar a contestar. Cada conversacion nueva la pide en su condicion
+    # (ver characters/<npc>/ventajas/mensajear/), asi que sin la ventaja el pool
+    # queda en las de siempre.
+    registrar_ventaja(
+        "nuevos_chats",
+        "Nuevos Chats",
+        "Al escribirle a {npc} se abren conversaciones nuevas, mas directas que las de antes.",
+    )
+
     registrar_ventaja(
         "accion_beso_amor",
         "Beso (Amor)",

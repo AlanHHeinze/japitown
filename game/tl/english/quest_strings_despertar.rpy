@@ -129,8 +129,6 @@ translate english strings:
     old "Hablar con la tienda para pedir el cambio."
     new "Talk to the store to ask for the replacement."
 
-    old "Hay un mensaje de Tienda Coxplay."
-    new "There's a message from the Coxplay Store."
 
     old "Hoy es sábado, tengo que despertar a Violet para limpiar."
     new "Today is Saturday, I have to wake Violet up to clean."
@@ -165,8 +163,6 @@ translate english strings:
     old "Las entradas para la Japicon están disponibles"
     new "The tickets for the Japicon are available"
 
-    old "Leer el mensaje de Tienda Coxplay"
-    new "Read the message from the Coxplay Store"
 
     old "Me gustaría ponerme al día con Jasmine, podría hablar con ella cuando esta sola en el Gym"
     new "I'd like to catch up with Jasmine, I could talk to her when she's alone at the Gym"
@@ -555,11 +551,14 @@ translate english strings:
     old "Estuvo bueno el juego, deberia decirselo"
     new "The game was good, I should tell her"
 
-    # Cartel de elipsis de la partida (violet_amor_20.rpy). Va por
-    # renpy.translate_string: se dibuja con `show text Text(...)`, que el
-    # extractor de Ren'Py no ve.
+    # Carteles de elipsis. Van por renpy.translate_string: se dibujan con
+    # `show text Text(...)`, que el extractor de Ren'Py no ve.
     old "Algunas partidas mas tarde"
     new "A few matches later"
+
+    # violet_amor_25.rpy, el corte antes de la escena final en su habitacion.
+    old "Luego de la cena"
+    new "After dinner"
 
     old "Jugar de noche en mi habitacion"
     new "Play at night in my room"
@@ -607,12 +606,16 @@ translate english strings:
     new "Watch TV in the basement at night"
 
     # =========================================================================
-    # Violet — Deseo 30 ("Noche de amigas")
+    # Violet — Deseo 30 ("Sinceridad")
     # =========================================================================
-    # La pista es "Esperar", que ya esta traducida en quest_strings.rpy.
+    # Arranca de noche con el MC en su propia habitacion, asi que el "que
+    # hacer" dice donde y cuando en vez de "esperar".
 
-    old "Esperar hasta la noche"
-    new "Wait until night"
+    old "Hay algo que quiero hablar con Violet"
+    new "There's something I want to talk to Violet about"
+
+    old "Estar de noche en mi habitacion"
+    new "Be in my room at night"
 
     # =========================================================================
     # Violet — Amor 30 ("¿Que me pongo?")
@@ -620,14 +623,19 @@ translate english strings:
     # Responder el chat es un Requisito, asi que la etapa de CONDICIONES manda
     # a esperar el mensaje y la de BOTON_LISTO a su habitacion.
 
-    old "Tengo que esperar por ahora"
-    new "I have to wait for now"
 
-    old "Esperar que violet te escriba"
-    new "Wait for Violet to text you"
 
     old "Violet quiere mi opinion sobre algo"
     new "Violet wants my opinion on something"
 
-    old "Ir a su habitacion por la noche"
-    new "Go to her room at night"
+    old "Pasar por el pasillo de arriba por la tarde"
+    new "Walk through the upstairs hallway in the afternoon"
+
+    # =========================================================================
+    # Quest temporal — cartel generico y su explicacion
+    # =========================================================================
+    # El cartel (ui/hud/hud_quest_temporal.rpy) va por translate_string: se
+    # dibuja en una screen. Los ⚠️ hacen de signos de admiracion y se conservan.
+
+    old "⚠️ Quest temporal activa ⚠️"
+    new "⚠️ Temporary quest active ⚠️"

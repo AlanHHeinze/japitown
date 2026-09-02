@@ -1560,6 +1560,11 @@ init python:
 
         if quest_a_completar:
             quest_a_completar.completar(recuerdos)
+            # Cerrar una quest cuenta como contacto con su NPC (ver
+            # core/npcs/npc_contacto.rpy). No alcanza con el embudo de stats:
+            # hay quests que no mueven ninguno.
+            if hasattr(store, 'marcar_contacto_npc'):
+                store.marcar_contacto_npc(quest_a_completar.npc_id)
     
     def guardar_recuerdo_quest(clave, valor):
         """
@@ -1661,8 +1666,15 @@ init python:
         la cadena `activa and not completada and etapa == ...` a mano.
         """
         q = store.sistema_quests.obtener_quest(quest_id)
-        return bool(q and q.activa and not q.completada and
-                    q.etapa_actual == ETAPA_BOTON_LISTO)
+        if not (q and q.activa and not q.completada and
+                q.etapa_actual == ETAPA_BOTON_LISTO):
+            return False
+
+        # Con el NPC fuera de juego ninguna de sus quests se puede disparar
+        # (core/npcs/npc_disponibilidad.rpy). Acá alcanza para TODAS: este es
+        # el predicado que usan los botones, las opciones de puerta y los
+        # triggers de dormir/game_loop.
+        return npc_disponible(q.npc_id)
 
     # Icono por linea, para los tags de los botones. Mismos emojis que usa el
     # panel de Pistas en sus pestañas, asi el jugador los asocia.

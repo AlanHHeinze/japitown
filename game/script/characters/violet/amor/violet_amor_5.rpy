@@ -116,8 +116,6 @@ label quest_violet_amor_01:
     hide mc_parado_base with dissolve
     hide violet_parada with dissolve
 
-    #violet pensando
-
 
     $ completar_quest_actual("violet", quest_id="violet_amor_01")
 

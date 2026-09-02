@@ -18,19 +18,73 @@ default _hpos_idle_y        = 0      # Coord Y del idle al soltarlo (= ypos en c
 default _hpos_menu_abierto  = None   # Dropdown activo: "fondos" | "sprites" | None
 default _hpos_idle_id       = 0      # Incrementa al elegir nuevo sprite → resetea drag
 
+# ── Modo ZONAS ──────────────────────────────────────────────────────────────
+# Rectangulos invisibles del juego (hotspots, botones de minijuego). No tienen
+# imagen: son area y nada mas, asi que la unica forma de acomodarlos es verlos
+# dibujados encima del fondo y arrastrarlos.
+default _hpos_modo          = "sprite"  # "sprite" | "zonas"
+default _hpos_zonas         = []        # [{"id","x","y","w","h"}]
+default _hpos_zona_sel      = None      # indice de la zona seleccionada
+default _hpos_zona_paso     = 10        # cuanto mueve cada +/- de tamaño
+
 ################################################################################
 ## Lógica Python
 ################################################################################
 
 init python:
 
+    # Las tres listas de la herramienta son EXCLUYENTES: una imagen aparece en
+    # una sola. Fondos es la base sobre la que se acomoda todo lo demas, asi que
+    # meter ahi las piezas sueltas de un minijuego llenaba el desplegable de
+    # cosas que no son fondos.
+
+    _HPOS_EXT = (".png", ".jpg", ".webp")
+
+    def _hpos_es_contenido(f):
+        """True si el path vive en las carpetas de quests o minijuegos."""
+        return (f.startswith("images/quest/")
+                or f.startswith("images/minijuegos/"))
+
+    def _hpos_es_fondo_de_contenido(f):
+        """
+        True si una imagen de quest/minijuego es la BASE de su escena.
+
+        Se reconoce por el nombre: `cama_fondo`, `ducha_fondo`, etc. Es una
+        convencion y no una carpeta aparte porque el arte de una escena llega
+        junto y separarlo en dos lugares se olvida.
+        """
+        return "fondo" in f.rsplit("/", 1)[-1].lower()
+
     def _hpos_lista_fondos():
-        """Retorna lista de paths de fondos en images/bg/, ordenados."""
+        """
+        Fondos: todo images/bg/ mas las bases de escena de quests y minijuegos.
+        """
         try:
             return sorted([
                 f for f in renpy.list_files()
-                if f.startswith("images/bg/")
-                and f.lower().endswith((".png", ".jpg", ".webp"))
+                if f.lower().endswith(_HPOS_EXT)
+                and (f.startswith("images/bg/")
+                     or (_hpos_es_contenido(f) and _hpos_es_fondo_de_contenido(f)))
+            ])
+        except Exception:
+            return []
+
+    def _hpos_lista_assets():
+        """
+        Assets: las piezas sueltas de una quest o minijuego — sudores, ropa,
+        props, zonas de interaccion.
+
+        Es todo lo que vive en esas carpetas y NO es ni la base de la escena ni
+        un idle (esos ya tienen su propia lista). Asi las piezas de un minijuego
+        nuevo aparecen solas, sin tocar la herramienta.
+        """
+        try:
+            return sorted([
+                f for f in renpy.list_files()
+                if f.lower().endswith(_HPOS_EXT)
+                and _hpos_es_contenido(f)
+                and not _hpos_es_fondo_de_contenido(f)
+                and "/idle_" not in f
             ])
         except Exception:
             return []
@@ -87,6 +141,68 @@ init python:
                 store._hpos_idle_y = int(d.y)
         return None
 
+    # ── Zonas ────────────────────────────────────────────────────────────────
+
+    def _hpos_zona_nueva():
+        """Agrega una zona nueva en el centro y la deja seleccionada."""
+        store._hpos_zonas.append({
+            "id": "zona_{}".format(len(store._hpos_zonas) + 1),
+            "x": 760, "y": 440, "w": 400, "h": 200,
+        })
+        store._hpos_zona_sel = len(store._hpos_zonas) - 1
+
+    def _hpos_zona_borrar():
+        """Borra la zona seleccionada."""
+        _i = store._hpos_zona_sel
+        if _i is None or _i >= len(store._hpos_zonas):
+            return
+        del store._hpos_zonas[_i]
+        store._hpos_zona_sel = (len(store._hpos_zonas) - 1) if store._hpos_zonas else None
+
+    def _hpos_zona_medir(campo, delta):
+        """Cambia el ancho o el alto de la zona seleccionada. Minimo 10 px."""
+        _i = store._hpos_zona_sel
+        if _i is None or _i >= len(store._hpos_zonas):
+            return
+        store._hpos_zonas[_i][campo] = max(10, store._hpos_zonas[_i][campo] + delta)
+
+    def _hpos_zona_al_soltar(drags, drop):
+        """Callback de drag: la esquina superior-izquierda es la posicion."""
+        if not drags:
+            return None
+        _d = drags[0]
+        try:
+            _i = int(_d.drag_name.split("_")[-1])
+        except (ValueError, AttributeError):
+            return None
+        if _i < len(store._hpos_zonas):
+            store._hpos_zonas[_i]["x"] = int(_d.x)
+            store._hpos_zonas[_i]["y"] = int(_d.y)
+            store._hpos_zona_sel = _i
+        return None
+
+    def _hpos_zonas_guardar():
+        """
+        Escribe las zonas en posiciones_idle.txt, en el mismo formato de lista
+        que usa el codigo del juego: (id, x, y, w, h).
+        """
+        if not store._hpos_zonas:
+            return
+        import os
+        import datetime
+        ruta = os.path.join(config.basedir, "posiciones_idle.txt")
+        ts   = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        with open(ruta, "a", encoding="utf-8") as f:
+            f.write("\n")
+            f.write("# ZONAS — {}\n".format(ts))
+            f.write("# fondo: {}\n".format(store._hpos_bg_path or "(ninguno)"))
+            f.write("ZONAS = [\n")
+            for _z in store._hpos_zonas:
+                f.write('    ("{}", {}, {}, {}, {}),\n'.format(
+                    _z["id"], _z["x"], _z["y"], _z["w"], _z["h"]))
+            f.write("]\n")
+        renpy.notify("Guardadas {} zonas".format(len(store._hpos_zonas)))
+
     def _hpos_guardar():
         """
         Añade la posición actual al archivo posiciones_idle.txt.
@@ -129,7 +245,7 @@ screen herramienta_pos_simple():
     # ── 3. Idle arrastrable ───────────────────────────────────────────────────
     # Usar drag_name con _hpos_idle_id: al incrementar el ID al seleccionar
     # un nuevo sprite, Ren'Py crea un drag nuevo desde xpos=0 ypos=0.
-    if _hpos_idle_path:
+    if _hpos_modo == "sprite" and _hpos_idle_path:
         draggroup:
             drag:
                 drag_name ("idle_{}".format(_hpos_idle_id))
@@ -139,6 +255,38 @@ screen herramienta_pos_simple():
                 droppable False
                 dragged _hpos_al_soltar
                 add _hpos_idle_path
+
+    # ── 3b. Zonas arrastrables ────────────────────────────────────────────────
+    # Cada zona es un rectangulo translucido con su id encima. En el juego el
+    # boton va con `background None` y no se ve; acá se pinta SOLO para poder
+    # agarrarlo. La seleccionada va en naranja para distinguirla del resto.
+    if _hpos_modo == "zonas":
+        draggroup:
+            for _zi, _z in enumerate(_hpos_zonas):
+                drag:
+                    drag_name ("zona_{}".format(_zi))
+                    xpos _z["x"]
+                    ypos _z["y"]
+                    draggable True
+                    droppable False
+                    dragged _hpos_zona_al_soltar
+                    clicked SetVariable("_hpos_zona_sel", _zi)
+
+                    fixed:
+                        xysize (_z["w"], _z["h"])
+
+                        frame:
+                            xfill True
+                            yfill True
+                            background ("#ff980055" if _zi == _hpos_zona_sel else "#4fc3f744")
+                            padding (0, 0)
+
+                        text _z["id"]:
+                            size 15
+                            color "#ffffff"
+                            outlines [(2, "#000000", 0, 0)]
+                            xpos 6
+                            ypos 4
 
     # ── 4. Barra de cabecera (máx 50 px, sobre todo lo demás) ─────────────────
     frame:
@@ -179,8 +327,35 @@ screen herramienta_pos_simple():
                         None if _hpos_menu_abierto == "sprites" else "sprites")
                     text "Sprites" size 17 color "#cccccc" yalign 0.5
 
+                ## Botón Assets — piezas sueltas de quests y minijuegos.
+                ## Se arrastran igual que un sprite y exportan las mismas
+                ## coordenadas: comparten _hpos_idle_path.
+                button:
+                    yalign 0.5
+                    background ("#3a6186" if _hpos_menu_abierto == "assets" else "#2d2d45")
+                    hover_background "#4a7196"
+                    padding (16, 8)
+                    action SetVariable("_hpos_menu_abierto",
+                        None if _hpos_menu_abierto == "assets" else "assets")
+                    text "Assets" size 17 color "#cccccc" yalign 0.5
+
+                ## Modo Zonas — para rectangulos invisibles (hotspots, botones
+                ## de minijuego). Convive con el modo sprite: el fondo elegido
+                ## es el mismo.
+                button:
+                    yalign 0.5
+                    background ("#c66a00" if _hpos_modo == "zonas" else "#2d2d45")
+                    hover_background "#e08020"
+                    padding (16, 8)
+                    action [
+                        SetVariable("_hpos_menu_abierto", None),
+                        SetVariable("_hpos_modo",
+                            "sprite" if _hpos_modo == "zonas" else "zonas"),
+                    ]
+                    text "Zonas" size 17 color "#cccccc" yalign 0.5
+
                 ## Nombre del sprite activo
-                if _hpos_idle_path:
+                if _hpos_modo == "sprite" and _hpos_idle_path:
                     text (_hpos_idle_path.split("/")[-1].rsplit(".", 1)[0]):
                         size 13
                         color "#777777"
@@ -194,8 +369,76 @@ screen herramienta_pos_simple():
                 yalign 0.5
                 spacing 8
 
+                ## Modo zonas: crear / borrar / medir / guardar
+                if _hpos_modo == "zonas":
+                    button:
+                        yalign 0.5
+                        background "#2d2d45"
+                        hover_background "#4a7196"
+                        padding (12, 8)
+                        action Function(_hpos_zona_nueva)
+                        text "+ Zona" size 16 color "#cccccc" yalign 0.5
+
+                    if _hpos_zona_sel is not None and _hpos_zona_sel < len(_hpos_zonas):
+                        $ _zsel = _hpos_zonas[_hpos_zona_sel]
+
+                        frame:
+                            yalign 0.5
+                            background "#000000"
+                            padding (10, 8)
+                            text ("x={:4d} y={:4d}  w={:4d} h={:4d}".format(
+                                    _zsel["x"], _zsel["y"], _zsel["w"], _zsel["h"])):
+                                size 15
+                                color "#ffffff"
+
+                        ## Ancho y alto con pasos de _hpos_zona_paso
+                        for _campo, _et in (("w", "W"), ("h", "H")):
+                            button:
+                                yalign 0.5
+                                background "#2d2d45"
+                                hover_background "#4a7196"
+                                padding (9, 8)
+                                action Function(_hpos_zona_medir, _campo, -_hpos_zona_paso)
+                                text ("−" + _et) size 15 color "#cccccc" yalign 0.5
+                            button:
+                                yalign 0.5
+                                background "#2d2d45"
+                                hover_background "#4a7196"
+                                padding (9, 8)
+                                action Function(_hpos_zona_medir, _campo, _hpos_zona_paso)
+                                text ("+" + _et) size 15 color "#cccccc" yalign 0.5
+
+                        ## Paso: 1 para afinar, 10 para grueso
+                        button:
+                            yalign 0.5
+                            background "#2d2d45"
+                            hover_background "#4a7196"
+                            padding (9, 8)
+                            action SetVariable("_hpos_zona_paso",
+                                1 if _hpos_zona_paso == 10 else 10)
+                            text ("paso {}".format(_hpos_zona_paso)):
+                                size 15
+                                color "#cccccc"
+                                yalign 0.5
+
+                        button:
+                            yalign 0.5
+                            background "#7f0000"
+                            hover_background "#c62828"
+                            padding (9, 8)
+                            action Function(_hpos_zona_borrar)
+                            text "Borrar" size 15 color "#ffffff" yalign 0.5
+
+                    button:
+                        yalign 0.5
+                        background "#2e7d32"
+                        hover_background "#388e3c"
+                        padding (14, 8)
+                        action Function(_hpos_zonas_guardar)
+                        text "Guardar" size 17 color "#ffffff" yalign 0.5
+
                 ## Caja de coordenadas + botón Guardar (solo si hay sprite)
-                if _hpos_idle_path:
+                elif _hpos_idle_path:
                     frame:
                         yalign 0.5
                         background "#000000"
@@ -262,9 +505,14 @@ screen herramienta_pos_simple():
                                 size 13
                                 color "#cccccc"
 
-    # ── 6. Dropdown Sprites ───────────────────────────────────────────────────
-    if _hpos_menu_abierto == "sprites":
-        $ _hpos_idles_lista = _hpos_lista_idles()
+    # ── 6. Dropdown Sprites / Assets ──────────────────────────────────────────
+    # Comparten el mismo cuerpo: los dos eligen la imagen arrastrable, solo
+    # cambia de que lista salen.
+    if _hpos_menu_abierto in ("sprites", "assets"):
+        if _hpos_menu_abierto == "assets":
+            $ _hpos_idles_lista = _hpos_lista_assets()
+        else:
+            $ _hpos_idles_lista = _hpos_lista_idles()
         frame:
             xpos 120
             ypos 50

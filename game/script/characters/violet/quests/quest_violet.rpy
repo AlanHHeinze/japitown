@@ -1009,11 +1009,21 @@ init 5 python:
     # QUEST 09_A — Violet enferma
     # =========================================================================
 
+    # Idles de Violet ENFERMA. Solo existen los de tarde y noche, que son los
+    # dos momentos en que se la puede ir a ver.
+    #
+    # Mañana y trasnoche van con sprite None A PROPOSITO: el motor la ubica en
+    # su habitacion (que es lo que necesita la logica de la quest) pero no la
+    # dibuja, y sin sprite no hay imagebutton — o sea que tampoco se la puede
+    # clickear. Es justo lo que se quiere: a esas horas no se la molesta.
+    #
+    # Los idles normales NO sirven acá: la mostraban sana mientras la quest la
+    # tiene en cama.
     _vq9a_sprites_violet = {
-        0: "images/characters/casa/idle/idle_violet_casa_hviolet_manana_rutinabase_grupobase_skinbase.jpg",
-        1: "images/characters/casa/idle/idle_violet_casa_hviolet_tarde_rutinabase_grupobase_skinbase.jpg",
-        2: "images/characters/casa/idle/idle_violet_casa_hviolet_noche_rutinabase_grupopijama_skinbase.jpg",
-        3: "images/characters/casa/idle/idle_violet_casa_hviolet_trasnoche_rutinabase_grupobase_skinbase.jpg",
+        0: None,
+        1: "images/characters/casa/idle/idle_violet_casa_hviolet_tarde_enferma.jpg",
+        2: "images/characters/casa/idle/idle_violet_casa_hviolet_noche_enferma.jpg",
+        3: None,
     }
     _vq9a_sprites_monica = {
         0: "images/characters/casa/idle/idle_monica_casa_living_manana_rutinabase_grupobase_skinbase.webp",
@@ -1033,9 +1043,11 @@ init 5 python:
         # Ultima quest de la linea principal de Violet: arranca al completarse la
         # 08_a y no encadena a ninguna (las viejas 11 y 12 se eliminaron).
         quest_anterior="violet_questprincipal_08_a",
-        requisitos=[
-            Requisito("mensaje", "Leer el mensaje de Tienda Coxplay", grupo_id="tienda_coxplay_q9a_g1"),
-        ],
+        # Sin requisitos ademas de la espera: la respuesta de la tienda ya no
+        # es un Requisito. Los mensajes se meten en el historial YA LEIDOS
+        # dentro de la escena de arranque (violet_quest09a_inicio), asi que no
+        # hay nada que el jugador tenga que ir a responder.
+        requisitos=[],
         rutina_quest={
             (dia, horario): RutinaQuest(
                 locacion="casa_hviolet",
@@ -1058,11 +1070,6 @@ init 5 python:
             ETAPA_ESPERA: ConfigEtapa(
                 pista="A seguir esperando por la Japicon.",
                 que_hacer=_qc("vq09a_espera_quehacer", lambda: vq_esperar_texto("violet_questprincipal_09_a", 1)),
-            ),
-            ETAPA_CONDICIONES: ConfigEtapa(
-                pista="Hay un mensaje de Tienda Coxplay.",
-                que_hacer="Leer el mensaje de Tienda Coxplay",
-                trigger_mensaje=("tienda_coxplay_q9a_g1", "tienda_coxplay"),
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista="Podría ver si Violet necesita algo mientras está enferma.",

@@ -537,23 +537,13 @@ label intro_llegada_casa:
 
     scene expression "images/bg/casa/bg_casa_manana_living.jpg" with fade
 
-    # Posicionar a las tres a la derecha, ligeramente montadas
-    # Orden de show = orden de profundidad (ultimo = al frente)
-    show violet_parada c_rbase_base o_base b_none:
-        xpos 0.58
-        xanchor 0.5
-        yanchor 1.0
-        ypos 1.0
-    show jasmine_parada c_rbase_base o_base b_none:
-        xpos 0.70
-        xanchor 0.5
-        yanchor 1.0
-        ypos 1.0
-    show monica_parada c_rbase_base o_base b_none:
-        xpos 0.82
-        xanchor 0.5
-        yanchor 1.0
-        ypos 1.0
+    # Posicionar a las tres a la derecha, ligeramente montadas.
+    # Orden de show = orden de profundidad (ultimo = al frente).
+    # Los transforms viven en core/utils/transforms_common.rpy: los comparte la
+    # escena final de la quest de amor 25, que arma el mismo cuadro de cuatro.
+    show violet_parada c_rbase_base o_base b_none at grupo3_izq
+    show jasmine_parada c_rbase_base o_base b_none at grupo3_centro
+    show monica_parada c_rbase_base o_base b_none at grupo3_der
 
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda with dissolve  
 

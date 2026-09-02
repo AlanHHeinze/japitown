@@ -421,3 +421,185 @@ layeredimage violet_magica:
             "images/characters/casa/violet/violet_parada_boca_magica_hablando_espalda.webp"
         attribute be_hablandochica:
             "images/characters/casa/violet/violet_parada_boca_magica_hablandochica_espalda.webp"
+
+
+################################################################################
+## Layeredimage: beso_deseo_violet
+################################################################################
+## La secuencia del beso, cuadro por cuadro. UN SOLO GRUPO con diez atributos
+## excluyentes: mostrar uno apaga el anterior, asi que la escena avanza con
+## `show beso_deseo_violet bs_3` y nada mas — no hay que apagar el cuadro
+## previo a mano.
+##
+## Es un layeredimage y no diez `image` sueltas justamente por eso: con
+## imagenes separadas cada paso serian un show + un hide, y un olvido dejaria
+## dos cuadros encimados.
+##
+## `bs_frenteafrente` es el default: el primer `show` sin atributos ya entra por
+## ahi, que es como arranca la secuencia.
+##
+## Los diez assets son de 1920x1080 CON transparencia: son la pareja recortada,
+## no un CG completo. Van encima del fondo de la locacion, asi que la escena
+## tiene que dejar el `scene` de la habitacion puesto detras.
+
+layeredimage beso_deseo_violet:
+
+    group secuencia:
+        attribute bs_frenteafrente default:
+            "images/minijuegos/beso/violet/beso_deseo_frenteafrente.webp"
+        attribute bs_1:
+            "images/minijuegos/beso/violet/beso_deseo_secuencia1.webp"
+        attribute bs_2:
+            "images/minijuegos/beso/violet/beso_deseo_secuencia2.webp"
+        attribute bs_3:
+            "images/minijuegos/beso/violet/beso_deseo_secuencia3.webp"
+        attribute bs_4:
+            "images/minijuegos/beso/violet/beso_deseo_secuencia4.webp"
+        attribute bs_5:
+            "images/minijuegos/beso/violet/beso_deseo_secuencia5.webp"
+        attribute bs_6:
+            "images/minijuegos/beso/violet/beso_deseo_secuencia6.webp"
+        attribute bs_7:
+            "images/minijuegos/beso/violet/beso_deseo_secuencia7.webp"
+        attribute bs_8:
+            "images/minijuegos/beso/violet/beso_deseo_secuencia8.webp"
+        attribute bs_9:
+            "images/minijuegos/beso/violet/beso_deseo_secuencia9.webp"
+
+
+################################################################################
+## Layeredimage: beso_amor_violet
+################################################################################
+## El abrazo y el beso de la quest de amor 25, cuadro por cuadro. Hermano de
+## `beso_deseo_violet`: mismo criterio, distinta escena.
+##
+## TRES GRUPOS. El primero es la SECUENCIA —un solo grupo con los nueve
+## cuadros, o sea excluyentes: mostrar uno apaga el anterior—. Los otros dos son
+## las BOCAS, una por personaje, y van declaradas DESPUES para dibujarse encima.
+##
+## Las dos bocas arrancan en Null y son independientes: se puede hablar de a uno
+## o encimar los dos. Estan dibujadas para el cuadro del abrazo, que es donde
+## pasa el unico dialogo de la secuencia.
+##
+## `ab_1` es el default: el primer `show` sin atributos ya entra por ahi, que es
+## como arranca. Y tambien es donde vuelve al final, despues del beso.
+##
+## Los once assets son 1920x1080 CON transparencia: la pareja recortada, no un
+## CG. Van encima del fondo de la locacion, asi que la escena tiene que dejar
+## el `scene` de la habitacion puesto detras.
+
+layeredimage beso_amor_violet:
+
+    group secuencia:
+        attribute ab_1 default:
+            "images/quest/violet/amor25/abrazo1.webp"
+        attribute ab_2:
+            "images/quest/violet/amor25/abrazo2.webp"
+        attribute ab_3:
+            "images/quest/violet/amor25/abrazo3.webp"
+        attribute ab_4:
+            "images/quest/violet/amor25/abrazo4.webp"
+        attribute ab_5:
+            "images/quest/violet/amor25/abrazo5.webp"
+        attribute bs_1:
+            "images/minijuegos/beso/violet/beso_amor1.webp"
+        attribute bs_2:
+            "images/minijuegos/beso/violet/beso_amor2.webp"
+        attribute bs_3:
+            "images/minijuegos/beso/violet/beso_amor3.webp"
+        attribute bs_4:
+            "images/minijuegos/beso/violet/beso_amor4.webp"
+
+    # Bocas. Despues de la secuencia = encima de ella.
+    group boca_mc:
+        attribute bmc_none default:
+            Null()
+        attribute bmc_hablando:
+            "images/quest/violet/amor25/mc_hablando.webp"
+
+    group boca_violet:
+        attribute bv_none default:
+            Null()
+        attribute bv_hablando:
+            "images/quest/violet/amor25/violet_hablando.webp"
+
+
+################################################################################
+## Layeredimage: violet_q30a
+################################################################################
+## Violet para la quest de amor 30. Es un layeredimage propio y no un grupo de
+## `violet_parada` porque el arte trae la cabeza y la cara dibujadas: no combina
+## con los grupos `cabeza` ni `ojos` del sprite de siempre.
+##
+## DOS GRUPOS. El cuerpo y, DESPUES, la boca — despues = encima. La boca arranca
+## en Null (`b_none`): boca cerrada.
+##
+## DOS ROPAS EN EL MISMO GRUPO `cuerpo`: jean y jeanblanco. Son excluyentes, que
+## es justo lo que se quiere — mostrar una apaga la otra, y no hay forma de
+## dejar las dos puestas.
+##
+## LAS BOCAS DE FRENTE Y DE ESPALDAS TAMBIEN COMPARTEN GRUPO, aunque sean
+## archivos distintos: la boca cae en otro lugar segun para donde mire, pero
+## nunca se ven las dos a la vez. Al girar hay que cambiarla a mano — un cuerpo
+## `_espalda` con una boca `bf_` deja la boca flotando.
+##
+##     bf_*  →  para los cuerpos de FRENTE
+##     be_*  →  para los cuerpos _espalda
+##
+## Los 23 assets son 680x1080, el mismo lienzo que el resto de los sprites de
+## Violet, asi que se muestra con las mismas posiciones (`at right`, etc).
+
+layeredimage violet_q30a:
+
+    group cuerpo:
+        attribute c_jean_base default:
+            "images/characters/casa/violet/violet_parada_cuerpo_jean_base.webp"
+        attribute c_jean_bajando1:
+            "images/characters/casa/violet/violet_parada_cuerpo_jean_bajando1.webp"
+        attribute c_jean_bajando2:
+            "images/characters/casa/violet/violet_parada_cuerpo_jean_bajando2.webp"
+        attribute c_jean_bajando3:
+            "images/characters/casa/violet/violet_parada_cuerpo_jean_bajando3.webp"
+        attribute c_jean_bajando4:
+            "images/characters/casa/violet/violet_parada_cuerpo_jean_bajando4.webp"
+        attribute c_jean_bajando5:
+            "images/characters/casa/violet/violet_parada_cuerpo_jean_bajando5.webp"
+        attribute c_jean_tocando1:
+            "images/characters/casa/violet/violet_parada_cuerpo_jean_tocando1.webp"
+        attribute c_jean_tocando2:
+            "images/characters/casa/violet/violet_parada_cuerpo_jean_tocando2.webp"
+        attribute c_jean_tocando3:
+            "images/characters/casa/violet/violet_parada_cuerpo_jean_tocando3.webp"
+        attribute c_jean_espalda:
+            "images/characters/casa/violet/violet_parada_cuerpo_jean_espalda.webp"
+        attribute c_jeanblanco_base:
+            "images/characters/casa/violet/violet_parada_cuerpo_jeanblanco_base.webp"
+        attribute c_jeanblanco_pensando:
+            "images/characters/casa/violet/violet_parada_cuerpo_jeanblanco_pensando.webp"
+        attribute c_jeanblanco_tocando1:
+            "images/characters/casa/violet/violet_parada_cuerpo_jeanblanco_tocando1.webp"
+        attribute c_jeanblanco_tocando2:
+            "images/characters/casa/violet/violet_parada_cuerpo_jeanblanco_tocando2.webp"
+        attribute c_jeanblanco_tocando3:
+            "images/characters/casa/violet/violet_parada_cuerpo_jeanblanco_tocando3.webp"
+        attribute c_jeanblanco_tocando4:
+            "images/characters/casa/violet/violet_parada_cuerpo_jeanblanco_tocando4.webp"
+        attribute c_jeanblanco_espalda:
+            "images/characters/casa/violet/violet_parada_cuerpo_jeanblanco_espalda.webp"
+
+    # Despues del cuerpo = encima del cuerpo. El default es Null: boca cerrada.
+    group boca:
+        attribute b_none default:
+            Null()
+        attribute bf_hablando:
+            "images/characters/casa/violet/violet_parada_boca_frente_hablando.webp"
+        attribute bf_hablandochica:
+            "images/characters/casa/violet/violet_parada_boca_frente_hablandochica.webp"
+        attribute bf_sonrisa:
+            "images/characters/casa/violet/violet_parada_boca_frente_sonrisa.webp"
+        attribute be_hablando:
+            "images/characters/casa/violet/violet_parada_boca_espalda_hablando.webp"
+        attribute be_hablandochica:
+            "images/characters/casa/violet/violet_parada_boca_espalda_hablandochica.webp"
+        attribute be_sonrisa:
+            "images/characters/casa/violet/violet_parada_boca_espalda_sonrisa.webp"

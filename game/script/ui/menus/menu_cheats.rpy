@@ -116,6 +116,43 @@ screen menu_cheats():
 
                             text "🧪 Quest 08_a Violet" size int(14 * _k) color "#FFD54F" bold True
 
+                        button:
+                            xfill True
+                            background "#4a1e3aCC"
+                            hover_background "#6a2a50CC"
+                            padding (int(12 * _k), int(10 * _k))
+                            action [
+                                Hide("menu_cheats"),
+                                SetVariable("menu_celular_abierto", False),
+                                Hide("menu_celular"),
+                                Jump("test_vq9_minijuego")
+                            ]
+
+                            text "🧪 Minijuego 09 Violet" size int(14 * _k) color "#FFD54F" bold True
+
+                        # El cuidado decide si Violet lo deja sacarle la tanga
+                        # (VQ9_CUIDADO_PARA_TANGA). Los dos botones sirven para
+                        # ver las dos respuestas sin jugar los tres dias.
+                        hbox:
+                            xfill True
+                            spacing int(6 * _k)
+
+                            button:
+                                xsize int(150 * _k)
+                                background "#2a4a3aCC"
+                                hover_background "#3a6a50CC"
+                                padding (int(8 * _k), int(10 * _k))
+                                action Function(_vq9_cheat_cuidado, 3)
+                                text "💚 Cuidado 3" size int(13 * _k) color "#A5D6A7" bold True xalign 0.5
+
+                            button:
+                                xsize int(150 * _k)
+                                background "#4a2a2aCC"
+                                hover_background "#6a3a3aCC"
+                                padding (int(8 * _k), int(10 * _k))
+                                action Function(_vq9_cheat_cuidado, 0)
+                                text "💔 Cuidado 0" size int(13 * _k) color "#EF9A9A" bold True xalign 0.5
+
                         # ── Test de sistema: forzar un error para probar Sentry ──
                         text "TESTEO DE SISTEMA" size int(12 * _k) color "#4FC3F7" bold True
 

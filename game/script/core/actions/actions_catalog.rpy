@@ -41,6 +41,21 @@ init 5 python:
                 getattr(store, 'violet_9a_pedido_actual', None) is not None and
                 not getattr(store, 'violet_9a_entrega_completada', False))
 
+    def _vq9b_toalla_activa():
+        """
+        La Toalla vuelve a aparecer en el desenlace de la 09_b: Violet la manda
+        a buscar cuando el MC la visita. Es la MISMA accion del baño de arriba
+        —no un boton nuevo— porque para el jugador es lo mismo que ya hizo.
+        """
+        return (_vq9b_quest_viva()
+                and getattr(store, 'vq9b_rama', None) == "positivo"
+                and getattr(store, 'vq9b_visito', False)
+                and not getattr(store, 'vq9b_toalla', False))
+
+    def _vq9a_toalla_visible():
+        """La Toalla sirve para las dos etapas: el pedido diario y el desenlace."""
+        return _vq9a_accion_activa() or _vq9b_toalla_activa()
+
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vq9a_heladera",
         nombre="Heladera",
@@ -78,7 +93,7 @@ init 5 python:
         locacion_id="casa_banioarriba",
         label_generico="accion_violet_toalla",
         reseteo=None,
-        condicion=_vq9a_accion_activa,
+        condicion=_vq9a_toalla_visible,
     ))
 
     # =========================================================================

@@ -25,6 +25,50 @@ transform npc_cerca:
     xpos 960
     xanchor 0.0
 
+# TRES NPCs a la derecha, ligeramente montados, con el MC en su mc_izquierda.
+# Es la escena de cuatro personajes: la usa la intro (Violet / Jasmine / Monica
+# en ese orden) y la escena final de la quest de amor 25.
+#
+# El ORDEN DE PROFUNDIDAD no lo dan estos numeros sino el orden de los `show`:
+# el ultimo queda al frente.
+transform grupo3_izq:
+    xpos 0.58
+    xanchor 0.5
+    yanchor 1.0
+    ypos 1.0
+
+transform grupo3_centro:
+    xpos 0.70
+    xanchor 0.5
+    yanchor 1.0
+    ypos 1.0
+
+transform grupo3_der:
+    xpos 0.82
+    xanchor 0.5
+    yanchor 1.0
+    ypos 1.0
+
+# Los mismos dos lugares, pero LLEGANDO: parten de mc_izquierda / right y se
+# acercan hasta quedar frente a frente. Terminan EXACTAMENTE en mc_cerca y
+# npc_cerca, asi que se pueden encadenar con ellos sin que el sprite salte.
+#
+# El punto de partida va en PIXELES y no en fracciones (0.15, xalign 1.0) a
+# proposito: Ren'Py no interpola bien entre un xpos float —que lee como
+# fraccion de pantalla— y uno int —que lee como pixeles—, y el sprite pega un
+# salto en el primer frame. 288 = 0.15 * 1920 y 1920 = el borde derecho, o sea
+# los mismos lugares de los que salen.
+transform mc_acercarse:
+    xpos 288
+    xanchor 0.5
+    xzoom -1.0
+    linear 0.8 xpos 960 xanchor 1.0
+
+transform npc_acercarse:
+    xpos 1920
+    xanchor 1.0
+    linear 0.8 xpos 960 xanchor 0.0
+
 # MC en posición intro nocturna
 transform mc_intro_micro_noche_transform:
     xalign 0.62

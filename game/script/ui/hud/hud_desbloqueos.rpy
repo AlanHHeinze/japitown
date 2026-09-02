@@ -222,7 +222,7 @@ screen _desb_linea(npc_id, stat, icono, titulo, color_barra):
                     # entre las repeticiones del for y una fila puede quedar
                     # renderizada con pedazos de otra.
                     for _it in _desbloq_r:
-                        use _desb_hito(_it, False) id _it["id"]
+                        use _desb_hito(_it, False, npc_id) id _it["id"]
 
                     # Separador solo si hay algo de los dos lados
                     if _desbloq_r and _bloq_r:
@@ -235,7 +235,7 @@ screen _desb_linea(npc_id, stat, icono, titulo, color_barra):
                         null height int(3 * _k)
 
                     for _it in _bloq_r:
-                        use _desb_hito(_it, True) id _it["id"]
+                        use _desb_hito(_it, True, npc_id) id _it["id"]
 
 
 ################################################################################
@@ -243,7 +243,7 @@ screen _desb_linea(npc_id, stat, icono, titulo, color_barra):
 ################################################################################
 ## Conseguido y bloqueado comparten screen; cambian los colores y el candado.
 
-screen _desb_hito(item, bloqueado):
+screen _desb_hito(item, bloqueado, npc_id="violet"):
     $ _k = CEL_APP_ESCALA_SMALL if renpy.variant("small") else 1.0
 
     vbox:
@@ -261,7 +261,7 @@ screen _desb_hito(item, bloqueado):
             use _desb_rotulo_ventajas(bloqueado)
 
             for _v in item["ventajas"]:
-                use _desb_fila_ventaja(_v, bloqueado) id _v["id"]
+                use _desb_fila_ventaja(_v, bloqueado, npc_id) id _v["id"]
 
         null height int(6 * _k)
 
@@ -376,56 +376,85 @@ screen _desb_rotulo_ventajas(bloqueado):
 ## Fila de una ventaja (hija de un hito)
 ################################################################################
 
-screen _desb_fila_ventaja(ventaja, bloqueado):
+screen _desb_fila_ventaja(ventaja, bloqueado, npc_id="violet"):
     $ _col_v = "#5a5a6e" if bloqueado else "#b8c4d8"
     $ _k = CEL_APP_ESCALA_SMALL if renpy.variant("small") else 1.0
 
+    ## El ojo solo existe si esa ventaja tiene contenido registrado para ESTE
+    ## NPC (core/hitos/ventajas_contenido.rpy). Asi el panel no conoce ninguna
+    ## ventaja por nombre: una que no tenga catalogo simplemente no lo muestra.
+    ##
+    ## Tambien se esconde con el hito bloqueado: la lista de adentro es un
+    ## premio de haber llegado, no un catalogo de lo que te falta.
+    $ _ojo_v = (not bloqueado) and ventaja_tiene_contenido(ventaja["id"], npc_id)
+
     ## Sangria de segundo nivel: las ventajas cuelgan del rotulo "Ventajas",
     ## que a su vez cuelga del hito. El ancho restante sale de la MISMA cuenta
-    ## que la fila del hito, menos la sangria y el hueco de la viñeta.
+    ## que la fila del hito, menos la sangria y el hueco de la viñeta. Con ojo
+    ## se descuenta ademas su columna, o el nombre lo empujaria fuera del ancho.
     $ _sangria_v = int(48 * _k)
     $ _vineta_v  = int(18 * _k)
-    $ _avail_v   = max(int(80 * _k), _desb_ancho_util(_k) - _sangria_v - _vineta_v)
+    $ _ojo_w     = int(34 * _k) if _ojo_v else 0
+    $ _avail_v   = max(int(80 * _k), _desb_ancho_util(_k) - _sangria_v - _vineta_v - _ojo_w)
 
     ## El texto del cuadro se arma ACA y no dentro del button: un `$` en medio
     ## del bloque convierte en no-constantes a los argumentos que vienen
     ## despues, y Ren'Py rechaza la screen al compilarla.
     $ _txt_v = renpy.translate_string(DESB_TXT_VENTAJA).format(ventaja["desc"])
 
-    button:
+    ## El ojo va HERMANO del boton de la descripcion, no adentro: Ren'Py no
+    ## admite botones anidados —el de afuera se come el click del de adentro—,
+    ## asi que los dos cuelgan de este hbox y cada uno atiende lo suyo.
+    hbox:
         xfill True
-        background None
-        hover_background "#ffffff08"
-        padding (int(4 * _k), int(3 * _k))
-        # LAS DOS COSAS a proposito:
-        #  - hovered/unhovered → en PC la descripcion sigue al mouse.
-        #  - action            → en tactil no hay hover; el toque es la unica
-        #                        via, y fija la descripcion hasta tocar otra.
-        # En PC el action no molesta: el hover ya la habia mostrado.
-        #
-        # CaptureFocus guarda el rectangulo de ESTE boton bajo el nombre
-        # DESB_FOCO_POPUP; el nearrect del cuadro lo lee para salir pegado.
-        # No hace falta ClearFocus al salir: el cuadro solo se dibuja con
-        # _rel_hover_desc puesto, asi que un rectangulo viejo nunca se ve.
-        action [SetVariable("_rel_hover_desc", _txt_v), CaptureFocus(DESB_FOCO_POPUP)]
-        hovered [SetVariable("_rel_hover_desc", _txt_v), CaptureFocus(DESB_FOCO_POPUP)]
-        unhovered SetVariable("_rel_hover_desc", None)
+        spacing 0
 
-        hbox:
-            spacing 0
+        button:
+            xsize (_desb_ancho_util(_k) - _ojo_w)
+            background None
+            hover_background "#ffffff08"
+            padding (int(4 * _k), int(3 * _k))
+            # LAS DOS COSAS a proposito:
+            #  - hovered/unhovered → en PC la descripcion sigue al mouse.
+            #  - action            → en tactil no hay hover; el toque es la unica
+            #                        via, y fija la descripcion hasta tocar otra.
+            # En PC el action no molesta: el hover ya la habia mostrado.
+            #
+            # CaptureFocus guarda el rectangulo de ESTE boton bajo el nombre
+            # DESB_FOCO_POPUP; el nearrect del cuadro lo lee para salir pegado.
+            # No hace falta ClearFocus al salir: el cuadro solo se dibuja con
+            # _rel_hover_desc puesto, asi que un rectangulo viejo nunca se ve.
+            action [SetVariable("_rel_hover_desc", _txt_v), CaptureFocus(DESB_FOCO_POPUP)]
+            hovered [SetVariable("_rel_hover_desc", _txt_v), CaptureFocus(DESB_FOCO_POPUP)]
+            unhovered SetVariable("_rel_hover_desc", None)
 
-            # Sangria con un null y no con padding: en un frame el padding
-            # pinta fondo y se veria un escalon de color.
-            null width _sangria_v
+            hbox:
+                spacing 0
 
-            frame:
-                xsize _vineta_v
+                # Sangria con un null y no con padding: en un frame el padding
+                # pinta fondo y se veria un escalon de color.
+                null width _sangria_v
+
+                frame:
+                    xsize _vineta_v
+                    background None
+                    padding (0, 0)
+                    text DESB_VINETA size int(14 * _k) color _col_v yalign 0.5
+
+                frame:
+                    xsize _avail_v
+                    background None
+                    padding (int(4 * _k), 0)
+                    text ventaja["nombre"] size int(16 * _k) color _col_v yalign 0.5
+
+        # Abre la subapp con la lista de situaciones de esta ventaja.
+        if _ojo_v:
+            button:
+                xsize _ojo_w
                 background None
-                padding (0, 0)
-                text DESB_VINETA size int(14 * _k) color _col_v yalign 0.5
-
-            frame:
-                xsize _avail_v
-                background None
-                padding (int(4 * _k), 0)
-                text ventaja["nombre"] size int(16 * _k) color _col_v yalign 0.5
+                hover_background "#ffffff14"
+                padding (int(4 * _k), int(3 * _k))
+                action [Hide("panel_desbloqueos"),
+                        Show("panel_contenido_ventaja",
+                             npc_id=npc_id, ventaja_id=ventaja["id"])]
+                text u"👁️" size int(15 * _k) xalign 0.5 yalign 0.5

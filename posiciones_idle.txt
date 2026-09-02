@@ -258,3 +258,123 @@ xpos 1537  ypos 1020  # xanchor=0.5  yanchor=1.0
 # violet_noche_altillo_buscando — 2026-08-24 11:29:56
 # path: images/characters/casa/idle/violet_noche_altillo_buscando.webp
 xpos 1077  ypos 874  # xanchor=0.5  yanchor=1.0
+
+# pechos_interaccion — 2026-09-01 23:44:19
+# path: images/quest/violet/quest9/pechos_interaccion.jpg
+xpos 558  ypos 393  # xanchor=0.0  yanchor=0.0
+
+# pechos_interaccion — 2026-09-01 23:44:21
+# path: images/quest/violet/quest9/pechos_interaccion.jpg
+xpos 558  ypos 393  # xanchor=0.0  yanchor=0.0
+
+# pelvis_interaccion — 2026-09-01 23:46:04
+# path: images/quest/violet/quest9/pelvis_interaccion.jpg
+xpos 898  ypos 440  # xanchor=0.0  yanchor=0.0
+
+# pelvis_interaccion — 2026-09-01 23:46:10
+# path: images/quest/violet/quest9/pelvis_interaccion.jpg
+xpos 898  ypos 440  # xanchor=0.0  yanchor=0.0
+
+# ropa_pantalones — 2026-09-01 23:48:34
+# path: images/quest/violet/quest9/ropa_pantalones.webp
+xpos 763  ypos 329  # xanchor=0.0  yanchor=0.0
+
+# ropa_pantalones — 2026-09-01 23:48:35
+# path: images/quest/violet/quest9/ropa_pantalones.webp
+xpos 763  ypos 329  # xanchor=0.0  yanchor=0.0
+
+# ropa_remera — 2026-09-01 23:49:02
+# path: images/quest/violet/quest9/ropa_remera.webp
+xpos 457  ypos 304  # xanchor=0.0  yanchor=0.0
+
+# ropa_remera — 2026-09-01 23:49:03
+# path: images/quest/violet/quest9/ropa_remera.webp
+xpos 457  ypos 304  # xanchor=0.0  yanchor=0.0
+
+# ropa_tanga — 2026-09-01 23:49:27
+# path: images/quest/violet/quest9/ropa_tanga.webp
+xpos 833  ypos 369  # xanchor=0.0  yanchor=0.0
+
+# ropa_tanga — 2026-09-01 23:49:27
+# path: images/quest/violet/quest9/ropa_tanga.webp
+xpos 833  ypos 369  # xanchor=0.0  yanchor=0.0
+
+# sudor_abdominal — 2026-09-01 23:49:52
+# path: images/quest/violet/quest9/sudor_abdominal.webp
+xpos 686  ypos 401  # xanchor=0.0  yanchor=0.0
+
+# sudor_abdominal — 2026-09-01 23:49:52
+# path: images/quest/violet/quest9/sudor_abdominal.webp
+xpos 686  ypos 401  # xanchor=0.0  yanchor=0.0
+
+# sudor_brazoderecho — 2026-09-01 23:50:13
+# path: images/quest/violet/quest9/sudor_brazoderecho.webp
+xpos 500  ypos 610  # xanchor=0.0  yanchor=0.0
+
+# sudor_brazoderecho — 2026-09-01 23:50:14
+# path: images/quest/violet/quest9/sudor_brazoderecho.webp
+xpos 500  ypos 610  # xanchor=0.0  yanchor=0.0
+
+# sudor_brazoizquierdo — 2026-09-01 23:50:38
+# path: images/quest/violet/quest9/sudor_brazoizquierdo.webp
+xpos 514  ypos 272  # xanchor=0.0  yanchor=0.0
+
+# sudor_brazoizquierdo — 2026-09-01 23:50:38
+# path: images/quest/violet/quest9/sudor_brazoizquierdo.webp
+xpos 514  ypos 272  # xanchor=0.0  yanchor=0.0
+
+# sudor_cara — 2026-09-01 23:51:05
+# path: images/quest/violet/quest9/sudor_cara.webp
+xpos 234  ypos 425  # xanchor=0.0  yanchor=0.0
+
+# sudor_cara — 2026-09-01 23:51:05
+# path: images/quest/violet/quest9/sudor_cara.webp
+xpos 234  ypos 425  # xanchor=0.0  yanchor=0.0
+
+# sudor_pechos — 2026-09-01 23:51:35
+# path: images/quest/violet/quest9/sudor_pechos.webp
+xpos 447  ypos 380  # xanchor=0.0  yanchor=0.0
+
+# sudor_pechos — 2026-09-01 23:51:35
+# path: images/quest/violet/quest9/sudor_pechos.webp
+xpos 447  ypos 380  # xanchor=0.0  yanchor=0.0
+
+# sudor_pelo — 2026-09-01 23:52:00
+# path: images/quest/violet/quest9/sudor_pelo.webp
+xpos 159  ypos 324  # xanchor=0.0  yanchor=0.0
+
+# sudor_pelo — 2026-09-01 23:52:00
+# path: images/quest/violet/quest9/sudor_pelo.webp
+xpos 159  ypos 324  # xanchor=0.0  yanchor=0.0
+
+# sudor_piernaderecha — 2026-09-01 23:52:46
+# path: images/quest/violet/quest9/sudor_piernaderecha.webp
+xpos 929  ypos 540  # xanchor=0.0  yanchor=0.0
+
+# sudor_piernaderecha — 2026-09-01 23:52:46
+# path: images/quest/violet/quest9/sudor_piernaderecha.webp
+xpos 929  ypos 540  # xanchor=0.0  yanchor=0.0
+
+# sudor_piernaizquierda — 2026-09-01 23:53:15
+# path: images/quest/violet/quest9/sudor_piernaizquierda.webp
+xpos 904  ypos 368  # xanchor=0.0  yanchor=0.0
+
+# sudor_piernaizquierda — 2026-09-01 23:53:15
+# path: images/quest/violet/quest9/sudor_piernaizquierda.webp
+xpos 904  ypos 368  # xanchor=0.0  yanchor=0.0
+
+# sudor_piernaizquierda — 2026-09-01 23:53:23
+# path: images/quest/violet/quest9/sudor_piernaizquierda.webp
+xpos 907  ypos 367  # xanchor=0.0  yanchor=0.0
+
+# sudor_piernaizquierda — 2026-09-01 23:53:24
+# path: images/quest/violet/quest9/sudor_piernaizquierda.webp
+xpos 907  ypos 367  # xanchor=0.0  yanchor=0.0
+
+# ropa_pantalones — 2026-09-01 23:59:17
+# path: images/quest/violet/quest9/ropa_pantalones.webp
+xpos 798  ypos 337  # xanchor=0.0  yanchor=0.0
+
+# ropa_pantalones — 2026-09-01 23:59:17
+# path: images/quest/violet/quest9/ropa_pantalones.webp
+xpos 798  ypos 337  # xanchor=0.0  yanchor=0.0

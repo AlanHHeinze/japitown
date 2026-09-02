@@ -209,7 +209,15 @@
       "Bash(grep -n \"^\\\\s*\\\\$\\\\s*int\\\\s*=\" game/script/ui/hud/hud_navigation.rpy)",
       "Bash(grep -viE \"door_knock_3|limpiando_alacena|orphan|^\\\\s+\\\\*|^game/tl/|^$\")",
       "Bash(PYTHONIOENCODING=utf-8 python mover_pocketboy.py)",
-      "Bash(PYTHONIOENCODING=utf-8 python tl_lote3.py)"
+      "Bash(PYTHONIOENCODING=utf-8 python tl_lote3.py)",
+      "Bash(python _tmp_huerfanos.py)",
+      "Bash(rm -f _tmp_huerfanos.py)",
+      "Bash(git rm *)",
+      "Bash(python _tmp_dupes2.py)",
+      "Bash(awk '/grupo_mv_intencion = GrupoMensajes/,/registrar_conversacion_mensajear\\\\\\(\\\\n *\"intencion2\"/' script/characters/violet/ventajas/mensajear/mv_intencion.rpy)",
+      "Bash(python _tmp_catalogos.py)",
+      "Bash(python _tmp_estado.py)",
+      "Bash(python _tmp_estado2.py)"
     ],
     "additionalDirectories": [
       "c:\\Users\\Alan\\OneDrive\\Desktop\\Japitown\\.claude\\skills\\cambios",

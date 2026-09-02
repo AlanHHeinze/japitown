@@ -710,30 +710,9 @@ init 6 python:
     )
     sistema_mensajes.registrar_grupo("violet", chat_violet_q7c_g1)
 
-    # =========================================================================
-    # QUEST 09_A — Notificación de Tienda Coxplay (paquete recibido)
-    # =========================================================================
-
-    chat_tienda_coxplay_q9a_g1 = GrupoMensajes(
-        id="tienda_coxplay_q9a_g1",
-        npc_id="tienda_coxplay",
-        mensaje_inicial="Buen día [mc_name], recibimos el paquete. Cuando esté la revisión lista le avisamos.",
-        trigger_id="tienda_coxplay_q9a_g1",
-        momento_horario=0,
-        pasos=[
-            # Paso 0: MC responde
-            PasoConversacion(
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto="Gracias",
-                        respuesta_npc="",
-                        saltar_a_paso=-1,
-                    ),
-                ]
-            ),
-        ],
-    )
-    sistema_mensajes.registrar_grupo("tienda_coxplay", chat_tienda_coxplay_q9a_g1)
+    # (Acá estaba el chat de la quest 09_a. Ya no existe como grupo: sus dos
+    # mensajes se meten directo en el historial —y ya leidos— desde la escena
+    # de arranque, en quests/violet_quest_09_a.rpy.)
 
     # (Acá estaba el chat de la quest de amor 15. Ese arco se mudo entero a
     # ventajas/juegosnuevos/jn_pocketboy.rpy, donde vive ahora el grupo con
@@ -744,33 +723,6 @@ init 6 python:
     # del sistema Mensajear y no un chat reactivo: vive con el resto de la
     # quest en deseo/violet_deseo_20.rpy.)
 
-    # =========================================================================
-    # AMOR 30 ("¿Que me pongo?") — Violet lo cita para la noche
-    # =========================================================================
-    # Lo habilita el trigger de game_loop de violet_amor_30.rpy al llegar a 30
-    # de amor. Sale una TARDE (momento_horario) en que ella este en casa y el
-    # MC no este con ella (condicion_entrega).
-    #
-    # Responderlo es un Requisito de la quest, asi que hasta que el jugador
-    # conteste no aparece el boton de la escena.
-
-    chat_violet_amor06 = GrupoMensajes(
-        id="violet_amor06_chat",
-        npc_id="violet",
-        mensaje_inicial="En algun momento que puedas ven a la noche a mi habitacion, necesito tu opinion con algo",
-        trigger_id="violet_amor06_chat",
-        momento_horario=1,
-        condicion_entrega=_va30_chat_condiciones,
-        pasos=[
-            PasoConversacion(
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto="Ok",
-                        respuesta_npc="",
-                        saltar_a_paso=-1,
-                    ),
-                ]
-            ),
-        ],
-    )
-    sistema_mensajes.registrar_grupo("violet", chat_violet_amor06)
+    # (El chat de la quest de amor 30 se borro con el rediseño: la quest ya no
+    # espera ningun mensaje, arranca sola cuando el MC pasa por el pasillo de
+    # arriba por la tarde.)

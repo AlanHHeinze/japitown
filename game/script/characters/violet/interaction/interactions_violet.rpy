@@ -202,8 +202,6 @@ label interaccion_violet:
     # Amor 30 ("¿Que me pongo?"): mismo momento que la opcion de su puerta,
     # pero visto desde adentro de la habitacion. Nunca conviven: si estas en el
     # pasillo ves la de la puerta, si ya entraste ves esta.
-    if _va30_boton_violet():
-        $ _opciones_extra_v.append({"texto": "Necesitabas ayuda con algo", "label": "quest_violet_amor_06", "condicion": True})
 
     # ── LINEAS DE RELACION (amor / deseo) ────────────────────────────────────
     # Un boton por quest de linea (disparador unico, regla 10 del skill).

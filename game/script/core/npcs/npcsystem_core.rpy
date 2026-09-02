@@ -285,15 +285,21 @@ init python:
 
             clave = (dia_semana, horario)
 
+            # NPC fuera de juego: NINGUN contenido le mueve la rutina — ni un
+            # evento ni una quest (core/npcs/npc_disponibilidad.rpy). Cae a la
+            # rutina base, que es la de prioridad 4: el NPC tiene que estar en
+            # algun lado igual, simplemente no se lo ve ni se lo puede tocar.
+            _disp = npc_disponible(self.id)
+
             # Prioridad 1: Override de evento
-            if hasattr(store, 'sistema_events'):
+            if _disp and hasattr(store, 'sistema_events'):
                 override = store.sistema_events.obtener_override_rutina(self.id, dia_semana, horario)
                 if override:
                     return override
 
             # Prioridad 2: Rutina de quest activa (manda sobre especiales)
             rutinas_q = getattr(self, 'rutinas_quest', {})
-            if clave in rutinas_q:
+            if _disp and clave in rutinas_q:
                 return rutinas_q[clave]
 
             # Prioridad 3: Rutina especial del dia (fuera/baño)
@@ -405,6 +411,13 @@ init python:
             setattr(store, f"{self.id}_{nombre_stat}", nuevo)
 
             aplicado = nuevo - anterior
+
+            # Cualquier movimiento de stat es contacto con este NPC: por acá
+            # pasan talk, chat, quests, eventos, espiar, acciones y besos.
+            # Se marca con el delta REAL —si el tope lo freno del todo, igual
+            # hubo interaccion— y tambien con las bajadas.
+            if hasattr(store, 'marcar_contacto_npc'):
+                store.marcar_contacto_npc(self.id)
 
             if _a_reserva:
                 try:

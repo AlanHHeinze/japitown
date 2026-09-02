@@ -309,13 +309,17 @@ init python:
         """
         BLOQUEOS_GLOBALES.append((condicion, mensaje))
 
-    def accion_bloqueada(accion_id):
+    def accion_bloqueada(accion_id, incluir_globales=True):
         """
         Verifica si una accion esta bloqueada. Consulta EN ORDEN:
         1. la restriccion de quest activa,
         2. los bloqueos declarados por events (sistema_events.hay_bloqueo),
         3. mensajes prioritarios sin responder (solo dormir/avanzar_tiempo),
-        4. los bloqueos registrados por contenido.
+        4. los bloqueos registrados por contenido,
+        5. los bloqueos GLOBALES.
+
+        `incluir_globales=False` saltea el paso 5. Es para ABRIR UNA APP del
+        celular: ver ver app_celular_bloqueada().
 
         Returns:
             str: Mensaje de bloqueo (ya traducido), o None si esta permitida.
@@ -346,12 +350,33 @@ init python:
                 return renpy.translate_string(_msg)
 
         # 5. Bloqueos GLOBALES: valen para cualquier accion_id.
-        for _cond, _msg in BLOQUEOS_GLOBALES:
-            if _cond():
-                return renpy.translate_string(_msg)
+        if incluir_globales:
+            for _cond, _msg in BLOQUEOS_GLOBALES:
+                if _cond():
+                    return renpy.translate_string(_msg)
 
         return None
-    
+
+    def app_celular_bloqueada(app_id):
+        """
+        ¿Se puede ABRIR esta app del celular?
+
+        Es accion_bloqueada() SIN los bloqueos globales. Abrir una app es
+        navegar por una UI, no hacer algo en el mundo, y un bloqueo global no
+        tiene forma de distinguirlas: cubre cualquier accion_id que le pasen.
+
+        BUG REAL (2026-08-31): la quest de deseo 20 encierra al jugador con un
+        bloqueo global hasta que le escriba a Violet... y ese mismo bloqueo le
+        tapaba la app de Chat, que es lo unico que lo destraba. La partida
+        quedaba muerta. El sistema Mensajear tenia el mismo agujero latente.
+
+        Los bloqueos ESPECIFICOS (restriccion de quest, events, los registrados
+        por accion) siguen valiendo: una quest que quiera cerrar la Tienda o las
+        Pistas lo sigue pudiendo hacer nombrandolas.
+        """
+        return accion_bloqueada(app_id, incluir_globales=False)
+
+
     def accion_bloqueada_movimiento(destino_id):
         """
         Verifica si el movimiento a una locación está bloqueado.
@@ -367,7 +392,17 @@ init python:
         return renpy.translate_string(r.mensaje_movimiento)
     
     def npc_esta_oculto(npc_id):
-        """Verifica si un NPC está oculto por la restricción."""
+        """
+        Verifica si un NPC no debe dibujarse en la escena.
+
+        Ademas de la restriccion, mira la DISPONIBILIDAD: un NPC fuera de juego
+        no se dibuja (core/npcs/npc_disponibilidad.rpy). Sin esto el sprite
+        seguiria en la locacion pero sin responder al click — se veria como un
+        bug, no como que no esta.
+        """
+        if not npc_disponible(npc_id):
+            return True
+
         r = store.restriccion_quest_activa
         if r is None or not r.activa:
             return False
@@ -430,7 +465,14 @@ init python:
         Verifica si se puede interactuar con un NPC.
         De trasnoche duermen; despues, si hay restricción activa, por defecto
         NINGÚN NPC es interactuable.
+
+        La DISPONIBILIDAD va primero que todo (core/npcs/npc_disponibilidad):
+        un NPC fuera de juego no se toca, ni siquiera con una restriccion que
+        lo declare interactuable.
         """
+        if not npc_disponible(npc_id):
+            return False
+
         if npc_durmiendo(npc_id):
             return False
 
@@ -440,6 +482,12 @@ init python:
         return r.es_npc_interactuable(npc_id)
 
     def mensaje_npc_bloqueado(npc_id=None):
+        # Si esta fuera de juego, el motivo lo da la disponibilidad y no la
+        # restriccion: es mas especifico y ademas puede no haber restriccion.
+        _m_disp = motivo_npc_no_disponible(npc_id) if npc_id else None
+        if _m_disp:
+            return _m_disp
+
         """
         Mensaje al intentar interactuar con un NPC bloqueado.
 

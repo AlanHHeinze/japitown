@@ -144,6 +144,14 @@ init 5 python:
         _jn_cascovr_jugado,
     )
 
+    registrar_contenido_ventaja(
+        "juegos_nuevos", "cascovr", "violet",
+        "Casco de realidad virtual",
+        "Compralo en la tienda del celular y después proponéselo desde su menú.",
+        vista=_jn_cascovr_jugado,
+        orden=10,
+    )
+
     registrar_trigger_game_loop("jn_cascovr_tienda", _jn_cascovr_trigger_tienda)
 
 

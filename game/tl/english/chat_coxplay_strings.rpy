@@ -150,8 +150,19 @@ translate english strings:
     # QUEST 09_A — La tienda avisa que recibio el paquete (chat_violet.rpy)
     # =========================================================================
 
-    old "Buen día [mc_name], recibimos el paquete. Cuando esté la revisión lista le avisamos."
-    new "Good morning [mc_name], we've received the package. We'll let you know once the inspection is done."
 
     old "Gracias"
     new "Thanks."
+
+    # =========================================================================
+    # QUEST 09_A — la respuesta de la tienda
+    # =========================================================================
+    # Ya no son un GrupoMensajes: la escena de arranque los mete en el
+    # historial ya leidos (quests/violet_quest_09_a.rpy). [mc_name] lo resuelve
+    # renpy.substitute() DESPUES de traducir, por eso se conserva en el `new`.
+
+    old "Buen día [mc_name], ya revisamos el cosplay y vamos a realizar el cambio."
+    new "Good morning [mc_name], we've looked the cosplay over and we'll do the exchange."
+
+    old "Por el momento no tenemos stock. Apenas nos entre nos comunicamos."
+    new "We're out of stock at the moment. We'll get in touch as soon as it comes in."

@@ -174,9 +174,6 @@ translate english strings:
     old "Ya nos dijimos lo que estaba pasando."
     new "We told each other what was going on."
 
-    old "Un paso más allá"
-    new "One step further"
-
     old "La relacion cambio de forma definitiva."
     new "The relationship changed for good."
 
@@ -334,7 +331,81 @@ translate english strings:
     old "En distintos momentos {npc} nos va a estar provocando; son escenas especiales que aparecen solas."
     new "At different moments {npc} will be teasing us; they're special scenes that show up on their own."
 
+    old "Nuevos Chats"
+    new "New Chats"
+
+    old "Al escribirle a {npc} se abren conversaciones nuevas, mas directas que las de antes."
+    new "Texting {npc} unlocks new conversations, more forward than the earlier ones."
+
     # Hitos marcador de fin de linea (proximamente=True). Su descripcion
     # comparte el `old` que ya vive en el tl de hud_pistas.
     old "Próximamente"
     new "Coming soon"
+
+    # =========================================================================
+    # Subapp de contenido de una ventaja (el ojo del panel)
+    # =========================================================================
+    # El nombre de cada situacion y su PISTA de como llegar. Las pistas son lo
+    # que el jugador viene a leer, asi que se traducen como instrucciones y no
+    # como descripciones.
+    #
+    # "Pensando en Violet" no esta acá: es tambien el nombre de la quest de
+    # deseo 20 y comparte el `old` de quest_strings.rpy.
+
+    old "{} — Contenido"
+    new "{} — Content"
+
+    old "Todavía no hay contenido cargado para esta ventaja."
+    new "There's no content loaded for this perk yet."
+
+    old "Lo que aparece con 🔒 todavía no se puede alcanzar; hace falta avanzar en otra parte primero."
+    new "Anything marked 🔒 can't be reached yet; you need to make progress elsewhere first."
+
+    old "Es la quest de 20 💋. Entrá de noche a tu habitación y escribile desde el celular."
+    new "It's the 20 💋 quest. Go to your room at night and text her from your phone."
+
+    old "La intención"
+    new "The Intention"
+
+    old "Escribile estando ella en su habitación y libre. Según cómo le contestes cuando pregunte qué buscás, la charla sigue o se corta."
+    new "Text her while she's in her room and free. Depending on how you answer when she asks what you're after, the chat continues or ends."
+
+    old "La intención · segunda parte"
+    new "The Intention · Part Two"
+
+    old "Sale sola la próxima vez que le escribas, pero solo si en la charla anterior te hiciste el disimulado."
+    new "It comes up on its own the next time you text her, but only if you played dumb in the previous chat."
+
+    old "Justo antes de la ducha"
+    new "Right Before the Shower"
+
+    old "Escribile de noche, mientras esté en el baño a punto de bañarse."
+    new "Text her at night, while she's in the bathroom about to shower."
+
+    old "Casco de realidad virtual"
+    new "VR Headset"
+
+    old "Compralo en la tienda del celular y después proponéselo desde su menú."
+    new "Buy it in the phone store, then suggest it from her menu."
+
+    old "Entrá a su habitación y elegí Ropa Nueva en su menú."
+    new "Go into her room and pick New Clothes from her menu."
+
+    old "El beso"
+    new "The Kiss"
+
+    old "Elegí Beso (Amor) en su menú, con ella a solas. Una vez por día."
+    new "Pick Kiss (Love) from her menu, with her alone. Once per day."
+
+    old "El otro beso"
+    new "The Other Kiss"
+
+    old "Elegí Beso (Deseo) en su menú, con ella a solas. Una vez por día."
+    new "Pick Kiss (Desire) from her menu, with her alone. Once per day."
+
+    old "La puerta entreabierta"
+    new "The Door Left Ajar"
+
+    old "Andá al pasillo de arriba mientras se esté bañando. No pasa siempre: depende de si ella dejó la puerta así."
+    new "Go to the upstairs hallway while she's showering. It doesn't always happen: it depends on whether she left the door that way."
+

@@ -223,6 +223,9 @@ label talk_iniciar:
     hide mc_parado_base
     scene black with dissolve
 
+    # Hablarle cuenta como contacto aunque el resultado haya sido "nada" y
+    # ningun stat se haya movido.
+    $ marcar_contacto_npc(_npc_id_temp)
     $ avanzar_horario()
     $ mostrar_hud()
     return

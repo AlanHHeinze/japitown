@@ -241,8 +241,6 @@ translate english strings:
 
     # Violet Deseo 30 ("¿Que me pongo?"). UNA entrada para los DOS botones:
     # el de su puerta y el de su menu comparten texto.
-    old "Necesitabas ayuda con algo"
-    new "You needed help with something"
 
     # Ventajas de los hitos de 30. "Ropa Nueva" (el otro boton) comparte el
     # `old` que ya existe en quest_strings.rpy; "Beso (Amor)" y "Beso (Deseo)"

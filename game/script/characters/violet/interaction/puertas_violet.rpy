@@ -104,8 +104,15 @@ init python:
     # --- Condiciones de override y bloqueo de golpe --------------------------
 
     def _puerta_v_09a_override():
-        # Durante la enfermedad (09_a lista), la puerta entera la maneja la quest.
-        return quest_lista_para_boton("violet_questprincipal_09_a")
+        """
+        Durante la enfermedad la puerta entera la maneja la quest.
+
+        NO usa quest_lista_para_boton: ese helper devuelve False con el NPC no
+        disponible, y el desenlace de la 09_b deja a Violet justamente asi. Si
+        el override se apagara ahi, la puerta caeria al flujo normal y en vez
+        de "no la molestes" saldria que no esta en su habitacion.
+        """
+        return _vq9b_quest_viva()
 
     def _puerta_v_sabado_dormida():
         # Sabado a la mañana Violet duerme: golpear no hace nada.

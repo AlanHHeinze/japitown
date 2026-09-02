@@ -519,11 +519,14 @@ screen selector_respuesta(npc_id="monica"):
                                 hover_background "#2a2a50CC"
                                 padding (int(12 * _k), int(8 * _k))
 
-                                # texto puede ser callable (igual que en seleccionar_respuesta,
-                                # messagesystem_core): resolverlo antes de traducir, o se
-                                # renderiza el repr de la funcion.
-                                $ _texto_crudo = _opcion.texto() if callable(_opcion.texto) else _opcion.texto
-                                $ _texto_opcion = renpy.substitute(renpy.translate_string(_texto_crudo))
+                                # mensaje_partes resuelve las tres formas del
+                                # texto (str, lista o callable). Cada parte se
+                                # traduce por separado —tiene su propio `old`— y
+                                # recien despues se unen: en el BOTON las varias
+                                # burbujas se muestran como renglones, aunque al
+                                # enviarlas salgan como mensajes separados.
+                                $ _partes_opcion = [renpy.translate_string(_p) for _p in mensaje_partes(_opcion.texto)]
+                                $ _texto_opcion = renpy.substitute("\n".join(_partes_opcion))
                                 text "[_texto_opcion]" size int(13 * _k) color "#ffffff"
 
             elif _chat and len(_chat.grupos_pendientes) > 0:
@@ -531,7 +534,9 @@ screen selector_respuesta(npc_id="monica"):
                 text _("¿A qué mensaje respondés?") size int(14 * _k) color "#4FC3F7" bold True xalign 0.5
 
                 for _grupo in _grupos_visibles:
-                    $ _texto_preview = renpy.substitute(_grupo.mensaje_inicial)
+                    # mensaje_inicial tambien puede ser lista: se une para el
+                    # preview, que es una sola linea recortada a 45 caracteres.
+                    $ _texto_preview = renpy.substitute(" ".join(mensaje_partes(_grupo.mensaje_inicial)))
                     $ _preview_msg = _texto_preview[:45] + ("..." if len(_texto_preview) > 45 else "")
 
                     button:

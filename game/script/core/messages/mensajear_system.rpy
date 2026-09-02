@@ -47,6 +47,11 @@ init python:
         Envuelto en try: lo llama una screen, y una excepcion ahi rompe el
         celular entero. Ante la duda, el boton queda apagado.
         """
+        # NPC fuera de juego: no se le escribe
+        # (core/npcs/npc_disponibilidad.rpy).
+        if not npc_disponible(npc_id):
+            return False
+
         _reg = MENSAJEAR_REGISTRO.get(npc_id)
         if not _reg:
             return False

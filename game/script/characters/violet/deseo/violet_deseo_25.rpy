@@ -238,15 +238,71 @@ label quest_violet_deseo_05:
     violet "¿Que me va a pasar por hacerlo?"
     show violet_parada b_none
 
-    # Introducir secuencia del beso
+    # ── LA SECUENCIA DEL BESO ────────────────────────────────────────────────
+    #
+    # Tres tramos:
+    #   1. los dos sprites normales CAMINAN hasta el centro (mc_acercarse /
+    #      npc_acercarse, que terminan justo en mc_cerca / npc_cerca)
+    #   2. se cambian por el layeredimage de la secuencia, que ya trae a los dos
+    #      dibujados juntos
+    #   3. la secuencia avanza cuadro por cuadro
+    #
+    # El `pause` despues del acercamiento es por el transform: dura 0.8s y sin
+    # esperarlo el cambio de sprites lo cortaria a la mitad.
+    #
+    # Los cuadros son 1920x1080 CON transparencia, o sea la pareja recortada: el
+    # `scene` de la habitacion sigue puesto detras y no hay que volver a
+    # pintarlo.
+
+    show mc_parado_base c_rbase_base o_base b_none at mc_acercarse
+    show violet_parada b_none at npc_acercarse
+    pause 1.2
+
+    # Los sprites sueltos se van y entra el layeredimage, que arranca solo en
+    # `bs_frenteafrente` (es el default de su unico grupo).
+    hide mc_parado_base
+    hide violet_parada
+    show beso_deseo_violet with dissolve
+    pause 0.5
+
+    # De acá en adelante cada `show` reemplaza el cuadro anterior: el grupo es
+    # uno solo, asi que los atributos son excluyentes y no hay que apagar nada.
+    #
+    # SIN DIALOGO Y SIN CLICKS: cada cuadro entra con sprite_normal (Dissolve de
+    # 0.5) y se sostiene otro medio segundo. Los `pause` van con duracion, asi
+    # que corren solos y el jugador mira la secuencia de corrido.
+    show beso_deseo_violet bs_1 with sprite_normal
+    pause 0.5
+
+    show beso_deseo_violet bs_2 with sprite_normal
+    pause 0.5
+
+    show beso_deseo_violet bs_3 with sprite_normal
+    pause 0.5
+
+    show beso_deseo_violet bs_4 with sprite_normal
+    pause 0.5
+
+    show beso_deseo_violet bs_5 with sprite_normal
+    pause 0.5
+
+    show beso_deseo_violet bs_6 with sprite_normal
+    pause 0.5
+
+    show beso_deseo_violet bs_7 with sprite_normal
+    pause 0.5
+
+    show beso_deseo_violet bs_8 with sprite_normal
+    pause 0.5
+
+    show beso_deseo_violet bs_9 with sprite_normal
+    pause 0.5
 
     # =========================================================================
     # FIN DEL CONTENIDO
     # =========================================================================
 
-    hide mc_parado_base
-    hide violet_parada
-    with dissolve
+    hide beso_deseo_violet with dissolve
 
     $ vd25_fase = 2
     $ desactivar_restriccion()

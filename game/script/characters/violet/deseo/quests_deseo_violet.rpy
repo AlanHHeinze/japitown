@@ -98,7 +98,7 @@ init 5 python:
         (3,  15, "Anime en estreno",   "Estrenan el anime que los dos queriamos ver.", "violet_deseo_02"),
         (4,  20, "Pensando en Violet",  "No me la puedo sacar de la cabeza.",       "violet_deseo_03"),
         (5,  25, "En su habitacion",   "Un capitulo de anime en la pieza de Violet.", "violet_deseo_04"),
-        (6,  30, "Noche de amigas",    "Violet me hizo lugar entre sus amigas.",     "violet_deseo_05"),
+        (6,  30, "Sinceridad",         "Le dije lo que me pasa y se hizo la desinteresada.", "violet_deseo_05"),
     ]
 
     # Textos de ETAPA_BOTON_LISTO para las quests que NO se disparan con el
@@ -141,24 +141,21 @@ init 5 python:
             },
         },
         6: {
-            # Se dispara sola al llegar la noche estando dentro de la casa, asi
-            # que el "que hacer" es literalmente esperar.
-            "pista_listo": "Esperar",
-            "que_hacer_listo": "Esperar hasta la noche",
-            # Las tres pasan la NOCHE en el sotano, para que el jugador que baja
-            # antes de que salte el aviso las encuentre ahi. Despues de la
-            # escena queda encerrado en su pieza, asi que no vuelve a verlas.
-            #
-            # ⚠️ Monica y Jasmine son PLACEHOLDER de los dos personajes nuevos,
-            # igual que en los `show` de la escena (violet_deseo_30.rpy). Van sin
-            # sprite porque no existen idles del sotano: el motor las ubica sin
-            # dibujarlas.
+            # Arranca sola de noche estando el MC en SU habitacion y ella libre
+            # en la suya, asi que el "que hacer" solo tiene que decir donde.
+            "pista_listo": "Hay algo que quiero hablar con Violet",
+            "que_hacer_listo": "Estar de noche en mi habitacion",
+            # Mientras la quest esta activa Violet pasa la noche en su pieza,
+            # que es lo que exige el arranque. De lunes a sabado ya lo hacia por
+            # rutina base; el unico dia que cambia algo es el domingo (que
+            # normalmente estaria en el living), y sin esto la quest no podria
+            # empezar esa noche. Mismo criterio que la de 25.
             "rutina_quest": {
-                (dia, 2): RutinaQuest(locacion="casa_sotano") for dia in range(7)
-            },
-            "rutinas_adicionales": {
-                "monica": {(dia, 2): RutinaQuest(locacion="casa_sotano") for dia in range(7)},
-                "jasmine": {(dia, 2): RutinaQuest(locacion="casa_sotano") for dia in range(7)},
+                (dia, 2): RutinaQuest(
+                    locacion="casa_hviolet",
+                    sprite="images/characters/casa/idle/idle_violet_casa_hviolet_noche_rutinabase_grupopijama_skinbase.jpg",
+                    posicion=(1537, 1020),
+                ) for dia in range(7)
             },
         },
     }

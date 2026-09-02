@@ -24,6 +24,14 @@ init 5 python:
         _rn_vestido_visto,
     )
 
+    registrar_contenido_ventaja(
+        "ropa_nueva", "vestido", "violet",
+        "Vestido",
+        "Entrá a su habitación y elegí Ropa Nueva en su menú.",
+        vista=_rn_vestido_visto,
+        orden=10,
+    )
+
 
 label violet_rn_vestido:
 

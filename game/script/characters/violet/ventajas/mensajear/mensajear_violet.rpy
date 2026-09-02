@@ -12,11 +12,21 @@
 ##     characters/violet/ventajas/mensajear/
 ##     ├── mensajear_violet.rpy       ← esto
 ##     ├── mv_respuestagenerica.rpy   ← la de descarte
-##     └── mv_aburrida.rpy            ← la primera especial
+##     ├── mv_intencion.rpy           ← arco de dos partes encadenadas
+##     └── mv_ducha.rpy               ← con ella en el baño
 ##
 ## Hay una conversacion registrada FUERA de esta carpeta: la de la quest de
 ## deseo 20 (deseo/violet_deseo_20.rpy), que se queda con su quest porque es la
 ## quest entera. Va con `forzada=True` — ver el parametro mas abajo.
+##
+## (Hubo una tercera, "aburrida", que se borro: su guion paso a ser el de la
+## quest de deseo 20.)
+##
+## DOS POOLS. Las conversaciones de arriba salen apenas se tiene "Mensajear"
+## (hito de deseo 20). El hito de deseo 30 agrega la ventaja "nuevos_chats", que
+## abre un SEGUNDO pool mas directo. No lo filtra este archivo: cada
+## conversacion del segundo pool arranca su condicion con _mv_nuevos_chats(),
+## asi el pool viejo sigue saliendo despues del hito en vez de ser reemplazado.
 ##
 ## ⚠️ LOS GRUPOS DE ESTE SISTEMA NO LLEVAN CONDICIONES DE ENTREGA
 ## (momento_horario, momento_locacion, condicion_entrega). Un grupo con
@@ -75,6 +85,22 @@ init python:
         """
         MENSAJEAR_VIOLET.append((prioridad, len(MENSAJEAR_VIOLET),
                                  conv_id, grupo_id, condicion, saludo, forzada))
+
+    def _mv_nuevos_chats():
+        """
+        ¿Esta abierto el SEGUNDO pool de conversaciones?
+
+        Lo abre la ventaja "nuevos_chats" del hito de deseo 30. Cada
+        conversacion de ese pool lo pide en su propia condicion:
+
+            def _mv_loquesea_condicion():
+                return _mv_nuevos_chats() and <lo suyo>
+
+        Se chequea conversacion por conversacion y no una sola vez acá a
+        proposito: el pool viejo tiene que seguir saliendo despues del hito, no
+        ser reemplazado.
+        """
+        return npc_tiene_ventaja("violet", "nuevos_chats")
 
     def _mv_grupo_disponible(grupo_id):
         """

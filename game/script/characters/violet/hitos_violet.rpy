@@ -130,7 +130,7 @@ init 6 python:
         stat="deseo",
         umbral=30,
         quest_id="violet_deseo_06",         # la quest de umbral 30
-        nombre="Un paso más allá",
+        nombre="Sinceridad",
         descripcion="La relacion cambio de forma definitiva.",
         icono="💋",
         ventajas=[
@@ -140,6 +140,7 @@ init 6 python:
             "talk_estado_caliente",
             "accion_beso_deseo",            # besarla, una vez por dia
             "provocacion",                  # ella provoca: la puerta del baño
+            "nuevos_chats",                 # se abre el segundo pool de Mensajear
         ],
     ))
 

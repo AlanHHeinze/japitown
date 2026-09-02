@@ -209,18 +209,13 @@ init 5 python:
             # domingo, el jugador no tiene que ir a hacer nada.
         },
         6: {
-            # El chat es un Requisito: hasta responderlo la quest se queda en
-            # CONDICIONES. Los textos de esa etapa son funciones que miran el
-            # stat (violet_amor_30.rpy) — mientras falta amor muestran el
-            # contador, y recien despues "esperar que te escriba".
-            "requisitos_extra": [
-                Requisito("mensaje", "Esperar el mensaje de Violet",
-                          grupo_id="violet_amor06_chat"),
-            ],
+            # Sin requisitos ademas del umbral: alcanzado el amor, la quest
+            # arranca sola la proxima vez que el MC pase por el pasillo de
+            # arriba por la tarde (trigger de game_loop en violet_amor_30.rpy).
             "pista_condiciones": _pista_va30_condiciones,
             "que_hacer_condiciones": _quehacer_va30_condiciones,
             "pista_listo": "Violet quiere mi opinion sobre algo",
-            "que_hacer_listo": "Ir a su habitacion por la noche",
+            "que_hacer_listo": "Pasar por el pasillo de arriba por la tarde",
         },
     }
 

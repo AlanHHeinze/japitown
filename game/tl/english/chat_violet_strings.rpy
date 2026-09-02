@@ -253,8 +253,6 @@ translate english strings:
     # =========================================================================
     # La respuesta del jugador es "Ok", que ya esta traducida en otro archivo.
 
-    old "En algun momento que puedas ven a la noche a mi habitacion, necesito tu opinion con algo"
-    new "Whenever you get a chance, come to my room tonight, I need your opinion on something"
 
     # =========================================================================
     # MENSAJEAR (ventaja del hito de deseo 20)
@@ -278,33 +276,9 @@ translate english strings:
     old "Hablamos despues"
     new "Talk later"
 
-    # --- Aburrida -----------------------------------------------------------
-    old "Aburrida\n¿Vos?"
-    new "Bored\nYou?"
-
-    old "Si yo tambien\nPero no tengo ganas de hacer nada, asi que me merezco el aburrimiento"
-    new "Yeah, me too\nBut I don't feel like doing anything, so I deserve the boredom"
-
-    old "Jajaja"
-    new "Hahaha"
-
-    old "Si suele pasar"
-    new "Yeah, it happens"
-
-    old "¿Y vos por que no estas haciendo nada?"
-    new "And why aren't you doing anything?"
-
-    old "Estoy esperando a que se conecten unas amigas para jugar"
-    new "I'm waiting for some friends to come online to play"
-
-    old "Envia una foto"
-    new "Sends a photo"
-
-    old "🔥\nEstas linda"
-    new "🔥\nYou look pretty"
-
-    old "Ahi me hablaron de que ya estan conectadas"
-    new "They just messaged me, they're online now"
+    # (Acá estaban las lineas de la conversacion "aburrida" de Mensajear. Esa
+    # conversacion se borro —su guion paso a la quest de deseo 20— y con ella
+    # sus `old`, que no los usaba nadie mas.)
 
     # --- Deseo 20 ("Pensando en Violet") ------------------------------------
     # Tambien es una conversacion de Mensajear, aunque viva con su quest en
@@ -319,8 +293,13 @@ translate english strings:
     old "¿Como estas?"
     new "How are you?"
 
-    old "En la cama\nAburrida"
-    new "In bed\nBored"
+    # Dos burbujas separadas, o sea dos entradas: `mensaje_inicial` va como
+    # lista y cada elemento se traduce por su cuenta.
+    old "En la cama"
+    new "In bed"
+
+    old "Aburrida"
+    new "Bored"
 
     # Rama a: el MC se hace el gracioso.
     old "¿Es una propuesta? jajaja"
@@ -329,8 +308,10 @@ translate english strings:
     old "Ultimamente todo para vos es una propuesta"
     new "Lately everything is an offer to you"
 
-    old "Mala mia supongo\nSe me esta haciendo dificil"
-    new "My bad I guess\nIt's getting hard for me"
+    old "Mala mia supongo"
+    new "My bad I guess"
+    old "Se me esta haciendo dificil"
+    new "It's getting hard for me"
 
     old "¿Que cosa se te esta haciendo dificil?"
     new "What's getting hard for you?"
@@ -370,8 +351,10 @@ translate english strings:
     # La confesion. El "eso" del segundo renglon apunta a lo que ella acaba de
     # decir, no a la foto: en ingles hace falta el "that" explicito para que no
     # se lea como que la esta desmintiendo a ella.
-    old "Siempre fuiste mi cosa favorita\nPero no hablaba de eso ahora"
-    new "You were always my favorite thing\nBut that's not what I meant just now"
+    old "Siempre fuiste mi cosa favorita"
+    new "You were always my favorite thing"
+    old "Pero no hablaba de eso ahora"
+    new "But that's not what I meant just now"
 
     old "¿Y de que hablabas?"
     new "Then what did you mean?"
@@ -379,11 +362,16 @@ translate english strings:
     old "De mi otra cosa favorita"
     new "My other favorite thing"
 
+    old "Lo tenes atras"
+    new "You've got it behind you"
+
     old "¿Los slimes?"
     new "The slimes?"
 
-    old "Pista dos\nEs algo redondo que dan ganas de morder"
-    new "Hint two\nIt's something round that makes you want to bite it"
+    old "Pista dos"
+    new "Second hint"
+    old "Es algo redondo que dan ganas de morder"
+    new "It's round and it makes you want to bite it"
 
     old "Jajaja no te hagas"
     new "Hahaha don't play dumb"
@@ -415,3 +403,156 @@ translate english strings:
 
     old "Hablamos despues 👋"
     new "Talk later 👋"
+
+    # --- Intencion, parte 1 -------------------------------------------------
+    # Los \n separan burbujas escritas como un solo mensaje: se conservan.
+
+    old "Hola ¿Como estas?"
+    new "Hey, how are you?"
+
+    old "Bien, ¿tu?"
+    new "Good, you?"
+
+    old "Algo aburrido\n¿Que hacias?"
+    new "A bit bored\nWhat were you up to?"
+
+    old "Mmmmm ¿que estas buscando?"
+    new "Mmmmm what are you after?"
+
+    old "Nada solo queria hablar"
+    new "Nothing, I just wanted to talk"
+
+    old "Pense que me escribias a ver si te mandaba una foto otra vez"
+    new "I thought you were texting to see if I'd send you another photo"
+
+    # Rama a: se hace el disimulado. Corta la charla y abre la parte 2.
+    old "No, no era por eso, solo queria hablar"
+    new "No, that wasn't it, I just wanted to talk"
+
+    old "Ok, entonces no te mando nada"
+    new "Ok, then I'm not sending you anything"
+
+    old "Si queres igual me podes mandar algo"
+    new "You can still send me something if you want"
+
+    old "Mmm no, no quiero"
+    new "Mmm no, I don't want to"
+
+    # Rama b: sinceridad. Cobra en el momento.
+    old "No voy a mentirte que estaba pensando en la foto antes de escribirte"
+    new "I won't lie, I was thinking about the photo before I texted you"
+
+    old "Lo sabia, es en lo unico que pensas"
+    new "I knew it, it's the only thing you think about"
+
+    old "¿Esta mal que piense todo el dia en vos?"
+    new "Is it wrong that I think about you all day?"
+
+    old "Premio a la sinceridad"
+    new "A prize for being honest"
+
+    old "Me encantas\nQuiero ir para alla y agarrar eso"
+    new "I'm crazy about you\nI want to come over and grab that"
+
+    old "Se mira y no se toca"
+    new "Look, don't touch"
+
+    old "No se cuanto me voy a poder controlar"
+    new "I don't know how long I can control myself"
+
+    old "Si no te podes controlar no te mando mas nada entonces"
+    new "If you can't control yourself then I won't send you anything else"
+
+    old "Prometo portarme bien"
+    new "I promise I'll behave"
+
+    old "Ese es el camino"
+    new "That's the way"
+
+    # --- Intencion, parte 2 -------------------------------------------------
+    # El saludo "¿Como estas?" NO se repite: ya esta arriba, en el bloque de
+    # la quest de deseo 20, y las dos conversaciones comparten esa entrada.
+
+    old "Volviste"
+    new "You came back"
+
+    old "¿Volvi?"
+    new "I came back?"
+
+    old "Me imagine que te ibas a quedar pensando en lo que te dije"
+    new "I figured you'd keep thinking about what I told you"
+
+    old "Si, la intencion verdadera no era solo hablar"
+    new "Yeah, the real intention wasn't just to talk"
+
+    old "¿Y por que no lo dijiste?"
+    new "So why didn't you say so?"
+
+    old "Me dio verguenza"
+    new "I was embarrassed"
+
+    old "¿Desde cuando el de la verguenza sos vos?"
+    new "Since when are you the embarrassed one?"
+
+    old "No lo se\nNo es mi estilo"
+    new "I don't know\nIt's not like me"
+
+    old "No y no te queda bien"
+    new "It isn't, and it doesn't suit you"
+
+    old "Si seguimos con la sinceridad quiero ir a agarrarlo"
+    new "If we're still being honest, I want to come grab it"
+
+    old "Todavia te falta para eso"
+    new "You've still got a way to go for that"
+
+    old "¿Que me falta?"
+    new "What am I missing?"
+
+    old "De momento que sigas siendo sincero"
+    new "For now, that you keep being honest"
+
+    old "Lo voy a ser"
+    new "I will be"
+
+    # --- Ducha --------------------------------------------------------------
+
+    old "¿Estas para jugar algo?"
+    new "Up for playing something?"
+
+    old "Me estoy por bañar"
+    new "I'm about to shower"
+
+    old "Se me acelero el corazon de solo imaginarlo"
+    new "My heart raced just picturing it"
+
+    old "¿De imaginar que?"
+    new "Picturing what?"
+
+    old "Desnuda por entrar a la ducha"
+    new "You naked, about to get in the shower"
+
+    old "Para tu desgracia no estoy desnuda"
+    new "Bad news for you, I'm not naked"
+
+    old "No, pero me ayuda a imaginarlo mejor"
+    new "No, but it helps me picture it better"
+
+    old "Lo vas a tener que seguir imaginando"
+    new "You'll just have to keep picturing it"
+
+    # --- Quest 09_b: el desenlace de la enfermedad --------------------------
+    # El reproche lo comparten las dos ramas que lo usan (el negativo directo
+    # y el positivo plantado): mismo texto, distinto precio.
+
+    old "Gracias por ayudarme estos dias..."
+    new "Thanks for helping me these past few days..."
+
+    old "Perdon estuve muy ocupado"
+    new "Sorry, I was really busy"
+
+    old "Ven a mi habitacion porfavor"
+    new "Come to my room please"
+
+    old "Voy para alla"
+    new "On my way"

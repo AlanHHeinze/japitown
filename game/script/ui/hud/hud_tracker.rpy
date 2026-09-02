@@ -27,6 +27,13 @@ init python:
         los iconos del menu de viaje rapido, asi que un NPC oculto por una
         restriccion de quest no se filtra por ningun lado.
         """
+        # NPC fuera de juego: para todo el que pregunte, no esta en ningun
+        # lado (core/npcs/npc_disponibilidad.rpy). Con esto se caen solas las
+        # puertas, el viaje rapido, las acciones compartidas y las condiciones
+        # de contenido que preguntan por su locacion.
+        if not npc_disponible(npc_id):
+            return None
+
         npc = obtener_npc(npc_id)
         if not npc or not npc.locacion_actual or npc.locacion_actual == "fuera":
             return None
