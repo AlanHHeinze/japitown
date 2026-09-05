@@ -7,7 +7,7 @@ translate english strings:
     new "Settings"
 
     # game/script/ui/hud/hud_configuracion.rpy:61
-    old "Mostrar Accion movimiento"
+    old "Mostrar Acción movimiento"
     new "Show Movement Action"
 
     # game/script/ui/hud/hud_configuracion.rpy:62

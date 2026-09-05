@@ -36,14 +36,14 @@ translate english strings:
     # GRUPO 1 — El MC inicia contacto
     # =========================================================================
 
-    old "Hola ¿Cómo están? Mi nombre es [mc_name], hice hace algunos días una compra con ustedes y estoy buscando un cosplay nuevo."
+    old "Hola, ¿cómo están? Mi nombre es [mc_name], hice hace algunos días una compra con ustedes y estoy buscando un cosplay nuevo."
     new "Hi, how are you? My name is [mc_name]. I made a purchase with you a few days ago and I'm looking for a new cosplay."
 
     # =========================================================================
     # GRUPO 2 — Respuesta de la tienda y negociacion
     # =========================================================================
 
-    old "Hola gracias por comunicarte con Tienda CoXplay, recuerda que nuestro horario de atención es de Lunes a Sábado por la mañana y tarde"
+    old "Hola, gracias por comunicarte con Tienda CoXplay, recuerda que nuestro horario de atención es de Lunes a Sábado por la mañana y tarde"
     new "Hello, thank you for contacting CoXplay Store. Remember that our business hours are Monday to Saturday, mornings and afternoons."
 
     # El {} lo reemplaza el saludo segun horario — conservarlo en el `new`.

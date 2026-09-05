@@ -1,0 +1,3122 @@
+REVISION ORTOGRAFICA — PARES VIEJO / NUEVO
+==============================================================================
+
+Para que no se pierdan las traducciones al ingles que ya existian.
+
+EL PROBLEMA: Ren'Py ata cada traduccion a un hash del texto original. Si a una
+linea le cambia una coma, el bloque de tl/english deja de coincidir y queda
+huerfano; al regenerar los tl aparece un bloque NUEVO con el español adentro en
+vez del ingles. Ren'Py no los conecta: no tiene como saber que son la misma
+linea.
+
+COMO SE USA: al terminar toda la revision y generar los tl nuevos, un script
+recorre este archivo, busca cada bloque huerfano por su texto VIEJO, le saca la
+traduccion y la mete en el bloque nuevo del texto NUEVO. Lo que quede sin
+recuperar es contenido genuinamente nuevo, que es lo unico que hay que traducir.
+
+FORMATO: una entrada por linea corregida.
+    ARCHIVO   ruta del .rpy
+    VIEJO     texto exacto de antes
+    NUEVO     texto exacto de ahora
+Las lineas en blanco separan entradas; todo lo demas se ignora.
+
+
+==============================================================================
+INTRO — game/script/characters/mc/quests/intro_main.rpy
+==============================================================================
+
+ARCHIVO game/script/characters/mc/quests/intro_main.rpy
+VIEJO   Jajaja vamos, no seas así, vas a extrañar a tu padre
+NUEVO   Jajaja, vamos, no seas así, vas a extrañar a tu padre
+
+ARCHIVO game/script/characters/mc/quests/intro_main.rpy
+VIEJO   Sí sí, te voy a extrañar un montón
+NUEVO   Sí, sí, te voy a extrañar un montón
+
+ARCHIVO game/script/characters/mc/quests/intro_main.rpy
+VIEJO   Jajaja lo sabía
+NUEVO   Jajaja, lo sabía
+
+ARCHIVO game/script/characters/mc/quests/intro_main.rpy
+VIEJO   Los pasajeros del vuelo 91218 con destino a Argentonia por favor acercarse a la puerta número 4
+NUEVO   Los pasajeros del vuelo 91218 con destino a Argentonia, por favor, acercarse a la puerta número 4
+
+ARCHIVO game/script/characters/mc/quests/intro_main.rpy
+VIEJO   Bueno, ese es mi vuelo. ¿Estás seguro que no quieres venir?
+NUEVO   Bueno, ese es mi vuelo. ¿Estás seguro de que no quieres venir?
+
+ARCHIVO game/script/characters/mc/quests/intro_main.rpy
+VIEJO   Te seguí siempre... pero ir a Argentonia, es una locura
+NUEVO   Te seguí siempre... pero ir a Argentonia es una locura
+
+ARCHIVO game/script/characters/mc/quests/intro_main.rpy
+VIEJO   Bienvenido [mc_name], ¿Cómo estuvo el viaje?
+NUEVO   Bienvenido [mc_name], ¿cómo estuvo el viaje?
+
+ARCHIVO game/script/characters/mc/quests/intro_main.rpy
+VIEJO   Bien pero agotador, fueron muchas horas arriba del micro
+NUEVO   Bien, pero agotador, fueron muchas horas arriba del micro
+
+ARCHIVO game/script/characters/mc/quests/intro_main.rpy
+VIEJO   Bueno, tu habitación está casi lista, solo falta lo que enviaste en las cajas, esta todo en el [colorear_locacion('Garage')]
+NUEVO   Bueno, tu habitación está casi lista, solo falta lo que enviaste en las cajas, está todo en el [colorear_locacion('Garage')]
+
+ARCHIVO game/script/characters/mc/quests/intro_main.rpy
+VIEJO   Voy a hablar con ella luego.
+NUEVO   Voy a hablar con ella luego
+
+ARCHIVO game/script/characters/mc/quests/intro_main.rpy
+VIEJO   No te preocupes Mónica, después yo hablo con ella
+NUEVO   No te preocupes, Mónica, después yo hablo con ella
+
+ARCHIVO game/script/characters/mc/quests/intro_main.rpy
+VIEJO   Pero ahora encargate tranquilo de tus cosas, Jasmine dejemmos que [mc_name] se acomode. Cualquier cosa me avisas
+NUEVO   Pero ahora encárgate tranquilo de tus cosas, Jasmine, dejemos que [mc_name] se acomode. Cualquier cosa me avisas
+
+==============================================================================
+QUEST 0 DEL MC
+==============================================================================
+
+ARCHIVO game/script/characters/mc/quests/mc_quest_0_a.rpy
+VIEJO   Que nostalgia, han pasado años desde la última vez que estuve en esta casa 
+NUEVO   Qué nostalgia, han pasado años desde la última vez que estuve en esta casa
+
+ARCHIVO game/script/characters/mc/quests/mc_quest_0_a.rpy
+VIEJO   Me gustaría ver que tanto cambio
+NUEVO   Me gustaría ver qué tanto cambió
+
+ARCHIVO game/script/characters/mc/quests/mc_quest_0_a.rpy
+VIEJO   Para movernos por una locacion los podemos hacer haciendo click en puntos de movimiento (Normalemente estaran ubicados en puertas o escaleras)
+NUEVO   Para movernos por una locación lo podemos hacer haciendo click en puntos de movimiento (Normalmente estarán ubicados en puertas o escaleras)
+
+ARCHIVO game/script/characters/mc/quests/mc_quest_0_a.rpy
+VIEJO   O mediante el panel de movimiento rapido que se encuentra
+NUEVO   O mediante el panel de movimiento rápido que se encuentra
+
+ARCHIVO game/script/characters/mc/quests/mc_quest_0_a.rpy
+VIEJO   Bueno... Monica dijo que mis cosas están en el
+NUEVO   Bueno... Mónica dijo que mis cosas están en el
+
+ARCHIVO game/script/characters/mc/quests/mc_quest_0_a.rpy
+VIEJO   Al entrar a una locacion tendremos un menu flotante
+NUEVO   Al entrar a una locación tendremos un menú flotante
+
+ARCHIVO game/script/characters/mc/quests/mc_quest_0_a.rpy
+VIEJO   Momento de empeza a acomodar todo
+NUEVO   Momento de empezar a acomodar todo
+
+ARCHIVO game/script/characters/mc/quests/mc_quest_0_a.rpy
+VIEJO   Listo. Ya esta todo acomodado
+NUEVO   Listo. Ya está todo acomodado
+
+ARCHIVO game/script/characters/mc/quests/mc_quest_0_a.rpy
+VIEJO   Monica dijo que ibamos a salir por la
+NUEVO   Mónica dijo que íbamos a salir por la
+
+ARCHIVO game/script/characters/mc/quests/mc_quest_0_a.rpy
+VIEJO   haz click en el boton central
+NUEVO   haz click en el botón central
+
+ARCHIVO game/script/characters/mc/quests/mc_quest_0_a.rpy
+VIEJO   mañana sera un día nuevo
+NUEVO   mañana será un día nuevo
+
+ARCHIVO game/script/characters/mc/quests/mc_quest_0_a.rpy
+VIEJO   Estoy agotado, no se si fue por la mudanza
+NUEVO   Estoy agotado, no sé si fue por la mudanza
+
+ARCHIVO game/script/characters/mc/quests/mc_quest_0_b.rpy
+VIEJO   colorear_quest('Guia')
+NUEVO   colorear_quest('Guía')
+
+ARCHIVO game/script/characters/mc/quests/mc_quest_0_b.rpy
+VIEJO   Y en la pestaña [colorear_quest('Que Hacer')] te dira exactamente como avanzar en la misma\nNOTA: Los presonajes tienen [colorear_quest('Rutinas Fijas')], [colorear_quest('Dinamicas')] y [colorear_quest('Especiales')], por lo que no siempre encontrara al personaje en la locacion y horario que se te indica
+NUEVO   Y en la pestaña [colorear_quest('Qué Hacer')] te dirá exactamente cómo avanzar en la misma\nNOTA: Los personajes tienen [colorear_quest('Rutinas Fijas')], [colorear_quest('Dinámicas')] y [colorear_quest('Especiales')], por lo que no siempre encontrarás al personaje en la locación y horario que se te indica
+
+ARCHIVO game/script/characters/mc/quests/mc_quest_0_b.rpy
+VIEJO   Ahora vamos a probarlo, [colorear_quest('Abri el celilar y entra a la App Pistas')]
+NUEVO   Ahora vamos a probarlo, [colorear_quest('abre el celular y entra a la App Pistas')]
+
+==============================================================================
+MONICA — QUEST 0_a
+==============================================================================
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   Pero me volviste a recibir y eso es muy importante para mi.
+NUEVO   Pero me volviste a recibir y eso es muy importante para mí.
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   quiero aprovechar el momento, es un nuevo comienzo para mi.
+NUEVO   quiero aprovechar el momento, es un nuevo comienzo para mí.
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   Voy a dar todo de mi para que podamos tener esa relación que esperas.
+NUEVO   Voy a dar todo de mí para que podamos tener esa relación que esperas.
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   con ganas de hacer las cosas por mi mismo.
+NUEVO   con ganas de hacer las cosas por mí mismo.
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   tengo fe que las cosas volveran a ser como antes.
+NUEVO   tengo fe en que las cosas volverán a ser como antes.
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   yo era un niño y te veia muy distante.
+NUEVO   yo era un niño y te veía muy distante.
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   No sabia que pensabas así...
+NUEVO   No sabía que pensabas así...
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   Aquí esta
+NUEVO   Aquí está
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   Perdón, me deje llevar
+NUEVO   Perdón, me dejé llevar
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   Se veia tan tierno estando nervioso
+NUEVO   Se veía tan tierno estando nervioso
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   Exitoooo
+NUEVO   Éxitoooo
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   ¿Y como quieres que sea ese nuevo comienzo?
+NUEVO   ¿Y cómo quieres que sea ese nuevo comienzo?
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   ¿A que te refieres con eso?
+NUEVO   ¿A qué te refieres con eso?
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   Creo que te pasaste un poco, ¿Hasta donde querías llegar?
+NUEVO   Creo que te pasaste un poco, ¿hasta dónde querías llegar?
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   Muchas gracias de verdad Monica.
+NUEVO   Muchas gracias de verdad, Mónica.
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   Gracias Monica, de verdad
+NUEVO   Gracias, Mónica, de verdad
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   Me dejé llevar y creo que monica se enojó
+NUEVO   Me dejé llevar y creo que Mónica se enojó
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   Perdón Monica no era mi intencion de verdad
+NUEVO   Perdón, Mónica, no era mi intención, de verdad
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   Gracias por apoyarme antes ahora y siempre.
+NUEVO   Gracias por apoyarme antes, ahora y siempre.
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_a.rpy
+VIEJO   ¿Huele rico verdad?
+NUEVO   ¿Huele rico, verdad?
+
+ARCHIVO (los tres archivos del tutorial de elecciones)
+VIEJO   Estas elecciones afectan el desarrollo inmediato como también a largo plazo. Los personajes recordaran las elecciones elegidas y actuaran en relación a ello en ciertos momentos
+NUEVO   Estas elecciones afectan el desarrollo inmediato como también a largo plazo. Los personajes recordarán las elecciones elegidas y actuarán en relación a ello en ciertos momentos
+
+==============================================================================
+MONICA — QUESTS 0_b y 0_c
+==============================================================================
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_b.rpy
+VIEJO   Monica, ¿Está todo bien? Te escuché desde arriba
+NUEVO   Mónica, ¿está todo bien? Te escuché desde arriba
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_b.rpy
+VIEJO   en tu inventario (El icono de la mochila
+NUEVO   en tu inventario (el icono de la mochila
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_b.rpy
+VIEJO   solo tendras que hacer click
+NUEVO   solo tendrás que hacer click
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_c.rpy
+VIEJO   La bateria esta algo hinchada pareceria ser ese el problema
+NUEVO   La batería está algo hinchada, parecería ser ese el problema
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_c.rpy
+VIEJO   Podría comprar una nueva y cambiarsela
+NUEVO   Podría comprar una nueva y cambiársela
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_c.rpy
+VIEJO   parece ser la batería esta algo hinchadda.
+NUEVO   parece ser la batería, está algo hinchada.
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_c.rpy
+VIEJO   Dentro del celular tendras una App llamada tienda en la que podras encontrar
+NUEVO   Dentro del celular tendrás una App llamada Tienda en la que podrás encontrar
+
+ARCHIVO game/script/characters/monica/quests/monica_quest_0_c.rpy
+VIEJO   Al comprar un objeto tendras que esperar los dias de entrega, una vez llegua podras recibirlo por la mañana en el frente o si pasa el tiempo el objeto aparecera sobre tu cama
+NUEVO   Al comprar un objeto tendrás que esperar los días de entrega, una vez llegue, podrás recibirlo por la mañana en el frente o si pasa el tiempo el objeto aparecerá sobre tu cama
+
+==============================================================================
+MONICA — EVENTO 01
+==============================================================================
+
+ARCHIVO game/script/characters/monica/events/event_monica_01.rpy
+VIEJO   ¿Cómo estas Monica? ¿Sigues con dolor en tus hombros?
+NUEVO   ¿Cómo estás, Mónica? ¿Sigues con dolor en tus hombros?
+
+ARCHIVO game/script/characters/monica/events/event_monica_01.rpy
+VIEJO   Ya se me está pasando,solo tengo que acostumbrarme
+NUEVO   Ya se me está pasando, solo tengo que acostumbrarme
+
+ARCHIVO game/script/characters/monica/events/event_monica_01.rpy
+VIEJO   No parece que se te este quitando
+NUEVO   No parece que se te esté quitando
+
+ARCHIVO game/script/characters/monica/events/event_monica_01.rpy
+VIEJO   el increíble cuerpo que tiene Monica para su edad.
+NUEVO   el increíble cuerpo que tiene Mónica para su edad.
+
+ARCHIVO game/script/characters/monica/events/event_monica_01.rpy
+VIEJO   ¿Estas lista?
+NUEVO   ¿Estás lista?
+
+ARCHIVO game/script/characters/monica/events/event_monica_01.rpy
+VIEJO   ¿Estas bien?
+NUEVO   ¿Estás bien?
+
+ARCHIVO game/script/characters/monica/events/event_monica_01.rpy
+VIEJO   Monica, compré una loción de masajes.
+NUEVO   Mónica, compré una loción de masajes.
+
+ARCHIVO game/script/characters/monica/events/event_monica_01.rpy
+VIEJO   Monica, ¿te gustaría un masaje?
+NUEVO   Mónica, ¿te gustaría un masaje?
+
+==============================================================================
+JASMINE — QUESTS 0_a / 0_b / 0_c Y EVENTO 01
+==============================================================================
+
+ARCHIVO game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy
+VIEJO   Hola Jasmine... ¿interrumpo?
+NUEVO   Hola, Jasmine... ¿interrumpo?
+
+ARCHIVO game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy
+VIEJO   ¿A qué te referís con recibirte bien?
+NUEVO   ¿A qué te refieres con recibirte bien?
+
+ARCHIVO game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy
+VIEJO   enojar más, ¿Puedo saber por qué estás enojada?
+NUEVO   enojar más, ¿puedo saber por qué estás enojada?
+
+ARCHIVO game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy
+VIEJO   para mi fue muy duro irme
+NUEVO   para mí fue muy duro irme
+
+ARCHIVO game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy
+VIEJO   no lo dije con otra intencion.
+NUEVO   no lo dije con otra intención.
+
+ARCHIVO game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy
+VIEJO   no fue solo perdelas a ustedes
+NUEVO   no fue solo perderlas a ustedes
+
+ARCHIVO game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy
+VIEJO   Como dijiste, eramos chicos
+NUEVO   Como dijiste, éramos chicos
+
+ARCHIVO game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy
+VIEJO   Jajaja si.
+NUEVO   Jajaja, sí.
+
+ARCHIVO game/script/characters/jasmine/quests/jasmine_quest_0_b.rpy
+VIEJO   Dentro de cada conversacion en algunos casos
+NUEVO   Dentro de cada conversación en algunos casos
+
+ARCHIVO game/script/characters/jasmine/quests/jasmine_quest_0_b.rpy
+VIEJO   Cada vez que recibiamos un mensaje vamos a tener una notificacion
+NUEVO   Cada vez que recibamos un mensaje vamos a tener una notificación
+
+ARCHIVO game/script/characters/jasmine/quests/jasmine_quest_0_b.rpy
+VIEJO   por parte de los persnojaes pueden estar ligada a momentos
+NUEVO   por parte de los personajes pueden estar ligadas a momentos
+
+ARCHIVO game/script/characters/jasmine/quests/jasmine_quest_0_c.rpy
+VIEJO   Mira como me queda
+NUEVO   Mira cómo me queda
+
+ARCHIVO game/script/characters/jasmine/quests/jasmine_quest_0_c.rpy
+VIEJO   Es super elastica
+NUEVO   Es súper elástica
+
+ARCHIVO game/script/characters/jasmine/quests/jasmine_quest_0_c.rpy
+VIEJO   Vez lo que te digo
+NUEVO   Ves lo que te digo
+
+ARCHIVO game/script/characters/jasmine/events/event_jasmine_01.rpy
+VIEJO   Sí, cuando vuela a Capital City puedo comprarte otro similar
+NUEVO   Sí, cuando vuelva a Capital City puedo comprarte otro similar
+
+ARCHIVO game/script/characters/jasmine/events/event_jasmine_01.rpy
+VIEJO   Elastico, pero ajustado arriba
+NUEVO   Elástico, pero ajustado arriba
+
+ARCHIVO game/script/characters/jasmine/events/event_jasmine_01.rpy
+VIEJO   Mmmm....
+NUEVO   Mmmm...
+
+ARCHIVO game/script/characters/jasmine/events/event_jasmine_01.rpy
+VIEJO   Vez lo que te digo
+NUEVO   Ves lo que te digo
+
+ARCHIVO game/script/characters/jasmine/events/event_jasmine_01.rpy
+VIEJO   Volve a la realidad
+NUEVO   Vuelve a la realidad
+
+ARCHIVO game/script/characters/jasmine/events/event_jasmine_01.rpy
+VIEJO   Te muestro como debe ser de atrás
+NUEVO   Te muestro cómo debe ser de atrás
+
+ARCHIVO game/script/characters/jasmine/events/event_jasmine_01.rpy
+VIEJO   Bueno, ya se termino el show
+NUEVO   Bueno, ya se terminó el show
+
+ARCHIVO game/script/characters/jasmine/events/event_jasmine_01.rpy
+VIEJO   ¿Esta vez si entendiste?
+NUEVO   ¿Esta vez sí entendiste?
+
+ARCHIVO game/script/characters/jasmine/events/event_jasmine_01.rpy
+VIEJO   otra vez como es la parte de atrás no?
+NUEVO   otra vez cómo es la parte de atrás, no?
+
+ARCHIVO game/script/characters/jasmine/events/event_jasmine_01.rpy
+VIEJO   Supongo que si
+NUEVO   Supongo que sí
+
+==============================================================================
+VIOLET — QUEST 0_a
+==============================================================================
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_a.rpy
+VIEJO   Hola Violet, ¿cómo estás?
+NUEVO   Hola, Violet, ¿cómo estás?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_a.rpy
+VIEJO   Para mejorar la relacion con un personaje
+NUEVO   Para mejorar la relación con un personaje
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_a.rpy
+VIEJO   que dependeran del estado del personaje (El mismo es aleatorio al inicio de cada dia)
+NUEVO   que dependerán del estado del personaje (el mismo es aleatorio al inicio de cada día)
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_a.rpy
+VIEJO   Algunos estados recibien opciones especiales segun objetos, atributos o ventajas que tengamos, las cuales nos daran mejores recompensas
+NUEVO   Algunos estados reciben opciones especiales según objetos, atributos o ventajas que tengamos, las cuales nos darán mejores recompensas
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_a.rpy
+VIEJO   Conozco esa cara, no esta de buen humor parece tener hambre
+NUEVO   Conozco esa cara, no está de buen humor, parece tener hambre
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_a.rpy
+VIEJO   Creo que es mi mejor opcion
+NUEVO   Creo que es mi mejor opción
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_a.rpy
+VIEJO   las recompensas asociadas a cada opcion
+NUEVO   las recompensas asociadas a cada opción
+
+==============================================================================
+VIOLET — QUEST 0_b
+==============================================================================
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   saber que esta molesta por algo
+NUEVO   saber que está molesta por algo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Esta más terca de lo que la recuerdo
+NUEVO   Está más terca de lo que la recuerdo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   no quiero estar por la casa y que me estes esquivando
+NUEVO   no quiero estar por la casa y que me estés esquivando
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Me esta ignorando de nuevo
+NUEVO   Me está ignorando de nuevo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   ¿Y quien me respondio?.
+NUEVO   ¿Y quién me respondió?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   ¿Desde cuando soy un extraño?
+NUEVO   ¿Desde cuándo soy un extraño?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   por qué y con quien estas enojada voy a estar para escucharte
+NUEVO   por qué y con quién estás enojada, voy a estar para escucharte
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Solo quiero saber ¿Qué te pasa?
+NUEVO   Solo quiero saber, ¿qué te pasa?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Ya vere como resolverlo
+NUEVO   Ya veré cómo resolverlo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Si quiero
+NUEVO   Sí quiero
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Jajaja ¿Eso si?
+NUEVO   Jajaja, ¿eso sí?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   ¿Si que?
+NUEVO   ¿Sí qué?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Si señor
+NUEVO   Sí, señor
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Este contenido se agregara en futuras actualizaciones
+NUEVO   Este contenido se agregará en futuras actualizaciones
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   parece que cambio un poco su actitud
+NUEVO   parece que cambió un poco su actitud
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Violet es fanatica de la pizza
+NUEVO   Violet es fanática de la pizza
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Aunque no sea mi intencion
+NUEVO   Aunque no sea mi intención
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Violet se sento en la punta de la mesa, lejos de mi y no me hablo en toda la noche
+NUEVO   Violet se sentó en la punta de la mesa, lejos de mí y no me habló en toda la noche
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   ya dejamos de ser extaños
+NUEVO   ya dejamos de ser extraños
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   No seas caprichosa y abrime la puerta
+NUEVO   No seas caprichosa y ábreme la puerta
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Por cierto, antes que me olvide.
+NUEVO   Por cierto, antes de que me olvide.
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Me acorde que te traje un regalo
+NUEVO   Me acordé de que te traje un regalo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Monica me dijo que había todo lo necesario
+NUEVO   Mónica me dijo que había todo lo necesario
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   voy a llamar a Monica!
+NUEVO   voy a llamar a Mónica!
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   sabes que Monica no te va a creer eso
+NUEVO   sabes que Mónica no te va a creer eso
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Le dije a Monica que iba a cocinar pizzas hoy
+NUEVO   Le dije a Mónica que iba a cocinar pizzas hoy
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   No quiero involucrar a Monica
+NUEVO   No quiero involucrar a Mónica
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Bueno me voy y no te molesto más
+NUEVO   Bueno, me voy y no te molesto más
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Violet voy a entrar...
+NUEVO   Violet, voy a entrar...
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Jajaja ¿Qué le vas a decir?
+NUEVO   Jajaja, ¿qué le vas a decir?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Eh Gracias... ¿Qué es?
+NUEVO   Eh, gracias... ¿Qué es?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   Ahora estamos hablando ya dejamos de ser extraños
+NUEVO   Ahora estamos hablando, ya dejamos de ser extraños
+
+==============================================================================
+VIOLET — QUESTS 01_a y 01_b
+==============================================================================
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_a.rpy
+VIEJO   yo no pedi nada
+NUEVO   yo no pedí nada
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_a.rpy
+VIEJO   el paquete que Monica me dijo
+NUEVO   el paquete que Mónica me dijo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_b.rpy
+VIEJO   curiosidad que habra comprado Violet
+NUEVO   curiosidad qué habrá comprado Violet
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_b.rpy
+VIEJO   Sí sé que le gusta, podría usarlo para mejorar la relación, es un buen plan... y una buena justificacion
+NUEVO   Si sé qué le gusta, podría usarlo para mejorar la relación, es un buen plan... y una buena justificación
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_b.rpy
+VIEJO   Dependera de como reaccione cuando le de sus cosas
+NUEVO   Dependerá de cómo reaccione cuando le dé sus cosas
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_b.rpy
+VIEJO   ¿Me lo podras llevar después a mi habitación?
+NUEVO   ¿Me lo podrás llevar después a mi habitación?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_b.rpy
+VIEJO   Violet aquí esta tu paquete
+NUEVO   Violet, aquí está tu paquete
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_b.rpy
+VIEJO   Gracias por traermelo
+NUEVO   Gracias por traérmelo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_b.rpy
+VIEJO   y no sabia que era
+NUEVO   y no sabía qué era
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_b.rpy
+VIEJO   Creo que la linea es voy a matarte
+NUEVO   Creo que la línea es voy a matarte
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_b.rpy
+VIEJO   No seria un buen final para la novela...
+NUEVO   No sería un buen final para la novela...
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_b.rpy
+VIEJO   Me canse, me voy
+NUEVO   Me cansé, me voy
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_b.rpy
+VIEJO   pero quiero que hagas algo por mi
+NUEVO   pero quiero que hagas algo por mí
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_b.rpy
+VIEJO   ¿No me vas a molestar más verdad?
+NUEVO   ¿No me vas a molestar más, verdad?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_b.rpy
+VIEJO   Jajaja eso fue divertido
+NUEVO   Jajaja, eso fue divertido
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_b.rpy
+VIEJO   Esto es turbio... 
+NUEVO   Esto es turbio...
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_b.rpy
+VIEJO   Creo que la línea sería algo como te odio oni-chan 
+NUEVO   Creo que la línea sería algo como te odio oni-chan
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_01_b.rpy
+VIEJO   Oni... 
+NUEVO   Oni...
+
+==============================================================================
+VIOLET — QUESTS 02_a y 02_b
+==============================================================================
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_a.rpy
+VIEJO   ¿Ya se te paso el capricho?
+NUEVO   ¿Ya se te pasó el capricho?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_a.rpy
+VIEJO   No, no se me paso ¿Algo más?
+NUEVO   No, no se me pasó. ¿Algo más?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_a.rpy
+VIEJO   ¿Tengo cara de pagina de reseñas?
+NUEVO   ¿Tengo cara de página de reseñas?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_a.rpy
+VIEJO   Mmm... pordia ser...
+NUEVO   Mmm... podría ser...
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_a.rpy
+VIEJO   ¿Qué estas buscando?
+NUEVO   ¿Qué estás buscando?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_a.rpy
+VIEJO   No se...
+NUEVO   No sé...
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_a.rpy
+VIEJO   ¿Y si me recomendas algo?
+NUEVO   ¿Y si me recomiendas algo?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_a.rpy
+VIEJO   voy a pensar en cual puede ser
+NUEVO   voy a pensar en cuál puede ser
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_a.rpy
+VIEJO   Genial!
+NUEVO   ¡Genial!
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_a.rpy
+VIEJO   A la noche paso a buscarlos, gracias!
+NUEVO   A la noche paso a buscarlos, ¡gracias!
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_a.rpy
+VIEJO   No se si tengo menos ganas de prestarte algo o de tenerte insistiendome
+NUEVO   No sé si tengo menos ganas de prestarte algo o de tenerte insistiéndome
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_a.rpy
+VIEJO   va a estar bien, confio en tu criterio
+NUEVO   va a estar bien, confío en tu criterio
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_a.rpy
+VIEJO   No se si es de la manera que me hubiera gustado pero al menos
+NUEVO   No sé si es de la manera que me hubiera gustado, pero al menos
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   ¿Y ya elegiste cual va a ser?
+NUEVO   ¿Y ya elegiste cuál va a ser?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Sí... tengo elegi algunos separados
+NUEVO   Sí... tengo elegidos algunos separados
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   ¿Pero buscas algún genero en particular?
+NUEVO   ¿Pero buscas algún género en particular?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   una historia media intrincada estaria bien
+NUEVO   una historia media intrincada estaría bien
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Ya se cuales podrian ser
+NUEVO   Ya sé cuáles podrían ser
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   eran esas calza que usa
+NUEVO   eran esas calzas que usa
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Perdón no te escuche ¿Qué dijiste?
+NUEVO   Perdón, no te escuché. ¿Qué dijiste?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Suena como un poco generico la verdad
+NUEVO   Suena como un poco genérico la verdad
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Sí, es algo generico pero está bien llevado
+NUEVO   Sí, es algo genérico pero está bien llevado
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Ya se
+NUEVO   Ya sé
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   que no son fanatica de los slime
+NUEVO   que no son fanáticas de los slime
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Buen punto, no se si te va a gustar ese
+NUEVO   Buen punto, no sé si te va a gustar ese
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   convertirse en el lider de la ciudad
+NUEVO   convertirse en el líder de la ciudad
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Ese si suena interesante
+NUEVO   Ese sí suena interesante
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Perdi la buena vista
+NUEVO   Perdí la buena vista
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Ahora si... ¿Qué dijiste?
+NUEVO   Ahora sí... ¿Qué dijiste?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Te esche, solo te estaba dando lugar a que me cuentes cual es la buena vista
+NUEVO   Te escuché, solo te estaba dando lugar a que me cuentes cuál es la buena vista
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Yo si
+NUEVO   Yo sí
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Me quede impactado cuando te diste vuelta
+NUEVO   Me quedé impactado cuando te diste vuelta
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Perdón me tomo desprevenido
+NUEVO   Perdón, me tomó desprevenido
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   terminas logrando que si lo este
+NUEVO   terminas logrando que sí lo esté
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Todo esto me trajo recuerdo
+NUEVO   Todo esto me trajo recuerdos
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Me pones las cosas dificiles
+NUEVO   Me pones las cosas difíciles
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   ¿Dificiles?
+NUEVO   ¿Difíciles?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Sí, dificiles... es todo lo que voy a decir
+NUEVO   Sí, difíciles... es todo lo que voy a decir
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   ¿Y cual es el problema?
+NUEVO   ¿Y cuál es el problema?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Te estas poniendo raro
+NUEVO   Te estás poniendo raro
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   luego de estar mirandome un rato
+NUEVO   luego de estar mirándome un rato
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Te pusiste colorara jajaja
+NUEVO   Te pusiste colorada jajaja
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Gracias por los mangas Violet
+NUEVO   Gracias por los mangas, Violet
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_02_b.rpy
+VIEJO   Tengo este un colegio donde compiten entre los estudiantes con pruebas para subir de clase...
+NUEVO   Tengo este de un colegio donde compiten entre los estudiantes con pruebas para subir de clase...
+
+==============================================================================
+VIOLET — QUESTS 03_a y 04_a
+==============================================================================
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   Sí, ya los termine de leer
+NUEVO   Sí, ya los terminé de leer
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   Bueno listo, ya te puedes ir
+NUEVO   Bueno, listo, ya te puedes ir
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   Acaso no te interesa saber ¿Qué me parecio?
+NUEVO   ¿Acaso no te interesa saber qué me pareció?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   Veo que se lo tomo bastante a pecho
+NUEVO   Veo que se lo tomó bastante a pecho
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   No se si es el mejor momento para hablar de eso, voy a esperar hasta que este un poco más tranquila
+NUEVO   No sé si es el mejor momento para hablar de eso, voy a esperar hasta que esté un poco más tranquila
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   Bueno, de verda hablemos del manga
+NUEVO   Bueno, de verdad hablemos del manga
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   Perdón solo dije lo que pensé, no sabia que te iba a molestar
+NUEVO   Perdón, solo dije lo que pensé, no sabía que te iba a molestar
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   No me molesto, solo que no quiero hablar de eso
+NUEVO   No me molestó, solo que no quiero hablar de eso
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   la historia me parecio facinante
+NUEVO   la historia me pareció fascinante
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   A mi me gusto, refleja bastante bien el mundo y la idea de los finale felices
+NUEVO   A mí me gustó, refleja bastante bien el mundo y la idea de los finales felices
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   A mi también, pero duele jajaja
+NUEVO   A mí también, pero duele jajaja
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   Monica necesita que la ayude con algo
+NUEVO   Mónica necesita que la ayude con algo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   capas que encuentro algo más para conectar
+NUEVO   capaz que encuentro algo más para conectar
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   Violet y su obsesion con los Slime
+NUEVO   Violet y su obsesión con los Slime
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   me pregunto que estara jugando actualmente
+NUEVO   me pregunto qué estará jugando actualmente
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   la proxima le voy a pedir alguno
+NUEVO   la próxima le voy a pedir alguno
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   Su coleccion de figuras
+NUEVO   Su colección de figuras
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   me pregunto cuanto le habra costado
+NUEVO   me pregunto cuánto le habrá costado
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   no vi el cosplay que le regale por ningún lado, quizás este guardado en su ropero
+NUEVO   no vi el cosplay que le regalé por ningún lado, quizás esté guardado en su ropero
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   Ahí esta guardado el cosplay que le regale
+NUEVO   Ahí está guardado el cosplay que le regalé
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   ¿Se lo habra probado? No me dijo nada de si le gusto o no
+NUEVO   ¿Se lo habrá probado? No me dijo nada de si le gustó o no
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   pensé que si iba a haber, quizás lo le gustan...
+NUEVO   pensé que sí iba a haber, quizás no le gustan...
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   No sé que esperaba encontrar aquí, segui mirando por instinto
+NUEVO   No sé qué esperaba encontrar aquí, seguí mirando por instinto
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   Esta toda su ropa interior, no me imagine que Violet usara de este tipo
+NUEVO   Está toda su ropa interior, no me imaginé que Violet usara de este tipo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   No, estaba revisando nada, solo cerre el cajon que estaba abierto
+NUEVO   No, no estaba revisando nada, solo cerré el cajón que estaba abierto
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   entonces lo estabas guardando no?
+NUEVO   entonces lo estabas guardando, no?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   Estoy muerto... si, si lo estoy
+NUEVO   Estoy muerto... sí, sí lo estoy
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   Epera, hay una explicación
+NUEVO   Espera, hay una explicación
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_03_a.rpy
+VIEJO   ¿Ahora que hago con esto?
+NUEVO   ¿Ahora qué hago con esto?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   Violet una pregunta
+NUEVO   Violet, una pregunta
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   Si te interesa saber si te perdone, no lo hice
+NUEVO   Si te interesa saber si te perdoné, no lo hice
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   fue todo una gran confusion
+NUEVO   fue todo una gran confusión
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   si te habias probado el regalo que te traje
+NUEVO   si te habías probado el regalo que te traje
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   ¿A que viene eso ahora?
+NUEVO   ¿A qué viene eso ahora?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   vi la caja en tu ropero y me acorde de el
+NUEVO   vi la caja en tu ropero y me acordé de él
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   Entonces, si estabas revisando mis cosas...
+NUEVO   Entonces, sí estabas revisando mis cosas...
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   Es que... 
+NUEVO   Es que...
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   aprovecho que estaba solo en mi habitación y me robo ropa interior
+NUEVO   aprovechó que estaba solo en mi habitación y me robó ropa interior
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   Es una acusacion fuerte jajaja
+NUEVO   Es una acusación fuerte jajaja
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   sabes que fue todo una confusion
+NUEVO   sabes que fue todo una confusión
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   Se esta malinterpretando todo
+NUEVO   Se está malinterpretando todo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   Si me gusto, pero después de esto tengo más dudas
+NUEVO   Sí me gustó, pero después de esto tengo más dudas
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   ahora me pregunto que clase de regalo es
+NUEVO   ahora me pregunto qué clase de regalo es
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   recorde que es algo que siempre quizo
+NUEVO   recordé que es algo que siempre quiso
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   No te portes como una niña Violet, te trajo un regalo tienes que ser agradecida de verdad
+NUEVO   No te portes como una niña, Violet, te trajo un regalo, tienes que ser agradecida de verdad
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   Luego te lo pruebas y se lo mostras
+NUEVO   Luego te lo pruebas y se lo muestras
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   Pero ni loca voy a mostrarselo
+NUEVO   Pero ni loca voy a mostrárselo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   A mi me trajo un conjunto para entrenar y lo primero que pensé fue en mostraselo
+NUEVO   A mí me trajo un conjunto para entrenar y lo primero que pensé fue en mostrárselo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   Le mande una foto y le dije que pase a verlo
+NUEVO   Le mandé una foto y le dije que pase a verlo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   Parece que le gusto mucho
+NUEVO   Parece que le gustó mucho
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   Violet si te hizo un regalo lo minimo que puedes hacer es mostrarselo
+NUEVO   Violet, si te hizo un regalo lo mínimo que puedes hacer es mostrárselo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   No se porque te metes Jasmine, no es tu asunto
+NUEVO   No sé por qué te metes, Jasmine, no es tu asunto
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   Seguite portando como una niña pequeña si quieres
+NUEVO   Seguí portándote como una niña pequeña si quieres
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   Mejor para mi
+NUEVO   Mejor para mí
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_a.rpy
+VIEJO   Si no quiere ya esta, no hay que insistir
+NUEVO   Si no quiere ya está, no hay que insistir
+
+==============================================================================
+VIOLET — QUESTS 04_b, 04_c, 04_d y 04_d2
+==============================================================================
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_b.rpy
+VIEJO   ¿Paso algo?
+NUEVO   ¿Pasó algo?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_b.rpy
+VIEJO   estaba en un maniqui, sé que es uno de tus personajes favoritos y quería que el regalo no fuera algo generico
+NUEVO   estaba en un maniquí, sé que es uno de tus personajes favoritos y quería que el regalo no fuera algo genérico
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_b.rpy
+VIEJO   pensé que seria un buen cosplay
+NUEVO   pensé que sería un buen cosplay
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_b.rpy
+VIEJO   No ¿Qué puede haber detrás de eso? es solo un cosplay
+NUEVO   No, ¿qué puede haber detrás de eso? Es solo un cosplay
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_b.rpy
+VIEJO   no hay posibilidades que vaya a usarlo
+NUEVO   no hay posibilidades de que vaya a usarlo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_b.rpy
+VIEJO   ¿Por qué no me muestras que tal esta? Y te doy mi opion, seguro estas exagerando
+NUEVO   ¿Por qué no me muestras qué tal está? Y te doy mi opinión, seguro estás exagerando
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_c.rpy
+VIEJO   solo te lo mostré por cortezia
+NUEVO   solo te lo mostré por cortesía
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_c.rpy
+VIEJO   La Japicon sera dentro de poco tiempo
+NUEVO   La Japicon será dentro de poco tiempo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_c.rpy
+VIEJO   suficiente que te mande una de las fotos
+NUEVO   suficiente que te mandé una de las fotos
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_c.rpy
+VIEJO   Entonces se saco más
+NUEVO   Entonces se sacó más
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_c.rpy
+VIEJO   Violet se saco más fotos, si logre que me mande una
+NUEVO   Violet se sacó más fotos, si logré que me mande una
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_c.rpy
+VIEJO   Sera cosa de seguir mejorarndo la relación
+NUEVO   Será cosa de seguir mejorando la relación
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d.rpy
+VIEJO   ¿Cómo estas?
+NUEVO   ¿Cómo estás?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d.rpy
+VIEJO   Conozco esa mirada, estas pensando algo
+NUEVO   Conozco esa mirada, estás pensando algo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d.rpy
+VIEJO   no sé que tan buena idea es
+NUEVO   no sé qué tan buena idea es
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d.rpy
+VIEJO   Todavia quedan fotos que no vi, podria portarme bien
+NUEVO   Todavía quedan fotos que no vi, podría portarme bien
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d.rpy
+VIEJO   Puede que asi logre que me mande las fotos
+NUEVO   Puede que así logre que me mande las fotos
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d2.rpy
+VIEJO   ¿Que pasa?
+NUEVO   ¿Qué pasa?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d2.rpy
+VIEJO   Nada, solo queria saber como estas
+NUEVO   Nada, solo quería saber cómo estás
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d2.rpy
+VIEJO   ¿Como que?
+NUEVO   ¿Cómo qué?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d2.rpy
+VIEJO   No se, solo preguntaba, capas habia algo que con lo que te podia ayudar o hacer por vos
+NUEVO   No sé, solo preguntaba, capaz había algo con lo que te podía ayudar o hacer por ti
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d2.rpy
+VIEJO   ¿Que es lo que queres?
+NUEVO   ¿Qué es lo que quieres?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d2.rpy
+VIEJO   si en algun momento necesitas algo, no dudes en pedirmelo
+NUEVO   si en algún momento necesitas algo, no dudes en pedírmelo
+
+==============================================================================
+VIOLET — QUESTS 04_d3 y 04_d4
+==============================================================================
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d3.rpy
+VIEJO   Veo que todavia estas con ganas de ser servicial
+NUEVO   Veo que todavía estás con ganas de ser servicial
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d3.rpy
+VIEJO   ¿Cuando no lo soy?
+NUEVO   ¿Cuándo no lo soy?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d3.rpy
+VIEJO   ¿Desde hace cuanto las tenes ahi?
+NUEVO   ¿Desde hace cuánto las tienes ahí?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d3.rpy
+VIEJO   Bueno esta bien
+NUEVO   Bueno, está bien
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d3.rpy
+VIEJO   ¿Necesitas algo mas?
+NUEVO   ¿Necesitas algo más?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d3.rpy
+VIEJO   No por ahora no, gracias
+NUEVO   No, por ahora no, gracias
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d3.rpy
+VIEJO   tendre que hacer mas cosas por ella si quiero que me mand la otra foto
+NUEVO   tendré que hacer más cosas por ella si quiero que me mande la otra foto
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d3.rpy
+VIEJO   Mañana podria seguir intentandolo
+NUEVO   Mañana podría seguir intentándolo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d3.rpy
+VIEJO   Esta bien, espero que no te olvide
+NUEVO   Está bien, espero que no te olvides
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d3.rpy
+VIEJO   En algun momento le voy a tener que dar las golosinas
+NUEVO   En algún momento le voy a tener que dar las golosinas
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d3.rpy
+VIEJO   Cierto las golosinas, me habia olvidado
+NUEVO   Cierto, las golosinas, me había olvidado
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d3.rpy
+VIEJO   Bueno, voy a estar esperandolas
+NUEVO   Bueno, voy a estar esperándolas
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   ¿Y ahora que podria querer?
+NUEVO   ¿Y ahora qué podría querer?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   Si no queres nada, no hay problema...
+NUEVO   Si no quieres nada, no hay problema...
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   Podriamos pedir a la noche entonces
+NUEVO   Podríamos pedir a la noche entonces
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   No, quiero que las hagas vos
+NUEVO   No, quiero que las hagas tú
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   Ok... esta bien, hago pizzas para cenar
+NUEVO   Ok... está bien, hago pizzas para cenar
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   Avisame cuando esten listas
+NUEVO   Avísame cuando estén listas
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   Todavia estoy esperando las pizzas
+NUEVO   Todavía estoy esperando las pizzas
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   Si, ya me acuerdo, no te preocupes
+NUEVO   Sí, ya me acuerdo, no te preocupes
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   Si la veo de buen humor podria perguntarle por las otras fotos
+NUEVO   Si la veo de buen humor podría preguntarle por las otras fotos
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   ¿Que pasa?
+NUEVO   ¿Qué pasa?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   ¿Ya estan las pizzas?
+NUEVO   ¿Ya están las pizzas?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   Si ya estan listas, me pedist que venga a avisarte
+NUEVO   Sí, ya están listas, me pediste que venga a avisarte
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   ¿Nada mas?
+NUEVO   ¿Nada más?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   ¿Nada mas de que?
+NUEVO   ¿Nada más de qué?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   No se, me hiciste subir a avisarte...
+NUEVO   No sé, me hiciste subir a avisarte...
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   ¿Estabas esperando algo mas?
+NUEVO   ¿Estabas esperando algo más?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   Nos vemos luego [mc_name]
+NUEVO   Nos vemos luego, [mc_name]
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   sabe lo que estoy esperando y se esta abusando
+NUEVO   sabe lo que estoy esperando y se está abusando
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d4.rpy
+VIEJO   hay que saber cuando rendirse
+NUEVO   hay que saber cuándo rendirse
+
+==============================================================================
+VIOLET — QUESTS 04_d5, 04_d6 y 04_e
+==============================================================================
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   ¿Como estas?
+NUEVO   ¿Cómo estás?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Bien, ¿y tu?
+NUEVO   Bien, ¿y tú?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   ¿Que pasa?
+NUEVO   ¿Qué pasa?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Estabas muy servicial ultimamente y me parecio raro que ya no lo estes
+NUEVO   Estabas muy servicial últimamente y me pareció raro que ya no lo estés
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Me rendi
+NUEVO   Me rendí
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Entonces si querias algo
+NUEVO   Entonces sí querías algo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   ¿No querias ver las otras fotos que no te mande?
+NUEVO   ¿No querías ver las otras fotos que no te mandé?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Ella sabia lo que queria desde un principio
+NUEVO   Ella sabía lo que quería desde un principio
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Podri hacerme el desentendido
+NUEVO   Podría hacerme el desentendido
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   ¿Que queres que haga?
+NUEVO   ¿Qué quieres que haga?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Monica me pidio que me encargue
+NUEVO   Mónica me pidió que me encargue
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Mmmm me parecee que es mucho
+NUEVO   Mmmm me parece que es mucho
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Tu trabajo va a ser recompensado, creeme
+NUEVO   Tu trabajo va a ser recompensado, créeme
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Esta bien, acepto
+NUEVO   Está bien, acepto
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Avisame cuando esta todo listo
+NUEVO   Avísame cuando esté todo listo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Esta bien...
+NUEVO   Está bien...
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Cai completamente en su juego, sabe como manipularme
+NUEVO   Caí completamente en su juego, sabe cómo manipularme
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   No todavia estoy en eso
+NUEVO   No, todavía estoy en eso
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Estoy agotado y recien empiezo a limpiar
+NUEVO   Estoy agotado y recién empiezo a limpiar
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Dos de tres y no quiero saber mas nada...
+NUEVO   Dos de tres y no quiero saber más nada...
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Esta debilidad por Violet me esta costando caro
+NUEVO   Esta debilidad por Violet me está costando caro
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Al fin termine
+NUEVO   Al fin terminé
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d5.rpy
+VIEJO   Pero aprendi algo, no puedo dejar que Violet control la situacion
+NUEVO   Pero aprendí algo, no puedo dejar que Violet controle la situación
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d6.rpy
+VIEJO   Lo se... no estabas haciendo las cosas porque eres un buen chico como decias
+NUEVO   Lo sé... no estabas haciendo las cosas porque eres un buen chico como decías
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d6.rpy
+VIEJO   ¿Tantas ganas de verlas tenes?
+NUEVO   ¿Tantas ganas de verlas tienes?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d6.rpy
+VIEJO   Despues de limpiar toda la casa y hacer todo lo que me pediste, si
+NUEVO   Después de limpiar toda la casa y hacer todo lo que me pediste, sí
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d6.rpy
+VIEJO   Te volvist un pervertido
+NUEVO   Te volviste un pervertido
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d6.rpy
+VIEJO   No se que es pero si ser un perverito, o ser una pervertidas que manipula a otros
+NUEVO   No sé qué es peor, si ser un pervertido o ser una pervertida que manipula a otros
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d6.rpy
+VIEJO   Si no lo fueras no estarias manipulandome con esas fotos, queres mostrarmelas, solo que quierias aprovechar para obtener algo a cambio
+NUEVO   Si no lo fueras no estarías manipulándome con esas fotos, quieres mostrármelas, solo que querías aprovechar para obtener algo a cambio
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d6.rpy
+VIEJO   Bueno, yo ya cumpli, ahora te toca a vos
+NUEVO   Bueno, yo ya cumplí, ahora te toca a ti
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d6.rpy
+VIEJO   No te las voy a mostar ahora
+NUEVO   No te las voy a mostrar ahora
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d6.rpy
+VIEJO   Te lo mando despues por mensaje
+NUEVO   Te lo mando después por mensaje
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_d6.rpy
+VIEJO   Confio en vos
+NUEVO   Confío en ti
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_e.rpy
+VIEJO   Violet tengo una idea
+NUEVO   Violet, tengo una idea
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_e.rpy
+VIEJO   No se si quiero saberla, ultimamente tus ideas no son buenas para mi
+NUEVO   No sé si quiero saberla, últimamente tus ideas no son buenas para mí
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_e.rpy
+VIEJO   un cosplay nuevo y que lo envien
+NUEVO   un cosplay nuevo y que lo envíen
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_e.rpy
+VIEJO   No se... sigue dandome verguenza la idea
+NUEVO   No sé... sigue dándome vergüenza la idea
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_e.rpy
+VIEJO   no te tiene que dar verguenza
+NUEVO   no te tiene que dar vergüenza
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_e.rpy
+VIEJO   pero si te hace sentir más comoda
+NUEVO   pero si te hace sentir más cómoda
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_e.rpy
+VIEJO   le voy a escribir para ver que opciones hay
+NUEVO   le voy a escribir para ver qué opciones hay
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_e.rpy
+VIEJO   no es que ya acepte usarlo
+NUEVO   no es que ya acepté usarlo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_04_e.rpy
+VIEJO   un cosplay para Violet y uno para mi
+NUEVO   un cosplay para Violet y uno para mí
+
+==============================================================================
+VIOLET — QUESTS 05 y 06
+==============================================================================
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_05_a.rpy
+VIEJO   Está bien, avisame cuando llegue el pedido.
+NUEVO   Está bien, avísame cuando llegue el pedido.
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_05_b.rpy
+VIEJO   los voy a ver y te digo cual me gusta
+NUEVO   los voy a ver y te digo cuál me gusta
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_05_c.rpy
+VIEJO   No lo compre para eso, quería que lo usaras en el evento
+NUEVO   No lo compré para eso, quería que lo usaras en el evento
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_05_c.rpy
+VIEJO   algo que te exponga y tampoo para que te mire todo el mundo
+NUEVO   algo que te exponga y tampoco para que te mire todo el mundo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_a.rpy
+VIEJO   No te entiendo ¿Por qué lo haces?
+NUEVO   No te entiendo, ¿por qué lo haces?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_a.rpy
+VIEJO   fue un impulso y no se como va a reaccionar Violet
+NUEVO   fue un impulso y no sé cómo va a reaccionar Violet
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_a.rpy
+VIEJO   Bueno nos vemos luego
+NUEVO   Bueno, nos vemos luego
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_a.rpy
+VIEJO   me equivoqué al enojarme cuando me fui y arruine la relación
+NUEVO   me equivoqué al enojarme cuando me fui y arruiné la relación
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_a.rpy
+VIEJO   Ahora voy a estar a la espectativa de la reaccion de Violet
+NUEVO   Ahora voy a estar a la expectativa de la reacción de Violet
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_b.rpy
+VIEJO   no menciono nada de lo que paso el otro día
+NUEVO   no menciono nada de lo que pasó el otro día
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_b.rpy
+VIEJO   Sabes que nunca me gusto llamar la atención
+NUEVO   Sabes que nunca me gustó llamar la atención
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_b.rpy
+VIEJO   Bueno, nos costo pero estamos de acuerdo
+NUEVO   Bueno, nos costó pero estamos de acuerdo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_b.rpy
+VIEJO   este es el momento en donde la cosa se descontrolaria
+NUEVO   este es el momento en donde la cosa se descontrolaría
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_b.rpy
+VIEJO   Si esta un poco trabado, no te preocupes que lo voy a arreglar
+NUEVO   Sí, está un poco trabado, no te preocupes que lo voy a arreglar
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_b.rpy
+VIEJO   Si voy a poder
+NUEVO   Sí voy a poder
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_b.rpy
+VIEJO   Que cierre de porquería
+NUEVO   Qué cierre de porquería
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_b.rpy
+VIEJO   Creo que lo trabe más, no lo puedo ni subir ahora
+NUEVO   Creo que lo trabé más, no lo puedo ni subir ahora
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_b.rpy
+VIEJO   Es un problema ese cierre, me costo mucho sacarmelo la otra vez
+NUEVO   Es un problema ese cierre, me costó mucho sacármelo la otra vez
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_b.rpy
+VIEJO   ¿Y ahora que hacemos?
+NUEVO   ¿Y ahora qué hacemos?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_b.rpy
+VIEJO   Le voy a pedir a Monica que me lo quite
+NUEVO   Le voy a pedir a Mónica que me lo quite
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_b.rpy
+VIEJO   le voy a decir ahora, antes que se haga más tarde
+NUEVO   le voy a decir ahora, antes de que se haga más tarde
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_06_b.rpy
+VIEJO   [mc_name] Este es el momento en que sin decir nada te vas...
+NUEVO   [mc_name], este es el momento en que sin decir nada te vas...
+
+==============================================================================
+VIOLET — QUESTS 07 y 08
+==============================================================================
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_07_a.rpy
+VIEJO   Monica lo pudo destrabar, pero me dijo que el cierre está fallado
+NUEVO   Mónica lo pudo destrabar, pero me dijo que el cierre está fallado
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_07_a.rpy
+VIEJO   Le pregunté a Monica si lo podía arreglar
+NUEVO   Le pregunté a Mónica si lo podía arreglar
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_08_a.rpy
+VIEJO   Están bastante de moda ultimamente los piratas, no me quejo me gustan pero ya cansa un poco
+NUEVO   Están bastante de moda últimamente los piratas, no me quejo, me gustan, pero ya cansa un poco
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_08_a.rpy
+VIEJO   Tendria que revisar que esté todo cerrado
+NUEVO   Tendría que revisar que esté todo cerrado
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_08_a.rpy
+VIEJO   ¿Llego alguien?
+NUEVO   ¿Llegó alguien?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_08_a.rpy
+VIEJO   Monica me dejo en casa de Nath para ver el cosplay y cuando sali estaba apenas nublado
+NUEVO   Mónica me dejó en casa de Nath para ver el cosplay y cuando salí estaba apenas nublado
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_08_a.rpy
+VIEJO   Subi a darte una ducha caliente antes de que te agarre un resfrio
+NUEVO   Sube a darte una ducha caliente antes de que te agarre un resfrío
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_08_a.rpy
+VIEJO   Si ¿Me puedes traer el pijama rosa del ropero?
+NUEVO   Sí, ¿me puedes traer el pijama rosa del ropero?
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_08_a.rpy
+VIEJO   Sí, anda a bañarte que ahora te lo llevo
+NUEVO   Sí, ve a bañarte que ahora te lo llevo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_08_a.rpy
+VIEJO   Pobre Violet llego empapada, voy a buscar su pijama y dejarselo
+NUEVO   Pobre Violet, llegó empapada, voy a buscar su pijama y dejárselo
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_08_a.rpy
+VIEJO   Listo, te deje la ropa afuera de la puerta
+NUEVO   Listo, te dejé la ropa afuera de la puerta
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_08_a.rpy
+VIEJO   No se si fue la mejor opcion entrar así
+NUEVO   No sé si fue la mejor opción entrar así
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_08_a.rpy
+VIEJO   Si me acerco mas me va a ver y me va a matar
+NUEVO   Si me acerco más me va a ver y me va a matar
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_08_a.rpy
+VIEJO   Podrias haberlo dejado afuera
+NUEVO   Podrías haberlo dejado afuera
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_08_a.rpy
+VIEJO   De aca veo un poco mejor
+NUEVO   De acá veo un poco mejor
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_08_a.rpy
+VIEJO   El riesgo valio la pena
+NUEVO   El riesgo valió la pena
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_08_a.rpy
+VIEJO   Se esta poniendo feo el día
+NUEVO   Se está poniendo feo el día
+
+==============================================================================
+VIOLET — QUEST 09, MINIJUEGO E ITEM MANGAS
+==============================================================================
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_09_a.rpy
+VIEJO   Este tipo de misiones solo estaran disponible durante un tiempo, el cierre de la misma cambiara segun tus acciones
+NUEVO   Este tipo de misiones solo estarán disponibles durante un tiempo, el cierre de la misma cambiará según tus acciones
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_09_a.rpy
+VIEJO   Monica pidio que no la molestemos
+NUEVO   Mónica pidió que no la molestemos
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_09_a.rpy
+VIEJO   Ya le avisé a Monica, dijo que en un momento va.
+NUEVO   Ya le avisé a Mónica, dijo que en un momento va.
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_09_a.rpy
+VIEJO   Monica, Violet te llama.
+NUEVO   Mónica, Violet te llama.
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_09_b.rpy
+VIEJO   Estuve tres dias sin acordarme de Violet
+NUEVO   Estuve tres días sin acordarme de Violet
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_09_minijuego.rpy
+VIEJO   Tiene la ropa empapada, se la tendria que quitar
+NUEVO   Tiene la ropa empapada, se la tendría que quitar
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_09_minijuego.rpy
+VIEJO   Violet tenes toda la ropa mojada
+NUEVO   Violet, tienes toda la ropa mojada
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_09_minijuego.rpy
+VIEJO   mc "Si"
+NUEVO   mc "Sí"
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_09_minijuego.rpy
+VIEJO   Si quieres sacala
+NUEVO   Si quieres, sácala
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_09_minijuego.rpy
+VIEJO   Si fueran mas grandes seria mejor
+NUEVO   Si fueran más grandes sería mejor
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_09_minijuego.rpy
+VIEJO   No me puedo resistir cuando se trata de vos
+NUEVO   No me puedo resistir cuando se trata de ti
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_09_minijuego.rpy
+VIEJO   Este contenido se incluira en futuras actualizaciones
+NUEVO   Este contenido se incluirá en futuras actualizaciones
+
+ARCHIVO game/script/characters/violet/quests/violet_item_mangas.rpy
+VIEJO   Es muy tarde para ponerme a leer, sera mejor hacerlo mañana
+NUEVO   Es muy tarde para ponerme a leer, será mejor hacerlo mañana
+
+ARCHIVO game/script/characters/violet/quests/violet_item_mangas.rpy
+VIEJO   Bien llevado como el mundo lo absorve y convierte a media que va perdiendo cosas
+NUEVO   Bien llevado como el mundo lo absorbe y convierte a medida que va perdiendo cosas
+
+ARCHIVO game/script/characters/violet/quests/violet_item_mangas.rpy
+VIEJO   Uff... duro...  El final duele
+NUEVO   Uff... duro... El final duele
+
+ARCHIVO game/script/characters/violet/quests/violet_item_mangas.rpy
+VIEJO   La verdad supero espectativas, ahora quiero hablar con Violet y seahogar algunas cosas
+NUEVO   La verdad superó expectativas, ahora quiero hablar con Violet y desahogar algunas cosas
+
+==============================================================================
+VIOLET — AMOR 5, 10 y 15
+==============================================================================
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   Bueno de a poco voy logrando avances con Violet cuando la cruzo en algun lugar de la casa
+NUEVO   Bueno, de a poco voy logrando avances con Violet cuando la cruzo en algún lugar de la casa
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   quiero darle su espacio pero sinto que tambien es rendirme
+NUEVO   quiero darle su espacio pero siento que también es rendirme
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   Nos soliamos llevar muy bien como para que ahora las cosas esten asi
+NUEVO   Nos solíamos llevar muy bien como para que ahora las cosas estén así
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   "¿Que queres ahora?"
+NUEVO   "¿Qué quieres ahora?"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   ... repito ... ¿Que queres ahora?
+NUEVO   ... repito ... ¿Qué quieres ahora?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   Pense que no iba a salir esta vez tampoco y ahora no se que decirle
+NUEVO   Pensé que no iba a salir esta vez tampoco y ahora no sé qué decirle
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   Hola ¿Como estas?
+NUEVO   Hola, ¿cómo estás?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   Nada en particular, queria saber como estabas
+NUEVO   Nada en particular, quería saber cómo estabas
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   ¿De verad me molestas por eso?
+NUEVO   ¿De verdad me molestas por eso?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   ¿Hasta cuando vas a seguir con este juego?
+NUEVO   ¿Hasta cuándo vas a seguir con este juego?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   No se de que juego me hablas
+NUEVO   No sé de qué juego me hablas
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   Si tanto problema tenes conmigo ¿Por que no me lo decis de una vez y terminamos con esto?
+NUEVO   Si tanto problema tienes conmigo, ¿por qué no me lo dices de una vez y terminamos con esto?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   no enviaste un mensaje , una llamada, ni siquiera un saludo, y ahora que venis ¿Tenemos que ser mejores amigos?
+NUEVO   no enviaste un mensaje, una llamada, ni siquiera un saludo, y ahora que vienes, ¿tenemos que ser mejores amigos?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   Creo que no funciona asi
+NUEVO   Creo que no funciona así
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   pero haciendome el ofendido no voy a solucionar nada
+NUEVO   pero haciéndome el ofendido no voy a solucionar nada
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   en la casa, en algun momento se va a tener que hablar
+NUEVO   en la casa, en algún momento se va a tener que hablar
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   "Adios"
+NUEVO   "Adiós"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   Bueno al menos el problema esta plantado
+NUEVO   Bueno, al menos el problema está plantado
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_5.rpy
+VIEJO   Sera cosa de seguir insistiendo y esperar a que ella este lista
+NUEVO   Será cosa de seguir insistiendo y esperar a que ella esté lista
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   "¿Que paso?"
+NUEVO   "¿Qué pasó?"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   Alguien se levanto con habre a la noche y dejo toda la cocina sucia
+NUEVO   Alguien se levantó con hambre a la noche y dejó toda la cocina sucia
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   ¿Fuiste vos [mc_name]?
+NUEVO   ¿Fuiste tú, [mc_name]?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   No, solo baje por un vaso de agua
+NUEVO   No, solo bajé por un vaso de agua
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   Ayer Jasmine entreno mucho
+NUEVO   Ayer Jasmine entrenó mucho
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   siempre le solia echar la culpa de todo a Jasmine
+NUEVO   siempre le solía echar la culpa de todo a Jasmine
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   por la unica vez que hace algo asi, quizas estaba muy dormida
+NUEVO   por la única vez que hace algo así, quizás estaba muy dormida
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   "¿Enserio?"
+NUEVO   "¿En serio?"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   Cuando yo subia ella estaba bajando y se la veia bastante dormida
+NUEVO   Cuando yo subía ella estaba bajando y se la veía bastante dormida
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   Si Jasmine siempre hace todo por nosotros
+NUEVO   Sí, Jasmine siempre hace todo por nosotros
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   Es lo minimo que podemos hacer por ella
+NUEVO   Es lo mínimo que podemos hacer por ella
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   "Si Monica"
+NUEVO   "Sí, Mónica"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   "Si, nos encargamos de todo"
+NUEVO   "Sí, nos encargamos de todo"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   "Si, de Jasmine"
+NUEVO   "Sí, de Jasmine"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   "Jajaja dale, vamos"
+NUEVO   "Jajaja, dale, vamos"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   No puedo creer el desastre que habia... ¿Que hiciste?
+NUEVO   No puedo creer el desastre que había... ¿Qué hiciste?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   decia que era facil y no lo resulto
+NUEVO   decía que era fácil y no resultó
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   ¿Y limpiarlo en el momento tampoco funciono?
+NUEVO   ¿Y limpiarlo en el momento tampoco funcionó?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   No, quede estresada y de mal humor
+NUEVO   No, quedé estresada y de mal humor
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   Ahora el que se quiere ir a dormir despues de todo esto soy yo
+NUEVO   Ahora el que se quiere ir a dormir después de todo esto soy yo
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   no hay limites a lo que podes pedir
+NUEVO   no hay límites a lo que puedes pedir
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_10.rpy
+VIEJO   "¿Como antes?"
+NUEVO   "¿Cómo antes?"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_15.rpy
+VIEJO   buscando mi vieja Pocket Boy y miral o que encontre
+NUEVO   buscando mi vieja Pocket Boy y mira lo que encontré
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_15.rpy
+VIEJO   debe ser uno de los primeros juegos que jugue
+NUEVO   debe ser uno de los primeros juegos que jugué
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_15.rpy
+VIEJO   Mmmm no se si hoy en dia lo jugaria
+NUEVO   Mmmm no sé si hoy en día lo jugaría
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_15.rpy
+VIEJO   Pero yo queria jugar este, antes te encantaba
+NUEVO   Pero yo quería jugar este, antes te encantaba
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_15.rpy
+VIEJO   La verdad nunca me gusto mucho ese juego jajaja
+NUEVO   La verdad nunca me gustó mucho ese juego jajaja
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_15.rpy
+VIEJO   Recuerdo que siempre me decias de jugarlo
+NUEVO   Recuerdo que siempre me decías de jugarlo
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_15.rpy
+VIEJO   era tu juego favorito y siempre decias que si
+NUEVO   era tu juego favorito y siempre decías que sí
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_15.rpy
+VIEJO   Siempre pense que te gustaba mucho
+NUEVO   Siempre pensé que te gustaba mucho
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_15.rpy
+VIEJO   me daba un poco de verguenza porque siempre terminabamos casados y teniamos hijos
+NUEVO   me daba un poco de vergüenza porque siempre terminábamos casados y teníamos hijos
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_15.rpy
+VIEJO   Me dio nostalgia y queria jugar
+NUEVO   Me dio nostalgia y quería jugar
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_15.rpy
+VIEJO   eso de casarnos y tener hijos me da verguenza a mi
+NUEVO   eso de casarnos y tener hijos me da vergüenza a mí
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_15.rpy
+VIEJO   Bueno si te arrepentis y queres que vivamos felices por siempre me avisas
+NUEVO   Bueno, si te arrepientes y quieres que vivamos felices por siempre me avisas
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_15.rpy
+VIEJO   ahora le dan verguenza ese tipo de cosas
+NUEVO   ahora le dan vergüenza ese tipo de cosas
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_15.rpy
+VIEJO   quizas podria ver de unir a Violet al club jajaja
+NUEVO   quizás podría ver de unir a Violet al club jajaja
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_15.rpy
+VIEJO   Tendria que buscar algun bueno como para empeza
+NUEVO   Tendría que buscar alguno bueno como para empezar
+
+==============================================================================
+VIOLET — AMOR 20
+==============================================================================
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   Necesito una recomendacion de tu parte
+NUEVO   Necesito una recomendación de tu parte
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   ¿Sobre que?
+NUEVO   ¿Sobre qué?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   Estoy buscando algo que jugar y no se me ocurre que
+NUEVO   Estoy buscando algo que jugar y no se me ocurre qué
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   ¿Que genero?
+NUEVO   ¿Qué género?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   Algo de accion, muchos tiros y explosiones si puede ser
+NUEVO   Algo de acción, muchos tiros y explosiones si puede ser
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   ¿De que trata?
+NUEVO   ¿De qué trata?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   ¿Y eso es de accion?
+NUEVO   ¿Y eso es de acción?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   Bueno tendria que comprarlo ¿Es muy caro?
+NUEVO   Bueno, tendría que comprarlo. ¿Es muy caro?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   creo que esta en oferta con un 30% de descuento
+NUEVO   creo que está en oferta con un 30% de descuento
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   Jajaja suena raro, bueno te aviso cuando lo tenga
+NUEVO   Jajaja, suena raro, bueno te aviso cuando lo tenga
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   Si, ultimamente con mis amigos lo jugamos casi todas las noches
+NUEVO   Sí, últimamente con mis amigos lo jugamos casi todas las noches
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   Bueno, ya tengo la recomendacion, ahora tengo que ir a la pc
+NUEVO   Bueno, ya tengo la recomendación, ahora tengo que ir a la pc
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   Bueno ya tengo el juego, costo una buena moneda pero en los videos se veia prometedor
+NUEVO   Bueno, ya tengo el juego, costó una buena moneda pero en los videos se veía prometedor
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   "Podria probarlo"
+NUEVO   "Podría probarlo"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   Violet no suele estar conectada a esta hora, podria intentarlo de noche
+NUEVO   Violet no suele estar conectada a esta hora, podría intentarlo de noche
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   Violet no esta conectada ahora
+NUEVO   Violet no está conectada ahora
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   Violet se unio y jugamos algunas partidas juntos
+NUEVO   Violet se unió y jugamos algunas partidas juntos
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   Al final el juego supero mis expectativas, no pare de morirme
+NUEVO   Al final el juego superó mis expectativas, no paré de morirme
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   aunque sus amigos me hicieron sentir muy comodo
+NUEVO   aunque sus amigos me hicieron sentir muy cómodo
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   Me encanto el juego, lleno de enemigos por todos lados
+NUEVO   Me encantó el juego, lleno de enemigos por todos lados
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   Tambien estaba llenos de pedazos tuyos por todos lados jajaja
+NUEVO   También estaba lleno de pedazos tuyos por todos lados jajaja
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   Pero es normal, estas jugando una dificultad muy alta
+NUEVO   Pero es normal, estás jugando una dificultad muy alta
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   Hacia mucho que no jugabamos un video juego juntos
+NUEVO   Hacía mucho que no jugábamos un video juego juntos
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   Eso espero, ahora quede con ganas de mas
+NUEVO   Eso espero, ahora quedé con ganas de más
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   "Nos vemos despues"
+NUEVO   "Nos vemos después"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_20.rpy
+VIEJO   "Adios"
+NUEVO   "Adiós"
+
+==============================================================================
+VIOLET — AMOR 25 y 30
+==============================================================================
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Hoy tengo el dia libre pero no tengo planes, vere que puedo hacer
+NUEVO   Hoy tengo el día libre pero no tengo planes, veré qué puedo hacer
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Quizas arregle para salir
+NUEVO   Quizás arregle para salir
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Tengo una llamada perdida de Monica, voy a ver que quiere
+NUEVO   Tengo una llamada perdida de Mónica, voy a ver qué quiere
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   vamos a ir al shopping a hacer unas compras y ver una pelicula
+NUEVO   vamos a ir al shopping a hacer unas compras y ver una película
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   ¿Que van a ver?
+NUEVO   ¿Qué van a ver?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   No es su estilo de salida ni de pelica, dijo que se preferia quedar
+NUEVO   No es su estilo de salida ni de película, dijo que prefería quedarse
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Te tengo que pedir un favor tambien
+NUEVO   Te tengo que pedir un favor también
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   "Si decime"
+NUEVO   "Sí, dime"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   podrias estar atento para recibirlo
+NUEVO   podrías estar atento para recibirlo
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   No confio en que Violet este atenta
+NUEVO   No confío en que Violet esté atenta
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Si, no hay problema yo voy a quedarme todo el dia en casa
+NUEVO   Sí, no hay problema, yo voy a quedarme todo el día en casa
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Despreocupate y pasen un lindo dia
+NUEVO   Despreocúpate y pasen un lindo día
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   "Adios"
+NUEVO   "Adiós"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   "Tengo todo el dia"
+NUEVO   "Tengo todo el día"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   "Podria comer algo para pasar el tiempo"
+NUEVO   "Podría comer algo para pasar el tiempo"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   "Podria ver algo para pasar el tiempo"
+NUEVO   "Podría ver algo para pasar el tiempo"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   "¿Que pasa?"
+NUEVO   "¿Qué pasa?"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Estoy aburrido ¿Miramos alguna pelicual?
+NUEVO   Estoy aburrido, ¿miramos alguna película?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Que sea algo de accion
+NUEVO   Que sea algo de acción
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Voy a ver que hay en la cocina
+NUEVO   Voy a ver qué hay en la cocina
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Podra hacer unas hamburguesas, algo simple y rapido
+NUEVO   Podría hacer unas hamburguesas, algo simple y rápido
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Uhhhh se corto la luz...
+NUEVO   Uhhhh se cortó la luz...
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   No se ve luz afuera tampoco, se ve que el corte es general
+NUEVO   No se ve luz afuera tampoco, se ve que el corte es general
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   ¿El corte es general no?
+NUEVO   ¿El corte es general, no?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Parece que si, vamos a tener que esperar que vuelve
+NUEVO   Parece que sí, vamos a tener que esperar a que vuelva
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Bueno, me voy a mi habitacion a acostarme un rato hasta que vuelva
+NUEVO   Bueno, me voy a mi habitación a acostarme un rato hasta que vuelva
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Si queres te podes quedar aca acostado hasta que la luz vuelva
+NUEVO   Si quieres te puedes quedar acá acostado hasta que la luz vuelva
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Mmmm... ¿Le seguis teniendo miendo a la oscuridad?
+NUEVO   Mmmm... ¿Le sigues teniendo miedo a la oscuridad?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Entonces me voy, voy a estar mas comodo en mi cama
+NUEVO   Entonces me voy, voy a estar más cómodo en mi cama
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   no es que me muera de miedo cuando se esta todo oscuro pero pero si me da un poco
+NUEVO   no es que me muera de miedo cuando está todo oscuro, pero sí me da un poco
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Pero ahora la situacion es distinta, despues de tantas peliculas de terror la imaginacion me da a pensar
+NUEVO   Pero ahora la situación es distinta, después de tantas películas de terror la imaginación me da a pensar
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   ¿Y si el corte lo genero un asesino para venir a matarnos?
+NUEVO   ¿Y si el corte lo generó un asesino para venir a matarnos?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   "¿Que carajos fue eso?"
+NUEVO   "¿Qué carajos fue eso?"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   estoy aca con vos y te voy a cuidar
+NUEVO   estoy acá contigo y te voy a cuidar
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   ¿Chicos donde estan?
+NUEVO   ¿Chicos, dónde están?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Asi que eso habia sido el rudio
+NUEVO   Así que eso había sido el ruido
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Ehhh ¿Estas mejor?
+NUEVO   Ehhh, ¿estás mejor?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Volvieron mas temprano de lo esperado
+NUEVO   Volvieron más temprano de lo esperado
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   El shopping estaba con luces de emergenica y el cine cerrado
+NUEVO   El shopping estaba con luces de emergencia y el cine cerrado
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Nos reprogramaron la entrada para el proximo domingo
+NUEVO   Nos reprogramaron la entrada para el próximo domingo
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Uhhhh una lastima
+NUEVO   Uhhhh, una lástima
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   ¿Violet estas bien?
+NUEVO   ¿Violet, estás bien?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   violet "Si"
+NUEVO   violet "Sí"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Estas roja ¿No estaras con fiebre no?
+NUEVO   Estás roja, ¿no estarás con fiebre?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Debe ser que se asusto con los ruidos
+NUEVO   Debe ser que se asustó con los ruidos
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   No tenia miedo...
+NUEVO   No tenía miedo...
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Si comamos antes que se enfrie
+NUEVO   Sí, comamos antes de que se enfríe
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Todo paso muy rapido y luego llegaron las chicas
+NUEVO   Todo pasó muy rápido y luego llegaron las chicas
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_25.rpy
+VIEJO   Me pregunto que pensara de esto que paso
+NUEVO   Me pregunto qué pensará de esto que pasó
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   [mc_name] ¿Me podes ayudar en algo?
+NUEVO   [mc_name], ¿me puedes ayudar en algo?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Emmmm si ¿Que pasa?
+NUEVO   Emmmm sí, ¿qué pasa?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   ¿Que tengo que hacer?
+NUEVO   ¿Qué tengo que hacer?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Necesito que me des una opinion y quiero que seas objetivo
+NUEVO   Necesito que me des una opinión y quiero que seas objetivo
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   "¿Sobre que?"
+NUEVO   "¿Sobre qué?"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Sobre mi trasero y el pantalon que me voy a poner
+NUEVO   Sobre mi trasero y el pantalón que me voy a poner
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   mirarme el trasero todo el tiempo puede ser util
+NUEVO   mirarme el trasero todo el tiempo puede ser útil
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   un tema serio que va a requerir toda mi atencion
+NUEVO   un tema serio que va a requerir toda mi atención
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Va a ser dificil porque caminas con algo llamativo
+NUEVO   Va a ser difícil porque caminas con algo llamativo
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   "¿Que opinas?"
+NUEVO   "¿Qué opinas?"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   necesito colaboracion y me da verguenza preguntarle a Jasmine o a Monica
+NUEVO   necesito colaboración y me da vergüenza preguntarle a Jasmine o a Mónica
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Bueno a ver la otra opcion
+NUEVO   Bueno, a ver la otra opción
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Tengo que admitir que la situacion es bastante exitante
+NUEVO   Tengo que admitir que la situación es bastante excitante
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   "Si eso ya lo se"
+NUEVO   "Sí, eso ya lo sé"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   "¿De que color es?"
+NUEVO   "¿De qué color es?"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   "Bueno tenia esa duda"
+NUEVO   "Bueno, tenía esa duda"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Listo, ya podes abrir los ojos
+NUEVO   Listo, ya puedes abrir los ojos
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   "A ver atras"
+NUEVO   "A ver atrás"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Creo que es mas ajustado
+NUEVO   Creo que es más ajustado
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Si parece un poco mas ajustado, te lo hace mas redondo que el blanco
+NUEVO   Sí, parece un poco más ajustado, te lo hace más redondo que el blanco
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Si bien este te marca mas el trasero
+NUEVO   Si bien este te marca más el trasero
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   El blanco se ve a kilometros
+NUEVO   El blanco se ve a kilómetros
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Me imagine que no ibas a tener problemas en ayudarme con esto
+NUEVO   Me imaginé que no ibas a tener problemas en ayudarme con esto
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   ¿Estabas esperando algo mas?
+NUEVO   ¿Estabas esperando algo más?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Mmmm... ¿No te tenes que probar otro?
+NUEVO   Mmmm... ¿No te tienes que probar otro?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   ¿No tenes dudas con la ropa interior que vas a llevar?
+NUEVO   ¿No tienes dudas con la ropa interior que vas a llevar?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   "Lo intente"
+NUEVO   "Lo intenté"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   ¿Tantas ganas tenes de verla?
+NUEVO   ¿Tantas ganas tienes de verla?
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Cerrar los ojos mientras te cambiabas fue una situacion letal
+NUEVO   Cerrar los ojos mientras te cambiabas fue una situación letal
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   "Me pedis imposibles"
+NUEVO   "Me pides imposibles"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Es todo lo que esta bien en este mundo
+NUEVO   Es todo lo que está bien en este mundo
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Aceptaste los terminos de no tocar
+NUEVO   Aceptaste los términos de no tocar
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Si, me voy antes de que me vuelva peligroso jajaja
+NUEVO   Sí, me voy antes de que me vuelva peligroso jajaja
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Sos bastante peligroso, mira lo que me hiciste hacer...
+NUEVO   Eres bastante peligroso, mira lo que me hiciste hacer...
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Se que te gusta volverme loco, no fue solo algo mio
+NUEVO   Sé que te gusta volverme loco, no fue solo algo mío
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Bueno, termino la exhibicion que se me hace tarde
+NUEVO   Bueno, terminó la exhibición que se me hace tarde
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   "Nos vemos despues"
+NUEVO   "Nos vemos después"
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   No me podes poner el to be continue justo ahora
+NUEVO   No me puedes poner el to be continue justo ahora
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   que queria hablar con ella y ver como habia repercutido lo del beso
+NUEVO   que quería hablar con ella y ver cómo había repercutido lo del beso
+
+ARCHIVO game/script/characters/violet/amor/violet_amor_30.rpy
+VIEJO   Espero que me vuelva a pedir ayuda con la ropa en algun momento
+NUEVO   Espero que me vuelva a pedir ayuda con la ropa en algún momento
+
+==============================================================================
+VIOLET — DESEO 5 y 10
+==============================================================================
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_5.rpy
+VIEJO   Si hay algo que me esta llamando mucho la atencion desde que llegue es el trasero de Violet
+NUEVO   Si hay algo que me está llamando mucho la atención desde que llegué es el trasero de Violet
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_5.rpy
+VIEJO   De a poco me esta empezando a tentar y cada vez me cuesta mas dejar de mirarlo
+NUEVO   De a poco me está empezando a tentar y cada vez me cuesta más dejar de mirarlo
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_5.rpy
+VIEJO   "¿Que pasa?"
+NUEVO   "¿Qué pasa?"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_5.rpy
+VIEJO   "Nada ¿Por?"
+NUEVO   "Nada, ¿por?"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_5.rpy
+VIEJO   Subiste y te quedaste ahi paralizado
+NUEVO   Subiste y te quedaste ahí paralizado
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_5.rpy
+VIEJO   Es que justo me acorde de algo y me puse a pensar en ello
+NUEVO   Es que justo me acordé de algo y me puse a pensar en ello
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_5.rpy
+VIEJO   "¿En que?"
+NUEVO   "¿En qué?"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_5.rpy
+VIEJO   en algun momento se va a dar cuenta que no puedo dejar de mirarle el trasero
+NUEVO   en algún momento se va a dar cuenta de que no puedo dejar de mirarle el trasero
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   ¿Tambien con sed?
+NUEVO   ¿También con sed?
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   Se ve que esta dormida y no se dio que esta en tanga
+NUEVO   Se ve que está dormida y no se dio cuenta de que está en tanga
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   Si, me tengo que acostumbrar a llevarme agua antes de dormir
+NUEVO   Sí, me tengo que acostumbrar a llevarme agua antes de dormir
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   Yo tengo una botella pero siempre olvido de llenarmela
+NUEVO   Yo tengo una botella pero siempre me olvido de llenármela
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   Para mi si porque me puedo desvelar
+NUEVO   Para mí sí, porque me puedo desvelar
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   ¿Sabes que hora es?
+NUEVO   ¿Sabes qué hora es?
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   Esta mas habladora de lo habitual tambien, parece otra persona
+NUEVO   Está más habladora de lo habitual también, parece otra persona
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   ¿A ti te cuesta dormirte tambien cuando te levantas?
+NUEVO   ¿A ti te cuesta dormirte también cuando te levantas?
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   En la mayoria de los casos me vuelvo a dormir rapido
+NUEVO   En la mayoría de los casos me vuelvo a dormir rápido
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   "Que envidia"
+NUEVO   "Qué envidia"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   "Si, ¿Que pasa?"
+NUEVO   "Sí, ¿qué pasa?"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   ¿Por que me estas mirando tanto?
+NUEVO   ¿Por qué me estás mirando tanto?
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   Me es imposible no mirarla, no se que espera
+NUEVO   Me es imposible no mirarla, no sé qué espera
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   Si me dices que miras y por que te puedo dar una recompensa
+NUEVO   Si me dices qué miras y por qué te puedo dar una recompensa
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   Sabe por que la estoy mirando, no se a donde quiere llegar
+NUEVO   Sabe por qué la estoy mirando, no sé adónde quiere llegar
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   pero me voy a arrepentir mas de perderme esa recompensa
+NUEVO   pero me voy a arrepentir más de perderme esa recompensa
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   "Te estoy mirando a vos"
+NUEVO   "Te estoy mirando a ti"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   "¿Y por que?"
+NUEVO   "¿Y por qué?"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   Asi que te volviste un pervertido
+NUEVO   Así que te volviste un pervertido
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   Es una reaccion natural, soy un hombre
+NUEVO   Es una reacción natural, soy un hombre
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   ¿Te pones asi asi solo por una tanga o cambia porque sea yo?
+NUEVO   ¿Te pones así solo por una tanga o cambia porque sea yo?
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   Creo que ya te respondi lo que me preguntaste
+NUEVO   Creo que ya te respondí lo que me preguntaste
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   Supongo que es por la situacion y por que seas vos
+NUEVO   Supongo que es por la situación y porque seas tú
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   "¿Que estabas esperando?"
+NUEVO   "¿Qué estabas esperando?"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   Cai completamente... no le voy a seguir mas el juego
+NUEVO   Caí completamente... no le voy a seguir más el juego
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   quizas porque teniamos miles de cosas en comun
+NUEVO   quizás porque teníamos miles de cosas en común
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_10.rpy
+VIEJO   Que ella lo sepa no se si es bueno o es malo
+NUEVO   Que ella lo sepa no sé si es bueno o es malo
+
+==============================================================================
+VIOLET — DESEO 15
+==============================================================================
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   Todavia no lo dan, la serie se emite por la noche
+NUEVO   Todavía no lo dan, la serie se emite por la noche
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   Violet no esta en casa ahora
+NUEVO   Violet no está en casa ahora
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   Violet se unio y vimos un par de capitulos juntos
+NUEVO   Violet se unió y vimos un par de capítulos juntos
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   Por que no se me ocurrio usar el sotano antes para ver anime
+NUEVO   Por qué no se me ocurrió usar el sótano antes para ver anime
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   ¿Que estas mirando?
+NUEVO   ¿Qué estás mirando?
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   me di cuenta que tenia un poder inutil para la vida real pero en este mundo es OP igual a mi no me importa
+NUEVO   me di cuenta de que tenía un poder inútil para la vida real pero en este mundo es OP igual a mí no me importa
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   Esta es la tercer temporada
+NUEVO   Esta es la tercera temporada
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   no me llama la atencion, es bastante rara
+NUEVO   no me llama la atención, es bastante rara
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   Yo creo que es de lo mas comun, un fracasado es atropellado por un camion
+NUEVO   Yo creo que es de lo más común, un fracasado es atropellado por un camión
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   Eso si es clasico, pero los personajes no tienen sentido
+NUEVO   Eso sí es clásico, pero los personajes no tienen sentido
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   Respecto a su traje, esta bien que use algo asi, es una maga
+NUEVO   Respecto a su traje, está bien que use algo así, es una maga
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   ¿Que tiene que ver que sea maga con que este casi desnuda?
+NUEVO   ¿Qué tiene que ver que sea maga con que esté casi desnuda?
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   "¿Que? ... Es solo una excusa del creador para mostrar su cuerpo"
+NUEVO   "¿Qué? ... Es solo una excusa del creador para mostrar su cuerpo"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   Esta justificado en el lore en realidad, el primer rey demonio hizo una maldicion en la tela para que interrumpa la magia y asi evitar ser derrotado
+NUEVO   Está justificado en el lore en realidad, el primer rey demonio hizo una maldición en la tela para que interrumpa la magia y así evitar ser derrotado
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   "Mmm... si puede ser"
+NUEVO   "Mmm... sí puede ser"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   su cuerpo tambien es un poquito exagerado
+NUEVO   su cuerpo también es un poquito exagerado
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   Yo creo que se parece bastante a ti fisicamente
+NUEVO   Yo creo que se parece bastante a ti físicamente
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   "Mas te miro y mas lo creo"
+NUEVO   "Más te miro y más lo creo"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   Yo creo que si, hasta podria imaginarlo
+NUEVO   Yo creo que sí, hasta podría imaginarlo
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   ¿Estas listo para ir a enfrentarnos al rey demonio?
+NUEVO   ¿Estás listo para ir a enfrentarnos al rey demonio?
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   Si, claramente seria perfecta para el personaje
+NUEVO   Sí, claramente sería perfecta para el personaje
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   "Me estas mirando mucho"
+NUEVO   "Me estás mirando mucho"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   O estabas pensando en ver mejor mi armadura magica
+NUEVO   O estabas pensando en ver mejor mi armadura mágica
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   Si, mejor quiero ver tu armadura magica
+NUEVO   Sí, mejor quiero ver tu armadura mágica
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   "¿Se ve bien de atras?"
+NUEVO   "¿Se ve bien de atrás?"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   ¿Asi que es la version mejorada? Eso que no lo viste bien todavia
+NUEVO   ¿Así que es la versión mejorada? Eso que no lo viste bien todavía
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   "¿Algo asi?"
+NUEVO   "¿Algo así?"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   Si, es excactamente como lo imagino
+NUEVO   Sí, es exactamente como lo imagino
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   [mc_name] hey te estoy hablando
+NUEVO   [mc_name], hey, te estoy hablando
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   Me tilde pensando en algo, perdon
+NUEVO   Me tildé pensando en algo, perdón
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   ¿No me digas que estuviste imaginandome con eso puesto?
+NUEVO   ¿No me digas que estuviste imaginándome con eso puesto?
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   nunca lo hice y nunca lo volveria a hacer
+NUEVO   nunca lo hice y nunca lo volvería a hacer
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   mas siendo tan sugerentes
+NUEVO   más siendo tan sugerentes
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   ¿Pero me tienes que incluir a mi en tus fantasias?
+NUEVO   ¿Pero me tienes que incluir a mí en tus fantasías?
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   La proxima vez que estes mirando algun anime que no me involucre quizas me sume
+NUEVO   La próxima vez que estés mirando algún anime que no me involucre quizás me sume
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   Ahora te dejo seguir con tus fantasias
+NUEVO   Ahora te dejo seguir con tus fantasías
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   No es en el unico momento que pienso en ella
+NUEVO   No es en el único momento que pienso en ella
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   que Violet use un cosplay de la armadura magica
+NUEVO   que Violet use un cosplay de la armadura mágica
+
+==============================================================================
+VIOLET — DESEO 20 y 25
+==============================================================================
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_15.rpy
+VIEJO   es mucho mejor que el de Mashika, es la version mejorada
+NUEVO   es mucho mejor que el de Mashika, es la versión mejorada
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_20.rpy
+VIEJO   Hace un rato que no veo a Violet ¿Que estara haciendo?
+NUEVO   Hace un rato que no veo a Violet, ¿qué estará haciendo?
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_20.rpy
+VIEJO   "Podria enviarle un mensaje"
+NUEVO   "Podría enviarle un mensaje"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_20.rpy
+VIEJO   Con Violet eso es mucho mas que un tal vez
+NUEVO   Con Violet eso es mucho más que un tal vez
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_25.rpy
+VIEJO   Violet me dijo que iba a bajar a ver un capitulo conmigo y no aparecio
+NUEVO   Violet me dijo que iba a bajar a ver un capítulo conmigo y no apareció
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_25.rpy
+VIEJO   "¿Cuanto mas le falta?"
+NUEVO   "¿Cuánto más le falta?"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_25.rpy
+VIEJO   "¿Ya esta?"
+NUEVO   "¿Ya está?"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_25.rpy
+VIEJO   "¿Que pasa?"
+NUEVO   "¿Qué pasa?"
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_25.rpy
+VIEJO   Me habias dicho que venias a ver el capitulo conmigo
+NUEVO   Me habías dicho que venías a ver el capítulo conmigo
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_25.rpy
+VIEJO   Perdon me colgue haciendo unas cosas, pero ya iba a bajar
+NUEVO   Perdón, me colgué haciendo unas cosas, pero ya iba a bajar
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_25.rpy
+VIEJO   No hacia falta que me vengas a buscar o ¿Estabas muy apurado por verme?
+NUEVO   No hacía falta que me vengas a buscar, ¿o estabas muy apurado por verme?
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_25.rpy
+VIEJO   ya extrañaba ese lindo trasero y no podia esperar mas para verlo
+NUEVO   ya extrañaba ese lindo trasero y no podía esperar más para verlo
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_25.rpy
+VIEJO   Aunque lo estes diciendo de forma sarcastica, se que en el fondo es asi
+NUEVO   Aunque lo estés diciendo de forma sarcástica, sé que en el fondo es así
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_25.rpy
+VIEJO   Asi que no hace falta que lo ocultes
+NUEVO   Así que no hace falta que lo ocultes
+
+ARCHIVO game/script/characters/violet/deseo/violet_deseo_25.rpy
+VIEJO   ¿Que me va a pasar por hacerlo?
+NUEVO   ¿Qué me va a pasar por hacerlo?
+
+==============================================================================
+VIOLET — VENTAJA JUEGOS NUEVOS
+==============================================================================
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   El casco VR de su lista de deseados ahora esta disponible
+NUEVO   El casco VR de su lista de deseados ahora está disponible
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   "Me cai"
+NUEVO   "Me caí"
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   ¿Eso es un casco vr?
+NUEVO   ¿Eso es un casco VR?
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   No parece, ¿Qué juegos tienes?
+NUEVO   No parece, ¿qué juegos tienes?
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   "Ya entendi"
+NUEVO   "Ya entendí"
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   Supongo que es valido
+NUEVO   Supongo que es válido
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   ¿Qué? No te escuche
+NUEVO   ¿Qué? No te escuché
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   Ahí viene la sandia
+NUEVO   Ahí viene la sandía
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   ¡Muere maldita sandiaaaaa!
+NUEVO   ¡Muere, maldita sandiaaaaa!
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   ¿Te gusto mi golpe final?
+NUEVO   ¿Te gustó mi golpe final?
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   "Quede agotada"
+NUEVO   "Quedé agotada"
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   Otro día volvemos a jugar y con ropa más comoda
+NUEVO   Otro día volvemos a jugar y con ropa más cómoda
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   ¿Eso decias tú?
+NUEVO   ¿Eso decías tú?
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   Que parte de que hay que reutilizar los recursos no entendiste?
+NUEVO   ¿Qué parte de que hay que reutilizar los recursos no entendiste?
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   No se de que está hablando
+NUEVO   No sé de qué está hablando
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   Te lo dije y todavía no termine
+NUEVO   Te lo dije y todavía no terminé
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   ¡10120 puntos! en tu cara [mc_name]
+NUEVO   ¡10120 puntos! En tu cara, [mc_name]
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   Nunca vas a superar mi puntuacion
+NUEVO   Nunca vas a superar mi puntuación
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   Avisame si lo logras
+NUEVO   Avísame si lo logras
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   "Lo hare"
+NUEVO   "Lo haré"
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   hasta la poxima perdedor jajaja
+NUEVO   hasta la próxima, perdedor jajaja
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   La invite a jugar con el casco de realidad virtual esta noche.
+NUEVO   La invité a jugar con el casco de realidad virtual esta noche.
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   Tendria que ver como configurar esto
+NUEVO   Tendría que ver cómo configurar esto
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   "Ahí esta"
+NUEVO   "Ahí está"
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   un golpe mas y destruyo al terrible
+NUEVO   un golpe más y destruyo al terrible
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_cascovr.rpy
+VIEJO   Un tiempo mas tarde...
+NUEVO   Un tiempo más tarde...
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   [mc_name] subi a ayudarme por favor
+NUEVO   [mc_name], sube a ayudarme por favor
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   Hay un monton de cajas, no voy a terminar mas
+NUEVO   Hay un montón de cajas, no voy a terminar más
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   No te quedes ahi mirando y empeza a buscar
+NUEVO   No te quedes ahí mirando y empieza a buscar
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   no dije que me estes mirando a mi, dije que dejes de mirar
+NUEVO   no dije que me estés mirando a mí, dije que dejes de mirar
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   Bueno, ¿tenes idea por donde puede estar?
+NUEVO   Bueno, ¿tienes idea por dónde puede estar?
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   ¿No te parece que si tendria idea no estaria hace una hora revisando cajas?
+NUEVO   ¿No te parece que si tendría idea no estaría hace una hora revisando cajas?
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   Buen punto, habra que revisar todo
+NUEVO   Buen punto, habrá que revisar todo
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   Aca estoy buscando yo, busca por otro lado
+NUEVO   Acá estoy buscando yo, busca por otro lado
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   No hay espacio para los dos aca
+NUEVO   No hay espacio para los dos acá
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   ¿Lo estas haciendo a proposito no?
+NUEVO   ¿Lo estás haciendo a propósito, no?
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   "Si, la hice enojar"
+NUEVO   "Sí, la hice enojar"
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   "Un poco si"
+NUEVO   "Un poco sí"
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   Esa fue la ultima advertencia, la proxima te pateo
+NUEVO   Esa fue la última advertencia, la próxima te pateo
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   Prometo no molestarte mas
+NUEVO   Prometo no molestarte más
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   "Segui buscando entonces"
+NUEVO   "Sigue buscando entonces"
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   Deberia concentrame en buscar la consola
+NUEVO   Debería concentrarme en buscar la consola
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   Un ultimo disfrute a esta vista
+NUEVO   Un último disfrute a esta vista
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   "¿Ya esta?"
+NUEVO   "¿Ya está?"
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   "Vamos un poco mas"
+NUEVO   "Vamos un poco más"
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   No tenia tantas ganas de jugar a la Pocket Boy
+NUEVO   No tenía tantas ganas de jugar a la Pocket Boy
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   Creo que esta por aca
+NUEVO   Creo que está por acá
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   "Ahi te ayudo"
+NUEVO   "Ahí te ayudo"
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   "¿Estas bien?"
+NUEVO   "¿Estás bien?"
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   Si, solo que se me cayo algo pesado encima
+NUEVO   Sí, solo que se me cayó algo pesado encima
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   Ahora me voy a quedar asi
+NUEVO   Ahora me voy a quedar así
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   Asi se debe sentir estar en el cielo
+NUEVO   Así se debe sentir estar en el cielo
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   ¿Que es esa cara de que lo estas disfrutando?
+NUEVO   ¿Qué es esa cara de que lo estás disfrutando?
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   No lo niego, pero encontre la caja correcta
+NUEVO   No lo niego, pero encontré la caja correcta
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   Pero tu sola, yo ya no me canse de esto
+NUEVO   Pero tú sola, yo ya no me cansé de esto
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   "Sos un idiota"
+NUEVO   "Eres un idiota"
+
+==============================================================================
+VIOLET — VENTAJAS (dialogo)
+==============================================================================
+
+ARCHIVO game/script/characters/violet/ventajas/ropanueva/ropanueva_violet.rpy
+VIEJO   Sí, algo tengo. ¿Qué querés que me pruebe?
+NUEVO   Sí, algo tengo. ¿Qué quieres que me pruebe?
+
+==============================================================================
+VIOLET — EVENTO 03
+==============================================================================
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   Violet, Monica pidió que nos ocupemos hoy de la limpieza
+NUEVO   Violet, Mónica pidió que nos ocupemos hoy de la limpieza
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   "DESPERTATEEEEE"
+NUEVO   "DESPIERTATEEEEE"
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   Encargáte de limpiar el pasillo y el baño
+NUEVO   Encárgate de limpiar el pasillo y el baño
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   Cuánto antes terminemos, antes te puedes dormir
+NUEVO   Cuanto antes terminemos, antes te puedes dormir
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   Hay que apurarnos Violet, tenemos que terminar antes que vuelvan las chicas
+NUEVO   Hay que apurarnos, Violet, tenemos que terminar antes de que vuelvan las chicas
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   Voy a ver como esta
+NUEVO   Voy a ver cómo está
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   "¿Si?"
+NUEVO   "¿Sí?"
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   ¿Está limpiando la alfombra del baño con un trapo?
+NUEVO   ¿Estás limpiando la alfombra del baño con un trapo?
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   No, ¿Por qué?
+NUEVO   No, ¿por qué?
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   Me estas mirando sin decir nada
+NUEVO   Me estás mirando sin decir nada
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   Mierda, ¿Se dio cuenta de que la estaba mirando cuando estaba agachada?
+NUEVO   Mierda, ¿se dio cuenta de que la estaba mirando cuando estaba agachada?
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   Estaba mirando como limpiabas
+NUEVO   Estaba mirando cómo limpiabas
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   "¿En que?"
+NUEVO   "¿En qué?"
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   ¿A que yo este aquí?
+NUEVO   ¿A que yo esté aquí?
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   Si o para que nos fueramos a dormir
+NUEVO   Sí o para que nos fuéramos a dormir
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   Si o para que te bañes
+NUEVO   Sí o para que te bañes
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   No, en todos mis recuerdos nos llevabamos muy bien
+NUEVO   No, en todos mis recuerdos nos llevábamos muy bien
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   Ahh si por qué eres un pervertido
+NUEVO   Ahh, sí, porque eres un pervertido
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   No se por qué me puse a limpiar esto...
+NUEVO   No sé por qué me puse a limpiar esto...
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   Listo el living. Voy a ver como va Violet.
+NUEVO   Listo el Living. Voy a ver cómo va Violet.
+
+ARCHIVO game/script/characters/violet/events/evento03_violet.rpy
+VIEJO   "Aquí esta"
+NUEVO   "Aquí está"
+
+==============================================================================
+VIOLET — EVENTO 02 · REPARTIDOR
+==============================================================================
+
+ARCHIVO game/script/characters/violet/events/evento2_violet.rpy
+VIEJO   ¿Esto querías ver? Perverido
+NUEVO   ¿Esto querías ver? Pervertido
+
+ARCHIVO game/script/characters/violet/events/evento2_violet.rpy
+VIEJO   Bueno entonces veni a buscarlo
+NUEVO   Bueno, entonces ven a buscarlo
+
+ARCHIVO game/script/characters/violet/events/evento2_violet.rpy
+VIEJO   No puedo dejar de pensar en el trasero de violet...
+NUEVO   No puedo dejar de pensar en el trasero de Violet...
+
+ARCHIVO game/script/characters/otros/repartidor/historia_repartidor.rpy
+VIEJO   Hola, ¿Pedido para [mc_name]?
+NUEVO   Hola, ¿pedido para [mc_name]?
+
+ARCHIVO game/script/characters/otros/repartidor/historia_repartidor.rpy
+VIEJO   Sí, acabo de mudarme. Esta sera mi casa a partir de ahora
+NUEVO   Sí, acabo de mudarme. Esta será mi casa a partir de ahora
+
+ARCHIVO game/script/characters/otros/repartidor/historia_repartidor.rpy
+VIEJO   "Que afortunado..."
+NUEVO   "Qué afortunado..."
+
+ARCHIVO game/script/characters/otros/repartidor/historia_repartidor.rpy
+VIEJO   "Que tengas un buen día."
+NUEVO   "Que tengas un buen día"
+
+==============================================================================
+CORRECCIONES FINALES (negacion, pronombre, comas empalmadas)
+==============================================================================
+
+ARCHIVO game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy
+VIEJO   Pero tú sola, yo ya no me cansé de esto
+NUEVO   Pero tú sola, yo ya me cansé de esto
+
+ARCHIVO game/script/characters/violet/quests/violet_quest_0_b.rpy
+VIEJO   de la nada llega alguien a molestarse
+NUEVO   de la nada llega alguien a molestarme
+
+ARCHIVO game/script/characters/mc/quests/intro_main.rpy
+VIEJO   para que te reciba en su casa, no vayas a causarles muchos problemas
+NUEVO   para que te reciba en su casa. No vayas a causarles muchos problemas
+
+ARCHIVO game/script/characters/mc/quests/intro_main.rpy
+VIEJO   Qué nostalgia estar aquí de nuevo, pasaron muchos años...
+NUEVO   Qué nostalgia estar aquí de nuevo. Pasaron muchos años...
+
+ARCHIVO game/script/characters/mc/quests/intro_main.rpy
+VIEJO   era solo una pequeña ciudad, pasar de la metrópoli a aquí fue horrible
+NUEVO   era solo una pequeña ciudad. Pasar de la metrópoli a aquí fue horrible
+
+ARCHIVO game/script/characters/mc/quests/intro_main.rpy
+VIEJO   solo falta lo que enviaste en las cajas, está todo en el
+NUEVO   solo falta lo que enviaste en las cajas. Está todo en el
+
+ARCHIVO game/script/characters/mc/quests/mc_quest_0_a.rpy
+VIEJO   Mónica dijo que íbamos a salir por la [colorear_quest('noche')], todavía falta algo de tiempo
+NUEVO   Mónica dijo que íbamos a salir por la [colorear_quest('noche')]. Todavía falta algo de tiempo
+
+ARCHIVO game/script/characters/mc/quests/mc_quest_0_a.rpy
+VIEJO   Mejor duermo, mañana será un día nuevo para ponerme al día con las chicas
+NUEVO   Mejor duermo. Mañana será un día nuevo para ponerme al día con las chicas

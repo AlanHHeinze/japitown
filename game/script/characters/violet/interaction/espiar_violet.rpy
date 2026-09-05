@@ -35,7 +35,7 @@ init 6 python:
     registrar_contenido_ventaja(
         "provocacion", "espiar_ducha", "violet",
         "La puerta entreabierta",
-        "Andá al pasillo de arriba mientras se esté bañando. No pasa siempre: depende de si ella dejó la puerta así.",
+        "Ve al pasillo de arriba mientras se esté bañando. No pasa siempre: depende de si ella dejó la puerta así.",
         vista=_violet_espiar_ducha_vista,
         orden=10,
     )

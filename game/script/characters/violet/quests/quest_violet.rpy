@@ -39,20 +39,20 @@ init 5 python:
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista=_pista_quest0a_violet,
                 que_hacer=_quehacer_quest0a_violet,
-                mensaje_despertar="Violet se veia bastante molesta, podría hablar con ella para saber que le pasa",
+                mensaje_despertar="Violet se veía bastante molesta, podría hablar con ella para saber qué le pasa",
             ),
         },
     )
     sistema_quests.registrar_quest(quest_violet_0a)
 
     # =========================================================================
-    # QUEST 0_b - ¿Que le pasa a Violet? (Violet)
+    # QUEST 0_b - ¿Qué le pasa a Violet? (Violet)
     # =========================================================================
 
     quest_violet_0 = Quest(
         id="violet_questprincipal_0_b",
         npc_id="violet",
-        nombre="¿Que le pasa a Violet?",
+        nombre="¿Qué le pasa a Violet?",
         descripcion="Violet me ignoró desde que llegué, debería hablar con ella.",
         numero_quest=0,
         dias_espera=0,
@@ -124,7 +124,7 @@ init 5 python:
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista=_pista_quest1_violet,
                 que_hacer=_quehacer_quest1_violet,
-                mensaje_despertar=_qc("vq01a_botonlisto_despertar", lambda: "Escuche el timbre" if getattr(store, 'violet_quest1_entrega_pendiente', False) else ""),
+                mensaje_despertar=_qc("vq01a_botonlisto_despertar", lambda: "Escuché el timbre" if getattr(store, 'violet_quest1_entrega_pendiente', False) else ""),
                 accion_al_entrar=setup_entrega_quest1_violet,
             ),
         },
@@ -339,7 +339,7 @@ init 5 python:
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista="Podría hablar con Violet y pedirle perdón",
                 que_hacer="Hablar con Violet",
-                mensaje_despertar="No paro de tener problemas con Violet, debería verda y pedirle perdón",
+                mensaje_despertar="No paro de tener problemas con Violet, debería verla y pedirle perdón",
                 accion_al_entrar=setup_restriccion_violet_quest04b,
             ),
         },
@@ -372,7 +372,7 @@ init 5 python:
                 # Rama "todavía no llegó el mensaje": el chat de Violet llega de
                 # NOCHE, así que al despertar decía "responderle el mensaje" sin
                 # que hubiera mensaje. Ahora invita a esperar.
-                pista=_qc("vq04c_botonlisto_pista", lambda: "Violet se lo probo debería ir a hablar con ella" if store.sistema_mensajes.grupo_completado("violet_quest04c_chat") else "No voy a seguir molestando a Violet, por ahora podría esperar"),
+                pista=_qc("vq04c_botonlisto_pista", lambda: "Violet se lo probó, debería ir a hablar con ella" if store.sistema_mensajes.grupo_completado("violet_quest04c_chat") else "No voy a seguir molestando a Violet, por ahora podría esperar"),
                 que_hacer=_qc("vq04c_botonlisto_quehacer", lambda: "Ir a ver a Violet" if store.sistema_mensajes.grupo_completado("violet_quest04c_chat") else "Esperar que Violet nos envíe un mensaje"),
                 # Sin mensaje_despertar: el chat llega de noche como prioritario y se
                 # resuelve en el momento, no hace falta avisar al despertar.
@@ -410,7 +410,7 @@ init 5 python:
                 que_hacer=_qc("vq04d_condiciones_quehacer", lambda: renpy.translate_string("Alcanzar {}").format(
                     texto_hito_corto("violet_hito_deseo_01")
                 )),
-                mensaje_despertar="Violet dijo que tenía más fotos, quizás pueda lograr que me las envie",
+                mensaje_despertar="Violet dijo que tenía más fotos, quizás pueda lograr que me las envíe",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 # Misma corrección que en la 04_c: el chat llega de NOCHE, así que
@@ -596,7 +596,7 @@ init 5 python:
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
-                pista="No se como conseguir la foto, me rindo",
+                pista="No sé cómo conseguir la foto, me rindo",
                 que_hacer="Esperar a que Violet te busque",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
@@ -674,7 +674,7 @@ init 5 python:
                 que_hacer=_qc("vq04e_condiciones_quehacer", lambda: renpy.translate_string("Subir deseo 💋 con Violet ({}/{})").format(
                     getattr(store, 'violet_deseo', 0), 15
                 )),
-                mensaje_despertar="Esto de mejorar mi relación con Violet esta trayendo buenos resultados, me pregunto si podre conseguir algo más",
+                mensaje_despertar="Esto de mejorar mi relación con Violet está trayendo buenos resultados, me pregunto si podré conseguir algo más",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 # Misma corrección que en la 04_c y la 04_d: el chat llega de
@@ -928,13 +928,13 @@ init 5 python:
         dias_espera=0,
         quest_anterior="violet_questprincipal_07_a",
         requisitos=[
-            Requisito("mensaje", "Enviar mensaje a Tienda Coxplay", grupo_id="tienda_coxplay_q7b_g1"),
+            Requisito("mensaje", "Enviar mensaje a Tienda CoXplay", grupo_id="tienda_coxplay_q7b_g1"),
         ],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_CONDICIONES: ConfigEtapa(
                 pista="Hablar con la tienda para pedir el cambio.",
-                que_hacer="Enviar mensaje a Tienda Coxplay",
+                que_hacer="Enviar mensaje a Tienda CoXplay",
                 trigger_mensaje=("tienda_coxplay_q7b_g1", "tienda_coxplay"),
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
@@ -998,8 +998,8 @@ init 5 python:
                 que_hacer=_qc("vq08a_espera_quehacer", lambda: vq_esperar_texto("violet_questprincipal_08_a", 3)),
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista="Hoy las chicas salieron. Podría ver la TV en el living",
-                que_hacer="Ver TV en el living",
+                pista="Hoy las chicas salieron. Podría ver la TV en el Living",
+                que_hacer="Ver TV en el Living",
             ),
         },
     )
@@ -1025,13 +1025,47 @@ init 5 python:
         2: "images/characters/casa/idle/idle_violet_casa_hviolet_noche_enferma.jpg",
         3: None,
     }
+    # Posiciones propias: el arte de enferma (850x463, ella en la cama) no
+    # coincide con los idles de pie, asi que no sirven las de su rutina base.
+    # Salen de la herramienta de posicionamiento (tecla P, modo sprite;
+    # quedan registradas en tools/posiciones_idle.txt) y ya vienen en
+    # centro-abajo (xanchor=0.5, yanchor=1.0), que es lo que espera
+    # RutinaQuest.
+    _vq9a_pos_violet = {
+        0: None,           # de mañana no hay sprite
+        1: (780, 1036),    # tarde
+        2: (775, 1010),    # noche
+        3: None,           # de trasnoche no hay sprite
+    }
+
+    # Monica se queda en el LIVING todo el dia mientras Violet este enferma:
+    # esta pendiente de ella y no se encierra en su pieza hasta la madrugada.
+    #
+    # Los tres horarios del living comparten el mismo sprite porque no hay
+    # arte de ella en el living de noche — solo existen el de mañana y el de
+    # tarde. Se usa el de mañana, que es el que la quest ya venia usando.
     _vq9a_sprites_monica = {
         0: "images/characters/casa/idle/idle_monica_casa_living_manana_rutinabase_grupobase_skinbase.webp",
         1: "images/characters/casa/idle/idle_monica_casa_living_manana_rutinabase_grupobase_skinbase.webp",
-        2: "images/characters/casa/idle/idle_monica_casa_hmonica_noche_rutinabase_grupobase_skinbase.jpg",
+        2: "images/characters/casa/idle/idle_monica_casa_living_manana_rutinabase_grupobase_skinbase.webp",
         3: "images/characters/casa/idle/idle_monica_casa_hmonica_trasnoche_rutinabase_grupobase_skinbase.jpg",
     }
-    _vq9a_locs_monica = {0: "casa_living", 1: "casa_living", 2: "casa_hmonica", 3: "casa_hmonica"}
+    _vq9a_locs_monica = {0: "casa_living", 1: "casa_living", 2: "casa_living", 3: "casa_hmonica"}
+
+    # LA POSICION HAY QUE DARLA. Sin `posicion`, obtener_posicion_quest_npc
+    # devuelve None y el HUD cae a la posicion generica repartida
+    # (hud_navigation: `posiciones[i] * 1920`, y=1080), que no es donde va
+    # el sprite en esa locacion — Monica aparecia corrida en el living.
+    #
+    # Los valores son los MISMOS que usa su rutina base para esas locaciones
+    # (characters/monica/definition_monica.rpy), asi el sprite cae en el
+    # punto de siempre y la quest no inventa una ubicacion propia.
+    _vq9a_pos_monica = {
+        0: (1299, 1067),   # living  — el mismo punto que su rutina de la tarde
+        1: (1299, 1067),   # living
+        2: (1299, 1067),   # living
+        3: (953, 766),     # h. monica, trasnoche
+    }
 
     quest_violet_09_a = Quest(
         id="violet_questprincipal_09_a",
@@ -1052,6 +1086,7 @@ init 5 python:
             (dia, horario): RutinaQuest(
                 locacion="casa_hviolet",
                 sprite=_vq9a_sprites_violet[horario],
+                posicion=_vq9a_pos_violet[horario],
             )
             for dia in range(7) for horario in range(4)
         },
@@ -1060,11 +1095,15 @@ init 5 python:
                 (dia, horario): RutinaQuest(
                     locacion=_vq9a_locs_monica[horario],
                     sprite=_vq9a_sprites_monica[horario],
+                    posicion=_vq9a_pos_monica[horario],
                 )
                 for dia in range(7) for horario in range(4)
             }
         },
-        prioridad_rutina=0,
+        # Le gana a las rutinas de las lineas de amor y deseo, que tambien la
+        # ponen en su habitacion de noche pero con el idle de pijama. Estando
+        # enferma manda esta: el idle de enferma es el que corresponde.
+        prioridad_rutina=10,
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(

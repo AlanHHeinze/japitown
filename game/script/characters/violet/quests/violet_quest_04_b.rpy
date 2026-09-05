@@ -31,14 +31,14 @@ label quest_violet_questprincipal_04_b:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "¿Paso algo?"
+    violet "¿Pasó algo?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando o_abajonm c_rbase_perdon with sprite_fast
+    show mc_parado_base b_hablando o_abajonm c_rbase_perdon with sprite_normal
     mc "Te quería pedir perdón por la situación de la otra vez y por mirar tus cosas"
-    show mc_parado_base b_none o_base c_rbase_base with sprite_fast
+    show mc_parado_base b_none o_base c_rbase_base with sprite_normal
 
-    show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_fast
+    show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_normal
     violet "Espera, te quiero hacer una pregunta primero"
     show violet_parada b_none
 
@@ -50,28 +50,28 @@ label quest_violet_questprincipal_04_b:
     violet "¿Por qué me trajiste ese regalo?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_pensando with sprite_fast
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
     mc "Mmmmm la verdad no lo pensé mucho, simplemente sentí que ese era el regalo"
-    show mc_parado_base b_abiertachica 
+    show mc_parado_base b_abiertachica
     mc "Y pensé que te gustaría"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_parada b_hablandochica c_rbase_base with sprite_fast
+    show violet_parada b_hablandochica c_rbase_base with sprite_normal
     violet "¿Lo viste antes de comprarlo?"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Sí, estaba en un maniqui, sé que es uno de tus personajes favoritos y quería que el regalo no fuera algo generico"
+    mc "Sí, estaba en un maniquí, sé que es uno de tus personajes favoritos y quería que el regalo no fuera algo genérico"
     show mc_parado_base b_abiertachica
-    mc "Aparte de eso pronto se va a hacer la Japicon y pensé que seria un buen cosplay"
+    mc "Aparte de eso pronto se va a hacer la Japicon y pensé que sería un buen cosplay"
     show mc_parado_base b_none
 
-    show violet_parada b_hablandochica c_rbase_pensando with sprite_fast
+    show violet_parada b_hablandochica c_rbase_pensando with sprite_normal
     violet "¿No hay otro tipo de intenciones detrás del regalo?"
-    show violet_parada b_none c_rbase_base with sprite_fast
+    show violet_parada b_none c_rbase_base with sprite_normal
 
     show mc_parado_base b_hablando
-    mc "No ¿Qué puede haber detrás de eso? es solo un cosplay"
+    mc "No, ¿qué puede haber detrás de eso? Es solo un cosplay"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica o_arribanm
@@ -80,23 +80,23 @@ label quest_violet_questprincipal_04_b:
     violet "Apretado"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_pensando with sprite_fast
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
     mc "Pero es así el traje, no tiene nada de raro"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_parada b_hablandochica c_rbase_dedolabio with sprite_fast
-    violet "No creo que todos sean así..." 
-    show violet_parada b_hablando ot_none c_rbase_brazoscruzados with sprite_fast
-    violet "Y ya te digo que no hay posibilidades que vaya a usarlo en un evento"
+    show violet_parada b_hablandochica c_rbase_dedolabio with sprite_normal
+    violet "No creo que todos sean así..."
+    show violet_parada b_hablando ot_none c_rbase_brazoscruzados with sprite_normal
+    violet "Y ya te digo que no hay posibilidades de que vaya a usarlo en un evento"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "¿Por qué no me muestras que tal esta? Y te doy mi opion, seguro estas exagerando"
+    mc "¿Por qué no me muestras qué tal está? Y te doy mi opinión, seguro estás exagerando"
     show mc_parado_base b_none
 
-    show violet_parada b_hablandochica o_arribanm c_rbase_pensando with sprite_fast
+    show violet_parada b_hablandochica o_arribanm c_rbase_pensando with sprite_normal
     violet "Lo voy a pensar"
-    show violet_parada b_none o_base c_rbase_base with sprite_fast
+    show violet_parada b_none o_base c_rbase_base with sprite_normal
 
     hide violet_parada with dissolve
     hide mc_parado_base with dissolve

@@ -75,7 +75,7 @@ label violet_deseo_15_ver_tv:
     # dueños de la accion, asi que el chequeo va antes de repartir.
     if horario_actual != 2:
         $ _blk_guardar_toque()
-        piensa "Todavia no lo dan, la serie se emite por la noche"
+        piensa "Todavía no lo dan, la serie se emite por la noche"
         return
 
     # Ya no esta la quest: manda la ventaja del hito y se ve igual, con o sin
@@ -111,7 +111,7 @@ label violet_ver_anime_suelto:
     # Va ANTES de marcar_usada: el intento fallido no consume nada.
     if not _va_disponible:
         $ _blk_guardar_toque()
-        piensa "Violet no esta en casa ahora"
+        piensa "Violet no está en casa ahora"
         return
 
     $ sistema_acciones.marcar_usada("vd15_ver_tv_sotano")
@@ -122,8 +122,8 @@ label violet_ver_anime_suelto:
     window show
 
     if _va_se_une:
-        $ obtener_npc("violet").modificar_stat2(2)
-        piensa "Violet se unio y vimos un par de capitulos juntos"
+        $ obtener_npc("violet").modificar_stat2(1)
+        piensa "Violet se unió y vimos un par de capítulos juntos"
     else:
         piensa "Ver anime solo no es lo mismo"
 
@@ -154,7 +154,7 @@ label quest_violet_deseo_03:
     # CONTENIDO — PARTE A · el MC solo, antes de que ella baje
     # =========================================================================
 
-    piensa "Por que no se me ocurrio usar el sotano antes para ver anime"
+    piensa "Por qué no se me ocurrió usar el sótano antes para ver anime"
     piensa "Puedo ver en pantalla grande y sin molestar a nadie"
 
     scene black with fade
@@ -171,87 +171,87 @@ label quest_violet_deseo_03:
 
     show violet_parada c_pijama_base ca_pijama o_base b_none at right with sprite_normal
 
-    show violet_parada b_hablando c_pijama_pensando with sprite_fast
-    violet "¿Que estas mirando?"
-    show violet_parada b_none c_pijama_base with sprite_fast
+    show violet_parada b_hablando c_pijama_pensando with sprite_normal
+    violet "¿Qué estás mirando?"
+    show violet_parada b_none c_pijama_base with sprite_normal
 
     show mc_parado_base b_hablando
     mc "El anime se llama"
     show mc_parado_base b_abiertachica
-    mc "Aquella vez que revivi en otro mundo y me di cuenta que tenia un poder inutil para la vida real pero en este mundo es OP igual a mi no me importa ya que mi sueño es tener una tienda de mascotas llena de waifus"
+    mc "Aquella vez que revivi en otro mundo y me di cuenta de que tenía un poder inútil para la vida real pero en este mundo es OP igual a mí no me importa ya que mi sueño es tener una tienda de mascotas llena de waifus"
     show mc_parado_base b_hablando
-    mc "Esta es la tercer temporada"
+    mc "Esta es la tercera temporada"
     show mc_parado_base b_none
 
     show violet_parada b_hablando
-    violet "Conozco algo de la serie, no me llama la atencion, es bastante rara"
+    violet "Conozco algo de la serie, no me llama la atención, es bastante rara"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_fast
-    mc "Yo creo que es de lo mas comun, un fracasado es atropellado por un camion y tiene que vencer al rey demonio"
-    show mc_parado_base b_none o_base c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_normal
+    mc "Yo creo que es de lo más común, un fracasado es atropellado por un camión y tiene que vencer al rey demonio"
+    show mc_parado_base b_none o_base c_rbase_base with sprite_normal
 
-    show violet_parada b_hablando c_pijama_brazoscruzados with sprite_fast
-    violet "Eso si es clasico, pero los personajes no tienen sentido"
+    show violet_parada b_hablando c_pijama_brazoscruzados with sprite_normal
+    violet "Eso sí es clásico, pero los personajes no tienen sentido"
     show violet_parada b_hablandochica
     violet "Mira el traje que usa ese personaje"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_confianza with sprite_fast
+    show mc_parado_base b_hablando c_rbase_confianza with sprite_normal
     mc "Es Mashika, mi personaje favorito y no voy a mentir, me calienta un poco jajaja"
-    show mc_parado_base b_abiertachica c_rbase_brazoscruzados with sprite_fast
-    mc "Respecto a su traje, esta bien que use algo asi, es una maga"
-    show mc_parado_base b_none 
+    show mc_parado_base b_abiertachica c_rbase_brazoscruzados with sprite_normal
+    mc "Respecto a su traje, está bien que use algo así, es una maga"
+    show mc_parado_base b_none
 
-    show violet_parada b_hablando c_pijama_pensando with sprite_fast
-    violet "¿Que tiene que ver que sea maga con que este casi desnuda?"
-    show violet_parada b_none c_pijama_base with sprite_fast
+    show violet_parada b_hablando c_pijama_pensando with sprite_normal
+    violet "¿Qué tiene que ver que sea maga con que esté casi desnuda?"
+    show violet_parada b_none c_pijama_base with sprite_normal
 
-    show mc_parado_base b_hablando c_rbase_idea with sprite_fast
+    show mc_parado_base b_hablando c_rbase_idea with sprite_normal
     mc "La ropa bloquea el flujo de mana del cuerpo"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_parada c_pijama_rascando1 with sprite_fast
+    show violet_parada c_pijama_rascando1 with sprite_normal
     pause 0.3
-    show violet_parada c_pijama_rascando2 with sprite_fast
+    show violet_parada c_pijama_rascando2 with sprite_normal
     pause 0.3
 
-    show violet_parada b_hablando c_pijama_rascando1 with sprite_fast
-    violet "¿Que? ... Es solo una excusa del creador para mostrar su cuerpo"
+    show violet_parada b_hablando c_pijama_rascando1 with sprite_normal
+    violet "¿Qué? ... Es solo una excusa del creador para mostrar su cuerpo"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_señalando with sprite_fast
-    mc "Esta justificado en el lore en realidad, el primer rey demonio hizo una maldicion en la tela para que interrumpa la magia y asi evitar ser derrotado"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_señalando with sprite_normal
+    mc "Está justificado en el lore en realidad, el primer rey demonio hizo una maldición en la tela para que interrumpa la magia y así evitar ser derrotado"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_parada b_hablando c_pijama_pensando with sprite_fast
+    show violet_parada b_hablando c_pijama_pensando with sprite_normal
     violet "¿No te parece que sigue siendo una excusa?"
-    show violet_parada b_none c_pijama_base with sprite_fast
+    show violet_parada b_none c_pijama_base with sprite_normal
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
-    mc "Mmm... si puede ser"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "Mmm... sí puede ser"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_parada c_pijama_señalando with sprite_fast
+    show violet_parada c_pijama_señalando with sprite_normal
     pause 0.5
 
-    show violet_parada b_hablando c_pijama_brazoscruzados with sprite_fast
-    violet "Aparte no solo su ropa, su cuerpo tambien es un poquito exagerado"
+    show violet_parada b_hablando c_pijama_brazoscruzados with sprite_normal
+    violet "Aparte no solo su ropa, su cuerpo también es un poquito exagerado"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_pensando with sprite_fast
-    mc "Yo creo que se parece bastante a ti fisicamente"
-    show mc_parado_base b_abiertachica o_base 
-    mc "Mas te miro y mas lo creo"
-    show mc_parado_base b_none c_rbase_brazoscruzados with sprite_fast
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "Yo creo que se parece bastante a ti físicamente"
+    show mc_parado_base b_abiertachica o_base
+    mc "Más te miro y más lo creo"
+    show mc_parado_base b_none c_rbase_brazoscruzados with sprite_normal
 
     show violet_parada b_hablando
     violet "Ehh no... no soy en nada parecida"
     show violet_parada b_none
 
-    show mc_parado_base b_abiertachica 
-    mc "Yo creo que si, hasta podria imaginarlo"
-    show mc_parado_base b_none 
+    show mc_parado_base b_abiertachica
+    mc "Yo creo que sí, hasta podría imaginarlo"
+    show mc_parado_base b_none
 
     scene bg_qd15_imaginacion
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
@@ -259,33 +259,33 @@ label quest_violet_deseo_03:
     with fade
 
     show violet_magica bf_hablando
-    violet "¿Estas listo para ir a enfrentarnos al rey demonio?"
+    violet "¿Estás listo para ir a enfrentarnos al rey demonio?"
     show violet_magica bf_none
 
-    show mc_parado_base c_rbase_pensando with sprite_fast
-    piensa "Si, claramente seria perfecta para el personaje"
+    show mc_parado_base c_rbase_pensando with sprite_normal
+    piensa "Sí, claramente sería perfecta para el personaje"
 
     show violet_magica bf_hablando
-    violet "Me estas mirando mucho"
+    violet "Me estás mirando mucho"
     show violet_magica bf_hablandochica
-    violet "O estabas pensando en ver mejor mi armadura magica"
+    violet "O estabas pensando en ver mejor mi armadura mágica"
     show violet_magica bf_none
 
-    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
-    mc "Si, mejor quiero ver tu armadura magica"
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
+    mc "Sí, mejor quiero ver tu armadura mágica"
     show mc_parado_base b_none
 
-    show violet_magica c_espalda o_espalda bf_none be_sonrisa with sprite_fast
+    show violet_magica c_espalda o_espalda bf_none be_sonrisa with sprite_normal
     show violet_magica be_hablando
-    violet "¿Se ve bien de atras?"
+    violet "¿Se ve bien de atrás?"
     show violet_magica be_sonrisa
 
     show mc_parado_base b_hablando
-    mc "Tu trasero es mucho mejor que el de Mashika, es la version mejorada"
+    mc "Tu trasero es mucho mejor que el de Mashika, es la versión mejorada"
     show mc_parado_base b_none
 
     show violet_magica be_hablando
-    violet "¿Asi que es la version mejorada? Eso que no lo viste bien todavia"
+    violet "¿Así que es la versión mejorada? Eso que no lo viste bien todavía"
     show violet_magica be_sonrisa
 
     show mc_parado_base b_hablando
@@ -294,21 +294,20 @@ label quest_violet_deseo_03:
 
     show violet_magica be_hablando
     violet "A ver si es como lo imaginas"
-    show violet_magica be_sonrisa
 
-    show violet_magica c_mostrando o_espalda be_sonrisa with sprite_fast
+    show violet_magica c_mostrando o_espalda be_sonrisa with sprite_normal
     show violet_magica be_hablando
-    violet "¿Algo asi?"
+    violet "¿Algo así?"
     show violet_magica be_sonrisa
 
     show mc_parado_base b_hablando
-    mc "Si, es excactamente como lo imagino"
+    mc "Sí, es exactamente como lo imagino"
     show mc_parado_base b_none
 
     show violet_magica c_base bf_none be_none o_base at right with sprite_normal
 
     show violet_magica bf_hablando
-    violet "[mc_name] hey te estoy hablando"
+    violet "[mc_name], hey, te estoy hablando"
     show violet_magica bf_none
 
     scene expression _vd15_bg
@@ -317,23 +316,23 @@ label quest_violet_deseo_03:
     show violet_parada c_pijama_base ca_pijama o_base b_none at right
     with fade
 
-    show violet_parada b_hablando c_pijama_brazoscruzados with sprite_fast
+    show violet_parada b_hablando c_pijama_brazoscruzados with sprite_normal
     violet "¿Ya volviste a la realidad?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
-    mc "Me tilde pensando en algo, perdon"
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "Me tildé pensando en algo, perdón"
     show mc_parado_base b_none
 
-    show violet_parada b_hablando ot_avergonzada ot_avergonzada
-    violet "¿No me digas que estuviste imaginandome con eso puesto?"
+    show violet_parada b_hablando ot_avergonzada
+    violet "¿No me digas que estuviste imaginándome con eso puesto?"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Emmm no... nunca lo hice y nunca lo volveria a hacer"
+    mc "Emmm no... nunca lo hice y nunca lo volvería a hacer"
     show mc_parado_base b_none
 
-    show violet_parada b_hablando 
+    show violet_parada b_hablando
     violet "¿Y no es la primera vez?"
     show violet_parada b_none
 
@@ -341,31 +340,32 @@ label quest_violet_deseo_03:
     mc "Prefiero no entrar en detalles"
     show mc_parado_base b_none
 
-    show violet_parada b_hablando 
-    violet "Supongo que es normal fantasear con personajes de anime, mas siendo tan sugerentes"
+    show violet_parada b_hablando
+    violet "Supongo que es normal fantasear con personajes de anime, más siendo tan sugerentes"
     show violet_parada b_hablandochica
-    violet "¿Pero me tienes que incluir a mi en tus fantasias?"
+    violet "¿Pero me tienes que incluir a mí en tus fantasías?"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
     mc "Es que ya te dije que creo que son muy parecidas"
     show mc_parado_base b_none
 
-    show violet_parada b_hablando 
+    show violet_parada b_hablando
     violet "Mejor me voy antes de que me empieces a confundir en la realidad"
     show violet_parada b_hablandochica
-    violet "La proxima vez que estes mirando algun anime que no me involucre quizas me sume"
+    violet "La próxima vez que estés mirando algún anime que no me involucre quizás me sume"
     show violet_parada b_hablando
-    violet "Ahora te dejo seguir con tus fantasias"
+    violet "Ahora te dejo seguir con tus fantasías"
     show violet_parada b_none
 
     hide violet_parada with dissolve
 
-    show mc_parado_base c_rbase_pensando o_arribanm with sprite_fast
-    piensa "No es en el unico momento que pienso en ella, pero no es necesario que lo sepa"
-    piensa "Ahora tengo un nuevo objetivo de vida, que Violet use un cosplay de la armadura magica"
+    show mc_parado_base c_rbase_pensando o_arribanm with sprite_normal
+    piensa "No es en el único momento que pienso en ella, pero no es necesario que lo sepa"
+    piensa "Ahora tengo un nuevo objetivo de vida, que Violet use un cosplay de la armadura mágica"
 
     hide mc_parado_base
+    hide pantalla_anime_pausa
     with dissolve
 
     $ completar_quest_actual("violet", quest_id="violet_deseo_03")

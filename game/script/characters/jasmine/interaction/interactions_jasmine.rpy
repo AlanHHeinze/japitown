@@ -86,7 +86,8 @@ label interaccion_jasmine:
         $ _opciones_extra_jasmine.append({
             "texto": "Preguntar por Violet",
             "label": "violet_quest09a_jasmine_preguntar",
-            "condicion": True
+            "condicion": True,
+            "quest_id": "violet_questprincipal_09_a"
         })
 
     call screen menu_interaccion_npc_completo(_npc_actual, opciones_extra=_opciones_extra_jasmine)

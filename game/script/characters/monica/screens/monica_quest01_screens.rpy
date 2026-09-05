@@ -27,10 +27,10 @@ init python:
             ],
         },
         {
-            "titulo": "Paso 3 de 5 — Pagina de inicio",
-            "descripcion": "El instalador quiere modificar la pagina de inicio.",
+            "titulo": "Paso 3 de 5 — Página de inicio",
+            "descripcion": "El instalador quiere modificar la página de inicio.",
             "opciones": [
-                {"texto": "Mantener la configuracion actual", "correcta": True},
+                {"texto": "Mantener la configuración actual", "correcta": True},
                 {"texto": "Cambiar pagina de inicio a SearchMaster", "correcta": False},
                 {"texto": "Agregar SearchMaster como pagina secundaria", "correcta": False},
             ],
@@ -45,7 +45,7 @@ init python:
             ],
         },
         {
-            "titulo": "Paso 5 de 5 — Finalizacion",
+            "titulo": "Paso 5 de 5 — Finalización",
             "descripcion": "Último paso antes de completar la instalación.",
             "opciones": [
                 {"texto": "Completar instalación y agregar accesos directos al escritorio", "correcta": False},
@@ -100,7 +100,7 @@ screen monica_quest1_pantalla_instalador(paso):
                     spacing 20
 
                     # Titulo del paso
-                    text _paso_data["titulo"] size 20 color "#333333" bold True
+                    text renpy.translate_string(_paso_data["titulo"]) size 20 color "#333333" bold True
 
                     # Barra de progreso
                     frame:
@@ -114,7 +114,7 @@ screen monica_quest1_pantalla_instalador(paso):
                             background "#2855a0"
 
                     # Descripcion
-                    text _paso_data["descripcion"] size 15 color "#555555"
+                    text renpy.translate_string(_paso_data["descripcion"]) size 15 color "#555555"
 
                     null height 5
 
@@ -143,7 +143,7 @@ screen monica_quest1_pantalla_instalador(paso):
                                         background "#ccccdd"
                                         yalign 0.5
 
-                                    text _opcion["texto"] size 14 color "#333333" yalign 0.5
+                                    text renpy.translate_string(_opcion["texto"]) size 14 color "#333333" yalign 0.5
 
                     # Texto informativo
                     text "Seleccione una opción para continuar" size 12 color "#888888" xalign 0.5

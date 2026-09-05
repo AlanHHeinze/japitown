@@ -25,7 +25,7 @@ init 5 python:
             Requisito("locacion", "Debes estar en el gym", locacion_id="casa_gym"),
             Requisito("horario", "Debe ser por la tarde", horario_id=1)
         ],
-        mensaje_pista="Me gustaría ponerme al día con Jasmine, podría hablar con ella cuando esta sola en el Gym",
+        mensaje_pista="Me gustaría ponerme al día con Jasmine, podría hablar con ella cuando está sola en el Gym",
         mensaje_despertar="Jasmine suele entrenar en el Gym por la tarde, podría ir a verla y aprovechar el momento para hablar",
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
@@ -57,7 +57,7 @@ init 5 python:
         config_etapas={
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista="Responder el mensaje de Carl",
-                que_hacer="Entrar a la App Chat y responde los mensajes de Carl",
+                que_hacer="Entrar a la App Chat y responder los mensajes de Carl",
             ),
         },
     )
@@ -78,13 +78,13 @@ init 5 python:
         requisitos=[],
         validacion_especial=[],
         mensaje_pista="Jasmine quiere mostrar su nueva ropa deportiva.",
-        mensaje_despertar="Jasmine quiere que vea como le queda el conjunto deportivo que le regale, podría pasar a la tarde por el gym",
+        mensaje_despertar="Jasmine quiere que vea cómo le queda el conjunto deportivo que le regalé, podría pasar a la tarde por el Gym",
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista="Jasmine quiere mostrar su nueva ropa deportiva.",
                 que_hacer="Ver lo que Jasmine quiere mostrar.",
-                mensaje_despertar="Jasmine quiere que vea como le queda el conjunto deportivo que le regale, podría pasar a la tarde por el gym",
+                mensaje_despertar="Jasmine quiere que vea cómo le queda el conjunto deportivo que le regalé, podría pasar a la tarde por el Gym",
             ),
         },
     )

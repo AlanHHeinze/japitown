@@ -114,3 +114,65 @@ translate english violet_q4d6_cierre_70a9681a:
     # piensa "Bueno ahora solo queda esperar"
     piensa "Well, now all that's left is to wait"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_04_d6.rpy:46
+translate english violet_q4d6_cierre_3c463767:
+
+    # violet "Lo sé... no estabas haciendo las cosas porque eres un buen chico como decías"
+    violet "I know... you weren't doing all that because you're a nice guy like you said"
+
+# game/script/characters/violet/quests/violet_quest_04_d6.rpy:60
+translate english violet_q4d6_cierre_a4980f5f:
+
+    # violet "¿Tantas ganas de verlas tienes?"
+    violet "You want to see them that badly?"
+
+# game/script/characters/violet/quests/violet_quest_04_d6.rpy:64
+translate english violet_q4d6_cierre_de10f740:
+
+    # mc "Después de limpiar toda la casa y hacer todo lo que me pediste, sí"
+    mc "After cleaning the whole house and doing everything you asked, yes"
+
+# game/script/characters/violet/quests/violet_quest_04_d6.rpy:71
+translate english violet_q4d6_cierre_f7cbb7dd:
+
+    # violet "Te volviste un pervertido"
+    violet "You've turned into a pervert"
+
+# game/script/characters/violet/quests/violet_quest_04_d6.rpy:75
+translate english violet_q4d6_cierre_3b94d501:
+
+    # mc "No sé qué es peor, si ser un pervertido o ser una pervertida que manipula a otros"
+    mc "I don't know which is worse, being a pervert, or being a pervert who manipulates other people"
+
+# game/script/characters/violet/quests/violet_quest_04_d6.rpy:86
+translate english violet_q4d6_cierre_d3d1e7d6:
+
+    # mc "Si no lo fueras no estarías manipulándome con esas fotos, quieres mostrármelas, solo que querías aprovechar para obtener algo a cambio"
+    mc "If you weren't, you wouldn't be manipulating me with those photos. You want to show them to me, you just wanted to squeeze something out of it first"
+
+# game/script/characters/violet/quests/violet_quest_04_d6.rpy:94
+translate english violet_q4d6_cierre_dcbc6cb7:
+
+    # mc "Bueno, yo ya cumplí, ahora te toca a ti"
+    mc "Well, I did my part, now it's your turn"
+
+# game/script/characters/violet/quests/violet_quest_04_d6.rpy:100
+translate english violet_q4d6_cierre_ee57d2ee:
+
+    # violet "No te las voy a mostrar ahora"
+    violet "I'm not going to show them to you now"
+
+# game/script/characters/violet/quests/violet_quest_04_d6.rpy:108
+translate english violet_q4d6_cierre_b9a9e3b0:
+
+    # violet "Te lo mando después por mensaje"
+    violet "I'll send it to you later by message"
+
+# game/script/characters/violet/quests/violet_quest_04_d6.rpy:112
+translate english violet_q4d6_cierre_3581ee00:
+
+    # mc "Confío en ti"
+    mc "I trust you"
+

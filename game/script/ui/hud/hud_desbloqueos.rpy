@@ -41,8 +41,8 @@ define DESB_VINETA = u"•"
 
 # Textos fijos del cuadro emergente. Explican QUE ES un hito y que es una
 # ventaja; la descripcion concreta de cada ventaja se arma con DESB_TXT_VENTAJA.
-define DESB_TXT_HITO = "Hito: Conseguir un Hito nos permite avanzar en misiones principales y desbloquear elecciones únicas."
-define DESB_TXT_VENTAJAS = "Desbloquear una Ventaja nos da mejoras permanentes en algunas interacciones con el personaje."
+define DESB_TXT_HITO = "Hito: Conseguir un Hito te permite avanzar en misiones principales y desbloquear elecciones únicas."
+define DESB_TXT_VENTAJAS = "Desbloquear una Ventaja te da mejoras permanentes en algunas interacciones con el personaje."
 define DESB_TXT_VENTAJA = "Esta ventaja otorga - {}"
 
 

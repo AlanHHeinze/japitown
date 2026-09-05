@@ -2,9 +2,6 @@
 
 translate english strings:
 
-    old "30 minutos mas tarde"
-    new "30 minutes later"
-
     old "Rechazar la tarjeta"
     new "Decline the card"
 
@@ -19,7 +16,7 @@ translate english strings:
     # que corresponde a la ruta actual del fuente. Acá había una copia con un
     # punto final de más que no matcheaba con nada; se borró.)
 
-    old "¿Tenés 18 años o más?"
+    old "¿Tienes 18 años o más?"
     new "Are you 18 years of age or older?"
 
     old "Sí, tengo 18 años o más"
@@ -39,7 +36,7 @@ translate english strings:
     new "Skip"
 
     # menu_tutorial_choice
-    old "TUTORIAL"
+    old "Tutorial"
     new "TUTORIAL"
 
     old "Este tutorial está pensado para abarcar los conceptos más importantes del juego.\nTe recomendamos que si no estás familiarizado con el juego o con este tipo de juegos, lo veas."

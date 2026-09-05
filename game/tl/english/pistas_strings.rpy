@@ -19,11 +19,32 @@ translate english strings:
     # Quests del MC — panel de Pistas
     # =========================================================================
 
+    # "Visitar: {lista}" y "Has recorrido toda la casa." salen de
+    # locaciones_pendientes (QuestMC). Hoy ninguna quest usa esa lista — la
+    # unica que la usaba era la 0 del MC, con el recorrido obligatorio que se
+    # elimino — pero la funcion sigue en el sistema, asi que las traducciones
+    # quedan para cuando se la vuelva a usar.
     old "Visitar: {lista}"
     new "Visit: {lista}"
 
     old "Has recorrido toda la casa."
     new "You've been all over the house."
+
+    # Quest 0 del MC — que_hacer por fase (_mc_q0_que_hacer en quest_mc.rpy)
+    old "Buscar mis cosas en el Garage"
+    new "Get my things from the Garage"
+
+    old "Llevar las cajas a mi habitación"
+    new "Take the boxes up to my room"
+
+    old "Hacer tiempo hasta la noche"
+    new "Kill time until tonight"
+
+    old "Ir al Frente de la casa"
+    new "Go to the Front of the house"
+
+    old "Instalarme en casa"
+    new "Get settled in"
 
     old "Completar:"
     new "Complete:"
@@ -34,7 +55,7 @@ translate english strings:
     old "La batería de la notebook (Mónica)"
     new "The laptop battery (Monica)"
 
-    old "¿Que le pasa a Violet? (Violet)"
+    old "¿Qué le pasa a Violet? (Violet)"
     new "What's up with Violet? (Violet)"
 
     old "Reencuentro con Jasmine (Jasmine)"
@@ -129,7 +150,7 @@ translate english strings:
     old "Responder mensaje Violet"
     new "Reply to Violet's message"
 
-    old "Violet se lo probo debería ir a hablar con ella"
+    old "Violet se lo probó, debería ir a hablar con ella"
     new "Violet tried it on, I should go talk to her"
 
     old "Violet ya me contestó, debería ir a hablar con ella"

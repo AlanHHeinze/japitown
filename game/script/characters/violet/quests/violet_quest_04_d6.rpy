@@ -33,92 +33,92 @@ label violet_q4d6_cierre:
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
 
-    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
     mc "Listo ya hice todo lo que me pediste"
-    show mc_parado_base b_abiertachica 
+    show mc_parado_base b_abiertachica
     mc "Ahora quiero mi recompensa"
-    show mc_parado_base b_none 
-
-    if vq4dfav_cuerpo == "c_pijama":
-        show violet_parada b_hablando o_arribanm c_pijama_pensando with sprite_fast
-    else:
-        show violet_parada b_hablando o_arribanm c_rbase_pensando with sprite_fast
-    violet "Lo se... no estabas haciendo las cosas porque eres un buen chico como decias"
-    if vq4dfav_cuerpo == "c_pijama":
-        show violet_parada b_none o_base c_pijama_base with sprite_fast
-    else:
-        show violet_parada b_none o_base c_rbase_base with sprite_fast
-
-    show mc_parado_base b_hablando 
-    mc "A ver esas fotos..."
-    show mc_parado_base b_none 
-
-    if vq4dfav_cuerpo == "c_pijama":
-        show violet_parada b_hablandochica c_pijama_verguenza with sprite_fast
-    else:
-        show violet_parada b_hablandochica c_rbase_verguenza with sprite_fast
-    violet "¿Tantas ganas de verlas tenes?"
-    show violet_parada b_none
-
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
-    mc "Despues de limpiar toda la casa y hacer todo lo que me pediste, si"
     show mc_parado_base b_none
 
     if vq4dfav_cuerpo == "c_pijama":
-        show violet_parada b_hablandochica c_pijama_dedolabio with sprite_fast
+        show violet_parada b_hablando o_arribanm c_pijama_pensando with sprite_normal
     else:
-        show violet_parada b_hablandochica c_rbase_dedolabio with sprite_fast
-    violet "Te volvist un pervertido"
-    show violet_parada b_none
+        show violet_parada b_hablando o_arribanm c_rbase_pensando with sprite_normal
+    violet "Lo sé... no estabas haciendo las cosas porque eres un buen chico como decías"
+    if vq4dfav_cuerpo == "c_pijama":
+        show violet_parada b_none o_base c_pijama_base with sprite_normal
+    else:
+        show violet_parada b_none o_base c_rbase_base with sprite_normal
 
-    show mc_parado_base b_hablando c_rbase_pensando with sprite_fast
-    mc "No se que es pero si ser un perverito, o ser una pervertidas que manipula a otros"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando
+    mc "A ver esas fotos..."
+    show mc_parado_base b_none
 
     if vq4dfav_cuerpo == "c_pijama":
-        show violet_parada b_hablandochica c_pijama_brazoscruzados with sprite_fast
+        show violet_parada b_hablandochica c_pijama_verguenza with sprite_normal
     else:
-        show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_fast
+        show violet_parada b_hablandochica c_rbase_verguenza with sprite_normal
+    violet "¿Tantas ganas de verlas tienes?"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "Después de limpiar toda la casa y hacer todo lo que me pediste, sí"
+    show mc_parado_base b_none
+
+    if vq4dfav_cuerpo == "c_pijama":
+        show violet_parada b_hablandochica c_pijama_dedolabio with sprite_normal
+    else:
+        show violet_parada b_hablandochica c_rbase_dedolabio with sprite_normal
+    violet "Te volviste un pervertido"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "No sé qué es peor, si ser un pervertido o ser una pervertida que manipula a otros"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
+
+    if vq4dfav_cuerpo == "c_pijama":
+        show violet_parada b_hablandochica c_pijama_brazoscruzados with sprite_normal
+    else:
+        show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_normal
     violet "No soy una pervertida..."
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
-    mc "Si no lo fueras no estarias manipulandome con esas fotos, queres mostrarmelas, solo que quierias aprovechar para obtener algo a cambio"
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
+    mc "Si no lo fueras no estarías manipulándome con esas fotos, quieres mostrármelas, solo que querías aprovechar para obtener algo a cambio"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
     violet "Basta"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_base with sprite_fast
-    mc "Bueno, yo ya cumpli, ahora te toca a vos"
+    show mc_parado_base b_hablando c_rbase_base with sprite_normal
+    mc "Bueno, yo ya cumplí, ahora te toca a ti"
     show mc_parado_base b_abiertachica
     mc "A ver..."
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "No te las voy a mostar ahora"
+    violet "No te las voy a mostrar ahora"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_fast
+    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_normal
     mc "¿Y entonces?"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     show violet_parada b_hablandochica
-    violet "Te lo mando despues por mensaje"
+    violet "Te lo mando después por mensaje"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando 
-    mc "Confio en vos"
+    show mc_parado_base b_hablando
+    mc "Confío en ti"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
     violet "Chau"
     show violet_parada b_none
 
-    hide violet_parada 
+    hide violet_parada
 
-    show mc_parado_base c_rbase_pensando with sprite_fast
+    show mc_parado_base c_rbase_pensando with sprite_normal
     piensa "Bueno ahora solo queda esperar"
 
 

@@ -226,7 +226,7 @@ init python:
             posicion=None,
             probabilidad=0.20,
             horarios=[0, 1, 2],
-            nombre="Monica salió de la casa"
+            nombre="Mónica salió de la casa"
         ))
 
         monica.agregar_rutina_especial(RutinaEspecial(
@@ -236,7 +236,7 @@ init python:
             posicion=None,
             probabilidad=0.25,
             horarios=[2],
-            nombre="Monica en la ducha"
+            nombre="Mónica en la ducha"
         ))
 
         # Los desbloqueos de relación ya no se declaran acá: son HITOS. Mónica

@@ -126,3 +126,47 @@ translate english violet_quest06a_cierre_479ac201:
     # piensa "Ahora voy a estar a la espectativa de la reaccion de Violet"
     piensa "Now I'll be on edge waiting for Violet's reaction"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_06_a.rpy:118
+translate english violet_quest06a_habitacion_6b6f8fb9:
+
+    # violet "No te entiendo, ¿por qué lo haces?"
+    violet "I don't get you. Why are you doing this?"
+
+# game/script/characters/violet/quests/violet_quest_06_a.rpy:165
+translate english violet_quest06a_camino_amor_c46f357f:
+
+    # piensa "No puedo creer que di el paso, fue un impulso y no sé cómo va a reaccionar Violet"
+    piensa "I can't believe I made the move, it was an impulse and I don't know how Violet's going to react"
+
+# game/script/characters/violet/quests/violet_quest_06_a.rpy:172
+translate english violet_quest06a_camino_amor_c708d975:
+
+    # mc "Bueno, nos vemos luego"
+    mc "Okay, see you later"
+
+# game/script/characters/violet/quests/violet_quest_06_a.rpy:186
+translate english violet_quest06a_camino_deseo_b8de2309:
+
+    # mc "Hoy de nuevo en la casa, compartiendo momentos contigo, entendí que me equivoqué al enojarme cuando me fui y arruiné la relación"
+    mc "Back in the house today, sharing moments with you, I realized I was wrong to get angry when I left and ruined our relationship"
+
+# game/script/characters/violet/quests/violet_quest_06_a.rpy:217
+translate english violet_quest06a_camino_deseo_c46f357f:
+
+    # piensa "No puedo creer que di el paso, fue un impulso y no sé cómo va a reaccionar Violet"
+    piensa "I can't believe I made the move, it was an impulse and I don't know how Violet's going to react"
+
+# game/script/characters/violet/quests/violet_quest_06_a.rpy:224
+translate english violet_quest06a_camino_deseo_c708d975:
+
+    # mc "Bueno, nos vemos luego"
+    mc "Okay, see you later"
+
+# game/script/characters/violet/quests/violet_quest_06_a.rpy:248
+translate english violet_quest06a_cierre_0a90d57b:
+
+    # piensa "Ahora voy a estar a la expectativa de la reacción de Violet"
+    piensa "Now I'll be on edge waiting for Violet's reaction"
+

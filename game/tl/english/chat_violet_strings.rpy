@@ -25,7 +25,7 @@ translate english strings:
     old "Es perfecto para ti"
     new "It looks perfect on you"
 
-    old "No diria apretado, diria sexy"
+    old "No diría apretado, diría sexy"
     new "I wouldn't say tight, I'd say sexy"
 
     # =========================================================================
@@ -59,7 +59,7 @@ translate english strings:
     old "¿En serio te molestaría?"
     new "Would it really bother you?"
 
-    old "No se, me imagine la situación y sentí celos"
+    old "No sé, me imaginé la situación y sentí celos"
     new "I don't know, I pictured it and got jealous"
 
     old "Tienes toda mi atención"
@@ -90,7 +90,7 @@ translate english strings:
     old "No sé qué hice, así que idiota"
     new "I don't know what I did, so: idiot"
 
-    old "¿Cuándo fuiste a la tienda no notaste nada raro?"
+    old "Cuando fuiste a la tienda, ¿no notaste nada raro?"
     new "When you went to the store, didn't you notice anything strange?"
 
     old "No, la verdad que no"
@@ -141,7 +141,7 @@ translate english strings:
     old "La verdad es que no sé si tengo ganas de ir contigo"
     new "Honestly, I'm not sure I feel like going with you anymore"
 
-    old "Perdón Violet, realmente no fue mi intención"
+    old "Perdón, Violet, realmente no fue mi intención"
     new "I'm sorry, Violet. It really wasn't my intention"
 
     # =========================================================================
@@ -155,7 +155,7 @@ translate english strings:
     # QUEST 06_B — Violet invita al MC a su habitación
     # =========================================================================
 
-    old "Pasate a la noche por mi habitación"
+    old "Pásate a la noche por mi habitación"
     new "Come by my room tonight"
 
     old "Te quiero consultar algo"
@@ -264,16 +264,16 @@ translate english strings:
     new "Everything okay?"
 
     # --- Respuesta generica -------------------------------------------------
-    old "Que raro que me estes escribiendo\n¿Necesitas algo?"
+    old "Qué raro que me estés escribiendo\n¿Necesitas algo?"
     new "Weird that you're texting me\nDo you need something?"
 
-    old "No solo queria hablar un rato"
+    old "No, solo quería hablar un rato"
     new "No, I just wanted to talk for a bit"
 
     old "Ahora estoy con otra cosa"
     new "I'm busy with something right now"
 
-    old "Hablamos despues"
+    old "Hablamos después"
     new "Talk later"
 
     # (Acá estaban las lineas de la conversacion "aburrida" de Mensajear. Esa
@@ -290,7 +290,7 @@ translate english strings:
     #
     # Los \n separan burbujas escritas como un solo mensaje: se conservan.
 
-    old "¿Como estas?"
+    old "¿Cómo estás?"
     new "How are you?"
 
     # Dos burbujas separadas, o sea dos entradas: `mensaje_inicial` va como
@@ -305,22 +305,22 @@ translate english strings:
     old "¿Es una propuesta? jajaja"
     new "Is that an offer? hahaha"
 
-    old "Ultimamente todo para vos es una propuesta"
+    old "Últimamente todo para ti es una propuesta"
     new "Lately everything is an offer to you"
 
-    old "Mala mia supongo"
+    old "Mala mía supongo"
     new "My bad I guess"
-    old "Se me esta haciendo dificil"
+    old "Se me está haciendo difícil"
     new "It's getting hard for me"
 
-    old "¿Que cosa se te esta haciendo dificil?"
+    old "¿Qué cosa se te está haciendo difícil?"
     new "What's getting hard for you?"
 
-    old "Ver eso dando vueltas todo el dia por la casa"
+    old "Ver eso dando vueltas todo el día por la casa"
     new "Seeing that walking around the house all day"
 
     # Rama b: el MC se planta.
-    old "Si queres te puedo decir que hacer"
+    old "Si quieres te puedo decir qué hacer"
     new "If you want I can tell you what to do"
 
     old "Me imagino tu sugerencia"
@@ -329,17 +329,17 @@ translate english strings:
     old "A ver"
     new "Let's hear it"
 
-    old "¿Que clase de peticion es esa?"
+    old "¿Qué clase de petición es esa?"
     new "What kind of request is that?"
 
-    old "Una muy comun supongo"
+    old "Una muy común supongo"
     new "A pretty common one I guess"
 
     # Tronco unico, desde la foto.
     old "No me lo esperaba 😲"
     new "I wasn't expecting that 😲"
 
-    old "¿Que cosa?"
+    old "¿Qué cosa?"
     new "Expecting what?"
 
     old "Una foto de mi cosa favorita"
@@ -356,13 +356,13 @@ translate english strings:
     old "Pero no hablaba de eso ahora"
     new "But that's not what I meant just now"
 
-    old "¿Y de que hablabas?"
+    old "¿Y de qué hablabas?"
     new "Then what did you mean?"
 
     old "De mi otra cosa favorita"
     new "My other favorite thing"
 
-    old "Lo tenes atras"
+    old "Lo tienes atrás"
     new "You've got it behind you"
 
     old "¿Los slimes?"
@@ -380,28 +380,28 @@ translate english strings:
     old "Bueno, con esto ya no te debo nada"
     new "Well, now I don't owe you anything"
 
-    old "No recuerdo que me debias"
+    old "No recuerdo qué me debías"
     new "I don't remember you owing me"
 
     old "El premio de la cocina"
     new "The prize from the kitchen"
 
-    old "Nunca pense que ibas a cumplir, estabas dormida y lo hacias para molestarme"
+    old "Nunca pensé que ibas a cumplir, estabas dormida y lo hacías para molestarme"
     new "I never thought you'd follow through, you were half asleep and just messing with me"
 
-    old "Si a ambas cosas, pero siempre cumplo"
+    old "Sí a ambas cosas, pero siempre cumplo"
     new "Yes to both, but I always follow through"
 
-    old "Entonces voy a tener que hacerte prometer mas cosas"
+    old "Entonces voy a tener que hacerte prometer más cosas"
     new "Then I'm going to have to make you promise more things"
 
-    old "Depende solo de vos lograr eso"
+    old "Depende solo de ti lograr eso"
     new "That's entirely up to you"
 
     old "Ahi se conectaron mis amigos para la partida"
     new "My friends just came online for the match"
 
-    old "Hablamos despues 👋"
+    old "Hablamos después 👋"
     new "Talk later 👋"
 
     # --- Intencion, parte 1 -------------------------------------------------
@@ -410,29 +410,29 @@ translate english strings:
     old "Hola ¿Como estas?"
     new "Hey, how are you?"
 
-    old "Bien, ¿tu?"
+    old "Bien, ¿tú?"
     new "Good, you?"
 
-    old "Algo aburrido\n¿Que hacias?"
+    old "Algo aburrido\n¿Qué hacías?"
     new "A bit bored\nWhat were you up to?"
 
-    old "Mmmmm ¿que estas buscando?"
+    old "Mmmmm, ¿qué estás buscando?"
     new "Mmmmm what are you after?"
 
-    old "Nada solo queria hablar"
+    old "Nada, solo quería hablar"
     new "Nothing, I just wanted to talk"
 
-    old "Pense que me escribias a ver si te mandaba una foto otra vez"
+    old "Pensé que me escribías a ver si te mandaba una foto otra vez"
     new "I thought you were texting to see if I'd send you another photo"
 
     # Rama a: se hace el disimulado. Corta la charla y abre la parte 2.
-    old "No, no era por eso, solo queria hablar"
+    old "No, no era por eso, solo quería hablar"
     new "No, that wasn't it, I just wanted to talk"
 
     old "Ok, entonces no te mando nada"
     new "Ok, then I'm not sending you anything"
 
-    old "Si queres igual me podes mandar algo"
+    old "Si quieres igual me puedes mandar algo"
     new "You can still send me something if you want"
 
     old "Mmm no, no quiero"
@@ -442,22 +442,22 @@ translate english strings:
     old "No voy a mentirte que estaba pensando en la foto antes de escribirte"
     new "I won't lie, I was thinking about the photo before I texted you"
 
-    old "Lo sabia, es en lo unico que pensas"
+    old "Lo sabía, es en lo único que piensas"
     new "I knew it, it's the only thing you think about"
 
-    old "¿Esta mal que piense todo el dia en vos?"
+    old "¿Está mal que piense todo el día en ti?"
     new "Is it wrong that I think about you all day?"
 
     old "Premio a la sinceridad"
     new "A prize for being honest"
 
-    old "Me encantas\nQuiero ir para alla y agarrar eso"
+    old "Me encantas\nQuiero ir para allá y agarrar eso"
     new "I'm crazy about you\nI want to come over and grab that"
 
     old "Se mira y no se toca"
     new "Look, don't touch"
 
-    old "No se cuanto me voy a poder controlar"
+    old "No sé cuánto me voy a poder controlar"
     new "I don't know how long I can control myself"
 
     old "Si no te podes controlar no te mando mas nada entonces"
@@ -517,16 +517,16 @@ translate english strings:
 
     # --- Ducha --------------------------------------------------------------
 
-    old "¿Estas para jugar algo?"
+    old "¿Estás para jugar algo?"
     new "Up for playing something?"
 
     old "Me estoy por bañar"
     new "I'm about to shower"
 
-    old "Se me acelero el corazon de solo imaginarlo"
+    old "Se me aceleró el corazón de solo imaginarlo"
     new "My heart raced just picturing it"
 
-    old "¿De imaginar que?"
+    old "¿De imaginar qué?"
     new "Picturing what?"
 
     old "Desnuda por entrar a la ducha"
@@ -545,14 +545,14 @@ translate english strings:
     # El reproche lo comparten las dos ramas que lo usan (el negativo directo
     # y el positivo plantado): mismo texto, distinto precio.
 
-    old "Gracias por ayudarme estos dias..."
+    old "Gracias por ayudarme estos días..."
     new "Thanks for helping me these past few days..."
 
-    old "Perdon estuve muy ocupado"
+    old "Perdón, estuve muy ocupado"
     new "Sorry, I was really busy"
 
-    old "Ven a mi habitacion porfavor"
+    old "Ven a mi habitación, por favor"
     new "Come to my room please"
 
-    old "Voy para alla"
+    old "Voy para allá"
     new "On my way"

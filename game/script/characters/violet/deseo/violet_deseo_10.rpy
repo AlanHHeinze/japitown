@@ -55,6 +55,28 @@ init python:
         """Condicion de la AccionLocacion 'Tomar agua' (actions_catalog)."""
         return getattr(store, 'vd10_sed_activa', False)
 
+    # ── Los textos de la guia, que cambian a mitad de la quest ───────────────
+    # La quest se queda en ETAPA_BOTON_LISTO desde que llega al umbral hasta que
+    # el MC toma el agua, pero en el medio pasa el despertar y lo que hay que
+    # hacer es OTRA cosa. Con textos fijos la guia seguia diciendo "Dormir"
+    # cuando dormir ya ni se puede — la restriccion de la escena lo bloquea.
+    #
+    # Van como funciones de MODULO y no como lambdas: la ConfigEtapa vive dentro
+    # del Quest, y el Quest se guarda (regla anti-PicklingError del proyecto).
+    # Devuelven español; el motor las pasa por translate_string al mostrarlas.
+
+    def vd10_pista_listo():
+        """Pista de ETAPA_BOTON_LISTO."""
+        if getattr(store, 'vd10_sed_activa', False):
+            return "Ir a la cocina"
+        return "Deberia descansar bien"
+
+    def vd10_que_hacer_listo():
+        """Que hacer de ETAPA_BOTON_LISTO."""
+        if getattr(store, 'vd10_sed_activa', False):
+            return "Tomar agua en la cocina"
+        return "Dormir"
+
 
 init 5 python:
 
@@ -132,160 +154,158 @@ label quest_violet_deseo_02:
     $ _vd10_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
     scene expression _vd10_bg
 
-    show violet_tanga_qd10 c_tanga b_none at right with sprite_normal
+    show violet_tanga c_tanga b_none at right with sprite_normal
 
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda with sprite_normal
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
     mc "Ehhh... Hola"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_tanga_qd10 b_hablando
+    show violet_tanga b_hablando
     violet "Hola"
-    show violet_tanga_qd10 b_hablandochica
-    violet "¿Tambien con sed?"
-    show violet_tanga_qd10 b_none
-    
-    piensa "Se ve que esta dormida y no se dio que esta en tanga"
+    show violet_tanga b_hablandochica
+    violet "¿También con sed?"
+    show violet_tanga b_none
 
+    piensa "Se ve que está dormida y no se dio cuenta de que está en tanga"
 
-    show violet_tanga_qd10 c_tomando with sprite_fast
+    show violet_tanga c_tomando with sprite_normal
     pause 0.5
-    show violet_tanga_qd10 c_tanga with sprite_fast
+    show violet_tanga c_tanga with sprite_normal
     pause 0.5
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
-    mc "Si, me tengo que acostumbrar a llevarme agua antes de dormir"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "Sí, me tengo que acostumbrar a llevarme agua antes de dormir"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_tanga_qd10 b_hablando
-    violet "Yo tengo una botella pero siempre olvido de llenarmela"
-    show violet_tanga_qd10 b_none
+    show violet_tanga b_hablando
+    violet "Yo tengo una botella pero siempre me olvido de llenármela"
+    show violet_tanga b_none
 
-    show mc_parado_base b_hablando 
+    show mc_parado_base b_hablando
     mc "No es una mala idea, pero tampoco es tanto problema levantarse"
     show mc_parado_base b_none
 
-    show violet_tanga_qd10 b_hablando
-    violet "Para mi si porque me puedo desvelar y me cuesta mucho volver a dormir"
-    show violet_tanga_qd10 b_hablandochica
-    violet "¿Sabes que hora es?"
-    show violet_tanga_qd10 b_none
-    
-    piensa "Esta mas habladora de lo habitual tambien, parece otra persona"
+    show violet_tanga b_hablando
+    violet "Para mí sí, porque me puedo desvelar y me cuesta mucho volver a dormir"
+    show violet_tanga b_hablandochica
+    violet "¿Sabes qué hora es?"
+    show violet_tanga b_none
 
-    show mc_parado_base b_hablando c_rbase_celu o_abajonm with sprite_fast
+    piensa "Está más habladora de lo habitual también, parece otra persona"
+
+    show mc_parado_base b_hablando c_rbase_celular o_abajonm with sprite_normal
     mc "Son las 5 am"
-    show mc_parado_base b_none c_rbase_base o_base with sprite_fast
+    show mc_parado_base b_none c_rbase_base o_base with sprite_normal
 
-    show violet_tanga_qd10 b_hablando
-    violet "¿A ti te cuesta dormirte tambien cuando te levantas?"
-    show violet_tanga_qd10 b_none
+    show violet_tanga b_hablando
+    violet "¿A ti te cuesta dormirte también cuando te levantas?"
+    show violet_tanga b_none
 
-    show violet_tanga_qd10 c_tomando with sprite_fast
+    show violet_tanga c_tomando with sprite_normal
     pause 0.5
-    show violet_tanga_qd10 c_tanga with sprite_fast
+    show violet_tanga c_tanga with sprite_normal
     pause 0.5
 
-    show mc_parado_base b_hablando c_rbase_pensando o_arribanm with sprite_fast
-    mc "En la mayoria de los casos me vuelvo a dormir rapido"
-    show mc_parado_base b_none c_rbase_base o_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_pensando o_arribanm with sprite_normal
+    mc "En la mayoría de los casos me vuelvo a dormir rápido"
+    show mc_parado_base b_none c_rbase_base o_base with sprite_normal
 
-    show violet_tanga_qd10 b_hablando
-    violet "Que envidia"
-    show violet_tanga_qd10 b_hablandochica
+    show violet_tanga b_hablando
+    violet "Qué envidia"
+    show violet_tanga b_hablandochica
     violet "¿Te puedo hacer una pregunta?"
-    show violet_tanga_qd10 b_none
+    show violet_tanga b_none
 
     show mc_parado_base b_hablando
-    mc "Si, ¿Que pasa?"
+    mc "Sí, ¿qué pasa?"
     show mc_parado_base b_none
 
-    show violet_tanga_qd10 b_hablando
-    violet "¿Por que me estas mirando tanto?"
-    show violet_tanga_qd10 b_none
+    show violet_tanga b_hablando
+    violet "¿Por qué me estás mirando tanto?"
+    show violet_tanga b_none
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
     mc "Ehh... no te estaba mirando"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    piensa "Me es imposible no mirarla, no se que espera"
+    piensa "Me es imposible no mirarla, no sé qué espera"
 
-    show violet_tanga_qd10 b_hablando ot_colorada
+    show violet_tanga b_hablando ot_colorada
     violet "Aunque me imagino..."
-    show violet_tanga_qd10 b_hablandochica
-    violet "Si me dices que miras y por que te puedo dar una recompensa"
-    show violet_tanga_qd10 b_sonrisa
+    show violet_tanga b_hablandochica
+    violet "Si me dices qué miras y por qué te puedo dar una recompensa"
+    show violet_tanga b_sonrisa
 
-    piensa "Sabe por que la estoy mirando, no se a donde quiere llegar y no conozco esta faceta suya"
-    piensa "No le quiero decir, pero me voy a arrepentir mas de perderme esa recompensa"
+    piensa "Sabe por qué la estoy mirando, no sé adónde quiere llegar y no conozco esta faceta suya"
+    piensa "No le quiero decir, pero me voy a arrepentir más de perderme esa recompensa"
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
-    mc "Te estoy mirando a vos"
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "Te estoy mirando a ti"
     show mc_parado_base b_none
 
-    show violet_tanga_qd10 b_hablando
-    violet "¿Y por que?"
-    show violet_tanga_qd10 b_sonrisa
+    show violet_tanga b_hablando
+    violet "¿Y por qué?"
+    show violet_tanga b_sonrisa
 
     show mc_parado_base b_hablando
     mc "Porque tenerte adelante en tanga me calienta un poco, no voy a mentirte"
     show mc_parado_base b_none
 
-    show violet_tanga_qd10 b_hablando
-    violet "Asi que te volviste un pervertido"
-    show violet_tanga_qd10 b_sonrisa
+    show violet_tanga b_hablando
+    violet "Así que te volviste un pervertido"
+    show violet_tanga b_sonrisa
 
     show mc_parado_base b_hablando
-    mc "Es una reaccion natural, soy un hombre"
+    mc "Es una reacción natural, soy un hombre"
     show mc_parado_base b_none
 
-    show violet_tanga_qd10 b_hablando
-    violet "¿Te pones asi asi solo por una tanga o cambia porque sea yo?"
-    show violet_tanga_qd10 b_sonrisa
+    show violet_tanga b_hablando
+    violet "¿Te pones así solo por una tanga o cambia porque sea yo?"
+    show violet_tanga b_sonrisa
 
     show mc_parado_base b_hablando
-    mc "Creo que ya te respondi lo que me preguntaste y no vi mi recompensa"
+    mc "Creo que ya te respondí lo que me preguntaste y no vi mi recompensa"
     show mc_parado_base b_none
 
-    show violet_tanga_qd10 b_hablando
+    show violet_tanga b_hablando
     violet "Depende de tu respuesta ahora puede mejorar o empeorar"
-    show violet_tanga_qd10 b_sonrisa
+    show violet_tanga b_sonrisa
 
     show mc_parado_base b_hablando
-    mc "Supongo que es por la situacion y por que seas vos"
+    mc "Supongo que es por la situación y porque seas tú"
     show mc_parado_base b_none
 
-    show violet_tanga_qd10 b_hablando
+    show violet_tanga b_hablando
     violet "Muy bien... honesto"
-    show violet_tanga_qd10 b_hablandochica
+    show violet_tanga b_hablandochica
     violet "Bueno, me voy a dormir antes de terminar de desvelarme"
-    show violet_tanga_qd10 b_sonrisa
+    show violet_tanga b_sonrisa
 
     show mc_parado_base b_hablando
     mc "¿Y mi recompensa?"
     show mc_parado_base b_none
 
-    show violet_tanga_qd10 b_hablando
+    show violet_tanga b_hablando
     violet "Nunca dije que iba a ser ahora"
-    show violet_tanga_qd10 b_hablandochica
-    violet "¿Que estabas esperando?"
-    show violet_tanga_qd10 b_sonrisa
+    show violet_tanga b_hablandochica
+    violet "¿Qué estabas esperando?"
+    show violet_tanga b_sonrisa
 
-    piensa "Cai completamente... no le voy a seguir mas el juego"
+    piensa "Caí completamente... no le voy a seguir más el juego"
 
     show mc_parado_base b_hablando
     mc "Nada, me voy a dormir, tampoco me quiero desvelar"
     show mc_parado_base b_none
 
-    show violet_tanga_qd10 b_hablando
+    show violet_tanga b_hablando
     violet "Nos vemos"
-    show violet_tanga_qd10 b_sonrisa
+    show violet_tanga b_sonrisa
 
-    hide violet_tanga_qd10
+    hide violet_tanga
     hide mc_parado_base
     with dissolve
-
 
     $ sistema_locaciones.mover_a_locacion("casa_hmc")
     $ _vd10_bg_final = sistema_locaciones.locacion_actual.background
@@ -293,9 +313,9 @@ label quest_violet_deseo_02:
 
     show mc_parado_base c_rbase_pensando o_base b_none at center with sprite_normal
 
-    piensa "Violet siempre me atrajo, quizas porque teniamos miles de cosas en comun"
+    piensa "Violet siempre me atrajo, quizás porque teníamos miles de cosas en común"
     piensa "Pero ahora es distinto, me cuesta no mirarla con otros ojos y este tipo de situaciones no ayudan"
-    piensa "Que ella lo sepa no se si es bueno o es malo, pero ahora no voy a ganar nada con pensarlo"
+    piensa "Que ella lo sepa no sé si es bueno o es malo, pero ahora no voy a ganar nada con pensarlo"
     piensa "Mejor me voy a dormir"
 
     hide mc_parado_base with dissolve

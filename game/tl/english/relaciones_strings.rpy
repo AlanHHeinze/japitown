@@ -45,10 +45,10 @@ translate english strings:
     new "Perks"
 
     # Textos fijos del cuadro emergente (DESB_TXT_* en hud_desbloqueos.rpy)
-    old "Hito: Conseguir un Hito nos permite avanzar en misiones principales y desbloquear elecciones únicas."
+    old "Hito: Conseguir un Hito te permite avanzar en misiones principales y desbloquear elecciones únicas."
     new "Milestone: Reaching a Milestone lets you advance in main quests and unlock unique choices."
 
-    old "Desbloquear una Ventaja nos da mejoras permanentes en algunas interacciones con el personaje."
+    old "Desbloquear una Ventaja te da mejoras permanentes en algunas interacciones con el personaje."
     new "Unlocking a Perk gives you permanent improvements in some interactions with the character."
 
     # El {} lo rellena la descripcion de la ventaja, ya traducida.
@@ -65,25 +65,25 @@ translate english strings:
     old "Entrar a la habitación de trasnoche"
     new "Enter her room after midnight"
 
-    old "Podés entrar a su habitación de madrugada sin golpear. Es el nivel de confianza más alto."
+    old "Puedes entrar a su habitación de madrugada sin golpear. Es el nivel de confianza más alto."
     new "You can walk into her room after midnight without knocking. The highest level of trust."
 
     old "Entrar a la habitación durante el día"
     new "Enter her room during the day"
 
-    old "Podés entrar a su habitación de día sin golpear ni pedir permiso."
+    old "Puedes entrar a su habitación de día sin golpear ni pedir permiso."
     new "You can walk into her room during the day without knocking or asking."
 
     old "Te deja pasar al golpear la puerta"
     new "She lets you in when you knock"
 
-    old "Si golpeás, te abre y te deja pasar a su habitación."
+    old "Si golpeas, te abre y te deja pasar a su habitación."
     new "If you knock, she opens up and lets you into her room."
 
-    old "Sale al pasillo cuando golpeás la puerta"
+    old "Sale al pasillo cuando golpeas la puerta"
     new "She comes out to the hallway when you knock"
 
-    old "Si golpeás, sale a hablar al pasillo, pero todavía no te deja entrar."
+    old "Si golpeas, sale a hablar al pasillo, pero todavía no te deja entrar."
     new "If you knock, she comes out to talk in the hallway, but won't let you in yet."
 
     # El marcador {npc} se conserva en el `new`: no es un placeholder de Ren'Py,
@@ -123,20 +123,20 @@ translate english strings:
     new "Knowing her"
 
     # Trasnoche
-    old "Podés hablarle de madrugada"
+    old "Puedes hablarle de madrugada"
     new "You can talk to her in the middle of the night"
 
     old "Aunque sea de madrugada te atiende en vez de estar durmiendo."
     new "Even in the middle of the night she'll talk to you instead of being asleep."
 
-    old "Al hablar con ella siempre vemos el resultado de una de las respuestas."
+    old "Al hablar con ella siempre ves el resultado de una de las respuestas."
     new "When you talk to her you always see the outcome of one of the replies."
 
     # Memoria sin tope — ventaja del hito de deseo 10
     old "Recordar"
     new "Remembering"
 
-    old "Al hablar con ella siempre vemos el resultado de nuestra elección pasada con ese estado."
+    old "Al hablar con ella siempre ves el resultado de tu elección pasada con ese estado."
     new "When you talk to her you always see the outcome of your past choice in that mood."
 
     # ── Hitos de Violet — nombre y descripcion ───────────────────────────────
@@ -149,10 +149,10 @@ translate english strings:
     old "Buena relación"
     new "Good relationship"
 
-    old "Violet me tiene confianza y se muestra mas abierta."
+    old "Violet me tiene confianza y se muestra más abierta."
     new "Violet trusts me and is more open with me."
 
-    old "Volvimos a tener la relacion que teniamos."
+    old "Volvimos a tener la relación que teníamos."
     new "We're back to how we used to be."
 
     old "Algo nos pasa"
@@ -165,7 +165,7 @@ translate english strings:
     old "Me calienta"
     new "She turns me on"
 
-    old "Hay una tension distinta entre los dos."
+    old "Hay una tensión distinta entre los dos."
     new "There's a different kind of tension between us."
 
     old "Confesión"
@@ -174,7 +174,7 @@ translate english strings:
     old "Ya nos dijimos lo que estaba pasando."
     new "We told each other what was going on."
 
-    old "La relacion cambio de forma definitiva."
+    old "La relación cambió de forma definitiva."
     new "The relationship changed for good."
 
     # ── Estados de animo — Violet ────────────────────────────────────────────
@@ -263,17 +263,26 @@ translate english strings:
     old "Pasar (Tarde)"
     new "Come in (Afternoon)"
 
-    old "Podremos ingresar a su habitación por la tarde."
+    old "Puedes ingresar a su habitación por la tarde."
     new "We'll be able to go into her room in the afternoon."
 
-    old "Al hacer uso de la acción Jugar, {npc} se puede unir y mejora la relación en +2 ❤️."
-    new "When you use the Play action, {npc} may join in and the relationship improves by +2 ❤️."
+    old "Al hacer uso de la acción Jugar, {npc} se puede unir y mejora la relación en +1 ❤️."
+    new "When you use the Play action, {npc} may join in and the relationship improves by +1 ❤️."
 
     old "Juegos Nuevos"
     new "New Games"
 
-    old "Al interactuar con {npc} tendremos la opción de jugar un juego nuevo; son escenas especiales con ella."
+    old "Al interactuar con {npc} tienes la opción de jugar un juego nuevo; son escenas especiales con ella."
     new "When you interact with {npc} you'll have the option to play a new game; they're special scenes with her."
+
+    # Lo que Violet dice al enumerar los juegos pendientes. Sale del registro
+    # (registrar_juego_nuevo) y se muestra con translate_string, asi que va
+    # por `old`/`new` y no por bloque de dialogo.
+    old "Siempre quise probar un casco de realidad virtual"
+    new "I always wanted to try a virtual reality headset"
+
+    old "Todavía tengo por ahí la Portátil Boy, si la encontramos podríamos jugar"
+    new "I still have the Portable Boy around somewhere, if we find it we could play"
 
     # =========================================================================
     # Ventajas del hito de deseo 20
@@ -282,19 +291,19 @@ translate english strings:
     old "Pasar (Noche)"
     new "Come in (Night)"
 
-    old "Podremos ingresar a su habitación por la noche."
+    old "Puedes ingresar a su habitación por la noche."
     new "We'll be able to go into her room at night."
 
     old "Ver Anime"
     new "Watch Anime"
 
-    old "Al hacer uso de la acción Ver Anime, {npc} se puede unir y mejora la relación en +2 💋."
-    new "When you use the Watch Anime action, {npc} may join in and the relationship improves by +2 💋."
+    old "Al hacer uso de la acción Ver Anime, {npc} se puede unir y mejora la relación en +1 💋."
+    new "When you use the Watch Anime action, {npc} may join in and the relationship improves by +1 💋."
 
     old "Mensajear"
     new "Texting"
 
-    old "Ahora podremos escribirle a {npc} por el chat cuando queramos y tener conversaciones especiales con ella."
+    old "Ahora puedes escribirle a {npc} por el chat cuando quieras y tener conversaciones especiales con ella."
     new "Now we can text {npc} whenever we want and have special conversations with her."
 
     # =========================================================================
@@ -307,11 +316,11 @@ translate english strings:
     old "Beso (Amor)"
     new "Kiss (Love)"
 
-    old "En el menú de {npc} tendremos la opción de besarla, una vez por día."
-    new "{npc}'s menu will have the option to kiss her, once per day."
+    old "Estando en su habitación por la tarde, en el menú de {npc} tienes la opción de besarla, una vez por día."
+    new "While in her room in the afternoon, {npc}'s menu will have the option to kiss her, once per day."
 
-    old "Estando en su habitación, {npc} nos puede mostrar cómo le queda algo nuevo."
-    new "While she's in her room, {npc} can show us how something new looks on her."
+    old "En el menú de {npc} le puedes pedir que te muestre cómo le queda algo nuevo."
+    new "{npc}'s menu lets you ask her to show us how something new looks on her."
 
     # =========================================================================
     # Ventajas del hito de deseo 30
@@ -322,13 +331,13 @@ translate english strings:
     old "Beso (Deseo)"
     new "Kiss (Desire)"
 
-    old "En el menú de {npc} tendremos otra forma de besarla, una vez por día."
-    new "{npc}'s menu will have another way to kiss her, once per day."
+    old "Estando en su habitación por la noche, en el menú de {npc} tienes otra forma de besarla, una vez por día."
+    new "While in her room at night, {npc}'s menu will have another way to kiss her, once per day."
 
     old "Provocación"
     new "Teasing"
 
-    old "En distintos momentos {npc} nos va a estar provocando; son escenas especiales que aparecen solas."
+    old "En distintos momentos {npc} te va a estar provocando; son escenas especiales que aparecen solas."
     new "At different moments {npc} will be teasing us; they're special scenes that show up on their own."
 
     old "Nuevos Chats"
@@ -361,13 +370,13 @@ translate english strings:
     old "Lo que aparece con 🔒 todavía no se puede alcanzar; hace falta avanzar en otra parte primero."
     new "Anything marked 🔒 can't be reached yet; you need to make progress elsewhere first."
 
-    old "Es la quest de 20 💋. Entrá de noche a tu habitación y escribile desde el celular."
+    old "Es la quest de 20 💋. Entra de noche a tu habitación y escríbele desde el celular."
     new "It's the 20 💋 quest. Go to your room at night and text her from your phone."
 
     old "La intención"
     new "The Intention"
 
-    old "Escribile estando ella en su habitación y libre. Según cómo le contestes cuando pregunte qué buscás, la charla sigue o se corta."
+    old "Escríbele estando ella en su habitación y libre. Según cómo le contestes cuando pregunte qué buscas, la charla sigue o se corta."
     new "Text her while she's in her room and free. Depending on how you answer when she asks what you're after, the chat continues or ends."
 
     old "La intención · segunda parte"
@@ -379,33 +388,39 @@ translate english strings:
     old "Justo antes de la ducha"
     new "Right Before the Shower"
 
-    old "Escribile de noche, mientras esté en el baño a punto de bañarse."
+    old "Escríbele de noche, mientras esté en el baño a punto de bañarse."
     new "Text her at night, while she's in the bathroom about to shower."
 
     old "Casco de realidad virtual"
     new "VR Headset"
 
-    old "Compralo en la tienda del celular y después proponéselo desde su menú."
+    old "Cómpralo en la tienda del celular y después propónselo desde su menú."
     new "Buy it in the phone store, then suggest it from her menu."
 
-    old "Entrá a su habitación y elegí Ropa Nueva en su menú."
-    new "Go into her room and pick New Clothes from her menu."
+    old "Elige Ropa Nueva en su menú y pídele el vestido."
+    new "Pick New Clothes from her menu and ask her for the dress."
+
+    old "El jean, otra vez"
+    new "The Jeans, Again"
+
+    old "Elige Ropa Nueva en su menú y pídele el jean. Si no están en su habitación, te cita allá."
+    new "Pick New Clothes from her menu and ask her for the jeans. If you are not in her room, she will summon you there."
 
     old "El beso"
     new "The Kiss"
 
-    old "Elegí Beso (Amor) en su menú, con ella a solas. Una vez por día."
-    new "Pick Kiss (Love) from her menu, with her alone. Once per day."
+    old "Elige Beso (Amor) en su menú, en su habitación por la tarde y a solas. Una vez por día."
+    new "Pick Kiss (Love) from her menu, in her room in the afternoon and with her alone. Once per day."
 
     old "El otro beso"
     new "The Other Kiss"
 
-    old "Elegí Beso (Deseo) en su menú, con ella a solas. Una vez por día."
-    new "Pick Kiss (Desire) from her menu, with her alone. Once per day."
+    old "Elige Beso (Deseo) en su menú, en su habitación por la noche y a solas. Una vez por día."
+    new "Pick Kiss (Desire) from her menu, in her room at night and with her alone. Once per day."
 
     old "La puerta entreabierta"
     new "The Door Left Ajar"
 
-    old "Andá al pasillo de arriba mientras se esté bañando. No pasa siempre: depende de si ella dejó la puerta así."
+    old "Ve al pasillo de arriba mientras se esté bañando. No pasa siempre: depende de si ella dejó la puerta así."
     new "Go to the upstairs hallway while she's showering. It doesn't always happen: it depends on whether she left the door that way."
 

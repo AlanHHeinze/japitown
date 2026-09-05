@@ -21,10 +21,9 @@
 ## OpcionRespuesta no tiene callback propio— y es la que ya usa el sistema de
 ## recompensas, asi que no agrega maquinaria.
 ##
-## ⚠️ LA FOTO ES PRESTADA. Las dos partes mandan la misma imagen y hoy apunta a
-## la de la quest de deseo 20, que es la unica que encaja: las otras tres del
-## chat son de quests. Cuando exista el arte propio se cambia SOLO
-## _MV_INTENCION_FOTO, que es de donde salen los dos usos.
+## LA FOTO ES PROPIA de esta conversacion. Las dos partes mandan la misma
+## imagen y sale de _MV_INTENCION_FOTO, que es de donde salen los dos usos.
+## Hasta que existio ese arte apuntaba prestada a la de la quest de deseo 20.
 ##
 ## ⚠️ LOS GRUPOS DE MENSAJEAR NO LLEVAN CONDICIONES DE ENTREGA (momento_horario,
 ## momento_locacion, condicion_entrega). Un grupo con condiciones se va a
@@ -39,7 +38,7 @@ default mv_intencion_parte2 = False
 init python:
 
     # Una sola definicion para los dos usos: ver la nota de arriba.
-    _MV_INTENCION_FOTO = "images/chat/violet/violet_chat_q20d.jpg"
+    _MV_INTENCION_FOTO = "images/chat/violet/violet_chat_intencion.jpg"
 
     def _mv_intencion_condicion():
         """
@@ -103,15 +102,15 @@ init 6 python:
     grupo_mv_intencion = GrupoMensajes(
         id="violet_mv_intencion",
         npc_id="violet",
-        mensaje_inicial="Bien, ¿tu?",
+        mensaje_inicial="Bien, ¿tú?",
         trigger_id="violet_mv_intencion",
         accion_al_completar=_mv_intencion_al_completar,
         pasos=[
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Algo aburrido\n¿Que hacias?",
-                        respuesta_npc="Mmmmm ¿que estas buscando?",
+                        texto="Algo aburrido\n¿Qué hacías?",
+                        respuesta_npc="Mmmmm, ¿qué estás buscando?",
                         saltar_a_paso=1,
                     ),
                 ]
@@ -119,8 +118,8 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Nada solo queria hablar",
-                        respuesta_npc="Pense que me escribias a ver si te mandaba una foto otra vez",
+                        texto="Nada, solo quería hablar",
+                        respuesta_npc="Pensé que me escribías a ver si te mandaba una foto otra vez",
                         saltar_a_paso=2,
                     ),
                 ]
@@ -129,7 +128,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="No, no era por eso, solo queria hablar",
+                        texto="No, no era por eso, solo quería hablar",
                         respuesta_npc="Ok, entonces no te mando nada",
                         # Lo unico que distingue la rama al terminar. Sin esto
                         # no habria forma de saber cual se jugo.
@@ -138,7 +137,7 @@ init 6 python:
                     ),
                     OpcionRespuesta(
                         texto="No voy a mentirte que estaba pensando en la foto antes de escribirte",
-                        respuesta_npc="Lo sabia, es en lo unico que pensas",
+                        respuesta_npc="Lo sabía, es en lo único que piensas",
                         saltar_a_paso=4,
                     ),
                 ]
@@ -147,7 +146,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Si queres igual me podes mandar algo",
+                        texto="Si quieres igual me puedes mandar algo",
                         respuesta_npc="Mmm no, no quiero",
                         saltar_a_paso=-1,
                     ),
@@ -157,7 +156,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="¿Esta mal que piense todo el dia en vos?",
+                        texto="¿Está mal que piense todo el día en ti?",
                         respuesta_npc="Premio a la sinceridad",
                         foto_respuesta=_MV_INTENCION_FOTO,
                         saltar_a_paso=5,
@@ -167,7 +166,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Me encantas\nQuiero ir para alla y agarrar eso",
+                        texto="Me encantas\nQuiero ir para allá y agarrar eso",
                         respuesta_npc=["Se mira y no se toca", "😈"],
                         saltar_a_paso=6,
                     ),
@@ -176,7 +175,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="No se cuanto me voy a poder controlar",
+                        texto="No sé cuánto me voy a poder controlar",
                         respuesta_npc="Si no te podes controlar no te mando mas nada entonces",
                         saltar_a_paso=7,
                     ),
@@ -214,7 +213,7 @@ init 6 python:
     registrar_contenido_ventaja(
         "mensajear", "intencion", "violet",
         "La intención",
-        "Escribile estando ella en su habitación y libre. Según cómo le contestes cuando pregunte qué buscás, la charla sigue o se corta.",
+        "Escríbele estando ella en su habitación y libre. Según cómo le contestes cuando pregunte qué buscas, la charla sigue o se corta.",
         vista=_mv_intencion_vista,
         orden=10,
     )

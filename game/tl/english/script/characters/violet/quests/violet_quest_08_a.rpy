@@ -328,3 +328,101 @@ translate english strings:
     old "Dejar la ropa afuera"
     new "Leave the clothes outside"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_08_a.rpy:154
+translate english violet_quest08a_ver_tv_d6137119:
+
+    # piensa "Se está poniendo feo el día, parece que va a llover"
+    piensa "The day's turning ugly, looks like it's going to rain"
+
+# game/script/characters/violet/quests/violet_quest_08_a.rpy:162
+translate english violet_quest08a_ver_tv_0ae4ecb6:
+
+    # piensa "Están bastante de moda últimamente los piratas, no me quejo, me gustan, pero ya cansa un poco"
+    piensa "Pirates are pretty trendy lately, I'm not complaining, I like them, but it gets a bit tiring"
+
+# game/script/characters/violet/quests/violet_quest_08_a.rpy:194
+translate english violet_quest08a_ver_tv_f5230e7a:
+
+    # piensa "Tendría que revisar que esté todo cerrado, no vaya a ser que entre más agua"
+    piensa "I should check that everything's closed, so no more water gets in"
+
+# game/script/characters/violet/quests/violet_quest_08_a.rpy:202
+translate english violet_quest08a_ver_tv_22a63262:
+
+    # piensa "¿Llegó alguien?"
+    piensa "Did someone arrive?"
+
+# game/script/characters/violet/quests/violet_quest_08_a.rpy:220
+translate english violet_quest08a_ver_tv_28140d0b:
+
+    # violet "Mónica me dejó en casa de Nath para ver el cosplay y cuando salí estaba apenas nublado, no pensé que iba a llover tan fuerte"
+    violet "Monica dropped me off at Nath's to see the cosplay and when I left it was barely cloudy, I didn't think it'd rain so hard"
+
+# game/script/characters/violet/quests/violet_quest_08_a.rpy:228
+translate english violet_quest08a_ver_tv_289151d9:
+
+    # mc "Sube a darte una ducha caliente antes de que te agarre un resfrío"
+    mc "Go up and take a hot shower before you catch a cold"
+
+# game/script/characters/violet/quests/violet_quest_08_a.rpy:240
+translate english violet_quest08a_ver_tv_fef05d99:
+
+    # violet "Sí, ¿me puedes traer el pijama rosa del ropero?"
+    violet "Yes, can you bring me the pink pajamas from the wardrobe?"
+
+# game/script/characters/violet/quests/violet_quest_08_a.rpy:248
+translate english violet_quest08a_ver_tv_e13560ec:
+
+    # mc "Sí, ve a bañarte que ahora te lo llevo"
+    mc "Sure, go take your shower and I'll bring them to you"
+
+# game/script/characters/violet/quests/violet_quest_08_a.rpy:253
+translate english violet_quest08a_ver_tv_d91b6655:
+
+    # piensa "Pobre Violet, llegó empapada, voy a buscar su pijama y dejárselo"
+    piensa "Poor Violet arrived soaked, I'll go get her pajamas and leave them for her"
+
+# game/script/characters/violet/quests/violet_quest_08_a.rpy:400
+translate english violet_quest08a_opcion_a_3efa18df:
+
+    # mc "Listo, te dejé la ropa afuera de la puerta"
+    mc "There, I left your clothes outside the door"
+
+# game/script/characters/violet/quests/violet_quest_08_a.rpy:441
+translate english violet_quest08a_entrar_baño_ff2f5f15:
+
+    # piensa "No sé si fue la mejor opción entrar así"
+    piensa "I don't know if coming in like this was the best option"
+
+# game/script/characters/violet/quests/violet_quest_08_a.rpy:460
+translate english violet_quest08a_baño_irse_265d6813:
+
+    # piensa "Si me acerco más me va a ver y me va a matar"
+    piensa "If I get any closer she'll see me and kill me"
+
+# game/script/characters/violet/quests/violet_quest_08_a.rpy:497
+translate english violet_quest08a_baño_irse_44f0cafe:
+
+    # violet "Podrías haberlo dejado afuera"
+    violet "You could have just left it outside"
+
+# game/script/characters/violet/quests/violet_quest_08_a.rpy:513
+translate english violet_quest08a_baño_acercarse_d18dd045:
+
+    # piensa "De acá veo un poco mejor"
+    piensa "I can see a bit better from here"
+
+# game/script/characters/violet/quests/violet_quest_08_a.rpy:514
+translate english violet_quest08a_baño_acercarse_015a6e32:
+
+    # piensa "El riesgo valió la pena"
+    piensa "The risk was worth it"
+
+# game/script/characters/violet/quests/violet_quest_08_a.rpy:550
+translate english violet_quest08a_baño_acercarse_44f0cafe:
+
+    # violet "Podrías haberlo dejado afuera"
+    violet "You could have just left it outside"
+

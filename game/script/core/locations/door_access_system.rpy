@@ -20,9 +20,9 @@ define PASILLO_NPC = {
 
 # Mensaje cuando NPC no esta
 define MENSAJES_AUSENTE = {
-    "violet": "Violet no esta en su habitacion.",
-    "jasmine": "Jasmine no esta en su habitacion.",
-    "monica": "Monica no esta en su habitacion."
+    "violet": "Violet no está en su habitación.",
+    "jasmine": "Jasmine no está en su habitación.",
+    "monica": "Mónica no está en su habitación."
 }
 
 init python:
@@ -50,11 +50,17 @@ init python:
     BLOQUEOS_GOLPE_REGISTRO = {}    # {npc_id: [(condicion, mensaje)]}
 
     def registrar_opcion_puerta(npc_id, texto, label, condicion,
-                                ocultar_golpear=False, tipo=None):
+                                ocultar_golpear=False, tipo=None,
+                                quest_id=None):
         """
         Registra un boton del menu de puerta de un NPC. El orden de registro es
         el orden en el menu. `condicion` es una funcion de modulo sin argumentos
         que decide si el boton aparece (None = siempre).
+
+        `quest_id`: a que quest pertenece el boton, para el tag " (⭐ Quest)".
+        Solo hace falta cuando el label es PROPIO: si se llama `quest_<id>`,
+        tag_opcion_quest lo deduce solo. Sin ninguna de las dos cosas el boton
+        sale con un " (Quest)" pelado, sin el icono de la linea.
         """
         OPCIONES_PUERTA_REGISTRO.setdefault(npc_id, []).append({
             "texto": texto,
@@ -62,7 +68,55 @@ init python:
             "condicion": condicion,
             "ocultar_golpear": ocultar_golpear,
             "tipo": tipo,
+            "quest_id": quest_id,
         })
+
+    # ==========================================================================
+    # Menu EXCLUSIVO — "durante esta escena, solo esta opcion"
+    # ==========================================================================
+    # Hay momentos en que el menu de un NPC tiene que quedar reducido a UNA
+    # opcion: la escena en curso es lo unico que corresponde, y ofrecerle al
+    # jugador devolverle unos mangas en el medio del corte de luz rompe el tono.
+    #
+    # Va como REGISTRO y no como un `if`: el motor no conoce ninguna quest por
+    # nombre (regla 1). El contenido lo declara en su init 5.
+    #
+    #     registrar_menu_exclusivo("violet", _va25_boton_matar_tiempo,
+    #                              "violet_amor_25_matar_tiempo")
+    #     registrar_menu_exclusivo("violet", _va25_puerta_exclusiva,
+    #                              "violet_amor_25_puerta_entrar", ambito="puerta")
+    #
+    # DOS AMBITOS porque son dos menus distintos con labels distintos:
+    #
+    #     "menu"    el menu del sprite. Ademas de filtrar, esconde "Hablar".
+    #     "puerta"  el menu de la puerta. "Golpear" y "Volver" se quedan: sin
+    #               ellos el jugador no tendria como salir ni como que le
+    #               conteste el bloqueo de golpe que corresponda.
+    #
+    # VIVE ACA Y NO EN ui/menus/ para que la dependencia vaya en la direccion
+    # correcta: lo define el core y lo consultan los dos menus.
+    #
+    # Si la condicion revienta se ignora: es preferible un menu de mas que un
+    # menu que no se puede abrir. Gana el PRIMERO que cumple.
+
+    # [(npc_id, ambito, condicion, label)]
+    MENU_EXCLUSIVO_REGISTRO = []
+
+    def registrar_menu_exclusivo(npc_id, condicion, label, ambito="menu"):
+        """Declara que, con `condicion`, ese menu de `npc_id` es solo `label`."""
+        MENU_EXCLUSIVO_REGISTRO.append((npc_id, ambito, condicion, label))
+
+    def menu_exclusivo_label(npc_id, ambito="menu"):
+        """Label al que queda reducido el menu, o None si no aplica."""
+        for _nid, _amb, _cond, _label in MENU_EXCLUSIVO_REGISTRO:
+            if _nid != npc_id or _amb != ambito:
+                continue
+            try:
+                if _cond():
+                    return _label
+            except Exception:
+                continue
+        return None
 
     def registrar_override_puerta(npc_id, condicion, label):
         """
@@ -135,12 +189,26 @@ init python:
         del menu). El contenido se registra con registrar_opcion_puerta()
         desde los archivos del personaje.
 
+        ⚠️ ESTA FUNCION REARMA EL DICT, no pasa el del registro. Todo campo que
+        la screen necesite tiene que copiarse acá explicitamente: si se agrega
+        uno nuevo a registrar_opcion_puerta() y no se lo suma a esta lista, se
+        pierde en el camino sin ningun error — la opcion aparece igual, solo que
+        sin ese dato. Paso con `quest_id`, que quedaba descartado y dejaba a
+        todos los botones de puerta con un " (Quest)" sin el icono de la linea.
+
         Returns:
             list: Lista de dicts {"texto": str, "label": str, "ocultar_golpear": bool}
-            (mas "tipo" si la opcion lo declaro, ej. "evento")
+            (mas "tipo" y "quest_id" si la opcion los declaro)
         """
+        # Menu exclusivo: si hay una escena que se lleva la puerta entera, queda
+        # su opcion y nada mas. "Golpear" y "Volver" no salen de acá, asi que
+        # siguen estando.
+        _excl = menu_exclusivo_label(npc_id, "puerta")
+
         opciones = []
         for _reg in OPCIONES_PUERTA_REGISTRO.get(npc_id, []):
+            if _excl and _reg["label"] != _excl:
+                continue
             if _reg["condicion"] is not None and not _reg["condicion"]():
                 continue
             _op = {
@@ -150,6 +218,8 @@ init python:
             }
             if _reg["tipo"]:
                 _op["tipo"] = _reg["tipo"]
+            if _reg.get("quest_id"):
+                _op["quest_id"] = _reg["quest_id"]
             opciones.append(_op)
         return opciones
 
@@ -225,7 +295,7 @@ screen menu_puerta_npc(npc_id, opciones_especiales, bg_path=None):
 
         # Opciones especiales de quest/evento
         for opcion in opciones_especiales:
-            $ _tag_opcion = tag_opcion_quest(opcion.get("label"), opcion.get("tipo") == "evento")
+            $ _tag_opcion = tag_opcion_quest(opcion.get("label"), opcion.get("tipo") == "evento", opcion.get("tipo"), opcion.get("quest_id"))
             textbutton (renpy.translate_string(opcion.get("texto", "Opcion")) + _tag_opcion):
                 style "choice_button"
                 action [Hide("menu_puerta_npc"),

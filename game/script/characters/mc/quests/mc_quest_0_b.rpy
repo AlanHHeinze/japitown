@@ -66,10 +66,10 @@ label mc_q0b_trigger:
     # Mensajes de tutorial SIN HUD (se muestran correctamente ahora)
     window show
 
-    tutorial "Durante el juego tendrás acceso a una [colorear_quest('Guia')] que te ayudará a saber qué hacer en cada momento"
+    tutorial "Durante el juego tendrás acceso a una [colorear_quest('Guía')] que te ayudará a saber qué hacer en cada momento"
     tutorial "Dentro del [colorear_quest('Celular')] encontrarás la [colorear_quest('App Pistas')], ahí podrás ver el estado actual de la quest"
-    tutorial "Y en la pestaña [colorear_quest('Que Hacer')] te dira exactamente como avanzar en la misma\nNOTA: Los presonajes tienen [colorear_quest('Rutinas Fijas')], [colorear_quest('Dinamicas')] y [colorear_quest('Especiales')], por lo que no siempre encontrara al personaje en la locacion y horario que se te indica"
-    tutorial "Ahora vamos a probarlo, [colorear_quest('Abri el celilar y entra a la App Pistas')]"
+    tutorial "Y en la pestaña [colorear_quest('Qué Hacer')] te dirá exactamente cómo avanzar en la misma\nNOTA: Los personajes tienen [colorear_quest('Rutinas Fijas')], [colorear_quest('Dinámicas')] y [colorear_quest('Especiales')], por lo que no siempre encontrarás al personaje en la locación y horario que se te indica"
+    tutorial "Ahora vamos a probarlo, [colorear_quest('abre el celular y entra a la App Pistas')]"
 
     window hide
 

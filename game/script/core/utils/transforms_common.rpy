@@ -78,6 +78,19 @@ transform mc_intro_micro_noche_transform:
 transform girar_x:
     xzoom -1.0
 
+# El `right` de Ren'Py pero ESPEJADO. Los valores son los del transform estandar
+# (renpy/common/00definitions.rpy:37) mas el xzoom, asi que ocupa exactamente el
+# mismo rectangulo de pantalla: el zoom negativo espeja la superficie y el
+# anclaje se calcula sobre el mismo ancho.
+#
+# Va como transform PROPIO y no como `at right, girar_x`: en una lista `at` cada
+# transform envuelve al anterior, asi que mezclar posicionamiento con zoom queda
+# a merced del orden. Con las cuatro propiedades en el mismo nivel no hay nada
+# que interpretar.
+transform right_flip:
+    xpos 1.0 xanchor 1.0 ypos 1.0 yanchor 1.0
+    xzoom -1.0
+
 # Flip horizontal instantáneo (para usar en cadena con at)
 transform personaje_flip:
     xzoom -1.0
@@ -153,6 +166,20 @@ transform reentrar_izquierda_a_right:
     xalign -0.3 yalign 1.0
     ease 1.5 xalign 1.0
     xzoom 1.0
+
+# El mismo estado FINAL del transform de arriba, pero quieto.
+#
+# VA DESPUES DEL `pause` QUE ESPERA LA ANIMACION. El `pause` es una interaccion,
+# asi que un click lo corta — y con el se corta el `ease`: el sprite se queda
+# donde iba, a mitad de camino, y ahi se queda el resto de la escena. Reafirmar
+# la posicion final lo deja en su lugar igual, con click o sin click. Sin click
+# no se nota nada, porque el sprite ya estaba justo ahi.
+#
+# Los dos valores tienen que seguir a los del transform animado: si uno cambia,
+# el otro tambien.
+transform reentrar_izquierda_a_right_final:
+    xzoom 1.0
+    xalign 1.0 yalign 1.0
 
 # Entra desde la derecha ya flipeado hasta right (par de right_a_salir)
 transform entrar_a_right:

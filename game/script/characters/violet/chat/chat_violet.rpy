@@ -48,7 +48,7 @@ init 6 python:
                         saltar_a_paso=-1
                     ),
                     OpcionRespuesta(
-                        texto="No diria apretado, diria sexy",
+                        texto="No diría apretado, diría sexy",
                         respuesta_npc="",
                         puntos={"deseo": 2},
                         saltar_a_paso=-1
@@ -99,7 +99,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Para mi tu trasero es perfecto",
+                        texto="Para mí tu trasero es perfecto",
                         respuesta_npc=["...", "Te volviste un pervertido"],
                         puntos={},
                         saltar_a_paso=2 # Rama A
@@ -140,13 +140,13 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="No, te lo compre con buenas intenciones",
+                        texto="No, te lo compré con buenas intenciones",
                         respuesta_npc="No lo parece",
                         puntos={},
                         saltar_a_paso=8
                     ),
                     OpcionRespuesta(
-                        texto="¿Eso piensas de mi?",
+                        texto="¿Eso piensas de mí?",
                         respuesta_npc="Sí...",
                         puntos={},
                         saltar_a_paso=8
@@ -169,7 +169,7 @@ init 6 python:
                 mensaje_npc="",
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Pero no sabia de ese trasero cuando lo compre",
+                        texto="Pero no sabía de ese trasero cuando lo compré",
                         respuesta_npc="...",
                         puntos={},
                         saltar_a_paso=10
@@ -180,7 +180,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="No te enojes, sabes que siempre me gusto y me va a gustar pelearte",
+                        texto="No te enojes, sabes que siempre me gustó y me va a gustar pelearte",
                         respuesta_npc="Idiota",
                         puntos={},
                         saltar_a_paso=11
@@ -243,7 +243,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Jajajaja un poco si",
+                        texto="Jajajaja un poco sí",
                         respuesta_npc=set_vq6_rama_b,
                         puntos={},
                         saltar_a_paso=-1
@@ -255,7 +255,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Me sentiria un poco celoso con todos mirandote",
+                        texto="Me sentiría un poco celoso con todos mirándote",
                         respuesta_npc="",
                         puntos={},
                         saltar_a_paso=13
@@ -283,7 +283,7 @@ init 6 python:
                         saltar_a_paso=14
                     ),
                     OpcionRespuesta(
-                        texto="No se, me imagine la situación y sentí celos",
+                        texto="No sé, me imaginé la situación y sentí celos",
                         respuesta_npc=["No me lo hubiera imaginado", "¿Encerio te molestaria?"],
                         puntos={},
                         saltar_a_paso=14
@@ -295,7 +295,7 @@ init 6 python:
                 opciones_jugador=[
                     OpcionRespuesta(
                         texto="No es que me moleste, solo un poquito de celos",
-                        respuesta_npc="idiota",
+                        respuesta_npc="Idiota",
                         puntos={},
                         saltar_a_paso=15
                     )
@@ -331,7 +331,7 @@ init 6 python:
     chat_violet_quest8 = GrupoMensajes(
         id="violet_quest04e_chat",
         npc_id="violet",
-        mensaje_inicial="Aca esta mi parte del trato",
+        mensaje_inicial="Acá está mi parte del trato",
         foto_inicial="images/chat/violet/violet_chat_foto_03.jpg",
         trigger_id="violet_quest04e_chat",
         momento_locacion="casa_hviolet",
@@ -350,7 +350,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Tenias razon con que me iba a buscar",
+                        texto="Tenías razón con que me iba a buscar",
                         respuesta_npc=["Y era obvio", "Cada vez que puedes hablas de mi trasero"],
                         puntos={},
                         saltar_a_paso=1
@@ -367,7 +367,7 @@ init 6 python:
                         saltar_a_paso=2
                     ),
                     OpcionRespuesta(
-                        texto="No es lo unico que me gusta",
+                        texto="No es lo único que me gusta",
                         respuesta_npc=["😳", "Quiero pedirte algo"],
                         puntos={"amor": 1},
                         saltar_a_paso=2
@@ -403,7 +403,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Pero me lo pones dificil",
+                        texto="Pero me lo pones difícil",
                         respuesta_npc="",
                         puntos={},
                         saltar_a_paso=-1
@@ -446,7 +446,7 @@ init 6 python:
             ),
             # Paso 1: Violet pregunta por la tienda
             PasoConversacion(
-                mensaje_npc="¿Cuándo fuiste a la tienda no notaste nada raro?",
+                mensaje_npc="Cuando fuiste a la tienda, ¿no notaste nada raro?",
                 opciones_jugador=[
                     OpcionRespuesta(
                         texto="No, la verdad que no",
@@ -499,7 +499,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Perdón Violet, realmente no fue mi intención",
+                        texto="Perdón, Violet, realmente no fue mi intención",
                         respuesta_npc="",
                         saltar_a_paso=-1,
                     ),
@@ -533,7 +533,7 @@ init 6 python:
     chat_violet_q6b_g1 = GrupoMensajes(
         id="violet_q6b_g1",
         npc_id="violet",
-        mensaje_inicial="Pasate a la noche por mi habitación",
+        mensaje_inicial="Pásate a la noche por mi habitación",
         trigger_id="violet_q6b_g1",
         # Llega por la mañana y sin importar dónde esté Violet (sin momento_locacion):
         # así no depende de que su rutina coincida y cae apenas empieza el día.

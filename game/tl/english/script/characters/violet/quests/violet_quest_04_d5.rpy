@@ -240,3 +240,143 @@ translate english violet_q4d5_tras_limpiar_3_9a1ca3c2:
     # piensa "Pero aprendi algo, no puedo dejar que Violet control la situacion, voy a salir perdiendo siempre"
     piensa "But I learned something: I can't let Violet run the situation, I'll always come out losing"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:93
+translate english violet_q4d5_encuentro_efaf3d3f:
+
+    # violet "¿Cómo estás?"
+    violet "How are you?"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:97
+translate english violet_q4d5_encuentro_1fa0cb0b:
+
+    # mc "Bien, ¿y tú?"
+    mc "Good, and you?"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:143
+translate english violet_q4d5_pedido_3b916da8:
+
+    # mc "¿Qué pasa?"
+    mc "What is it?"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:147
+translate english violet_q4d5_pedido_13f615b8:
+
+    # violet "Estabas muy servicial últimamente y me pareció raro que ya no lo estés"
+    violet "You'd been really helpful lately and it struck me as odd that you're not anymore"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:151
+translate english violet_q4d5_pedido_3b3547c8:
+
+    # mc "Me rendí"
+    mc "I gave up"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:155
+translate english violet_q4d5_pedido_defb029d:
+
+    # violet "Entonces sí querías algo"
+    violet "So you did want something"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:165
+translate english violet_q4d5_pedido_c21b7c9a:
+
+    # violet "Entonces... ¿No querías ver las otras fotos que no te mandé?"
+    violet "So... you didn't want to see the other photos I never sent you?"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:169
+translate english violet_q4d5_pedido_89fbf21b:
+
+    # piensa "Ella sabía lo que quería desde un principio y me estaba manipulando para que le haga favores"
+    piensa "She knew what I wanted from the start and she was manipulating me into doing her favors"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:171
+translate english violet_q4d5_pedido_aa60a7a5:
+
+    # piensa "Podría hacerme el desentendido, pero si lo hago nunca las voy a ver..."
+    piensa "I could play dumb, but if I do I'll never get to see them..."
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:175
+translate english violet_q4d5_pedido_34df6afa:
+
+    # mc "¿Qué quieres que haga?"
+    mc "What do you want me to do?"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:181
+translate english violet_q4d5_pedido_e95c3da7:
+
+    # violet "Mónica me pidió que me encargue y sabes que no me gusta limpiar"
+    violet "Monica asked me to take care of it and you know I hate cleaning"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:185
+translate english violet_q4d5_pedido_95e6cf99:
+
+    # mc "Mmmm me parece que es mucho"
+    mc "Hmmm, that sounds like a lot to me"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:189
+translate english violet_q4d5_pedido_c58665e3:
+
+    # violet "Tu trabajo va a ser recompensado, créeme"
+    violet "Your work will be rewarded, believe me"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:195
+translate english violet_q4d5_pedido_cbc3882d:
+
+    # mc "Está bien, acepto"
+    mc "All right, I accept"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:199
+translate english violet_q4d5_pedido_39611de6:
+
+    # violet "Avísame cuando esté todo listo"
+    violet "Let me know when it's all done"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:203
+translate english violet_q4d5_pedido_5159f9e5:
+
+    # mc "Está bien..."
+    mc "All right..."
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:214
+translate english violet_q4d5_pedido_7e6ab012:
+
+    # piensa "Caí completamente en su juego, sabe cómo manipularme"
+    piensa "I walked right into her game. She knows how to work me"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:263
+translate english violet_q4d5_recordatorio_4135be5f:
+
+    # mc "No, todavía estoy en eso"
+    mc "No, I'm still on it"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:404
+translate english violet_q4d5_tras_limpiar_1_1c0b6d68:
+
+    # piensa "Estoy agotado y recién empiezo a limpiar"
+    piensa "I'm exhausted and I'm only just getting started"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:421
+translate english violet_q4d5_tras_limpiar_2_192a97ed:
+
+    # piensa "Dos de tres y no quiero saber más nada..."
+    piensa "Two out of three and I've already had enough..."
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:422
+translate english violet_q4d5_tras_limpiar_2_e12e9ac5:
+
+    # piensa "Esta debilidad por Violet me está costando caro"
+    piensa "This weakness for Violet is costing me dearly"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:438
+translate english violet_q4d5_tras_limpiar_3_f867e4d5:
+
+    # piensa "Al fin terminé"
+    piensa "Finally done"
+
+# game/script/characters/violet/quests/violet_quest_04_d5.rpy:439
+translate english violet_q4d5_tras_limpiar_3_aa89a61e:
+
+    # piensa "Pero aprendí algo, no puedo dejar que Violet controle la situación, voy a salir perdiendo siempre"
+    piensa "But I learned something: I can't let Violet run the situation, I'll always come out losing"
+

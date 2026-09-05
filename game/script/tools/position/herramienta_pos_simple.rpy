@@ -2,7 +2,7 @@
 ## Herramienta de Posicionamiento de Idles — Versión Simple
 ################################################################################
 ## Uso:   tecla P (con MODO_DEV = True) o botón "📐 Posicionar" en panel de debug (F1).
-## Guarda: posiciones_idle.txt en la raíz del proyecto (append, nunca sobreescribe).
+## Guarda: tools/posiciones_idle.txt (append, nunca sobreescribe).
 ##
 ## Anclaje registrado: xanchor=0.0, yanchor=0.0 (esquina superior-izquierda).
 ## Esto coincide exactamente con cómo los idles se posicionan en el código del juego.
@@ -181,16 +181,29 @@ init python:
             store._hpos_zona_sel = _i
         return None
 
+    def _hpos_ruta_salida():
+        """
+        Archivo donde se acumulan las posiciones exportadas.
+
+        Va en tools/ y no en la raiz para no dejar nada suelto ahi. La carpeta
+        se crea si no esta: el archivo lo escribe el juego, asi que no puede
+        depender de que alguien la haya creado antes.
+        """
+        import os
+        _dir = os.path.join(config.basedir, "tools")
+        if not os.path.isdir(_dir):
+            os.makedirs(_dir)
+        return os.path.join(_dir, "posiciones_idle.txt")
+
     def _hpos_zonas_guardar():
         """
-        Escribe las zonas en posiciones_idle.txt, en el mismo formato de lista
-        que usa el codigo del juego: (id, x, y, w, h).
+        Escribe las zonas en tools/posiciones_idle.txt, en el mismo formato de
+        lista que usa el codigo del juego: (id, x, y, w, h).
         """
         if not store._hpos_zonas:
             return
-        import os
         import datetime
-        ruta = os.path.join(config.basedir, "posiciones_idle.txt")
+        ruta = _hpos_ruta_salida()
         ts   = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         with open(ruta, "a", encoding="utf-8") as f:
             f.write("\n")
@@ -205,15 +218,14 @@ init python:
 
     def _hpos_guardar():
         """
-        Añade la posición actual al archivo posiciones_idle.txt.
+        Añade la posición actual al archivo tools/posiciones_idle.txt.
         Formato listo para copiar al código fuente del juego.
         """
         if not store._hpos_idle_path:
             return
-        import os
         import datetime
         nombre  = store._hpos_idle_path.split("/")[-1].rsplit(".", 1)[0]
-        ruta    = os.path.join(config.basedir, "posiciones_idle.txt")
+        ruta    = _hpos_ruta_salida()
         ts      = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         es_npc  = _hpos_es_sprite_personaje()
         anchor  = "xanchor=0.5  yanchor=1.0" if es_npc else "xanchor=0.0  yanchor=0.0"

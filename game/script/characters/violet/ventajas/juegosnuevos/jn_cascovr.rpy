@@ -131,7 +131,7 @@ init python:
         sistema_mensajes.inicializar_chat("libre_mercado")
         sistema_mensajes.chats["libre_mercado"].agregar_mensaje(
             "libre_mercado",
-            "El casco VR de su lista de deseados ahora esta disponible"
+            "El casco VR de su lista de deseados ahora está disponible"
         )
         return None
 
@@ -147,7 +147,7 @@ init 5 python:
     registrar_contenido_ventaja(
         "juegos_nuevos", "cascovr", "violet",
         "Casco de realidad virtual",
-        "Compralo en la tienda del celular y después proponéselo desde su menú.",
+        "Cómpralo en la tienda del celular y después propónselo desde su menú.",
         vista=_jn_cascovr_jugado,
         orden=10,
     )
@@ -176,11 +176,11 @@ label evento1_violet:
     show violet_parada o_abiertos b_abiertachica
     violet "¿Qué haces en el piso?"
     show violet_parada b_none o_enojados
-    mc "Me cai"
+    mc "Me caí"
 
     # Violet nota el casco VR - curiosidad
     show violet_parada o_abiertos b_hablando
-    violet "¿Eso es un casco vr?"
+    violet "¿Eso es un casco VR?"
     show violet_parada b_none
     mc "Sí"
 
@@ -211,7 +211,7 @@ label evento1_violet:
 
     # Violet pregunta por los juegos
     show violet_evento_01_violetvr b_hablando
-    violet "No parece, ¿Qué juegos tienes?"
+    violet "No parece, ¿qué juegos tienes?"
     show violet_evento_01_violetvr b_none
     show mc_parado_base b_hablando
     mc "Hay varios que ya vienen integrados"
@@ -232,7 +232,7 @@ label evento1_violet:
     show violet_evento_01_violetvr vr3 with dissolve
     violet "Mmmmm"
     show violet_evento_01_violetvr vr4 with dissolve
-    violet "Ya entendi"
+    violet "Ya entendí"
 
     # MC pregunta que va a jugar
     show mc_parado_base o_aburridos b_hablando
@@ -240,7 +240,7 @@ label evento1_violet:
     show mc_parado_base b_seria o_base
     violet "Uno de cortar frutas"
     show mc_parado_base o_molestosnm b_hablando
-    mc "Supongo que es valido"
+    mc "Supongo que es válido"
     show mc_parado_base b_seria o_base
 
     # Violet empieza a jugar - animacion de cortes
@@ -285,7 +285,7 @@ label evento1_violet:
 
     # Violet no escucho
     show violet_evento_01_violetvr vr4 with dissolve
-    violet "¿Qué? No te escuche"
+    violet "¿Qué? No te escuché"
 
     # MC se da cuenta de lo que dijo
     show mc_parado_base o_asustados b_asustada c_rbase_avergonzado
@@ -296,13 +296,13 @@ label evento1_violet:
 
     # Viene la sandia
     show violet_evento_01_violetvr vr7 with dissolve
-    violet "Ahí viene la sandia"
+    violet "Ahí viene la sandía"
     show violet_evento_01_violetvr vr8 with dissolve
     pause 0.3
 
     # Violet ataca la sandia
     show violet_evento_01_violetvr vr9 with dissolve
-    violet "¡Muere maldita sandiaaaaa!"
+    violet "¡Muere, maldita sandiaaaaa!"
 
     # MC se rie
     show mc_parado_base o_felicescerrados b_felizabierta
@@ -317,23 +317,23 @@ label evento1_violet:
     show violet_evento_01_violetvr vr12 with dissolve
 
     # Violet presume su golpe
-    violet "¿Te gusto mi golpe final?"
+    violet "¿Te gustó mi golpe final?"
     show mc_parado_base o_felices b_felizabierta
     mc "Sí, fue genial"
     show mc_parado_base b_felizcerrada
 
     # Violet esta agotada
-    violet "Quede agotada"
+    violet "Quedé agotada"
     show mc_parado_base o_base b_hablando
     mc "¿Quieres algo de tomar?"
     show mc_parado_base b_seria
 
     # Violet menciona ropa comoda - MC se pone nervioso
-    violet "No, gracias... Otro día volvemos a jugar y con ropa más comoda"
+    violet "No, gracias... Otro día volvemos a jugar y con ropa más cómoda"
     show mc_parado_base o_sorprendidos b_hablando
     mc "Eso es lo que decía yo"
     show mc_parado_base b_seria o_base
-    violet "¿Eso decias tú?"
+    violet "¿Eso decías tú?"
 
     # MC penso en voz alta otra vez
     show mc_parado_base o_asustados b_asustada c_rbase_avergonzado
@@ -410,12 +410,12 @@ label evento1_violet_repetir:
 
     # Violet responde sarcastica
     show violet_evento_01_violetvr vr3 with dissolve
-    violet "Que parte de que hay que reutilizar los recursos no entendiste?"
+    violet "¿Qué parte de que hay que reutilizar los recursos no entendiste?"
     show violet_evento_01_violetvr vr4 with dissolve
 
     # MC no entiende
     show mc_parado_base o_aburridosnm b_aburrida
-    piensa "No se de que está hablando"
+    piensa "No sé de qué está hablando"
     show mc_parado_base b_hablando
     mc "Lo que digas..."
     show mc_parado_base b_seria o_base
@@ -462,7 +462,7 @@ label evento1_violet_repetir:
 
     # Violet presume
     show violet_evento_01_violetvr vr4 with dissolve
-    violet "Te lo dije y todavía no termine"
+    violet "Te lo dije y todavía no terminé"
 
     # El golpe final
     show violet_evento_01_violetvr vr7 with dissolve
@@ -470,7 +470,7 @@ label evento1_violet_repetir:
     show violet_evento_01_violetvr vr8 with dissolve
     pause 0.3
     show violet_evento_01_violetvr vr9 with dissolve
-    violet "¡10120 puntos! en tu cara [mc_name]"
+    violet "¡10120 puntos! En tu cara, [mc_name]"
 
     # MC derrotado
     show mc_parado_base o_asustados b_hablando
@@ -489,21 +489,21 @@ label evento1_violet_repetir:
     show mc_parado_base o_serios b_hablando
     mc "Voy a tener que practicar más"
     show mc_parado_base b_seria
-    violet "Nunca vas a superar mi puntuacion"
+    violet "Nunca vas a superar mi puntuación"
 
     # MC competitivo
     show mc_parado_base o_enojados b_hablando c_rbase_confianza
     mc "Ya veremos"
     show mc_parado_base b_seria c_rbase_base o_base
-    violet "Avisame si lo logras"
+    violet "Avísame si lo logras"
     show mc_parado_base o_felicesnm b_hablando
-    mc "Lo hare"
+    mc "Lo haré"
     show mc_parado_base b_felizcerrada o_base
 
     # Violet se despide burlona
     show violet_evento_01_violetvr vr1 with dissolve
     show violet_evento_01_violetvr b_hablando
-    violet "Bueno, me voy a dormir, hasta la poxima perdedor jajaja"
+    violet "Bueno, me voy a dormir, hasta la próxima, perdedor jajaja"
 
     # MC resignado pero con buen humor
     show mc_parado_base o_molestosnm b_hablando
@@ -522,7 +522,7 @@ label invitar_violet_vr:
     # El jugador invita a Violet a jugar VR
     $ violet_evento1_repetir = True
     $ ocultar_hud()
-    piensa "La invite a jugar con el casco de realidad virtual esta noche."
+    piensa "La invité a jugar con el casco de realidad virtual esta noche."
     jump game_loop
 
 
@@ -555,32 +555,32 @@ label usar_casco_vr:
     show mc_parado_base c_rbase_vr with sprite_normal
     pause 0.3
 
-    show mc_parado_base b_hablando 
+    show mc_parado_base b_hablando
     mc "Al fin lo tengo"
     show mc_parado_base b_none
     pause 0.3
-    show mc_parado_base b_hablando 
+    show mc_parado_base b_hablando
     mc "Voy a probar el X Fighters"
     show mc_parado_base b_none
-    
+
     hide mc_parado_base with dissolve
     show mc_base_parado_vr vr1 at center with dissolve
-    piensa "Tendria que ver como configurar esto"
+    piensa "Tendría que ver cómo configurar esto"
     show mc_base_parado_vr vr2 at center with dissolve
     piensa "Creo que voy entendiendo"
     show mc_base_parado_vr vr3 at center with dissolve
-    piensa "Ahí esta"
+    piensa "Ahí está"
     show mc_base_parado_vr vr2 at center with dissolve
     pause 0.3
     show mc_base_parado_vr vr1 at center with dissolve
-    
+
     scene black with fade
     pause 1.0
-    centered "{color=#FFFFFF}Un tiempo mas tarde...{/color}"
+    centered "{color=#FFFFFF}Un tiempo más tarde...{/color}"
     scene bg_casa_noche_hmc_zoom with fade
 
     show violet_evento_01_jugandosolo j1 with dissolve
-    piensa "Ya casi lo tengo, un golpe mas y destruyo al terrible Majin Freazing Cell Z"
+    piensa "Ya casi lo tengo, un golpe más y destruyo al terrible Majin Freazing Cell Z"
     show violet_evento_01_jugandosolo j2 with dissolve
     piensa "¡Muereeeeeee!"
     show violet_evento_01_jugandosolo j3 with dissolve
@@ -624,7 +624,7 @@ label usar_casco_vr_repetir:
 
     scene black with fade
     pause 1.0
-    centered "{color=#FFFFFF}Un tiempo mas tarde...{/color}"
+    centered "{color=#FFFFFF}Un tiempo más tarde...{/color}"
 
     show violet_evento_01_jugandosolo j1 with dissolve
     piensa "Placeholder: Estuvo bien la sesion de hoy."

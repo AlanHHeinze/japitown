@@ -62,15 +62,15 @@ init 10 python:
             label_efecto="event_jasmine_01_check_replay",
             descripcion="Jasmine estrenó un conjunto deportivo nuevo.",
             npc_id="jasmine",
-            mensaje_pista="Podría volver a ver el conjunto de Jasmine en el gym por la tarde.",
-            mensaje_que_hacer="Habla con Jasmine en el gym por la tarde.",
+            mensaje_pista="Podría volver a ver el conjunto de Jasmine en el Gym por la tarde.",
+            mensaje_que_hacer="Habla con Jasmine en el Gym por la tarde.",
             condicion_cierre_texto="",
-            mensaje_despertar="Podría volver a ver el conjunto nuevo de Jasmine si la encuentro en el gym por la tarde.",
+            mensaje_despertar="Podría volver a ver el conjunto nuevo de Jasmine si la encuentro en el Gym por la tarde.",
             config_etapas={
                 ESTADO_EVENT_VISIBLE: ConfigEtapa(
-                    pista="Podría volver a ver el conjunto de Jasmine en el gym por la tarde.",
-                    que_hacer="Habla con Jasmine en el gym por la tarde.",
-                    mensaje_despertar="Podría volver a ver el conjunto nuevo de Jasmine si la encuentro en el gym por la tarde.",
+                    pista="Podría volver a ver el conjunto de Jasmine en el Gym por la tarde.",
+                    que_hacer="Habla con Jasmine en el Gym por la tarde.",
+                    mensaje_despertar="Podría volver a ver el conjunto nuevo de Jasmine si la encuentro en el Gym por la tarde.",
                 ),
             },
         )

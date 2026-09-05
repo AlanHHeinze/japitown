@@ -6,16 +6,16 @@ translate english strings:
     ## Chat Jasmine — Quest 0
     ############################################################################
 
-    old "Gracias por el conjunto que me regalaste, me encantó! Mañana lo voy a empezar a usar 😊"
+    old "Gracias por el conjunto que me regalaste, ¡me encantó! Mañana lo voy a empezar a usar 😊"
     new "Thanks for the outfit you gave me, I loved it! I'm going to start wearing it tomorrow 😊"
 
-    old "Estoy muy contento que te haya gustado"
+    old "Estoy muy contento de que te haya gustado"
     new "I'm really glad you liked it"
 
     old "Lo sabía, soy muy bueno eligiendo regalos"
     new "I knew it, I'm really good at picking gifts"
 
-    old "Jajaja sí que tienes ego 😂"
+    old "Jajaja, sí que tienes ego 😂"
     new "Hahaha you've got quite the ego 😂"
 
     old "Perdón, no lo vi"

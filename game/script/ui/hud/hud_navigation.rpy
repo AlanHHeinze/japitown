@@ -216,7 +216,8 @@ screen hud_navegacion():
     # cuadro colgado, la solución va en el LABEL que corresponda (`window hide`),
     # nunca acá adentro.
     #
-    # Registro completo de la investigación y cómo revertir: fix_textbox_say.md
+    # Registro completo de la investigación y cómo revertir:
+    # docs/errores/fix_textbox_say.md
 
     # Escala del HUD superior. En celular los iconos de 96 px son casi
     # intocables, asi que se agrandan; en PC/tablet queda 1.0 (sin cambios).

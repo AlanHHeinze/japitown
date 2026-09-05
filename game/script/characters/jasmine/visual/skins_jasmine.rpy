@@ -11,6 +11,14 @@ init 10 python:
         quest = sistema_quests.obtener_quest("jasmine_questprincipal_0")
         return quest and quest.completada
 
+    def _jasmine_entrenamiento_en_gym():
+        """La ropa de entrenamiento es del gym: si no esta ahi, no corresponde."""
+        return tracker_locacion_npc("jasmine") == "casa_gym"
+
+    def _jasmine_bikini_en_patio():
+        """El bikini es del patio: si no esta ahi, no corresponde."""
+        return tracker_locacion_npc("jasmine") == "casa_patio"
+
     def inicializar_skins_jasmine():
         """Inicializa los skins de Jasmine y asigna grupos a rutinas."""
         
@@ -80,10 +88,17 @@ init 10 python:
         # =====================================================================
         
         # Lunes a Viernes (0-4) - Tarde en Gym = Entrenamiento
-        establecer_grupo_rutina("jasmine", [0, 1, 2, 3, 4], 1, "entrenamiento")
+        # La condicion pide que este DE VERDAD en esa locacion. El grupo va
+        # por (dia, horario), asi que sin esto una quest que la reubique la
+        # deja con la ropa del lugar donde ya no esta — pasaba en la 09_a de
+        # Violet con Monica, y le puede pasar igual a Jasmine. Si falla, obtener_grupo_rutina cae a
+        # "base", que es exactamente lo que corresponde.
+        establecer_grupo_rutina("jasmine", [0, 1, 2, 3, 4], 1, "entrenamiento",
+                                condicion=_jasmine_entrenamiento_en_gym)
         
         # Sábado y Domingo (5, 6) - Tarde en Patio = Bikini
-        establecer_grupo_rutina("jasmine", [5, 6], 1, "bikini")
+        establecer_grupo_rutina("jasmine", [5, 6], 1, "bikini",
+                                condicion=_jasmine_bikini_en_patio)
         
         # El resto de rutinas usará "base" por defecto (no es necesario definirlas)
 

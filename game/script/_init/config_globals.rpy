@@ -108,10 +108,45 @@ define -10 piensa_base = Character(
 )
 
 
+################################################################################
+## El character `tutorial` y su plano oscuro
+################################################################################
+## Antes de cada linea de tutorial entra un plano negro al 75% que baja el fondo
+## y los personajes, para que el texto resalte.
+##
+## VA EN LA CAPA DE SCREENS Y NO EN LA DE IMAGENES: asi tapa de una todo lo que
+## haya puesto `scene` y `show` —fondo y sprites— sin tener que enumerar nada ni
+## acordarse de apagarlo.
+##
+## CON zorder -1 QUEDA DEBAJO DEL CUADRO DE TEXTO Y DEL HUD (los dos en 0). Que
+## el HUD NO se oscurezca es a proposito: varios tutoriales justamente señalan
+## sus botones ("haz click en el botón central de la parte superior"), y
+## atenuar lo que se esta señalando seria contraproducente.
+##
+## SE MUESTRA TRANSIENT, igual que la screen `say`: Ren'Py lo saca solo al
+## terminar la interaccion. Por eso el callback solo se ocupa del "begin" — no
+## hay que apagarlo a mano, y entre dos lineas seguidas de tutorial no parpadea
+## porque no se dibuja ningun frame en el medio.
+
+screen tutorial_oscurecer():
+    zorder -1
+    add Solid("#000000") alpha 0.75
+
+
+# El callback va en un init ANTERIOR al `define`: Character() resuelve el nombre
+# en el momento de definirse, asi que la funcion ya tiene que existir.
+init -20 python:
+
+    def _tutorial_oscurecer(event, **kwargs):
+        """Callback del character `tutorial`: planta el plano al empezar la linea."""
+        if event == "begin":
+            renpy.show_screen("tutorial_oscurecer", _transient=True)
+
+
 # what_size fijo en 33 ignora el bump de gui.text_size que aplica en pantalla
 # chica (ver @gui.variant small() en gui.rpy) — por eso el texto del tutorial
 # se veía chico ahi. Se lo hace seguir al mismo tamaño que el diálogo general.
-define tutorial = Character("Tutorial", color="#FFB74D", what_size=(gui.text_size if renpy.variant("small") else 33), what_text_align=0.5)
+define tutorial = Character("Tutorial", color="#FFB74D", what_size=(gui.text_size if renpy.variant("small") else 33), what_text_align=0.5, callback=_tutorial_oscurecer)
 
 
 init python:

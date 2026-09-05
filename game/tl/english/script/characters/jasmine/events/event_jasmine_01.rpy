@@ -277,3 +277,83 @@ translate english event_jasmine_01_repetir_alternativo_41fd650a:
 
     # mc "Perdón por molestarte otra vez"
     mc "Sorry for bothering you again."
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:39
+translate english event_jasmine_01_repetir_937af5ef:
+
+    # jasmine "Mmmm..."
+    jasmine "Hmm..."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:44
+translate english event_jasmine_01_repetir_0f564a39:
+
+    # mc "Sí, cuando vuelva a Capital City puedo comprarte otro similar"
+    mc "Yeah, when I go to Capital City I can get you another one like it."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:65
+translate english event_jasmine_01_repetir_3c3c2913:
+
+    # jasmine "Elástico, pero ajustado arriba"
+    jasmine "Stretchy, but tight up top."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:105
+translate english event_jasmine_01_repetir_5e2b15f0:
+
+    # jasmine "Ves lo que te digo"
+    jasmine "See what I mean?"
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:125
+translate english event_jasmine_01_repetir_68dbefc5:
+
+    # jasmine "Vuelve a la realidad"
+    jasmine "Come back to reality."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:129
+translate english event_jasmine_01_repetir_ee370544:
+
+    # jasmine "Te muestro cómo debe ser de atrás"
+    jasmine "Let me show you how it looks from behind."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:165
+translate english event_jasmine_01_repetir_48da7675:
+
+    # jasmine "Bueno, ya se terminó el show, tengo que seguir entrenando"
+    jasmine "Alright, show's over. I need to keep training."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:241
+translate english event_jasmine_01_repetir_alternativo_0f564a39:
+
+    # mc "Sí, cuando vuelva a Capital City puedo comprarte otro similar"
+    mc "Yeah, when I go to Capital City I can get you another one like it."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:262
+translate english event_jasmine_01_repetir_alternativo_3c3c2913:
+
+    # jasmine "Elástico, pero ajustado arriba"
+    jasmine "Stretchy, but tight up top."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:302
+translate english event_jasmine_01_repetir_alternativo_5c8aa989:
+
+    # jasmine "¿Esta vez sí entendiste?"
+    jasmine "Did you get it this time?"
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:312
+translate english event_jasmine_01_repetir_alternativo_09e446d2:
+
+    # jasmine "¿También te tengo que mostrar otra vez cómo es la parte de atrás, no?"
+    jasmine "I suppose you need me to show you the back again too, hm?"
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:317
+translate english event_jasmine_01_repetir_alternativo_3936ac65:
+
+    # mc "Supongo que sí"
+    mc "I guess so."
+
+# game/script/characters/jasmine/events/event_jasmine_01.rpy:322
+translate english event_jasmine_01_repetir_alternativo_937af5ef_1:
+
+    # jasmine "Mmmm..."
+    jasmine "Hmm..."
+

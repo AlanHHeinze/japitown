@@ -294,7 +294,7 @@ screen jp_error_screen():
 
                 text "Ocurrió un error" size 34 color "#ff6b6b" bold True
 
-                text "El juego encontró un problema. Podés reportarlo para que se corrija." size 20 color "#dddddd"
+                text "El juego encontró un problema. Puedes reportarlo para que se corrija." size 20 color "#dddddd"
 
                 null height 6
 

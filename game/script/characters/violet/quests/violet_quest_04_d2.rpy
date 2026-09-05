@@ -42,23 +42,23 @@ label violet_quest04d2_hablar:
     $ _bg_conv = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
     scene expression _bg_conv
 
-    
-    
+
+
     show violet_parada c_rbase_base ca_base o_base b_none at right
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
- 
+
     show mc_parado_base b_hablando
     mc "Hola, Violet. ¿Cómo estás?"
     show mc_parado_base b_none
-    
-    show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_fast
-    violet "¿Que pasa?"
+
+    show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_normal
+    violet "¿Qué pasa?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_pensando with sprite_fast
-    mc "Nada, solo queria saber como estas"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "Nada, solo quería saber cómo estás"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     show violet_parada b_hablandochica
     violet "Estoy bien..."
@@ -68,21 +68,21 @@ label violet_quest04d2_hablar:
     mc "¿Y no necesitas nada?"
     show mc_parado_base b_none
 
-    show violet_parada b_hablandochica o_juzgandonm c_rbase_pensando with sprite_fast
-    violet "¿Como que?"
-    show violet_parada b_none o_base c_rbase_base with sprite_fast
+    show violet_parada b_hablandochica o_juzgandonm c_rbase_pensando with sprite_normal
+    violet "¿Cómo qué?"
+    show violet_parada b_none o_base c_rbase_base with sprite_normal
 
-    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_fast
-    mc "No se, solo preguntaba, capas habia algo que con lo que te podia ayudar o hacer por vos"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_normal
+    mc "No sé, solo preguntaba, capaz había algo con lo que te podía ayudar o hacer por ti"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_fast
-    violet "¿Que es lo que queres?"
+    show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_normal
+    violet "¿Qué es lo que quieres?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
-    mc "De verdad nada, si en algun momento necesitas algo, no dudes en pedirmelo"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "De verdad nada, si en algún momento necesitas algo, no dudes en pedírmelo"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     show violet_parada b_hablandochica
     violet "Lo voy a tener en cuenta, gracias"

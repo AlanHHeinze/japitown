@@ -18,7 +18,7 @@ init 6 python:
     chat_monica_violet_quest2 = GrupoMensajes(
         id="monica_chat_violet_quest2",
         npc_id="monica",
-        mensaje_inicial="[mc_name] con jasmine vamos a estar fuera de casa el próximo sábado durante la mañana",
+        mensaje_inicial="[mc_name], con Jasmine vamos a estar fuera de casa el próximo sábado durante la mañana",
         trigger_id="violet_quest2_chat_monica",
         tabla_recompensas=TablaRecompensas({}),
         pasos=[
@@ -26,11 +26,11 @@ init 6 python:
             # PASO 0: Monica pide ayuda, MC acepta
             # =================================================================
             PasoConversacion(
-                mensaje_npc="Te pido si con Violet pueden colaborar con la limpieza hasta que Raquel vuelva de sus vacaciones",
+                mensaje_npc="¿Podrían con Violet colaborar con la limpieza hasta que Raquel vuelva de sus vacaciones?",
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Ok yo me encargo",
-                        respuesta_npc="Quiero que Violet ayude, despertala temprano el sábado",
+                        texto="Ok, yo me encargo",
+                        respuesta_npc="Quiero que Violet ayude, despiértala temprano el sábado",
                         puntos={}
                     ),
                 ]
@@ -41,7 +41,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Sí Monica, despreocupate",
+                        texto="Sí, Mónica, despreocúpate",
                         respuesta_npc="👍",
                         puntos={}
                     ),

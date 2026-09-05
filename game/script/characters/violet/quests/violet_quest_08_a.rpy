@@ -151,7 +151,7 @@ label violet_quest08a_ver_tv:
 
     show vq8a_tv2 as vq_tv with dissolve
     piensa "Quiero ver algo pero no creo que un documental de elefantes sea la mejor opción"
-    piensa "Se esta poniendo feo el día, parece que va a llover"
+    piensa "Se está poniendo feo el día, parece que va a llover"
 
     # Empieza a llover
     scene vq8a_living_lloviendo with Dissolve(2.0)
@@ -159,7 +159,7 @@ label violet_quest08a_ver_tv:
     show vq8a_tv2 as vq_tv
 
     piensa "¿Está lloviendo? Me pregunto si las chicas se llevaron paraguas... Espero que sí"
-    piensa "Están bastante de moda ultimamente los piratas, no me quejo me gustan pero ya cansa un poco"
+    piensa "Están bastante de moda últimamente los piratas, no me quejo, me gustan, pero ya cansa un poco"
 
     show vq8a_tv3 as vq_tv with dissolve
 
@@ -191,7 +191,7 @@ label violet_quest08a_ver_tv:
     pause 0.8
     window show
     piensa "Uf. Qué tormenta, ya estaba entrando agua a la casa"
-    piensa "Tendria que revisar que esté todo cerrado, no vaya a ser que entre más agua"
+    piensa "Tendría que revisar que esté todo cerrado, no vaya a ser que entre más agua"
     window hide
 
     # Golpe en la puerta de entrada
@@ -199,7 +199,7 @@ label violet_quest08a_ver_tv:
     pause 0.9
 
     window show
-    piensa "¿Llego alguien?"
+    piensa "¿Llegó alguien?"
     window hide
 
     # Violet entra mojada
@@ -217,7 +217,7 @@ label violet_quest08a_ver_tv:
     show mc_parado_base b_none
 
     show violet_mojada b_hablando
-    violet "Monica me dejo en casa de Nath para ver el cosplay y cuando sali estaba apenas nublado, no pensé que iba a llover tan fuerte"
+    violet "Mónica me dejó en casa de Nath para ver el cosplay y cuando salí estaba apenas nublado, no pensé que iba a llover tan fuerte"
     show violet_mojada b_none
 
     show violet_mojada b_hablando
@@ -225,7 +225,7 @@ label violet_quest08a_ver_tv:
     show violet_mojada b_none
 
     show mc_parado_base b_hablando
-    mc "Subi a darte una ducha caliente antes de que te agarre un resfrio"
+    mc "Sube a darte una ducha caliente antes de que te agarre un resfrío"
     show mc_parado_base b_none
 
     show violet_mojada b_hablando
@@ -237,7 +237,7 @@ label violet_quest08a_ver_tv:
     show mc_parado_base b_none
 
     show violet_mojada b_hablandochica
-    violet "Si ¿Me puedes traer el pijama rosa del ropero?"
+    violet "Sí, ¿me puedes traer el pijama rosa del ropero?"
     show violet_mojada b_none
 
     show violet_mojada b_sonrisaleve
@@ -245,12 +245,12 @@ label violet_quest08a_ver_tv:
     show violet_mojada b_none
 
     show mc_parado_base b_hablando
-    mc "Sí, anda a bañarte que ahora te lo llevo"
+    mc "Sí, ve a bañarte que ahora te lo llevo"
     show mc_parado_base b_none
 
     hide violet_mojada with dissolve
 
-    piensa "Pobre Violet llego empapada, voy a buscar su pijama y dejarselo"
+    piensa "Pobre Violet, llegó empapada, voy a buscar su pijama y dejárselo"
     window hide
 
     # Fase 2 — solo living, pasillo arriba y habitacion de Violet
@@ -397,7 +397,7 @@ label violet_quest08a_puerta_baño:
 
 label violet_quest08a_opcion_a:
     piensa "Mejor la dejo aquí y me voy"
-    mc "Listo, te deje la ropa afuera de la puerta"
+    mc "Listo, te dejé la ropa afuera de la puerta"
     pause 0.3
     violet "¿Ya está?"
     mc "Sí"
@@ -438,7 +438,7 @@ label violet_quest08a_entrar_baño:
     show ducha_gen_capa_densa
 
     window show
-    piensa "No se si fue la mejor opcion entrar así"
+    piensa "No sé si fue la mejor opción entrar así"
     piensa "Está lleno de vapor y no veo bien"
     window hide
 
@@ -457,11 +457,11 @@ label violet_quest08a_entrar_baño:
 
 label violet_quest08a_baño_irse:
     window show
-    piensa "Si me acerco mas me va a ver y me va a matar"
+    piensa "Si me acerco más me va a ver y me va a matar"
     piensa "Puedo disfrutar un poco desde aquí"
     window hide
 
-    # El agua sigue animándose automáticamente; personaje cambia con transición sprite_fast
+    # El agua sigue animándose automáticamente; personaje cambia con transición sprite_normal
     show violet_ducha_quest f2 with sprite_normal
     pause 0.1
     show violet_ducha_quest f3 with sprite_normal
@@ -494,7 +494,7 @@ label violet_quest08a_baño_irse:
 
     window show
     show violet_ducha_quest b_hablando_tapada with sprite_normal
-    violet "Podrias haberlo dejado afuera"
+    violet "Podrías haberlo dejado afuera"
     show violet_ducha_quest b_none with sprite_normal
     window hide
 
@@ -510,8 +510,8 @@ label violet_quest08a_baño_acercarse:
     hide ducha_gen_capa_densa with dissolve
 
     window show
-    piensa "De aca veo un poco mejor"
-    piensa "El riesgo valio la pena"
+    piensa "De acá veo un poco mejor"
+    piensa "El riesgo valió la pena"
     window hide
 
     # El agua sigue animándose automáticamente; solo actualiza el personaje
@@ -547,7 +547,7 @@ label violet_quest08a_baño_acercarse:
 
     window show
     show violet_ducha_quest b_hablando_tapada
-    violet "Podrias haberlo dejado afuera"
+    violet "Podrías haberlo dejado afuera"
     show violet_ducha_quest b_none
     window hide
 

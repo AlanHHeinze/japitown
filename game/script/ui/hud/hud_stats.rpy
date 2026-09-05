@@ -370,6 +370,16 @@ screen panel_entrenamiento():
 
                     text "WORK" size int(10 * _pe_k) color "#BCAAA4" bold True xalign 0.5
 
+            # Las acciones de la habitacion (comprar el juego, jugar, etc.) van
+            # DENTRO de este panel y no en el suyo: los dos frames comparten
+            # posicion exacta y se encimaban. Ver la nota de arriba en
+            # core/actions/actionsystem_screen.rpy.
+            #
+            # Va FUERA del if/else del trasnoche a proposito: ese mensaje habla
+            # de entrenar y trabajar, no de las acciones de locacion, que tienen
+            # cada una su propia condicion y pueden estar disponibles igual.
+            use acciones_locacion_botones(_pe_k)
+
 
 ################################################################################
 ## Panel de Tienda / Comprar

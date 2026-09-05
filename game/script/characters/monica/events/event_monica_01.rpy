@@ -8,7 +8,7 @@
 ################################################################################
 
 layeredimage monica_evento_01:
-    
+
     group img:
         attribute none default null
         attribute img_base:
@@ -37,7 +37,7 @@ layeredimage monica_evento_01:
             "images/eventos/monica/monica_evento1_img11.webp"
         attribute img12:
             "images/eventos/monica/monica_evento1_img12.webp"
-    
+
     group mc:
         attribute mc_none:
             Null()
@@ -63,7 +63,7 @@ layeredimage monica_evento_01:
             "images/eventos/monica/monica_evento1_mc_sonrojado.webp"
         attribute mc_suspirando:
             "images/eventos/monica/monica_evento1_mc_suspirando.webp"
-    
+
     group monica:
         attribute monica_none:
             Null()
@@ -93,13 +93,13 @@ layeredimage monica_evento_01:
             "images/eventos/monica/monica_evento1_monica_sonrojada.webp"
         attribute monica_suspiro:
             "images/eventos/monica/monica_evento1_monica_suspiro.webp"
-    
+
     group bocamc:
         attribute bmc_none:
             Null()
         attribute bmc_hablando:
             "images/eventos/monica/monica_evento1_bocamc_hablando.webp"
-    
+
     group bocamonica:
         attribute bmonica_none:
             Null()
@@ -118,14 +118,14 @@ layeredimage monica_evento_01:
 label event_monica_01_narrativa:
     # Guardar el ID del evento para poder completarlo despues
     $ _event_id_temp = "monica_event_01"
-    
+
     # Esconder pantallas del juego temporalmente
     hide screen hud_navegacion
     $ ocultar_hud()
-    
+
     # Mostrar background: Living por la tarde zoom
     scene bg_casa_tarde_living_zoom with fade
-    
+
     # Mostrar personajes: MC a la izquierda, Monica a la derecha
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
     show monica_parada c_rbase_base o_base b_none at right
@@ -133,13 +133,13 @@ label event_monica_01_narrativa:
     # === CONVERSACIÓN ===
 
     # MC habla
-    show mc_parado_base b_hablando 
-    mc "¿Cómo estas Monica? ¿Sigues con dolor en tus hombros?"
-    show mc_parado_base b_none 
+    show mc_parado_base b_hablando
+    mc "¿Cómo estás, Mónica? ¿Sigues con dolor en tus hombros?"
+    show mc_parado_base b_none
 
     # Monica habla
     show monica_parada b_hablando c_rbase_dolorhombro1 with sprite_normal
-    monica "Ya se me está pasando,solo tengo que acostumbrarme a usar la notebook en casa"
+    monica "Ya se me está pasando, solo tengo que acostumbrarme a usar la notebook en casa"
     show monica_parada b_none
     pause 0.3
     show monica_parada b_dolor c_rbase_dolorhombro2 with sprite_normal
@@ -150,7 +150,7 @@ label event_monica_01_narrativa:
 
     # MC habla
     show mc_parado_base b_hablando c_rbase_avergonzado o_felicescerrados with sprite_normal
-    mc "No parece que se te este quitando"
+    mc "No parece que se te esté quitando"
     show mc_parado_base b_none o_base
 
     # Monica habla
@@ -161,24 +161,24 @@ label event_monica_01_narrativa:
     # MC habla
     show mc_parado_base b_hablando c_rbase_confianza with sprite_normal
     mc "Te voy a hacer un masaje. Soy bueno en eso"
-    show mc_parado_base b_felizcerrada o_base 
+    show mc_parado_base b_felizcerrada o_base
 
     # Monica habla
-    show monica_parada o_felicesnm b_hablando 
+    show monica_parada o_felicesnm b_hablando
     monica "No me voy a negar a tal oferta."
-    show monica_parada b_none o_base 
-    
+    show monica_parada b_none o_base
+
     pause 0.3
 
     # Monica habla
     show monica_parada b_hablando
     monica "¿Aquí está bien?"
-    show monica_parada b_none 
+    show monica_parada b_none
 
     # MC habla
-    show mc_parado_base b_hablando 
+    show mc_parado_base b_hablando
     mc "Sí, está bien."
-    show mc_parado_base b_none 
+    show mc_parado_base b_none
 
     # Monica se cambia
     show monica_parada c_remera_sacando1 with sprite_normal
@@ -196,12 +196,12 @@ label event_monica_01_narrativa:
     show monica_parada b_none c_remera_base
 
     # MC piensa
-    piensa "No me había puesto a pensar en el increíble cuerpo que tiene Monica para su edad."
+    piensa "No me había puesto a pensar en el increíble cuerpo que tiene Mónica para su edad."
 
     # MC habla
-    show mc_parado_base b_hablando 
+    show mc_parado_base b_hablando
     mc "Vamos..."
-    show mc_parado_base b_none 
+    show mc_parado_base b_none
 
     scene black with fade
     show monica_evento_01 img1
@@ -210,7 +210,7 @@ label event_monica_01_narrativa:
     pause 0.3
     show monica_evento_01 img3 with sprite_normal
     show monica_evento_01 bmc_hablando
-    mc "¿Estas lista?"
+    mc "¿Estás lista?"
     show monica_evento_01 bmc_none
     show monica_evento_01 bmonica_hablando
     monica "Sí"
@@ -221,7 +221,7 @@ label event_monica_01_narrativa:
     pause 0.3
     show monica_evento_01 img4 with sprite_normal
     pause 0.3
-    show monica_evento_01 img3 monica_none with sprite_normal 
+    show monica_evento_01 img3 monica_none with sprite_normal
     show monica_evento_01 bmc_hablando
     mc "¿Está bien así? ¿O más suave?"
     show monica_evento_01 bmc_none
@@ -275,7 +275,7 @@ label event_monica_01_narrativa:
     monica "mmmmm..."
     show monica_evento_01 bmonica_none
     show monica_evento_01 bmc_hablando
-    mc "¿Estas bien?"
+    mc "¿Estás bien?"
     show monica_evento_01 bmc_none
     show monica_evento_01 bmonica_hablandoabajo
     monica "Sí..."
@@ -345,7 +345,7 @@ label event_monica_01_narrativa:
     # Transición de salida
     scene black with fade
     hide monica_evento_01
-    
+
     # Restaurar ambiente (Opcional: Si quieres que aparezcan acomodándose)
     scene bg_casa_tarde_living_zoom with dissolve
     show monica_parada c_rbase_base o_felicesnm b_sonrisacerrada at right
@@ -354,12 +354,12 @@ label event_monica_01_narrativa:
     # MC habla
     show mc_parado_base b_hablando c_rbase_confianza with sprite_normal
     mc "¿Mejor?"
-    show mc_parado_base b_felizcerrada o_base 
+    show mc_parado_base b_felizcerrada o_base
 
     # Monica habla
-    show monica_parada o_felicesnm b_hablando 
+    show monica_parada o_felicesnm b_hablando
     monica "Mucho mejor... Gracias."
-    show monica_parada b_none o_base 
+    show monica_parada b_none o_base
 
     # Completar el evento
     $ event = obtener_event(_event_id_temp)
@@ -404,17 +404,17 @@ label masaje_locion:
     # Esconder pantallas del juego temporalmente
     $ ocultar_hud()
     hide screen hud_navegacion
-    
+
     # Escena en el living
     scene bg_casa_tarde_living_zoom with fade
-    
+
     # Mostrar personajes
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
     show monica_parada c_rbase_base o_base b_none at right
 
     # MC habla
     show mc_parado_base b_hablando
-    mc "Monica, compré una loción de masajes. ¿Te gustaría probarla?"
+    mc "Mónica, compré una loción de masajes. ¿Te gustaría probarla?"
     show mc_parado_base b_none
 
     # Monica habla
@@ -435,10 +435,10 @@ label masaje_locion:
     # Ocultar personajes
     hide monica_parada
     hide mc_parado_base
-    
+
     # Mostrar pantallas del juego
     show screen hud_navegacion
-    
+
     # Volver al loop del juego
     jump game_loop
 
@@ -451,17 +451,17 @@ label masaje_repetir:
     # Esconder pantallas del juego temporalmente
     $ ocultar_hud()
     hide screen hud_navegacion
-    
+
     # Escena en el living
     scene bg_casa_tarde_living_zoom with fade
-    
+
     # Mostrar personajes
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
     show monica_parada c_rbase_base o_base b_none at right
 
     # MC habla
     show mc_parado_base b_hablando
-    mc "Monica, ¿te gustaría un masaje?"
+    mc "Mónica, ¿te gustaría un masaje?"
     show mc_parado_base b_none
 
     # Monica habla
@@ -482,9 +482,9 @@ label masaje_repetir:
     # Ocultar personajes
     hide monica_parada
     hide mc_parado_base
-    
+
     # Mostrar pantallas del juego
     show screen hud_navegacion
-    
+
     # Volver al loop del juego
     jump game_loop

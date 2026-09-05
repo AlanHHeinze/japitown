@@ -90,20 +90,20 @@ label violet_q4d5_encuentro:
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
     show violet_parada b_hablando
-    violet "¿Como estas?"
-    show violet_parada b_none 
+    violet "¿Cómo estás?"
+    show violet_parada b_none
 
-    show mc_parado_base b_hablando 
-    mc "Bien, ¿y tu?"
-    show mc_parado_base b_none 
+    show mc_parado_base b_hablando
+    mc "Bien, ¿y tú?"
+    show mc_parado_base b_none
 
     show violet_parada b_hablandochica
     violet "Bien..."
     show violet_parada b_none
 
-    show mc_parado_base b_hablando 
+    show mc_parado_base b_hablando
     mc "Bueno, nos vemos luego"
-    show mc_parado_base b_none 
+    show mc_parado_base b_none
 
     show violet_parada b_hablandochica
     violet "Espera..."
@@ -139,68 +139,68 @@ label violet_q4d5_pedido:
     show violet_parada c_rbase_base ca_base o_base b_none at right
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
-    show mc_parado_base b_hablando 
-    mc "¿Que pasa?"
-    show mc_parado_base b_none 
+    show mc_parado_base b_hablando
+    mc "¿Qué pasa?"
+    show mc_parado_base b_none
 
-    show violet_parada b_hablandochica c_rbase_pensando o_arribanm with sprite_fast
-    violet "Estabas muy servicial ultimamente y me parecio raro que ya no lo estes"
+    show violet_parada b_hablandochica c_rbase_pensando o_arribanm with sprite_normal
+    violet "Estabas muy servicial últimamente y me pareció raro que ya no lo estés"
     show violet_parada b_none o_base
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
-    mc "Me rendi"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "Me rendí"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_fast
-    violet "Entonces si querias algo"
+    show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_normal
+    violet "Entonces sí querías algo"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando 
+    show mc_parado_base b_hablando
     mc "No nada, no te preocupes"
     show mc_parado_base b_abiertachica
     mc "Nos vemos luego"
     show mc_parado_base b_none
 
-    show violet_parada b_hablandochica c_rbase_pensando o_juzgandonm with sprite_fast
-    violet "Entonces... ¿No querias ver las otras fotos que no te mande?"
-    show violet_parada b_none o_base c_rbase_base with sprite_fast
+    show violet_parada b_hablandochica c_rbase_pensando o_juzgandonm with sprite_normal
+    violet "Entonces... ¿No querías ver las otras fotos que no te mandé?"
+    show violet_parada b_none o_base c_rbase_base with sprite_normal
 
-    show mc_parado_base c_rbase_avergonzado with sprite_fast
-    piensa "Ella sabia lo que queria desde un principio y me estaba manipulando para que le haga favores"
+    show mc_parado_base c_rbase_avergonzado with sprite_normal
+    piensa "Ella sabía lo que quería desde un principio y me estaba manipulando para que le haga favores"
     piensa "Y yo caí como un tonto"
-    piensa "Podri hacerme el desentendido, pero si lo hago nunca las voy a ver..."
-    
+    piensa "Podría hacerme el desentendido, pero si lo hago nunca las voy a ver..."
 
-    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
-    mc "¿Que queres que haga?"
+
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
+    mc "¿Qué quieres que haga?"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
     violet "Directo.... Quiero que limpies el living, el comedor y la cocina"
     show violet_parada b_hablando
-    violet "Monica me pidio que me encargue y sabes que no me gusta limpiar"
+    violet "Mónica me pidió que me encargue y sabes que no me gusta limpiar"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_pensando o_arribanm with sprite_fast
-    mc "Mmmm me parecee que es mucho"
-    show mc_parado_base b_none o_base c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_pensando o_arribanm with sprite_normal
+    mc "Mmmm me parece que es mucho"
+    show mc_parado_base b_none o_base c_rbase_base with sprite_normal
 
     show violet_parada b_hablandochica
-    violet "Tu trabajo va a ser recompensado, creeme"
-    show violet_parada b_hablando 
+    violet "Tu trabajo va a ser recompensado, créeme"
+    show violet_parada b_hablando
     violet "¿Aceptas?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando 
-    mc "Esta bien, acepto"
+    show mc_parado_base b_hablando
+    mc "Está bien, acepto"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Avisame cuando esta todo listo"
+    violet "Avísame cuando esté todo listo"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando 
-    mc "Esta bien..."
+    show mc_parado_base b_hablando
+    mc "Está bien..."
     show mc_parado_base b_abiertachica
     mc "Nos vemos luego"
     show mc_parado_base b_none
@@ -211,7 +211,7 @@ label violet_q4d5_pedido:
 
     hide violet_parada
 
-    piensa "Cai completamente en su juego, sabe como manipularme"
+    piensa "Caí completamente en su juego, sabe cómo manipularme"
     piensa "Pero no me arrepiento. Si es por ver esas fotos, vale la pena"
 
 
@@ -259,8 +259,8 @@ label violet_q4d5_recordatorio:
     violet "¿Ya terminaste de limpiar?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando 
-    mc "No todavia estoy en eso"
+    show mc_parado_base b_hablando
+    mc "No, todavía estoy en eso"
     show mc_parado_base b_abiertachica
     mc "Vuelvo luego cuando termine"
     show mc_parado_base b_none
@@ -401,7 +401,7 @@ label violet_q4d5_tras_limpiar_1:
     scene expression _bg_tras
     show mc_parado_base c_rbase_pensando o_base b_none at center
 
-    piensa "Estoy agotado y recien empiezo a limpiar"
+    piensa "Estoy agotado y recién empiezo a limpiar"
     piensa "Me estoy cuestionando si hice bien en aceptar esto..."
 
     window hide
@@ -418,8 +418,8 @@ label violet_q4d5_tras_limpiar_2:
     scene expression _bg_tras
     show mc_parado_base c_rbase_pensando o_base b_none at center
 
-    piensa "Dos de tres y no quiero saber mas nada..."
-    piensa "Esta debilidad por Violet me esta costando caro"
+    piensa "Dos de tres y no quiero saber más nada..."
+    piensa "Esta debilidad por Violet me está costando caro"
 
     window hide
     $ mostrar_hud()
@@ -435,8 +435,8 @@ label violet_q4d5_tras_limpiar_3:
     scene expression _bg_tras
     show mc_parado_base c_rbase_pensando o_base b_none at center
 
-    piensa "Al fin termine"
-    piensa "Pero aprendi algo, no puedo dejar que Violet control la situacion, voy a salir perdiendo siempre"
+    piensa "Al fin terminé"
+    piensa "Pero aprendí algo, no puedo dejar que Violet controle la situación, voy a salir perdiendo siempre"
 
     # Al completar arranca sola la 04_d6, que espera un día antes de habilitarse.
     $ completar_quest_actual("violet", quest_id="violet_questprincipal_04_d5")

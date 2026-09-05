@@ -66,3 +66,35 @@ translate english usar_bateria_nt520_037b8547:
     # "Contenido en desarrollo"
     "Content in development"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/monica/quests/monica_quest_0_c.rpy:22
+translate english revisar_notebook_monica_f093f434:
+
+    # piensa "La batería está algo hinchada, parecería ser ese el problema"
+    piensa "The battery's a bit swollen, that seems to be the problem"
+
+# game/script/characters/monica/quests/monica_quest_0_c.rpy:23
+translate english revisar_notebook_monica_e9d41c36:
+
+    # piensa "Podría comprar una nueva y cambiársela"
+    piensa "I could buy a new one and replace it"
+
+# game/script/characters/monica/quests/monica_quest_0_c.rpy:47
+translate english quest_monica_questprincipal_0_c_06cf52ee:
+
+    # piensa "Por suerte el problema parece ser la batería, está algo hinchada. Con comprar una nueva debería solucionarse... o eso creo"
+    piensa "Luckily the problem seems to be the battery, it's a bit swollen. Buying a new one should fix it... or so I think"
+
+# game/script/characters/monica/quests/monica_quest_0_c.rpy:52
+translate english quest_monica_questprincipal_0_c_484dbba3:
+
+    # tutorial "Dentro del celular tendrás una App llamada Tienda en la que podrás encontrar todos los objetos del juego"
+    tutorial "Inside the phone you will have an App called Store where you can find every item in the game"
+
+# game/script/characters/monica/quests/monica_quest_0_c.rpy:53
+translate english quest_monica_questprincipal_0_c_a41db507:
+
+    # tutorial "Al comprar un objeto tendrás que esperar los días de entrega, una vez llegue, podrás recibirlo por la mañana en el frente o si pasa el tiempo el objeto aparecerá sobre tu cama"
+    tutorial "When you buy an item you have to wait for the delivery days. Once it arrives you can receive it out front in the morning, or if time passes the item will appear on your bed"
+

@@ -44,7 +44,7 @@ screen panel_configuracion():
                         spacing int(2 * _k)
                         xfill True
 
-                        # ── Opción: Mostrar Accion movimiento ──
+                        # ── Opción: Mostrar Acción movimiento ──
                         frame:
                             xfill True
                             background "#1e1e3aCC"
@@ -59,7 +59,7 @@ screen panel_configuracion():
                                     xfill True
                                     yalign 0.5
                                     spacing int(3 * _k)
-                                    text _("Mostrar Accion movimiento") size int(15 * _k) color "#ffffff" bold True
+                                    text _("Mostrar Acción movimiento") size int(15 * _k) color "#ffffff" bold True
                                     text _("Muestra el botón para visualizar las salidas de cada locación.") size int(11 * _k) color "#888888"
 
                                 # Toggle ON / OFF

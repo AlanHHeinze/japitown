@@ -66,3 +66,17 @@ translate english violet_quest05b_puerta_76cf75ac:
     # violet "Gracias, los voy a ver y te digo cual me gusta"
     violet "Thanks, I'll look at them and tell you which one I like"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_05_b.rpy:70
+translate english violet_quest05b_hablar_d8fb1be6:
+
+    # violet "Gracias, los voy a ver y te digo cuál me gusta"
+    violet "Thanks, I'll look at them and tell you which one I like"
+
+# game/script/characters/violet/quests/violet_quest_05_b.rpy:138
+translate english violet_quest05b_puerta_d8fb1be6:
+
+    # violet "Gracias, los voy a ver y te digo cuál me gusta"
+    violet "Thanks, I'll look at them and tell you which one I like"
+

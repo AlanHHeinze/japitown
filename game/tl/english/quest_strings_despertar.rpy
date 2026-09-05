@@ -72,16 +72,16 @@ translate english strings:
     old "Debería pedirle perdón a Violet... Otra vez"
     new "I should apologize to Violet... Again"
 
-    old "Entrar a la App Chat y responde los mensajes de Carl"
+    old "Entrar a la App Chat y responder los mensajes de Carl"
     new "Go into the Chat App and reply to Carl's messages"
 
-    old "Enviar mensaje a Tienda Coxplay"
+    old "Enviar mensaje a Tienda CoXplay"
     new "Send a message to the Coxplay Store"
 
-    old "Escucho a Monica quejarse desde aquí"
+    old "Escucho a Mónica quejarse desde aquí"
     new "I can hear Monica complaining from here"
 
-    old "Escucho que Monica se esta peleando con alguien, debería ver si todo está bien"
+    old "Escucho que Mónica se está peleando con alguien, debería ver si todo está bien"
     new "I hear Monica arguing with someone, I should check if everything's okay"
 
     old "Esperar a que Violet me hable del cosplay"
@@ -102,19 +102,19 @@ translate english strings:
     old "Esperar que Violet hable con la tienda"
     new "Wait for Violet to talk to the store"
 
-    old "Esto de mejorar mi relación con Violet esta trayendo buenos resultados, me pregunto si podre conseguir algo más"
+    old "Esto de mejorar mi relación con Violet está trayendo buenos resultados, me pregunto si podré conseguir algo más"
     new "Improving my relationship with Violet is bringing good results, I wonder if I can get something more"
 
     old "Estoy esperando que llegue el paquete de CoXplay"
     new "I'm waiting for the CoXplay package to arrive"
 
-    old "Habla con Jasmine en el gym por la tarde."
+    old "Habla con Jasmine en el Gym por la tarde."
     new "Talk to Jasmine at the gym in the afternoon."
 
     old "Hablar con Jasmine en el Gym por la tarde"
     new "Talk to Jasmine at the Gym in the afternoon"
 
-    old "Hablar con Monica cuando esta sola en el Living por la tarde"
+    old "Hablar con Mónica cuando está sola en el Living por la tarde"
     new "Talk to Monica when she's alone in the Living Room in the afternoon"
 
     old "Hablar con Violet de noche en su habitación"
@@ -133,7 +133,7 @@ translate english strings:
     old "Hoy es sábado, tengo que despertar a Violet para limpiar."
     new "Today is Saturday, I have to wake Violet up to clean."
 
-    old "Hoy las chicas salieron. Podría ver la TV en el living"
+    old "Hoy las chicas salieron. Podría ver la TV en el Living"
     new "The girls went out today. I could watch TV in the living room"
 
     old "Interactuar habitación Violet"
@@ -154,7 +154,7 @@ translate english strings:
     old "Jasmine quiere mostrar su nueva ropa deportiva."
     new "Jasmine wants to show off her new workout clothes."
 
-    old "Jasmine quiere que vea como le queda el conjunto deportivo que le regale, podría pasar a la tarde por el gym"
+    old "Jasmine quiere que vea cómo le queda el conjunto deportivo que le regalé, podría pasar a la tarde por el Gym"
     new "Jasmine wants me to see how the workout outfit I gave her looks on her, I could stop by the gym in the afternoon"
 
     old "Jasmine suele entrenar en el Gym por la tarde, podría ir a verla y aprovechar el momento para hablar"
@@ -164,7 +164,7 @@ translate english strings:
     new "The tickets for the Japicon are available"
 
 
-    old "Me gustaría ponerme al día con Jasmine, podría hablar con ella cuando esta sola en el Gym"
+    old "Me gustaría ponerme al día con Jasmine, podría hablar con ella cuando está sola en el Gym"
     new "I'd like to catch up with Jasmine, I could talk to her when she's alone at the Gym"
 
     old "Monica me pidió que limpie la casa con Violet el sábado por la mañana."
@@ -173,10 +173,10 @@ translate english strings:
     old "No hay nada urgente que hacer, dejar pasar unos días"
     new "There's nothing urgent to do, let a few days pass"
 
-    old "No paro de tener problemas con Violet, debería verda y pedirle perdón"
+    old "No paro de tener problemas con Violet, debería verla y pedirle perdón"
     new "I keep having problems with Violet, I should see her and apologize"
 
-    old "Podría agradecerle a Monica si la encuentro a solas"
+    old "Podría agradecerle a Mónica si la encuentro a solas"
     new "I could thank Monica if I find her alone"
 
     old "Podría hablar con Violet a ver si me presta algún manga"
@@ -194,14 +194,11 @@ translate english strings:
     old "Podría ver si Violet necesita algo mientras está enferma."
     new "I could check if Violet needs anything while she's sick."
 
-    old "Podría volver a ver el conjunto de Jasmine en el gym por la tarde."
+    old "Podría volver a ver el conjunto de Jasmine en el Gym por la tarde."
     new "I could see Jasmine's outfit again at the gym in the afternoon."
 
-    old "Podría volver a ver el conjunto nuevo de Jasmine si la encuentro en el gym por la tarde."
+    old "Podría volver a ver el conjunto nuevo de Jasmine si la encuentro en el Gym por la tarde."
     new "I could see Jasmine's new outfit again if I find her at the gym in the afternoon."
-
-    old "Recorrer la casa"
-    new "Walk around the house"
 
     old "Recuerdo lo del cosplay, debería esperar unos días."
     new "I remember the cosplay thing, I should wait a few days."
@@ -259,7 +256,7 @@ translate english strings:
     old "Tengo que mejorar mi relación con Violet para que me muestre más del cosplay"
     new "I have to improve my relationship with Violet so she shows me more of the cosplay"
 
-    old "Tengo que ponerme al día con Monica, Jasmine y Violet"
+    old "Tengo que ponerme al día con Mónica, Jasmine y Violet"
     new "I have to catch up with Monica, Jasmine and Violet"
 
     old "Tengo que romper el hielo con Violet"
@@ -271,7 +268,7 @@ translate english strings:
     old "Todavía tengo cosas pendientes con las chicas antes de seguir."
     new "I still have things pending with the girls before moving on."
 
-    old "Todavía tengo que darle las gracias a Monica por darme un lugar. Podría verla cuando esta sola y de paso darle el perfume"
+    old "Todavía tengo que darle las gracias a Mónica por darme un lugar. Podría verla cuando está sola y de paso darle el perfume"
     new "I still have to thank Monica for giving me a place. I could see her when she's alone and give her the perfume while I'm at it"
 
     old "Todo tranquilo por ahora, debería esperar unos días."
@@ -280,16 +277,16 @@ translate english strings:
     old "Usar el objeto Notebook de Monica desde el inventario, en tu habitación"
     new "Use the Monica's Laptop item from the inventory, in your room"
 
-    old "Ver TV en el living"
+    old "Ver TV en el Living"
     new "Watch TV in the living room"
 
     old "Ver lo que Jasmine quiere mostrar."
     new "See what Jasmine wants to show."
 
-    old "Ver que le pasa a Monica"
+    old "Ver qué le pasa a Mónica"
     new "See what's wrong with Monica"
 
-    old "Violet dijo que tenía más fotos, quizás pueda lograr que me las envie"
+    old "Violet dijo que tenía más fotos, quizás pueda lograr que me las envíe"
     new "Violet said she had more photos, maybe I can get her to send them to me"
 
     # Quest 04_d2 — los dos primeros van juntos como mensaje_despertar (lista)
@@ -402,7 +399,7 @@ translate english strings:
     new "I have to clean the living room, the dining room and the kitchen"
 
     # 04_d5 — los dos dias de espera antes de que Violet lo busque
-    old "No se como conseguir la foto, me rindo"
+    old "No sé cómo conseguir la foto, me rindo"
     new "I don't know how to get that photo. I give up"
 
     old "Esperar a que Violet te busque"
@@ -421,7 +418,7 @@ translate english strings:
     old "Violet me pidió que la visite por la noche."
     new "Violet asked me to visit her at night."
 
-    old "Violet se veia bastante molesta, podría hablar con ella para saber que le pasa"
+    old "Violet se veía bastante molesta, podría hablar con ella para saber qué le pasa"
     new "Violet seemed pretty upset, I could talk to her to find out what's wrong"
 
     old "Violet te mandó un mensaje"
@@ -512,9 +509,18 @@ translate english strings:
     # Violet — Deseo 10 ("Encuentro nocturno")
     # =========================================================================
     # Su disparador es dormir, asi que el "que hacer" lo dice literalmente.
+    # Los dos textos cambian al despertar de madrugada: la etapa sigue siendo la
+    # misma, pero lo que hay que hacer ya no es dormir sino ir por el agua.
+    # ("Dormir" ya tiene su `old` en script/core/time/timesystem_core.rpy.)
 
     old "Deberia descansar bien"
     new "I should get a good night's sleep"
+
+    old "Ir a la cocina"
+    new "Go to the kitchen"
+
+    old "Tomar agua en la cocina"
+    new "Drink water in the kitchen"
 
     # =========================================================================
     # Violet — Deseo 15 ("Anime en estreno")
@@ -535,32 +541,41 @@ translate english strings:
     # cambian con va20_fase. "Hablar con Violet" (el del primer tramo) ya esta
     # traducido en quest_strings.rpy.
 
-    old "No se que jugar podria preguntarle a Violet"
+    old "No sé qué jugar, podría preguntarle a Violet"
     new "I don't know what to play, I could ask Violet"
 
-    old "Violet me recomendo un juego, tendria que conseguirlo"
+    old "Violet me recomendó un juego, tendría que conseguirlo"
     new "Violet recommended me a game, I should get it"
 
-    old "Comprar el juego en mi habitacion"
+    old "Comprar el juego en mi habitación"
     new "Buy the game in my room"
 
     old "Ya tengo el juego, ahora falta jugarlo con ella"
     new "I have the game now, all that's left is playing it with her"
 
     # Ultimo tramo: ya jugaron y falta comentarselo.
-    old "Estuvo bueno el juego, deberia decirselo"
+    old "Estuvo bueno el juego, debería decírselo"
     new "The game was good, I should tell her"
 
     # Carteles de elipsis. Van por renpy.translate_string: se dibujan con
     # `show text Text(...)`, que el extractor de Ren'Py no ve.
-    old "Algunas partidas mas tarde"
+    old "Algunas partidas más tarde"
     new "A few matches later"
 
     # violet_amor_25.rpy, el corte antes de la escena final en su habitacion.
     old "Luego de la cena"
     new "After dinner"
 
-    old "Jugar de noche en mi habitacion"
+    # violet_amor_10.rpy, el corte entre el living y la cocina (la limpieza).
+    old "Un tiempo después"
+    new "Some time later"
+
+    # violet_quest_09_minijuego.rpy, el cierre del arco de Violet enferma: hasta
+    # ahi llega el contenido por ahora.
+    old "Continuará en la siguiente actualización"
+    new "To be continued in the next update"
+
+    old "Jugar de noche en mi habitación"
     new "Play at night in my room"
 
     # =========================================================================
@@ -587,11 +602,18 @@ translate english strings:
     old "Esperar algunos dias"
     new "Wait a few days"
 
-    old "Esperar 1 dia"
-    new "Wait 1 day"
+    old "Esperar 1 dia, hasta el domingo"
+    new "Wait 1 day, until Sunday"
 
-    old "Esperar {} dias"
-    new "Wait {} days"
+    old "Esperar {} dias, hasta el domingo"
+    new "Wait {} days, until Sunday"
+
+    # ETAPA_BOTON_LISTO. Se llega ahi solo si el jugador alcanzo los 25 de
+    # amor con el domingo ya empezado: la etapa avanza igual y hay que
+    # esperar al domingo siguiente. Por eso la pista habla del domingo y no
+    # de ir a hablar con ella.
+    old "El domingo no voy a tener nada que hacer, es un buen dia para estar con Violet"
+    new "I have nothing to do on Sunday, it is a good day to spend with Violet"
 
     # =========================================================================
     # Violet — Deseo 25 ("En su habitacion")
@@ -608,14 +630,33 @@ translate english strings:
     # =========================================================================
     # Violet — Deseo 30 ("Sinceridad")
     # =========================================================================
-    # Arranca de noche con el MC en su propia habitacion, asi que el "que
-    # hacer" dice donde y cuando en vez de "esperar".
+    # TEXTOS DINAMICOS por fase (vd30_pista_listo / vd30_que_hacer_listo en
+    # violet_deseo_30.rpy). La quest no cambia de etapa en todo su recorrido,
+    # asi que los tres pares de abajo son los tres momentos de la MISMA etapa.
 
+    # Fase 0 — esperando el arranque.
     old "Hay algo que quiero hablar con Violet"
     new "There's something I want to talk to Violet about"
 
     old "Estar de noche en mi habitacion"
     new "Be in my room at night"
+
+    # Fase 1 — yendo a su pieza.
+    old "Quiero hablar con Violet ahora"
+    new "I want to talk to Violet right now"
+
+    old "Ir a la habitacion de Violet"
+    new "Go to Violet's room"
+
+    # Fase 2 — los tres dias ignorandola. La plantilla se traduce ANTES de que
+    # el codigo le meta los numeros, asi que las TRES llaves tienen que quedar
+    # tal cual en el `new` o el .format() de la fuente revienta. El orden es
+    # total, actual, total.
+    old "Prefiero no cruzarmela por unos dias"
+    new "I'd rather not run into her for a few days"
+
+    old "Pasar {} dias ignorando a Violet ({}/{})"
+    new "Spend {} days ignoring Violet ({}/{})"
 
     # =========================================================================
     # Violet — Amor 30 ("¿Que me pongo?")

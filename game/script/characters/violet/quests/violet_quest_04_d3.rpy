@@ -42,12 +42,12 @@ label violet_q4d3_pedido:
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
     show violet_parada b_hablandochica
-    violet "Veo que todavia estas con ganas de ser servicial"
+    violet "Veo que todavía estás con ganas de ser servicial"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_pensando with sprite_fast
-    mc "¿Cuando no lo soy?"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "¿Cuándo no lo soy?"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     show violet_parada b_hablandochica
     violet "Lo que digas..."
@@ -77,9 +77,9 @@ label violet_q4d3_pedido:
 
 label violet_q4d3_pedido_dar:
 
-    show mc_parado_base b_hablando 
+    show mc_parado_base b_hablando
     mc "Tengo algunas golosinas"
-    show mc_parado_base b_none 
+    show mc_parado_base b_none
 
     # (Mc cuerpo mochila 1)
     show mc_parado_base c_rbase_mochila1 with sprite_normal
@@ -111,30 +111,30 @@ label violet_q4d3_pedido_dar:
     show violet_parada o_abajonm
     violet "..."
     show violet_parada b_hablandochica o_base
-    violet "¿Desde hace cuanto las tenes ahi?"
-    show violet_parada b_none 
+    violet "¿Desde hace cuánto las tienes ahí?"
+    show violet_parada b_none
 
-    show mc_parado_base b_hablando 
+    show mc_parado_base b_hablando
     mc "¿Las quieres o no?"
-    show mc_parado_base b_none 
+    show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Bueno esta bien"
+    violet "Bueno, está bien"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando 
-    mc "¿Necesitas algo mas?"
-    show mc_parado_base b_none 
+    show mc_parado_base b_hablando
+    mc "¿Necesitas algo más?"
+    show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "No por ahora no, gracias"
+    violet "No, por ahora no, gracias"
     show violet_parada b_none
 
-    hide violet_parada 
+    hide violet_parada
 
-    show mc_parado_base c_rbase_pensando with sprite_fast
-    piensa "No creo que con esto sea suficiente, tendre que hacer mas cosas por ella si quiero que me mand la otra foto"
-    piensa "Mañana podria seguir intentandolo"
+    show mc_parado_base c_rbase_pensando with sprite_normal
+    piensa "No creo que con esto sea suficiente, tendré que hacer más cosas por ella si quiero que me mande la otra foto"
+    piensa "Mañana podría seguir intentándolo"
 
 
     # Al completar arranca sola la 04_d4, que espera un día antes de habilitarse.
@@ -153,21 +153,21 @@ label violet_q4d3_pedido_dar:
 
 label violet_q4d3_pedido_no_dar:
 
-    show mc_parado_base c_rbase_pensando with sprite_fast
+    show mc_parado_base c_rbase_pensando with sprite_normal
     piensa "Mmmm... Mejor le doy las golosinas en otro momento"
 
-    show mc_parado_base b_hablando c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_base with sprite_normal
     mc "Bueno, cuando las tenga te aviso"
-    show mc_parado_base b_none 
+    show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Esta bien, espero que no te olvide"
+    violet "Está bien, espero que no te olvides"
     show violet_parada b_none
 
-    hide violet_parada 
+    hide violet_parada
 
-    show mc_parado_base c_rbase_pensando with sprite_fast
-    piensa "En algun momento le voy a tener que dar las golosinas si quiero progresar con esto"
+    show mc_parado_base c_rbase_pensando with sprite_normal
+    piensa "En algún momento le voy a tener que dar las golosinas si quiero progresar con esto"
 
     window hide
     $ mostrar_hud()
@@ -180,12 +180,12 @@ label violet_q4d3_pedido_no_dar:
 
 label violet_q4d3_pedido_sin_golosinas:
 
-    show mc_parado_base b_hablando 
+    show mc_parado_base b_hablando
     mc "Ahora no tengo, pero puedo comprarte algunas"
-    show mc_parado_base b_none 
+    show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Esta bien, espero que no te olvide"
+    violet "Está bien, espero que no te olvides"
     show violet_parada b_none
 
     window hide
@@ -217,18 +217,18 @@ label violet_q4d3_recordatorio:
     violet "¿Ya conseguiste las golosinas?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando 
-    mc "Cierto las golosinas, me habia olvidado"
+    show mc_parado_base b_hablando
+    mc "Cierto, las golosinas, me había olvidado"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Bueno, voy a estar esperandolas"
+    violet "Bueno, voy a estar esperándolas"
     show violet_parada b_none
 
     hide violet_parada
 
-    show mc_parado_base c_rbase_pensando with sprite_fast
-    piensa "En algun momento le voy a tener que dar las golosinas si quiero progresar con esto"
+    show mc_parado_base c_rbase_pensando with sprite_normal
+    piensa "En algún momento le voy a tener que dar las golosinas si quiero progresar con esto"
 
 
     window hide
@@ -256,9 +256,9 @@ label violet_q4d3_entregar:
         show violet_parada c_rbase_base ca_base o_base b_none at right
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
-    show mc_parado_base b_hablando 
+    show mc_parado_base b_hablando
     mc "Tengo algunas golosinas"
-    show mc_parado_base b_none 
+    show mc_parado_base b_none
 
     # (Mc cuerpo mochila 1)
     show mc_parado_base c_rbase_mochila1 with sprite_normal
@@ -296,30 +296,30 @@ label violet_q4d3_entregar:
     show violet_parada o_abajonm
     violet "..."
     show violet_parada b_hablandochica o_base
-    violet "¿Desde hace cuanto las tenes ahi?"
-    show violet_parada b_none 
+    violet "¿Desde hace cuánto las tienes ahí?"
+    show violet_parada b_none
 
-    show mc_parado_base b_hablando 
+    show mc_parado_base b_hablando
     mc "¿Las quieres o no?"
-    show mc_parado_base b_none 
+    show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Bueno esta bien"
+    violet "Bueno, está bien"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando 
-    mc "¿Necesitas algo mas?"
-    show mc_parado_base b_none 
+    show mc_parado_base b_hablando
+    mc "¿Necesitas algo más?"
+    show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "No por ahora no, gracias"
+    violet "No, por ahora no, gracias"
     show violet_parada b_none
 
-    hide violet_parada 
+    hide violet_parada
 
-    show mc_parado_base c_rbase_pensando with sprite_fast
-    piensa "No creo que con esto sea suficiente, tendre que hacer mas cosas por ella si quiero que me mand la otra foto"
-    piensa "Mañana podria seguir intentandolo"
+    show mc_parado_base c_rbase_pensando with sprite_normal
+    piensa "No creo que con esto sea suficiente, tendré que hacer más cosas por ella si quiero que me mande la otra foto"
+    piensa "Mañana podría seguir intentándolo"
 
     # Al completar arranca sola la 04_d4, que espera un día antes de habilitarse.
     $ completar_quest_actual("violet", quest_id="violet_questprincipal_04_d3")

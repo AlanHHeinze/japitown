@@ -453,12 +453,16 @@ init python:
             """Modifica el stat secundario del NPC y sincroniza con variables default"""
             return self._aplicar_cambio_stat(self.nombre_stat2, cantidad, reserva)
 
-        def modificar_stat(self, stat, cantidad):
-            """Dispatcher: modifica el stat indicado por nombre"""
+        def modificar_stat(self, stat, cantidad, reserva=False):
+            """Dispatcher: modifica el stat indicado por nombre.
+
+            Tambien reenvia `reserva`. Hoy nadie lo llama asi, pero tenia el
+            mismo agujero que los wrappers de arriba y habria fallado igual.
+            """
             if stat == self.nombre_stat1:
-                self.modificar_stat1(cantidad)
+                return self.modificar_stat1(cantidad, reserva)
             elif stat == self.nombre_stat2:
-                self.modificar_stat2(cantidad)
+                return self.modificar_stat2(cantidad, reserva)
 
         def establecer_stat1(self, valor):
             """Fija el stat principal a un valor absoluto sincronizando el store.
@@ -642,17 +646,23 @@ init python:
             return npc.obtener_estado(npc.nombre_stat2, 0)
         return 0
 
-    def cambiar_stat1(npc_id, cantidad):
-        """Modifica el stat principal de un NPC"""
-        npc = obtener_npc(npc_id)
-        if npc:
-            npc.modificar_stat1(cantidad)
+    def cambiar_stat1(npc_id, cantidad, reserva=False):
+        """
+        Modifica el stat principal de un NPC.
 
-    def cambiar_stat2(npc_id, cantidad):
-        """Modifica el stat secundario de un NPC"""
+        `reserva` se REENVIA: es la via por la que el contenido cobra las
+        recompensas de quest, y sin el parametro acá la llamada reventaba
+        con TypeError aunque modificar_stat1 lo aceptara.
+        """
         npc = obtener_npc(npc_id)
         if npc:
-            npc.modificar_stat2(cantidad)
+            return npc.modificar_stat1(cantidad, reserva)
+
+    def cambiar_stat2(npc_id, cantidad, reserva=False):
+        """Modifica el stat secundario de un NPC. Idem `reserva`."""
+        npc = obtener_npc(npc_id)
+        if npc:
+            return npc.modificar_stat2(cantidad, reserva)
 
     def obtener_progreso(npc_id):
         """Obtiene el valor de progreso de un NPC"""

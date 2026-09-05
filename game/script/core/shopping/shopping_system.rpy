@@ -514,10 +514,12 @@ label recoger_paquete_habitacion:
     $ ocultar_hud()
     hide screen hud_navegacion
     
-    # Mostrar escena de la habitacion del MC según horario
-    $ _horarios_bg = ["tarde", "tarde", "noche", "noche"]
-    $ _bg_horario = _horarios_bg[horario_actual]
-    scene expression "images/bg/casa/bg_casa_" + _bg_horario + "_hmc.jpg" with fade
+    # Mostrar escena de la habitacion del MC según horario.
+    # El bg lo resuelve el sistema de locaciones, que ya sabe el horario
+    # (y respeta horario_visual_override). Antes se armaba con una lista a
+    # mano que estaba desalineada con la canonica de locationsystem_core.
+    $ _bg_horario = sistema_locaciones.obtener_locacion("casa_hmc").background
+    scene expression _bg_horario with fade
     
     # Mostrar MC a la izquierda sosteniendo el paquete
     show mc_parado_base c_rbase_regaloviolet o_abajonm b_none at mc_izquierda with dissolve

@@ -205,8 +205,13 @@ init 5 python:
             ],
             "pista_condiciones": "Esperar algunos dias",
             "que_hacer_condiciones": _quehacer_va25_condiciones,
-            # Sin textos de BOTON_LISTO: la escena arranca sola al despertar el
-            # domingo, el jugador no tiene que ir a hacer nada.
+            # BOTON_LISTO tambien lleva textos propios, y NO son los de "anda a
+            # hablar con ella": acá no hay boton. Se llega a esta etapa cuando
+            # el jugador alcanza los 25 de amor con el domingo ya empezado, y
+            # entonces lo unico que queda es esperar al domingo siguiente. Ver
+            # _pista_va25_listo en violet_amor_25.rpy.
+            "pista_listo": _pista_va25_listo,
+            "que_hacer_listo": _quehacer_va25_listo,
         },
         6: {
             # Sin requisitos ademas del umbral: alcanzado el amor, la quest

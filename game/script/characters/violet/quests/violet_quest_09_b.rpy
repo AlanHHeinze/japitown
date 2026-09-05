@@ -154,7 +154,7 @@ init python:
             _v.modificar_stat2(-_cuanto)
         if hasattr(store, 'notificar_recordara'):
             store.notificar_recordara("violet")
-        marcar_npc_no_disponible("violet", "Monica pidio que no la molestemos")
+        marcar_npc_no_disponible("violet", "Mónica pidió que no la molestemos")
 
     def _vq9b_chat_invitacion_completado():
         """accion_al_completar de la invitacion: no cobra nada, solo deja pasar."""
@@ -179,7 +179,7 @@ init 6 python:
     grupo_vq9b_reproche = GrupoMensajes(
         id="violet_q9b_reproche",
         npc_id="violet",
-        mensaje_inicial="Gracias por ayudarme estos dias...",
+        mensaje_inicial="Gracias por ayudarme estos días...",
         trigger_id="violet_q9b_reproche",
         prioritario=True,
         accion_al_completar=_vq9b_chat_reproche_completado,
@@ -187,7 +187,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Perdon estuve muy ocupado",
+                        texto="Perdón, estuve muy ocupado",
                         respuesta_npc="💔",
                         saltar_a_paso=-1,
                     ),
@@ -202,7 +202,7 @@ init 6 python:
     grupo_vq9b_invitacion = GrupoMensajes(
         id="violet_q9b_invitacion",
         npc_id="violet",
-        mensaje_inicial="Ven a mi habitacion porfavor",
+        mensaje_inicial="Ven a mi habitación, por favor",
         trigger_id="violet_q9b_invitacion",
         prioritario=True,
         accion_al_completar=_vq9b_chat_invitacion_completado,
@@ -210,7 +210,7 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Voy para alla",
+                        texto="Voy para allá",
                         respuesta_npc="",
                         saltar_a_paso=-1,
                     ),
@@ -250,11 +250,11 @@ label violet_quest09b_noche:
         $ vq9b_rama = "nulo"
         $ ocultar_hud()
         window show
-        piensa "Estuve tres dias sin acordarme de Violet"
+        piensa "Estuve tres días sin acordarme de Violet"
         window hide
         $ mostrar_hud()
         $ notificar_recordara("violet")
-        $ marcar_npc_no_disponible("violet", "Monica pidio que no la molestemos")
+        $ marcar_npc_no_disponible("violet", "Mónica pidió que no la molestemos")
 
     jump game_loop
 
@@ -330,37 +330,43 @@ label violet_quest09b_visita:
 
     # Violet en la cama (su idle de enferma) y el MC en el lugar que suele
     # ocupar el NPC.
+    # La posicion sale de la misma tabla que usa el HUD y la 09_a: `at
+    # center` la dejaba en el medio de la pantalla, lejos de la cama.
     $ _vq9b_idle = "images/characters/casa/idle/idle_violet_casa_hviolet_noche_enferma.jpg"
-    show expression _vq9b_idle as violet_cama at center
+    $ _vq9b_pos = _vq9a_pos_violet[2]
+    show expression _vq9b_idle as violet_cama:
+        xpos _vq9b_pos[0] ypos _vq9b_pos[1] xanchor 0.5 yanchor 1.0
     # (Mc cuerpo base ojos base boca neutral)
     show mc_parado_base c_rbase_base o_base b_none at right
     with sprite_normal
 
     # =========================================================================
-    # CONTENIDO — la charla y el pedido de la toalla
+    # CONTENIDO — la charla antes de secarla
     # =========================================================================
 
-    violet "..."
+    show mc_parado_base b_hablando
+    mc "Hola ¿Con que te ayudo?"
+    show mc_parado_base b_none
+    
+    violet "Estoy toda transpirada ¿Me podrias secar un poco?"
 
     show mc_parado_base b_hablando
-    mc "..."
+    mc "Si, ahi te ayudo con eso"
     show mc_parado_base b_none
 
     # =========================================================================
     # FIN DEL CONTENIDO
     # =========================================================================
 
-    hide violet_cama
-    hide mc_parado_base
-    with dissolve
-
-    # Sale a buscar la toalla. NO se bloquea nada a proposito: si no la trae,
-    # a la mañana siguiente cae en la rama del plantado.
-    $ sistema_locaciones.mover_a_locacion("casa_pasilloarriba")
-
-    window hide
-    $ mostrar_hud()
-    jump game_loop
+    # DIRECTO AL MINIJUEGO. Antes acá salia a buscar una toalla al baño de
+    # arriba y volvia a golpear la puerta para la segunda visita
+    # (violet_quest09b_toalla). Ese rodeo queda fuera: el dialogo que lo
+    # pedia todavia no esta escrito, asi que el jugador salia de la escena
+    # sin ninguna indicacion y la quest parecia trabada.
+    #
+    # `secar` se encarga de sacar los sprites: dibuja su propia escena a
+    # pantalla completa, asi que no hay que esconderlos acá.
+    jump violet_quest09b_secar
 
 
 ################################################################################
@@ -377,8 +383,12 @@ label violet_quest09b_toalla:
     $ _vq9b_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
     scene expression _vq9b_bg with fade
 
+    # La posicion sale de la misma tabla que usa el HUD y la 09_a: `at
+    # center` la dejaba en el medio de la pantalla, lejos de la cama.
     $ _vq9b_idle = "images/characters/casa/idle/idle_violet_casa_hviolet_noche_enferma.jpg"
-    show expression _vq9b_idle as violet_cama at center
+    $ _vq9b_pos = _vq9a_pos_violet[2]
+    show expression _vq9b_idle as violet_cama:
+        xpos _vq9b_pos[0] ypos _vq9b_pos[1] xanchor 0.5 yanchor 1.0
     # (Mc cuerpo base ojos base boca neutral)
     show mc_parado_base c_rbase_base o_base b_none at right
     with sprite_normal
@@ -387,10 +397,14 @@ label violet_quest09b_toalla:
     # CONTENIDO — la charla antes de secarla
     # =========================================================================
 
-    violet "..."
+    show mc_parado_base b_hablando
+    mc "Hola ¿Con que te ayudo?"
+    show mc_parado_base b_none
+    
+    violet "Estoy toda transpirada ¿Me podrias secar un poco?"
 
     show mc_parado_base b_hablando
-    mc "..."
+    mc "Si, ahi te ayudo con eso"
     show mc_parado_base b_none
 
     # =========================================================================
@@ -426,18 +440,20 @@ label violet_quest09b_secar:
     # CONTENIDO — la charla antes de destaparla
     # =========================================================================
 
+    mc "Te voy a destapar ¿Si?"
+
     $ vq9_boca_estado = "b_hablando"
-    violet "..."
+    violet "Te vas a tenes que ocupar de todo vos"
     $ vq9_boca_estado = "b_none"
 
-    mc "..."
+    mc "Si, yo me encargo"
 
     # =========================================================================
     # FIN DEL CONTENIDO
     # =========================================================================
 
     # Se destapa y empieza la parte jugable. El minijuego se cierra solo por
-    # el boton de salir (vq9_intentar_salir), que salta a vq9_cierre.
+    # el boton de salir (vq9_salir), que salta a vq9_cierre.
     $ vq9_colcha = False
     $ vq9_boca_estado = "b_none"
 

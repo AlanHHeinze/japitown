@@ -109,11 +109,11 @@ label quest_violet_amor_06:
     show mc_parado_base c_rbase_base o_base b_none at center with sprite_normal
 
     # Ella habla del otro lado de la puerta: SIN sprite, a proposito.
-    violet "[mc_name] ¿Me podes ayudar en algo?"
+    violet "[mc_name], ¿me puedes ayudar en algo?"
 
-    show mc_parado_base b_hablando
-    mc "Emmmm si ¿Que pasa?"
-    show mc_parado_base b_none
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "Emmmm sí, ¿qué pasa?"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     violet "Entra por favor"
 
@@ -128,34 +128,43 @@ label quest_violet_amor_06:
     $ _va30_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
     scene expression _va30_bg with fade
 
-   
+
+    # ENTRAN ESCALONADOS: primero ella, que ya estaba adentro, y despues el MC.
+    #
+    # Cada uno lleva SU PROPIO `with`. El `pause` de por medio es una
+    # interaccion, asi que corta lo pendiente: sin el `with` en la linea de
+    # Violet, ella aparecia de golpe y el sprite_normal terminaba siendo solo
+    # del MC.
+    #
+    # El pause es 0.5 porque sprite_normal es un Dissolve(0.5) (options.rpy):
+    # asi el fundido de ella alcanza a terminar justo antes de que el entre.
+
     # (Violet cuerpo jean blanco base boca neutral)
-    show violet_q30a c_jeanblanco_base b_none at right
-    pause 0.3
-    show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
-    with sprite_normal
+    show violet_q30a c_jeanblanco_base b_none at right with sprite_normal
+    pause 0.5
+    show mc_parado_base c_rbase_base o_base b_none at mc_izquierda with sprite_normal
+
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "¿Qué tengo que hacer?"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
+
+    show violet_q30a bf_hablando
+    violet "Necesito que me des una opinión y quiero que seas objetivo"
+    show violet_q30a b_none
 
     show mc_parado_base b_hablando
-    mc "¿Que tengo que hacer?"
+    mc "¿Sobre qué?"
     show mc_parado_base b_none
 
     show violet_q30a bf_hablando
-    violet "Necesito que me des una opinion y quiero que seas objetivo"
+    violet "Sobre mi trasero y el pantalón que me voy a poner"
+    show violet_q30a bf_hablandochica
+    violet "Creo que tu pasatiempo de mirarme el trasero todo el tiempo puede ser útil"
     show violet_q30a b_none
 
-    show mc_parado_base b_hablando
-    mc "¿Sobre que?"
-    show mc_parado_base b_none
-
-    show violet_q30a be_hablando
-    violet "Sobre mi trasero y el pantalon que me voy a poner"
-    show violet_q30a b_hablandochica
-    violet "Creo que tu pasatiempo de mirarme el trasero todo el tiempo puede ser util"
-    show violet_q30a b_none
-
-    show mc_parado_base b_hablando
-    mc "Veo que es un tema serio que va a requerir toda mi atencion"
-    show mc_parado_base b_abiertachica
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "Veo que es un tema serio que va a requerir toda mi atención"
+    show mc_parado_base b_abiertachica c_rbase_brazoscruzados with sprite_normal
     mc "Adelante"
     show mc_parado_base b_none
 
@@ -164,18 +173,22 @@ label quest_violet_amor_06:
     show violet_q30a b_none
 
     show mc_parado_base b_hablando
-    mc "Va a ser dificil porque caminas con algo llamativo"
+    mc "Va a ser difícil porque caminas con algo llamativo"
     show mc_parado_base b_none
 
     show violet_q30a bf_hablando
-    violet "Dijiste que ibas a ser serio..." 
-    show violet_q30a b_hablandochica
+    violet "Dijiste que ibas a ser serio..."
+    show violet_q30a bf_hablandochica
     violet "Esta es una de las opciones, lo siento bastante ajustado"
     show violet_q30a b_none
 
     show mc_parado_base b_hablando
+    mc "Lo estoy siendo..."
+    show mc_parado_base b_abiertachica c_rbase_idea with sprite_normal
     mc "Date vuelta"
-    show mc_parado_base b_none
+    show mc_parado_base b_none c_rbase_brazoscruzados with sprite_normal
+
+    piensa "Siempre quise decir eso"
 
     # Se da vuelta y se toca el pantalon. Va de corrido: cada cuadro entra con
     # sprite_normal y se sostiene medio segundo. Sin boca — no habla mientras.
@@ -199,20 +212,22 @@ label quest_violet_amor_06:
     pause 0.5
 
     show violet_q30a bf_hablando
-    violet "¿Que opinas?"
+    violet "¿Qué opinas?"
     show violet_q30a b_none
 
-    show mc_parado_base b_hablando
+    show mc_parado_base b_hablando c_rbase_confianza with sprite_normal
     mc "Es hermoso..."
-    show mc_parado_base b_none
+    show mc_parado_base b_none c_rbase_brazoscruzados with sprite_normal
 
     show violet_q30a bf_hablando
-    violet "De verdad... necesito colaboracion y me da verguenza preguntarle a Jasmine o a Monica"
+    violet "De verdad... necesito colaboración y me da vergüenza preguntarle a Jasmine o a Mónica"
     show violet_q30a b_none
 
     show mc_parado_base b_hablando
-    mc "Bueno a ver la otra opcion"
-    show mc_parado_base b_none
+    mc "Insisto, estoy siendo serio y objetivo"
+    show mc_parado_base b_abiertachica c_rbase_pensando with sprite_normal
+    mc "Bueno, a ver la otra opción"
+    show mc_parado_base b_none c_rbase_brazoscruzados with sprite_normal
 
     violet "..."
 
@@ -226,13 +241,21 @@ label quest_violet_amor_06:
 
     scene black with fade
 
-    mc "Tengo que admitir que la situacion es bastante exitante"
+    mc "Tengo que admitir que la situación es bastante excitante"
 
     violet "No es el momento para eso"
 
-    mc "¿Ya esta?"
+    mc "Soy una persona muy imaginativa"
 
-    violet "Listo"
+    violet "Sí, eso ya lo sé"
+
+    mc "¿De qué color es?"
+
+    violet "¿De verdad...?"
+
+    mc "Bueno, tenía esa duda"
+
+    violet "Listo, ya puedes abrir los ojos"
 
     # ── SU HABITACION — el jean ──────────────────────────────────────────────
     # Vuelve a abrir los ojos y ella ya se cambio.
@@ -243,6 +266,7 @@ label quest_violet_amor_06:
     # (Mc cuerpo base ojos base boca neutral)
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
     # (Violet cuerpo jean base boca neutral)
+    #
     show violet_q30a c_jean_base b_none at right
     with sprite_normal
 
@@ -251,20 +275,30 @@ label quest_violet_amor_06:
     show violet_q30a b_none
 
     show mc_parado_base b_hablando
-    mc "A ver atras"
-    show mc_parado_base b_none
+    mc "Sexy"
+    show mc_parado_base b_abiertachica c_rbase_pensando with sprite_normal
+    mc "A ver atrás"
+    show mc_parado_base b_none c_rbase_brazoscruzados with sprite_normal
 
     # Se da vuelta. ACÁ SI HABLA DE ESPALDAS: la boca pasa a `be_*`, que es la
     # que esta dibujada para esa vista.
-    show violet_q30a c_jean_espalda with sprite_normal
+    #
+    # Y ACÁ ENTRA EL ESPEJADO, junto con el giro: el `at right_flip` va en el
+    # mismo `show` que la espalda, asi el cambio de vista y el espejo pasan en
+    # el mismo frame en vez de verse como dos movimientos.
+    #
+    # Se queda para el resto de la quest: los `show violet_q30a ...` que siguen
+    # no llevan `at` y Ren'Py le conserva el transform al tag. No hay ningun
+    # `at` posterior — el siguiente toque a este tag es el `hide` del cierre.
+    show violet_q30a c_jean_espalda at right_flip with sprite_normal
     pause 0.5
 
     show violet_q30a be_hablando
-    violet "Creo que es mas ajustado"
+    violet "Creo que es más ajustado"
     show violet_q30a b_none
 
-    show mc_parado_base b_hablando
-    mc "Si parece un poco mas ajustado"
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "Sí, parece un poco más ajustado, te lo hace más redondo que el blanco"
     show mc_parado_base b_none
 
     # Se toca el jean.
@@ -281,34 +315,60 @@ label quest_violet_amor_06:
     violet "¿Y?"
     show violet_q30a b_none
 
-    show mc_parado_base b_hablando
-    mc "Este te marca mas el trasero, pero es menos llamativo que el otro, el blanco se ve a kilometros"
-    show mc_parado_base b_none
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "Si bien este te marca más el trasero, es menos llamativo que el otro"
+    show mc_parado_base b_abiertachica
+    mc "El blanco se ve a kilómetros"
+    show mc_parado_base b_none c_rbase_brazoscruzados with sprite_normal
 
     show violet_q30a be_hablando
     violet "Entonces me quedo con este"
-    show violet_q30a b_hablandochica
+    show violet_q30a be_hablandochica
     violet "Gracias por ayudarme"
     show violet_q30a b_none
 
-    violet "..."
+    show mc_parado_base b_hablando c_rbase_confianza with sprite_normal
+    mc "De nada, cuando quieras probarte pantalones puedes contar conmigo"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     show violet_q30a be_hablando
-    violet "¿Estas esperando algo?"
+    violet "Me imaginé que no ibas a tener problemas en ayudarme con esto"
     show violet_q30a b_none
 
-    show mc_parado_base b_hablando
-    mc "Perdon me quede perdido en la imaginacion"
-    show mc_parado_base b_none
-
-    show violet_q30a be_sonrisa
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "¿Listo?"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     show violet_q30a be_hablando
-    violet "¿Tanto te gusta?"
+    violet "¿Estabas esperando algo más?"
     show violet_q30a be_sonrisa
 
-    show mc_parado_base b_hablando
-    mc "No lo puedo evitar"
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "Mmmm... ¿No te tienes que probar otro?"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
+
+    show violet_q30a be_hablando
+    violet "No, estaba entre esos dos"
+    show violet_q30a be_sonrisa
+
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "¿No tienes dudas con la ropa interior que vas a llevar?"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
+
+    show violet_q30a be_hablando
+    violet "Jajajaja no"
+    show violet_q30a be_sonrisa
+
+    show mc_parado_base b_hablando c_rbase_confianza with sprite_normal
+    mc "Lo intenté"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
+
+    show violet_q30a be_hablando
+    violet "¿Tantas ganas tienes de verla?"
+    show violet_q30a be_sonrisa
+
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "Cerrar los ojos mientras te cambiabas fue una situación letal"
     show mc_parado_base b_none
 
     show violet_q30a be_hablando
@@ -316,23 +376,38 @@ label quest_violet_amor_06:
     show violet_q30a be_sonrisa
 
     show mc_parado_base b_hablando
-    mc "Me pedis imposibles"
+    mc "Me pides imposibles"
     show mc_parado_base b_none
 
     show violet_q30a be_hablando
-    violet "¿Eso nada?"
+    violet "Eso o nada"
     show violet_q30a be_sonrisa
 
-    show mc_parado_base b_hablando
-    mc "Me voy a controlar"
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
+    mc "Acepto el trato, solo miro"
     show mc_parado_base b_none
 
     # Y se lo empieza a bajar.
     show violet_q30a c_jean_bajando1 with sprite_normal
     pause 0.5
-
     show violet_q30a c_jean_bajando2 with sprite_normal
     pause 0.5
+
+    show violet_q30a be_hablando
+    violet "Listo, ya sabes el color"
+    show violet_q30a be_sonrisa
+
+    show mc_parado_base b_hablando c_rbase_facepalm with sprite_normal
+    mc "No me puedes poner el to be continue justo ahora"
+    show mc_parado_base b_none c_rbase_brazoscruzados with sprite_normal
+
+    show violet_q30a be_hablando
+    violet "Jajajajaja, dale las gracias a ese comentario"
+    show violet_q30a be_sonrisa
+
+    show mc_parado_base c_rbase_victoria with sprite_normal
+    pause 0.5
+    show mc_parado_base c_rbase_base with sprite_normal
 
     show violet_q30a c_jean_bajando3 with sprite_normal
     pause 0.5
@@ -343,20 +418,41 @@ label quest_violet_amor_06:
     show violet_q30a c_jean_bajando5 with sprite_normal
     pause 0.5
 
-    show mc_parado_base b_hablando
-    mc "No le puedo creer"
-    show mc_parado_base b_hablandochica
-    mc "Cuando vuelvas a necesitar ayuda para elegir ropa, llamame"
+    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_normal
+    mc "Es todo lo que está bien en este mundo"
+    show mc_parado_base b_abiertachica
+    mc "Muero de ganas de darle un besito"
+    show mc_parado_base b_none c_rbase_brazoscruzados with sprite_normal
+
+    show violet_q30a be_hablando
+    violet "Aceptaste los términos de no tocar"
+    show violet_q30a be_sonrisa
+
+    show violet_q30a c_jean_bajando2 with sprite_normal
+    pause 0.5
+    show violet_q30a c_jean_bajando1 with sprite_normal
+    pause 0.5
+
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "Sí, me voy antes de que me vuelva peligroso jajaja"
     show mc_parado_base b_none
 
     show violet_q30a be_hablando
-    violet "Jajajajaja no creo que vuelvas a tener tanta suerte"
-    show violet_q30a b_hablandochica
-    violet "Bueno se termino la exhibicion, me voy a cambiar y salir"
+    violet "Eres bastante peligroso, mira lo que me hiciste hacer..."
+    show violet_q30a be_sonrisa
+
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "Sé que te gusta volverme loco, no fue solo algo mío"
+    show mc_parado_base b_none c_rbase_brazoscruzados with sprite_normal
+
+    show violet_q30a be_hablando
+    violet "Bueno, terminó la exhibición que se me hace tarde"
+    show violet_q30a be_hablandochica
+    violet "Nos vemos después"
     show violet_q30a be_sonrisa
 
     show mc_parado_base b_hablando
-    mc "Pasala bien en el cumpleaños"
+    mc "Nos vemos después"
     show mc_parado_base b_none
 
     hide mc_parado_base
@@ -373,8 +469,11 @@ label quest_violet_amor_06:
     # (Mc cuerpo pensando ojos base boca neutral)
     show mc_parado_base c_rbase_pensando o_base b_none at center with sprite_normal
 
-    piensa "No pude hablar sobre el beso, pero siento que la relacion con Violet esta un poco mas intima, voy por un buen camino"
-    piensa "Y lo del cambio de ropa me dejo pensando que podria ser una excusa para otro momento asi, podria pensar en algo que quiera que use o se pruebe"
+    show mc_parado_base c_rbase_avergonzado with sprite_normal
+    piensa "Su trasero hizo olvidarme por completo que quería hablar con ella y ver cómo había repercutido lo del beso"
+    show mc_parado_base c_rbase_pensando with sprite_normal
+    piensa "Aunque creo que no hace falta hablar nada"
+    piensa "Espero que me vuelva a pedir ayuda con la ropa en algún momento"
 
     hide mc_parado_base with dissolve
 

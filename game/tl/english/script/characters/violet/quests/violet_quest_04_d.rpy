@@ -80,3 +80,35 @@ translate english quest_violet_questprincipal_04_d_cd23dfa9:
     # piensa "Puede que asi logre que me mande las fotos"
     piensa "Maybe that way I can get her to send me the photos"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_04_d.rpy:30
+translate english quest_violet_questprincipal_04_d_a9487c9a:
+
+    # mc "¿Cómo estás?"
+    mc "How are you?"
+
+# game/script/characters/violet/quests/violet_quest_04_d.rpy:45
+translate english quest_violet_questprincipal_04_d_45a13ea3:
+
+    # violet "Conozco esa mirada, estás pensando algo"
+    violet "I know that look, you're thinking something"
+
+# game/script/characters/violet/quests/violet_quest_04_d.rpy:75
+translate english quest_violet_questprincipal_04_d_9f1c2260:
+
+    # piensa "Es muy divertido molestarla pero no sé qué tan buena idea es, a este paso no la voy a poder convencer de que use el cosplay"
+    piensa "It's a lot of fun teasing her but I don't know how good an idea it is; at this rate I won't be able to convince her to wear the cosplay"
+
+# game/script/characters/violet/quests/violet_quest_04_d.rpy:76
+translate english quest_violet_questprincipal_04_d_1ec818fc:
+
+    # piensa "Todavía quedan fotos que no vi, podría portarme bien y hacer cosas por ella"
+    piensa "There are still photos I haven't seen. I could behave and do things for her"
+
+# game/script/characters/violet/quests/violet_quest_04_d.rpy:77
+translate english quest_violet_questprincipal_04_d_e30b60ad:
+
+    # piensa "Puede que así logre que me mande las fotos"
+    piensa "Maybe that way I can get her to send me the photos"
+

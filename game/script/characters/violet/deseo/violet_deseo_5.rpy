@@ -72,52 +72,58 @@ label quest_violet_deseo_01:
     show violet_espalda sb_celular at right:
         xzoom -1.0
 
+    # `with None` cierra el fondo y a Violet sin transicion: un `with`
+    # arrastra TODO lo pendiente, asi que sin esto el sprite_normal de
+    # abajo se los llevaba tambien y entraban los tres juntos.
+    with None
+
     # El MC con sprite_normal: es el que acaba de entrar, y la transicion le da
     # esa sensacion de movimiento.
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda with sprite_normal
 
-    show mc_parado_base c_rbase_pensando o_abajonm with sprite_fast
-    piensa "Si hay algo que me esta llamando mucho la atencion desde que llegue es el trasero de Violet"
-    show mc_parado_base c_rbase_avergonzado o_arribanm with sprite_fast
-    piensa "De a poco me esta empezando a tentar y cada vez me cuesta mas dejar de mirarlo"
+    show mc_parado_base c_rbase_pensando o_abajonm with sprite_normal
+    piensa "Si hay algo que me está llamando mucho la atención desde que llegué es el trasero de Violet"
+    show mc_parado_base c_rbase_avergonzado o_arribanm with sprite_normal
+    piensa "De a poco me está empezando a tentar y cada vez me cuesta más dejar de mirarlo"
     piensa "..."
 
     hide violet_espalda
     show violet_parada c_rbase_celu ca_base o_base b_none at right with sprite_normal
 
     show violet_parada b_hablando
-    violet "¿Que pasa?"
+    violet "¿Qué pasa?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_asustado o_base with sprite_fast
-    mc "Nada ¿Por?"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_asustado o_base with sprite_normal
+    mc "Nada, ¿por?"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_parada b_hablando c_rbase_base with sprite_fast
-    violet "Subiste y te quedaste ahi paralizado"
+    show violet_parada b_hablando c_rbase_base with sprite_normal
+    violet "Subiste y te quedaste ahí paralizado"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Es que justo me acorde de algo y me puse a pensar en ello"
+    mc "Es que justo me acordé de algo y me puse a pensar en ello"
     show mc_parado_base b_none
 
-    show violet_parada b_hablando c_rbase_pensando with sprite_fast
-    violet "¿En que?"
-    show violet_parada b_none c_rbase_base with sprite_fast
+    show violet_parada b_hablando c_rbase_pensando with sprite_normal
+    violet "¿En qué?"
+    show violet_parada b_none c_rbase_base with sprite_normal
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
     mc "Jejeje no te lo puedo decir"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_parada b_hablando 
+    show violet_parada b_hablando
     violet "Raro..."
     show violet_parada b_none
 
     hide violet_parada with dissolve
 
-    show mc_parado_base c_rbase_brazoscruzados with sprite_fast
-    piensa "Tengo que tratar de ser menos evidente, en algun momento se va a dar cuenta que no puedo dejar de mirarle el trasero"
-   
+    show mc_parado_base c_rbase_brazoscruzados with sprite_normal
+    piensa "Tengo que tratar de ser menos evidente, en algún momento se va a dar cuenta de que no puedo dejar de mirarle el trasero"
+
+    hide mc_parado_base with dissolve
 
     $ completar_quest_actual("violet", quest_id="violet_deseo_01")
 

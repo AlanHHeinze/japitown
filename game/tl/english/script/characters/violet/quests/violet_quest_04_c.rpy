@@ -72,3 +72,41 @@ translate english quest_violet_questprincipal_04_c_43fbde42:
     # piensa "Sera cosa de seguir mejorarndo la relación"
     piensa "It'll be a matter of keeping on improving the relationship"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_04_c.rpy:40
+translate english quest_violet_questprincipal_04_c_a7d136ea:
+
+    # violet "Ya te dije que no, solo te lo mostré por cortesía"
+    violet "I already told you no, I only showed it to you out of courtesy"
+
+# game/script/characters/violet/quests/violet_quest_04_c.rpy:46
+translate english quest_violet_questprincipal_04_c_45eeea22:
+
+    # mc "La Japicon será dentro de poco tiempo"
+    mc "The Japicon will be here soon"
+
+# game/script/characters/violet/quests/violet_quest_04_c.rpy:52
+translate english quest_violet_questprincipal_04_c_0b90371d:
+
+    # violet "No voy a usar eso en un evento, suficiente que te mandé una de las fotos"
+    violet "I'm not going to wear that at an event, it's enough that I sent you one of the photos"
+
+# game/script/characters/violet/quests/violet_quest_04_c.rpy:57
+translate english quest_violet_questprincipal_04_c_fb7db0cc:
+
+    # piensa "Entonces se sacó más"
+    piensa "So she took more"
+
+# game/script/characters/violet/quests/violet_quest_04_c.rpy:72
+translate english quest_violet_questprincipal_04_c_b1328b12:
+
+    # piensa "Violet se sacó más fotos, si logré que me mande una, puedo lograr que me mande las otras también"
+    piensa "Violet took more photos; if I got her to send me one, I can get her to send me the others too"
+
+# game/script/characters/violet/quests/violet_quest_04_c.rpy:73
+translate english quest_violet_questprincipal_04_c_d7dd568f:
+
+    # piensa "Será cosa de seguir mejorando la relación"
+    piensa "It'll be a matter of keeping on improving the relationship"
+

@@ -178,11 +178,11 @@ translate english strings:
 
     # game/script/characters/violet/quests/violet_quest_0_a.rpy:132
     old "Complacerla (+1 💋)"
-    new "Please her"
+    new "Please her (+1 💋)"
 
     # game/script/characters/violet/quests/violet_quest_0_a.rpy:135
     old "Provocarla (-2 ❤️)"
-    new "Provoke her"
+    new "Provoke her (-2 ❤️)"
 
     # game/script/characters/violet/quests/violet_quest_0_a.rpy:138
     old "Escucharla (Nada)"
@@ -199,4 +199,78 @@ translate english strings:
     # game/script/characters/violet/quests/violet_quest_0_a.rpy:147
     old "Darle golosinas (+2 ❤️ +1 💋)"
     new "Give her candy (+2 ❤️ +1 💋)"
+
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_0_a.rpy:51
+translate english quest_violet_questprincipal_0_a_17b3838a:
+
+    # mc "Hola, Violet, ¿cómo estás?"
+    mc "Hi Violet, how are you?"
+
+# game/script/characters/violet/quests/violet_quest_0_a.rpy:79
+translate english quest_violet_questprincipal_0_a_d148fa8e:
+
+    # tutorial "Para mejorar la relación con un personaje podremos hacer uso de varios sistemas, uno de ellos es el de Hablar"
+    tutorial "To improve your relationship with a character you can use several systems, one of them is Talk"
+
+# game/script/characters/violet/quests/violet_quest_0_a.rpy:80
+translate english quest_violet_questprincipal_0_a_4796754a:
+
+    # tutorial "Este es un minijuego de opciones que dependerán del estado del personaje (el mismo es aleatorio al inicio de cada día)"
+    tutorial "This is a minigame of options that depend on the character's mood (which is random at the start of each day)"
+
+# game/script/characters/violet/quests/violet_quest_0_a.rpy:81
+translate english quest_violet_questprincipal_0_a_acc4dd38:
+
+    # tutorial "Puedes tratar de recordar las mejores respuestas o ir obteniendo ventajas para este sistema mediante desbloqueos"
+    tutorial "You can try to remember the best answers or earn perks for this system through unlocks"
+
+# game/script/characters/violet/quests/violet_quest_0_a.rpy:113
+translate english violet_q0a_talk_sistema_a4125931:
+
+    # tutorial "Algunos estados reciben opciones especiales según objetos, atributos o ventajas que tengamos, las cuales nos darán mejores recompensas"
+    tutorial "Some moods get special options depending on the items, attributes or perks you have, and they give better rewards"
+
+# game/script/characters/violet/quests/violet_quest_0_a.rpy:117
+translate english violet_q0a_talk_sistema_74a7d642:
+
+    # "Conozco esa cara, no está de buen humor, parece tener hambre"
+    "I know that face, she's not in a good mood, she seems hungry"
+
+# game/script/characters/violet/quests/violet_quest_0_a.rpy:152
+translate english violet_q0a_complacer_096a4562:
+
+    # "Podría aprovechar que tengo unas golosinas. Creo que es mi mejor opción"
+    "I could take advantage of the fact that I have some candy. I think it's my best option"
+
+# game/script/characters/violet/quests/violet_quest_0_a.rpy:163
+translate english violet_q0a_provocar_096a4562:
+
+    # "Podría aprovechar que tengo unas golosinas. Creo que es mi mejor opción"
+    "I could take advantage of the fact that I have some candy. I think it's my best option"
+
+# game/script/characters/violet/quests/violet_quest_0_a.rpy:174
+translate english violet_q0a_escuchar_096a4562:
+
+    # "Podría aprovechar que tengo unas golosinas. Creo que es mi mejor opción"
+    "I could take advantage of the fact that I have some candy. I think it's my best option"
+
+# game/script/characters/violet/quests/violet_quest_0_a.rpy:185
+translate english violet_q0a_hablar_096a4562:
+
+    # "Podría aprovechar que tengo unas golosinas. Creo que es mi mejor opción"
+    "I could take advantage of the fact that I have some candy. I think it's my best option"
+
+# game/script/characters/violet/quests/violet_quest_0_a.rpy:196
+translate english violet_q0a_adulación_096a4562:
+
+    # "Podría aprovechar que tengo unas golosinas. Creo que es mi mejor opción"
+    "I could take advantage of the fact that I have some candy. I think it's my best option"
+
+# game/script/characters/violet/quests/violet_quest_0_a.rpy:234
+translate english violet_q0a_golosinas_3c6e54a6:
+
+    # tutorial "En las futuras interacciones no veremos las recompensas asociadas a cada opción"
+    tutorial "In future interactions you won't see the rewards attached to each option"
 

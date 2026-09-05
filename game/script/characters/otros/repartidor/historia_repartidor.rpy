@@ -11,10 +11,10 @@ label interaccion_repartidor:
     # Esconder HUD temporalmente
     hide screen hud_navegacion
     $ ocultar_hud()
-    
+
     # Determinar qué label usar según confianza
     $ _label_entrega = obtener_label_entrega()
-    
+
     # Saltar al label correspondiente
     jump expression _label_entrega
 
@@ -25,35 +25,40 @@ label interaccion_repartidor:
 
 label entrega_repartidor_0:
     # Primera vez que el jugador recibe un paquete
-    
+
     # Fija el cuadro de dialogo en todo el tramo: sin esto cada `scene` lo
     # esconde y la linea siguiente lo reaparece. Ver la nota de config.window
     # en ui/base/options.rpy.
     window show
 
-    scene bg_casa_manana_frente with fade
-    
+    # El bg lo resuelve el sistema de locaciones en vez de ir fijo. Los tres
+    # tramos de esta escena son la MISMA puerta: con el nombre escrito a mano
+    # el de confianza 5+ pintaba la tarde y los otros dos la mañana, o sea que
+    # la hora del frente cambiaba segun cuanto te conocia el repartidor.
+    $ _bg_frente_rep = sistema_locaciones.obtener_locacion("casa_frente").background
+    scene expression _bg_frente_rep with fade
+
     show repartidor_parado c_base at right
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
-    
+
     show repartidor_parado c_hablando
-    repartidor "Hola, ¿Pedido para [mc_name]?"
+    repartidor "Hola, ¿pedido para [mc_name]?"
     show repartidor_parado c_base
 
     show mc_parado_base b_hablando
     mc "Sí, soy yo"
     show mc_parado_base b_none
-    
+
     show repartidor_parado c_base
     repartidor "¿Eres nuevo? Nunca te había visto por aquí."
     show repartidor_parado c_base
 
     show mc_parado_base b_hablando
-    mc "Sí, acabo de mudarme. Esta sera mi casa a partir de ahora"
+    mc "Sí, acabo de mudarme. Esta será mi casa a partir de ahora"
     show mc_parado_base b_none
-    
+
     show repartidor_parado c_base
-    repartidor "Que afortunado..."
+    repartidor "Qué afortunado..."
     show repartidor_parado c_base
 
     show mc_parado_base b_hablando
@@ -71,13 +76,13 @@ label entrega_repartidor_0:
     show repartidor_parado c_hablando
     repartidor "A usted joven"
     show repartidor_parado c_base
-    
+
     # Procesar entrega y obtener items
     $ _items_entregados = procesar_entrega_repartidor()
-    
+
     show repartidor_parado c_hablando
-    repartidor "Que tengas un buen día."
-    
+    repartidor "Que tengas un buen día"
+
     hide repartidor_parado with dissolve
 
     show screen hud_navegacion
@@ -95,21 +100,26 @@ label entrega_repartidor_0:
 
 label entrega_repartidor_1_5:
     # El repartidor ya conoce al jugador
-    
+
     # Fija el cuadro de dialogo en todo el tramo: sin esto cada `scene` lo
     # esconde y la linea siguiente lo reaparece. Ver la nota de config.window
     # en ui/base/options.rpy.
     window show
 
-    scene bg_casa_manana_frente with fade
-    
+    # El bg lo resuelve el sistema de locaciones en vez de ir fijo. Los tres
+    # tramos de esta escena son la MISMA puerta: con el nombre escrito a mano
+    # el de confianza 5+ pintaba la tarde y los otros dos la mañana, o sea que
+    # la hora del frente cambiaba segun cuanto te conocia el repartidor.
+    $ _bg_frente_rep = sistema_locaciones.obtener_locacion("casa_frente").background
+    scene expression _bg_frente_rep with fade
+
     show repartidor_parado c_base at right
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
-    
+
     show mc_parado_base b_hablando
     mc "Hola"
     show mc_parado_base b_none
-    
+
     show repartidor_parado c_hablando
     repartidor "¡Hola de nuevo!"
     show repartidor_parado c_base
@@ -121,14 +131,14 @@ label entrega_repartidor_1_5:
     show mc_parado_base b_hablando
     mc "Gracias"
     show mc_parado_base b_none
-    
+
     # Procesar entrega y obtener items
     $ _items_entregados = procesar_entrega_repartidor()
-    
+
     show repartidor_parado c_hablando
     repartidor "De nada. ¡Hasta la próxima!"
     show repartidor_parado c_base
-    
+
     hide repartidor_parado with dissolve
 
     show screen hud_navegacion
@@ -146,27 +156,32 @@ label entrega_repartidor_1_5:
 
 label entrega_repartidor_5_plus:
     # El repartidor y el jugador ya se conocen bien
-    
+
     # Fija el cuadro de dialogo en todo el tramo: sin esto cada `scene` lo
     # esconde y la linea siguiente lo reaparece. Ver la nota de config.window
     # en ui/base/options.rpy.
     window show
 
-    scene bg_casa_tarde_frente with fade
-    
+    # El bg lo resuelve el sistema de locaciones en vez de ir fijo. Los tres
+    # tramos de esta escena son la MISMA puerta: con el nombre escrito a mano
+    # el de confianza 5+ pintaba la tarde y los otros dos la mañana, o sea que
+    # la hora del frente cambiaba segun cuanto te conocia el repartidor.
+    $ _bg_frente_rep = sistema_locaciones.obtener_locacion("casa_frente").background
+    scene expression _bg_frente_rep with fade
+
     show repartidor_parado c_hablando at right
-    
+
     repartidor "¡Hey, mi cliente favorito!"
-    
+
     show repartidor_parado c_base with sprite_normal
     repartidor "Ya sabes cómo es esto..."
-    
+
     # Procesar entrega y obtener items
     $ _items_entregados = procesar_entrega_repartidor()
-    
+
     show repartidor_parado c_hablando with sprite_normal
     repartidor "Otro paquete entregado. ¡Nos vemos pronto!"
-    
+
     hide repartidor_parado with dissolve
 
     show screen hud_navegacion

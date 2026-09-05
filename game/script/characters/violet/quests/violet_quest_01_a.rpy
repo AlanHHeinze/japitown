@@ -149,7 +149,11 @@ label paqueterepartidor_quest01_violet:
     $ ocultar_hud()
     window show
 
-    scene bg_casa_manana_frente with fade
+    # El bg lo resuelve el sistema de locaciones en vez de ir fijo: el
+    # repartidor aparece de mañana, pero nada garantiza que la escena no
+    # corra a otra hora, y ahi el frente quedaba pintado a destiempo.
+    $ _bg_frente_vq1 = sistema_locaciones.obtener_locacion("casa_frente").background
+    scene expression _bg_frente_vq1 with fade
 
     show repartidor_parado c_base at right
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
@@ -158,7 +162,7 @@ label paqueterepartidor_quest01_violet:
     repartidor "Buen día, tengo un paquete para esta dirección."
     show repartidor_parado c_base
 
-    piensa "Debe ser de alguna de las chicas, yo no pedi nada"
+    piensa "Debe ser de alguna de las chicas, yo no pedí nada"
     show mc_parado_base b_hablando
     mc "Yo lo recibo, gracias"
     show mc_parado_base b_none
@@ -207,14 +211,16 @@ label paquetecama_quest01_violet:
     hide screen hud_navegacion
     window show
 
-    # Mostrar habitacion del MC segun horario
-    $ _horarios_bg_vq1 = ["tarde", "tarde", "noche", "noche"]
-    $ _bg_horario_vq1 = _horarios_bg_vq1[horario_actual]
-    scene expression "images/bg/casa/bg_casa_" + _bg_horario_vq1 + "_hmc.jpg" with fade
+    # Mostrar habitacion del MC segun horario.
+    # El bg lo resuelve el sistema de locaciones, que ya sabe el horario
+    # (y respeta horario_visual_override). Antes se armaba con una lista a
+    # mano que estaba desalineada con la canonica de locationsystem_core.
+    $ _bg_horario_vq1 = sistema_locaciones.obtener_locacion("casa_hmc").background
+    scene expression _bg_horario_vq1 with fade
 
     show mc_parado_base c_rbase_regaloviolet o_abajonm b_none at mc_izquierda with dissolve
 
-    piensa "Este debe ser el paquete que Monica me dijo"
+    piensa "Este debe ser el paquete que Mónica me dijo"
     piensa "La etiqueta está dañada y no se llega a ver el nombre, pero dice MundoMangas"
     piensa "Debe ser de Violet, luego se lo doy"
 

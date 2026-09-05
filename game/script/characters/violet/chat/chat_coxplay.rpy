@@ -68,7 +68,7 @@ init 6 python:
                     # sistema la auto-envia (_abrir_selector_respuesta), asi que el
                     # jugador no elige entre variantes identicas.
                     OpcionRespuesta(
-                        texto="Hola ¿Cómo están? Mi nombre es [mc_name], hice hace algunos días una compra con ustedes y estoy buscando un cosplay nuevo.",
+                        texto="Hola, ¿cómo están? Mi nombre es [mc_name], hice hace algunos días una compra con ustedes y estoy buscando un cosplay nuevo.",
                         respuesta_npc="",
                         saltar_a_paso=-1,
                     ),
@@ -85,7 +85,7 @@ init 6 python:
     chat_coxplay_q5a_g2 = GrupoMensajes(
         id="coxplay_q5a_g2",
         npc_id="tienda_coxplay",
-        mensaje_inicial="Hola gracias por comunicarte con Tienda CoXplay, recuerda que nuestro horario de atención es de Lunes a Sábado por la mañana y tarde",
+        mensaje_inicial="Hola, gracias por comunicarte con Tienda CoXplay, recuerda que nuestro horario de atención es de Lunes a Sábado por la mañana y tarde",
         trigger_id="coxplay_q5a_g2",
         condicion_entrega=_coxplay_es_horario_laboral,
         accion_al_completar=_coxplay_disparar_g3,

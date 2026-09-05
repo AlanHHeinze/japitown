@@ -4,5 +4,5 @@
 translate english violet_rn_vestido_f6b5c5d2:
 
     # violet "Contenido de prueba"
-    violet "Contenido de prueba"
+    violet "Placeholder content"
 

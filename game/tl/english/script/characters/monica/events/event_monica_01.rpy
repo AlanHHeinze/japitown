@@ -275,3 +275,53 @@ translate english event_monica_01_check_replay_6c74853b:
     # "[_msg_rework_masaje]"
     "[_msg_rework_masaje]"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/monica/events/event_monica_01.rpy:137
+translate english event_monica_01_narrativa_fe098cce:
+
+    # mc "¿Cómo estás, Mónica? ¿Sigues con dolor en tus hombros?"
+    mc "How are you, Monica? Is your shoulder still bothering you?"
+
+# game/script/characters/monica/events/event_monica_01.rpy:142
+translate english event_monica_01_narrativa_02688420:
+
+    # monica "Ya se me está pasando, solo tengo que acostumbrarme a usar la notebook en casa"
+    monica "It's getting better. I just need to get used to working on the laptop at home."
+
+# game/script/characters/monica/events/event_monica_01.rpy:153
+translate english event_monica_01_narrativa_d753c1b7:
+
+    # mc "No parece que se te esté quitando"
+    mc "It doesn't look like it's letting up."
+
+# game/script/characters/monica/events/event_monica_01.rpy:199
+translate english event_monica_01_narrativa_54da6555:
+
+    # piensa "No me había puesto a pensar en el increíble cuerpo que tiene Mónica para su edad."
+    piensa "I hadn't stopped to think about what an incredible figure Monica has for her age."
+
+# game/script/characters/monica/events/event_monica_01.rpy:213
+translate english event_monica_01_narrativa_06c4903a:
+
+    # mc "¿Estás lista?"
+    mc "Ready?"
+
+# game/script/characters/monica/events/event_monica_01.rpy:278
+translate english event_monica_01_narrativa_a8136d8d:
+
+    # mc "¿Estás bien?"
+    mc "Are you okay?"
+
+# game/script/characters/monica/events/event_monica_01.rpy:417
+translate english masaje_locion_7aeee3e3:
+
+    # mc "Mónica, compré una loción de masajes. ¿Te gustaría probarla?"
+    mc "Monica, I bought a massage lotion. Would you like to try it?"
+
+# game/script/characters/monica/events/event_monica_01.rpy:464
+translate english masaje_repetir_5e836fb3:
+
+    # mc "Mónica, ¿te gustaría un masaje?"
+    mc "Monica, would you like a massage?"
+

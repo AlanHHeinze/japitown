@@ -19,8 +19,8 @@ label revisar_notebook_monica:
     # Ya se revisó la notebook: recordatorio
     $ ocultar_hud()
     window show
-    piensa "La bateria esta algo hinchada pareceria ser ese el problema"
-    piensa "Podría comprar una nueva y cambiarsela"
+    piensa "La batería está algo hinchada, parecería ser ese el problema"
+    piensa "Podría comprar una nueva y cambiársela"
     window hide
     $ mostrar_hud()
     jump game_loop
@@ -44,17 +44,14 @@ label quest_monica_questprincipal_0_c:
     piensa "A ver qué tiene esta notebook..."
     piensa "Probé encenderla y no da señales de vida"
     show mc_parado_base o_arribanm
-    piensa "Por suerte el problema parece ser la batería esta algo hinchadda. Con comprar una nueva debería solucionarse... o eso creo"
+    piensa "Por suerte el problema parece ser la batería, está algo hinchada. Con comprar una nueva debería solucionarse... o eso creo"
     show mc_parado_base o_base
 
     hide mc_parado_base with dissolve
 
-    tutorial "Dentro del [colorear_quest('Celular')] hay una [colorear_quest('App Tienda')]	a donde podras conseguir todos los [colorear_quest('Objetos Comprables')] del juego"
-    tutorial "Todos los articulos van a tener tres indicadores: Su [colorear_quest('Costo')], el [colorear_quest('Stock')] en tienda (la mayoria de los articulos se reponen nuevamente los lunes) y los [colorear_quest('Dias hasta la Entrega')]"
-    tutorial "Cuando el [colorear_quest('Dia de Entrega')] llegue tendras un [colorear_quest('Recordatorio al Despertar')], podras salir por la mañana hasta el [colorear_locacion('Frente')] y recoger el pedido [colorear_quest('Interactuando con el Repartidor')]"
-    tutorial "Si no lo haces alguien recogera el paquete por ti y lo dejara [colorear_quest('Sobre tu Cama por la Tarde')]"
-    tutorial "Para conseguir más [colorear_quest('Dinero')]	puedes hacer la [colorear_quest('Accion Trabajar')] disponible en [colorear_locacion('Tu Habitacion')]. Cada turno te da $20 y avanza el horario. Puedes trabajar hasta 2 veces por día."
-   
+    tutorial "Dentro del celular tendrás una App llamada Tienda en la que podrás encontrar todos los objetos del juego"
+    tutorial "Al comprar un objeto tendrás que esperar los días de entrega, una vez llegue, podrás recibirlo por la mañana en el frente o si pasa el tiempo el objeto aparecerá sobre tu cama"
+
     window hide
     $ mostrar_hud()
 

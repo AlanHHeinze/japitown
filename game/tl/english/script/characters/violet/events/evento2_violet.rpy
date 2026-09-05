@@ -85,3 +85,23 @@ translate english evento2_violet_repetir_0d542f83:
 
     # piensa "Esto me va a terminar volviendo loco"
     piensa "This is going to end up driving me crazy"
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/events/evento2_violet.rpy:91
+translate english evento2_violet_66ae4c5f:
+
+    # violet "¿Esto querías ver? Pervertido"
+    violet "Is this what you wanted to see? Pervert"
+
+# game/script/characters/violet/events/evento2_violet.rpy:96
+translate english evento2_violet_1190d4fc:
+
+    # violet "Bueno, entonces ven a buscarlo"
+    violet "Well then, come and get it"
+
+# game/script/characters/violet/events/evento2_violet.rpy:127
+translate english evento2_violet_repetir_3a092dd4:
+
+    # piensa "No puedo dejar de pensar en el trasero de Violet..."
+    piensa "I can't stop thinking about Violet's ass..."
+

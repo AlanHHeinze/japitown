@@ -46,13 +46,13 @@ translate english strings:
     ## Mensajes de ausencia (MENSAJES_AUSENTE)
     ############################################################################
 
-    old "Violet no esta en su habitacion."
+    old "Violet no está en su habitación."
     new "Violet is not in her room."
 
-    old "Jasmine no esta en su habitacion."
+    old "Jasmine no está en su habitación."
     new "Jasmine is not in her room."
 
-    old "Monica no esta en su habitacion."
+    old "Mónica no está en su habitación."
     new "Monica is not in her room."
 
     old "No hay nadie."

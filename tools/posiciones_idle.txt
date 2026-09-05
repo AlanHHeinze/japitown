@@ -378,3 +378,11 @@ xpos 798  ypos 337  # xanchor=0.0  yanchor=0.0
 # ropa_pantalones — 2026-09-01 23:59:17
 # path: images/quest/violet/quest9/ropa_pantalones.webp
 xpos 798  ypos 337  # xanchor=0.0  yanchor=0.0
+
+# idle_violet_casa_hviolet_tarde_enferma — 2026-09-04 20:28:44
+# path: images/characters/casa/idle/idle_violet_casa_hviolet_tarde_enferma.jpg
+xpos 780  ypos 1036  # xanchor=0.5  yanchor=1.0
+
+# idle_violet_casa_hviolet_noche_enferma — 2026-09-04 20:29:11
+# path: images/characters/casa/idle/idle_violet_casa_hviolet_noche_enferma.jpg
+xpos 775  ypos 1010  # xanchor=0.5  yanchor=1.0

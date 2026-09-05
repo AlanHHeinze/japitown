@@ -67,7 +67,7 @@ label violet_quest05b_hablar:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Gracias, los voy a ver y te digo cual me gusta"
+    violet "Gracias, los voy a ver y te digo cuál me gusta"
     show violet_parada b_none
 
     $ inventario["coxplay_box"] = max(0, inventario.get("coxplay_box", 0) - 1)
@@ -135,7 +135,7 @@ label violet_quest05b_puerta:
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Gracias, los voy a ver y te digo cual me gusta"
+    violet "Gracias, los voy a ver y te digo cuál me gusta"
     show violet_parada b_none
 
     $ inventario["coxplay_box"] = max(0, inventario.get("coxplay_box", 0) - 1)

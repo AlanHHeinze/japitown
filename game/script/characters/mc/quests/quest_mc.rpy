@@ -138,7 +138,7 @@ init python:
     # Quests finales de cada NPC que liberan la quest 1 del MC.
     _MC_Q1_QUESTS_REQUERIDAS = {
         "monica_questprincipal_0_c":  "La batería de la notebook (Mónica)",
-        "violet_questprincipal_0_b":  "¿Que le pasa a Violet? (Violet)",
+        "violet_questprincipal_0_b":  "¿Qué le pasa a Violet? (Violet)",
         "jasmine_questprincipal_0_c": "Reencuentro con Jasmine (Jasmine)",
     }
 
@@ -155,6 +155,23 @@ init python:
             return renpy.translate_string("¡Todas completadas!")
         return renpy.translate_string("Completar:") + "\n" + "\n".join(pendientes)
 
+    def _mc_q0_que_hacer():
+        """
+        Objetivo actual de la quest 0, segun la fase de la mudanza.
+
+        Reemplaza a la lista de `locaciones_pendientes`, que era el "Visitar:
+        Pasillo arriba, Pasillo abajo y Patio" del recorrido obligatorio. Sin
+        ese recorrido la quest ya no pide moverse a ningun lado puntual, asi que
+        la pista sigue lo unico que queda por hacer.
+        """
+        if getattr(store, 'mc_q0_mudanza_garage_activa', False):
+            return renpy.translate_string("Buscar mis cosas en el Garage")
+        if getattr(store, 'mc_q0_mudanza_hmc_activa', False):
+            return renpy.translate_string("Llevar las cajas a mi habitación")
+        if getattr(store, 'mc_q0_esperar_horario', False):
+            return renpy.translate_string("Hacer tiempo hasta la noche")
+        return renpy.translate_string("Ir al Frente de la casa")
+
     def _mc_q1_condicion_completada():
         """True cuando las 3 quests finales de los NPC están completas."""
         for qid in _MC_Q1_QUESTS_REQUERIDAS:
@@ -168,10 +185,8 @@ init 5 python:
     _quest_mc_0 = QuestMC(
         id="mc_quest_0",
         nombre="De nuevo en casa",
-        pista="Recorrer la casa",
-        # Deben coincidir con MC_Q0_OBJETIVOS (mc_quest_0_a.rpy): se van retirando
-        # via mc_q0_registrar_exploracion() al entrar a cada una.
-        locaciones_pendientes=["Pasillo arriba", "Pasillo abajo", "Patio"],
+        pista="Instalarme en casa",
+        que_hacer_fn=_mc_q0_que_hacer,
         siguiente_quest_id="mc_quest_0b",
     )
     sistema_quests_mc.registrar(_quest_mc_0)
@@ -187,7 +202,7 @@ init 5 python:
     _quest_mc_1 = QuestMC(
         id="mc_quest_1",
         nombre="Reencuentro",
-        pista="Tengo que ponerme al día con Monica, Jasmine y Violet",
+        pista="Tengo que ponerme al día con Mónica, Jasmine y Violet",
         que_hacer_fn=_mc_q1_que_hacer,
         condicion_completada=_mc_q1_condicion_completada,
     )

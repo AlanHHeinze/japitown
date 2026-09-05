@@ -22,6 +22,17 @@ translate english strings:
     new "✖ Cancel"
 
     # =========================================================================
+    # Quest 0_b de Violet — la decision frente a su puerta
+    # Las dos primeras opciones son literales del screen y las traduce Ren'Py
+    # sola. La tercera NO: la arma etiqueta_opcion_hito() y llega como variable,
+    # asi que su texto base va acá. El nombre del hito que se le agrega entre
+    # parentesis ya se traduce en relaciones_strings.rpy.
+    # =========================================================================
+
+    old "Ya esta resuelto"
+    new "It's already sorted out"
+
+    # =========================================================================
     # Evento 03 de Violet — qué pensaba mientras limpiaba
     # =========================================================================
 
@@ -62,8 +73,11 @@ translate english strings:
     new "Force the zipper  💪 (3 Strength)"
 
     # =========================================================================
-    # Quest 08_a de Violet — el baño
+    # Quest 08_a de Violet — el baño y el menu de productos
     # =========================================================================
+
+    old "¿Qué quieres usar?"
+    new "What do you want to use?"
 
     old "Dejar la ropa aca"
     new "Leave the clothes here"
@@ -90,3 +104,17 @@ translate english strings:
 
     old "Tráeme una toalla"
     new "Bring me a towel"
+
+    # Donde esta cada cosa (VQ9A_PEDIDOS_DONDE). Van despues del pedido; el
+    # de Monica no tiene porque no hay nada que ir a buscar.
+    old "Quedó algo en la heladera de la cocina"
+    new "There's some left in the kitchen fridge"
+
+    old "El remedio está en el baño de abajo"
+    new "The medicine is in the downstairs bathroom"
+
+    old "Hay agua fría en la cocina"
+    new "There's cold water in the kitchen"
+
+    old "Hay toallas limpias en el baño de arriba"
+    new "There are clean towels in the upstairs bathroom"

@@ -204,3 +204,59 @@ translate english quest_jasmine_0_regalo_95cd4cc4:
     # mc "¿Aquí está bien?"
     mc "Is here okay?"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy:33
+translate english quest_jasmine_questprincipal_0_a_b3d54c62:
+
+    # mc "Hola, Jasmine... ¿interrumpo?"
+    mc "Hey Jasmine... am I interrupting?"
+
+# game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy:52
+translate english quest_jasmine_questprincipal_0_a_4ff72161:
+
+    # jasmine "¿A qué te refieres con recibirte bien?"
+    jasmine "What do you mean, welcoming?"
+
+# game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy:78
+translate english quest_jasmine_questprincipal_0_a_e82dbca3:
+
+    # mc "Con riesgo a que te puedas enojar más, ¿puedo saber por qué estás enojada?"
+    mc "At the risk of making it worse — can I ask why you're angry?"
+
+# game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy:110
+translate english quest_jasmine_questprincipal_0_a_c4d0aafc:
+
+    # mc "Y lo siento, para mí fue muy duro irme de un momento para el otro"
+    mc "And I'm sorry. Leaving like that was really hard for me too."
+
+# game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy:126
+translate english tutorial_elecciones_jasmine_e8e739d1:
+
+    # tutorial "Estas elecciones afectan el desarrollo inmediato como también a largo plazo. Los personajes recordarán las elecciones elegidas y actuarán en relación a ello en ciertos momentos"
+    tutorial "These choices affect both the immediate and the long-term development. Characters will remember the choices made and act accordingly at certain moments"
+
+# game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy:206
+translate english quest_jasmine_0_opcion_deseo_caa6c7b2:
+
+    # mc "Es verdad, no lo dije con otra intención."
+    mc "I mean it — I'm not saying it for any other reason."
+
+# game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy:255
+translate english quest_jasmine_0_opcion_realidad_fae09e15:
+
+    # mc "Pero para mí no fue solo perderlas a ustedes"
+    mc "But for me, it wasn't just losing you guys."
+
+# game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy:291
+translate english quest_jasmine_0_opcion_realidad_37103626:
+
+    # mc "Como dijiste, éramos chicos y fuimos idiotas."
+    mc "Like you said — we were kids and we were idiots."
+
+# game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy:300
+translate english quest_jasmine_0_opcion_realidad_0032fbe6:
+
+    # jasmine "Jajaja, sí."
+    jasmine "Ha, yeah."
+

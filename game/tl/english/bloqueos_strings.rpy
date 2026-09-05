@@ -26,7 +26,7 @@ translate english strings:
 
     # Quest 09_b: el motivo con el que Violet queda fuera de juego. Sale como
     # `piensa` en su puerta y tambien como motivo de la disponibilidad.
-    old "Monica pidio que no la molestemos"
+    old "Mónica pidió que no la molestemos"
     new "Monica asked us not to bother her"
 
     old "Debo responder el mensaje de {npc} antes de continuar"
@@ -127,8 +127,8 @@ translate english strings:
 
     # Ventajas de amor 20 / deseo 15: la accion se corta si Violet no esta, para
     # que el jugador no gaste el horario al pedo.
-    old "Violet no esta conectada ahora"
+    old "Violet no está conectada ahora"
     new "Violet isn't online right now"
 
-    old "Violet no esta en casa ahora"
+    old "Violet no está en casa ahora"
     new "Violet isn't home right now"

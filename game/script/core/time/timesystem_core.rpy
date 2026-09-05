@@ -32,7 +32,7 @@ init python:
     # Suscriptores a "el repartidor se fue sin ser atendido". El contenido se
     # registra en init 5 (ej. violet_quest_01_a) con funciones de MODULO sin
     # argumentos; el motor solo itera la lista y no conoce ninguna quest.
-    # (Refactor C3 de arquitectura_sistemas.md)
+    # (Refactor C3 de docs/arquitectura/arquitectura_sistemas.md)
     REPARTIDOR_AL_IRSE = []
 
     def actualizar_bg_master(con_fade=False):

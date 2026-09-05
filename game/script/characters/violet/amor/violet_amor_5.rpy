@@ -32,90 +32,94 @@ label quest_violet_amor_01:
 
     # El MC en su posicion de conversacion: entra solo, pero se queda donde va a
     # estar cuando Violet salga, para no moverse a mitad de escena.
-    show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
+    #
+    # Entra YA pensando. Antes eran dos `show`: uno en c_rbase_base sin
+    # transicion y otro en c_rbase_pensando con sprite_fast, asi que el primero
+    # no llegaba a verse nunca.
+    show mc_parado_base c_rbase_pensando o_base b_none at mc_izquierda
 
-    show mc_parado_base c_rbase_pensando with sprite_fast
-    piensa "Bueno de a poco voy logrando avances con Violet cuando la cruzo en algun lugar de la casa"
-    piensa "Pero no me suele responder cuando la llamo, quiero darle su espacio pero sinto que tambien es rendirme"
-    piensa "Nos soliamos llevar muy bien como para que ahora las cosas esten asi"
+    piensa "Bueno, de a poco voy logrando avances con Violet cuando la cruzo en algún lugar de la casa"
+    piensa "Pero no me suele responder cuando la llamo, quiero darle su espacio pero siento que también es rendirme"
+    piensa "Nos solíamos llevar muy bien como para que ahora las cosas estén así"
 
     # Violet sale al pasillo. Ropa base: la escena es de tarde, nunca en pijama.
     show violet_parada c_rbase_base ca_base o_base b_none at right with sprite_normal
-    
+
     show violet_parada b_hablando o_arribanm
-    violet "¿Que queres ahora?"
+    violet "¿Qué quieres ahora?"
     show violet_parada b_none o_base
 
-    show mc_parado_base c_rbase_base with sprite_fast
-    piensa "Pense que no iba a salir esta vez tampoco y ahora no se que decirle"
+    show mc_parado_base c_rbase_avergonzado with sprite_normal
+    piensa "Pensé que no iba a salir esta vez tampoco y ahora no sé qué decirle"
 
-    show mc_parado_base b_hablando 
-    mc "Hola ¿Como estas?"
+    show mc_parado_base b_hablando c_rbase_base with sprite_normal
+    mc "Hola, ¿cómo estás?"
     show mc_parado_base b_none
 
-    show violet_parada b_hablando c_rbase_brazoscruzados with sprite_fast
-    violet "... repito ... ¿Que queres ahora?"
+    show violet_parada b_hablando c_rbase_brazoscruzados with sprite_normal
+    violet "... repito ... ¿Qué quieres ahora?"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Nada en particular, queria saber como estabas"
+    mc "Nada en particular, quería saber cómo estabas"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando o_arribanm
+    violet "¿De verdad me molestas por eso?"
+    show violet_parada b_none o_base
+
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
+    mc "¿Hasta cuándo vas a seguir con este juego?"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando c_rbase_pensando with sprite_normal
+    violet "No sé de qué juego me hablas"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando
+    mc "De ignorarme y hacerte la ofendida cuando te hablo"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando c_rbase_brazoscruzados with sprite_normal
+    violet "Simplemente tengo ganas de ignorarte y ya"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_normal
+    mc "Si tanto problema tienes conmigo, ¿por qué no me lo dices de una vez y terminamos con esto?"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
+
+    show violet_parada b_hablando
+    violet "Desde que te fuiste no enviaste un mensaje, una llamada, ni siquiera un saludo, y ahora que vienes, ¿tenemos que ser mejores amigos?"
+    show violet_parada b_hablandochica
+    violet "Creo que no funciona así"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
+    mc "¿Y yo solo estuve mal? ¿No aplica lo mismo para el otro lado?"
+    show mc_parado_base b_abiertachica
+    mc "Tampoco recuerdo un mensaje tuyo, pero haciéndome el ofendido no voy a solucionar nada"
     show mc_parado_base b_none
 
     show violet_parada b_hablando
-    violet "¿De verad me molestas por eso?"
+    violet "La verdad es que no tengo ganas de discutir esto ahora"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
-    mc "No, bueno no pense que me ibas a responder..."
-    show mc_parado_base b_abiertachica
-    mc "Y no tenia un tema de conversacion pensado"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
-
-    show violet_parada b_hablando c_rbase_pensando with sprite_fast
-    violet "¿Y para que me llamaste si no tenias un tema de conversacion planeado?"
-    show violet_parada b_none c_rbase_base with sprite_fast
-
-    show mc_parado_base b_hablando 
-    mc "Para ver si me respondias"
-    show mc_parado_base b_none
-
-    show violet_parada b_hablando 
-    violet "Raro..."
-    show violet_parada b_none
-
-    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
-    mc "Rara vos, sigo sin entender que te pasa y me vengo esforzando mucho para poder llevarnos como antes"
-    show mc_parado_base b_none
-
-    show violet_parada b_hablando c_rbase_pensando with sprite_fast
-    violet "Si te es mucho esfuerzo entonces dejalo de hacer"
-    show violet_parada b_none c_rbase_base with sprite_fast
-
-    show mc_parado_base b_hablando
-    mc "No, hasta que la situacion no cambie voy a seguir insistiendo"
-    show mc_parado_base b_abiertachica
-    mc "Vas a tener que vivir con eso"
-    show mc_parado_base b_none
-
-    violet "..."
-
-    show mc_parado_base b_hablando
-    mc "¿No vas a decir nada?"
+    # Descruza los brazos: los tomo en la discusion (mas arriba) y sin esto se
+    # los quedaba puestos hasta el final, incluso en los pensamientos de cierre.
+    show mc_parado_base b_hablando c_rbase_base with sprite_normal
+    mc "Bueno, voy a vivir por un largo tiempo en la casa, en algún momento se va a tener que hablar"
     show mc_parado_base b_none
 
     show violet_parada b_hablando
-    violet "No"
+    violet "Adiós"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando
-    mc "Bueno tendre que seguir intentandolo dia a dia"
-    show mc_parado_base b_abiertachica
-    mc "Nos vemos en el proximo intento"
-    show mc_parado_base b_none
-
-    hide mc_parado_base with dissolve
     hide violet_parada with dissolve
 
+    piensa "Bueno, al menos el problema está plantado, es el primer paso a resolverlo"
+    piensa "Será cosa de seguir insistiendo y esperar a que ella esté lista"
+
+    hide mc_parado_base with dissolve
 
     $ completar_quest_actual("violet", quest_id="violet_amor_01")
 

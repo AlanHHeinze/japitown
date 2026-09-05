@@ -354,3 +354,83 @@ translate english violet_quest06b_cierre_c_5b5bd708:
     # violet "[mc_name] Este es el momento en que sin decir nada te vas..."
     violet "[mc_name], this is the moment where you leave without saying a word..."
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_06_b.rpy:71
+translate english violet_quest06b_puerta_130711f0:
+
+    # piensa "Estoy muy nervioso, no menciono nada de lo que pasó el otro día"
+    piensa "I'm really nervous, I won't mention anything about what happened the other day"
+
+# game/script/characters/violet/quests/violet_quest_06_b.rpy:157
+translate english violet_quest06b_puerta_b8cbeaa6:
+
+    # violet "Sabes que nunca me gustó llamar la atención"
+    violet "You know I never liked drawing attention"
+
+# game/script/characters/violet/quests/violet_quest_06_b.rpy:183
+translate english violet_quest06b_puerta_dd4401d9:
+
+    # mc "Bueno, nos costó pero estamos de acuerdo"
+    mc "Well, it took us a while but we agree"
+
+# game/script/characters/violet/quests/violet_quest_06_b.rpy:213
+translate english violet_quest06b_puerta_1854ef9e:
+
+    # piensa "Si fuese un juego para adultos, este es el momento en donde la cosa se descontrolaría"
+    piensa "If this were an adult game, this is the moment where things would get out of hand"
+
+# game/script/characters/violet/quests/violet_quest_06_b.rpy:221
+translate english violet_quest06b_puerta_a1404b02:
+
+    # mc "Sí, está un poco trabado, no te preocupes que lo voy a arreglar"
+    mc "It is a bit stuck, don't worry, I'll fix it"
+
+# game/script/characters/violet/quests/violet_quest_06_b.rpy:226
+translate english violet_quest06b_puerta_85b89fa6:
+
+    # mc "Sí voy a poder"
+    mc "Yes, I can do it"
+
+# game/script/characters/violet/quests/violet_quest_06_b.rpy:234
+translate english violet_quest06b_puerta_5f783da0:
+
+    # piensa "Qué cierre de porquería"
+    piensa "What a piece-of-junk zipper"
+
+# game/script/characters/violet/quests/violet_quest_06_b.rpy:280
+translate english violet_quest06b_cierre_a_edbb0148:
+
+    # mc "Creo que lo trabé más, no lo puedo ni subir ahora"
+    mc "I think I jammed it more, I can't even pull it up now"
+
+# game/script/characters/violet/quests/violet_quest_06_b.rpy:282
+translate english violet_quest06b_cierre_a_c438fa05:
+
+    # violet "Es un problema ese cierre, me costó mucho sacármelo la otra vez"
+    violet "That zipper's a problem, it was really hard to get off last time"
+
+# game/script/characters/violet/quests/violet_quest_06_b.rpy:288
+translate english violet_quest06b_cierre_a_3cfad090:
+
+    # mc "¿Y ahora qué hacemos?"
+    mc "And now what do we do?"
+
+# game/script/characters/violet/quests/violet_quest_06_b.rpy:290
+translate english violet_quest06b_cierre_a_f16b5c6c:
+
+    # violet "Le voy a pedir a Mónica que me lo quite"
+    violet "I'll ask Monica to get it off me"
+
+# game/script/characters/violet/quests/violet_quest_06_b.rpy:294
+translate english violet_quest06b_cierre_a_4ad7bab3:
+
+    # violet "Sí, le voy a decir ahora, antes de que se haga más tarde"
+    violet "Yeah, I'll tell her now, before it gets later"
+
+# game/script/characters/violet/quests/violet_quest_06_b.rpy:332
+translate english violet_quest06b_cierre_c_a9c87c69:
+
+    # violet "[mc_name], este es el momento en que sin decir nada te vas..."
+    violet "[mc_name], this is the moment where you leave without saying a word..."
+

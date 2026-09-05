@@ -39,8 +39,9 @@ translate english strings:
     old "Hablar"
     new "Talk"
 
-    old "Hablar (quest)"
-    new "Talk (quest)"
+    # El botón de la quest 0_a dice "Saludar", que ya tiene su `old` en la
+    # sección de Jasmine, más abajo: un `old` sirve para todo el juego y
+    # repetirlo acá lo dejaría duplicado.
 
     old "Pedir mangas"
     new "Ask for manga"
@@ -95,7 +96,7 @@ translate english strings:
     old "Preguntarle por las fotos"
     new "Ask her about the photos"
 
-    old "¿Puedo hacer algo por vos?"
+    old "¿Puedo hacer algo por ti?"
     new "Can I do something for you?"
 
     # Arco de los favores (04_d3 → 04_d6)
@@ -197,7 +198,7 @@ translate english strings:
     old "No realizar cambios en el navegador"
     new "Make no changes to the browser"
 
-    old "Mantener la configuracion actual"
+    old "Mantener la configuración actual"
     new "Keep the current settings"
 
     old "Cambiar pagina de inicio a SearchMaster"
@@ -223,6 +224,43 @@ translate english strings:
 
     old "Completar instalación e iniciar diagnostico del sistema"
     new "Finish installation and run a system diagnostic"
+
+    # Titulos, descripciones y pie del wizard. No estaban traducidos:
+    # se dibujan desde una variable, asi que hasta ahora ni siquiera las
+    # opciones se traducian (ver renpy.translate_string en el screen).
+
+    old "Paso 1 de 5 — Componentes adicionales"
+    new "Step 1 of 5 — Additional components"
+
+    old "El instalador quiere agregar componentes opcionales."
+    new "The installer wants to add optional components."
+
+    old "Paso 2 de 5 — Navegador predeterminado"
+    new "Step 2 of 5 — Default browser"
+
+    old "El instalador quiere cambiar tu navegador."
+    new "The installer wants to change your browser."
+
+    old "Paso 3 de 5 — Página de inicio"
+    new "Step 3 of 5 — Home page"
+
+    old "El instalador quiere modificar la página de inicio."
+    new "The installer wants to change your home page."
+
+    old "Paso 4 de 5 — Software complementario"
+    new "Step 4 of 5 — Bundled software"
+
+    old "El instalador recomienda software adicional."
+    new "The installer recommends additional software."
+
+    old "Paso 5 de 5 — Finalización"
+    new "Step 5 of 5 — Finishing up"
+
+    old "Último paso antes de completar la instalación."
+    new "Last step before finishing the installation."
+
+    old "Seleccione una opción para continuar"
+    new "Select an option to continue"
 
     # Violet Amor 20 ("Jugando juntos") — primer y ultimo tramo
     old "Algo para jugar"

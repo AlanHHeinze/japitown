@@ -108,3 +108,17 @@ translate english violet_quest05a_puerta_2cf8afc8:
     # violet "Está bien, avisame cuando llegue el pedido."
     violet "Okay, let me know when the order arrives."
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:75
+translate english violet_quest05a_hablar_6499f06d:
+
+    # violet "Está bien, avísame cuando llegue el pedido."
+    violet "Okay, let me know when the order arrives."
+
+# game/script/characters/violet/quests/violet_quest_05_a.rpy:145
+translate english violet_quest05a_puerta_6499f06d:
+
+    # violet "Está bien, avísame cuando llegue el pedido."
+    violet "Okay, let me know when the order arrives."
+

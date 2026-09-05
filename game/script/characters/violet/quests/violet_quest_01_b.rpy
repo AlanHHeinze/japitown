@@ -27,16 +27,18 @@ label usar_mangas_violet:
     $ ocultar_hud()
     window show
 
-    # BG segun horario
-    $ _horarios_bg_vq2n = ["tarde", "tarde", "noche", "noche"]
-    $ _bg_h_vq2n = _horarios_bg_vq2n[horario_actual]
-    scene expression "images/bg/casa/bg_casa_" + _bg_h_vq2n + "_hmc.jpg" with fade
+    # BG segun horario.
+    # El bg lo resuelve el sistema de locaciones, que ya sabe el horario
+    # (y respeta horario_visual_override). Antes se armaba con una lista a
+    # mano que estaba desalineada con la canonica de locationsystem_core.
+    $ _bg_h_vq2n = sistema_locaciones.obtener_locacion("casa_hmc").background
+    scene expression _bg_h_vq2n with fade
 
     # (Mc cuerpo regalo violet ojos abajo boca neutral)
     show mc_parado_base c_rbase_regaloviolet o_abajonm b_none at center with dissolve
 
-    piensa "Me da algo de curiosidad que habra comprado Violet"
-    piensa "Sí sé que le gusta, podría usarlo para mejorar la relación, es un buen plan... y una buena justificacion"
+    piensa "Me da algo de curiosidad qué habrá comprado Violet"
+    piensa "Si sé qué le gusta, podría usarlo para mejorar la relación, es un buen plan... y una buena justificación"
     piensa "Aunque quizás puede que se enoje porque lo abrí"
 
     menu:
@@ -65,7 +67,7 @@ label usar_mangas_violet:
             pause 0.3
             # (Mc cuerpo manga yamete)
             show mc_parado_base c_rbase_mangayamete with sprite_normal
-            piensa "Esto es turbio... "
+            piensa "Esto es turbio..."
             # (Mc cuerpo manga yamete pp)
             show mc_parado_base c_rbase_mangayametepp with sprite_normal
             pause 0.3
@@ -76,7 +78,7 @@ label usar_mangas_violet:
             show mc_parado_base c_rbase_pensando o_arribanm b_seria with sprite_normal
             piensa "Ahora sí sé que si Violet se entera de que revisé sus cosas va a ser un problema"
             piensa "Puedo fingir que no vi nada o usar lo que vi a mi favor"
-            piensa "Dependera de como reaccione cuando le de sus cosas"
+            piensa "Dependerá de cómo reaccione cuando le dé sus cosas"
 
             hide mc_parado_base with dissolve
             window hide
@@ -143,7 +145,7 @@ label dar_paquete_quest02_violet_rechaza:
 
     # (Violet boca hablando chica)
     show violet_parada b_hablandochica
-    violet "¿Me lo podras llevar después a mi habitación?"
+    violet "¿Me lo podrás llevar después a mi habitación?"
     # (Violet boca neutral)
     show violet_parada b_none
 
@@ -178,7 +180,7 @@ label dar_paquete_quest02_violet_a:
     pause 0.5
     # (Mc boca hablando)
     show mc_parado_base b_hablando
-    mc "Violet aquí esta tu paquete"
+    mc "Violet, aquí está tu paquete"
     # (Mc boca neutral)
     show mc_parado_base b_none
 
@@ -218,14 +220,14 @@ label dar_paquete_quest02_violet_a:
     show violet_parada b_none o_none
 
     # (Mc boca hablando cuerpo asustado)
-    show mc_parado_base b_hablando c_rbase_asustado with sprite_fast
+    show mc_parado_base b_hablando c_rbase_asustado with sprite_normal
     mc "No, solo vi que en la etiqueta decía MundoMangas, así que supuse que eran tuyos"
     # (Mc boca neutral cuerpo base)
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     # (Violet boca hablando chica)
     show violet_parada b_hablandochica
-    violet "Gracias por traermelo"
+    violet "Gracias por traérmelo"
     # (Violet boca neutral)
     show violet_parada b_none
 
@@ -240,7 +242,7 @@ label dar_paquete_quest02_violet_a:
     hide violet_parada with dissolve
 
     # (Mc cuerpo pensando)
-    show mc_parado_base c_rbase_pensando with sprite_fast
+    show mc_parado_base c_rbase_pensando with sprite_normal
     piensa "Fue buena idea no abrirlo parece"
 
     hide mc_parado_base with dissolve
@@ -265,7 +267,7 @@ label dar_paquete_quest02_violet_b:
     pause 0.5
     # (Mc boca hablando)
     show mc_parado_base b_hablando
-    mc "Violet aquí esta tu paquete"
+    mc "Violet, aquí está tu paquete"
     # (Mc boca neutral)
     show mc_parado_base b_none
 
@@ -320,8 +322,8 @@ label dar_paquete_quest02_violet_b:
     show violet_parada b_none o_base
 
     # (Mc boca hablando cuerpo avergonzado)
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
-    mc "Lo dejaron en mi habitación y no sabia que era"
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "Lo dejaron en mi habitación y no sabía qué era"
     # (Mc boca abierta chica)
     show mc_parado_base b_abiertachica
     mc "Quizás era algo que me había mandado mi papá"
@@ -389,7 +391,7 @@ label dar_paquete_quest02_violet_b1:
     hide violet_parada with dissolve
 
     # (Mc cuerpo pensando)
-    show mc_parado_base c_rbase_pensando with sprite_fast
+    show mc_parado_base c_rbase_pensando with sprite_normal
     piensa "Ahora Violet va a estar con la duda de si vi o no sus cosas, seguramente esté a la defensiva"
     piensa "Tengo que ver de aprovechar eso a mi favor de alguna manera"
 
@@ -408,10 +410,10 @@ label dar_paquete_quest02_violet_b2:
     show mc_parado_base b_hablando
     mc "Miré que había unos mangas y pensé que podía ser mío"
     # (Mc boca abierta chica cuerpo pensando ojos arriba)
-    show mc_parado_base b_abiertachica c_rbase_pensando o_arribanm with sprite_fast
+    show mc_parado_base b_abiertachica c_rbase_pensando o_arribanm with sprite_normal
     mc "Luego vi uno que se llamaba algo Yamette Oni-chan y supe que mío no era"
     # (Mc boca neutral cuerpo base ojos base)
-    show mc_parado_base b_none c_rbase_base o_base with sprite_fast
+    show mc_parado_base b_none c_rbase_base o_base with sprite_normal
 
     # (Violet boca hablando ojos abiertos)
     show violet_parada b_hablando o_abiertos
@@ -439,32 +441,32 @@ label dar_paquete_quest02_violet_b2:
 
 
     # (Mc boca hablando cuerpo pensando)
-    show mc_parado_base b_hablando c_rbase_pensando with sprite_fast
-    mc "Creo que la línea sería algo como te odio oni-chan "
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "Creo que la línea sería algo como te odio oni-chan"
     # (Mc boca neutral cuerpo base)
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     # (Violet ojos enojados cuerpo enojada)
-    show violet_parada o_enojados ot_none 
-    violet "Creo que la linea es voy a matarte y a enterrarte"
+    show violet_parada o_enojados ot_none
+    violet "Creo que la línea es voy a matarte y a enterrarte"
     # (Violet ojos base boca neutral)
     show violet_parada o_base b_none
 
     # (Mc boca hablando)
     show mc_parado_base b_hablando
-    mc "No seria un buen final para la novela..."
+    mc "No sería un buen final para la novela..."
     # (Mc boca neutral)
     show mc_parado_base b_none
 
     # (Violet boca hablando cuerpo brazos cruzados)
-    show violet_parada b_hablando 
-    violet "Me canse, me voy"
+    show violet_parada b_hablando
+    violet "Me cansé, me voy"
     # (Violet boca neutral)
     show violet_parada b_none
 
     # (Mc boca hablando cuerpo cuestionando)
-    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_fast
-    mc "Espera... No voy a molestarte con esto, pero quiero que hagas algo por mi"
+    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_normal
+    mc "Espera... No voy a molestarte con esto, pero quiero que hagas algo por mí"
     # (Mc boca neutral cuerpo base)
     show mc_parado_base b_none c_rbase_base
 
@@ -481,7 +483,7 @@ label dar_paquete_quest02_violet_b2:
     show mc_parado_base b_none
 
     # (Violet ojos abiertos cuerpo sorprendida)
-    show violet_parada o_abiertos c_rbase_sorprendido with sprite_fast
+    show violet_parada o_abiertos
     pause 0.5
     # (Violet boca hablando)
     show violet_parada b_hablando
@@ -497,7 +499,7 @@ label dar_paquete_quest02_violet_b2:
 
     # (Violet boca hablando)
     show violet_parada b_hablando
-    violet "¿No me vas a molestar más verdad?"
+    violet "¿No me vas a molestar más, verdad?"
     # (Violet boca neutral)
     show violet_parada b_none
 
@@ -509,7 +511,7 @@ label dar_paquete_quest02_violet_b2:
 
     # (Violet boca hablando sonrojo)
     show violet_parada b_hablando ot_avergonzada
-    mc "Oni... "
+    mc "Oni..."
     # (Violet boca hablando chica)
     show violet_parada b_hablandochica
     violet "No puedo decirte eso, me voy"
@@ -528,9 +530,9 @@ label dar_paquete_quest02_violet_b2:
 
     # (Mc ojos felices cerrados)
     show mc_parado_base o_felicescerrados
-    piensa "Jajaja eso fue divertido"
+    piensa "Jajaja, eso fue divertido"
     # (Mc cuerpo pensando ojos arriba)
-    show mc_parado_base c_rbase_pensando o_arribanm with sprite_fast
+    show mc_parado_base c_rbase_pensando o_arribanm with sprite_normal
     piensa "Voy entendiendo más a Violet, si la presiono se vuelve más fácil de tratar"
 
     hide mc_parado_base with dissolve

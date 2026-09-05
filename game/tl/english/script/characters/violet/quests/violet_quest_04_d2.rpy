@@ -60,3 +60,41 @@ translate english violet_quest04d2_hablar_0600838a:
     # violet "Lo voy a tener en cuenta, gracias"
     violet "I'll keep it in mind, thanks"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_04_d2.rpy:56
+translate english violet_quest04d2_hablar_1c6cca9f:
+
+    # violet "¿Qué pasa?"
+    violet "What is it?"
+
+# game/script/characters/violet/quests/violet_quest_04_d2.rpy:60
+translate english violet_quest04d2_hablar_f1c2d70d:
+
+    # mc "Nada, solo quería saber cómo estás"
+    mc "Nothing, I just wanted to know how you're doing"
+
+# game/script/characters/violet/quests/violet_quest_04_d2.rpy:72
+translate english violet_quest04d2_hablar_c84a4d76:
+
+    # violet "¿Cómo qué?"
+    violet "Like what?"
+
+# game/script/characters/violet/quests/violet_quest_04_d2.rpy:76
+translate english violet_quest04d2_hablar_996e4ef4:
+
+    # mc "No sé, solo preguntaba, capaz había algo con lo que te podía ayudar o hacer por ti"
+    mc "I don't know, just asking. Maybe there was something I could help you with or do for you"
+
+# game/script/characters/violet/quests/violet_quest_04_d2.rpy:80
+translate english violet_quest04d2_hablar_967d4cca:
+
+    # violet "¿Qué es lo que quieres?"
+    violet "What is it that you want?"
+
+# game/script/characters/violet/quests/violet_quest_04_d2.rpy:84
+translate english violet_quest04d2_hablar_cf5da14c:
+
+    # mc "De verdad nada, si en algún momento necesitas algo, no dudes en pedírmelo"
+    mc "Really, nothing. If you ever need anything, don't hesitate to ask me"
+

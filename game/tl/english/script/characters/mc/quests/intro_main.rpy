@@ -248,21 +248,104 @@ translate english intro_llegada_casa_49d728bf:
 
 translate english strings:
 
-    # game/script/characters/mc/quests/intro_main.rpy:107
-    old "Este juego contiene material explícito no apto para menores de 18 años. Todos los personajes, nombres y eventos retratados en esta obra son completamente ficticios. Cualquier parecido con personas reales, vivas o muertas, es pura coincidencia.\n\nTodos los personajes involucrados en escenas de contenido sexual tienen 18 años o más al momento de los hechos representados"
-    new "This game contains explicit material not suitable for minors under 18 years of age. All characters, names and events portrayed in this work are entirely fictional. Any resemblance to real persons, living or dead, is purely coincidental.\n\nAll characters involved in scenes of a sexual nature are 18 years of age or older at the time of the depicted events."
-
-    # disclaimer_ficcion — antes la screen tenía las dos versiones escritas a
-    # mano y elegía con `if _preferences.language == "spanish"`, que nunca daba
-    # verdadero (en el idioma base `language` vale None), así que el aviso salía
-    # en inglés en los dos idiomas.
-    old "AVISO LEGAL"
-    new "LEGAL NOTICE"
-
-    old "Este juego es una obra de ficción. Todos los personajes, situaciones, eventos y diálogos presentados son completamente imaginarios y creados con fines de entretenimiento. Cualquier similitud con personas reales, vivas o fallecidas, es pura coincidencia.\n\nTodos los personajes involucrados en cualquier escena de contenido explícito o romántico son mayores de 18 años. Los desarrolladores no respaldan ni promueven ningún contenido que tenga lugar en este juego como aceptable en la realidad."
-    new "This game is a work of fiction. All characters, situations, events, and dialogues presented are completely imaginary and created for entertainment purposes. Any resemblance to real persons, living or deceased, is purely coincidental.\n\nAll characters involved in any scene of explicit or romantic content are 18 years of age or older. The developers do not endorse or promote any content that takes place in this game as acceptable in reality."
+    # advertencia_adultos — el aviso UNICO del arranque. El texto junta lo
+    # que antes estaba partido entre esta pantalla y disclaimer_ficcion.
+    old "Este juego es una obra de ficción. Todos los personajes, nombres, situaciones, eventos y diálogos presentados son completamente imaginarios y fueron creados con fines de entretenimiento. Cualquier parecido con personas reales, vivas o fallecidas, es pura coincidencia.\n\nTodos los personajes involucrados en cualquier escena de contenido explícito o romántico tienen 18 años o más al momento de los hechos representados. Los desarrolladores no respaldan ni promueven ningún contenido que tenga lugar en este juego como aceptable en la realidad.\n\nEste juego contiene material explícito y es exclusivo para mayores de 18 años."
+    new "This game is a work of fiction. All characters, names, situations, events and dialogue presented are entirely imaginary and were created for entertainment purposes. Any resemblance to real persons, living or dead, is purely coincidental.\n\nAll characters involved in any scene of explicit or romantic content are 18 years of age or older at the time of the depicted events. The developers do not endorse or promote any content that takes place in this game as acceptable in reality.\n\nThis game contains explicit material and is intended exclusively for adults aged 18 and over."
 
     # game/script/characters/mc/quests/intro_main.rpy:167
     old "La misma presenta el comienzo de la historia, presentacion de personajes iniciales y incluye el tutorial de las funciones mas basicas.\n\nSi es tu primera vez en Japitonw te recomendamos jugar la introduccion "
     new "It presents the beginning of the story, the introduction of the initial characters, and includes the tutorial for the most basic features.\n\nIf this is your first time in Japitown, we recommend playing the introduction"
+
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/mc/quests/intro_main.rpy:359
+translate english intro_conversacion_padre_c26c97ac:
+
+    # padre "Jajaja, vamos, no seas así, vas a extrañar a tu padre"
+    padre "Ha, come on. Don't be like that — you're going to miss your old man."
+
+# game/script/characters/mc/quests/intro_main.rpy:363
+translate english intro_conversacion_padre_8e31894a:
+
+    # mc "Sí, sí, te voy a extrañar un montón"
+    mc "Yeah, yeah. I'll miss you terribly."
+
+# game/script/characters/mc/quests/intro_main.rpy:367
+translate english intro_conversacion_padre_e53675b6:
+
+    # padre "Jajaja, lo sabía"
+    padre "Ha! I knew it."
+
+# game/script/characters/mc/quests/intro_main.rpy:378
+translate english intro_conversacion_padre_97119b6f:
+
+    # terminal_micros "Los pasajeros del vuelo 91218 con destino a Argentonia, por favor, acercarse a la puerta número 4"
+    terminal_micros "Passengers on flight 91218 bound for Argentonia, please proceed to gate number 4."
+
+# game/script/characters/mc/quests/intro_main.rpy:381
+translate english intro_conversacion_padre_a84773c4:
+
+    # padre "Bueno, ese es mi vuelo. ¿Estás seguro de que no quieres venir?"
+    padre "Well, that's my flight. Are you sure you don't want to come?"
+
+# game/script/characters/mc/quests/intro_main.rpy:385
+translate english intro_conversacion_padre_c449fc7e:
+
+    # mc "Te seguí siempre... pero ir a Argentonia es una locura"
+    mc "I always followed you... but going to Argentonia, it's crazy."
+
+# game/script/characters/mc/quests/intro_main.rpy:403
+translate english intro_conversacion_padre_293a1f2f:
+
+    # padre "Bueno, ya terminé de arreglar todo con Mónica para que te reciba en su casa. No vayas a causarles muchos problemas"
+    padre "Well, I've already arranged everything with Mónica so she can take you in, just don't cause them too much trouble."
+
+# game/script/characters/mc/quests/intro_main.rpy:479
+translate english intro_llegada_casa_f5746ff1:
+
+    # piensa "Qué nostalgia estar aquí de nuevo. Pasaron muchos años..."
+    piensa "So nostalgic to be here again, it's been many years..."
+
+# game/script/characters/mc/quests/intro_main.rpy:483
+translate english intro_llegada_casa_34e110a8:
+
+    # piensa "En ese momento Japitown era solo una pequeña ciudad. Pasar de la metrópoli a aquí fue horrible"
+    piensa "At that time Japitown was just a small town, moving from the metropolis to here was horrible."
+
+# game/script/characters/mc/quests/intro_main.rpy:503
+translate english intro_llegada_casa_c2731ac1:
+
+    # monica "Bienvenido [mc_name], ¿cómo estuvo el viaje?"
+    monica "Welcome home, [mc_name]. How was the trip?"
+
+# game/script/characters/mc/quests/intro_main.rpy:507
+translate english intro_llegada_casa_43399540:
+
+    # mc "Bien, pero agotador, fueron muchas horas arriba del micro"
+    mc "Good but exhausting, it was many hours on the bus."
+
+# game/script/characters/mc/quests/intro_main.rpy:519
+translate english intro_llegada_casa_c426b574:
+
+    # monica "Bueno, tu habitación está casi lista, solo falta lo que enviaste en las cajas. Está todo en el [colorear_locacion('Garage')]"
+    monica "Well, your room is almost ready, only what you sent in the boxes is left; it's all in the [colorear_locacion('Garage')]"
+
+# game/script/characters/mc/quests/intro_main.rpy:568
+translate english intro_llegada_casa_70f5473f:
+
+    # monica "Voy a hablar con ella luego"
+    monica "I'll talk to her later."
+
+# game/script/characters/mc/quests/intro_main.rpy:572
+translate english intro_llegada_casa_62b2505e:
+
+    # mc "No te preocupes, Mónica, después yo hablo con ella"
+    mc "It's fine, Monica. I'll talk to her myself."
+
+# game/script/characters/mc/quests/intro_main.rpy:578
+translate english intro_llegada_casa_3f0a85dc:
+
+    # monica "Pero ahora encárgate tranquilo de tus cosas, Jasmine, dejemos que [mc_name] se acomode. Cualquier cosa me avisas"
+    monica "But for now take care of your things calmly. Jasmine, let's let [mc_name] settle in. Let me know if you need anything"
 

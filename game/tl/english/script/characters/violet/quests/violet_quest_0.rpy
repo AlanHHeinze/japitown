@@ -417,7 +417,7 @@ translate english quest_violet_0_puerta_94d52ad7:
 translate english strings:
 
     # game/script/characters/violet/quests/violet_quest_0.rpy:98
-    old "Quizas darle su espacio funcione"
+    old "Quizás darle su espacio funcione"
     new "Maybe giving her space will work"
 
     # game/script/characters/violet/quests/violet_quest_0.rpy:101

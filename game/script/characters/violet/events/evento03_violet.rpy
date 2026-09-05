@@ -119,7 +119,7 @@ label evento03_violet:
 
     # MC habla
     show mc_espalda_base brazoscruzados
-    mc "Violet, Monica pidió que nos ocupemos hoy de la limpieza, mientras ella estaba fuera con Jasmine."
+    mc "Violet, Mónica pidió que nos ocupemos hoy de la limpieza, mientras ella estaba fuera con Jasmine."
 
     # MC habla
     piensa "¿Se volvió a dormir?"
@@ -140,7 +140,7 @@ label evento03_violet:
     show mc_espalda_base golpeandoruido with sprite_normal
     "TOC TOC TOC"
     pause 0.5
-    mc "DESPERTATEEEEE"
+    mc "DESPIERTATEEEEE"
 
     # Violet habla
     violet "¿Qué pasa?"
@@ -187,7 +187,7 @@ label evento03_violet:
     show mc_parado_base b_none
     pause 0.3
     show mc_parado_base b_hablando
-    mc "Encargáte de limpiar el pasillo y el baño, yo voy a hacer el living y la cocina"
+    mc "Encárgate de limpiar el pasillo y el baño, yo voy a hacer el living y la cocina"
     show mc_parado_base b_none
     pause 0.3
 
@@ -210,7 +210,7 @@ label evento03_violet:
 
     # MC habla
     show mc_parado_base b_hablando
-    mc "Cuánto antes terminemos, antes te puedes dormir"
+    mc "Cuanto antes terminemos, antes te puedes dormir"
     show mc_parado_base b_none
 
     # MC habla
@@ -351,7 +351,7 @@ label violet_quest2_escena_pasillo:
 
     # MC habla
     show mc_parado_base b_hablando
-    mc "Hay que apurarnos Violet, tenemos que terminar antes que vuelvan las chicas"
+    mc "Hay que apurarnos, Violet, tenemos que terminar antes de que vuelvan las chicas"
     show mc_parado_base b_none
     pause 0.3
 
@@ -441,7 +441,7 @@ label violet_quest2_limpieza_pasillo:
     scene quest2_violet_limpiandopasilloarriba with fade
 
     piensa "Estoy agotado ya, Violet debería haber terminado"
-    piensa "Voy a ver como esta"
+    piensa "Voy a ver cómo está"
 
     scene black with fade
     pause 1.0
@@ -506,10 +506,10 @@ label violet_quest2_escena_banio:
     scene quest2_violet_baño1
 
     mc "¿Violet?"
-    violet "¿Si?"
+    violet "¿Sí?"
     mc "¿Qué haces?"
     violet "Estoy limpiando el baño"
-    mc "¿Está limpiando la alfombra del baño con un trapo?"
+    mc "¿Estás limpiando la alfombra del baño con un trapo?"
     violet "Estoy secando, se me cayó agua"
     piensa "Tiene medio trasero al aire..."
     violet "¿Necesitas algo?"
@@ -539,21 +539,21 @@ label violet_quest2_escena_banio:
 
     # Mc habla
     show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
-    mc "No, ¿Por qué?"
+    mc "No, ¿por qué?"
     show mc_parado_base b_none
 
     # Violet habla
     show violet_parada b_hablandochica c_pijama_brazoscruzados with sprite_normal
-    violet "Me estas mirando sin decir nada"
+    violet "Me estás mirando sin decir nada"
     show violet_parada b_sonrisapequeña
 
     # Mc piensa
-    piensa "Mierda, ¿Se dio cuenta de que la estaba mirando cuando estaba agachada?"
+    piensa "Mierda, ¿se dio cuenta de que la estaba mirando cuando estaba agachada?"
     piensa "Tengo que decir algo"
 
     # Mc habla
     show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
-    mc "Estaba mirando como limpiabas"
+    mc "Estaba mirando cómo limpiabas"
     show mc_parado_base b_none
 
     # Violet habla
@@ -568,7 +568,7 @@ label violet_quest2_escena_banio:
 
     # Violet habla
     show violet_parada b_hablandochica o_arribanm
-    violet "¿En que?"
+    violet "¿En qué?"
     show violet_parada b_sonrisapequeña o_base
 
     # =====================================================================
@@ -598,7 +598,7 @@ label violet_quest2_opcion_a:
     show violet_parada b_sonrisapequeña
 
     show mc_parado_base b_hablando
-    mc "¿A que yo este aquí?"
+    mc "¿A que yo esté aquí?"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
@@ -678,7 +678,7 @@ label violet_quest2_opcion_b:
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Si o para que nos fueramos a dormir"
+    mc "Sí o para que nos fuéramos a dormir"
     show mc_parado_base b_none
     pause 0.3
     show mc_parado_base b_hablando
@@ -690,7 +690,7 @@ label violet_quest2_opcion_b:
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Si o para que te bañes"
+    mc "Sí o para que te bañes"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica o_enojados
@@ -706,7 +706,7 @@ label violet_quest2_opcion_b:
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "No, en todos mis recuerdos nos llevabamos muy bien"
+    mc "No, en todos mis recuerdos nos llevábamos muy bien"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
@@ -795,7 +795,7 @@ label violet_quest2_opcion_c:
     show violet_parada b_none
     pause 0.3
     show violet_parada b_hablando
-    violet "Ahh si por qué eres un pervertido"
+    violet "Ahh, sí, porque eres un pervertido"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
@@ -861,7 +861,7 @@ label ev03_accion_limpiar_living:
     window show
 
     scene quest2_violet_limpiando_chimenea with fade
-    piensa "No se por qué me puse a limpiar esto..."
+    piensa "No sé por qué me puse a limpiar esto..."
     $ vq2_chimenea_pendiente = False
 
     scene quest2_violet_limpiando_escalera with fade
@@ -873,7 +873,7 @@ label ev03_accion_limpiar_living:
     $ vq2_sillon_pendiente = False
 
     scene quest2_violet_living_mañana with fade
-    piensa "Listo el living. Voy a ver como va Violet."
+    piensa "Listo el Living. Voy a ver cómo va Violet."
 
     $ activar_restriccion(
         locaciones_permitidas=["casa_pasilloarriba"],
@@ -922,7 +922,7 @@ label ev03_accion_buscar_cocina:
     window show
 
     scene quest2_violet_limpiando_alacena with fade
-    piensa "Aquí esta"
+    piensa "Aquí está"
 
     $ store.inventario["elementos_limpieza"] = store.inventario.get("elementos_limpieza", 0) + 1
 

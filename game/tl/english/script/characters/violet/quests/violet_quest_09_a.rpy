@@ -193,3 +193,61 @@ translate english accion_violet_toalla_b518df4b:
 
     # piensa "Violet me pidió [_pedido_t_txt]."
     piensa "Violet asked me for [_pedido_t_txt]."
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_09_a.rpy:141
+translate english violet_quest09a_inicio_b42b5fad:
+
+    # piensa "Me respondieron de la tienda"
+    piensa "The store got back to me"
+
+# game/script/characters/violet/quests/violet_quest_09_a.rpy:142
+translate english violet_quest09a_inicio_49b36bf4:
+
+    # piensa "Van a realizar el cambio, cuando vuelvan a tener stock se van a comunicar"
+    piensa "They're going to do the exchange, they'll get in touch when they have stock again"
+
+# game/script/characters/violet/quests/violet_quest_09_a.rpy:147
+translate english violet_quest09a_inicio_aa133e9b:
+
+    # piensa "Tengo que buscar a Violet para avisarle"
+    piensa "I have to find Violet to let her know"
+
+# game/script/characters/violet/quests/violet_quest_09_a.rpy:155
+translate english violet_quest09a_inicio_1dd2f7d9:
+
+    # tutorial "Este tipo de misiones solo estarán disponibles durante un tiempo, el cierre de la misma cambiará según tus acciones"
+    tutorial "This kind of quest is only available for a limited time, and how it ends will change depending on your actions"
+
+# game/script/characters/violet/quests/violet_quest_09_a.rpy:170
+translate english violet_quest09a_manejo_puerta_ce8da83d:
+
+    # piensa "Mónica pidió que no la molestemos"
+    piensa "Monica asked us not to bother her"
+
+# game/script/characters/violet/quests/violet_quest_09_a.rpy:300
+translate english violet_quest09a_entregar_directo_a82b63ad:
+
+    # mc "Ya le avisé a Mónica, dijo que en un momento va."
+    mc "I already told Monica, she said she'll go in a moment."
+
+# game/script/characters/violet/quests/violet_quest_09_a.rpy:338
+translate english violet_quest09a_monica_llamar_b6162b2b:
+
+    # mc "Mónica, Violet te llama."
+    mc "Monica, Violet's calling you."
+
+# game/script/characters/violet/quests/violet_quest_09_a.rpy:427
+translate english accion_violet_toalla_be374fdf:
+
+    # piensa "Ya tengo la toalla, se la llevo"
+    piensa "I've got the towel, I'll take it to her"
+
+# TODO: Translation updated at 2026-09-05 13:16
+
+# game/script/characters/violet/quests/violet_quest_09_a.rpy:388
+translate english violet_quest09a_interaccion_b60f0c2c:
+
+    # violet "[_donde_vq9_txt]."
+    violet "[_donde_vq9_txt]."
+

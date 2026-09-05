@@ -102,3 +102,23 @@ translate english quest_monica_questprincipal_0_b_60b2dec6:
     # tutorial "Prueba [colorear_item('Notebook de Monica')] desde el inventario cuando estés en [colorear_locacion('Tu Habitacion')]"
     tutorial "Try [colorear_item('Monica’s Laptop')] from the inventory when you're in [colorear_locacion('Your Room')]"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/monica/quests/monica_quest_0_b.rpy:94
+translate english quest_monica_questprincipal_0_b_0a2d272c:
+
+    # mc "Mónica, ¿está todo bien? Te escuché desde arriba"
+    mc "Monica, is everything okay? I heard you from upstairs"
+
+# game/script/characters/monica/quests/monica_quest_0_b.rpy:159
+translate english quest_monica_questprincipal_0_b_7d8f302f:
+
+    # tutorial "Los objetos que consigues se guardan en tu inventario (el icono de la mochila en la parte superior derecha de la pantalla)"
+    tutorial "The items you get are stored in your inventory (the backpack icon at the top right of the screen)"
+
+# game/script/characters/monica/quests/monica_quest_0_b.rpy:160
+translate english quest_monica_questprincipal_0_b_554618fb:
+
+    # tutorial "Para usar uno, solo tendrás que hacer click sobre su icono"
+    tutorial "To use one, you just have to click on its icon"
+

@@ -84,3 +84,23 @@ translate english quest_jasmine_questprincipal_0_c_20531535:
     # mc "Perfecto. Te ves muy bien."
     mc "Perfect. You look great."
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/jasmine/quests/jasmine_quest_0_c.rpy:39
+translate english quest_jasmine_questprincipal_0_c_aa8e5174:
+
+    # jasmine "Mira cómo me queda"
+    jasmine "Look how it fits."
+
+# game/script/characters/jasmine/quests/jasmine_quest_0_c.rpy:49
+translate english quest_jasmine_questprincipal_0_c_2cfbaf98:
+
+    # jasmine "Es súper elástica"
+    jasmine "It's super stretchy."
+
+# game/script/characters/jasmine/quests/jasmine_quest_0_c.rpy:97
+translate english quest_jasmine_questprincipal_0_c_5e2b15f0:
+
+    # jasmine "Ves lo que te digo"
+    jasmine "See what I mean?"
+

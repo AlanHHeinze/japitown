@@ -303,25 +303,34 @@ layeredimage violet_mojada:
 
 
 ################################################################################
-## Layeredimage: violet_tanga_qd10
+## Layeredimage: violet_tanga
 ################################################################################
 ## Violet en ropa interior. Antes era `c_tanga_base`, una sección del grupo
 ## `cuerpo` de `violet_parada`; se separó a layeredimage propio para que su arte
 ## no tenga que encajar con los atributos de la ropa de siempre.
 ##
-## El sufijo `_qd10` es a propósito: por ahora este arte se usa SOLO en la quest
-## de deseo 10. Si más adelante aparece en otras escenas, ahí sí conviene
-## renombrarlo a algo genérico y actualizar los `show`.
+## Se llamaba `violet_tanga_qd10` mientras el arte existía solo para la quest de
+## deseo 10. Con la de deseo 30 pasó a usarse en dos escenas, así que perdió el
+## sufijo — el nombre del archivo de cada asset sí lo conserva, y sirve para
+## saber de qué quest salió cada dibujo.
 ##
 ## NO tiene grupo de ojos: el arte del cuerpo ya los trae dibujados. Solo la boca
 ## va aparte, y su grupo se declara DESPUÉS del cuerpo para que se dibuje encima
 ## (en un layeredimage el orden de los grupos es el orden de las capas). Por lo
 ## mismo `otros` va ÚLTIMO: el rubor tiene que quedar sobre todas las demás.
 ##
-## Los seis assets son de 680x1080, el mismo lienzo, así que las capas alinean
+## ⚠️ DOS GRUPOS DE BOCA, y hay que usar el que corresponde al cuerpo:
+##   - cuerpos de la deseo 10 (c_tanga, c_tomando)          -> grupo `boca`   (b_*)
+##   - cuerpos de la deseo 30 (c_sacandoshort*, c_paradobase) -> grupo `boca_qd30` (b30_*)
+## Son archivos distintos porque las dos poses tienen la cabeza en otro lugar: la
+## boca `b_hablando` sobre un cuerpo de la 30 cae al costado de la cara. Los dos
+## grupos arrancan en Null, así que mientras se use uno el otro no dibuja nada y
+## no hay que apagarlo a mano.
+##
+## Los assets son todos de 680x1080, el mismo lienzo, así que las capas alinean
 ## sin offsets.
 
-layeredimage violet_tanga_qd10:
+layeredimage violet_tanga:
 
     group cuerpo:
         attribute c_tanga default:
@@ -329,7 +338,22 @@ layeredimage violet_tanga_qd10:
         attribute c_tomando:
             "images/characters/casa/violet/violet_tanga_qd10_cuerpotomando.webp"
 
+        # Los cuatro cuadros de la deseo 30, en orden: se baja el short en tres
+        # pasos y termina de brazos cruzados ya sin él. Van en el mismo grupo que
+        # los de arriba porque son excluyentes entre sí — mostrar uno apaga el
+        # anterior y la secuencia avanza sola.
+        attribute c_sacandoshort:
+            "images/characters/casa/violet/violet_tanga_qd30_cuerpo_sacandoshort.webp"
+        attribute c_sacandoshort2:
+            "images/characters/casa/violet/violet_tanga_qd30_cuerpo_sacandoshort2.webp"
+        attribute c_sacandoshort3:
+            "images/characters/casa/violet/violet_tanga_qd30_cuerpo_sacandoshort3.webp"
+        attribute c_paradobase:
+            "images/characters/casa/violet/violet_tanga_qd30_cuerpo_paradobase.webp"
+
     # Después del cuerpo = encima del cuerpo. El default es Null: boca cerrada.
+    #
+    # Boca para los cuerpos de la DESEO 10 (c_tanga, c_tomando).
     group boca:
         attribute b_none default:
             Null()
@@ -339,6 +363,16 @@ layeredimage violet_tanga_qd10:
             "images/characters/casa/violet/violet_tanga_qd10_bocahablandochica.webp"
         attribute b_sonrisa:
             "images/characters/casa/violet/violet_tanga_qd10_bocasonrisa.webp"
+
+    # Boca para los cuerpos de la DESEO 30 (c_sacandoshort*, c_paradobase).
+    # No hay `b30_sonrisa`: ese cuadro solo existe dibujado para la pose de la 10.
+    group boca_qd30:
+        attribute b30_none default:
+            Null()
+        attribute b30_hablando:
+            "images/characters/casa/violet/violet_tanga_qd30_boca_hablando.webp"
+        attribute b30_hablandochica:
+            "images/characters/casa/violet/violet_tanga_qd30_boca_hablandochica.webp"
 
     # Otros (efectos adicionales). Último grupo = capa de más arriba.
     group otros:
@@ -564,6 +598,14 @@ layeredimage violet_q30a:
             "images/characters/casa/violet/violet_parada_cuerpo_jean_bajando4.webp"
         attribute c_jean_bajando5:
             "images/characters/casa/violet/violet_parada_cuerpo_jean_bajando5.webp"
+        # Siguen a bajando5: con el jean ya abajo, se toca. Los usa la ventaja
+        # de Ropa Nueva (ventajas/ropanueva/rn_jean.rpy), no la quest de amor 30.
+        attribute c_jean_btocando1:
+            "images/characters/casa/violet/violet_parada_cuerpo_jean_btocando1.webp"
+        attribute c_jean_btocando2:
+            "images/characters/casa/violet/violet_parada_cuerpo_jean_btocando2.webp"
+        attribute c_jean_btocando3:
+            "images/characters/casa/violet/violet_parada_cuerpo_jean_btocando3.webp"
         attribute c_jean_tocando1:
             "images/characters/casa/violet/violet_parada_cuerpo_jean_tocando1.webp"
         attribute c_jean_tocando2:

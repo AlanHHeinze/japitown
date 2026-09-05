@@ -47,7 +47,7 @@ translate english strings:
     old "Mensaje de Carl"
     new "Carl's Message"
 
-    old "Monica enojada"
+    old "Mónica enojada"
     new "Angry Monica"
 
     old "Reencuentro"

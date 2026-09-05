@@ -186,7 +186,7 @@ init 5 python:
     # acordarse de agregarlo, solo de destrabar _jn_pocketboy_jugado().
     registrar_juego_nuevo(
         "pocketboy",
-        "Todavia tengo por ahi la Portatil Boy, si la encontramos podriamos jugar",
+        "Todavía tengo por ahí la Portátil Boy, si la encontramos podríamos jugar",
         _jn_pocketboy_jugado,
     )
 
@@ -217,8 +217,8 @@ label jn_pocketboy_pasillo:
     # CONTENIDO — Violet habla SIN sprite: esta arriba, en el altillo
     # =========================================================================
 
-    violet "[mc_name] subi a ayudarme por favor"
-    violet "Hay un monton de cajas, no voy a terminar mas"
+    violet "[mc_name], sube a ayudarme por favor"
+    violet "Hay un montón de cajas, no voy a terminar más"
 
     # (Mc ojos arriba)
     show mc_parado_base o_arribanm b_hablando
@@ -277,17 +277,17 @@ label jn_pocketboy_altillo:
         xpos JNPB_ALTILLO_POS[0]
         ypos JNPB_ALTILLO_POS[1]
 
-    violet "No te quedes ahi mirando y empeza a buscar"
+    violet "No te quedes ahí mirando y empieza a buscar"
 
     mc "No te estaba mirando"
 
-    violet "... no dije que me estes mirando a mi, dije que dejes de mirar"
+    violet "... no dije que me estés mirando a mí, dije que dejes de mirar"
 
-    mc "Bueno, ¿tenes idea por donde puede estar?"
+    mc "Bueno, ¿tienes idea por dónde puede estar?"
 
-    violet "¿No te parece que si tendria idea no estaria hace una hora revisando cajas?"
+    violet "¿No te parece que si tendría idea no estaría hace una hora revisando cajas?"
 
-    mc "Buen punto, habra que revisar todo"
+    mc "Buen punto, habrá que revisar todo"
 
 
     # =========================================================================
@@ -347,16 +347,16 @@ label jn_pocketboy_molestar:
     # que un valor inesperado (un save viejo con el contador en otra cosa) caiga
     # igual en una linea valida en vez de saltearse el dialogo.
     if jnpb_clicks_violet == 1:
-        violet "Aca estoy buscando yo, busca por otro lado"
+        violet "Acá estoy buscando yo, busca por otro lado"
 
     elif jnpb_clicks_violet == 2:
-        violet "No hay espacio para los dos aca"
+        violet "No hay espacio para los dos acá"
 
     elif jnpb_clicks_violet == 3:
         violet "Me tocaste el trasero..."
 
     else:
-        violet "¿Lo estas haciendo a proposito no?"
+        violet "¿Lo estás haciendo a propósito, no?"
 
     window hide
     $ mostrar_hud()
@@ -390,30 +390,30 @@ label jn_pocketboy_charla:
 
     # Se da vuelta y lo mira. Solo cambia el cuerpo; la boca sigue en b_none.
     show violet_qa15_primerplano c_violetmirando
-    
-    piensa "Si, la hice enojar"
+
+    piensa "Sí, la hice enojar"
 
     # Ahora si se le ve la cara, asi que la boca acompaña lo que dice.
     show violet_qa15_primerplano b_hablando
     violet "¿Es tan divertido molestarme?"
     show violet_qa15_primerplano b_none
 
-    mc "Un poco si"
+    mc "Un poco sí"
 
     show violet_qa15_primerplano b_hablando
-    violet "Esa fue la ultima advertencia, la proxima te pateo"
+    violet "Esa fue la última advertencia, la próxima te pateo"
     show violet_qa15_primerplano b_none
 
-    mc "Prometo no molestarte mas"
+    mc "Prometo no molestarte más"
 
     show violet_qa15_primerplano b_hablando
-    violet "Segui buscando entonces"
+    violet "Sigue buscando entonces"
     show violet_qa15_primerplano b_none
 
     show violet_qa15_primerplano c_violetespalda b_none
 
-    piensa "Deberia concentrame en buscar la consola"
-    piensa "Un ultimo disfrute a esta vista"
+    piensa "Debería concentrarme en buscar la consola"
+    piensa "Un último disfrute a esta vista"
     piensa "..."
     piensa "Listo"
 
@@ -487,19 +487,19 @@ label jn_pocketboy_cierre:
     show violet_sentada
     with fade
 
-    mc "¿Ya esta?"
+    mc "¿Ya está?"
 
     show violet_sentada b_hablando
     violet "Me rindo, estoy agotada"
     show violet_sentada b_none
 
-    mc "Vamos un poco mas"
+    mc "Vamos un poco más"
 
     show violet_sentada b_hablando
-    violet "No tenia tantas ganas de jugar a la Pocket Boy"
+    violet "No tenía tantas ganas de jugar a la Pocket Boy"
     show violet_sentada b_none
 
-    mc "Creo que esta por aca"
+    mc "Creo que está por acá"
     mc "Pero es en la caja de abajo"
 
     with hpunch
@@ -509,7 +509,7 @@ label jn_pocketboy_cierre:
     with hpunch
 
     show violet_sentada b_hablando
-    violet "Ahi te ayudo"
+    violet "Ahí te ayudo"
     show violet_sentada b_none
 
     mc "Agarra la de arriba"
@@ -534,24 +534,24 @@ label jn_pocketboy_cierre:
     #   violet_qa15_caidos_violet  ojos: o_enojada      boca: b_hablando, b_hablandochica
 
     show violet_qa15_caidos_violet b_hablando
-    violet "¿Estas bien?"
+    violet "¿Estás bien?"
     show violet_qa15_caidos_violet b_none
 
     show violet_qa15_caidos_mc b_hablando
-    mc "Si, solo que se me cayo algo pesado encima"
+    mc "Sí, solo que se me cayó algo pesado encima"
     show violet_qa15_caidos_mc b_none
 
     show violet_qa15_caidos_violet o_enojada b_hablando
     violet "No soy algo pesado"
     show violet_qa15_caidos_violet b_hablandochica
-    violet "Ahora me voy a quedar asi"
+    violet "Ahora me voy a quedar así"
     show violet_qa15_caidos_violet b_none
 
     show violet_qa15_caidos_mc o_cerrados b_feliz
-    piensa "Asi se debe sentir estar en el cielo"
+    piensa "Así se debe sentir estar en el cielo"
 
     show violet_qa15_caidos_violet b_hablando
-    violet "¿Que es esa cara de que lo estas disfrutando?"
+    violet "¿Qué es esa cara de que lo estás disfrutando?"
     show violet_qa15_caidos_violet b_none
 
     show violet_qa15_caidos_mc b_hablando o_none
@@ -563,7 +563,7 @@ label jn_pocketboy_cierre:
     show violet_qa15_caidos_violet b_none
 
     show violet_qa15_caidos_mc b_hablando
-    mc "No lo niego, pero encontre la caja correcta"
+    mc "No lo niego, pero encontré la caja correcta"
     show violet_qa15_caidos_mc b_none
 
     show violet_qa15_caidos_violet o_enojada b_hablando
@@ -571,7 +571,7 @@ label jn_pocketboy_cierre:
     show violet_qa15_caidos_violet b_none
 
     show violet_qa15_caidos_mc b_hablando
-    mc "Pero tu sola, yo ya no me canse de esto"
+    mc "Pero tú sola, yo ya me cansé de esto"
     show violet_qa15_caidos_mc b_none
 
     show violet_qa15_caidos_violet o_enojada b_hablando
@@ -583,7 +583,7 @@ label jn_pocketboy_cierre:
     show violet_qa15_caidos_mc b_none
 
     show violet_qa15_caidos_violet o_enojada b_hablando
-    violet "Sos un idiota"
+    violet "Eres un idiota"
     show violet_qa15_caidos_violet b_none
 
     # =========================================================================

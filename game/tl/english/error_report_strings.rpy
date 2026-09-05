@@ -6,7 +6,7 @@ translate english strings:
     old "Ocurrió un error"
     new "An error occurred"
 
-    old "El juego encontró un problema. Podés reportarlo para que se corrija."
+    old "El juego encontró un problema. Puedes reportarlo para que se corrija."
     new "The game ran into a problem. You can report it so it gets fixed."
 
     old "✅ Reporte enviado. ¡Gracias!"

@@ -47,7 +47,8 @@ label interaccion_monica:
             $ _opciones_extra_monica.append({
                 "texto": "Agradecerle",
                 "label": "monica_q0_agradecer",
-                "condicion": True
+                "condicion": True,
+                "quest_id": "monica_questprincipal_0"
             })
     
     # Evento 1 (masaje) — primera vez: botón "(Evento)" que inicia el masaje
@@ -78,7 +79,8 @@ label interaccion_monica:
             $ _opciones_extra_monica.append({
                 "texto": "Preguntar por Violet",
                 "label": "violet_quest09a_monica_preguntar",
-                "condicion": True
+                "condicion": True,
+                "quest_id": "violet_questprincipal_09_a"
             })
         # "Te llama Violet" cuando Violet pidió que venga Monica y no se completó aún
         if (getattr(store, 'violet_9a_pedido_actual', None) == "Dile a Monica que venga" and
@@ -86,7 +88,8 @@ label interaccion_monica:
             $ _opciones_extra_monica.append({
                 "texto": "Te llama Violet",
                 "label": "violet_quest09a_monica_llamar",
-                "condicion": True
+                "condicion": True,
+                "quest_id": "violet_questprincipal_09_a"
             })
 
     call screen menu_interaccion_npc_completo(_npc_actual, opciones_extra=_opciones_extra_monica)

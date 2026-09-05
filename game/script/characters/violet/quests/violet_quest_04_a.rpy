@@ -20,22 +20,22 @@ label quest_violet_questprincipal_04_a:
     $ _bg_conv = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
     scene expression _bg_conv
 
-    
+
     show violet_parada c_rbase_base o_base b_none at right
     show mc_parado_base c_rbase_base o_base b_seria at mc_izquierda
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
-    mc "Violet una pregunta"
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "Violet, una pregunta"
     show mc_parado_base b_none
 
-    show violet_parada b_hablando c_rbase_brazoscruzados o_enojados with sprite_fast
-    violet "Si te interesa saber si te perdone, no lo hice"
-    show violet_parada b_hablandochica 
+    show violet_parada b_hablando c_rbase_brazoscruzados o_enojados with sprite_normal
+    violet "Si te interesa saber si te perdoné, no lo hice"
+    show violet_parada b_hablandochica
     violet "Y tampoco quiero que me devuelvas lo que me robaste"
-    show violet_parada b_none 
+    show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Perdón por eso, fue todo una gran confusion"
+    mc "Perdón por eso, fue todo una gran confusión"
     show mc_parado_base b_abiertachica
     mc "Pero quería hablarte de otra cosa"
     show mc_parado_base b_seria
@@ -44,67 +44,67 @@ label quest_violet_questprincipal_04_a:
     violet "¿Qué quieres?"
     show violet_parada b_none o_enojados
 
-    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
-    mc "Quería saber si te habias probado el regalo que te traje"
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
+    mc "Quería saber si te habías probado el regalo que te traje"
     show mc_parado_base b_seria
 
-    show violet_parada b_hablandochica o_base c_rbase_base with sprite_fast
-    violet "¿A que viene eso ahora?"
+    show violet_parada b_hablandochica o_base c_rbase_base with sprite_normal
+    violet "¿A qué viene eso ahora?"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "El otro día vi la caja en tu ropero y me acorde de el"
+    mc "El otro día vi la caja en tu ropero y me acordé de él"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica o_enojados
-    violet "Entonces, si estabas revisando mis cosas..."
+    violet "Entonces, sí estabas revisando mis cosas..."
     show violet_parada b_none
 
-    show mc_parado_base b_hablando o_abajonm c_rbase_facepalm with sprite_fast
-    mc "Es que... "
-    
+    show mc_parado_base b_hablando o_abajonm c_rbase_facepalm with sprite_normal
+    mc "Es que..."
+
     show jasmine_parada c_rbase_base o_base b_none at entrar_derecha_centro with sprite_normal
     pause 1.0
-    show jasmine_parada c_rbase_base o_base b_none at center 
-    show jasmine_parada c_rbase_saludando at personaje_flip with sprite_fast
+    show jasmine_parada c_rbase_base o_base b_none at center
+    show jasmine_parada c_rbase_saludando at personaje_flip with sprite_normal
     pause 0.5
     show jasmine_parada at personaje_enderezar with sprite_fast
     pause 0.5
-    
-    show mc_parado_base b_seria o_base c_rbase_base with sprite_fast
-    
-    show jasmine_parada b_hablando o_arribanm c_rbase_dedolabio with sprite_fast
+
+    show mc_parado_base b_seria o_base c_rbase_base with sprite_normal
+
+    show jasmine_parada b_hablando o_arribanm c_rbase_dedolabio with sprite_normal
     jasmine "¿Por qué pelean ahora?"
     show jasmine_parada b_none o_base
-    
+
 
     show jasmine_parada at personaje_flip with sprite_fast
     pause 0.5
-    
-    show violet_parada b_hablando o_enojados c_rbase_brazoscruzados with sprite_fast
-    violet "Porque [mc_name] aprovecho que estaba solo en mi habitación y me robo ropa interior"
+
+    show violet_parada b_hablando o_enojados c_rbase_brazoscruzados with sprite_normal
+    violet "Porque [mc_name] aprovechó que estaba solo en mi habitación y me robó ropa interior"
     show violet_parada b_none
 
-    show jasmine_parada b_hablando c_rbase_brazoscruzados with sprite_fast
-    jasmine "Es una acusacion fuerte jajaja"
+    show jasmine_parada b_hablando c_rbase_brazoscruzados with sprite_normal
+    jasmine "Es una acusación fuerte jajaja"
     show jasmine_parada b_sorprendida
     jasmine "Pero no te enojes, es algo normal a esa edad"
-    show jasmine_parada b_felizcerrada c_rbase_base with sprite_fast
+    show jasmine_parada b_felizcerrada c_rbase_base with sprite_normal
 
-    show violet_parada b_hablando 
+    show violet_parada b_hablando
     violet "No me interesa si es normal o no"
     show violet_parada b_none
 
     show jasmine_parada at personaje_enderezar with sprite_fast
     pause 1.0
 
-    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
-    mc "No fue así, sabes que fue todo una confusion"
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
+    mc "No fue así, sabes que fue todo una confusión"
     show mc_parado_base b_seria
 
     show jasmine_parada b_hablando
     jasmine "No lo hagas más si le molesta"
-    show jasmine_parada b_sorprendida c_rbase_dedolabio with sprite_fast
+    show jasmine_parada b_sorprendida c_rbase_dedolabio with sprite_normal
     jasmine "Si te vuelve a surgir la necesidad, yo te regalo una jajaja"
     show jasmine_parada b_felizcerrada
 
@@ -113,32 +113,32 @@ label quest_violet_questprincipal_04_a:
     show violet_parada b_none o_base
 
     show mc_parado_base b_abiertachica
-    mc "Se esta malinterpretando todo"
-    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_fast
+    mc "Se está malinterpretando todo"
+    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_normal
     mc "Solo quería preguntarle por el regalo que le traje de Central City"
     show mc_parado_base b_abiertachica
     mc "Quería saber si te había gustado"
     show mc_parado_base b_seria c_rbase_base o_base
 
-    show jasmine_parada c_rbase_base at personaje_flip with sprite_fast
+    show jasmine_parada c_rbase_base at personaje_flip with sprite_normal
     pause 1.0
 
-    show violet_parada b_hablando c_rbase_pensando with sprite_fast
-    violet "Si me gusto, pero después de esto tengo más dudas sobre las intenciones de tu regalo"
-    show violet_parada b_none c_rbase_base with sprite_fast
+    show violet_parada b_hablando c_rbase_pensando with sprite_normal
+    violet "Sí me gustó, pero después de esto tengo más dudas sobre las intenciones de tu regalo"
+    show violet_parada b_none c_rbase_base with sprite_normal
 
     show jasmine_parada b_hablando
-    jasmine "Uhhhhh ahora me pregunto que clase de regalo es"
+    jasmine "Uhhhhh ahora me pregunto qué clase de regalo es"
     show jasmine_parada b_none
 
     show jasmine_parada at personaje_enderezar with sprite_fast
     pause 1.0
 
-    show mc_parado_base b_hablando c_rbase_facepalm o_abajonm with sprite_fast
-    mc "Es solo un cosplay, recorde que es algo que siempre quizo y pensé que era un buen regalo"
-    show mc_parado_base b_abiertachica 
+    show mc_parado_base b_hablando c_rbase_facepalm o_abajonm with sprite_normal
+    mc "Es solo un cosplay, recordé que es algo que siempre quiso y pensé que era un buen regalo"
+    show mc_parado_base b_abiertachica
     mc "Y antes de que digas algo, no es nada raro... es de uno de sus personajes favoritos"
-    show mc_parado_base b_seria o_base c_rbase_brazoscruzados with sprite_fast
+    show mc_parado_base b_seria o_base c_rbase_brazoscruzados with sprite_normal
 
     show jasmine_parada b_hablando
     jasmine "No veo el problema entonces"
@@ -147,42 +147,42 @@ label quest_violet_questprincipal_04_a:
     show jasmine_parada at personaje_flip with sprite_fast
     pause 1.0
 
-    show violet_parada b_hablando o_arribanm c_rbase_brazoscruzados with sprite_fast
+    show violet_parada b_hablando o_arribanm c_rbase_brazoscruzados with sprite_normal
     violet "Gracias por el regalo..."
     show violet_parada b_hablandochica o_base
     violet "¿Feliz?"
     show violet_parada b_none
 
-    show jasmine_parada b_hablando c_rbase_brazoscruzados with sprite_fast
-    jasmine "No te portes como una niña Violet, te trajo un regalo tienes que ser agradecida de verdad"
+    show jasmine_parada b_hablando c_rbase_brazoscruzados with sprite_normal
+    jasmine "No te portes como una niña, Violet, te trajo un regalo, tienes que ser agradecida de verdad"
     show jasmine_parada b_sorprendida
-    jasmine "Luego te lo pruebas y se lo mostras"
+    jasmine "Luego te lo pruebas y se lo muestras"
     show jasmine_parada b_aburrida
 
-    show violet_parada b_hablando c_rbase_base with sprite_fast
+    show violet_parada b_hablando c_rbase_base with sprite_normal
     violet "Gracias por el regalo"
-    show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_fast
-    violet "Pero ni loca voy a mostrarselo"
+    show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_normal
+    violet "Pero ni loca voy a mostrárselo"
     show violet_parada b_none
 
 
 
 label violet_quest04a_jasmine_todo_ok:
-    
+
     $ notificar_recuerdo_activado()
 
     show jasmine_parada at personaje_enderezar with sprite_fast
     pause 1.0
 
     show jasmine_parada b_hablando
-    jasmine "A mi me trajo un conjunto para entrenar y lo primero que pensé fue en mostraselo"
+    jasmine "A mí me trajo un conjunto para entrenar y lo primero que pensé fue en mostrárselo"
     show jasmine_parada b_sorprendida
-    jasmine "Le mande una foto y le dije que pase a verlo cuando entreno por la tarde"
+    jasmine "Le mandé una foto y le dije que pase a verlo cuando entreno por la tarde"
     show jasmine_parada b_hablando
-    jasmine "Parece que le gusto mucho"
+    jasmine "Parece que le gustó mucho"
     show jasmine_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_confianza with sprite_fast
+    show mc_parado_base b_hablando c_rbase_confianza with sprite_normal
     mc "Sí, te quedaba genial, tengo buen gusto"
     show mc_parado_base b_none with sprite_fast
 
@@ -203,17 +203,17 @@ label violet_quest04a_continua:
     pause 1.0
 
     show jasmine_parada b_hablando
-    jasmine "Volviendo al tema, Violet si te hizo un regalo lo minimo que puedes hacer es mostrarselo"
+    jasmine "Volviendo al tema, Violet, si te hizo un regalo lo mínimo que puedes hacer es mostrárselo"
     show jasmine_parada b_none
 
-    show violet_parada b_hablandochica o_enojados c_rbase_brazoscruzados with sprite_fast
-    violet "No se porque te metes Jasmine, no es tu asunto"
+    show violet_parada b_hablandochica o_enojados c_rbase_brazoscruzados with sprite_normal
+    violet "No sé por qué te metes, Jasmine, no es tu asunto"
     show violet_parada b_none o_base
 
     show jasmine_parada b_hablando
-    jasmine "Seguite portando como una niña pequeña si quieres"
+    jasmine "Seguí portándote como una niña pequeña si quieres"
     show jasmine_parada b_sorprendida
-    jasmine "Mejor para mi"
+    jasmine "Mejor para mí"
     show jasmine_parada b_none
 
     show jasmine_parada at personaje_enderezar with sprite_fast
@@ -222,14 +222,14 @@ label violet_quest04a_continua:
     show mc_parado_base b_hablando
     mc "No se peleen, no es la idea"
     show mc_parado_base b_abiertachica
-    mc "Si no quiere ya esta, no hay que insistir"
+    mc "Si no quiere ya está, no hay que insistir"
     show mc_parado_base b_none
 
     show jasmine_parada b_hablando
     jasmine "Sí, lo mejor es no insistirle"
-    show jasmine_parada b_sorprendida c_rbase_saludando with sprite_fast
+    show jasmine_parada b_sorprendida c_rbase_saludando with sprite_normal
     jasmine "Nos vemos luego"
-    show jasmine_parada b_none c_rbase_base with sprite_fast
+    show jasmine_parada b_none c_rbase_base with sprite_normal
 
     show mc_parado_base b_abiertachica
     mc "Nos vemos luego"
@@ -252,7 +252,7 @@ label violet_quest04a_continua:
 
     $ completar_quest_actual("violet", quest_id="violet_questprincipal_04_a")
 
-    
+
     window hide
     $ avanzar_horario()
     $ mostrar_hud()

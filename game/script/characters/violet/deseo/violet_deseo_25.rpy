@@ -118,8 +118,8 @@ label violet_deseo_25_sotano:
     show mc_parado_base c_rbase_base o_base b_none at center with sprite_normal
 
     # (Mc cuerpo pensando ojos arriba sin mirar)
-    show mc_parado_base c_rbase_pensando o_arribanm with sprite_fast
-    piensa "Violet me dijo que iba a bajar a ver un capitulo conmigo y no aparecio"
+    show mc_parado_base c_rbase_pensando o_arribanm with sprite_normal
+    piensa "Violet me dijo que iba a bajar a ver un capítulo conmigo y no apareció"
     piensa "Voy a subir a buscarla"
 
     hide mc_parado_base with dissolve
@@ -167,10 +167,10 @@ label violet_deseo_25_puerta:
     violet "Espera que me estoy poniendo el short"
 
     piensa "..."
-    piensa "¿Cuanto mas le falta?"
-    
+    piensa "¿Cuánto más le falta?"
+
     show mc_parado_base b_hablando
-    mc "¿Ya esta?"
+    mc "¿Ya está?"
     show mc_parado_base b_none
 
     violet "Pasa"
@@ -207,27 +207,27 @@ label quest_violet_deseo_05:
     # =========================================================================
 
     show violet_parada b_hablando
-    violet "¿Que pasa?"
+    violet "¿Qué pasa?"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Me habias dicho que venias a ver el capitulo conmigo y te estuve esperando bastante"
+    mc "Me habías dicho que venías a ver el capítulo conmigo y te estuve esperando bastante"
     show mc_parado_base b_none
 
     show violet_parada b_hablando
-    violet "Perdon me colgue haciendo unas cosas, pero ya iba a bajar"
+    violet "Perdón, me colgué haciendo unas cosas, pero ya iba a bajar"
     show violet_parada b_hablandochica
-    violet "No hacia falta que me vengas a buscar o ¿Estabas muy apurado por verme?"
+    violet "No hacía falta que me vengas a buscar, ¿o estabas muy apurado por verme?"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Me descubriste, ya extrañaba ese lindo trasero y no podia esperar mas para verlo"
+    mc "Me descubriste, ya extrañaba ese lindo trasero y no podía esperar más para verlo"
     show mc_parado_base b_none
 
     show violet_parada b_hablando
-    violet "Aunque lo estes diciendo de forma sarcastica, se que en el fondo es asi"
+    violet "Aunque lo estés diciendo de forma sarcástica, sé que en el fondo es así"
     show violet_parada b_hablandochica
-    violet "Asi que no hace falta que lo ocultes, puedes ser sincero jajaja"
+    violet "Así que no hace falta que lo ocultes, puedes ser sincero jajaja"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
@@ -235,7 +235,7 @@ label quest_violet_deseo_05:
     show mc_parado_base b_none
 
     show violet_parada b_hablando
-    violet "¿Que me va a pasar por hacerlo?"
+    violet "¿Qué me va a pasar por hacerlo?"
     show violet_parada b_none
 
     # ── LA SECUENCIA DEL BESO ────────────────────────────────────────────────
@@ -303,6 +303,42 @@ label quest_violet_deseo_05:
     # =========================================================================
 
     hide beso_deseo_violet with dissolve
+
+    show mc_parado_base c_rbase_brazoscruzados o_base b_none at mc_izquierda
+    show violet_parada c_pijama_base ca_pijama o_abiertos b_sonrisaleve ot_avergonzada at right
+    with sprite_normal
+
+    show mc_parado_base b_hablando
+    mc "Eso te puede pasar"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando o_base
+    violet "No pensé que ibas a hacer eso"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando
+    mc "¿Y qué esperabas?"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando c_pijama_dedolabio with sprite_normal
+    violet "No sé, te la pasas hablando de mí y de mi trasero, pero no sueles hacer nada"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando
+    mc "Y me cansé de no hacer nada"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando
+    violet "Supongo que es por ahí"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando
+    mc "Nos vemos después"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando
+    violet "Ehhh... adiós"
+    show violet_parada b_none
 
     $ vd25_fase = 2
     $ desactivar_restriccion()

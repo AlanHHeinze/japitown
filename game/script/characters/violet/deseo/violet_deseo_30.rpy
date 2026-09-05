@@ -5,6 +5,33 @@
 ##     quest     violet_deseo_06           (quests_deseo_violet.rpy)
 ##     label     quest_violet_deseo_06     (lo fija el motor: "quest_" + id)
 ##
+## ⚠️ EL DIALOGO YA ESTA ESCRITO PERO NO TRADUCIDO. El archivo de
+## tl/english todavia tiene los bloques viejos de cuando el texto era
+## marcadores "...", asi que estan todos huerfanos: hay que rehacerlo entero.
+##
+## DE QUE VA LA QUEST:
+##
+##   1. El MC intenta intimar un poco mas con Violet y ella se hace la dificil.
+##      (Es la charla en su pieza — quest_violet_deseo_06.)
+##
+##   2. El MC se enoja y decide ignorarla. De ahi sale la etapa 2: tres dias
+##      completos sin tener ningun contacto con ella.
+##
+##   3. Cumplidos los tres dias, VIOLET va a buscarlo a el, de noche, para
+##      preguntarle que le pasa. (violet_deseo_30_visita.)
+##
+##   4. En esa charla el MC le dice lo que piensa. Violet contesta que piensa
+##      igual, pero que quiere ir a otro ritmo: no quiere matar el juego entre
+##      los dos, que es justamente lo divertido.
+##
+##   5. Y le confiesa que le gusta como la mira con lujuria, y que eso la
+##      calienta.
+##
+## ESE ULTIMO PASO ES EL QUE ABRE LA VENTAJA `provocacion` del hito "Sinceridad"
+## (hitos_violet.rpy): de ahi en mas es ELLA la que arma situaciones para
+## calentarlo — dejar la puerta del baño entornada y demas. La quest tiene que
+## dejar eso plantado en el dialogo, o la ventaja aparece sin explicacion.
+##
 ## DOS ETAPAS bien distintas, encadenadas por `vd30_fase`:
 ##
 ##   ETAPA 1 — la charla en su pieza
@@ -49,6 +76,75 @@ init python:
 
     # Cuantas noches seguidas hay que ignorarla.
     VD30_DIAS_PARA_VISITA = 3
+
+    # ── Los textos de la guia, que cambian con la fase ───────────────────────
+    # La quest se queda en ETAPA_BOTON_LISTO de punta a punta —recien sale al
+    # completarse— pero por el medio lo que hay que hacer cambia tres veces. Con
+    # textos fijos la guia seguia diciendo "Estar de noche en mi habitacion"
+    # durante los tres dias de ignorarla, justo en la etapa donde el jugador mas
+    # necesita que le expliquen la regla: es la unica del juego que pide NO
+    # hacer algo.
+    #
+    # Van como funciones de MODULO y no como lambdas: la ConfigEtapa vive dentro
+    # del Quest, y el Quest se guarda (regla anti-PicklingError del proyecto).
+    # Devuelven el texto ya traducido; que _resolver lo pase de nuevo por
+    # translate_string no molesta, un string sin traduccion vuelve igual.
+
+    def vd30_pista_listo():
+        """Pista de ETAPA_BOTON_LISTO."""
+        _f = getattr(store, 'vd30_fase', 0)
+        if _f == 1:
+            return renpy.translate_string("Quiero hablar con Violet ahora")
+        if _f >= 2:
+            return renpy.translate_string("Prefiero no cruzarmela por unos dias")
+        return renpy.translate_string("Hay algo que quiero hablar con Violet")
+
+    def _vd30_dias_a_mostrar():
+        """
+        El contador COMO VA A QUEDAR esta noche, no como quedo la anterior.
+
+        `vd30_dias_ignorada` lo mueve el trigger de dormir, asi que si el
+        jugador le habla a Violet al mediodia el numero real recien cae a cero
+        cuando se va a acostar — y hasta entonces la guia le miente. Aca se
+        anticipa ese reseteo mirando el registro de contacto del dia, que se
+        marca en el momento y vive hasta que dormir() lo limpia.
+
+        Es SOLO para mostrar: no toca la variable. El reseteo de verdad lo
+        sigue haciendo un unico lugar, `_vd30_trigger_dormir`, con la misma
+        condicion.
+        """
+        if hubo_contacto_npc("violet"):
+            return 0
+        return getattr(store, 'vd30_dias_ignorada', 0)
+
+    def vd30_que_hacer_listo():
+        """
+        Que hacer de ETAPA_BOTON_LISTO.
+
+        En la fase 2 lleva el contador de dias. Se muestra aunque este en 0 —y
+        sobre todo cuando VUELVE a 0—: cualquier contacto con Violet lo
+        reinicia, y verlo caer es la unica forma que tiene el jugador de
+        entender por que la cuenta no avanza.
+
+        NO NOMBRA EL DORMIR a proposito, aunque dormir sea lo que mueve el
+        contador: decirlo invita a pasar los tres dias durmiendo de corrido y
+        saltearse el juego. El objetivo que se enuncia es el que importa,
+        ignorarla; como pasan los dias es cosa del jugador.
+
+        La plantilla se traduce ANTES de meterle los numeros: si se tradujera
+        el resultado ya armado haria falta una entrada por cada valor del
+        contador. Mismo criterio que el "Esperar {} dias" de la amor 25.
+        """
+        _f = getattr(store, 'vd30_fase', 0)
+        if _f == 1:
+            return renpy.translate_string("Ir a la habitacion de Violet")
+        if _f >= 2:
+            return renpy.translate_string(
+                "Pasar {} dias ignorando a Violet ({}/{})").format(
+                    VD30_DIAS_PARA_VISITA,
+                    _vd30_dias_a_mostrar(),
+                    VD30_DIAS_PARA_VISITA)
+        return renpy.translate_string("Estar de noche en mi habitacion")
 
     def _vd30_activa():
         return quest_lista_para_boton("violet_deseo_06")
@@ -163,8 +259,9 @@ label violet_deseo_30_inicio:
     # CONTENIDO — lo que le esta dando vueltas
     # =========================================================================
 
-    piensa "..."
-    piensa "..."
+    piensa "Cada vez me cuesta más controlar las ganas que tengo de estar con Violet"
+    piensa "Y tenerla a solo unos metros todo el tiempo no ayuda"
+    piensa "La voy a ir a ver"
 
     # =========================================================================
     # FIN DEL CONTENIDO
@@ -220,17 +317,56 @@ label quest_violet_deseo_06:
     # CONTENIDO — la charla en su habitacion
     # =========================================================================
 
-    # (Violet boca hablando)
     show violet_parada b_hablando
-    violet "..."
-    # (Violet boca neutral)
+    violet "¿Qué pasa?"
     show violet_parada b_none
 
-    # (Mc boca hablando)
     show mc_parado_base b_hablando
-    mc "..."
-    # (Mc boca neutral)
+    mc "Vine a verte, estuve pensando en ti todo el día y no aguanto las ganas"
     show mc_parado_base b_none
+
+    show violet_parada b_hablando
+    violet "¿Ganas de qué?"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando
+    mc "De estar contigo, ¿de qué más?"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando
+    violet "Todo el tiempo con cosas pervertidas en la cabeza"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando
+    mc "No puedo evitarlo, es lo que siento"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando
+    violet "Bueno, pero te tienes que controlar un poco"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando
+    mc "¿Por?"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando
+    violet "Porque sí"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando
+    mc "Al final no te entiendo... Si no actúo, por qué no actúo"
+    show mc_parado_base b_abiertachica
+    mc "Pero si quiero avanzar, por qué quiero avanzar"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando
+    violet "La situación es un poco complicada..."
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando
+    mc "Tu indecisión pone la situación complicada"
+    show mc_parado_base b_none
+
 
     # =========================================================================
     # FIN DEL CONTENIDO
@@ -291,24 +427,125 @@ label violet_deseo_30_visita:
     # CONTENIDO — ella vino a buscarlo
     # =========================================================================
 
-    # (Violet boca hablando)
     show violet_parada b_hablando
-    violet "..."
-    # (Violet boca neutral)
+    violet "Hola"
     show violet_parada b_none
 
-    # (Mc boca hablando)
     show mc_parado_base b_hablando
-    mc "..."
-    # (Mc boca neutral)
+    mc "Hola"
     show mc_parado_base b_none
+
+    show violet_parada b_hablando c_pijama_pensando with sprite_normal
+    violet "¿Todo bien?"
+    show violet_parada b_none c_pijama_base with sprite_normal
+
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
+    mc "Sí, ¿y tú?"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando
+    violet "Yo bien también, pero estás algo raro"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "¿Por qué lo dices?"
+    show mc_parado_base b_none c_rbase_brazoscruzados with sprite_normal
+
+    show violet_parada b_hablando c_pijama_brazoscruzados with sprite_normal
+    violet "Siento que me estás evitando"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando
+    mc "No te evito a ti, evito situaciones complicadas nada más"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando
+    violet "Ahhhh, es por eso... Tienes una visión muy drástica de las cosas"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando
+    mc "Es mi forma de ser"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando
+    violet "No, tu forma de ser es la de un pervertido que se la pasa comiéndome con la mirada"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando
+    mc "Quizás no lo sea"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablando c_pijama_pensando with sprite_normal
+    violet "¿Estás seguro?"
+    show violet_parada b_none c_pijama_base with sprite_normal
+
+    show mc_parado_base b_hablando
+    mc "Sí, muy seguro"
+    show mc_parado_base b_none
+
+    # Violet se saca el short hasta quedar en tanga.
+    #
+    # El sprite de pijama sale y entra `violet_tanga` en el mismo lugar (`at
+    # right`): las dos cosas van bajo un unico `with`, asi que se cruzan en una
+    # sola disolvencia en vez de verse un hueco entre medio.
+    #
+    # Los cuatro cuadros son atributos del mismo grupo `cuerpo`, o sea
+    # excluyentes: cada `show` apaga el anterior y no hay que bajar nada a mano.
+    # Van sin dialogo y sin clicks, con `pause` de duracion fija, para que la
+    # secuencia corra sola. El pause es 0.5 porque sprite_normal es un
+    # Dissolve(0.5): con menos, el cuadro siguiente entraria antes de que el
+    # anterior termine de aparecer.
+    hide violet_parada
+    show violet_tanga c_sacandoshort b30_none at right
+    with sprite_normal
+    pause 0.5
+
+    show violet_tanga c_sacandoshort2 with sprite_normal
+    pause 0.5
+
+    show violet_tanga c_sacandoshort3 with sprite_normal
+    pause 0.5
+
+    show violet_tanga c_paradobase with sprite_normal
+    pause 0.5
+
+    show mc_parado_base c_rbase_asustado with sprite_normal
+    piensa "¿Y ahora qué le pasa?"
+    show mc_parado_base c_rbase_brazoscruzados with sprite_normal
+
+    # Las bocas de este arte son las `b30_*`: las `b_*` estan dibujadas para la
+    # pose de la quest de deseo 10, que tiene la cabeza en otro lado.
+    show violet_tanga b30_hablando
+    violet "Entonces no hay problema si me quedo en tanga"
+    show violet_tanga b30_hablandochica
+    violet "Ya que no hay ningún pervertido acá"
+    show violet_tanga b30_none
+
+    show mc_parado_base c_rbase_avergonzado with sprite_normal
+    piensa "Ya entiendo por dónde va esto"
+    show mc_parado_base c_rbase_brazoscruzados with sprite_normal
+
+    show mc_parado_base b_hablando
+    mc "No hay ningún problema"
+    show mc_parado_base b_none
+
+    show violet_tanga b30_hablando
+    violet "Tenía ganas de jugar un ratito a algo, una lástima"
+    show violet_tanga b30_hablandochica
+    violet "Me voy entonces"
+    show violet_tanga b30_none
+
+    hide violet_tanga with dissolve
+
+    piensa "Creo que después de esto la voy entendiendo mejor, ella quiere llevar las cosas a su ritmo, pero le molesta que no le preste atención"
+    piensa "Ahora está en mí cómo usar esto, cuanto más la pueda ignorar más lejos ella va a llegar y al final va a resultar mejor para mí"
+
 
     # =========================================================================
     # FIN DEL CONTENIDO
     # =========================================================================
 
     hide mc_parado_base
-    hide violet_parada
     with dissolve
 
     $ completar_quest_actual("violet", quest_id="violet_deseo_06")

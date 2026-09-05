@@ -56,19 +56,19 @@ label quest_violet_questprincipal_06_b:
 label violet_quest06b_puerta:
 
     $ ocultar_hud()
-    
+
     $ _loc_pasillo = sistema_locaciones.obtener_locacion("casa_pasilloarriba")
     $ _bg_pasillo = _loc_pasillo.background if _loc_pasillo else "#1a1a1a"
     scene expression _bg_pasillo with fade
 
     show mc_parado_base c_rbase_avergonzado o_base b_none at mc_izquierda
-    
+
     window show
 
     show mc_parado_base b_hablando
     mc "Violet, me pediste que pasara"
     show mc_parado_base b_none
-    piensa "Estoy muy nervioso, no menciono nada de lo que paso el otro día"
+    piensa "Estoy muy nervioso, no menciono nada de lo que pasó el otro día"
     piensa "Supongo que me quiere hablar de eso"
 
     violet "Sí, espera un momento"
@@ -95,20 +95,20 @@ label violet_quest06b_puerta:
 
     show mc_parado_base b_hablando
     mc "Wooooow"
-    show mc_parado_base c_rbase_avergonzado with sprite_fast
+    show mc_parado_base c_rbase_avergonzado with sprite_normal
     piensa "Tenía razón, es muy llamativo, pensé que era algo de las fotos"
     piensa "Pero en persona es otra cosa..."
     show mc_parado_base b_abiertachica
     mc "Me encanta"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     show violet_parada b_hablandochica o_arribanm
     violet "¿Puedo ir al evento con esto?"
     show violet_parada b_none o_base
 
-    show mc_parado_base b_hablando o_arribanm c_rbase_pensando with sprite_fast
+    show mc_parado_base b_hablando o_arribanm c_rbase_pensando with sprite_normal
     mc "Sí... ¿Por qué no podrías?"
-    show mc_parado_base b_none o_base c_rbase_base with sprite_fast
+    show mc_parado_base b_none o_base c_rbase_base with sprite_normal
 
     show violet_parada b_hablandochica
     violet "Ya sabes el por qué..."
@@ -134,9 +134,9 @@ label violet_quest06b_puerta:
     show violet_espalda e_base at right with sprite_normal
 
 
-    show mc_parado_base c_rbase_facepalm o_cerrados with sprite_fast
+    show mc_parado_base c_rbase_facepalm o_cerrados with sprite_normal
     piensa "No lo puedo creer, es una obra de arte"
-    show mc_parado_base o_base c_rbase_base with sprite_fast
+    show mc_parado_base o_base c_rbase_base with sprite_normal
 
 
     hide violet_espalda with sprite_fast
@@ -149,12 +149,12 @@ label violet_quest06b_puerta:
 
     show mc_parado_base b_hablando
     mc "Lo puedes usar sin problema"
-    show mc_parado_base b_abiertachica c_rbase_cuestionando with sprite_fast
+    show mc_parado_base b_abiertachica c_rbase_cuestionando with sprite_normal
     mc "Es un poco llamativo, si no te voy a mentir. Pero es algo de lo que no te tienes que preocupar"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     show violet_parada b_hablandochica
-    violet "Sabes que nunca me gusto llamar la atención"
+    violet "Sabes que nunca me gustó llamar la atención"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
@@ -165,9 +165,9 @@ label violet_quest06b_puerta:
     violet "¿Por qué?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando o_arribanm c_rbase_pensando with sprite_fast
+    show mc_parado_base b_hablando o_arribanm c_rbase_pensando with sprite_normal
     mc "Porque eso no se va a ir a ningún lado"
-    show mc_parado_base b_abiertachica o_base c_rbase_brazoscruzados with sprite_fast
+    show mc_parado_base b_abiertachica o_base c_rbase_brazoscruzados with sprite_normal
     mc "Pero el motivo principal es porque eres una chica linda yendo a la Japicon jajajaja"
     show mc_parado_base b_hablando
     mc "¿No te parece suficiente?"
@@ -179,14 +179,14 @@ label violet_quest06b_puerta:
     violet "Tienes un buen punto"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
-    mc "Bueno, nos costo pero estamos de acuerdo"
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "Bueno, nos costó pero estamos de acuerdo"
     show mc_parado_base b_none
 
     piensa "Me gustaría hablar del beso, sé que ella no lo va a hacer"
     piensa "Pero tengo miedo de arruinar el momento, al fin las cosas me están saliendo bien"
 
-    show violet_parada at mover_al_centro_lento 
+    show violet_parada at mover_al_centro_lento
     pause 1.0
 
     show violet_parada b_hablando
@@ -205,12 +205,12 @@ label violet_quest06b_puerta:
     show violet_espalda e_pelo with sprite_normal
     pause 0.5
     show violet_espalda e_lista with sprite_normal
-    
+
 
     show mc_parado_base b_hablando
     mc "Emmm sí, claro"
     show mc_parado_base b_none
-    piensa "Si fuese un juego para adultos, este es el momento en donde la cosa se descontrolaria"
+    piensa "Si fuese un juego para adultos, este es el momento en donde la cosa se descontrolaría"
     piensa "Pero no suelo tener esa suerte en la vida"
 
     hide violet_espalda
@@ -218,12 +218,12 @@ label violet_quest06b_puerta:
 
     show quest06 uno at center with fade
 
-    mc "Si esta un poco trabado, no te preocupes que lo voy a arreglar"
+    mc "Sí, está un poco trabado, no te preocupes que lo voy a arreglar"
 
     violet "Cada vez que me lo intento sacar, es un problema"
     violet "Si no puedes no hay problema"
 
-    mc "Si voy a poder"
+    mc "Sí voy a poder"
 
     show quest06 dos with sprite_fast
     pause 0.3
@@ -231,7 +231,7 @@ label violet_quest06b_puerta:
     pause 0.3
     show quest06 dos with sprite_fast
 
-    piensa "Que cierre de porquería"
+    piensa "Qué cierre de porquería"
 
     violet "¿Seguro que puedes?"
 
@@ -277,25 +277,25 @@ label violet_quest06b_cierre_a:
 
     show quest06 uno with sprite_fast
 
-    mc "Creo que lo trabe más, no lo puedo ni subir ahora"
+    mc "Creo que lo trabé más, no lo puedo ni subir ahora"
 
-    violet "Es un problema ese cierre, me costo mucho sacarmelo la otra vez"
+    violet "Es un problema ese cierre, me costó mucho sacármelo la otra vez"
 
     show quest06 tres with sprite_fast
     pause 0.3
     show quest06 dos with sprite_fast
 
-    mc "¿Y ahora que hacemos?"
+    mc "¿Y ahora qué hacemos?"
 
-    violet "Le voy a pedir a Monica que me lo quite"
+    violet "Le voy a pedir a Mónica que me lo quite"
 
     mc "Seguro que ella lo puede arreglar"
 
-    violet "Sí, le voy a decir ahora, antes que se haga más tarde"
+    violet "Sí, le voy a decir ahora, antes de que se haga más tarde"
 
     hide quest06
     show mc_parado_base c_rbase_brazoscruzados at mc_izquierda with fade
-    
+
     piensa "Vaya, eso no salió como esperaba..."
 
     $ violet_06b_eleccion = "A"
@@ -314,7 +314,7 @@ label violet_quest06b_cierre_c:
     show quest06 tres with sprite_fast
     pause 0.3
     show quest06 dos with sprite_fast
-    
+
     pause 0.5
 
     vozoff "¡CRACK! ¡CRACK! ¡CRACK!"
@@ -322,14 +322,14 @@ label violet_quest06b_cierre_c:
 
     show quest06 roto with fade
     pause 1.0
-    
+
     mc "Creo que hice demasiada fuerza"
 
     violet "..."
 
     mc "..."
 
-    violet "[mc_name] Este es el momento en que sin decir nada te vas..."
+    violet "[mc_name], este es el momento en que sin decir nada te vas..."
 
 
     $ violet_06b_eleccion = "C"

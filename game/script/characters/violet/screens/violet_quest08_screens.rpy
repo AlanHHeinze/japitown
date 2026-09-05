@@ -30,7 +30,7 @@ screen violet_quest8_menu_items():
             spacing 10
             xfill True
 
-            text "Que quieres usar?" size 22 color "#ffffff" xalign 0.5
+            text "¿Qué quieres usar?" size 22 color "#ffffff" xalign 0.5
 
             null height 10
 

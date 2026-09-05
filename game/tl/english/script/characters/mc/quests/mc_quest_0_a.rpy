@@ -36,30 +36,6 @@ translate english quest_mc_quest_0_ba1026c0:
     # tutorial "Ahora vamos a centrarnos en 4 locaciones que son las que conectan a la mayoría.{w} El [colorear_locacion('Living')], el [colorear_locacion('Patio')], el [colorear_locacion('Pasillo de abajo')] y el [colorear_locacion('Pasillo de arriba')]"
     tutorial "Now let's focus on 4 locations, the ones that connect most of them.{w} The [colorear_locacion('Living Room')], the [colorear_locacion('Patio')], the [colorear_locacion('Downstairs Hallway')] and the [colorear_locacion('Upstairs Hallway')]"
 
-# game/script/characters/mc/quests/mc_quest_0_a.rpy:423
-translate english mc_q0_exploracion_completada_2e08b7a0:
-
-    # tutorial "Esas son las [colorear_locacion('habitaciones')] con más conexiones dentro de la casa"
-    tutorial "Those are the [colorear_locacion('rooms')] with the most connections inside the house"
-
-# game/script/characters/mc/quests/mc_quest_0_a.rpy:424
-translate english mc_q0_exploracion_completada_b8d511d9:
-
-    # tutorial "Durante el juego te podras mover libremente y explorar cada lugar, el movimiento no tiene ningún costo así que sientete libre de hacerlo"
-    tutorial "During the game you'll be able to move freely and explore every place; movement has no cost, so feel free to do it"
-
-# game/script/characters/mc/quests/mc_quest_0_a.rpy:425
-translate english mc_q0_exploracion_completada_5978b0f8:
-
-    # tutorial "Siempre que quieras puedes [colorear_quest('activar')] y [colorear_quest('desactivar')] la ayuda de movimiento con el [colorear_quest('boton del ojo')] que tendras en la [colorear_quest('barra de acciones')] de la locacion"
-    tutorial "Whenever you want, you can [colorear_quest('enable')] and [colorear_quest('disable')] the movement help with the [colorear_quest('eye button')] in the location's [colorear_quest('action bar')]"
-
-# game/script/characters/mc/quests/mc_quest_0_a.rpy:426
-translate english mc_q0_exploracion_completada_1f4c8e58:
-
-    # tutorial "Una vez que estes familiarizado con el movimiento, dentro del [colorear_quest('celular')] en las [colorear_quest('opciones')] podras directamente [colorear_quest('desactivarla')] si así lo prefieres"
-    tutorial "Once you're familiar with moving around, inside the [colorear_quest('phone')] under [colorear_quest('options')] you can [colorear_quest('disable it')] directly if you prefer"
-
 # game/script/characters/mc/quests/mc_quest_0_a.rpy:476
 translate english mc_q0_mudanza_6e8fee34:
 
@@ -248,35 +224,119 @@ translate english mc_q0_siguiente_etapa_b1129929:
 
 # TODO: Translation updated at 2026-07-14 15:17
 
-# game/script/characters/mc/quests/mc_quest_0_a.rpy:162
-translate english quest_mc_quest_0_a833c82f:
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:134
+translate english quest_mc_quest_0_b8d511d9:
 
-    # tutorial "Vamos a recorrerlos uno por uno"
-    tutorial "Let's go through them one by one"
+    # tutorial "Durante el juego te podras mover libremente y explorar cada lugar, el movimiento no tiene ningún costo así que sientete libre de hacerlo"
+    tutorial "During the game you'll be able to move freely and explore every place; movement has no cost, so feel free to do it"
 
-# TODO: Translation updated at 2026-07-14 19:05
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:135
+translate english quest_mc_quest_0_5978b0f8:
 
-# game/script/characters/mc/quests/mc_quest_0_a.rpy:236
-translate english mc_q0_entrada_locacion_be1445db:
+    # tutorial "Siempre que quieras puedes [colorear_quest('activar')] y [colorear_quest('desactivar')] la ayuda de movimiento con el [colorear_quest('boton del ojo')] que tendras en la [colorear_quest('barra de acciones')] de la locacion"
+    tutorial "Whenever you want, you can [colorear_quest('enable')] and [colorear_quest('disable')] the movement help with the [colorear_quest('eye button')] in the location's [colorear_quest('action bar')]"
 
-    # tutorial "[_mcq0_msg_ubi]"
-    tutorial "[_mcq0_msg_ubi]"
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:136
+translate english quest_mc_quest_0_1f4c8e58:
 
-# game/script/characters/mc/quests/mc_quest_0_a.rpy:241
-translate english mc_q0_entrada_locacion_db8e73af:
+    # tutorial "Una vez que estes familiarizado con el movimiento, dentro del [colorear_quest('celular')] en las [colorear_quest('opciones')] podras directamente [colorear_quest('desactivarla')] si así lo prefieres"
+    tutorial "Once you're familiar with moving around, inside the [colorear_quest('phone')] under [colorear_quest('options')] you can [colorear_quest('disable it')] directly if you prefer"
 
-    # tutorial "[_mcq0_msg_falt]"
-    tutorial "[_mcq0_msg_falt]"
-
-# game/script/characters/mc/quests/mc_quest_0_a.rpy:264
-translate english mc_q0_exploracion_completada_5071f5a9:
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:137
+translate english quest_mc_quest_0_5071f5a9:
 
     # tutorial "Tambien tendras una forma adicional para moverte por la casa si prefieres algo mas directo. En el [colorear_quest('Menu superior')] tienes 4 botones, [colorear_quest('el que tiene el icono de la casa')] te despliega una lista con todas las locaciones a las que te puedes mover"
     tutorial "You'll also have another way to move around the house if you prefer something more direct. In the [colorear_quest('Top menu')] you have 4 buttons; [colorear_quest('the one with the house icon')] opens a list of every location you can move to"
 
-# game/script/characters/mc/quests/mc_quest_0_a.rpy:265
-translate english mc_q0_exploracion_completada_32b15603:
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:138
+translate english quest_mc_quest_0_32b15603:
 
     # tutorial "En esta lista tambien veras la locacion en la que te encuentras actualmente, y las locaciones en la que se encuentran los otros [colorear_quest('personajes')]"
     tutorial "In that list you'll also see the location you're currently in, and where the other [colorear_quest('characters')] are"
+
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:127
+translate english quest_mc_quest_0_5d728743:
+
+    # piensa "Qué nostalgia, han pasado años desde la última vez que estuve en esta casa"
+    piensa "How nostalgic. It's been years since the last time I was in this house"
+
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:129
+translate english quest_mc_quest_0_9caaca48:
+
+    # piensa "Me gustaría ver qué tanto cambió"
+    piensa "I'd like to see how much it changed"
+
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:131
+translate english quest_mc_quest_0_5d62c5f7:
+
+    # tutorial "Para movernos por una locación lo podemos hacer haciendo click en puntos de movimiento (Normalmente estarán ubicados en puertas o escaleras)"
+    tutorial "To move around a location you can click on the movement points (usually placed on doors or stairs)"
+
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:132
+translate english quest_mc_quest_0_418d6a1f:
+
+    # tutorial "O mediante el panel de movimiento rápido que se encuentra en la parte superior de la pantalla y tiene el icono de una casa"
+    tutorial "Or through the fast travel panel at the top of the screen, the one with the house icon"
+
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:172
+translate english mc_q0_mudanza_7061337b:
+
+    # piensa "Bueno... Mónica dijo que mis cosas están en el [colorear_locacion('Garage')]"
+    piensa "Well... Monica said my things are in the [colorear_locacion('Garage')]"
+
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:194
+translate english mc_q0_entrada_garage_ab58c71b:
+
+    # tutorial "Al entrar a una locación tendremos un menú flotante con las acciones disponibles a realizar en ese lugar"
+    tutorial "When you enter a location a floating menu will show the actions available in that place"
+
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:195
+translate english mc_q0_entrada_garage_4a631f71:
+
+    # tutorial "Esta es la forma de interactuar con los elementos de cada lugar"
+    tutorial "This is how you interact with the things in each place"
+
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:248
+translate english mudanza_hmc_generico_2c8c1a37:
+
+    # piensa "Momento de empezar a acomodar todo"
+    piensa "Time to start putting everything away"
+
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:287
+translate english mc_q0_mudanza_completada_665d278c:
+
+    # piensa "Listo. Ya está todo acomodado"
+    piensa "Done. Everything's put away now"
+
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:288
+translate english mc_q0_mudanza_completada_23d1f128:
+
+    # piensa "Mónica dijo que íbamos a salir por la [colorear_quest('noche')]. Todavía falta algo de tiempo"
+    piensa "Monica said we'd go out at [colorear_quest('night')], there's still some time left"
+
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:291
+translate english mc_q0_mudanza_completada_416ad368:
+
+    # tutorial "Para pasar el tiempo haz click en el botón central de la parte superior de la pantalla"
+    tutorial "To pass the time click the center button at the top of the screen"
+
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:381
+translate english mc_q0_inicio_directo_52578465:
+
+    # piensa "Mejor duermo. Mañana será un día nuevo para ponerme al día con las chicas"
+    piensa "I'd better sleep; tomorrow will be a new day to catch up with the girls"
+
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:403
+translate english mc_q0_siguiente_etapa_139ddd46:
+
+    # piensa "Estoy agotado, no sé si fue por la mudanza, por el viaje, por mi padre..."
+    piensa "I'm exhausted. I don't know if it was the move, the trip, my father..."
+
+# game/script/characters/mc/quests/mc_quest_0_a.rpy:417
+translate english mc_q0_siguiente_etapa_340edf1c:
+
+    # tutorial "Para pasar al día siguiente haz click sobre la cama"
+    tutorial "To move on to the next day click on the bed"
 

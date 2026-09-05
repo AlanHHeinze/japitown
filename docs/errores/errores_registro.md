@@ -26,6 +26,11 @@
 >
 > **Aparte (no son bugs):** 2 reportes de `Exception: Error de prueba forzado
 > desde el panel de cheats` — mis pruebas de Sentry (botón 💥). Excluidos.
+>
+> **Los dos dumps crudos ya no están en el repo.** `errores.txt` y `errores2.txt`
+> eran los pegados de Discord de 0.1.7 y se borraron en la limpieza de la raíz —
+> todo lo que decían quedó destilado acá. Si hiciera falta el texto original,
+> siguen en la historia de git (`git show a139c9d:errores2.txt`).
 
 ---
 

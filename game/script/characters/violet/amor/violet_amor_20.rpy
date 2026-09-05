@@ -55,12 +55,12 @@ init python:
         """Pista de ETAPA_BOTON_LISTO — cambia con el tramo."""
         _f = getattr(store, 'va20_fase', 0)
         if _f == 0:
-            return renpy.translate_string("No se que jugar podria preguntarle a Violet")
+            return renpy.translate_string("No sé qué jugar, podría preguntarle a Violet")
         if _f == 1:
-            return renpy.translate_string("Violet me recomendo un juego, tendria que conseguirlo")
+            return renpy.translate_string("Violet me recomendó un juego, tendría que conseguirlo")
         if _f == 2:
             return renpy.translate_string("Ya tengo el juego, ahora falta jugarlo con ella")
-        return renpy.translate_string("Estuvo bueno el juego, deberia decirselo")
+        return renpy.translate_string("Estuvo bueno el juego, debería decírselo")
 
     def _quehacer_va20_listo():
         """Que hacer en ETAPA_BOTON_LISTO — idem."""
@@ -68,9 +68,9 @@ init python:
         if _f == 0:
             return renpy.translate_string("Hablar con Violet")
         if _f == 1:
-            return renpy.translate_string("Comprar el juego en mi habitacion")
+            return renpy.translate_string("Comprar el juego en mi habitación")
         if _f == 2:
-            return renpy.translate_string("Jugar de noche en mi habitacion")
+            return renpy.translate_string("Jugar de noche en mi habitación")
         return renpy.translate_string("Hablar con Violet")
 
     # ── Condiciones de los disparadores ──────────────────────────────────────
@@ -175,59 +175,70 @@ label violet_amor_20_recomendacion:
         show violet_parada c_rbase_base ca_base o_base b_none at right
     with sprite_normal
 
+    show mc_parado_base b_hablando c_rbase_idea with sprite_normal
+    mc "Necesito una recomendación de tu parte"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show mc_parado_base b_hablando
-    mc "Necesito una recomendacion de tu parte"
-    show mc_parado_base b_none
+    show violet_parada b_hablando c_rbase_pensando with sprite_normal
+    violet "¿Sobre qué?"
+    show violet_parada b_none c_rbase_base with sprite_normal
 
-    show violet_parada b_hablando c_rbase_pensando with sprite_fast
-    violet "¿Sobre que?"
+    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_normal
+    mc "Estoy buscando algo que jugar y no se me ocurre qué"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
+
+    show violet_parada b_hablando c_rbase_pensando with sprite_normal
+    violet "¿Qué género?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_fast
-    mc "Estoy buscando algo que jugar y no se me ocurre que"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_idea with sprite_normal
+    mc "Algo de acción, muchos tiros y explosiones si puede ser"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_parada b_hablando
-    violet "¿Que genero?"
-    show violet_parada b_none
-
-    show mc_parado_base b_hablando c_rbase_idea with sprite_fast
-    mc "Algo de accion, muchos tiros y explosiones si puede ser"
-    show mc_parado_base b_none c_rbase_idea with sprite_fast
-
-    show violet_parada b_hablando c_rbase_base with sprite_fast
+    show violet_parada b_hablando c_rbase_base with sprite_normal
     violet "Con unos amigos estamos jugando al Infernodivers II"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando
-    mc "¿De que trata?"
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
+    mc "¿De qué trata?"
     show mc_parado_base b_none
 
     show violet_parada b_hablando
     violet "De impartir democracia a lo largo del universo y salvar niños"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_pensando with sprite_fast
-    mc "¿Y eso es de accion?"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "¿Y eso es de acción?"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
+
+    show violet_parada b_hablando c_rbase_gestito with sprite_normal
+    violet "De la buena, no te vas a arrepentir"
+    show violet_parada b_none c_rbase_base with sprite_normal
+
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "Bueno, tendría que comprarlo. ¿Es muy caro?"
+    show mc_parado_base b_none c_rbase_brazoscruzados with sprite_normal
 
     show violet_parada b_hablando
-    violet "De la buena"
+    violet "No, y creo que está en oferta con un 30%% de descuento por el mes de la democracia"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Bueno tendria que comprarlo"
+    mc "Jajaja, suena raro, bueno te aviso cuando lo tenga"
     show mc_parado_base b_none
 
     show violet_parada b_hablando
-    violet "Cuando lo tengas y escribime para jugar juntos"
+    violet "Sí, últimamente con mis amigos lo jugamos casi todas las noches y hay un lugar en el equipo"
+    show violet_parada b_hablandochica
+    violet "Te voy a estar esperando"
     show violet_parada b_none
 
-
-    hide mc_parado_base
     hide violet_parada
     with dissolve
+
+    piensa "Bueno, ya tengo la recomendación, ahora tengo que ir a la pc y comprar el juego"
+
+    hide mc_parado_base with dissolve
 
     # Se va el boton de Violet y aparece el de comprar en la habitacion.
     $ va20_fase = 1
@@ -263,8 +274,8 @@ label violet_amor_20_comprar:
     # (Mc cuerpo pensando ojos base boca neutral)
     show mc_parado_base c_rbase_pensando o_base b_none at center with sprite_normal
 
-    piensa "Bueno ya tengo el juego, costo una buena moneda pero en los videos se veia prometedor"
-    piensa "Podria probarlo"
+    piensa "Bueno, ya tengo el juego, costó una buena moneda pero en los videos se veía prometedor"
+    piensa "Podría probarlo"
 
     hide mc_parado_base with dissolve
 
@@ -293,12 +304,12 @@ label violet_amor_20_jugar:
 
     if horario_actual != 2:
         $ _blk_guardar_toque()
-        piensa "Violet no suele estar conectada a esta hora, podria intentarlo de noche"
+        piensa "Violet no suele estar conectada a esta hora, podría intentarlo de noche"
         return
 
     if not _va20_violet_conectada():
         $ _blk_guardar_toque()
-        piensa "Violet no esta conectada ahora"
+        piensa "Violet no está conectada ahora"
         return
 
     jump quest_violet_amor_04
@@ -331,7 +342,7 @@ label violet_jugar_suelto:
     # asi que puede volver a probar mas tarde el mismo dia.
     if not _vj_disponible:
         $ _blk_guardar_toque()
-        piensa "Violet no esta conectada ahora"
+        piensa "Violet no está conectada ahora"
         return
 
     $ sistema_acciones.marcar_usada("va20_jugar")
@@ -342,8 +353,8 @@ label violet_jugar_suelto:
     window show
 
     if _vj_se_une:
-        $ obtener_npc("violet").modificar_stat1(2)
-        piensa "Violet se unio y jugamos algunas partidas juntos"
+        $ obtener_npc("violet").modificar_stat1(1)
+        piensa "Violet se unió y jugamos algunas partidas juntos"
     else:
         piensa "Jugar solo no es lo mismo"
 
@@ -368,7 +379,7 @@ label quest_violet_amor_04:
     $ avanzar_horario()
 
     scene black with fade
-    show text Text(renpy.translate_string("Algunas partidas mas tarde"),
+    show text Text(renpy.translate_string("Algunas partidas más tarde"),
                    size=50, color="#FFFFFF",
                    outlines=[(2, "#000000", 0, 0)]) at truecenter
     pause 2.0
@@ -381,8 +392,8 @@ label quest_violet_amor_04:
     show mc_parado_base c_rbase_base o_base b_none at center
     with fade
 
-    piensa "Eso estuvo intenso, pero no pare de morirme"
-    piensa "Violet y sus amigos ya jugaban muy bien, voy a tener que practicar"
+    piensa "Al final el juego superó mis expectativas, no paré de morirme y sentirme abrumado por la cantidad de enemigos pero eso fue lo divertido"
+    piensa "Espero ir mejorando para no ser una carga, aunque sus amigos me hicieron sentir muy cómodo y me ayudaron todo el tiempo"
 
     hide mc_parado_base with dissolve
 
@@ -416,19 +427,44 @@ label violet_amor_20_hablar:
     # CONTENIDO — le dice que le gusto y ella propone repetir
     # =========================================================================
 
-    show mc_parado_base b_hablando
-    mc "Me encanto el juego, lleno de enemigos por todos lados, tiros, las explosiones son geniales"
-    show mc_parado_base b_none
+    show mc_parado_base b_hablando c_rbase_confianza with sprite_normal
+    mc "Me encantó el juego, lleno de enemigos por todos lados, tiros, las explosiones son geniales"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_parada b_hablando
-    violet "Jajaja se te ve emocionado"
-    show violet_parada b_hablandochica
-    violet "Cuando quieras podemos volver a jugar"
+    show violet_parada b_hablando c_rbase_pensando with sprite_normal
+    violet "También estaba lleno de pedazos tuyos por todos lados jajaja"
+    show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_normal
+    violet "Pero es normal, estás jugando una dificultad muy alta"
     show violet_parada b_none
 
-    hide mc_parado_base
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "Hacía mucho que no jugábamos un video juego juntos"
+    show mc_parado_base b_none c_rbase_brazoscruzados with sprite_normal
+
+    show violet_parada b_hablando
+    violet "No te pongas en ese mood"
+    show violet_parada b_hablandochica
+    violet "Si quieres jugar algo y estoy conectada seguro me puedo conectar"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando
+    mc "Eso espero, ahora quedé con ganas de más"
+    show mc_parado_base b_none
+
+    show violet_parada b_hablandochica
+    violet "Nos vemos después"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando
+    mc "Adiós"
+    show mc_parado_base b_none
+
     hide violet_parada
     with dissolve
+
+    piensa "Violet suele conectarse a jugar por la noche, si quiero volver a jugar con ella, ese es el mejor horario para intentarlo"
+
+    hide mc_parado_base with dissolve
 
     $ va20_fase = 4
     $ completar_quest_actual("violet", quest_id="violet_amor_04")

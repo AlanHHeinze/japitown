@@ -64,7 +64,7 @@ init 6 python:
     chat_jasmine_quest0 = GrupoMensajes(
         id="jasmine_chat_quest0",
         npc_id="jasmine",
-        mensaje_inicial="Gracias por el conjunto que me regalaste, me encantó! Mañana lo voy a empezar a usar 😊",
+        mensaje_inicial="Gracias por el conjunto que me regalaste, ¡me encantó! Mañana lo voy a empezar a usar 😊",
         trigger_id="jasmine_questprincipal_0_b",
         momento_locacion="casa_hjasmine",
         momento_horario=3,
@@ -84,14 +84,14 @@ init 6 python:
                 opciones_jugador=[
                     # --- Ruta 1 (normal): dos opciones ---
                     OpcionRespuesta(
-                        texto="Estoy muy contento que te haya gustado",
+                        texto="Estoy muy contento de que te haya gustado",
                         respuesta_npc="❤️",
                         puntos={},
                         condicion=_jasmine_chat_cond_normal
                     ),
                     OpcionRespuesta(
                         texto="Lo sabía, soy muy bueno eligiendo regalos",
-                        respuesta_npc="Jajaja sí que tienes ego 😂",
+                        respuesta_npc="Jajaja, sí que tienes ego 😂",
                         puntos={},
                         condicion=_jasmine_chat_cond_normal
                     ),

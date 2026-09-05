@@ -26,8 +26,8 @@ translate english strings:
     old "Mejor termino de recorrer la casa antes"
     new "Better to finish looking around the house first"
 
-    old "Monica dijo que las cosas están en el garage"
-    new "Monica said the things are in the garage"
+    old "Mónica dijo que las cosas están en el Garage"
+    new "Monica said the things are in the Garage"
 
     old "No es el momento."
     new "It's not the time."

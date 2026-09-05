@@ -1,0 +1,188 @@
+TEXTOS TUTORIAL DEL JUEGO
+==============================================================================
+
+Total: 66 lineas `tutorial` en 11 archivos.
+
+El numero entre corchetes es la cantidad de caracteres del texto,
+para tener a mano cuanto hay para recortar en cada uno.
+
+
+==============================================================================
+game/script/characters/mc/quests/mc_quest_0_a.rpy
+==============================================================================
+
+  label quest_mc_quest_0:
+
+    L131   [147]  "Aprendamos como movernos. Todos los puntos de movimiento están remarcados en la pantalla, al hacer click en uno nos llevara a la locacion conectada"
+    L132   [103]  "A medida que durante el juego te muevas por la casa, la iras conociendo mejor y moverte sea algo simple"
+    L133   [238]  "Ahora vamos a centrarnos en 4 locaciones que son las que conectan a la mayoría.{w} El [colorear_locacion('Living')], el [colorear_locacion('Patio')], el [colorear_locacion('Pasillo de abajo')] y el [colorear_locacion('Pasillo de arriba')]"
+    L134   [136]  "Durante el juego te podras mover libremente y explorar cada lugar, el movimiento no tiene ningún costo así que sientete libre de hacerlo"
+    L135   [222]  "Siempre que quieras puedes [colorear_quest('activar')] y [colorear_quest('desactivar')] la ayuda de movimiento con el [colorear_quest('boton del ojo')] que tendras en la [colorear_quest('barra de acciones')] de la locacion"
+    L136   [198]  "Una vez que estes familiarizado con el movimiento, dentro del [colorear_quest('celular')] en las [colorear_quest('opciones')] podras directamente [colorear_quest('desactivarla')] si así lo prefieres"
+    L137   [276]  "Tambien tendras una forma adicional para moverte por la casa si prefieres algo mas directo. En el [colorear_quest('Menu superior')] tienes 4 botones, [colorear_quest('el que tiene el icono de la casa')] te despliega una lista con todas las locaciones a las que te puedes mover"
+    L138   [158]  "En esta lista tambien veras la locacion en la que te encuentras actualmente, y las locaciones en la que se encuentran los otros [colorear_quest('personajes')]"
+
+  label mc_q0_entrada_garage:
+
+    L200   [139]  "Al entrar a una locacion tendremos un [colorear_quest('menu flotante')] con las [colorear_quest('acciones')] que podremos hacer en la misma"
+    L201   [ 89]  "Algunas [colorear_quest('acciones')] estaran siempre disponibles al entrar a una locacion"
+    L202   [126]  "Mientras que otras solo estaran disponibles durante una parte de una [colorear_quest('quest')] o un [colorear_quest('evento')]"
+    L203   [ 89]  "Ahora vamos a usar la acción de [colorear_quest('acción mudanza')] para recoger las cajas"
+
+  label mc_q0_mudanza_completada:
+
+    L299   [ 66]  "Hacer algunas acciones o quest avanzaran el tiempo automaticamente"
+    L300   [159]  "También puedes avanzarlo de forma manual haciendo [colorear_quest('haciendo click en el indicador de horario')] que se encuentra al centro de la parte superior"
+    L301   [ 39]  "Prueba avanzar el tiempo hasta la noche"
+
+  label mc_q0_siguiente_etapa:
+
+    L425   [ 71]  "Para pasar al día siguiente haz [colorear_quest('click sobre la cama')]"
+
+==============================================================================
+game/script/characters/mc/quests/mc_quest_0_b.rpy
+==============================================================================
+
+  label mc_q0b_trigger:
+
+    L69    [111]  "Durante el juego tendrás acceso a una [colorear_quest('Guia')] que te ayudará a saber qué hacer en cada momento"
+    L70    [129]  "Dentro del [colorear_quest('Celular')] encontrarás la [colorear_quest('App Pistas')], ahí podrás ver el estado actual de la quest"
+    L71    [306]  "Y en la pestaña [colorear_quest('Que Hacer')] te dira exactamente como avanzar en la misma\nNOTA: Los presonajes tienen [colorear_quest('Rutinas Fijas')], [colorear_quest('Dinamicas')] y [colorear_quest('Especiales')], por lo que no siempre encontrara al personaje en la locacion y horario que se te indica"
+    L72    [ 83]  "Ahora vamos a probarlo, [colorear_quest('Abri el celilar y entra a la App Pistas')]"
+
+  label mc_q0b_completar:
+
+    L115   [ 22]  "Perfecto, así de fácil"
+    L116   [105]  "Durante el juego podrás consultar la app de Pistas en el celular para saber cuál es tu siguiente objetivo"
+    L117   [101]  "Cada vez que completes una quest o avances en la historia, las pistas se actualizarán automáticamente"
+
+==============================================================================
+game/script/characters/monica/quests/monica_quest_0_a.rpy
+==============================================================================
+
+  label tutorial_elecciones_monica:
+
+    L175   [214]  "A lo largo del desarrollo de la historia de un personaje nos iremos encontrando varias veces con distintas opciones para elegir. Estas representan la manera en la que nuestro personaje va a actuar ante la situación"
+    L176   [176]  "Estas elecciones afectan el desarrollo inmediato como también a largo plazo. Los personajes recordaran las elecciones elegidas y actuaran en relación a ello en ciertos momentos"
+    L177   [131]  "Aparte de los cambios narrativos algunas elecciones podrian darnos recompensas especiales, como estadisticas, objetos, escenas, etc"
+
+==============================================================================
+game/script/characters/monica/quests/monica_quest_0_b.rpy
+==============================================================================
+
+  label quest_monica_questprincipal_0_b:
+
+    L159   [142]  "Acabás de [colorear_quest('Recibir Objeto')]: la notebook de Monica. Los objetos que consigues se guardan en tu [colorear_quest('Inventario')]"
+    L160   [198]  "Puedes abrir el inventario desde el [colorear_quest('Icono de la Mochila')] en la parte superiro derecha, desde ahí, revisar y usar los objetos que tengas [colorear_quest('Haciendo Click')] en ellos"
+    L161   [119]  "Algunos objenos no se pueden usar desde el inventario, sirven para ser utilizados en algún momento especifico del juego"
+    L162   [182]  "Mientras que otros si puedes usarlos desde el mismo. Al usarlos disparara su acción relacionada o te indicara si hay algún requisito adicional para hacer, como una locacion o horario"
+    L163   [117]  "Prueba [colorear_item('Notebook de Monica')] desde el inventario cuando estés en [colorear_locacion('Tu Habitacion')]"
+
+==============================================================================
+game/script/characters/monica/quests/monica_quest_0_c.rpy
+==============================================================================
+
+  label quest_monica_questprincipal_0_c:
+
+    L52    [161]  "Dentro del [colorear_quest('Celular')] hay una [colorear_quest('App Tienda')]	a donde podras conseguir todos los [colorear_quest('Objetos Comprables')] del juego"
+    L53    [228]  "Todos los articulos van a tener tres indicadores: Su [colorear_quest('Costo')], el [colorear_quest('Stock')] en tienda (la mayoria de los articulos se reponen nuevamente los lunes) y los [colorear_quest('Dias hasta la Entrega')]"
+    L54    [247]  "Cuando el [colorear_quest('Dia de Entrega')] llegue tendras un [colorear_quest('Recordatorio al Despertar')], podras salir por la mañana hasta el [colorear_locacion('Frente')] y recoger el pedido [colorear_quest('Interactuando con el Repartidor')]"
+    L55    [108]  "Si no lo haces alguien recogera el paquete por ti y lo dejara [colorear_quest('Sobre tu Cama por la Tarde')]"
+    L56    [230]  "Para conseguir más [colorear_quest('Dinero')]	puedes hacer la [colorear_quest('Accion Trabajar')] disponible en [colorear_locacion('Tu Habitacion')]. Cada turno te da $20 y avanza el horario. Puedes trabajar hasta 2 veces por día."
+
+==============================================================================
+game/script/characters/violet/quests/violet_quest_0_a.rpy
+==============================================================================
+
+  label quest_violet_questprincipal_0_a:
+
+    L79    [144]  "Durante el transcurso del juego puede que necesitemos mejorar nuestra [colorear_quest('relacion con un personaje')] para avanzar en alguna quest"
+    L80    [127]  "Cada personaje tiene [colorear_quest('dos estadisticas')] que representan esto: [colorear_quest('el amor (❤️) y el deseo (💋)')]"
+    L81    [150]  "La mejora de estos también nos desbloqueara recompensas especiales en situaciones especificas a lo largo del desarrollo de la historia de un personaje"
+    L82    [160]  "La forma más directa de mejorarlos es usando la interaccion [colorear_quest('Hablar')] que veremos en el [colorear_quest('Menu del Personaje')] al hacerle click"
+    L83    [ 78]  "Prueba [colorear_quest('Hablar con Violet')] para mejorar tu relación con ella"
+
+  label violet_q0a_talk_sistema:
+
+    L115   [241]  "Durante la interaccion de hablar se nos presentara el [colorear_quest('Estado Actual')] del personaje. Cada día el personaje tendra de manera aleatoria un [colorear_quest('Estado Basico')] o podra tener un [colorear_quest('Estado Especial')]"
+    L116   [243]  "Los estados especiales se consiguen con acciones especificas y dan mejores recompensas que los estados basicos. Por ejemplo una quest podría hacer que el personaje gane el estado Feliz y nuestra interaccion de hablar se veria afectada por esto"
+    L117   [242]  "Luego tendremos las [colorear_quest('Aproximaciones')], que representan de que manera nuestro personaje se comporta. Habra cinco aproximaciones basicas y también tendremos [colorear_quest('Aproximaciones Especiales')] al igual que los estados"
+    L118   [243]  "Las aproximaciones especiales, al igual que los estados, dependeran de factores externos y nos daran mejores recompensas. Por ejemplo si un personaje tiene el estado Hambre y disponemos de un item de comida, tendremos una aproximacion especial"
+    L119   [135]  "Este sistema se convertira en un minijuego de opciones que nos premiara ir conociendo mejor al personaje con el que vamos a interactuar"
+    L120   [  9]  "Empecemos"
+
+  label violet_q0a_golosinas:
+
+    L241   [226]  "En las futuras interacciones no veremos las recompensas asociadas a la aproximacion. Pero [colorear_quest('Mejorando los Atributos')] de nuestro personaje iremos ganando distintas [colorear_quest('Ventajas')] para este sistema"
+    L242   [201]  "Al terminar la interaccion obtendremos la recompensa, si usamos algún consumible este se ira, el tiempo avanzara y tendremos que esperar hasta el siguiente día para volver a hacer uso de la Interaccion"
+
+==============================================================================
+game/script/characters/violet/quests/violet_quest_0_b.rpy
+==============================================================================
+
+  label tutorial_elecciones_violet:
+
+    L131   [214]  "A lo largo del desarrollo de la historia de un personaje nos iremos encontrando varias veces con distintas opciones para elegir. Estas representan la manera en la que nuestro personaje va a actuar ante la situación"
+    L132   [176]  "Estas elecciones afectan el desarrollo inmediato como también a largo plazo. Los personajes recordaran las elecciones elegidas y actuaran en relación a ello en ciertos momentos"
+    L133   [131]  "Aparte de los cambios narrativos algunas elecciones podrian darnos recompensas especiales, como estadisticas, objetos, escenas, etc"
+
+==============================================================================
+game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy
+==============================================================================
+
+  label tutorial_elecciones_jasmine:
+
+    L125   [214]  "A lo largo del desarrollo de la historia de un personaje nos iremos encontrando varias veces con distintas opciones para elegir. Estas representan la manera en la que nuestro personaje va a actuar ante la situación"
+    L126   [176]  "Estas elecciones afectan el desarrollo inmediato como también a largo plazo. Los personajes recordaran las elecciones elegidas y actuaran en relación a ello en ciertos momentos"
+    L127   [131]  "Aparte de los cambios narrativos algunas elecciones podrian darnos recompensas especiales, como estadisticas, objetos, escenas, etc"
+
+==============================================================================
+game/script/characters/jasmine/quests/jasmine_quest_0_b.rpy
+==============================================================================
+
+  label quest_jasmine_questprincipal_0_b:
+
+    L35    [160]  "En varios momentos del juego recibiremos [colorear_quest('Mensajes')] de los personajes atravez del [colorear_quest('Celular')] y podremos interactuar con ellos"
+    L36    [188]  "Por el momento solo lo haremos de forma pasiva, respondiendo mensajes que nos llegan y completando la cadena. En futuras actualizaciones este sistema se expandera y traera funciones nuevas"
+    L37    [134]  "Darnos cuenta que recibimos un mensaje sera simple, veremos una [colorear_quest('Notificacion')] moviendose sobre el icono del celular"
+    L38    [148]  "Esta notificacion la veremos también sobre la [colorear_quest('App Chat')] y sobre los personajes que tengan [colorear_quest('Mensajes Pendientes')]"
+    L39    [205]  "Al entrar en su conversación, debajo tendremos la opcion de [colorear_quest('Responder')], esta estara en [colorear_quest('Verde')] si hay respuestas disponibles y en [colorear_quest('Gris')] si no las hay"
+    L40    [200]  "Al interactuar con el boton se respondera un mensaje de [colorear_quest('Manera Automatica')] salvo que tengamos [colorear_quest('Opciones para Elegir')]. En ese caso las mismas saldran como una lista"
+    L41    [210]  "Al igual que dentro de una quest las distintas elecciones traeran cambios narrativos, se guardaran en los [colorear_quest('Recuerdos del Personaje')] y puede darnos distintas recompensas siempre que corresponda"
+    L42    [214]  "El sistema de mensajes esta conectado con el resto de los sistemas del juego por lo que en algunos casos la respuesta del mensaje o la respuesta recibida por el personaje puede verse afectada por elementos externos"
+    L43    [ 73]  "Ahora [colorear_quest('Respondamos el Mensaje')] pendiente para continuar"
+
+==============================================================================
+game/script/characters/violet/quests/violet_quest_09_a.rpy
+==============================================================================
+
+  label violet_quest09a_inicio:
+
+    L155   [114]  "Este tipo de misiones solo estaran disponible durante un tiempo, el cierre de la misma cambiara segun tus acciones"
+
+==============================================================================
+game/script/core/shopping/usar_pocion_conquista.rpy
+==============================================================================
+
+  label usar_pocion_conquista:
+
+    L33    [ 13]  "[_pocion_txt]"
+
+
+==============================================================================
+RESUMEN POR ARCHIVO
+==============================================================================
+
+  16  lineas   2256 caracteres   game/script/characters/mc/quests/mc_quest_0_a.rpy
+  7   lineas    857 caracteres   game/script/characters/mc/quests/mc_quest_0_b.rpy
+  3   lineas    521 caracteres   game/script/characters/monica/quests/monica_quest_0_a.rpy
+  5   lineas    758 caracteres   game/script/characters/monica/quests/monica_quest_0_b.rpy
+  5   lineas    974 caracteres   game/script/characters/monica/quests/monica_quest_0_c.rpy
+  13  lineas   2199 caracteres   game/script/characters/violet/quests/violet_quest_0_a.rpy
+  3   lineas    521 caracteres   game/script/characters/violet/quests/violet_quest_0_b.rpy
+  3   lineas    521 caracteres   game/script/characters/jasmine/quests/jasmine_quest_0_a.rpy
+  9   lineas   1532 caracteres   game/script/characters/jasmine/quests/jasmine_quest_0_b.rpy
+  1   lineas    114 caracteres   game/script/characters/violet/quests/violet_quest_09_a.rpy
+  1   lineas     13 caracteres   game/script/core/shopping/usar_pocion_conquista.rpy
+
+  66  lineas  10266 caracteres   TOTAL

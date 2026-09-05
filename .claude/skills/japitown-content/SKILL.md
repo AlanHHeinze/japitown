@@ -9,7 +9,7 @@ Juego Ren'Py (visual novel). **Todo el contenido nuevo va en español** (código
 comentarios, variables, diálogos, pistas). Este es EL único documento de trabajo;
 reemplaza a los antiguos `creacion.md`, `funcionamiento.md`, `creacion_screens.md`
 y `expresiones_referencia.md` (fusionados acá el 2026-07-31, tras la tanda de
-optimización registrada en `optimizacion.md`).
+optimización registrada en `docs/arquitectura/optimizacion.md`).
 
 ---
 
@@ -739,7 +739,7 @@ tiene tres listas excluyentes:
 | **Assets** | las piezas sueltas de quests y minijuegos |
 | **Zonas** | rectángulos invisibles: se crean, arrastran y redimensionan |
 
-Se arrastra, **Guardar** escribe en `posiciones_idle.txt` (append, nunca pisa) y
+Se arrastra, **Guardar** escribe en `tools/posiciones_idle.txt` (append, nunca pisa) y
 de ahí se pega a una tabla en el archivo del contenido:
 
 ```python
@@ -845,7 +845,7 @@ armar escenas para no asumir la ropa.
 
 ## 9. Testing
 
-Guía completa en `testing_sistemas.md` (raíz). Harness:
+Guía completa en `docs/arquitectura/testing_sistemas.md`. Harness:
 `game/script/core/utils/test_rutas.rpy` — en partida descartable, consola (Shift+O):
 
 ```

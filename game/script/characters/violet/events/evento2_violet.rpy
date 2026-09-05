@@ -70,7 +70,7 @@ label evento2_violet:
 
     # img1
     show violet_evento_02 img1 with dissolve
-    
+
     violet "¿Este era el cosplay que tanto querías ver?"
     mc "Sí... te queda muy bien"
 
@@ -78,7 +78,7 @@ label evento2_violet:
     show violet_evento_02 img2 with dissolve
     violet "¿Me lo vuelvo a poner o me lo termino de quitar?"
     mc "Ehhh"
-    
+
 
     # img3
     show violet_evento_02 img3 with dissolve
@@ -88,12 +88,12 @@ label evento2_violet:
 
     # img5
     show violet_evento_02 img5 with dissolve
-    violet "¿Esto querías ver? Perverido"
+    violet "¿Esto querías ver? Pervertido"
     mc "Sí, estaba deseando ese trasero"
 
     # img6
     show violet_evento_02 img6 with dissolve
-    violet "Bueno entonces veni a buscarlo"
+    violet "Bueno, entonces ven a buscarlo"
 
 
     hide violet_evento_02 with dissolve
@@ -124,7 +124,7 @@ label evento2_violet_repetir:
 
     scene violet_evento02_fondo with fade
 
-    piensa "No puedo dejar de pensar en el trasero de violet..."
+    piensa "No puedo dejar de pensar en el trasero de Violet..."
     piensa "Tengo ese sueño grabado en la cabeza"
 
     # img1
@@ -142,7 +142,7 @@ label evento2_violet_repetir:
     # img6
     show violet_evento_02 img6 with dissolve
     pause 1.0
-    
+
     piensa "Esto me va a terminar volviendo loco"
 
     hide violet_evento_02 with dissolve

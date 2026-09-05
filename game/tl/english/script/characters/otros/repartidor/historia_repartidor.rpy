@@ -109,3 +109,29 @@ translate english entrega_repartidor_0_f168ffdd:
 
     # repartidor "¿Qué?"
     repartidor "What?"
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/otros/repartidor/historia_repartidor.rpy:40
+translate english entrega_repartidor_0_97b062b1:
+
+    # repartidor "Hola, ¿pedido para [mc_name]?"
+    repartidor "Hi there — delivery for [mc_name]?"
+
+# game/script/characters/otros/repartidor/historia_repartidor.rpy:52
+translate english entrega_repartidor_0_94320f7a:
+
+    # mc "Sí, acabo de mudarme. Esta será mi casa a partir de ahora"
+    mc "Yeah, just moved in. This is home now."
+
+# game/script/characters/otros/repartidor/historia_repartidor.rpy:56
+translate english entrega_repartidor_0_005016b8:
+
+    # repartidor "Qué afortunado..."
+    repartidor "Lucky you..."
+
+# game/script/characters/otros/repartidor/historia_repartidor.rpy:79
+translate english entrega_repartidor_0_3626cfda:
+
+    # repartidor "Que tengas un buen día"
+    repartidor "Have a great day."
+

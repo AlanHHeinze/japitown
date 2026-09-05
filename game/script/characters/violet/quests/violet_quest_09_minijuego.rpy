@@ -15,9 +15,9 @@
 ## puede secar lo que esta tapado: primero hay que sacarle remera y pantalones.
 ##
 ## LO QUE SE DIBUJA, de abajo hacia arriba:
-##     cama_fondo → los 8 sudores → tanga/remera/pantalones → colcha → boca
+##     cama_fondo → los 8 sudores → tanga/remera/pantalones → colcha → cara
 ##
-## NO ES UN LAYEREDIMAGE (salvo la boca). Los sudores necesitan ALPHA propio por
+## NO ES UN LAYEREDIMAGE (salvo la cara). Los sudores necesitan ALPHA propio por
 ## pieza —33%, 66%, fuera— y un layeredimage no sabe hacer eso: sus atributos
 ## solo se prenden y se apagan. Asi que la escena se compone en la screen, con
 ## un `add` por pieza leyendo el estado.
@@ -55,6 +55,15 @@ init -1 python:
     # Toques antes de que salte la conversacion de una zona.
     VQ9_TOQUES_PARA_CHARLA = 4
 
+    # Sudores COMPLETAMENTE secos a partir de los cuales la cara en reposo pasa
+    # de neutra a sonriendo: se va sintiendo mejor a medida que la secan.
+    VQ9_SUDORES_PARA_SONRISA = 2
+
+    # Toques en una zona intima a partir de los cuales se pone colorada. Se mide
+    # sobre los pechos, o sobre la pelvis PERO solo los toques que ocurrieron
+    # con la tanga ya fuera.
+    VQ9_TOQUES_PARA_VERGUENZA = 3
+
     # Cuidado minimo (violet_enferma_atencion) para que la deje sacarle la tanga.
     VQ9_CUIDADO_PARA_TANGA = 3
 
@@ -63,8 +72,8 @@ init -1 python:
     # Salen de la herramienta (tecla P → Assets) y se pegan tal cual: la
     # herramienta exporta con el mismo anclaje que usa la screen.
     #
-    # La colcha y las dos bocas NO estan acá: son de 1920x1080 y caen solas
-    # sobre la cama, no necesitan coordenada.
+    # La colcha y las piezas de la cara NO estan acá: son de 1920x1080 y caen
+    # solas sobre la cama, no necesitan coordenada.
     VQ9_POS = {
         "sudor_pelo":            (159, 324),
         "sudor_cara":            (234, 425),
@@ -125,6 +134,11 @@ default vq9_toques_tanga = 0
 default vq9_toques_pechos = 0
 default vq9_toques_pelvis = 0
 
+# Toques en la pelvis que ocurrieron CON LA TANGA YA FUERA. Va aparte de
+# vq9_toques_pelvis porque la verguenza cuenta solo estos: tocarla tres veces
+# por encima de la ropa no es lo mismo.
+default vq9_toques_pelvis_desnuda = 0
+
 # Violet dejo sacarle la tanga (se evalua una vez, al cuarto toque).
 default vq9_tanga_permitida = False
 
@@ -143,16 +157,17 @@ default vq9_colcha = True
 # mientras lee.
 default vq9_hablando = False
 
-# Atributo del layeredimage vq9_boca que toca dibujar ahora.
+# Atributos del layeredimage vq9_boca que tocan dibujar ahora, uno por grupo.
 #
-# La boca NO se muestra con `show`: eso la manda a la capa master, que queda
+# La cara NO se muestra con `show`: eso la manda a la capa master, que queda
 # DEBAJO de las screens — o sea tapada por la escena entera. Va como estado y la
 # dibuja la screen, al final de todo para quedar por encima.
+#
+# Son TRES variables y no una porque los grupos son independientes: se puede
+# estar hablando con cara de placer y colorada al mismo tiempo.
 default vq9_boca_estado = "b_none"
-
-# Lo pone el menu de salir y lo lee el bucle. No se guarda en el save a
-# proposito: es de una sola vuelta.
-default _vq9_salir_confirmado = False
+default vq9_ojos_estado = "o_none"
+default vq9_ot_estado = "ot_none"
 
 # Copia de las entradas de config.mouse que pisa el minijuego, para poder
 # devolverlas al salir.
@@ -231,6 +246,70 @@ init python:
         store.violet_enferma_atencion = valor
         renpy.notify("Cuidado de Violet: {}".format(valor))
 
+    # ── La cara ──────────────────────────────────────────────────────────────
+    # Tres grupos que se combinan y NO se manejan igual:
+    #
+    #   boca   estado momentaneo — vuelve al reposo cuando termina de hablar,
+    #          y ese reposo cambia solo (neutra → sonriendo) a medida que la
+    #          secan.
+    #   ojos   momentaneo, solo para el gemido.
+    #   ot     PERMANENTE — una vez que se pone colorada, se queda asi.
+
+    def _vq9_sudores_secos():
+        """Cuantos sudores estan completamente borrados."""
+        return sum(1 for _s in VQ9_SUDORES if not _vq9_sudor_vivo(_s))
+
+    def _vq9_boca_reposo():
+        """Que boca queda cuando no esta hablando."""
+        if _vq9_sudores_secos() >= VQ9_SUDORES_PARA_SONRISA:
+            return "b_sonrisa"
+        return "b_none"
+
+    def _vq9_cara_reposo():
+        """
+        Devuelve la cara a como esta cuando no pasa nada.
+
+        NO toca el grupo `ot` a proposito: la verguenza es permanente.
+        """
+        store.vq9_boca_estado = _vq9_boca_reposo()
+        store.vq9_ojos_estado = "o_none"
+
+    def _vq9_cara_gemido():
+        """La cara del gemido: se muerde el labio y pone los ojos de placer."""
+        store.vq9_boca_estado = "b_mordiendo"
+        store.vq9_ojos_estado = "o_placer"
+
+    def _vq9_actualizar_verguenza():
+        """
+        Prende la verguenza si ya se la gano, y no la apaga nunca mas.
+
+        Lo llama vq9_hablar_inicio, o sea que el cambio se ve al ARRANCAR el
+        dialogo del toque que cumplio la condicion, no despues.
+        """
+        if store.vq9_ot_estado == "ot_verguenza":
+            return
+        _pelvis = getattr(store, 'vq9_toques_pelvis_desnuda', 0)
+        _pechos = getattr(store, 'vq9_toques_pechos', 0)
+        if (_pelvis >= VQ9_TOQUES_PARA_VERGUENZA
+                or _pechos >= VQ9_TOQUES_PARA_VERGUENZA):
+            store.vq9_ot_estado = "ot_verguenza"
+
+    def _vq9_cara():
+        """
+        Nombre de imagen de la cara con los tres grupos combinados, o None si no
+        hay nada que dibujar.
+
+        Devolver None cuando los tres estan en `none` es solo prolijidad —
+        dibujar tres Null() no rompe nada, pero asi no se arma la imagen al
+        pedo en cada refresco de la screen.
+        """
+        _b = getattr(store, 'vq9_boca_estado', "b_none")
+        _o = getattr(store, 'vq9_ojos_estado', "o_none")
+        _t = getattr(store, 'vq9_ot_estado', "ot_none")
+        if _b == "b_none" and _o == "o_none" and _t == "ot_none":
+            return None
+        return "vq9_boca " + _b + " " + _o + " " + _t
+
     def _vq9_sacar_ropa(prenda):
         """Le saca una prenda. La tanga NO pasa por acá: tiene su propio flujo."""
         if prenda in store.vq9_ropa_puesta:
@@ -240,11 +319,17 @@ init python:
 
 
 ################################################################################
-## Layeredimage de la boca
+## Layeredimage de la cara
 ################################################################################
-## Lo unico que SI es layeredimage: son tres estados excluyentes sin alpha
-## propio, o sea justo lo que un layeredimage hace bien. Las dos imagenes son de
-## 1920x1080, asi que caen solas sobre la cama.
+## Lo unico que SI es layeredimage: estados excluyentes sin alpha propio, o sea
+## justo lo que un layeredimage hace bien. TODAS las imagenes son de 1920x1080,
+## asi que caen solas sobre la cama y no llevan coordenada.
+##
+## TRES GRUPOS INDEPENDIENTES, y cada uno arranca en `none`: la boca puede estar
+## hablando con los ojos normales, o puede haber verguenza sin boca. Se combinan
+## libremente porque el estado de cada grupo es su propia variable.
+##
+## Los grupos se dibujan EN ORDEN DE DECLARACION, o sea `ot` arriba de todo.
 
 layeredimage vq9_boca:
 
@@ -255,6 +340,22 @@ layeredimage vq9_boca:
             "images/quest/violet/quest9/boca_hablando.webp"
         attribute b_hablandochica:
             "images/quest/violet/quest9/boca_hablandochica.webp"
+        attribute b_mordiendo:
+            "images/quest/violet/quest9/boca_mordiendo.webp"
+        attribute b_sonrisa:
+            "images/quest/violet/quest9/boca_sonrisa.webp"
+
+    group ojos:
+        attribute o_none default:
+            Null()
+        attribute o_placer:
+            "images/quest/violet/quest9/ojos_placer.webp"
+
+    group ot:
+        attribute ot_none default:
+            Null()
+        attribute ot_verguenza:
+            "images/quest/violet/quest9/ot_verguenza.webp"
 
 
 ################################################################################
@@ -291,10 +392,14 @@ screen vq9_escena():
     if vq9_colcha:
         add _vq9_img("colcha_puesta")
 
-    # La boca, ARRIBA DE TODO: es lo unico que se anima mientras habla y no
-    # tiene que taparla ninguna pieza.
-    if vq9_boca_estado != "b_none":
-        add ("vq9_boca " + vq9_boca_estado)
+    # La cara (boca + ojos + ot), ARRIBA DE TODO: es lo unico que cambia
+    # mientras habla y no tiene que taparla ninguna pieza.
+    #
+    # Se saltea cuando los tres grupos estan en none — dibujar tres Null() no
+    # rompe nada, pero asi no se arma la imagen al pedo en cada refresco.
+    $ _cara = _vq9_cara()
+    if _cara:
+        add _cara
 
 
 ################################################################################
@@ -486,11 +591,15 @@ label test_vq9_minijuego:
         vq9_toques_tanga = 0
         vq9_toques_pechos = 0
         vq9_toques_pelvis = 0
+        vq9_toques_pelvis_desnuda = 0
         vq9_tanga_permitida = False
         vq9_boton_boca = False
         vq9_boton_victoria = False
         vq9_completo = False
         vq9_colcha = False
+        vq9_boca_estado = "b_none"
+        vq9_ojos_estado = "o_none"
+        vq9_ot_estado = "ot_none"
 
     $ vq9_cursor_ocultar()
     with fade
@@ -544,9 +653,8 @@ label vq9_bucle:
             call vq9_proximamente from _call_vq9_b_prox
 
         elif _vq9_tipo == "salir":
-            call vq9_intentar_salir from _call_vq9_b_salir
-            if _vq9_salir_confirmado:
-                $ _vq9_jugando = False
+            call vq9_salir from _call_vq9_b_salir
+            $ _vq9_jugando = False
 
     # La screen NO se baja acá: si se bajara, por un frame se veria la capa
     # master —que todavia tiene el fondo de la habitacion de la escena previa—
@@ -566,6 +674,7 @@ label vq9_bucle:
 
 label vq9_hablar_inicio:
     $ vq9_hablando = True
+    $ _vq9_actualizar_verguenza()
     window show
     return
 
@@ -586,15 +695,15 @@ label vq9_aviso_ropa_mojada:
     if not vq9_aviso_ropa:
         $ vq9_aviso_ropa = True
 
-        piensa "Tiene la ropa empapada, se la tendria que quitar"
+        piensa "Tiene la ropa empapada, se la tendría que quitar"
 
-        mc "Violet tenes toda la ropa mojada"
+        mc "Violet, tienes toda la ropa mojada"
 
         $ vq9_boca_estado = "b_hablando"
         violet "¿Me la puedes quitar por favor?"
-        $ vq9_boca_estado = "b_none"
+        $ _vq9_cara_reposo()
 
-        mc "Si"
+        mc "Sí"
 
     else:
         piensa "Debo quitarle la ropa primero (Dejar la toalla)"
@@ -618,6 +727,10 @@ label vq9_click_sudor(sid):
         return
 
     $ _vq9_secar(sid)
+
+    # Si ese toque fue el que borro el segundo sudor, la sonrisa tiene que
+    # aparecer AHORA — no en el proximo dialogo.
+    $ _vq9_cara_reposo()
 
     if vq9_completo:
         call vq9_charla_final from _call_vq9_sudor_final
@@ -663,9 +776,9 @@ label vq9_click_tanga:
     call vq9_hablar_inicio from _call_vq9_tanga_ini
 
     if vq9_toques_tanga < VQ9_TOQUES_PARA_CHARLA:
-        $ vq9_boca_estado = "b_hablandochica"
+        $ _vq9_cara_gemido()
         violet "Mmmh..."
-        $ vq9_boca_estado = "b_none"
+        $ _vq9_cara_reposo()
 
     elif vq9_toques_tanga == VQ9_TOQUES_PARA_CHARLA:
         # El recuerdo se avisa ANTES de que hable: asi el jugador entiende que
@@ -675,18 +788,18 @@ label vq9_click_tanga:
         if getattr(store, 'violet_enferma_atencion', 0) >= VQ9_CUIDADO_PARA_TANGA:
             $ vq9_tanga_permitida = True
             $ vq9_boca_estado = "b_hablando"
-            violet "Si quieres sacala"
-            $ vq9_boca_estado = "b_none"
+            violet "Si quieres, sácala"
+            $ _vq9_cara_reposo()
         else:
             $ vq9_boca_estado = "b_hablando"
             violet "No te lo ganaste"
-            $ vq9_boca_estado = "b_none"
+            $ _vq9_cara_reposo()
 
     else:
         # Sigue tocando sin permiso: vuelve al gemido.
-        $ vq9_boca_estado = "b_hablandochica"
+        $ _vq9_cara_gemido()
         violet "Mmmh..."
-        $ vq9_boca_estado = "b_none"
+        $ _vq9_cara_reposo()
 
     call vq9_hablar_fin from _call_vq9_tanga_fin
     return
@@ -704,22 +817,22 @@ label vq9_click_pechos:
 
         $ vq9_boca_estado = "b_hablando"
         violet "¿Te gustan?"
-        $ vq9_boca_estado = "b_none"
+        $ _vq9_cara_reposo()
 
         mc "Todo de ti me gustan"
 
         $ vq9_boca_estado = "b_hablando"
-        violet "Si fueran mas grandes seria mejor"
-        $ vq9_boca_estado = "b_none"
+        violet "Si fueran más grandes sería mejor"
+        $ _vq9_cara_reposo()
 
         mc "Tienen su encanto, para grande ya tenemos la cola"
 
         $ vq9_boton_boca = True
 
     else:
-        $ vq9_boca_estado = "b_hablandochica"
+        $ _vq9_cara_gemido()
         violet "Mmmh..."
-        $ vq9_boca_estado = "b_none"
+        $ _vq9_cara_reposo()
 
     call vq9_hablar_fin from _call_vq9_pechos_fin
     return
@@ -731,26 +844,30 @@ label vq9_click_pelvis:
 
     $ vq9_toques_pelvis += 1
 
+    # La cuenta que mira la verguenza es solo la de los toques sin la tanga.
+    if "tanga" not in vq9_ropa_puesta:
+        $ vq9_toques_pelvis_desnuda += 1
+
     call vq9_hablar_inicio from _call_vq9_pelvis_ini
 
     if vq9_toques_pelvis == VQ9_TOQUES_PARA_CHARLA:
 
         $ vq9_boca_estado = "b_hablando"
         violet "Estoy muy caliente y no es por la fiebre"
-        $ vq9_boca_estado = "b_none"
+        $ _vq9_cara_reposo()
 
-        mc "No me puedo resistir cuando se trata de vos"
+        mc "No me puedo resistir cuando se trata de ti"
 
         $ vq9_boca_estado = "b_hablando"
         violet "Nunca dije que te resistas"
-        $ vq9_boca_estado = "b_none"
+        $ _vq9_cara_reposo()
 
         $ vq9_boton_victoria = True
 
     else:
-        $ vq9_boca_estado = "b_hablandochica"
+        $ _vq9_cara_gemido()
         violet "Mmmh..."
-        $ vq9_boca_estado = "b_none"
+        $ _vq9_cara_reposo()
 
     call vq9_hablar_fin from _call_vq9_pelvis_fin
     return
@@ -760,7 +877,7 @@ label vq9_click_pelvis:
 
 label vq9_proximamente:
     call vq9_hablar_inicio from _call_vq9_prox_ini
-    "Este contenido se incluira en futuras actualizaciones"
+    "Este contenido se incluirá en futuras actualizaciones"
     call vq9_hablar_fin from _call_vq9_prox_fin
     return
 
@@ -776,7 +893,7 @@ label vq9_charla_final:
 
     $ vq9_boca_estado = "b_hablando"
     violet "..."
-    $ vq9_boca_estado = "b_none"
+    $ _vq9_cara_reposo()
 
     mc "..."
 
@@ -784,30 +901,36 @@ label vq9_charla_final:
     return
 
 
-label vq9_intentar_salir:
+label vq9_salir:
 
-    $ _vq9_salir_confirmado = False
+    # ANTES ACA HABIA UN MENU "¿Salgo de la habitacion?" con Si/No. Se saco: el
+    # boton ya no lleva a irse sino a quedarse, asi que preguntar si sale y que
+    # el "Si" termine en dormir con ella era contradictorio. Igual no hace falta
+    # protegerlo de un click accidental: el boton recien aparece con los ocho
+    # sudores secos, o sea que es un "ya termine" deliberado.
 
     call vq9_hablar_inicio from _call_vq9_salir_ini
 
-    menu:
-        "¿Salgo de la habitación?"
+    $ vq9_boca_estado = "b_hablando"
+    violet "¿Te quedas a dormir conmigo?"
+    $ _vq9_cara_reposo()
 
-        "Si":
-            $ _vq9_salir_confirmado = True
-
-        "No":
-            pass
+    mc "Sí"
 
     call vq9_hablar_fin from _call_vq9_salir_fin
     return
 
 
 ################################################################################
-## La escena de cierre y el dia siguiente
+## El cierre — se queda a dormir con ella
 ################################################################################
-## ⚠️ SIN ARTE NI CONTENIDO todavia. Los labels existen para que el arco cierre
-## y la quest no quede colgada.
+## HASTA ACA LLEGA EL ARCO POR AHORA. La escena de la mañana siguiente todavia
+## no existe, asi que en vez de dejarla con dialogo sin escribir se avisa con un
+## cartel y la quest cierra al dormir.
+##
+## El label `vq9_despertar` que habia despues se elimino junto con el cartel: sus
+## dos `piensa` eran marcadores vacios y no habia forma de llegar a el sin pasar
+## por acá.
 
 label vq9_cierre:
 
@@ -822,17 +945,13 @@ label vq9_cierre:
     hide screen vq9_escena
     with fade
 
-    # =========================================================================
-    # CONTENIDO — pendiente (falta el arte)
-    # =========================================================================
-
-    violet "..."
-
-    mc "..."
-
-    # =========================================================================
-    # FIN DEL CONTENIDO
-    # =========================================================================
+    # El cartel espera el CLICK y no un `pause` con segundos: es un aviso para
+    # leer, no un efecto.
+    show text Text(renpy.translate_string("Continuará en la siguiente actualización"),
+                   size=50, color="#FFFFFF",
+                   outlines=[(2, "#000000", 0, 0)]) at truecenter
+    pause
+    hide text with dissolve
 
     # Se duerme AHI, en la habitacion de Violet. El autoguardado va justo
     # despues, como en accion_dormir — nunca adentro de dormir().
@@ -840,32 +959,8 @@ label vq9_cierre:
     $ dormir()
     $ autoguardar_partida()
 
-    jump vq9_despertar
-
-
-label vq9_despertar:
-
-    # Amanece en la pieza de Violet: no volvio a la suya.
+    # Amanece en su pieza: no volvio a la suya.
     $ sistema_locaciones.mover_a_locacion("casa_hviolet")
-
-    $ _vq9_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
-    scene expression _vq9_bg with fade
-
-    # (Mc cuerpo pensando ojos base boca neutral)
-    show mc_parado_base c_rbase_pensando o_base b_none at center with sprite_normal
-
-    # =========================================================================
-    # CONTENIDO — lo que le quedo dando vueltas
-    # =========================================================================
-
-    piensa "..."
-    piensa "..."
-
-    # =========================================================================
-    # FIN DEL CONTENIDO
-    # =========================================================================
-
-    hide mc_parado_base with dissolve
 
     $ vq9b_rama = "cerrado"
     $ marcar_npc_disponible("violet")

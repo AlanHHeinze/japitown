@@ -36,7 +36,7 @@ label quest_jasmine_questprincipal_0_c:
     show jasmine_paradadeportiva b_none with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva c_animacion2 b_hablando with sprite_normal
-    jasmine "Mira como me queda"
+    jasmine "Mira cómo me queda"
     show jasmine_paradadeportiva b_none with sprite_normal
 
     # MC Habla
@@ -46,7 +46,7 @@ label quest_jasmine_questprincipal_0_c:
 
     # Jasmine habla
     show jasmine_paradadeportiva c_animacion3 b_hablando with sprite_normal
-    jasmine "Es super elastica"
+    jasmine "Es súper elástica"
     show jasmine_paradadeportiva b_none with sprite_normal
     show jasmine_paradadeportiva c_animacion4 o_abajonm with sprite_normal
     pause 0.3
@@ -94,7 +94,7 @@ label quest_jasmine_questprincipal_0_c:
     pause 0.3
     show jasmine_paradadeportiva c_animacion17 with sprite_normal
     show jasmine_paradadeportiva b_hablando o_base with sprite_normal
-    jasmine "Vez lo que te digo"
+    jasmine "Ves lo que te digo"
     show jasmine_paradadeportiva b_none with sprite_normal
 
     # MC Habla

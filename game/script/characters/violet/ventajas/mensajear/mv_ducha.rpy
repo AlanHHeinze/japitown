@@ -49,8 +49,8 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Se me acelero el corazon de solo imaginarlo",
-                        respuesta_npc=["¿De imaginar que?", "😊"],
+                        texto="Se me aceleró el corazón de solo imaginarlo",
+                        respuesta_npc=["¿De imaginar qué?", "😊"],
                         saltar_a_paso=1,
                     ),
                 ]
@@ -84,13 +84,13 @@ init 6 python:
         "ducha", "violet_mv_ducha",
         condicion=_mv_ducha_condicion,
         prioridad=5,
-        saludo="¿Estas para jugar algo?",
+        saludo="¿Estás para jugar algo?",
     )
 
     registrar_contenido_ventaja(
         "mensajear", "ducha", "violet",
         "Justo antes de la ducha",
-        "Escribile de noche, mientras esté en el baño a punto de bañarse.",
+        "Escríbele de noche, mientras esté en el baño a punto de bañarse.",
         vista=_mv_ducha_vista,
         orden=20,
     )

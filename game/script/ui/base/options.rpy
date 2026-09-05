@@ -29,7 +29,7 @@ define gui.show_name = True
 ## ⚠️ Al cambiarla hay que agregarle su fila a JP_HISTORIAL_SAVES
 ## (core/utils/compatibilidad_saves.rpy), diciendo si rompe o no los saves de la
 ## version anterior. Si falta, el juego no arranca en desarrollo y te avisa.
-define config.version = "0.1.9"
+define config.version = "0.1.9(test)"
 
 
 ## Text that is placed on the game's about screen. Place the text between the
@@ -280,7 +280,7 @@ init python:
 
     ## Archivar imágenes en .rpa. En el build web reduce cientos de requests
     ## HTTP sueltos (uno por imagen, on-demand) a unos pocos → muchos menos
-    ## puntos de falla de descarga (ver E04 en errores_registro.md). Incluye
+    ## puntos de falla de descarga (ver E04 en docs/errores/errores_registro.md). Incluye
     ## .webp porque los sprites (los más numerosos) usan ese formato.
     build.classify('game/**.png', 'archive')
     build.classify('game/**.jpg', 'archive')

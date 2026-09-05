@@ -168,3 +168,119 @@ translate english violet_q4d4_avisar_74b055b0:
     # piensa "No creo que me lo muestre, ya hice suficiente esfuerzo, hay que saber cuando rendirse"
     piensa "I don't think she's ever going to show me. I've put in enough effort, and you have to know when to give up"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:44
+translate english violet_q4d4_pedido_46bcf299:
+
+    # violet "¿Y ahora qué podría querer?"
+    violet "And what could I possibly want now?"
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:52
+translate english violet_q4d4_pedido_5d8929d6:
+
+    # mc "Si no quieres nada, no hay problema..."
+    mc "If you don't want anything, no problem..."
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:60
+translate english violet_q4d4_pedido_dd3d2d1f:
+
+    # mc "Podríamos pedir a la noche entonces"
+    mc "We could order tonight then"
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:64
+translate english violet_q4d4_pedido_bec7b172:
+
+    # violet "No, quiero que las hagas tú"
+    violet "No, I want you to make it"
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:70
+translate english violet_q4d4_pedido_970413de:
+
+    # mc "Ok... está bien, hago pizzas para cenar"
+    mc "Ok... fine, I'll make pizza for dinner"
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:74
+translate english violet_q4d4_pedido_ce96bb8b:
+
+    # violet "Avísame cuando estén listas"
+    violet "Let me know when it's ready"
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:103
+translate english violet_q4d4_recordatorio_5f4eb82a:
+
+    # violet "Todavía estoy esperando las pizzas"
+    violet "I'm still waiting for that pizza"
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:107
+translate english violet_q4d4_recordatorio_e4ffe6ef:
+
+    # mc "Sí, ya me acuerdo, no te preocupes"
+    mc "Yeah, I remember, don't worry"
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:157
+translate english violet_q4d4_cocinar_9aecdcfb:
+
+    # piensa "Si la veo de buen humor podría preguntarle por las otras fotos"
+    piensa "If I catch her in a good mood I could ask her about the other photos"
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:216
+translate english violet_q4d4_avisar_1c6cca9f:
+
+    # violet "¿Qué pasa?"
+    violet "What is it?"
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:218
+translate english violet_q4d4_avisar_d1b7e8db:
+
+    # violet "¿Ya están las pizzas?"
+    violet "Is the pizza ready?"
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:222
+translate english violet_q4d4_avisar_6573dd0c:
+
+    # mc "Sí, ya están listas, me pediste que venga a avisarte"
+    mc "Yeah, it's ready. You asked me to come tell you"
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:230
+translate english violet_q4d4_avisar_f2494095:
+
+    # mc "¿Nada más?"
+    mc "Nothing else?"
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:234
+translate english violet_q4d4_avisar_f692a658:
+
+    # violet "¿Nada más de qué?"
+    violet "Nothing else about what?"
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:238
+translate english violet_q4d4_avisar_6c06171b:
+
+    # mc "No sé, me hiciste subir a avisarte..."
+    mc "I don't know, you made me come all the way up to tell you..."
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:242
+translate english violet_q4d4_avisar_963ec606:
+
+    # violet "¿Estabas esperando algo más?"
+    violet "Were you expecting something else?"
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:252
+translate english violet_q4d4_avisar_63e332a0:
+
+    # violet "Nos vemos luego, [mc_name]"
+    violet "See you later, [mc_name]"
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:260
+translate english violet_q4d4_avisar_fb380302:
+
+    # piensa "Empiezo a tener sospechas de que sabe lo que estoy esperando y se está abusando"
+    piensa "I'm starting to suspect she knows what I'm waiting for and she's taking advantage of it"
+
+# game/script/characters/violet/quests/violet_quest_04_d4.rpy:261
+translate english violet_q4d4_avisar_f6fde3cf:
+
+    # piensa "No creo que me lo muestre, ya hice suficiente esfuerzo, hay que saber cuándo rendirse"
+    piensa "I don't think she's ever going to show me. I've put in enough effort, and you have to know when to give up"
+

@@ -45,14 +45,14 @@ init 10 python:
         """Inicializa todos los eventos de Mónica."""
 
         # =====================================================================
-        # EVENTO 1: Monica adolorida
+        # EVENTO 1: Mónica adolorida
         # =====================================================================
         # Se dispara 2 dias despues de completar quest 0
         # Al interactuar en living por la tarde, ejecuta escena
 
         event_monica_01 = Event(
             id="monica_event_01",
-            nombre="Monica adolorida",
+            nombre="Mónica adolorida",
             tipo=TIPO_EVENT_ESPORADICO,
             prioridad=10,
             condicion_aparicion=condicion_aparicion_event1_monica,
@@ -60,14 +60,14 @@ init 10 python:
             label_efecto="event_monica_01_narrativa",
             descripcion="Mónica se estuvo quejando de dolor en sus hombros",
             npc_id="monica",
-            mensaje_pista="Podría ver a Monica en la tarde y ofrecerle un masaje.",
-            mensaje_que_hacer="Habla con Monica cuando esté en el living por la tarde.",
+            mensaje_pista="Podría ver a Mónica en la tarde y ofrecerle un masaje.",
+            mensaje_que_hacer="Habla con Mónica cuando esté en el Living por la tarde.",
             condicion_cierre_texto="",
             mensaje_despertar="Mónica se quejó de dolor en sus hombros, podría hacerle un masaje en la tarde.",
             config_etapas={
                 ESTADO_EVENT_VISIBLE: ConfigEtapa(
-                    pista="Podría ver a Monica en la tarde y ofrecerle un masaje.",
-                    que_hacer="Habla con Monica cuando esté en el living por la tarde.",
+                    pista="Podría ver a Mónica en la tarde y ofrecerle un masaje.",
+                    que_hacer="Habla con Mónica cuando esté en el Living por la tarde.",
                     mensaje_despertar="Mónica se quejó de dolor en sus hombros, podría hacerle un masaje en la tarde.",
                 ),
             },

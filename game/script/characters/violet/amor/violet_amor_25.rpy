@@ -65,10 +65,44 @@ init python:
         """Que hacer en ETAPA_CONDICIONES: el umbral primero, la espera despues."""
         if obtener_stat1("violet") < 25:
             return _quehacer_amor_violet(25)
-        _d = _va25_dias_hasta_domingo()
+        return _va25_texto_espera()
+
+    def _va25_texto_espera():
+        """"Esperar N dias" hasta el domingo en que la escena puede arrancar."""
+        _d = _va25_dias_hasta_arranque()
         if _d == 1:
-            return renpy.translate_string("Esperar 1 dia")
-        return renpy.translate_string("Esperar {} dias").format(_d)
+            return renpy.translate_string("Esperar 1 dia, hasta el domingo")
+        return renpy.translate_string("Esperar {} dias, hasta el domingo").format(_d)
+
+    def _va25_dias_hasta_arranque():
+        """
+        Dias hasta el domingo en que ESTA quest puede arrancar.
+
+        No es lo mismo que "dias hasta el domingo": la escena se dispara al
+        DESPERTAR un domingo (trigger de dormir, fase "despues"). Si hoy ya es
+        domingo y la quest todavia esta en fase 0, es que el jugador llego al
+        umbral con el domingo empezado y esa ventana ya paso — hay que esperar
+        al siguiente, o sea 7 dias y no 0.
+        """
+        _d = _va25_dias_hasta_domingo()
+        return _d if _d else 7
+
+    def _pista_va25_listo():
+        """
+        Pista de ETAPA_BOTON_LISTO.
+
+        Esta etapa NO significa "anda a hablar con ella", que es lo que decia el
+        texto por defecto de la linea de amor. Acá no hay boton: la quest ya
+        tiene todo cumplido y solo falta que llegue el domingo. Pasa cuando el
+        jugador alcanza los 25 de amor un domingo ya empezado: el requisito de
+        dia se cumple al toque, la etapa avanza —las etapas nunca vuelven
+        atras— y la escena recien puede correr el domingo siguiente.
+        """
+        return "El domingo no voy a tener nada que hacer, es un buen dia para estar con Violet"
+
+    def _quehacer_va25_listo():
+        """Que hacer en ETAPA_BOTON_LISTO: el mismo contador, no un boton."""
+        return _va25_texto_espera()
 
     # ── Condiciones de los disparadores ──────────────────────────────────────
 
@@ -171,6 +205,20 @@ init python:
         """Opcion "Entrar" de la puerta, solo durante el corte de luz."""
         return _va25_activa() and getattr(store, 'va25_fase', 0) == 4
 
+    def _va25_puerta_exclusiva():
+        """
+        Desde que arranca el domingo, su puerta es SOLO cosa de esta quest.
+
+        Sin esto, al subir en el corte de luz aparecia "Devolver mangas" al lado
+        de "Entrar": las opciones de puerta de las otras quests siguen vivas
+        mientras su quest lo este, y no saben nada del domingo.
+
+        Pide fase >= 1 y no solo que la quest este lista, por lo mismo que
+        _va25_bloquear_dormir: hasta que el domingo empieza, el resto del juego
+        sigue como siempre.
+        """
+        return _va25_activa() and getattr(store, 'va25_fase', 0) >= 1
+
     def _va25_puerta_durmiendo():
         """
         Durante el dia libre Violet duerme y no se la molesta. Es un bloqueo de
@@ -198,9 +246,22 @@ init 5 python:
     # estas dos van acá porque son de esta quest y de ningun otro lado.
     registrar_opcion_puerta("violet", "Entrar",
                             "violet_amor_25_puerta_entrar", _va25_puerta_entrar,
-                            ocultar_golpear=True)
+                            ocultar_golpear=True,
+                            quest_id="violet_amor_05")
     registrar_bloqueo_golpe("violet", _va25_puerta_durmiendo,
                             "Violet esta durmiendo")
+
+    # Mientras esta el boton de "Matar el tiempo", su menu es SOLO eso: no hay
+    # que ofrecerle besarla ni pedirle ropa nueva en el medio de la tarde que
+    # estan matando juntos. Se reusa la condicion del propio boton para que las
+    # dos cosas no se puedan desfasar: cuando el boton esta, es el unico.
+    registrar_menu_exclusivo("violet", _va25_boton_matar_tiempo,
+                             "violet_amor_25_matar_tiempo")
+
+    # Y su PUERTA es solo de esta quest mientras dure el domingo: sin esto, al
+    # subir en el corte de luz salia "Devolver mangas" junto a "Entrar".
+    registrar_menu_exclusivo("violet", _va25_puerta_exclusiva,
+                             "violet_amor_25_puerta_entrar", ambito="puerta")
 
 
 ################################################################################
@@ -218,12 +279,12 @@ label violet_amor_25_despertar:
     # (Mc cuerpo base ojos base boca neutral)
     show mc_parado_base c_rbase_base o_base b_none at center with sprite_normal
 
-    piensa "Hoy tengo el dia libre pero no tengo planes, vere que puedo hacer"
-    piensa "Quizas arregle para salir"
+    piensa "Hoy tengo el día libre pero no tengo planes, veré qué puedo hacer"
+    piensa "Quizás arregle para salir"
 
     # (Mc cuerpo celular)
-    show mc_parado_base c_rbase_celular with sprite_fast
-    piensa "Tengo una llamada perdida de Monica, voy a ver que quiere"
+    show mc_parado_base c_rbase_celular with sprite_normal
+    piensa "Tengo una llamada perdida de Mónica, voy a ver qué quiere"
 
     hide mc_parado_base with dissolve
 
@@ -270,41 +331,41 @@ label violet_amor_25_living:
 
 
     show monica_parada b_hablando
-    monica "Hola [mc_name], con Jasmine vamos a ir al shopping a hacer unas compras y ver una pelicula"
+    monica "Hola [mc_name], con Jasmine vamos a ir al shopping a hacer unas compras y ver una película"
     show monica_parada b_none
 
     show mc_parado_base b_hablando
-    mc "¿Que van a ver?"
+    mc "¿Qué van a ver?"
     show mc_parado_base b_none
 
     show jasmine_parada b_hablando
     jasmine "La moda viste al diablo"
     show jasmine_parada b_none
 
-    show mc_parado_base b_hablando
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
     mc "¿Y Violet no va?"
-    show mc_parado_base b_none
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show monica_parada b_hablando
-    monica "No es su estilo de salida ni de pelica, dijo que se preferia quedar"
-    show monica_parada b_abiertachica
-    monica "Te tengo que pedir un favor tambien"
+    show monica_parada b_hablando c_rbase_brazoscruzados with sprite_normal
+    monica "No es su estilo de salida ni de película, dijo que prefería quedarse"
+    show monica_parada b_hablandochica
+    monica "Te tengo que pedir un favor también"
     show monica_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Si decime"
+    mc "Sí, dime"
     show mc_parado_base b_none
 
     show monica_parada b_hablando
-    monica "Puede que hoy me llegue un paquete, podrias estar atento para recibirlo"
-    show monica_parada b_abiertachica
-    monica "No confio en que Violet este atenta"
+    monica "Puede que hoy me llegue un paquete, podrías estar atento para recibirlo"
+    show monica_parada b_hablandochica
+    monica "No confío en que Violet esté atenta"
     show monica_parada b_none
-    
-    show mc_parado_base b_hablando
-    mc "Si, no hay problema yo voy a quedarme todo el dia en casa"
-    show mc_parado_base b_abiertachica
-    mc "Despreocupate y pasen un lindo dia"
+
+    show mc_parado_base b_hablando c_rbase_idea with sprite_normal
+    mc "Sí, no hay problema, yo voy a quedarme todo el día en casa"
+    show mc_parado_base b_abiertachica c_rbase_base with sprite_normal
+    mc "Despreocúpate y pasen un lindo día"
     show mc_parado_base b_none
 
     show jasmine_parada b_hablando
@@ -312,7 +373,7 @@ label violet_amor_25_living:
     show jasmine_parada b_none
 
     show monica_parada b_hablando
-    monica "Adios"
+    monica "Adiós"
     show monica_parada b_none
 
     # =========================================================================
@@ -323,7 +384,7 @@ label violet_amor_25_living:
     hide jasmine_parada
     with dissolve
 
-    piensa "Tengo todo el dia"
+    piensa "Tengo todo el día"
 
     hide mc_parado_base with dissolve
 
@@ -357,7 +418,7 @@ label violet_amor_25_living:
 label violet_amor_25_pasar_cocina:
     $ ocultar_hud()
     window show
-    piensa "Podria comer algo para pasar el tiempo"
+    piensa "Podría comer algo para pasar el tiempo"
     window hide
     $ mostrar_hud()
     $ avanzar_horario()
@@ -367,7 +428,7 @@ label violet_amor_25_pasar_cocina:
 label violet_amor_25_pasar_tv:
     $ ocultar_hud()
     window show
-    piensa "Podria ver algo para pasar el tiempo"
+    piensa "Podría ver algo para pasar el tiempo"
     window hide
     $ mostrar_hud()
     $ avanzar_horario()
@@ -394,17 +455,17 @@ label violet_amor_25_matar_tiempo:
     # CONTENIDO — matan el rato juntos en el living
     # =========================================================================
 
-    show violet_parada b_hablando
-    violet "¿Que pasa?"
+    show violet_parada b_hablando c_rbase_brazoscruzados with sprite_normal
+    violet "¿Qué pasa?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando
-    mc "Estoy aburrido ¿Miramos alguna pelicual?"
-    show mc_parado_base b_none
+    show mc_parado_base b_hablando c_rbase_idea with sprite_normal
+    mc "Estoy aburrido, ¿miramos alguna película?"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_parada b_hablando
-    violet "Que sea algo de accion"
-    show violet_parada b_none
+    show violet_parada b_hablando c_rbase_pensando with sprite_normal
+    violet "Que sea algo de acción"
+    show violet_parada b_none c_rbase_base with sprite_normal
 
     # =========================================================================
     # FIN DEL CONTENIDO
@@ -437,7 +498,7 @@ label violet_amor_25_noche:
     show mc_parado_base c_rbase_pensando o_base b_none at center with sprite_normal
 
     piensa "Supongo que voy a cocinar algo para los dos, si espero que Violet lo haga voy a morir de hambre antes"
-    piensa "Voy a ver que hay en la cocina"
+    piensa "Voy a ver qué hay en la cocina"
 
     hide mc_parado_base with dissolve
 
@@ -473,7 +534,7 @@ label violet_amor_25_cocinar:
     # CONTENIDO — cocina, y en algun momento se corta la luz
     # =========================================================================
 
-    piensa "Podra hacer unas hamburguesas, algo simple y rapido"
+    piensa "Podría hacer unas hamburguesas, algo simple y rápido"
 
     # ── SE CORTA LA LUZ ──────────────────────────────────────────────────────
     #
@@ -490,10 +551,13 @@ label violet_amor_25_cocinar:
     $ _va25_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
     scene expression _va25_bg
     # (Mc cuerpo base ojos base boca neutral)
-    show mc_parado_base c_rbase_base o_base b_none at center
+    show mc_parado_base c_rbase_facepalm o_abajonm b_seria at center
 
-    piensa "Uhhhh se corto la luz..."
+
+    piensa "Uhhhh se cortó la luz..."
+    show mc_parado_base c_rbase_pensando o_base with sprite_normal
     piensa "No se ve luz afuera tampoco, se ve que el corte es general, no de la casa"
+    show mc_parado_base o_arribanm
     piensa "Le voy a preguntar a Violet si quiere esperar, o comer a oscuras"
 
     # =========================================================================
@@ -557,7 +621,7 @@ label quest_violet_amor_05:
     $ _va25_bg = _va25_loc_hv.obtener_background_por_horario(HORARIO_TRASNOCHE) if _va25_loc_hv else "#1a1a1a"
     scene expression _va25_bg
 
-    
+
     show violet_parada c_rbase_base ca_base o_base b_none at right
     pause 0.2
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
@@ -567,50 +631,50 @@ label quest_violet_amor_05:
     # CONTENIDO — la escena final, solos y a oscuras
     # =========================================================================
 
-    show violet_parada b_hablando
-    violet "¿El corte es general no?"
+    show violet_parada b_hablando c_rbase_brazoscruzados with sprite_normal
+    violet "¿El corte es general, no?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando
-    mc "Parece que si, vamos a tener que esperar que vuelve"
-    show mc_parado_base b_abiertachica
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "Parece que sí, vamos a tener que esperar a que vuelva"
+    show mc_parado_base b_abiertachica c_rbase_pensando with sprite_normal
     mc "¿Sigo cocinando? o ¿Esperamos un poco a ver si vuelve la luz?"
-    show mc_parado_base b_none
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_parada b_hablando
+    show violet_parada b_hablando c_rbase_base with sprite_normal
     violet "Mejor esperamos, no me gusta comer a oscuras"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Bueno, me voy a mi habitacion a acostarme un rato hasta que vuelva"
+    mc "Bueno, me voy a mi habitación a acostarme un rato hasta que vuelva"
     show mc_parado_base b_none
 
-    show violet_parada b_hablando
+    show violet_parada b_hablando c_rbase_base with sprite_normal
     violet "Espera..."
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "¿Que pasa?"
+    mc "¿Qué pasa?"
     show mc_parado_base b_none
 
-    show violet_parada b_hablando
-    violet "Si queres te podes quedar aca acostado hasta que la luz vuelva"
-    show violet_parada b_none
+    show violet_parada b_hablando c_rbase_idea with sprite_normal
+    violet "Si quieres te puedes quedar acá acostado hasta que la luz vuelva"
+    show violet_parada b_none c_rbase_base with sprite_normal
 
-    show mc_parado_base b_hablando
-    mc "Mmmm... ¿Le seguis teniendo miendo a la oscuridad?"
-    show mc_parado_base b_none
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "Mmmm... ¿Le sigues teniendo miedo a la oscuridad?"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_parada b_hablando
+    show violet_parada b_hablando c_rbase_brazoscruzados with sprite_normal
     violet "No"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando
-    mc "Entonces me voy, voy a estar mas comodo en mi cama"
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
+    mc "Entonces me voy, voy a estar más cómodo en mi cama"
     show mc_parado_base b_none
 
     show violet_parada b_hablando
-    violet "Espera... no es que me muera de miedo cuando se esta todo oscuro pero pero si me da un poco"
+    violet "Espera... no es que me muera de miedo cuando está todo oscuro, pero sí me da un poco"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
@@ -618,40 +682,40 @@ label quest_violet_amor_05:
     show mc_parado_base b_none
 
     show violet_parada b_hablando
-    violet "Pero ahora la situacion es distinta, despues de tantas peliculas de terror la imaginacion me da a pensar que cosas terribles pueden pasar"
+    violet "Pero ahora la situación es distinta, después de tantas películas de terror la imaginación me da a pensar que cosas terribles pueden pasar"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
     mc "No va a pasar nada, es solo un corte de luz"
-    show mc_parado_base b_none
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_parada b_hablando
-    violet "¿Y si el corte lo genero un asesino para venir a matarnos?"
-    show violet_parada b_none
+    show violet_parada b_hablando c_rbase_pensando with sprite_normal
+    violet "¿Y si el corte lo generó un asesino para venir a matarnos?"
+    show violet_parada b_none c_rbase_base with sprite_normal
 
     show mc_parado_base b_hablando
     mc "No creo que nadie me quiera matar"
-    show mc_parado_base b_abiertachica
+    show mc_parado_base b_abiertachica c_rbase_pensando with sprite_normal
     mc "¿A ti?"
-    show mc_parado_base b_none
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_parada b_hablando
+    show violet_parada b_hablando c_rbase_pensando with sprite_normal
     violet "En internet no soy un gran ejemplo, sobre todo cuando pierdo en un juego"
-    show violet_parada b_none
+    show violet_parada b_none c_rbase_base with sprite_normal
 
     "¡ÑEEEEEEEEEEEEEEEEEC!"
 
-    show violet_parada b_hablando
+    show violet_parada b_hablando o_abiertos
     violet "¿Eso fue una puerta abajo?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
     mc "Pudo ser el viento"
     show mc_parado_base b_none
 
     "¡Plaf!"
 
-    piensa "¿Que fue eso?"
+    piensa "¿Qué carajos fue eso?"
 
     "¡Plaf! ¡Plaf! ¡Plaf!"
 
@@ -665,10 +729,16 @@ label quest_violet_amor_05:
     #   3. la secuencia: abrazo → beso → vuelve al abrazo
     #
     # El `pause` despues del acercamiento es por el transform: dura 0.8s y sin
-    # esperarlo el cambio de sprites lo cortaria a la mitad.
+    # esperarlo el cambio de sprites lo cortaria a la mitad. Va en 1.2 —los 0.8
+    # del ease mas un respiro— igual que las dos escenas de beso; en 0.2 se
+    # cortaba a un cuarto de camino y el abrazo entraba de golpe.
 
     show violet_parada b_none at npc_acercarse
-    pause 0.2
+    pause 1.2
+    # Y se la planta en el destino. Si el jugador clickeo y corto el `pause`, el
+    # ease quedo a mitad; sin esto, el cuadro del abrazo entra con ella todavia
+    # a mitad de camino y se ve el salto.
+    show violet_parada b_none at npc_cerca
 
     hide mc_parado_base
     hide violet_parada
@@ -688,7 +758,7 @@ label quest_violet_amor_05:
     show beso_amor_violet bv_none
 
     show beso_amor_violet bmc_hablando
-    mc "Yo te digo que nada malo va a pasar, estoy aca con vos y te voy a cuidar"
+    mc "Yo te digo que nada malo va a pasar, estoy acá contigo y te voy a cuidar"
     show beso_amor_violet bmc_none
 
     # De acá hasta el final va de corrido, sin dialogo ni clicks: cada cuadro
@@ -727,18 +797,18 @@ label quest_violet_amor_05:
     show beso_amor_violet bs_4 with sprite_normal
     pause 0.5
 
-    monica "¿Chicos donde estan?"
+    monica "¿Chicos, dónde están?"
 
-    piensa "Asi que eso habia sido el rudio"
+    piensa "Así que eso había sido el ruido"
 
     hide beso_amor_violet with dissolve
 
-    show violet_parada c_rbase_base ca_base o_base b_none ot_verguenza at right
+    show violet_parada c_rbase_base ca_base o_base b_none ot_avergonzada at right
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
     with dissolve
-    
+
     show mc_parado_base b_hablando
-    mc "Ehhh ¿Estas mejor?"
+    mc "Ehhh, ¿estás mejor?"
     show mc_parado_base b_none
 
     show violet_parada b_hablando
@@ -754,8 +824,12 @@ label quest_violet_amor_05:
     # Se mueve de verdad y no solo cambia el fondo: la escena sigue en el living
     # y despues en la pieza del MC, asi que el motor tiene que saber donde esta.
     #
-    # El fondo va con el horario REAL (la luz volvio) y con fade, que es la
-    # transicion de cambio de escena.
+    # LA LUZ SIGUE CORTADA: el fondo se pide explicitamente en trasnoche, igual
+    # que el de la habitacion de Violet. El `horario_visual_override` global ya
+    # se apago al entrar a este label —para no dejar la casa a oscuras si la
+    # escena se corta—, asi que `locacion_actual.background` devolveria el
+    # living ILUMINADO, y ahi mismo Monica dice que el corte agarra a media
+    # ciudad. Con fade, que es la transicion de cambio de escena.
 
     hide mc_parado_base
     hide violet_parada
@@ -763,7 +837,8 @@ label quest_violet_amor_05:
 
     $ sistema_locaciones.mover_a_locacion("casa_living")
 
-    $ _va25_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
+    $ _va25_loc_liv = sistema_locaciones.obtener_locacion("casa_living")
+    $ _va25_bg = _va25_loc_liv.obtener_background_por_horario(HORARIO_TRASNOCHE) if _va25_loc_liv else "#1a1a1a"
     scene expression _va25_bg with fade
 
     # Mismo cuadro de cuatro que la intro y con los mismos transforms
@@ -773,7 +848,7 @@ label quest_violet_amor_05:
     # (Mc cuerpo base ojos base boca neutral)
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
     # (Violet cuerpo base ojos base boca neutral)
-    show violet_parada c_rbase_base ca_base o_base b_none ot_verguenza at grupo3_izq
+    show violet_parada c_rbase_base ca_base o_base b_none ot_avergonzada at grupo3_izq
     # (Jasmine cuerpo base ojos base boca neutral)
     show jasmine_parada c_rbase_base o_base b_none at grupo3_centro
     # (Monica cuerpo base ojos base boca neutral)
@@ -785,43 +860,43 @@ label quest_violet_amor_05:
     # =========================================================================
 
     show mc_parado_base b_hablando
-    mc "Volvieron mas temprano de lo esperado"
+    mc "Volvieron más temprano de lo esperado"
     show mc_parado_base b_none
 
     show monica_parada b_hablando
     monica "El corte de luz es muy grande y afecta a casi toda la ciudad"
-    show monica_parada b_abiertachica
-    monica "El shopping estaba con luces de emergenica y el cine cerrado"
+    show monica_parada b_hablandochica
+    monica "El shopping estaba con luces de emergencia y el cine cerrado"
     show monica_parada b_none
 
     show jasmine_parada b_hablando
-    jasmine "Nos reprogramaron la entrada para el proximo domingo"
+    jasmine "Nos reprogramaron la entrada para el próximo domingo"
     show jasmine_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Uhhhh una lastima"
+    mc "Uhhhh, una lástima"
     show mc_parado_base b_none
 
     show monica_parada b_hablando
     monica "No es tan grave, compramos algo de comida en el camino para cenar todos juntos"
-    show monica_parada b_abiertachica
-    monica "¿Violet estas bien?"
+    show monica_parada b_hablandochica
+    monica "¿Violet, estás bien?"
     show monica_parada b_none
 
     show violet_parada b_hablando
-    violet "Si"
+    violet "Sí"
     show violet_parada b_none
 
     show jasmine_parada b_hablando
-    jasmine "Estas roja ¿No estaras con fiebre no?"
+    jasmine "Estás roja, ¿no estarás con fiebre?"
     show jasmine_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Debe ser que se asusto con los ruidos"
+    mc "Debe ser que se asustó con los ruidos"
     show mc_parado_base b_none
 
     show violet_parada b_hablando
-    violet "No tenia miedo..."
+    violet "No tenía miedo..."
     show violet_parada b_none
 
     show mc_parado_base b_hablando
@@ -829,7 +904,7 @@ label quest_violet_amor_05:
     show mc_parado_base b_none
 
     show monica_parada b_hablando
-    monica "Si comamos antes que se enfrie"
+    monica "Sí, comamos antes de que se enfríe"
     show monica_parada b_none
 
     # ── DESPUES DE LA CENA ───────────────────────────────────────────────────
@@ -845,17 +920,23 @@ label quest_violet_amor_05:
     hide text with dissolve
 
     # ── SU HABITACION — solo, antes de dormir ────────────────────────────────
+    #
+    # La luz TODAVIA no volvio: en ningun momento de la quest se dice que
+    # vuelva, asi que la noche se cierra a oscuras igual que empezo. Mismo
+    # recurso que el living y que la habitacion de Violet — el fondo se pide en
+    # trasnoche a mano, porque el override global ya esta apagado.
 
     $ sistema_locaciones.mover_a_locacion("casa_hmc")
 
-    $ _va25_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
+    $ _va25_loc_hmc = sistema_locaciones.obtener_locacion("casa_hmc")
+    $ _va25_bg = _va25_loc_hmc.obtener_background_por_horario(HORARIO_TRASNOCHE) if _va25_loc_hmc else "#1a1a1a"
     scene expression _va25_bg with fade
 
     # (Mc cuerpo pensando ojos base boca neutral)
     show mc_parado_base c_rbase_pensando o_base b_none at center with sprite_normal
 
-    piensa "Todo paso muy rapido y luego llegaron las chicas, no tuve tiempo de hablar con Violet"
-    piensa "Me pregunto que pensara de esto que paso"
+    piensa "Todo pasó muy rápido y luego llegaron las chicas, no tuve tiempo de hablar con Violet"
+    piensa "Me pregunto qué pensará de esto que pasó"
 
     # =========================================================================
     # FIN DEL CONTENIDO

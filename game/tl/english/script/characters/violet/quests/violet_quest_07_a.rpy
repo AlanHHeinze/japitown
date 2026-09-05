@@ -66,3 +66,17 @@ translate english violet_quest07a_outcome_c_38228a90:
     # mc "Voy a hablar con la tienda para pedir el cambio"
     mc "I'll talk to the store to ask for a replacement"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_07_a.rpy:69
+translate english violet_quest07a_outcome_a_22f5a4b6:
+
+    # violet "Mónica lo pudo destrabar, pero me dijo que el cierre está fallado"
+    violet "Monica managed to unjam it, but she told me the zipper is faulty"
+
+# game/script/characters/violet/quests/violet_quest_07_a.rpy:105
+translate english violet_quest07a_outcome_c_18a005c7:
+
+    # violet "Le pregunté a Mónica si lo podía arreglar y me dijo que no iba a quedar muy bien"
+    violet "I asked Monica if she could fix it and she said it wouldn't turn out very well"
+

@@ -40,7 +40,7 @@ translate english strings:
     old "Con mi gordo trasero no puedo usar esto"
     new "With my fat butt I can't wear this"
 
-    old "Para mi tu trasero es perfecto"
+    old "Para mí tu trasero es perfecto"
     new "Your butt looks perfect to me"
 
     old "..."
@@ -64,31 +64,22 @@ translate english strings:
     old "Jajajaja solo te fui sincero"
     new "Hahaha I was just being honest"
 
-    old "¿Desde el principio esto era lo que querias?"
-    new "Was this what you wanted all along?"
-
     old "¿Mala mía?"
     new "My bad?"
 
-    old "No, te lo compre con buenas intenciones"
+    old "No, te lo compré con buenas intenciones"
     new "No, I bought it with good intentions"
 
     old "No lo parece"
     new "Doesn't seem like it"
 
-    old "¿Eso piensas de mi?"
+    old "¿Eso piensas de mí?"
     new "Is that what you think of me?"
 
-    old "Si..."
-    new "Yes..."
-
-    old "Esta bien que no me creas"
-    new "That's fine if you don't believe me"
-
-    old "Pero no sabia de ese trasero cuando lo compre"
+    old "Pero no sabía de ese trasero cuando lo compré"
     new "But I didn't know about that butt when I bought it"
 
-    old "No te enojes, sabes que siempre me gusto y me va a gustar pelearte"
+    old "No te enojes, sabes que siempre me gustó y me va a gustar pelearte"
     new "Don't get mad, you know I've always liked and will always like bickering with you"
 
     old "Si lo hubiera sabido tampoco hubiera cambiado la elección, me encanta cómo te queda"
@@ -103,22 +94,16 @@ translate english strings:
     old "No digo que lo uses, solo que si quieres lo puedes usar"
     new "I'm not saying wear it, just that you can if you want"
 
-    old "Llamar la atencion no es lo mio"
-    new "Drawing attention isn't my thing"
-
     old "Entiendo que no quieras ser la envidia del lugar"
     new "I get that you don't want to be the envy of the place"
 
     old "Eres linda, uses lo que uses vas a llamar la atención"
     new "You're pretty, whatever you wear you'll draw attention"
 
-    old "Mientras llames la mia yo estoy conforme"
-    new "As long as you draw mine I'm happy"
-
-    old "Jajajaja un poco si"
+    old "Jajajaja un poco sí"
     new "Hahaha yeah a little"
 
-    old "Me sentiria un poco celoso con todos mirandote"
+    old "Me sentiría un poco celoso con todos mirándote"
     new "I'd feel a little jealous with everyone looking at you"
 
     old "jeje"
@@ -136,17 +121,11 @@ translate english strings:
     old "¿Encerio te molestaria?"
     new "Would it really bother you?"
 
-    old "No se, me imagine la situacion y senti celos"
-    new "I don't know, I imagined it and felt jealous"
-
     old "No me lo hubiera imaginado"
     new "I wouldn't have imagined that"
 
     old "No es que me moleste, solo un poquito de celos"
     new "It's not that it bothers me, just a tiny bit of jealousy"
-
-    old "idiota"
-    new "idiot"
 
     old "jajaja solo un poco"
     new "hahaha just a little"
@@ -159,10 +138,10 @@ translate english strings:
     ## El mensaje que es solo emoji no lleva entrada (ver la nota del header de
     ## chat_violet_strings.rpy).
 
-    old "Aca esta mi parte del trato"
+    old "Acá está mi parte del trato"
     new "Here's my part of the deal"
 
-    old "Tenias razon con que me iba a buscar"
+    old "Tenías razón con que me iba a buscar"
     new "You were right that you'd come looking for me"
 
     old "Y era obvio"
@@ -174,7 +153,7 @@ translate english strings:
     old "Es que me encanta"
     new "It's just that I love it"
 
-    old "No es lo unico que me gusta"
+    old "No es lo único que me gusta"
     new "It's not the only thing I like"
 
     old "Quiero pedirte algo"
@@ -192,5 +171,5 @@ translate english strings:
     old "Voy a intentar contenerme"
     new "I'll try to hold back"
 
-    old "Pero me lo pones dificil"
+    old "Pero me lo pones difícil"
     new "But you make it hard for me"

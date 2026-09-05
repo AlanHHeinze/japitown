@@ -42,3 +42,23 @@ translate english mc_q0b_completar_aa67d9a5:
     # tutorial "Cada vez que completes una quest o avances en la historia, las pistas se actualizarán automáticamente"
     tutorial "Every time you complete a quest or advance the story, the hints will update automatically"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/mc/quests/mc_quest_0_b.rpy:69
+translate english mc_q0b_trigger_b91f98ad:
+
+    # tutorial "Durante el juego tendrás acceso a una [colorear_quest('Guía')] que te ayudará a saber qué hacer en cada momento"
+    tutorial "During the game you'll have access to a [colorear_quest('Guide')] that helps you know what to do at any moment"
+
+# game/script/characters/mc/quests/mc_quest_0_b.rpy:71
+translate english mc_q0b_trigger_62210f58:
+
+    # tutorial "Y en la pestaña [colorear_quest('Qué Hacer')] te dirá exactamente cómo avanzar en la misma\nNOTA: Los personajes tienen [colorear_quest('Rutinas Fijas')], [colorear_quest('Dinámicas')] y [colorear_quest('Especiales')], por lo que no siempre encontrarás al personaje en la locación y horario que se te indica"
+    tutorial "And the [colorear_quest('What To Do')] tab will tell you exactly how to advance it\nNOTE: Characters have [colorear_quest('Fixed')], [colorear_quest('Dynamic')] and [colorear_quest('Special')] routines, so you won't always find the character at the location and time you're told"
+
+# game/script/characters/mc/quests/mc_quest_0_b.rpy:72
+translate english mc_q0b_trigger_4a9ed2a9:
+
+    # tutorial "Ahora vamos a probarlo, [colorear_quest('abre el celular y entra a la App Pistas')]"
+    tutorial "Now let's try it, [colorear_quest('Open the phone and go to the Hints App')]"
+

@@ -312,3 +312,119 @@ translate english violet_quest02a_acepta_insiste_cb51a004:
     # piensa "No se si es de la manera que me hubiera gustado pero al menos logré que me preste los mangas, eso es un gran paso"
     piensa "I don't know if it's the way I would've liked, but at least I got her to lend me the manga, that's a big step"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:88
+translate english violet_quest02a_rechaza_insiste_56bd43aa:
+
+    # mc "¿Ya se te pasó el capricho?"
+    mc "Has your little whim passed already?"
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:103
+translate english violet_quest02a_rechaza_insiste_17276085:
+
+    # violet "No, no se me pasó. ¿Algo más?"
+    violet "No, it hasn't passed. Anything else?"
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:154
+translate english violet_quest02a_rechaza_7712474a:
+
+    # violet "¿Tengo cara de página de reseñas?"
+    violet "Do I look like a review site?"
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:211
+translate english violet_quest02a_acepta_directo_05b55b85:
+
+    # violet "Mmm... podría ser..."
+    violet "Hmm... could be..."
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:213
+translate english violet_quest02a_acepta_directo_fb5c20e4:
+
+    # violet "¿Qué estás buscando?"
+    violet "What are you looking for?"
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:217
+translate english violet_quest02a_acepta_directo_da8dd848:
+
+    # mc "No sé..."
+    mc "I don't know..."
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:219
+translate english violet_quest02a_acepta_directo_573ef4f1:
+
+    # mc "¿Y si me recomiendas algo?"
+    mc "What if you recommend me something?"
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:223
+translate english violet_quest02a_acepta_directo_cbefb345:
+
+    # violet "Bueno, voy a pensar en cuál puede ser"
+    violet "Okay, I'll think about which one it could be"
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:229
+translate english violet_quest02a_acepta_directo_e9f51070:
+
+    # mc "¡Genial!"
+    mc "Great!"
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:239
+translate english violet_quest02a_acepta_directo_0f0619e4:
+
+    # mc "A la noche paso a buscarlos, ¡gracias!"
+    mc "I'll come by at night to get them, thanks!"
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:278
+translate english violet_quest02a_acepta_insiste_499df30c:
+
+    # violet "No sé si tengo menos ganas de prestarte algo o de tenerte insistiéndome todo el tiempo..."
+    violet "I don't know whether I want to lend you something less, or have you nagging me all the time less..."
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:280
+translate english violet_quest02a_acepta_insiste_fb5c20e4:
+
+    # violet "¿Qué estás buscando?"
+    violet "What are you looking for?"
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:286
+translate english violet_quest02a_acepta_insiste_e9f51070:
+
+    # mc "¡Genial!"
+    mc "Great!"
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:294
+translate english violet_quest02a_acepta_insiste_da8dd848:
+
+    # mc "No sé..."
+    mc "I don't know..."
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:296
+translate english violet_quest02a_acepta_insiste_573ef4f1:
+
+    # mc "¿Y si me recomiendas algo?"
+    mc "What if you recommend me something?"
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:300
+translate english violet_quest02a_acepta_insiste_cbefb345:
+
+    # violet "Bueno, voy a pensar en cuál puede ser"
+    violet "Okay, I'll think about which one it could be"
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:306
+translate english violet_quest02a_acepta_insiste_962a5c15:
+
+    # mc "Lo que te parezca va a estar bien, confío en tu criterio"
+    mc "Whatever you think will be fine, I trust your judgment"
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:314
+translate english violet_quest02a_acepta_insiste_0f0619e4:
+
+    # mc "A la noche paso a buscarlos, ¡gracias!"
+    mc "I'll come by at night to get them, thanks!"
+
+# game/script/characters/violet/quests/violet_quest_02_a.rpy:319
+translate english violet_quest02a_acepta_insiste_d7327c05:
+
+    # piensa "No sé si es de la manera que me hubiera gustado, pero al menos logré que me preste los mangas, eso es un gran paso"
+    piensa "I don't know if it's the way I would've liked, but at least I got her to lend me the manga, that's a big step"
+

@@ -372,3 +372,197 @@ translate english usar_tanga_violet_de25c789:
     # piensa "Contenido en desarrollo"
     piensa "Content in development"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:76
+translate english quest_violet_questprincipal_03_a_a04f1693:
+
+    # mc "Sí, ya los terminé de leer"
+    mc "Yeah, I finished reading them"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:109
+translate english quest_violet_questprincipal_03_a_73411879:
+
+    # violet "Bueno, listo, ya te puedes ir"
+    violet "Okay then, you can go now"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:115
+translate english quest_violet_questprincipal_03_a_c66d866d:
+
+    # mc "¿Acaso no te interesa saber qué me pareció?"
+    mc "Aren't you interested in knowing what I thought?"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:164
+translate english vq03a_rama_deseo_458eb27c:
+
+    # piensa "Veo que se lo tomó bastante a pecho"
+    piensa "I see she took it pretty personally"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:165
+translate english vq03a_rama_deseo_44fed270:
+
+    # piensa "No sé si es el mejor momento para hablar de eso, voy a esperar hasta que esté un poco más tranquila"
+    piensa "I don't know if it's the best time to talk about that, I'll wait until she's a bit calmer"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:167
+translate english vq03a_rama_deseo_d632beab:
+
+    # mc "Bueno, de verdad hablemos del manga, necesito descargar con alguien"
+    mc "Okay, let's really talk about the manga, I need to vent to someone"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:189
+translate english vq03a_rama_amor_6394ac4e:
+
+    # mc "Perdón, solo dije lo que pensé, no sabía que te iba a molestar"
+    mc "Sorry, I just said what I thought, I didn't know it would bother you"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:193
+translate english vq03a_rama_amor_17142206:
+
+    # violet "No me molestó, solo que no quiero hablar de eso"
+    violet "It doesn't bother me, I just don't want to talk about that"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:205
+translate english vq03a_rama_amor_458eb27c:
+
+    # piensa "Veo que se lo tomó bastante a pecho"
+    piensa "I see she took it pretty personally"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:206
+translate english vq03a_rama_amor_44fed270:
+
+    # piensa "No sé si es el mejor momento para hablar de eso, voy a esperar hasta que esté un poco más tranquila"
+    piensa "I don't know if it's the best time to talk about that, I'll wait until she's a bit calmer"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:208
+translate english vq03a_rama_amor_d632beab:
+
+    # mc "Bueno, de verdad hablemos del manga, necesito descargar con alguien"
+    mc "Okay, let's really talk about the manga, I need to vent to someone"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:230
+translate english vq03a_comun_10d97339:
+
+    # mc "Pero el desarrollo de los personajes y la historia me pareció fascinante, todavía sigo pensando en el final"
+    mc "But the character development and the story seemed fascinating to me, I'm still thinking about the ending"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:234
+translate english vq03a_comun_0ccf3fe7:
+
+    # violet "A mí me gustó, refleja bastante bien el mundo y la idea de los finales felices"
+    violet "I liked it, it reflects the world and the idea of happy endings pretty well"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:238
+translate english vq03a_comun_9ac35d5c:
+
+    # mc "A mí también, pero duele jajaja"
+    mc "Me too, but it hurts, hahaha"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:251
+translate english vq03a_comun_99662d31:
+
+    # violet "Mónica necesita que la ayude con algo, ahí vengo"
+    violet "Monica needs me to help her with something, I'll be right back"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:259
+translate english vq03a_comun_e343017c:
+
+    # piensa "Y chusmear un poco su habitación, capaz que encuentro algo más para conectar con ella"
+    piensa "And snoop around her room a bit, maybe I'll find something else to connect with her over"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:306
+translate english vq3a_accion_peluches_35ce878e:
+
+    # piensa "Violet y su obsesión con los Slime... desde pequeña que le gustan y los colecciona"
+    piensa "Violet and her obsession with Slimes... she's liked them since she was little and collects them"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:317
+translate english vq3a_accion_pc_5d7cb184:
+
+    # piensa "PC master race, me pregunto qué estará jugando actualmente"
+    piensa "PC master race, I wonder what she's playing these days"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:328
+translate english vq3a_accion_manga_73c1b7d0:
+
+    # piensa "Tiene bastantes opciones, la próxima le voy a pedir alguno de sus favoritos"
+    piensa "She's got quite a few options, next time I'll ask her for one of her favorites"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:339
+translate english vq3a_accion_muñecos_a4b3d106:
+
+    # piensa "Su colección de figuras, también tiene slimes aquí"
+    piensa "Her figure collection, she's got slimes here too"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:350
+translate english vq3a_accion_mochila_8dc48a28:
+
+    # piensa "Tiene una mochila japonesa... sé que esas son muy caras, me pregunto cuánto le habrá costado..."
+    piensa "She has a Japanese backpack... I know those are really expensive, I wonder how much it cost her..."
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:370
+translate english vq3a_monologo_771898f9:
+
+    # piensa "Ahora que estoy aquí, no vi el cosplay que le regalé por ningún lado, quizás esté guardado en su ropero"
+    piensa "Now that I'm here, I haven't seen the cosplay I gave her anywhere, maybe it's put away in her wardrobe"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:392
+translate english vq3a_accion_ropero_a364e88d:
+
+    # piensa "Ahí está guardado el cosplay que le regalé y sigue en la caja"
+    piensa "There's the cosplay I gave her, still in the box"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:393
+translate english vq3a_accion_ropero_aa0cb9a8:
+
+    # piensa "¿Se lo habrá probado? No me dijo nada de si le gustó o no, podría preguntarle cuando vuelva"
+    piensa "I wonder if she tried it on? She didn't tell me anything about whether she liked it or not, I could ask her when she gets back"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:394
+translate english vq3a_accion_ropero_8ee620b8:
+
+    # piensa "Tampoco veo aquí que tenga algún otro cosplay, pensé que sí iba a haber, quizás no le gustan..."
+    piensa "I don't see that she has any other cosplay here either, I thought there would be, maybe she doesn't like them..."
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:416
+translate english vq3a_accion_cajonera_a9951d71:
+
+    # piensa "No sé qué esperaba encontrar aquí, seguí mirando por instinto"
+    piensa "I don't know what I expected to find here, I kept looking on instinct"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:417
+translate english vq3a_accion_cajonera_0c885966:
+
+    # piensa "Está toda su ropa interior, no me imaginé que Violet usara de este tipo"
+    piensa "Here's all her underwear, I didn't imagine Violet wore this kind"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:464
+translate english vq3a_final_escena_803f892c:
+
+    # mc "No, no estaba revisando nada, solo cerré el cajón que estaba abierto"
+    mc "No, I wasn't going through anything, I just closed the drawer that was open"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:468
+translate english vq3a_final_escena_4ab5e83b:
+
+    # violet "¿Y eso estaba en el piso, entonces lo estabas guardando, no?"
+    violet "And that was on the floor, so you were putting it away, right?"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:472
+translate english vq3a_final_escena_cc245b85:
+
+    # piensa "Estoy muerto... sí, sí lo estoy"
+    piensa "I'm dead... yeah, I am"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:476
+translate english vq3a_final_escena_ae75e902:
+
+    # mc "Espera, hay una explicación"
+    mc "Wait, there's an explanation"
+
+# game/script/characters/violet/quests/violet_quest_03_a.rpy:495
+translate english vq3a_final_escena_285c90f3:
+
+    # piensa "¿Ahora qué hago con esto?"
+    piensa "Now what do I do with this?"
+

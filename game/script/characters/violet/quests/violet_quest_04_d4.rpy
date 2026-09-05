@@ -40,38 +40,38 @@ label violet_q4d4_pedido:
     show violet_parada c_rbase_base ca_base o_base b_none at right
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
-    show violet_parada b_hablandochica o_arribanm c_rbase_pensando with sprite_fast
-    violet "¿Y ahora que podria querer?"
-    show violet_parada b_hablando 
+    show violet_parada b_hablandochica o_arribanm c_rbase_pensando with sprite_normal
+    violet "¿Y ahora qué podría querer?"
+    show violet_parada b_hablando
     violet "Mmmm..."
     show violet_parada b_none
 
     piensa "Me preocupa un poco esa actitud"
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
-    mc "Si no queres nada, no hay problema..."
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "Si no quieres nada, no hay problema..."
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show violet_parada b_hablandochica o_base c_rbase_base with sprite_fast
+    show violet_parada b_hablandochica o_base c_rbase_base with sprite_normal
     violet "Quiero cenar pizzas"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando 
-    mc "Podriamos pedir a la noche entonces"
-    show mc_parado_base b_none 
+    show mc_parado_base b_hablando
+    mc "Podríamos pedir a la noche entonces"
+    show mc_parado_base b_none
 
-    show violet_parada b_hablandochica c_rbase_idea with sprite_fast
-    violet "No, quiero que las hagas vos"
+    show violet_parada b_hablandochica c_rbase_idea with sprite_normal
+    violet "No, quiero que las hagas tú"
     show violet_parada b_hablando
     violet "La otra vez te salieron muy ricas"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando 
-    mc "Ok... esta bien, hago pizzas para cenar"
-    show mc_parado_base b_none 
+    show mc_parado_base b_hablando
+    mc "Ok... está bien, hago pizzas para cenar"
+    show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "Avisame cuando esten listas"
+    violet "Avísame cuando estén listas"
     show violet_parada b_none
 
     # Desde acá aparece la acción Cocinar de la quest en la cocina, de noche.
@@ -100,11 +100,11 @@ label violet_q4d4_recordatorio:
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
     show violet_parada b_hablando
-    violet "Todavia estoy esperando las pizzas"
+    violet "Todavía estoy esperando las pizzas"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Si, ya me acuerdo, no te preocupes"
+    mc "Sí, ya me acuerdo, no te preocupes"
     show mc_parado_base b_none
 
     hide violet_parada
@@ -154,7 +154,7 @@ label violet_q4d4_cocinar:
     $ vq4d4_pizza_cocinada = True
 
     piensa "Listo, espero que con esto quede satisfecha"
-    piensa "Si la veo de buen humor podria perguntarle por las otras fotos"
+    piensa "Si la veo de buen humor podría preguntarle por las otras fotos"
 
     # La pizza esta lista: hasta avisarle a Violet no se hace otra cosa. El
     # tiempo queda frenado y el recorrido acotado al camino cocina → su puerta.
@@ -208,48 +208,48 @@ label violet_q4d4_avisar:
     $ _bg_pasillo = _loc_pasillo.background if _loc_pasillo else "#1a1a1a"
     scene expression _bg_pasillo with fade
 
-   
+
     show violet_parada c_pijama_base ca_pijama o_base b_none at right
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
     show violet_parada b_hablando
-    violet "¿Que pasa?"
+    violet "¿Qué pasa?"
     show violet_parada b_hablandochica o_base
-    violet "¿Ya estan las pizzas?"
-    show violet_parada b_none 
+    violet "¿Ya están las pizzas?"
+    show violet_parada b_none
 
-    show mc_parado_base b_hablando 
-    mc "Si ya estan listas, me pedist que venga a avisarte"
-    show mc_parado_base b_none 
+    show mc_parado_base b_hablando
+    mc "Sí, ya están listas, me pediste que venga a avisarte"
+    show mc_parado_base b_none
 
     show violet_parada b_hablandochica
     violet "Bueno ahora bajo"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
-    mc "¿Nada mas?"
-    show mc_parado_base b_none 
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "¿Nada más?"
+    show mc_parado_base b_none
 
-    show violet_parada b_hablandochica c_pijama_pensando with sprite_fast
-    violet "¿Nada mas de que?"
+    show violet_parada b_hablandochica c_pijama_pensando with sprite_normal
+    violet "¿Nada más de qué?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
-    mc "No se, me hiciste subir a avisarte..."
-    show mc_parado_base b_none 
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
+    mc "No sé, me hiciste subir a avisarte..."
+    show mc_parado_base b_none
 
-    show violet_parada b_hablandochica o_juzgandonm 
-    violet "¿Estabas esperando algo mas?"
+    show violet_parada b_hablandochica o_juzgandonm
+    violet "¿Estabas esperando algo más?"
     show violet_parada b_none o_base
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
     mc "Emmm... no"
-    show mc_parado_base b_none 
+    show mc_parado_base b_none
 
-    show violet_parada b_hablandochica c_pijama_base with sprite_fast
+    show violet_parada b_hablandochica c_pijama_base with sprite_normal
     violet "Ahhh, bueno, entonces bajo a comer"
     show violet_parada b_hablando
-    violet "Nos vemos luego [mc_name]"
+    violet "Nos vemos luego, [mc_name]"
     show violet_parada b_none o_guiñando
     pause 0.3
     show violet_parada o_base
@@ -257,8 +257,8 @@ label violet_q4d4_avisar:
 
     hide violet_parada
 
-    piensa "Empiezo a tener sospechas de que sabe lo que estoy esperando y se esta abusando"
-    piensa "No creo que me lo muestre, ya hice suficiente esfuerzo, hay que saber cuando rendirse"
+    piensa "Empiezo a tener sospechas de que sabe lo que estoy esperando y se está abusando"
+    piensa "No creo que me lo muestre, ya hice suficiente esfuerzo, hay que saber cuándo rendirse"
 
     # Al completar arranca sola la 04_d5, que espera un día antes de habilitarse.
     $ completar_quest_actual("violet", quest_id="violet_questprincipal_04_d4")

@@ -27,26 +27,26 @@ label quest_violet_questprincipal_04_d:
     show mc_parado_base c_rbase_base o_base b_seria at mc_izquierda
 
     show mc_parado_base b_hablando
-    mc "¿Cómo estas?"
+    mc "¿Cómo estás?"
     show mc_parado_base b_felizcerrada
 
     show violet_parada b_hablandochica
     violet "Bien... ¿Qué quieres?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
     mc "Nada, solo te saludaba"
-    show mc_parado_base b_felizcerrada c_rbase_base with sprite_fast
+    show mc_parado_base b_felizcerrada c_rbase_base with sprite_normal
 
     if vq4d_cuerpo == "c_pijama":
-        show violet_parada b_hablandochica o_juzgandonm c_pijama_base with sprite_fast
+        show violet_parada b_hablandochica o_juzgandonm c_pijama_base with sprite_normal
     else:
-        show violet_parada b_hablandochica o_juzgandonm c_rbase_pensando with sprite_fast
-    violet "Conozco esa mirada, estas pensando algo"
+        show violet_parada b_hablandochica o_juzgandonm c_rbase_pensando with sprite_normal
+    violet "Conozco esa mirada, estás pensando algo"
     if vq4d_cuerpo == "c_pijama":
-        show violet_parada b_none o_base c_pijama_base with sprite_fast
+        show violet_parada b_none o_base c_pijama_base with sprite_normal
     else:
-        show violet_parada b_none o_base c_rbase_base with sprite_fast
+        show violet_parada b_none o_base c_rbase_base with sprite_normal
 
     show mc_parado_base b_felizabierta o_cerrados
     mc "En nada en particular... bueno... quizás un poco en tu trasero jajaja"
@@ -61,20 +61,20 @@ label quest_violet_questprincipal_04_d:
     show mc_parado_base b_felizcerrada
 
     if vq4d_cuerpo == "c_pijama":
-        show violet_parada b_hablandochica c_pijama_base with sprite_fast
+        show violet_parada b_hablandochica c_pijama_base with sprite_normal
     else:
-        show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_fast
+        show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_normal
     violet "No y menos en cualquier lugar de la casa como si fuera algo normal"
     if vq4d_cuerpo == "c_pijama":
-        show violet_parada b_none c_pijama_base with sprite_fast
+        show violet_parada b_none c_pijama_base with sprite_normal
     else:
-        show violet_parada b_none c_rbase_base with sprite_fast
+        show violet_parada b_none c_rbase_base with sprite_normal
 
     hide violet_parada with dissolve
 
-    piensa "Es muy divertido molestarla pero no sé que tan buena idea es, a este paso no la voy a poder convencer de que use el cosplay"
-    piensa "Todavia quedan fotos que no vi, podria portarme bien y hacer cosas por ella"
-    piensa "Puede que asi logre que me mande las fotos"
+    piensa "Es muy divertido molestarla pero no sé qué tan buena idea es, a este paso no la voy a poder convencer de que use el cosplay"
+    piensa "Todavía quedan fotos que no vi, podría portarme bien y hacer cosas por ella"
+    piensa "Puede que así logre que me mande las fotos"
 
     hide mc_parado_base with dissolve
 

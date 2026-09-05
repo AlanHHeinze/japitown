@@ -13,10 +13,10 @@ translate english strings:
     old "Jasmine quiere mostrarme como el conjunto deportivo que le traje"
     new "Jasmine wants to show me how the sportswear set I brought her looks."
 
-    old "Tengo que hablar con Monica para agraderle la oportunidad"
+    old "Tengo que hablar con Mónica para agradecerle la oportunidad"
     new "I have to talk to Monica to thank her for the opportunity."
 
-    old "Parece que Monica tiene un problema ¿Qué sera?"
+    old "Parece que Mónica tiene un problema, ¿qué será?"
     new "It looks like Monica has a problem. What could it be?"
 
     old "Tengo la notebook de Monica, debería revisarla en mi habitación"
@@ -89,7 +89,7 @@ translate english strings:
     old "Agradecimiento"
     new "Gratitude"
 
-    old "Servicio Tecnico"
+    old "Servicio Técnico"
     new "Tech Support"
 
     # --- Props / items / apps ---

@@ -13,7 +13,7 @@ label event_jasmine_01_repetir:
     # Esconder pantallas del juego temporalmente
     $ ocultar_hud()
     hide screen hud_navegacion
-    
+
     # Escena en el gym
     # Fija el cuadro de dialogo en todo el tramo: sin esto cada `scene` lo
     # esconde y la linea siguiente lo reaparece. Ver la nota de config.window
@@ -21,10 +21,10 @@ label event_jasmine_01_repetir:
     window show
 
     scene bg_casa_tarde_gym_zoom with fade
-    
+
     # Mostrar background: Patio/Gym
     scene bg_casa_tarde_gym_zoom with fade
-    
+
     # Mostrar personajes: MC a la izquierda, Jasmine a la derecha con ropa deportiva
     # Mostrar personajes: MC a la izquierda, Jasmine a la derecha con ropa deportiva
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
@@ -36,12 +36,12 @@ label event_jasmine_01_repetir:
     show jasmine_paradadeportiva b_none with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "Mmmm...."
+    jasmine "Mmmm..."
     show jasmine_paradadeportiva b_none with sprite_normal
 
     #MC Habla
     show mc_parado_base b_hablando o_felicescerrados with sprite_normal
-    mc "Sí, cuando vuela a Capital City puedo comprarte otro similar"
+    mc "Sí, cuando vuelva a Capital City puedo comprarte otro similar"
     show mc_parado_base b_felizcerrada o_base with sprite_normal
 
     #Jasmine habla
@@ -62,7 +62,7 @@ label event_jasmine_01_repetir:
     show jasmine_paradadeportiva c_animacion8 with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva c_animacion9 b_hablando o_base with sprite_normal
-    jasmine "Elastico, pero ajustado arriba"
+    jasmine "Elástico, pero ajustado arriba"
     show jasmine_paradadeportiva b_none with sprite_normal
     show jasmine_paradadeportiva c_animacion10 o_abajonm with sprite_normal
     pause 0.3
@@ -102,9 +102,9 @@ label event_jasmine_01_repetir:
     pause 0.3
     show jasmine_paradadeportiva c_animacion17 with sprite_normal
     show jasmine_paradadeportiva b_hablando o_base with sprite_normal
-    jasmine "Vez lo que te digo"
+    jasmine "Ves lo que te digo"
     show jasmine_paradadeportiva b_none with sprite_normal
-    
+
     #MC Habla
     show mc_parado_base b_hablando with sprite_normal
     mc "Sí..."
@@ -122,15 +122,15 @@ label event_jasmine_01_repetir:
 
     #Jasmine habla
     show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "Volve a la realidad"
+    jasmine "Vuelve a la realidad"
     show jasmine_paradadeportiva b_none with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "Te muestro como debe ser de atrás"
+    jasmine "Te muestro cómo debe ser de atrás"
     show jasmine_paradadeportiva b_none with sprite_normal
     pause 0.3
 
-    
+
     show jasmine_paradadeportiva e_animacion1 ca_none o_none b_none a_none c_none at right with sprite_normal
 
     show jasmine_paradadeportiva e_animacion2 with sprite_normal
@@ -145,7 +145,7 @@ label event_jasmine_01_repetir:
     mc "Sí, lo veo"
     show mc_parado_base b_none with sprite_normal
 
-    
+
     #Jasmine habla
     show jasmine_paradadeportiva e_animacion5 with sprite_normal
     pause 0.3
@@ -162,7 +162,7 @@ label event_jasmine_01_repetir:
     jasmine "¿Entendiste bien?"
     hide jasmine_paradadeportiva
     show jasmine_paradadeportiva c_estirando o_base b_hablando a_short at right with sprite_normal
-    jasmine "Bueno, ya se termino el show, tengo que seguir entrenando"
+    jasmine "Bueno, ya se terminó el show, tengo que seguir entrenando"
 
     #MC Habla
     show mc_parado_base b_hablando with sprite_normal
@@ -171,14 +171,14 @@ label event_jasmine_01_repetir:
 
     # Ocultar personaje
     hide jasmine_paradadeportiva
-    
+
     # Ocultar personaje
     hide jasmine_paradadeportiva
     with dissolve
-    
+
     # Mostrar pantallas del juego
     show screen hud_navegacion
-    
+
     # Completar el evento formal: lo saca del panel de pistas. El botón "Volver a
     # ver el conjunto" sigue visible (su condición es la quest 0_c completada).
     $ _ev_fin_jas01 = obtener_event("jasmine_event_01")
@@ -210,7 +210,7 @@ label event_jasmine_01_repetir_alternativo:
     # Esconder pantallas del juego temporalmente
     $ ocultar_hud()
     hide screen hud_navegacion
-    
+
     # Escena en el gym
     # Fija el cuadro de dialogo en todo el tramo: sin esto cada `scene` lo
     # esconde y la linea siguiente lo reaparece. Ver la nota de config.window
@@ -218,10 +218,10 @@ label event_jasmine_01_repetir_alternativo:
     window show
 
     scene bg_casa_tarde_gym_zoom with fade
-    
+
     # Mostrar background: Patio/Gym
     scene bg_casa_tarde_gym_zoom with fade
-    
+
     # Mostrar personajes: MC a la izquierda, Jasmine a la derecha con ropa deportiva
     # Mostrar personajes: MC a la izquierda, Jasmine a la derecha con ropa deportiva
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
@@ -233,12 +233,12 @@ label event_jasmine_01_repetir_alternativo:
     show jasmine_paradadeportiva b_none with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "Mmmm...."
+    jasmine "Mmmm..."
     show jasmine_paradadeportiva b_none with sprite_normal
 
     #MC Habla
     show mc_parado_base b_hablando o_felicescerrados with sprite_normal
-    mc "Sí, cuando vuela a Capital City puedo comprarte otro similar"
+    mc "Sí, cuando vuelva a Capital City puedo comprarte otro similar"
     show mc_parado_base b_felizcerrada o_base with sprite_normal
 
     #Jasmine habla
@@ -259,7 +259,7 @@ label event_jasmine_01_repetir_alternativo:
     show jasmine_paradadeportiva c_animacion8 with sprite_normal
     pause 0.3
     show jasmine_paradadeportiva c_animacion9 b_hablando o_base with sprite_normal
-    jasmine "Elastico, pero ajustado arriba"
+    jasmine "Elástico, pero ajustado arriba"
     show jasmine_paradadeportiva b_none with sprite_normal
     show jasmine_paradadeportiva c_animacion10 o_abajonm with sprite_normal
     pause 0.3
@@ -299,9 +299,9 @@ label event_jasmine_01_repetir_alternativo:
     pause 0.3
     show jasmine_paradadeportiva c_animacion17 with sprite_normal
     show jasmine_paradadeportiva b_hablando o_base with sprite_normal
-    jasmine "¿Esta vez si entendiste?"
+    jasmine "¿Esta vez sí entendiste?"
     show jasmine_paradadeportiva b_none with sprite_normal
-    
+
     #MC Habla
     show mc_parado_base b_hablando with sprite_normal
     mc "Sí..."
@@ -309,12 +309,12 @@ label event_jasmine_01_repetir_alternativo:
 
     #Jasmine habla
     show jasmine_paradadeportiva b_hablando with sprite_normal
-    jasmine "¿También te tengo que mostrar otra vez como es la parte de atrás no?"
+    jasmine "¿También te tengo que mostrar otra vez cómo es la parte de atrás, no?"
     show jasmine_paradadeportiva b_none with sprite_normal
 
     #MC Habla
     show mc_parado_base b_hablando o_arribanm c_rbase_avergonzado with sprite_normal
-    mc "Supongo que si"
+    mc "Supongo que sí"
     show mc_parado_base b_none c_rbase_base o_base with sprite_normal
 
     #Jasmine habla
@@ -327,7 +327,7 @@ label event_jasmine_01_repetir_alternativo:
     show jasmine_paradadeportiva b_none with sprite_normal
     pause 0.3
 
-    
+
     show jasmine_paradadeportiva e_animacion1 ca_none o_none b_none a_none c_none at right with sprite_normal
 
     show jasmine_paradadeportiva e_animacion2 with sprite_normal
@@ -342,7 +342,7 @@ label event_jasmine_01_repetir_alternativo:
     mc "Ajustado de atrás, lo voy a anotar"
     show mc_parado_base b_none with sprite_normal
 
-    
+
     #Jasmine habla
     show jasmine_paradadeportiva e_animacion5 with sprite_normal
     pause 0.3
@@ -368,13 +368,13 @@ label event_jasmine_01_repetir_alternativo:
 
     # Ocultar personaje
     hide jasmine_paradadeportiva
-    
+
     # Ocultar personaje
     hide jasmine_paradadeportiva
     with dissolve
-    
+
     # Mostrar pantallas del juego
     show screen hud_navegacion
-    
+
     # Volver al loop del juego
     jump game_loop

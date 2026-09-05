@@ -6,6 +6,9 @@
 ################################################################################
 ## Screen Principal de Interacción
 ################################################################################
+## El registro de menús EXCLUSIVOS (registrar_menu_exclusivo /
+## menu_exclusivo_label) vive en core/locations/door_access_system.rpy: lo
+## comparten este menú y el de la puerta. Acá solo se lo consulta.
 
 screen menu_interaccion_npc_completo(npc, opciones_extra=None):
     """
@@ -87,11 +90,21 @@ screen menu_interaccion_npc_completo(npc, opciones_extra=None):
             # van ULTIMAS de las extra, pegadas a Hablar: se parecen mas a eso
             # que a una quest pendiente, y ademas no llevan tag.
             $ _opciones_visibles = [o for o in (opciones_extra or []) if o.get("condicion", True)]
+
+            # Menu EXCLUSIVO: si hay una escena en curso que se lleva el menu
+            # entero, queda su opcion y nada mas — ni las otras quests, ni las
+            # ventajas, ni "Hablar". Ver el registro al principio del archivo.
+            $ _mi_exclusivo = menu_exclusivo_label(npc.id)
+            if _mi_exclusivo:
+                $ _opciones_visibles = [o for o in _opciones_visibles
+                                        if o.get("label") == _mi_exclusivo]
+
             $ _opciones_quest = [o for o in _opciones_visibles if o.get("tipo") not in ("evento", "ventaja")]
             $ _opciones_evento = [o for o in _opciones_visibles if o.get("tipo") == "evento"]
             $ _opciones_ventaja = [o for o in _opciones_visibles if o.get("tipo") == "ventaja"]
             $ _opciones_ordenadas = _opciones_quest + _opciones_evento + _opciones_ventaja
-            $ puede_hablar = npc.puede_interactuar("hablar") if hablar_desbloqueado else False
+            $ hablar_desbloqueado_aqui = hablar_desbloqueado and not _mi_exclusivo
+            $ puede_hablar = npc.puede_interactuar("hablar") if hablar_desbloqueado_aqui else False
 
             vbox:
                 spacing int(10 * _mi_k)
@@ -102,7 +115,7 @@ screen menu_interaccion_npc_completo(npc, opciones_extra=None):
                     # El texto se COMPONE (opcion + tag), asi que hay que traducir
                     # cada parte por separado: el string ya concatenado nunca
                     # matchearia un `old`. Mismo criterio que en door_access_system.
-                    $ _tag_extra = tag_opcion_quest(opcion.get("label"), opcion.get("tipo") == "evento", opcion.get("tipo"))
+                    $ _tag_extra = tag_opcion_quest(opcion.get("label"), opcion.get("tipo") == "evento", opcion.get("tipo"), opcion.get("quest_id"))
                     $ _texto_extra = renpy.translate_string(opcion.get("texto", "Opción")) + _tag_extra
                     button:
                         xfill True
@@ -114,8 +127,9 @@ screen menu_interaccion_npc_completo(npc, opciones_extra=None):
 
                         text "[_texto_extra]" size int(18 * _mi_k) color "#ffffff"
 
-                # 3. Hablar — siempre al final, oculta hasta completar la quest 0_a de Violet
-                if hablar_desbloqueado:
+                # 3. Hablar — siempre al final, oculta hasta completar la quest
+                # 0_a de Violet y tambien mientras haya un menu exclusivo.
+                if hablar_desbloqueado_aqui:
                     if _opciones_ordenadas:
                         null height int(5 * _mi_k)
                         frame:

@@ -109,9 +109,13 @@ init 5 python:
             "pista_listo": "Un encuentro casual con Violet",
             "que_hacer_listo": "Ingresar en el pasillo arriba por la tarde",
         },
+        # La 2 es la unica con textos DINAMICOS: su etapa no cambia al
+        # despertar, pero lo que hay que hacer si — pasa de dormir a ir por el
+        # vaso de agua. Las funciones viven en violet_deseo_10.rpy, al lado del
+        # flag que miran.
         2: {
-            "pista_listo": "Deberia descansar bien",
-            "que_hacer_listo": "Dormir",
+            "pista_listo": vd10_pista_listo,
+            "que_hacer_listo": vd10_que_hacer_listo,
         },
         3: {
             "pista_listo": "Podria usar el sotano para ver el nuevo anime",
@@ -141,10 +145,13 @@ init 5 python:
             },
         },
         6: {
-            # Arranca sola de noche estando el MC en SU habitacion y ella libre
-            # en la suya, asi que el "que hacer" solo tiene que decir donde.
-            "pista_listo": "Hay algo que quiero hablar con Violet",
-            "que_hacer_listo": "Estar de noche en mi habitacion",
+            # TEXTOS DINAMICOS, como los de la 2: la quest no cambia de etapa
+            # pero pasa por tres cosas distintas —ir a hablarle, ignorarla tres
+            # dias, esperar la visita—, y la fase 2 ademas muestra el contador.
+            # Las funciones viven en violet_deseo_30.rpy, al lado de las
+            # variables que miran.
+            "pista_listo": vd30_pista_listo,
+            "que_hacer_listo": vd30_que_hacer_listo,
             # Mientras la quest esta activa Violet pasa la noche en su pieza,
             # que es lo que exige el arranque. De lunes a sabado ya lo hacia por
             # rutina base; el unico dia que cambia algo es el domingo (que

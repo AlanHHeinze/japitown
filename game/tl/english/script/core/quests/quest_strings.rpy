@@ -6,7 +6,7 @@ translate english strings:
     ## Nombres de Quests
     ############################################################################
 
-    old "¿Que le pasa a Violet?"
+    old "¿Qué le pasa a Violet?"
     new "What's wrong with Violet?"
 
     old "Un paquete misterioso"
@@ -184,7 +184,7 @@ translate english strings:
     old "Ropa Nueva"
     new "New Outfit"
 
-    old "Monica adolorida"
+    old "Mónica adolorida"
     new "Monica in Pain"
 
     ############################################################################
@@ -274,7 +274,7 @@ translate english strings:
     old "No puedo salir de la casa ahora"
     new "I can't leave the house right now"
 
-    old "Deberia llevarle ropa a Violet"
+    old "Debería llevarle ropa a Violet"
     new "I should bring Violet some clothes"
 
     old "Debo llevarle la ropa a Violet"
@@ -391,7 +391,7 @@ translate english strings:
     old "Monica me dijo algo sobre limpiar la casa, tengo que esperar."
     new "Monica mentioned something about cleaning the house, I need to wait."
 
-    old "Deberia responderle a Monica."
+    old "Debería responderle a Monica."
     new "I should reply to Monica."
 
     old "Responder mensaje de Monica."
@@ -432,9 +432,6 @@ translate english strings:
     ## Pistas y qué hacer — Quest Violet 6
     ############################################################################
 
-    old "Recuerdo lo del cosplay, deberia esperar unos dias."
-    new "I remember the cosplay thing, I should wait a few days."
-
     old "Cuando encuentre a Violet podría ver si se probó el cosplay"
     new "When I find Violet I could check if she tried on the cosplay"
 
@@ -445,14 +442,11 @@ translate english strings:
     ## Pistas y qué hacer — Quest Violet 7-9 (Cosplay II-IV)
     ############################################################################
 
-    old "Deberia esperar unos dias antes de hablar con Violet sobre el cosplay."
+    old "Debería esperar unos días antes de hablar con Violet sobre el cosplay."
     new "I should wait a few days before talking to Violet about the cosplay."
 
     old "Subir deseo con Violet ({}/{})"
     new "Increase desire with Violet ({}/{})"
-
-    old "Deberia esperar unos dias."
-    new "I should wait a few days."
 
     old "Quizás si sigo mejorando mi deseo con Violet me muestre un poco más"
     new "Maybe if I keep improving my desire with Violet she'll show me a little more"
@@ -476,9 +470,6 @@ translate english strings:
     ## Pistas y qué hacer — Quest Violet 11 (Los ruidos nocturnos)
     ############################################################################
 
-    old "Todo tranquilo por ahora, deberia esperar unos dias."
-    new "All quiet for now, I should wait a few days."
-
     old "Podría conseguir algunos cosplay para que Violet se pruebe"
     new "I could get some cosplays for Violet to try on"
 
@@ -498,7 +489,7 @@ translate english strings:
     old "Violet me pidió que pase por su habitación, debería ir a la noche."
     new "Violet asked me to stop by her room, I should go at night."
 
-    old "Ir a la habitacion de Violet por la noche."
+    old "Ir a la habitación de Violet por la noche."
     new "Go to Violet's room at night."
 
     ############################################################################
@@ -517,17 +508,17 @@ translate english strings:
     old "Ir a la habitación de Monica por la tarde"
     new "Go to Monica's room in the afternoon"
 
-    old "Podría ver a Monica en la tarde y ofrecerle un masaje."
+    old "Podría ver a Mónica en la tarde y ofrecerle un masaje."
     new "I could see Monica in the afternoon and offer her a massage."
 
-    old "Habla con Monica cuando esté en el living por la tarde."
+    old "Habla con Mónica cuando esté en el Living por la tarde."
     new "Talk to Monica when she's in the living room in the afternoon."
 
     ############################################################################
     ## Pistas y qué hacer — Quests Jasmine
     ############################################################################
 
-    old "Podria ver a Jasmine por la tarde cuando entrena y hablar un poco."
+    old "Podría ver a Jasmine por la tarde cuando entrena y hablar un poco."
     new "I could see Jasmine in the afternoon when she's working out and chat a bit."
 
     old "Ir al gym por la tarde."
@@ -538,9 +529,6 @@ translate english strings:
     ############################################################################
 
     old "Violet debe estar en su habitación"
-    new "Violet must be in her room"
-
-    old "Violet debe estar en su habitacion"
     new "Violet must be in her room"
 
     old "Debe ser sábado"
@@ -564,7 +552,7 @@ translate english strings:
     old "Responder el mensaje de Violet"
     new "Reply to Violet's message"
 
-    old "Monica debe estar en su habitacion"
+    old "Monica debe estar en su habitación"
     new "Monica must be in her room"
 
     old "Necesitas mas deseo con Violet"
@@ -586,7 +574,7 @@ translate english strings:
     old "Tengo que encontrar algún momento para acercarme a Violet y ver qué le pasa."
     new "I have to find a moment to approach Violet and see what's wrong with her."
 
-    old "Escuche el timbre"
+    old "Escuché el timbre"
     new "I heard the doorbell"
 
     old "Hoy es sábado, tengo que despertar a Violet para que limpiemos la casa."
@@ -610,7 +598,7 @@ translate english strings:
     old "Podría aprovechar que Monica está en casa para hablar con ella."
     new "I could take advantage of Monica being home to talk to her."
 
-    old "Podria buscar a Jasmine cuando este entrenando para hablar con ella."
+    old "Podría buscar a Jasmine cuando este entrenando para hablar con ella."
     new "I could look for Jasmine while she's working out to talk to her."
 
     old "Mónica se quejó de dolor en sus hombros, podría hacerle un masaje en la tarde."

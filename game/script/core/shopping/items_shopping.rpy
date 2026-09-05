@@ -83,7 +83,7 @@ init python:
         
         # Lociones - Entrega media
         "locion_masajes": {
-            "nombre": "Locion de masajes",
+            "nombre": "Loción de masajes",
             "emoji": "🧴",
             "precio": 20,
             "dias_entrega": 1,
@@ -182,28 +182,28 @@ init python:
             "emoji": "🌸",
             "precio": 0,
             "dias_entrega": 0,
-            "descripcion": "El regalo que le traje a Monica.",
+            "descripcion": "El regalo que le traje a Mónica.",
             "usable": True,
             "vendible": False,
             "consumible": True,
             "condicion_uso": _item_cond_nunca,
-            "instruccion_uso": "El regalo que le traje a Monica. Debería agradecerle en persona cuando esté sola.",
+            "instruccion_uso": "El regalo que le traje a Mónica. Debería agradecerle en persona cuando esté sola.",
             "stock": 0,
             "reposicion": 0,
         },
 
-        # Notebook de Monica — item de quest (se revisa en la habitacion del MC)
+        # Notebook de Mónica — item de quest (se revisa en la habitacion del MC)
         "notebook_monica": {
-            "nombre": "Notebook de Monica",
+            "nombre": "Notebook de Mónica",
             "emoji": "💻",
             "precio": 0,
             "dias_entrega": 0,
-            "descripcion": "La notebook de Monica. Dijo que no le anda, voy a ver si puedo arreglarla.",
+            "descripcion": "La notebook de Mónica. Dijo que no le anda, voy a ver si puedo arreglarla.",
             "usable": True,
             "vendible": False,
             "consumible": False,
             "condicion_uso": _item_en_habitacion_mc,
-            "instruccion_uso": "Deberia revisarlo en mi habitacion",
+            "instruccion_uso": "Debería revisarlo en mi habitación",
             "label_uso": "revisar_notebook_monica",
             "stock": 0,
             "reposicion": 0,
@@ -212,17 +212,17 @@ init python:
         # Batería NT520 — repuesto para la notebook de Monica (quest 0_c)
         # Aparece en la tienda recién al completar la quest 0_c. 1 unidad, 2 dias.
         "bateria_nt520": {
-            "nombre": "Bateria NT520",
+            "nombre": "Batería NT520",
             "emoji": "🔋",
             "precio": 150,
             "dias_entrega": 2,
-            "descripcion": "Una batería nueva para la notebook de Monica.",
+            "descripcion": "Una batería nueva para la notebook de Mónica.",
             "usable": True,
             "vendible": True,
             "consumible": False,
             "condicion_visible": _bateria_nt520_disponible,
             "condicion_uso": _item_en_habitacion_mc,
-            "instruccion_uso": "Deberia hacer esto en mi habitacion",
+            "instruccion_uso": "Debería hacer esto en mi habitación",
             "label_uso": "usar_bateria_nt520",
             "stock": 1,
             "reposicion": 0,
@@ -271,7 +271,7 @@ init python:
 
         # Items de quest (no comprables, se obtienen durante quests)
         "jabon_quest": {
-            "nombre": "Jabon",
+            "nombre": "Jabón",
             "emoji": "🧼",
             "precio": 0,
             "dias_entrega": 0,

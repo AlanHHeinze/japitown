@@ -1606,29 +1606,43 @@ init python:
         locacion pero se seguian dibujando con el sprite de su rutina normal,
         que corresponde a otra habitacion — el mismo bug que E07.
 
-        Devuelve solo rutinas vigentes (el NPC parado donde la rutina dice), asi
-        que no hace falta desempatar por prioridad: un NPC esta en una sola
-        locacion, y como mucho una rutina puede coincidir.
+        DESEMPATA POR `prioridad_rutina`, mayor gana. Antes devolvia la primera
+        vigente que encontraba, con este razonamiento: "un NPC esta en una sola
+        locacion, asi que como mucho una rutina puede coincidir". Es FALSO —
+        dos quests pueden mandarlo al MISMO lugar a la misma hora, y ahi decidia
+        el orden de iteracion, que es arbitrario.
+
+        Bug real: con la 09_a (Violet enferma) y la de deseo 25 o 30 activas a
+        la vez, las dos la ponen en su habitacion por la noche. La de deseo trae
+        el idle de pijama y la 09_a el de enferma, y de noche salia el de
+        pijama — se la veia sana estando enferma.
+
+        A igual prioridad gana la primera, como antes: `>` y no `>=`.
         """
+        _mejor = None
+        _mejor_prio = None
+
         # 1. Rutina propia. Se recorren TODAS las quests activas del NPC y no solo
         #    la primera: con varias lineas en paralelo, la que define la rutina
         #    puede no ser la primera por orden de registro.
-        for quest in sistema_quests.obtener_quests_activas_npc(npc_id):
-            rutina = quest._rutina_quest_vigente(npc_id)
-            if rutina:
-                return rutina
-
-        # 2. rutinas_adicionales de quests de OTROS NPCs
+        # 2. rutinas_adicionales de quests de OTROS NPCs (ej: la 09_a de Violet
+        #    mueve a Monica).
+        _candidatas = list(sistema_quests.obtener_quests_activas_npc(npc_id))
         for q in sistema_quests.quests.values():
             if not q.activa or q.npc_id == npc_id:
                 continue
-            if npc_id not in q.rutinas_adicionales:
-                continue
-            rutina = q._rutina_quest_vigente(npc_id)
-            if rutina:
-                return rutina
+            if npc_id in q.rutinas_adicionales:
+                _candidatas.append(q)
 
-        return None
+        for quest in _candidatas:
+            rutina = quest._rutina_quest_vigente(npc_id)
+            if not rutina:
+                continue
+            _prio = getattr(quest, "prioridad_rutina", 0)
+            if _mejor_prio is None or _prio > _mejor_prio:
+                _mejor, _mejor_prio = rutina, _prio
+
+        return _mejor
 
     def obtener_sprite_quest_npc(npc_id):
         """
@@ -1684,19 +1698,24 @@ init python:
         LINEA_DESEO:     "💋",
     }
 
-    def tag_opcion_quest(label, es_evento=False, tipo=None):
+    def tag_opcion_quest(label, es_evento=False, tipo=None, quest_id=None):
         """
         Tag que va al final de un boton del menu de NPC o de puerta.
 
         Devuelve "" para tipo "ventaja", " (Evento)" para eventos, o
-        " (<icono> Quest)" segun la LINEA de la quest,
-        que se deduce del propio label: los labels de quest se llaman
-        "quest_<quest_id>", asi que se busca la quest y se lee su `linea`. Se
-        hace asi y no con un campo extra en el dict de la opcion para que valga
-        automaticamente para las ~40 opciones ya existentes, sin tocar ninguna.
+        " (<icono> Quest)" segun la LINEA de la quest.
 
-        Si el label no corresponde a una quest registrada (labels propios,
-        eventos, contenido suelto), cae al " (Quest)" de siempre.
+        DE DONDE SALE LA QUEST, en dos pasos.
+        Primero `quest_id`, si la opcion lo trae: es la via para los botones
+        cuyo label es PROPIO y no `quest_<id>` — que son muchos, porque casi
+        toda quest con una escena de entrada aparte ("Ya compré los cosplay",
+        "Tengo las entradas", "Matar el tiempo") tiene su label propio.
+        Si no viene, se deduce del label: los labels de quest se llaman
+        `quest_<quest_id>`. Eso cubre solo a las que entran derecho al label de
+        la quest, sin tener que declarar nada.
+
+        Sin ninguna de las dos —eventos, contenido suelto— cae al " (Quest)"
+        pelado, sin icono.
         """
         # Las opciones de VENTAJA no llevan tag: no son contenido puntual que
         # aparece y se va, son capacidades permanentes del vinculo — se leen
@@ -1707,9 +1726,22 @@ init python:
         if es_evento:
             return renpy.translate_string(" (Evento)")
 
+        # `quest_id` puede venir como funcion: las opciones de PUERTA se
+        # registran en init 5 con un valor fijo, y el arco de los favores cambia
+        # de quest segun el tramo, asi que necesita resolverse al mostrar el
+        # menu y no al registrarse.
+        _qid_tag = quest_id
+        if callable(_qid_tag):
+            try:
+                _qid_tag = _qid_tag()
+            except Exception:
+                _qid_tag = None
+        if not _qid_tag and label and label.startswith("quest_"):
+            _qid_tag = label[len("quest_"):]
+
         _linea = None
-        if label and label.startswith("quest_"):
-            _q_tag = store.sistema_quests.obtener_quest(label[len("quest_"):])
+        if _qid_tag:
+            _q_tag = store.sistema_quests.obtener_quest(_qid_tag)
             if _q_tag is not None:
                 _linea = getattr(_q_tag, "linea", LINEA_PRINCIPAL)
 

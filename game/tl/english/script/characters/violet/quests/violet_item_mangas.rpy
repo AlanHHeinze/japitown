@@ -48,3 +48,23 @@ translate english usar_mangas_violet_mc_1a9087fc:
     # piensa "La verdad supero espectativas, ahora quiero hablar con Violet y seahogar algunas cosas"
     piensa "Honestly it exceeded expectations; now I want to talk to Violet and get a few things off my chest"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_item_mangas.rpy:38
+translate english usar_mangas_violet_mc_6611cddb:
+
+    # piensa "Es muy tarde para ponerme a leer, será mejor hacerlo mañana"
+    piensa "It's too late to start reading; better do it tomorrow"
+
+# game/script/characters/violet/quests/violet_item_mangas.rpy:67
+translate english usar_mangas_violet_mc_f93c20d5:
+
+    # piensa "Bien llevado como el mundo lo absorbe y convierte a medida que va perdiendo cosas"
+    piensa "Nicely handled, how the world absorbs and changes him as he keeps losing things"
+
+# game/script/characters/violet/quests/violet_item_mangas.rpy:71
+translate english usar_mangas_violet_mc_3e0399f9:
+
+    # piensa "La verdad superó expectativas, ahora quiero hablar con Violet y desahogar algunas cosas"
+    piensa "Honestly it exceeded expectations; now I want to talk to Violet and get a few things off my chest"
+

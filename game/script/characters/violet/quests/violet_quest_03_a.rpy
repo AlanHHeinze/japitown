@@ -66,14 +66,14 @@ label quest_violet_questprincipal_03_a:
     show mc_parado_base b_none
 
     if vq3a_cuerpo == "c_pijama":
-        show violet_parada b_hablandochica c_pijama_pensando with sprite_fast
+        show violet_parada b_hablandochica c_pijama_pensando with sprite_normal
     else:
-        show violet_parada b_hablandochica c_rbase_pensando with sprite_fast
+        show violet_parada b_hablandochica c_rbase_pensando with sprite_normal
     violet "¿Ya los leíste todos?"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
-    mc "Sí, ya los termine de leer"
+    mc "Sí, ya los terminé de leer"
     show mc_parado_base b_none
 
     show mc_parado_base c_rbase_mochila1 with sprite_normal
@@ -90,15 +90,15 @@ label quest_violet_questprincipal_03_a:
     mc "Toma"
     show mc_parado_base b_none
 
-    show mc_parado_base c_rbase_base with sprite_fast
+    show mc_parado_base c_rbase_base with sprite_normal
     if vq3a_cuerpo == "c_pijama":
-        show violet_parada c_pijama_mangas with sprite_fast
+        show violet_parada c_pijama_mangas with sprite_normal
         pause 0.3
         show violet_parada c_pijama_mangas at right_a_salir with sprite_normal
         pause 1.0
         show violet_parada c_pijama_base at entrar_a_right with sprite_normal
     else:
-        show violet_parada c_rbase_mangas with sprite_fast
+        show violet_parada c_rbase_mangas with sprite_normal
         pause 0.3
         show violet_parada c_rbase_mangas at right_a_salir with sprite_normal
         pause 1.0
@@ -106,13 +106,13 @@ label quest_violet_questprincipal_03_a:
     pause 0.5
 
     show violet_parada b_hablandochica
-    violet "Bueno listo, ya te puedes ir"
+    violet "Bueno, listo, ya te puedes ir"
     show violet_parada b_none o_base
 
     show mc_parado_base b_hablando
     mc "Ehhh, espera"
-    show mc_parado_base b_abiertachica c_rbase_cuestionando with sprite_fast
-    mc "Acaso no te interesa saber ¿Qué me parecio?"
+    show mc_parado_base b_abiertachica c_rbase_cuestionando with sprite_normal
+    mc "¿Acaso no te interesa saber qué me pareció?"
     show mc_parado_base b_none
 
     if violet_recuerdo_mangas == "deseo":
@@ -130,9 +130,9 @@ label vq03a_rama_deseo:
     $ notificar_recuerdo_activado()
 
     if vq3a_cuerpo == "c_pijama":
-        show violet_parada b_hablandochica o_juzgandonm c_pijama_brazoscruzados with sprite_fast
+        show violet_parada b_hablandochica o_juzgandonm c_pijama_brazoscruzados with sprite_normal
     else:
-        show violet_parada b_hablandochica o_juzgandonm c_rbase_brazoscruzados with sprite_fast
+        show violet_parada b_hablandochica o_juzgandonm c_rbase_brazoscruzados with sprite_normal
     violet "¿Vamos a hablar del manga o de mi trasero?"
     show violet_parada b_none o_base
 
@@ -160,11 +160,11 @@ label vq03a_rama_deseo:
     violet "Me es complicado no hacerlo"
     show violet_parada b_none
 
-    show mc_parado_base c_rbase_pensando o_arribanm with sprite_fast
-    piensa "Veo que se lo tomo bastante a pecho"
-    piensa "No se si es el mejor momento para hablar de eso, voy a esperar hasta que este un poco más tranquila"
-    show mc_parado_base c_rbase_base o_base b_hablando with sprite_fast
-    mc "Bueno, de verda hablemos del manga, necesito descargar con alguien"
+    show mc_parado_base c_rbase_pensando o_arribanm with sprite_normal
+    piensa "Veo que se lo tomó bastante a pecho"
+    piensa "No sé si es el mejor momento para hablar de eso, voy a esperar hasta que esté un poco más tranquila"
+    show mc_parado_base c_rbase_base o_base b_hablando with sprite_normal
+    mc "Bueno, de verdad hablemos del manga, necesito descargar con alguien"
     show mc_parado_base b_none
 
     jump vq03a_comun
@@ -179,18 +179,18 @@ label vq03a_rama_amor:
     $ notificar_recuerdo_activado()
 
     if vq3a_cuerpo == "c_pijama":
-        show violet_parada b_hablandochica o_juzgandonm c_pijama_brazoscruzados with sprite_fast
+        show violet_parada b_hablandochica o_juzgandonm c_pijama_brazoscruzados with sprite_normal
     else:
-        show violet_parada b_hablandochica o_juzgandonm c_rbase_brazoscruzados with sprite_fast
+        show violet_parada b_hablandochica o_juzgandonm c_rbase_brazoscruzados with sprite_normal
     violet "Sí, pero no quiero que te pongas sentimental como la otra vez"
     show violet_parada b_none o_base
 
     show mc_parado_base b_hablando c_rbase_base
-    mc "Perdón solo dije lo que pensé, no sabia que te iba a molestar"
+    mc "Perdón, solo dije lo que pensé, no sabía que te iba a molestar"
     show mc_parado_base b_none
 
-    show violet_parada b_hablandochica 
-    violet "No me molesto, solo que no quiero hablar de eso"
+    show violet_parada b_hablandochica
+    violet "No me molestó, solo que no quiero hablar de eso"
     show violet_parada b_none o_base
 
     show mc_parado_base b_hablando
@@ -201,11 +201,11 @@ label vq03a_rama_amor:
     violet "Me es complicado no hacerlo"
     show violet_parada b_none
 
-    show mc_parado_base c_rbase_pensando o_arribanm with sprite_fast
-    piensa "Veo que se lo tomo bastante a pecho"
-    piensa "No se si es el mejor momento para hablar de eso, voy a esperar hasta que este un poco más tranquila"
-    show mc_parado_base c_rbase_base o_tristesnm b_hablando with sprite_fast
-    mc "Bueno, de verda hablemos del manga, necesito descargar con alguien"
+    show mc_parado_base c_rbase_pensando o_arribanm with sprite_normal
+    piensa "Veo que se lo tomó bastante a pecho"
+    piensa "No sé si es el mejor momento para hablar de eso, voy a esperar hasta que esté un poco más tranquila"
+    show mc_parado_base c_rbase_base o_tristesnm b_hablando with sprite_normal
+    mc "Bueno, de verdad hablemos del manga, necesito descargar con alguien"
     show mc_parado_base b_none
 
     jump vq03a_comun
@@ -218,24 +218,24 @@ label vq03a_rama_amor:
 label vq03a_comun:
 
     if vq3a_cuerpo == "c_pijama":
-        show violet_parada b_hablandochica o_felicesnm c_pijama_brazoscruzados with sprite_fast
+        show violet_parada b_hablandochica o_felicesnm c_pijama_brazoscruzados with sprite_normal
     else:
-        show violet_parada b_hablandochica o_felicesnm c_rbase_brazoscruzados with sprite_fast
+        show violet_parada b_hablandochica o_felicesnm c_rbase_brazoscruzados with sprite_normal
     violet "Jajaja es un trauma que va a quedar ahí para siempre"
     show violet_parada b_sonrisaleve o_base
 
-    show mc_parado_base b_hablando o_base 
+    show mc_parado_base b_hablando o_base
     mc "Sí, empezó como algo solo de acción y tiros, pensé que iba a ser eso"
     show mc_parado_base b_abiertachica
-    mc "Pero el desarrollo de los personajes y la historia me parecio facinante, todavía sigo pensando en el final"
+    mc "Pero el desarrollo de los personajes y la historia me pareció fascinante, todavía sigo pensando en el final"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "A mi me gusto, refleja bastante bien el mundo y la idea de los finale felices"
+    violet "A mí me gustó, refleja bastante bien el mundo y la idea de los finales felices"
     show violet_parada b_none o_base
 
     show mc_parado_base b_abiertachica
-    mc "A mi también, pero duele jajaja"
+    mc "A mí también, pero duele jajaja"
     show mc_parado_base b_hablando
     mc "¿Cuál es tu personaje favorito?"
     show mc_parado_base b_none
@@ -243,12 +243,12 @@ label vq03a_comun:
     vozoff "Prrr Prrr Prrr"
 
     if vq3a_cuerpo == "c_pijama":
-        show violet_parada o_abajonm c_pijama_celu with sprite_fast
+        show violet_parada o_abajonm c_pijama_celu with sprite_normal
     else:
-        show violet_parada o_abajonm c_rbase_celu with sprite_fast
+        show violet_parada o_abajonm c_rbase_celu with sprite_normal
     pause 1.0
     show violet_parada o_base b_hablandochica
-    violet "Monica necesita que la ayude con algo, ahí vengo"
+    violet "Mónica necesita que la ayude con algo, ahí vengo"
     show violet_parada b_hablando
     violet "Espérame y seguimos hablando"
     show violet_parada b_none
@@ -256,7 +256,7 @@ label vq03a_comun:
     hide violet_parada with dissolve
 
     piensa "Podría ver si hay algún otro manga que me interese mientras espero"
-    piensa "Y chusmear un poco su habitación, capas que encuentro algo más para conectar con ella"
+    piensa "Y chusmear un poco su habitación, capaz que encuentro algo más para conectar con ella"
 
     # Quitar mangas del inventario
     $ store.inventario["mangas_violet_mc"] = store.inventario.get("mangas_violet_mc", 1) - 1
@@ -303,7 +303,7 @@ label vq03a_comun:
 label vq3a_accion_peluches:
     $ ocultar_hud()
     window show
-    piensa "Violet y su obsesion con los Slime... desde pequeña que le gustan y los colecciona"
+    piensa "Violet y su obsesión con los Slime... desde pequeña que le gustan y los colecciona"
     window hide
     $ vq3a_peluches_hecho = True
     if vq3a_peluches_hecho and vq3a_pc_hecho and vq3a_manga_hecho and vq3a_muñecos_hecho and vq3a_mochila_hecho:
@@ -314,7 +314,7 @@ label vq3a_accion_peluches:
 label vq3a_accion_pc:
     $ ocultar_hud()
     window show
-    piensa "PC master race, me pregunto que estara jugando actualmente"
+    piensa "PC master race, me pregunto qué estará jugando actualmente"
     window hide
     $ vq3a_pc_hecho = True
     if vq3a_peluches_hecho and vq3a_pc_hecho and vq3a_manga_hecho and vq3a_muñecos_hecho and vq3a_mochila_hecho:
@@ -325,7 +325,7 @@ label vq3a_accion_pc:
 label vq3a_accion_manga:
     $ ocultar_hud()
     window show
-    piensa "Tiene bastantes opciones, la proxima le voy a pedir alguno de sus favoritos"
+    piensa "Tiene bastantes opciones, la próxima le voy a pedir alguno de sus favoritos"
     window hide
     $ vq3a_manga_hecho = True
     if vq3a_peluches_hecho and vq3a_pc_hecho and vq3a_manga_hecho and vq3a_muñecos_hecho and vq3a_mochila_hecho:
@@ -336,7 +336,7 @@ label vq3a_accion_manga:
 label vq3a_accion_muñecos:
     $ ocultar_hud()
     window show
-    piensa "Su coleccion de figuras, también tiene slimes aquí"
+    piensa "Su colección de figuras, también tiene slimes aquí"
     window hide
     $ vq3a_muñecos_hecho = True
     if vq3a_peluches_hecho and vq3a_pc_hecho and vq3a_manga_hecho and vq3a_muñecos_hecho and vq3a_mochila_hecho:
@@ -347,7 +347,7 @@ label vq3a_accion_muñecos:
 label vq3a_accion_mochila:
     $ ocultar_hud()
     window show
-    piensa "Tiene una mochila japonesa... sé que esas son muy caras, me pregunto cuanto le habra costado..."
+    piensa "Tiene una mochila japonesa... sé que esas son muy caras, me pregunto cuánto le habrá costado..."
     window hide
     $ vq3a_mochila_hecho = True
     if vq3a_peluches_hecho and vq3a_pc_hecho and vq3a_manga_hecho and vq3a_muñecos_hecho and vq3a_mochila_hecho:
@@ -367,7 +367,7 @@ label vq3a_monologo:
     piensa "Esperaba encontrar un desorden, pero tiene todo bien acomodado, un poco me sorprende"
     piensa "Descontando la cantidad de slimes por todos lados, esta podría ser mi habitación"
     piensa "La verdad que tenemos gustos similares, no debería ser tan difícil conectar con ella"
-    piensa "Ahora que estoy aquí, no vi el cosplay que le regale por ningún lado, quizás este guardado en su ropero"
+    piensa "Ahora que estoy aquí, no vi el cosplay que le regalé por ningún lado, quizás esté guardado en su ropero"
 
     window hide
 
@@ -389,9 +389,9 @@ label vq3a_accion_ropero:
     $ ocultar_hud()
     scene vq3a_ropero with fade
     window show
-    piensa "Ahí esta guardado el cosplay que le regale y sigue en la caja"
-    piensa "¿Se lo habra probado? No me dijo nada de si le gusto o no, podría preguntarle cuando vuelva"
-    piensa "Tampoco veo aquí que tenga algún otro cosplay, pensé que si iba a haber, quizás lo le gustan..."
+    piensa "Ahí está guardado el cosplay que le regalé y sigue en la caja"
+    piensa "¿Se lo habrá probado? No me dijo nada de si le gustó o no, podría preguntarle cuando vuelva"
+    piensa "Tampoco veo aquí que tenga algún otro cosplay, pensé que sí iba a haber, quizás no le gustan..."
     window hide
 
     $ vq3a_ropero_hecho = True
@@ -413,8 +413,8 @@ label vq3a_accion_cajonera:
     $ ocultar_hud()
     scene vq3a_cajonera with fade
     window show
-    piensa "No sé que esperaba encontrar aquí, segui mirando por instinto"
-    piensa "Esta toda su ropa interior, no me imagine que Violet usara de este tipo"
+    piensa "No sé qué esperaba encontrar aquí, seguí mirando por instinto"
+    piensa "Está toda su ropa interior, no me imaginé que Violet usara de este tipo"
     piensa "Tiene bastante variedad"
     window hide
 
@@ -461,19 +461,19 @@ label vq3a_final_escena:
     show violet_parada b_aburrida
 
     show mc_parado_base b_hablando
-    mc "No, estaba revisando nada, solo cerre el cajon que estaba abierto"
+    mc "No, no estaba revisando nada, solo cerré el cajón que estaba abierto"
     show mc_parado_base b_none
 
     show violet_parada b_hablandochica
-    violet "¿Y eso estaba en el piso, entonces lo estabas guardando no?"
+    violet "¿Y eso estaba en el piso, entonces lo estabas guardando, no?"
     show violet_parada b_none
 
     show mc_parado_base o_abajonm
-    piensa "Estoy muerto... si, si lo estoy"
+    piensa "Estoy muerto... sí, sí lo estoy"
     show mc_parado_base o_asustados b_asustada
     pause 0.5
-    show mc_parado_base b_hablando 
-    mc "Epera, hay una explicación"
+    show mc_parado_base b_hablando
+    mc "Espera, hay una explicación"
     show mc_parado_base b_asustada
 
     show mc_parado_base at mc_salir_izquierda with sprite_fast
@@ -482,7 +482,7 @@ label vq3a_final_escena:
     hide violet_parada with dissolve
     hide mc_parado_base
 
-    
+
     $ _loc_hmc_3a = sistema_locaciones.obtener_locacion("casa_hmc")
     $ _bg_hmc_3a  = _loc_hmc_3a.background if _loc_hmc_3a else None
     if _bg_hmc_3a:
@@ -492,7 +492,7 @@ label vq3a_final_escena:
 
     piensa "Escapar creo que fue la mejor opción"
     show mc_parado_base o_abajonm
-    piensa "¿Ahora que hago con esto?"
+    piensa "¿Ahora qué hago con esto?"
     piensa "Mejor lo guardo y cuando encuentre el momento se lo devuelvo"
 
     $ agregar_al_inventario("tanga_violet")

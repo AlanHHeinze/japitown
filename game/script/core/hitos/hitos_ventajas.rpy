@@ -74,19 +74,19 @@ init python:
     registrar_ventaja(
         "puerta_ingreso_noche",
         "Entrar a la habitación de trasnoche",
-        "Podés entrar a su habitación de madrugada sin golpear. Es el nivel de confianza más alto.",
+        "Puedes entrar a su habitación de madrugada sin golpear. Es el nivel de confianza más alto.",
     )
 
     registrar_ventaja(
         "puerta_ingreso_diurno",
         "Entrar a la habitación durante el día",
-        "Podés entrar a su habitación de día sin golpear ni pedir permiso.",
+        "Puedes entrar a su habitación de día sin golpear ni pedir permiso.",
     )
 
     registrar_ventaja(
         "puerta_dejar_pasar",
         "Te deja pasar al golpear la puerta",
-        "Si golpeás, te abre y te deja pasar a su habitación.",
+        "Si golpeas, te abre y te deja pasar a su habitación.",
     )
 
     # Variantes acotadas por horario, calcadas de las de sale_pasillo de mas
@@ -95,19 +95,19 @@ init python:
     registrar_ventaja(
         "puerta_dejar_pasar_tarde",
         "Pasar (Tarde)",
-        "Podremos ingresar a su habitación por la tarde.",
+        "Puedes ingresar a su habitación por la tarde.",
     )
 
     registrar_ventaja(
         "puerta_dejar_pasar_noche",
         "Pasar (Noche)",
-        "Podremos ingresar a su habitación por la noche.",
+        "Puedes ingresar a su habitación por la noche.",
     )
 
     registrar_ventaja(
         "puerta_sale_pasillo",
-        "Sale al pasillo cuando golpeás la puerta",
-        "Si golpeás, sale a hablar al pasillo, pero todavía no te deja entrar.",
+        "Sale al pasillo cuando golpeas la puerta",
+        "Si golpeas, sale a hablar al pasillo, pero todavía no te deja entrar.",
     )
 
     # Variantes acotadas por momento del dia. Sirven para que una linea abra el
@@ -135,7 +135,7 @@ init python:
     # levanta ese bloqueo para un NPC. Todavia no la otorga ningun hito.
     registrar_ventaja(
         "npc_interaccion_trasnoche",
-        "Podés hablarle de madrugada",
+        "Puedes hablarle de madrugada",
         "Aunque sea de madrugada te atiende en vez de estar durmiendo.",
     )
 
@@ -179,7 +179,7 @@ init python:
     registrar_ventaja(
         "talk_preview_resultado",
         "Conocerla",
-        "Al hablar con ella siempre vemos el resultado de una de las respuestas.",
+        "Al hablar con ella siempre ves el resultado de una de las respuestas.",
     )
 
     # Memoria sin tope para ese NPC. Sin esta ventaja el MC recuerda
@@ -193,7 +193,7 @@ init python:
     registrar_ventaja(
         "talk_memoria_total",
         "Recordar",
-        "Al hablar con ella siempre vemos el resultado de nuestra elección pasada con ese estado.",
+        "Al hablar con ella siempre ves el resultado de tu elección pasada con ese estado.",
     )
 
 
@@ -208,25 +208,25 @@ init python:
     registrar_ventaja(
         "accion_jugar",
         "Jugar",
-        "Al hacer uso de la acción Jugar, {npc} se puede unir y mejora la relación en +2 ❤️.",
+        "Al hacer uso de la acción Jugar, {npc} se puede unir y mejora la relación en +1 ❤️.",
     )
 
     registrar_ventaja(
         "juegos_nuevos",
         "Juegos Nuevos",
-        "Al interactuar con {npc} tendremos la opción de jugar un juego nuevo; son escenas especiales con ella.",
+        "Al interactuar con {npc} tienes la opción de jugar un juego nuevo; son escenas especiales con ella.",
     )
 
     registrar_ventaja(
         "accion_ver_anime",
         "Ver Anime",
-        "Al hacer uso de la acción Ver Anime, {npc} se puede unir y mejora la relación en +2 💋.",
+        "Al hacer uso de la acción Ver Anime, {npc} se puede unir y mejora la relación en +1 💋.",
     )
 
     registrar_ventaja(
         "mensajear",
         "Mensajear",
-        "Ahora podremos escribirle a {npc} por el chat cuando queramos y tener conversaciones especiales con ella.",
+        "Ahora puedes escribirle a {npc} por el chat cuando quieras y tener conversaciones especiales con ella.",
     )
 
     # Segundo escalon de "Mensajear": no cambia el boton, cambia lo que ella
@@ -242,23 +242,23 @@ init python:
     registrar_ventaja(
         "accion_beso_amor",
         "Beso (Amor)",
-        "En el menú de {npc} tendremos la opción de besarla, una vez por día.",
+        "Estando en su habitación por la tarde, en el menú de {npc} tienes la opción de besarla, una vez por día.",
     )
 
     registrar_ventaja(
         "ropa_nueva",
         "Ropa Nueva",
-        "Estando en su habitación, {npc} nos puede mostrar cómo le queda algo nuevo.",
+        "En el menú de {npc} le puedes pedir que te muestre cómo le queda algo nuevo.",
     )
 
     registrar_ventaja(
         "accion_beso_deseo",
         "Beso (Deseo)",
-        "En el menú de {npc} tendremos otra forma de besarla, una vez por día.",
+        "Estando en su habitación por la noche, en el menú de {npc} tienes otra forma de besarla, una vez por día.",
     )
 
     registrar_ventaja(
         "provocacion",
         "Provocación",
-        "En distintos momentos {npc} nos va a estar provocando; son escenas especiales que aparecen solas.",
+        "En distintos momentos {npc} te va a estar provocando; son escenas especiales que aparecen solas.",
     )

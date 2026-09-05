@@ -63,6 +63,47 @@ init 999 python:
         if agregadas and config.developer:
             print("[Persistencia] {}: {} elementos nuevos agregados".format(etiqueta, agregadas))
 
+    def _ps_refrescar_quests(fresco_dict, cargado_dict):
+        """
+        Pisa el CATALOGO de las quests ya presentes en el save con el fresco:
+        los textos de guia y las rutinas.
+
+        POR QUE HACE FALTA: _ps_merge_dict solo agrega las quests que faltan, asi
+        que una quest que ya venia en el save se queda para siempre con la
+        `config_etapas` y la `rutina_quest` del dia que se guardo. Ahi viven la
+        pista, el "que hacer" y donde se para cada NPC — o sea que corregir un
+        texto, o la posicion de un sprite, no llegaba nunca a una partida en
+        curso. Con esto si.
+
+        SOLO SE TOCA EL CATALOGO, no el progreso. Todos esos campos se arman en
+        el __init__ del Quest y nadie los muta en runtime (verificado por grep):
+        las rutinas se LEEN en cada frame desde _buscar_rutina_quest_vigente,
+        asi que refrescar el dict alcanza para que el cambio se vea. El estado
+        real de la quest —etapa_actual, activa, completada, fallo_ocurrido— no
+        se toca.
+
+        Los requisitos NO se refrescan a proposito: cambiarlos a mitad de una
+        partida podria destrabar o trabar el avance de golpe, que es otra cosa
+        muy distinta de corregir un texto.
+
+        SIRVE PARA LAS DOS CLASES DE QUEST, que guardan el texto distinto:
+        `Quest` (los NPCs) en config_etapas + mensaje_pista, y `QuestMC` en
+        _pista + _que_hacer_fn. Por eso se copia campo por campo con hasattr y
+        no atributo por atributo a ciegas — y por eso NO entra
+        `locaciones_pendientes` de QuestMC, que parece catalogo pero es
+        progreso: se va vaciando a medida que el jugador recorre.
+        """
+        _CAMPOS = ("config_etapas", "mensaje_pista", "_pista", "_que_hacer_fn",
+                   "rutina_quest", "rutinas_adicionales", "prioridad_rutina")
+        for _k, _fresca in fresco_dict.items():
+            _cargada = cargado_dict.get(_k)
+            if _cargada is None:
+                continue
+            for _campo in _CAMPOS:
+                if hasattr(_fresca, _campo) and hasattr(_cargada, _campo):
+                    setattr(_cargada, _campo,
+                            _copy_ps.deepcopy(getattr(_fresca, _campo)))
+
     def _ps_merge_post_load():
         """after_load: inyecta contenido nuevo del catálogo en el save cargado."""
 
@@ -71,6 +112,11 @@ init 999 python:
             _ps_merge_dict(
                 _SISTEMAS_FRESCOS["sistema_quests"].quests,
                 store.sistema_quests.quests, "quests")
+
+            # Y a las que ya estaban, se les actualiza el catalogo (textos y rutinas).
+            _ps_refrescar_quests(
+                _SISTEMAS_FRESCOS["sistema_quests"].quests,
+                store.sistema_quests.quests)
 
             # Reconstruir el indice por NPC desde .quests, que es la fuente real.
             # _ps_merge_dict solo llena .quests; quests_por_npc se arma en
@@ -91,6 +137,9 @@ init 999 python:
             _ps_merge_dict(
                 _SISTEMAS_FRESCOS["sistema_quests_mc"].quests,
                 store.sistema_quests_mc.quests, "quests_mc")
+            _ps_refrescar_quests(
+                _SISTEMAS_FRESCOS["sistema_quests_mc"].quests,
+                store.sistema_quests_mc.quests)
         except Exception:
             pass
 
@@ -100,6 +149,23 @@ init 999 python:
             for _gid, _g in _fresco_msg._todos_grupos.items():
                 if _gid not in store.sistema_mensajes._todos_grupos:
                     store.sistema_mensajes.registrar_grupo(_g.npc_id, _copy_ps.deepcopy(_g))
+                    continue
+
+                # El grupo ya estaba en el save, con la conversacion del dia que
+                # se guardo. Si TODAVIA NO EMPEZO se le refresca la definicion,
+                # asi una correccion a los pasos llega a las partidas en curso;
+                # antes se quedaban con la version vieja para siempre.
+                _gc = store.sistema_mensajes._todos_grupos[_gid]
+                if _gc is _g or _gc.paso_actual != 0 or _gc.estado == "en_curso":
+                    # ⚠️ EMPEZADO: NO SE TOCA. `paso_actual` es un indice dentro
+                    # de `pasos`, y cambiar la lista debajo lo deja apuntando a
+                    # otra cosa — basta con que se haya insertado un paso para
+                    # que la conversacion siga por donde no va. Un chat a medias
+                    # se queda con la version con la que arranco.
+                    continue
+                _gc.pasos = _copy_ps.deepcopy(_g.pasos)
+                _gc.mensaje_inicial = _copy_ps.deepcopy(_g.mensaje_inicial)
+                _gc.foto_inicial = _g.foto_inicial
         except Exception:
             pass
 

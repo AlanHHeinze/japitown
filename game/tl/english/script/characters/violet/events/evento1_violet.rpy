@@ -314,7 +314,7 @@ translate english invitar_violet_vr_6dbd396d:
 
 translate english strings:
 
-    old "El casco VR de su lista de deseados ahora esta disponible"
+    old "El casco VR de su lista de deseados ahora está disponible"
     new "The VR headset from your wishlist is now available"
 
 # TODO: Translation updated at 2026-06-25 23:12

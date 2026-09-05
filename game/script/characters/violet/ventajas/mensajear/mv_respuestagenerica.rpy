@@ -7,8 +7,26 @@
 ##
 ## ES LA UNICA REPETIBLE. Al terminar se devuelve a estado "pendiente" para que
 ## vuelva a estar disponible; el resto queda "completado" y no se repite.
+##
+## DE TRASNOCHE NO CONTESTA: a esa hora esta durmiendo. Al ser la unica sin
+## condicion, era la que mantenia el boton "Hablar" prendido toda la madrugada.
 
 init 6 python:
+
+    def _mv_generica_condicion():
+        """
+        Condicion de la conversacion: cualquier hora MENOS el trasnoche.
+
+        Va acá y no en _mv_puede_hablar() porque es una regla de ESTA
+        conversacion, no del sistema: una conversacion de quest puede necesitar
+        que conteste de madrugada, y esas ya declaran su propia condicion.
+
+        Al quedarse sin la de descarte, si a esa hora ninguna otra cumple lo
+        suyo, _mv_elegir() no devuelve nada y el boton "Hablar" queda apagado —
+        que es lo correcto: mejor no poder escribirle que escribirle y que no
+        conteste.
+        """
+        return store.horario_actual != HORARIO_TRASNOCHE
 
     def _mv_generica_al_completar():
         """
@@ -29,16 +47,16 @@ init 6 python:
     grupo_mv_generica = GrupoMensajes(
         id="violet_mv_generica",
         npc_id="violet",
-        mensaje_inicial="Que raro que me estes escribiendo\n¿Necesitas algo?",
+        mensaje_inicial="Qué raro que me estés escribiendo\n¿Necesitas algo?",
         trigger_id="violet_mv_generica",
         accion_al_completar=_mv_generica_al_completar,
         pasos=[
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="No solo queria hablar un rato",
+                        texto="No, solo quería hablar un rato",
                         respuesta_npc=["Ahora estoy con otra cosa",
-                                       "Hablamos despues"],
+                                       "Hablamos después"],
                         saltar_a_paso=1,
                     ),
                 ]
@@ -58,6 +76,6 @@ init 6 python:
 
     registrar_conversacion_mensajear(
         "generica", "violet_mv_generica",
-        condicion=None,
+        condicion=_mv_generica_condicion,
         prioridad=1,
     )

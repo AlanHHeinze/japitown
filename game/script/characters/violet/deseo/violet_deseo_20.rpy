@@ -176,65 +176,77 @@ init 6 python:
                 opciones_jugador=[
                     OpcionRespuesta(
                         texto="¿Es una propuesta? jajaja",
-                        respuesta_npc="Ultimamente todo para vos es una propuesta",
+                        respuesta_npc="Últimamente todo para ti es una propuesta",
                         saltar_a_paso=1,
                     ),
                     OpcionRespuesta(
-                        texto="Si queres te puedo decir que hacer",
+                        texto="Si quieres te puedo decir qué hacer",
                         respuesta_npc="Me imagino tu sugerencia",
-                        saltar_a_paso=2,
-                    ),
-                ]
-            ),
-            # Paso 1 - rama a.
-            PasoConversacion(
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto=["Mala mia supongo", "Se me esta haciendo dificil"],
-                        respuesta_npc="¿Que cosa se te esta haciendo dificil?",
                         saltar_a_paso=3,
                     ),
                 ]
             ),
-            # Paso 2 - rama b.
+            # Pasos 1 y 2 - rama a. Son DOS mensajes seguidos del MC y por eso
+            # van en dos pasos: un toque de "Responder" manda uno solo. El
+            # primero no lleva respuesta de ella —todavia no termino de hablar—
+            # y el sistema lo resuelve derecho (_finalizar_escribiendo).
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="A ver",
-                        respuesta_npc="¿Que clase de peticion es esa?",
+                        texto="Mala mía supongo",
+                        respuesta_npc="",
+                        saltar_a_paso=2,
+                    ),
+                ]
+            ),
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Se me está haciendo difícil",
+                        respuesta_npc="¿Qué cosa se te está haciendo difícil?",
                         saltar_a_paso=4,
                     ),
                 ]
             ),
-            # Pasos 3 y 4: cada rama cierra con lo suyo y ella manda la foto.
-            # Las dos siguen en el paso 5.
+            # Paso 3 - rama b.
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Ver eso dando vueltas todo el dia por la casa",
+                        texto="A ver",
+                        respuesta_npc="¿Qué clase de petición es esa?",
+                        saltar_a_paso=5,
+                    ),
+                ]
+            ),
+            # Pasos 4 y 5: cada rama cierra con lo suyo y ella manda la foto.
+            # Las dos siguen en el paso 6.
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Ver eso dando vueltas todo el día por la casa",
                         respuesta_npc="",
                         foto_respuesta="images/chat/violet/violet_chat_q20d.jpg",
-                        saltar_a_paso=5,
+                        saltar_a_paso=6,
                     ),
                 ]
             ),
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Una muy comun supongo",
+                        texto="Una muy común supongo",
                         respuesta_npc="",
                         foto_respuesta="images/chat/violet/violet_chat_q20d.jpg",
-                        saltar_a_paso=5,
+                        saltar_a_paso=6,
                     ),
                 ]
             ),
-            # Paso 5 en adelante: tronco unico.
+            # Paso 6 en adelante: tronco unico.
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
                         texto="No me lo esperaba 😲",
-                        respuesta_npc="¿Que cosa?",
-                        saltar_a_paso=6,
+                        respuesta_npc="¿Qué cosa?",
+                        saltar_a_paso=7,
                     ),
                 ]
             ),
@@ -243,30 +255,21 @@ init 6 python:
                     OpcionRespuesta(
                         texto="Una foto de mi cosa favorita",
                         respuesta_npc="¿Ahora soy tu cosa favorita?",
-                        saltar_a_paso=7,
-                    ),
-                ]
-            ),
-            # Paso 7: LA CONFESION. Ella lee mal a proposito —o no— y el la
-            # corrige en serio antes de volver al chiste. Es el unico momento
-            # del chat en que ninguno de los dos se esconde, y es de donde sale
-            # el nombre del hito de esta quest ("Confesión").
-            PasoConversacion(
-                opciones_jugador=[
-                    OpcionRespuesta(
-                        texto=["Siempre fuiste mi cosa favorita", "Pero no hablaba de eso ahora"],
-                        respuesta_npc=["😊", "¿Y de que hablabas?"],
                         saltar_a_paso=8,
                     ),
                 ]
             ),
-            # Las dos pistas. Ella contesta lo mismo las dos veces a proposito:
-            # el chiste es que se hace la desentendida.
+            # Pasos 8 y 9: LA CONFESION. Ella lee mal a proposito —o no— y el la
+            # corrige en serio antes de volver al chiste. Es el unico momento
+            # del chat en que ninguno de los dos se esconde, y es de donde sale
+            # el nombre del hito de esta quest ("Confesión"). Van en dos pasos
+            # porque son dos mensajes del MC, y ademas asi la confesion queda
+            # sola en pantalla un momento antes de que el se corrija.
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto=["De mi otra cosa favorita", "Lo tenes atras"],
-                        respuesta_npc="¿Los slimes?",
+                        texto="Siempre fuiste mi cosa favorita",
+                        respuesta_npc="",
                         saltar_a_paso=9,
                     ),
                 ]
@@ -274,9 +277,48 @@ init 6 python:
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto=["Pista dos", "Es algo redondo que dan ganas de morder"],
-                        respuesta_npc="¿Los slimes?",
+                        texto="Pero no hablaba de eso ahora",
+                        respuesta_npc=["😊", "¿Y de qué hablabas?"],
                         saltar_a_paso=10,
+                    ),
+                ]
+            ),
+            # Las dos pistas, cada una en sus dos pasos. Ella contesta lo mismo
+            # las dos veces a proposito: el chiste es que se hace la
+            # desentendida.
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="De mi otra cosa favorita",
+                        respuesta_npc="",
+                        saltar_a_paso=11,
+                    ),
+                ]
+            ),
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Lo tienes atrás",
+                        respuesta_npc="¿Los slimes?",
+                        saltar_a_paso=12,
+                    ),
+                ]
+            ),
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Pista dos",
+                        respuesta_npc="",
+                        saltar_a_paso=13,
+                    ),
+                ]
+            ),
+            PasoConversacion(
+                opciones_jugador=[
+                    OpcionRespuesta(
+                        texto="Es algo redondo que dan ganas de morder",
+                        respuesta_npc="¿Los slimes?",
+                        saltar_a_paso=14,
                     ),
                 ]
             ),
@@ -287,44 +329,44 @@ init 6 python:
                     OpcionRespuesta(
                         texto="Jajaja no te hagas",
                         respuesta_npc="Bueno, con esto ya no te debo nada",
-                        saltar_a_paso=11,
+                        saltar_a_paso=15,
                     ),
                 ]
             ),
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="No recuerdo que me debias",
+                        texto="No recuerdo qué me debías",
                         respuesta_npc="El premio de la cocina",
-                        saltar_a_paso=12,
+                        saltar_a_paso=16,
                     ),
                 ]
             ),
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Nunca pense que ibas a cumplir, estabas dormida y lo hacias para molestarme",
-                        respuesta_npc="Si a ambas cosas, pero siempre cumplo",
-                        saltar_a_paso=13,
+                        texto="Nunca pensé que ibas a cumplir, estabas dormida y lo hacías para molestarme",
+                        respuesta_npc="Sí a ambas cosas, pero siempre cumplo",
+                        saltar_a_paso=17,
                     ),
                 ]
             ),
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Entonces voy a tener que hacerte prometer mas cosas",
-                        respuesta_npc=["Depende solo de vos lograr eso",
+                        texto="Entonces voy a tener que hacerte prometer más cosas",
+                        respuesta_npc=["Depende solo de ti lograr eso",
                                        "😉",
                                        "Ahi se conectaron mis amigos para la partida"],
-                        saltar_a_paso=14,
+                        saltar_a_paso=18,
                     ),
                 ]
             ),
             PasoConversacion(
                 opciones_jugador=[
                     OpcionRespuesta(
-                        texto="Hablamos despues",
-                        respuesta_npc="Hablamos despues 👋",
+                        texto="Hablamos después",
+                        respuesta_npc="Hablamos después 👋",
                         saltar_a_paso=-1,
                     ),
                 ]
@@ -337,7 +379,7 @@ init 6 python:
         "deseo20", "violet_deseo04_chat",
         condicion=_vd20_conversacion_lista,
         prioridad=100,                 # le gana a cualquier otra mientras dure
-        saludo="¿Como estas?",
+        saludo="¿Cómo estás?",
         forzada=True,
     )
 
@@ -346,7 +388,7 @@ init 6 python:
     registrar_contenido_ventaja(
         "mensajear", "deseo20", "violet",
         "Pensando en Violet",
-        "Es la quest de 20 💋. Entrá de noche a tu habitación y escribile desde el celular.",
+        "Es la quest de 20 💋. Entra de noche a tu habitación y escríbele desde el celular.",
         vista=_vd20_chat_visto,
         orden=1,
     )
@@ -369,8 +411,8 @@ label violet_deseo_20_inicio:
     # (Mc cuerpo pensando ojos base boca neutral)
     show mc_parado_base c_rbase_pensando o_base b_none at center with sprite_normal
 
-    piensa "Hace un rato que no veo a Violet ¿Que estara haciendo?"
-    piensa "Podria enviarle un mensaje"
+    piensa "Hace un rato que no veo a Violet, ¿qué estará haciendo?"
+    piensa "Podría enviarle un mensaje"
 
     hide mc_parado_base with dissolve
 
@@ -405,7 +447,7 @@ label violet_deseo_20_cierre:
     show mc_parado_base c_rbase_celular o_base b_none at center with sprite_normal
 
     piensa "No me dijo que no"
-    piensa "Con Violet eso es mucho mas que un tal vez"
+    piensa "Con Violet eso es mucho más que un tal vez"
 
     hide mc_parado_base with dissolve
 

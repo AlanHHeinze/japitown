@@ -14,7 +14,7 @@ init 5 python:
         id="monica_questprincipal_0",
         npc_id="monica",
         nombre="Agradecimiento",
-        descripcion="Tengo que hablar con Monica para agraderle la oportunidad",
+        descripcion="Tengo que hablar con Mónica para agradecerle la oportunidad",
         numero_quest=0,
         dias_espera=0,
         requisitos=[],
@@ -22,13 +22,13 @@ init 5 python:
         # (visible solo a solas con ella), no la validación especial de la quest.
         validacion_especial=[],
         mensaje_pista="Debería agradecerle cuando esté a solas con ella",
-        mensaje_despertar="Podría agradecerle a Monica si la encuentro a solas",
+        mensaje_despertar="Podría agradecerle a Mónica si la encuentro a solas",
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista="Debería agradecerle cuando esté a solas con ella.",
-                que_hacer="Hablar con Monica cuando esta sola en el Living por la tarde",
-                mensaje_despertar="Todavía tengo que darle las gracias a Monica por darme un lugar. Podría verla cuando esta sola y de paso darle el perfume",
+                que_hacer="Hablar con Mónica cuando está sola en el Living por la tarde",
+                mensaje_despertar="Todavía tengo que darle las gracias a Mónica por darme un lugar. Podría verla cuando está sola y de paso darle el perfume",
             ),
         },
     )
@@ -41,26 +41,26 @@ init 5 python:
     quest_monica_0b = Quest(
         id="monica_questprincipal_0_b",
         npc_id="monica",
-        nombre="Monica enojada",
-        descripcion="Parece que Monica tiene un problema ¿Qué sera?",
+        nombre="Mónica enojada",
+        descripcion="Parece que Mónica tiene un problema, ¿qué será?",
         numero_quest=1,
         dias_espera=1,
         quest_anterior="monica_questprincipal_0",
         requisitos=[],
         validacion_especial=[],
-        mensaje_pista="Ver que le pasa a Monica",
-        mensaje_despertar="Escucho que Monica se esta peleando con alguien, debería ver si todo está bien",
+        mensaje_pista="Ver qué le pasa a Mónica",
+        mensaje_despertar="Escucho que Mónica se está peleando con alguien, debería ver si todo está bien",
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
                 pista="Todo tranquilo por ahora",
                 que_hacer="Esperar al día siguiente",
-                mensaje_despertar="Escucho a Monica quejarse desde aquí",
+                mensaje_despertar="Escucho a Mónica quejarse desde aquí",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista="Ver que le pasa a Monica",
+                pista="Ver qué le pasa a Mónica",
                 que_hacer="Ir al Living",
-                mensaje_despertar="Escucho que Monica se esta peleando con alguien, debería ver si todo está bien",
+                mensaje_despertar="Escucho que Mónica se está peleando con alguien, debería ver si todo está bien",
                 accion_al_entrar=setup_restriccion_monica_quest0b,
             ),
         },
@@ -74,7 +74,7 @@ init 5 python:
     quest_monica_0c = Quest(
         id="monica_questprincipal_0_c",
         npc_id="monica",
-        nombre="Servicio Tecnico",
+        nombre="Servicio Técnico",
         descripcion="Tengo la notebook de Monica, debería revisarla en mi habitación",
         numero_quest=2,
         dias_espera=0,

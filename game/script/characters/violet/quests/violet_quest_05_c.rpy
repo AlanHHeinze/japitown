@@ -63,16 +63,16 @@ label violet_quest05c_perdon_fuera:
     show mc_parado_base b_none
 
     if vq5c_cuerpo == "c_pijama":
-        show violet_parada b_hablandochica o_enojados c_pijama_base with sprite_fast
+        show violet_parada b_hablandochica o_enojados c_pijama_base with sprite_normal
     else:
-        show violet_parada b_hablandochica o_enojados c_rbase_brazoscruzados with sprite_fast
+        show violet_parada b_hablandochica o_enojados c_rbase_brazoscruzados with sprite_normal
     violet "Ahora no, no tengo ganas de hablar de esto"
     show violet_parada b_hablando
     violet "Chau"
     if vq5c_cuerpo == "c_pijama":
-        show violet_parada b_none c_pijama_base with sprite_fast
+        show violet_parada b_none c_pijama_base with sprite_normal
     else:
-        show violet_parada b_none c_rbase_base with sprite_fast
+        show violet_parada b_none c_rbase_base with sprite_normal
 
     window hide
     $ mostrar_hud()
@@ -124,22 +124,22 @@ label violet_quest05c_habitacion:
         show violet_parada c_rbase_base ca_base o_base b_none at right
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
-    show mc_parado_base b_hablando c_rbase_perdon with sprite_fast
+    show mc_parado_base b_hablando c_rbase_perdon with sprite_normal
     mc "Violet, quería pedirte perdón por lo de los cosplay"
-    show mc_parado_base b_seria c_rbase_base with sprite_fast
+    show mc_parado_base b_seria c_rbase_base with sprite_normal
 
     show violet_parada o_arribanm
     violet "..."
     show violet_parada o_base
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
     mc "Fue un error, no sabía que era ese tipo de tienda"
-    show mc_parado_base b_seria 
+    show mc_parado_base b_seria
 
     if vq5c_cuerpo == "c_pijama":
-        show violet_parada b_hablandochica c_pijama_base with sprite_fast
+        show violet_parada b_hablandochica c_pijama_base with sprite_normal
     else:
-        show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_fast
+        show violet_parada b_hablandochica c_rbase_brazoscruzados with sprite_normal
     violet "No tengo ganas de perdonarte ahora"
     show violet_parada b_none
 
@@ -166,7 +166,7 @@ label violet_quest05c_habitacion:
 
 label violet_quest05c_opcion_a:
 
-    show mc_parado_base b_hablando o_abajonm c_rbase_brazoscruzados with sprite_fast
+    show mc_parado_base b_hablando o_abajonm c_rbase_brazoscruzados with sprite_normal
     mc "Espero que en algún momento me creas que no tenía malas intenciones y que todo lo hice por ti"
     show mc_parado_base b_seria
 
@@ -176,7 +176,7 @@ label violet_quest05c_opcion_a:
     mc "Solo pensé en acompañarte en eso que siempre quisiste hacer"
     show mc_parado_base b_abiertachica
     mc "Nuevamente perdón"
-    show mc_parado_base b_seria c_rbase_base with sprite_fast
+    show mc_parado_base b_seria c_rbase_base with sprite_normal
 
     # La tienda lee stock_tienda (default, persiste en el save). No mutar
     # CATALOGO_ITEMS: es dato de init y los cambios no sobreviven save/load.
@@ -201,17 +201,17 @@ label violet_quest05c_opcion_a:
 
 label violet_quest05c_opcion_b:
 
-    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
     mc "Nunca tuve malas intenciones, todo salió así sin buscarlo"
-    show mc_parado_base b_abiertachica 
-    mc "Si bien me encantaría verte con algo así puesto... No lo compre para eso, quería que lo usaras en el evento"
+    show mc_parado_base b_abiertachica
+    mc "Si bien me encantaría verte con algo así puesto... No lo compré para eso, quería que lo usaras en el evento"
     show mc_parado_base b_seria
 
     show mc_parado_base b_hablando o_abajonm
-    mc "No te compraría algo que te exponga y tampoo para que te mire todo el mundo"
+    mc "No te compraría algo que te exponga y tampoco para que te mire todo el mundo"
     show mc_parado_base b_seria o_base
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
     mc "Me pondría un poco celoso..."
     show mc_parado_base b_seria
 
@@ -221,7 +221,7 @@ label violet_quest05c_opcion_b:
 
     show mc_parado_base b_hablando
     mc "Espero que me creas, nos vemos"
-    show mc_parado_base b_seria c_rbase_base with sprite_fast
+    show mc_parado_base b_seria c_rbase_base with sprite_normal
 
     # La tienda lee stock_tienda (default, persiste en el save). No mutar
     # CATALOGO_ITEMS: es dato de init y los cambios no sobreviven save/load.

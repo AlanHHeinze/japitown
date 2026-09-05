@@ -42,9 +42,9 @@ label violet_quest05a_hablar:
     show mc_parado_base b_none
 
     if vq5a_cuerpo == "c_pijama":
-        show violet_parada b_hablandochica c_pijama_base with sprite_fast
+        show violet_parada b_hablandochica c_pijama_base with sprite_normal
     else:
-        show violet_parada b_hablandochica c_rbase_pensando with sprite_fast
+        show violet_parada b_hablandochica c_rbase_pensando with sprite_normal
     violet "¿Qué compraste?"
     show violet_parada b_none
 
@@ -64,15 +64,15 @@ label violet_quest05a_hablar:
     violet "Raro... ¿Y tú qué te compraste?"
     show violet_parada b_none o_base
 
-    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
     mc "Voy a esperar que elijas uno de los tres y me compro algo acorde."
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     if vq5a_cuerpo == "c_pijama":
-        show violet_parada b_hablandochica c_pijama_base with sprite_fast
+        show violet_parada b_hablandochica c_pijama_base with sprite_normal
     else:
-        show violet_parada b_hablandochica c_rbase_base with sprite_fast
-    violet "Está bien, avisame cuando llegue el pedido."
+        show violet_parada b_hablandochica c_rbase_base with sprite_normal
+    violet "Está bien, avísame cuando llegue el pedido."
     show violet_parada b_none
 
     $ completar_quest_actual("violet", quest_id="violet_questprincipal_05_a")
@@ -112,9 +112,9 @@ label violet_quest05a_puerta:
     show mc_parado_base b_none
 
     if vq5a_cuerpo == "c_pijama":
-        show violet_parada b_hablandochica c_pijama_base with sprite_fast
+        show violet_parada b_hablandochica c_pijama_base with sprite_normal
     else:
-        show violet_parada b_hablandochica c_rbase_pensando with sprite_fast
+        show violet_parada b_hablandochica c_rbase_pensando with sprite_normal
     violet "¿Qué compraste?"
     show violet_parada b_none
 
@@ -134,15 +134,15 @@ label violet_quest05a_puerta:
     violet "Raro... ¿Y tú qué te compraste?"
     show violet_parada b_none o_base
 
-    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
     mc "Voy a esperar que elijas uno de los tres y me compro algo acorde."
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     if vq5a_cuerpo == "c_pijama":
-        show violet_parada b_hablandochica c_pijama_base with sprite_fast
+        show violet_parada b_hablandochica c_pijama_base with sprite_normal
     else:
-        show violet_parada b_hablandochica c_rbase_base with sprite_fast
-    violet "Está bien, avisame cuando llegue el pedido."
+        show violet_parada b_hablandochica c_rbase_base with sprite_normal
+    violet "Está bien, avísame cuando llegue el pedido."
     show violet_parada b_none
 
     $ completar_quest_actual("violet", quest_id="violet_questprincipal_05_a")

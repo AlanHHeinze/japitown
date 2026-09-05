@@ -60,3 +60,23 @@ translate english quest_jasmine_questprincipal_0_b_a0d8baca:
     # tutorial "Ahora [colorear_quest('Respondamos el Mensaje')] pendiente para continuar"
     tutorial "Now [colorear_quest('Let’s Reply to the Message')] that's pending to continue"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/jasmine/quests/jasmine_quest_0_b.rpy:35
+translate english quest_jasmine_questprincipal_0_b_de624e9b:
+
+    # tutorial "Dentro del celular tendremos una App para chatear con los distintos personajes del juego. Dentro de cada conversación en algunos casos vamos a tener distintas elecciones de respuesta"
+    tutorial "Inside the phone there is an App to chat with the different characters in the game. Within each conversation you will sometimes get different reply options"
+
+# game/script/characters/jasmine/quests/jasmine_quest_0_b.rpy:36
+translate english quest_jasmine_questprincipal_0_b_7fe683e3:
+
+    # tutorial "Cada vez que recibamos un mensaje vamos a tener una notificación sobre el icono del celular"
+    tutorial "Every time you get a message a notification will appear on the phone icon"
+
+# game/script/characters/jasmine/quests/jasmine_quest_0_b.rpy:37
+translate english quest_jasmine_questprincipal_0_b_2f70e91c:
+
+    # tutorial "Algunas respuestas por parte de los personajes pueden estar ligadas a momentos, lugares, tiempo y disponibilidad"
+    tutorial "Some replies from the characters can be tied to moments, places, time and availability"
+

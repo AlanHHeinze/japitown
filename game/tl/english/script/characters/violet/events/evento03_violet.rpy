@@ -743,3 +743,131 @@ translate english ev03_accion_buscar_cocina_5d065cc8:
 
     # piensa "Aquí esta"
     piensa "Here it is."
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/events/evento03_violet.rpy:122
+translate english evento03_violet_24a7fe09:
+
+    # mc "Violet, Mónica pidió que nos ocupemos hoy de la limpieza, mientras ella estaba fuera con Jasmine."
+    mc "Violet, Monica asked us to take care of the cleaning today while she's out with Jasmine."
+
+# game/script/characters/violet/events/evento03_violet.rpy:143
+translate english evento03_violet_3143c723:
+
+    # mc "DESPIERTATEEEEE"
+    mc "WAKE UUUUUUP"
+
+# game/script/characters/violet/events/evento03_violet.rpy:190
+translate english evento03_violet_57774708:
+
+    # mc "Encárgate de limpiar el pasillo y el baño, yo voy a hacer el living y la cocina"
+    mc "You take care of the hallway and the bathroom, I'll do the living room and the kitchen."
+
+# game/script/characters/violet/events/evento03_violet.rpy:213
+translate english evento03_violet_6aafdc5c:
+
+    # mc "Cuanto antes terminemos, antes te puedes dormir"
+    mc "The sooner we finish, the sooner you can go to sleep."
+
+# game/script/characters/violet/events/evento03_violet.rpy:354
+translate english violet_quest2_escena_pasillo_bb5b8947:
+
+    # mc "Hay que apurarnos, Violet, tenemos que terminar antes de que vuelvan las chicas"
+    mc "We have to hurry, Violet, we need to finish before the girls get back."
+
+# game/script/characters/violet/events/evento03_violet.rpy:444
+translate english violet_quest2_limpieza_pasillo_c7b9c450:
+
+    # piensa "Voy a ver cómo está"
+    piensa "I'll go check on her."
+
+# game/script/characters/violet/events/evento03_violet.rpy:509
+translate english violet_quest2_escena_banio_78e31d5d:
+
+    # violet "¿Sí?"
+    violet "Yes?"
+
+# game/script/characters/violet/events/evento03_violet.rpy:512
+translate english violet_quest2_escena_banio_545b673d:
+
+    # mc "¿Estás limpiando la alfombra del baño con un trapo?"
+    mc "Is she cleaning the bathroom rug with a rag?"
+
+# game/script/characters/violet/events/evento03_violet.rpy:542
+translate english violet_quest2_escena_banio_cf48ab97:
+
+    # mc "No, ¿por qué?"
+    mc "No, why?"
+
+# game/script/characters/violet/events/evento03_violet.rpy:547
+translate english violet_quest2_escena_banio_b4039891:
+
+    # violet "Me estás mirando sin decir nada"
+    violet "You're staring at me without saying anything."
+
+# game/script/characters/violet/events/evento03_violet.rpy:551
+translate english violet_quest2_escena_banio_d8718cf4:
+
+    # piensa "Mierda, ¿se dio cuenta de que la estaba mirando cuando estaba agachada?"
+    piensa "Shit, did she notice I was staring at her while she was bent over?"
+
+# game/script/characters/violet/events/evento03_violet.rpy:556
+translate english violet_quest2_escena_banio_baff8948:
+
+    # mc "Estaba mirando cómo limpiabas"
+    mc "I was watching how you clean."
+
+# game/script/characters/violet/events/evento03_violet.rpy:571
+translate english violet_quest2_escena_banio_332128a4:
+
+    # violet "¿En qué?"
+    violet "About what?"
+
+# game/script/characters/violet/events/evento03_violet.rpy:601
+translate english violet_quest2_opcion_a_4dc07b88:
+
+    # mc "¿A que yo esté aquí?"
+    mc "To me being here?"
+
+# game/script/characters/violet/events/evento03_violet.rpy:681
+translate english violet_quest2_opcion_b_1640e9f1:
+
+    # mc "Sí o para que nos fuéramos a dormir"
+    mc "Yeah, or to make us go to sleep."
+
+# game/script/characters/violet/events/evento03_violet.rpy:693
+translate english violet_quest2_opcion_b_1516ee21:
+
+    # mc "Sí o para que te bañes"
+    mc "Yeah, or to make YOU take a shower."
+
+# game/script/characters/violet/events/evento03_violet.rpy:709
+translate english violet_quest2_opcion_b_ce68a026:
+
+    # mc "No, en todos mis recuerdos nos llevábamos muy bien"
+    mc "No, in all my memories we got along really well."
+
+# game/script/characters/violet/events/evento03_violet.rpy:798
+translate english violet_quest2_opcion_c_ddde2ded:
+
+    # violet "Ahh, sí, porque eres un pervertido"
+    violet "Ahh right, because you're a pervert."
+
+# game/script/characters/violet/events/evento03_violet.rpy:864
+translate english ev03_accion_limpiar_living_81b35a0f:
+
+    # piensa "No sé por qué me puse a limpiar esto..."
+    piensa "I don't know why I started cleaning this..."
+
+# game/script/characters/violet/events/evento03_violet.rpy:876
+translate english ev03_accion_limpiar_living_f54a0b78:
+
+    # piensa "Listo el Living. Voy a ver cómo va Violet."
+    piensa "Living room's done. I'll go see how Violet's doing."
+
+# game/script/characters/violet/events/evento03_violet.rpy:925
+translate english ev03_accion_buscar_cocina_0d14eec6:
+
+    # piensa "Aquí está"
+    piensa "Here it is."
+

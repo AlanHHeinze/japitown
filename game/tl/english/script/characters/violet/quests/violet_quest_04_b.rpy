@@ -138,3 +138,41 @@ translate english violet_quest04b_puerta_c06b6fd0:
     # violet "Ahí salgo"
     violet "I'll be right out"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_04_b.rpy:34
+translate english quest_violet_questprincipal_04_b_8a63e10c:
+
+    # violet "¿Pasó algo?"
+    violet "Did something happen?"
+
+# game/script/characters/violet/quests/violet_quest_04_b.rpy:64
+translate english quest_violet_questprincipal_04_b_70585e47:
+
+    # mc "Sí, estaba en un maniquí, sé que es uno de tus personajes favoritos y quería que el regalo no fuera algo genérico"
+    mc "Yeah, it was on a mannequin, I know it's one of your favorite characters and I wanted the gift not to be something generic"
+
+# game/script/characters/violet/quests/violet_quest_04_b.rpy:66
+translate english quest_violet_questprincipal_04_b_6df50bdf:
+
+    # mc "Aparte de eso pronto se va a hacer la Japicon y pensé que sería un buen cosplay"
+    mc "Besides that, the Japicon is coming up soon and I thought it'd make a good cosplay"
+
+# game/script/characters/violet/quests/violet_quest_04_b.rpy:74
+translate english quest_violet_questprincipal_04_b_4af72387:
+
+    # mc "No, ¿qué puede haber detrás de eso? Es solo un cosplay"
+    mc "No, what could be behind that? It's just a cosplay"
+
+# game/script/characters/violet/quests/violet_quest_04_b.rpy:90
+translate english quest_violet_questprincipal_04_b_f6f63ff7:
+
+    # violet "Y ya te digo que no hay posibilidades de que vaya a usarlo en un evento"
+    violet "And I'm telling you there's no chance I'll wear it to an event"
+
+# game/script/characters/violet/quests/violet_quest_04_b.rpy:94
+translate english quest_violet_questprincipal_04_b_e8115c89:
+
+    # mc "¿Por qué no me muestras qué tal está? Y te doy mi opinión, seguro estás exagerando"
+    mc "Why don't you show me how it looks? And I'll give you my opinion, I bet you're exaggerating"
+

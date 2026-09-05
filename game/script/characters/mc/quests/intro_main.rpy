@@ -75,7 +75,7 @@ init python:
             store.sincronizar_relaciones_npcs()
         except Exception:
             pass
-        
+
         # Cargar estados de eventos
         try:
             if hasattr(store, 'cargar_eventos'):
@@ -88,7 +88,7 @@ init python:
             renpy.show_screen("navegacion_locaciones_con_hud")
         except Exception:
             pass
-        
+
         # Inicializar sistema de mensajes si no existe (saves antiguos)
         try:
             if not hasattr(store, 'sistema_mensajes') or store.sistema_mensajes is None:
@@ -110,10 +110,23 @@ init python:
 # ---------------------------------------------------------
 # START
 # ---------------------------------------------------------
+## LA UNICA ADVERTENCIA DEL ARRANQUE.
+##
+## Antes eran dos pantallas: esta y un `disclaimer_ficcion` que salia despues de
+## elegir la intro y el nombre. Decian casi lo mismo —obra de ficcion, parecido
+## con personas reales, todos los personajes son mayores— asi que se fusionaron
+## en esta, que es la primera que ve el jugador.
+##
+## EL ORDEN DEL TEXTO NO ES CASUAL: primero los legales (ficcion, edad de los
+## personajes, deslinde) y al final lo que se le pide al jugador (que el juego
+## es solo para mayores) pegado a la pregunta y los botones.
+
 screen advertencia_adultos():
     modal True
 
-    $ _aa_k = 2.0 if renpy.variant("small") else 1.0
+    # 1.7 y no 2.0 como antes: el texto ahora es el de las DOS pantallas juntas
+    # y con el factor viejo el bloque no entraba en pantalla chica.
+    $ _aa_k = 1.7 if renpy.variant("small") else 1.0
 
     add Solid("#000000")
 
@@ -136,7 +149,7 @@ screen advertencia_adultos():
 
             null height int(10 * _aa_k)
 
-            text _("Este juego contiene material explícito no apto para menores de 18 años. Todos los personajes, nombres y eventos retratados en esta obra son completamente ficticios. Cualquier parecido con personas reales, vivas o muertas, es pura coincidencia.\n\nTodos los personajes involucrados en escenas de contenido sexual tienen 18 años o más al momento de los hechos representados"):
+            text _("Este juego es una obra de ficción. Todos los personajes, nombres, situaciones, eventos y diálogos presentados son completamente imaginarios y fueron creados con fines de entretenimiento. Cualquier parecido con personas reales, vivas o fallecidas, es pura coincidencia.\n\nTodos los personajes involucrados en cualquier escena de contenido explícito o romántico tienen 18 años o más al momento de los hechos representados. Los desarrolladores no respaldan ni promueven ningún contenido que tenga lugar en este juego como aceptable en la realidad.\n\nEste juego contiene material explícito y es exclusivo para mayores de 18 años."):
                 size int(18 * _aa_k)
                 color "#cccccc"
                 xalign 0.5
@@ -145,7 +158,7 @@ screen advertencia_adultos():
 
             null height int(10 * _aa_k)
 
-            text _("¿Tenés 18 años o más?"):
+            text _("¿Tienes 18 años o más?"):
                 size int(22 * _aa_k)
                 color "#ffffff"
                 bold True
@@ -228,65 +241,6 @@ screen menu_intro_choice():
                     padding (int(30 * _mic_k), int(14 * _mic_k))
 
 
-screen disclaimer_ficcion():
-    modal True
-
-    $ _disc_k = 1.8 if renpy.variant("small") else 1.0
-
-    add Solid("#000000")
-
-    frame:
-        xalign 0.5
-        yalign 0.5
-        background None
-        xmaximum int(950 * _disc_k)
-        padding (int(70 * _disc_k), int(60 * _disc_k))
-
-        vbox:
-            spacing int(25 * _disc_k)
-            xalign 0.5
-
-            ## El idioma NO se pregunta acá. El texto va UNA vez en español, que
-            ## es el idioma base del proyecto (tl/None), y Ren'Py resuelve la
-            ## versión inglesa desde tl/english como con todo el resto.
-            ##
-            ## Antes esto era un `if _preferences.language == "spanish":` con las
-            ## dos versiones escritas a mano, y esa comparación NO ERA NUNCA
-            ## verdadera: en el idioma base `language` vale None, no el nombre
-            ## del idioma (se ve en el selector de idioma de ui/base/screens.rpy,
-            ## que usa `_preferences.language is None` para el español). Caía
-            ## siempre en el `else`, así que el aviso salía en inglés en los dos
-            ## idiomas. Las traducciones viven en
-            ## tl/english/script/story/intro/intro_main.rpy.
-            text _("AVISO LEGAL"):
-                size int(26 * _disc_k)
-                color "#FFB74D"
-                bold True
-                xalign 0.5
-
-            null height int(15 * _disc_k)
-
-            text _("Este juego es una obra de ficción. Todos los personajes, situaciones, eventos y diálogos presentados son completamente imaginarios y creados con fines de entretenimiento. Cualquier similitud con personas reales, vivas o fallecidas, es pura coincidencia.\n\nTodos los personajes involucrados en cualquier escena de contenido explícito o romántico son mayores de 18 años. Los desarrolladores no respaldan ni promueven ningún contenido que tenga lugar en este juego como aceptable en la realidad."):
-                size int(16 * _disc_k)
-                color "#E0E0E0"
-                xalign 0.5
-                text_align 0.5
-                line_spacing 7
-
-            null height int(20 * _disc_k)
-
-            hbox:
-                xalign 0.5
-
-                textbutton _("Continuar"):
-                    action Return(True)
-                    text_size int(18 * _disc_k)
-                    text_color "#ffffff"
-                    background "#1565C0"
-                    hover_background "#1976D2"
-                    padding (int(50 * _disc_k), int(16 * _disc_k))
-
-
 label start:
 
     # Generacion de guardado de esta partida (core/utils/compatibilidad_saves.rpy).
@@ -309,9 +263,6 @@ label start:
         # Si canceló sin escribir nada, usar nombre por defecto
         if not mc_name or mc_name.strip() == "":
             $ mc_name = "MC"
-
-        # Mostrar disclaimer de ficción y mayoría de edad
-        $ renpy.call_screen("disclaimer_ficcion")
 
         $ intro_mostrada = True
         $ inicializar_locaciones_casa()
@@ -368,7 +319,7 @@ label intro_principal:
     piensa "Aunque todavía estoy molesto con él, quiero verlo antes de que se vaya"
     show mc_parado_base o_base
     piensa "Es hora de apurarme"
-    
+
 
     # Viaje al aeropuerto
     # El modo auto esta apagado desde el `window show` de arriba, asi que el
@@ -399,47 +350,47 @@ label intro_conversacion_padre:
     show padre_intro bhablando
     padre "Pensé que no ibas a venir"
     show padre_intro bnone
-    
+
     show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
     mc "Una parte de mí no quería venir, pero aquí estoy"
     show mc_parado_base b_seria
-    
+
     show padre_intro bhablando
-    padre "Jajaja vamos, no seas así, vas a extrañar a tu padre"
+    padre "Jajaja, vamos, no seas así, vas a extrañar a tu padre"
     show padre_intro bnone
-    
+
     show mc_parado_base o_serios b_hablando
-    mc "Sí sí, te voy a extrañar un montón"
+    mc "Sí, sí, te voy a extrañar un montón"
     show mc_parado_base b_seria
-    
-    show padre_intro bhablando 
-    padre "Jajaja lo sabía"
+
+    show padre_intro bhablando
+    padre "Jajaja, lo sabía"
     show padre_intro bnone
-    
+
     show mc_parado_base b_hablando
     mc "Te conformas con poco..."
     show mc_parado_base b_seria
-    
-    show padre_intro bhablando 
+
+    show padre_intro bhablando
     padre "Así somos los padres, jajaja"
     show padre_intro bnone
-    
-    terminal_micros "Los pasajeros del vuelo 91218 con destino a Argentonia por favor acercarse a la puerta número 4"
-    
+
+    terminal_micros "Los pasajeros del vuelo 91218 con destino a Argentonia, por favor, acercarse a la puerta número 4"
+
     show padre_intro bhablando pbrazoscruzados
-    padre "Bueno, ese es mi vuelo. ¿Estás seguro que no quieres venir?"
+    padre "Bueno, ese es mi vuelo. ¿Estás seguro de que no quieres venir?"
     show padre_intro bnone
-    
+
     show mc_parado_base b_hablando
-    mc "Te seguí siempre... pero ir a Argentonia, es una locura"
+    mc "Te seguí siempre... pero ir a Argentonia es una locura"
     show mc_parado_base b_seria
-    
+
     show padre_intro bhablando
     padre "Es un país lleno de gente alegre y mujeres hermosas"
     show padre_intro bnone
 
     piensa "Se nota que este hombre jamás vio una noticia internacional..."
-    
+
     show mc_parado_base b_hablando
     mc "Gracias, pero realmente prefiero ir a Japitown que a Argentonia"
     show mc_parado_base b_seria
@@ -447,48 +398,48 @@ label intro_conversacion_padre:
     show mc_parado_base b_hablando c_rbase_base with sprite_normal
     mc "Igual deseo que Eva y tú sean muy felices allí"
     show mc_parado_base o_base b_none
-    
+
     show padre_intro bhablando pbase
-    padre "Bueno, ya terminé de arreglar todo con Mónica para que te reciba en su casa, no vayas a causarles muchos problemas"
+    padre "Bueno, ya terminé de arreglar todo con Mónica para que te reciba en su casa. No vayas a causarles muchos problemas"
     show padre_intro bnone
-    
+
     show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
     mc "Causar problemas es lo tuyo, no lo mío"
     show mc_parado_base b_seria
-    
+
     vozoff "Brrrr Brrrr"
-    
+
     show mc_parado_base o_abajonm c_rbase_celular with sprite_normal
     piensa "El micro sale en 20 minutos"
-    show mc_parado_base o_base b_hablando 
+    show mc_parado_base o_base b_hablando
     mc "Bueno, yo también debería irme o voy a perder mi viaje"
     show mc_parado_base b_seria
-    
-    show padre_intro bhablando 
+
+    show padre_intro bhablando
     padre "Espero verte en Argentonia en el verano"
     show padre_intro bnone
-    
+
     show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
     mc "Supongo que podría ir en plan turístico..."
     show mc_parado_base c_rbase_base with sprite_normal
     mc "Avísame cuando llegues y mándale saludos a Eva de mi parte"
     show mc_parado_base b_none
-    
-    show padre_intro bhablando 
+
+    show padre_intro bhablando
     padre "Tú también avísame cuando llegues a Japitown"
     show padre_intro bnone
 
     show mc_parado_base b_hablando
-    mc "Nos vemos, papá"  
+    mc "Nos vemos, papá"
     show mc_parado_base b_seria
 
     show mc_parado_base at mc_salir_izquierda
     pause 1.0
 
-    show padre_intro bhablando 
+    show padre_intro bhablando
     padre "Adiós..."
     show padre_intro bnone
-    
+
     pause 1.0
 
     hide padre_intro with dissolve
@@ -524,14 +475,14 @@ label intro_llegada_casa:
 
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
-    show mc_parado_base c_rbase_brazoscruzados with sprite_fast
-    piensa "Qué nostalgia estar aquí de nuevo, pasaron muchos años..."
+    show mc_parado_base c_rbase_brazoscruzados with sprite_normal
+    piensa "Qué nostalgia estar aquí de nuevo. Pasaron muchos años..."
     piensa "Aquí viví una parte importante de mi infancia. Mi papá conoció a Mónica en uno de sus viajes de trabajo"
     piensa "Y a los pocos meses nos estábamos mudando de la capital a esta casa"
-    show mc_parado_base c_rbase_pensando o_arribanm with sprite_fast
-    piensa "En ese momento Japitown era solo una pequeña ciudad, pasar de la metrópoli a aquí fue horrible"
+    show mc_parado_base c_rbase_pensando o_arribanm with sprite_normal
+    piensa "En ese momento Japitown era solo una pequeña ciudad. Pasar de la metrópoli a aquí fue horrible"
     piensa "Pero me adapté rápido. Mónica me ayudó mucho y sus hijas fueron de gran compañía"
-    show mc_parado_base o_base c_rbase_brazoscruzados with sprite_fast
+    show mc_parado_base o_base c_rbase_brazoscruzados with sprite_normal
     piensa "Cada vez que lo pienso, fueron los mejores años de mi vida"
     piensa "Momento de dar el paso y entrar"
 
@@ -545,16 +496,16 @@ label intro_llegada_casa:
     show jasmine_parada c_rbase_base o_base b_none at grupo3_centro
     show monica_parada c_rbase_base o_base b_none at grupo3_der
 
-    show mc_parado_base c_rbase_base o_base b_none at mc_izquierda with dissolve  
+    show mc_parado_base c_rbase_base o_base b_none at mc_izquierda with dissolve
 
     # Monica da la bienvenida
     show monica_parada b_hablando
-    monica "Bienvenido [mc_name], ¿Cómo estuvo el viaje?"
+    monica "Bienvenido [mc_name], ¿cómo estuvo el viaje?"
     show monica_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
-    mc "Bien pero agotador, fueron muchas horas arriba del micro"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "Bien, pero agotador, fueron muchas horas arriba del micro"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     show monica_parada b_hablando
     monica "Me alegra mucho que estés de nuevo en casa"
@@ -565,19 +516,19 @@ label intro_llegada_casa:
     show mc_parado_base b_none
 
     show monica_parada b_hablando
-    monica "Bueno, tu habitación está casi lista, solo falta lo que enviaste en las cajas, esta todo en el [colorear_locacion('Garage')]"
+    monica "Bueno, tu habitación está casi lista, solo falta lo que enviaste en las cajas. Está todo en el [colorear_locacion('Garage')]"
     show monica_parada b_hablandochica
     monica "No queríamos tocar tus cosas"
     show monica_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
     mc "No te preocupes por eso, hicieron mucho por mí. No sé dónde estaría en este momento si no me hubieras dado un lugar aquí"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
-    
-    show monica_parada b_hablando c_rbase_brazoscruzados with sprite_fast
+    show mc_parado_base b_none c_rbase_base with sprite_normal
+
+    show monica_parada b_hablando c_rbase_brazoscruzados with sprite_normal
     monica "No tienes que agradecerme por nada, esta fue y será siempre tu casa"
     show monica_parada b_none
-    
+
     show mc_parado_base b_hablando
     mc "De verdad me alegra mucho volver a verlas a todas. Estuve todo el viaje preocupado por este momento"
     show mc_parado_base b_abiertachica
@@ -602,29 +553,29 @@ label intro_llegada_casa:
     pause 1.0
     hide violet_parada with dissolve
 
-    show mc_parado_base b_hablando c_rbase_pensando with sprite_fast
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
     mc "¿Qué le pasa a [colorear_npc('violet', 'Violet')]?"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
-    show jasmine_parada b_hablando c_rbase_dedolabio with sprite_fast
+    show jasmine_parada b_hablando c_rbase_dedolabio with sprite_normal
     jasmine "Ella es así, le toma más tiempo procesar los cambios"
-    show jasmine_parada b_sorprendida c_rbase_base with sprite_fast
+    show jasmine_parada b_sorprendida c_rbase_base with sprite_normal
     jasmine "No te preocupes"
     show jasmine_parada b_none
 
     # Monica propone entrar
     show monica_parada b_hablando
-    monica "Voy a hablar con ella luego."
+    monica "Voy a hablar con ella luego"
     show monica_parada b_none
 
     show mc_parado_base b_hablando
-    mc "No te preocupes Mónica, después yo hablo con ella"
+    mc "No te preocupes, Mónica, después yo hablo con ella"
     show mc_parado_base b_none
 
     show monica_parada b_hablandochica
     monica "A la noche vamos a salir a cenar a algún restaurante"
     show monica_parada b_hablando
-    monica "Pero ahora encargate tranquilo de tus cosas, Jasmine dejemmos que [mc_name] se acomode. Cualquier cosa me avisas"
+    monica "Pero ahora encárgate tranquilo de tus cosas, Jasmine, dejemos que [mc_name] se acomode. Cualquier cosa me avisas"
     show monica_parada b_none
 
     hide monica_parada with dissolve

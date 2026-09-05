@@ -79,7 +79,7 @@ translate english strings:
     new "Language"
 
     # Pantalla About
-    old "Version [config.version!t]\n"
+    old "Versión [config.version!t]\n"
     new "Version [config.version!t]\n"
 
     old "Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].\n\n[renpy.license!t]"
@@ -260,10 +260,4 @@ translate english strings:
     new "Menu"
 
 # TODO: Translation updated at 2026-06-25 23:12
-
-translate english strings:
-
-    # game/script/ui/base/screens.rpy:573
-    old "Versión [config.version!t]\n"
-    new "Version [config.version!t]\n"
 

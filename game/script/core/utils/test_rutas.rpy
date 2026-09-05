@@ -5,7 +5,7 @@
 ## pasos ordenados (que probar primero, que se dispara, a donde deriva) y se
 ## corta en el primer paso que falla, reportando exactamente donde se rompio.
 ##
-## COMO USAR (guia completa en testing_sistemas.md, en la raiz del proyecto):
+## COMO USAR (guia completa en docs/arquitectura/testing_sistemas.md):
 ##   1. Iniciar una PARTIDA DESCARTABLE (Comenzar) — nunca en el menu principal.
 ##   2. Abrir la consola (Shift+O) y ejecutar:
 ##        jp_test_correr("quests")        # una ruta

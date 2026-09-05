@@ -299,3 +299,161 @@ translate english violet_quest04a_continua_fef80319:
 
     # mc "Prometo no molestarte más con eso"
     mc "I promise I won't bother you about that anymore"
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:28
+translate english quest_violet_questprincipal_04_a_8c9c27d2:
+
+    # mc "Violet, una pregunta"
+    mc "Violet, a question"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:32
+translate english quest_violet_questprincipal_04_a_132649e7:
+
+    # violet "Si te interesa saber si te perdoné, no lo hice"
+    violet "If you want to know whether I forgave you, I didn't"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:38
+translate english quest_violet_questprincipal_04_a_c320d33f:
+
+    # mc "Perdón por eso, fue todo una gran confusión"
+    mc "Sorry about that, it was all a big misunderstanding"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:48
+translate english quest_violet_questprincipal_04_a_67049291:
+
+    # mc "Quería saber si te habías probado el regalo que te traje"
+    mc "I wanted to know if you'd tried on the gift I brought you"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:52
+translate english quest_violet_questprincipal_04_a_2a56c5a2:
+
+    # violet "¿A qué viene eso ahora?"
+    violet "Where's that coming from now?"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:56
+translate english quest_violet_questprincipal_04_a_e73d1849:
+
+    # mc "El otro día vi la caja en tu ropero y me acordé de él"
+    mc "The other day I saw the box in your wardrobe and it reminded me of it"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:60
+translate english quest_violet_questprincipal_04_a_1898afce:
+
+    # violet "Entonces, sí estabas revisando mis cosas..."
+    violet "So, you were going through my things..."
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:64
+translate english quest_violet_questprincipal_04_a_8361b636:
+
+    # mc "Es que..."
+    mc "It's just that..."
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:85
+translate english quest_violet_questprincipal_04_a_6fd54601:
+
+    # violet "Porque [mc_name] aprovechó que estaba solo en mi habitación y me robó ropa interior"
+    violet "Because [mc_name] took advantage of being alone in my room and stole my underwear"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:89
+translate english quest_violet_questprincipal_04_a_b6c89524:
+
+    # jasmine "Es una acusación fuerte jajaja"
+    jasmine "That's a serious accusation, hahaha"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:102
+translate english quest_violet_questprincipal_04_a_3bab6766:
+
+    # mc "No fue así, sabes que fue todo una confusión"
+    mc "It wasn't like that, you know it was all a misunderstanding"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:116
+translate english quest_violet_questprincipal_04_a_5ddf8d00:
+
+    # mc "Se está malinterpretando todo"
+    mc "Everything's being misunderstood"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:127
+translate english quest_violet_questprincipal_04_a_dd0f5eba:
+
+    # violet "Sí me gustó, pero después de esto tengo más dudas sobre las intenciones de tu regalo"
+    violet "I did like it, but after this I have more doubts about the intentions behind your gift"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:131
+translate english quest_violet_questprincipal_04_a_cc883c03:
+
+    # jasmine "Uhhhhh ahora me pregunto qué clase de regalo es"
+    jasmine "Uhhhh, now I'm wondering what kind of gift it is"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:138
+translate english quest_violet_questprincipal_04_a_be5e5e7b:
+
+    # mc "Es solo un cosplay, recordé que es algo que siempre quiso y pensé que era un buen regalo"
+    mc "It's just a cosplay, I remembered it's something she always wanted and I thought it was a good gift"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:157
+translate english quest_violet_questprincipal_04_a_eb8ee338:
+
+    # jasmine "No te portes como una niña, Violet, te trajo un regalo, tienes que ser agradecida de verdad"
+    jasmine "Don't act like a child, Violet, he brought you a gift, you should really be grateful"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:159
+translate english quest_violet_questprincipal_04_a_620f0861:
+
+    # jasmine "Luego te lo pruebas y se lo muestras"
+    jasmine "Later you try it on and show it to him"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:165
+translate english quest_violet_questprincipal_04_a_1cea7b3e:
+
+    # violet "Pero ni loca voy a mostrárselo"
+    violet "But there's no way I'm showing it to him"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:178
+translate english violet_quest04a_jasmine_todo_ok_50c964d7:
+
+    # jasmine "A mí me trajo un conjunto para entrenar y lo primero que pensé fue en mostrárselo"
+    jasmine "He brought me a workout outfit and the first thing I thought of was showing it to him"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:180
+translate english violet_quest04a_jasmine_todo_ok_a629dcb6:
+
+    # jasmine "Le mandé una foto y le dije que pase a verlo cuando entreno por la tarde"
+    jasmine "I sent him a photo and told him to come see it when I train in the afternoon"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:182
+translate english violet_quest04a_jasmine_todo_ok_92bf88a7:
+
+    # jasmine "Parece que le gustó mucho"
+    jasmine "Seems she liked it a lot"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:206
+translate english violet_quest04a_continua_33c33eef:
+
+    # jasmine "Volviendo al tema, Violet, si te hizo un regalo lo mínimo que puedes hacer es mostrárselo"
+    jasmine "Getting back to the point, Violet, if he gave you a gift the least you can do is show it to him"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:210
+translate english violet_quest04a_continua_08ae07a7:
+
+    # violet "No sé por qué te metes, Jasmine, no es tu asunto"
+    violet "I don't know why you're butting in, Jasmine, it's none of your business"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:214
+translate english violet_quest04a_continua_c51ba208:
+
+    # jasmine "Seguí portándote como una niña pequeña si quieres"
+    jasmine "Keep acting like a little kid if you want"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:216
+translate english violet_quest04a_continua_c90178dc:
+
+    # jasmine "Mejor para mí"
+    jasmine "Better for me"
+
+# game/script/characters/violet/quests/violet_quest_04_a.rpy:225
+translate english violet_quest04a_continua_357e09e6:
+
+    # mc "Si no quiere ya está, no hay que insistir"
+    mc "If she doesn't want to, that's it, no need to insist"
+

@@ -104,73 +104,79 @@ label quest_violet_amor_03:
     # Cuerpo `c_rbase_live` (no el base) con su cabeza y ojos de siempre.
     show violet_parada c_rbase_live ca_base o_base b_none at right with sprite_normal
 
-    
+
     show violet_parada b_hablando
-    violet "Estaba en el altillo buscando mi vieja Pocket Boy y miral o que encontr"
+    violet "Estaba en el altillo buscando mi vieja Pocket Boy y mira lo que encontré"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_pensando with sprite_fast
-    mc "Uhhh... el LIVE... debe ser uno de los primeros juegos que jugue"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_pensando with sprite_normal
+    mc "Uhhh... el LIVE... debe ser uno de los primeros juegos que jugué"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     show violet_parada b_hablando
     violet "¿Jugamos?"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_fast
-    mc "Mmmm no se si hoy en dia lo jugaria, si quieres jugar un juego de mesa tengo muchas opciones"
+    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
+    mc "Mmmm no sé si hoy en día lo jugaría, si quieres jugar un juego de mesa tengo muchas opciones"
     show mc_parado_base b_none
 
-    show violet_parada b_hablando 
-    violet "Pero yo queria jugar este, antes te encantaba"
+    show violet_parada b_hablando
+    violet "Pero yo quería jugar este, antes te encantaba"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_fast
-    mc "La verdad nunca me gusto mucho ese juego jajaja"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
+    mc "La verdad nunca me gustó mucho ese juego jajaja"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     show violet_parada b_hablando
-    violet "Recuerdo que siempre me decias de jugarlo"
+    violet "Recuerdo que siempre me decías de jugarlo"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_pensando o_arribanm with sprite_fast
-    mc "Supongo que era para pasar un tiempo juntos y como era tu juego favorito decia que si"
-    show mc_parado_base b_abiertachica o_base
-    mc "En ese momento me daba algo de verguenza porque siempre nos casabamos en el juego y teniamos hijos"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_pensando o_arribanm with sprite_normal
+    mc "Supongo que era para pasar un tiempo juntos ya que era tu juego favorito y siempre decías que sí"
+    show mc_parado_base b_none c_rbase_base o_base with sprite_normal
 
-    show violet_parada 
+    show violet_parada b_hablando
+    violet "Siempre pensé que te gustaba mucho"
+    show violet_parada b_none
+
+    show mc_parado_base b_hablando c_rbase_pensando o_arribanm with sprite_normal
+    mc "La verdad es que me daba un poco de vergüenza porque siempre terminábamos casados y teníamos hijos"
+    show mc_parado_base b_none c_rbase_base o_base with sprite_normal
+
     violet "..."
-    
+
     show mc_parado_base b_hablando
     mc "Pero si tienes muchas ganas de que nos volvamos a casar y tener hijos, puedo hacer un sacrificio jajaja"
     show mc_parado_base b_none
 
     show violet_parada b_hablando
-    violet "No era por eso..."
+    violet "No era por eso... idiota"
     show violet_parada b_hablandochica
-    violet "Me dio nostalgia y queria jugar"
+    violet "Me dio nostalgia y quería jugar"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_fast
-    mc "¿Y ahora por que cambiaste de opinion?"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_cuestionando with sprite_normal
+    mc "Y bueno vamos a jugar"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     show violet_parada b_hablando
-    violet "Me acorde que en un rato tengo algo que hacer y este es un juego largo"
+    violet "Creo que ahora eso de casarnos y tener hijos me da vergüenza a mí"
     show violet_parada b_hablandochica
-    violet "Mejor me voy"
+    violet "Mejor no jugamos"
     show violet_parada b_none
 
-    show mc_parado_base b_hablando c_rbase_confianza with sprite_fast
-    mc "Bueno cuando quieras que vivamos felices por siempre me avisas"
-    show mc_parado_base b_none c_rbase_base with sprite_fast
+    show mc_parado_base b_hablando c_rbase_confianza with sprite_normal
+    mc "Bueno, si te arrepientes y quieres que vivamos felices por siempre me avisas"
+    show mc_parado_base b_none c_rbase_base with sprite_normal
 
     hide violet_parada with dissolve
 
-    show mc_parado_base c_rbase_pensando o_arribanm with sprite_fast
-    piensa "Jajajaja ahora le dan verguenza ese tipo de cosas"
-    piensa "Me gustaria igual volver a jugar una partida, en algun momento se podria dar"
+    show mc_parado_base c_rbase_pensando o_arribanm with sprite_normal
+    piensa "Jajajaja ahora le dan vergüenza ese tipo de cosas"
+    piensa "Pensando en los juegos de mesa quizás podría ver de unir a Violet al club jajaja"
+    piensa "Tendría que buscar alguno bueno como para empezar"
 
     # =========================================================================
     # FIN DEL CONTENIDO

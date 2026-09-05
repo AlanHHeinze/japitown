@@ -66,7 +66,7 @@ label violet_quest07a_puerta:
 label violet_quest07a_outcome_a:
 
     show violet_parada b_hablandochica
-    violet "Monica lo pudo destrabar, pero me dijo que el cierre está fallado"
+    violet "Mónica lo pudo destrabar, pero me dijo que el cierre está fallado"
     show violet_parada b_none
 
     show mc_parado_base b_hablando
@@ -102,7 +102,7 @@ label violet_quest07a_outcome_c:
     show violet_parada b_none
 
     show violet_parada b_hablandochica
-    violet "Le pregunté a Monica si lo podía arreglar y me dijo que no iba a quedar muy bien"
+    violet "Le pregunté a Mónica si lo podía arreglar y me dijo que no iba a quedar muy bien"
     show violet_parada b_none
 
     show violet_parada b_hablandochica

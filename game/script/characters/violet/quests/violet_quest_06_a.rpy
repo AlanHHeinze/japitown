@@ -98,7 +98,7 @@ label violet_quest06a_habitacion:
     mc "Violet, compré las entradas"
     show mc_parado_base b_none
 
-    show violet_parada b_hablandochica c_pijama_base with sprite_fast
+    show violet_parada b_hablandochica c_pijama_base with sprite_normal
     violet "¿Las entradas?"
     show violet_parada b_none
 
@@ -114,8 +114,8 @@ label violet_quest06a_habitacion:
     violet "Últimamente estás actuando un poco impulsivo..."
     show violet_parada b_none
 
-    show violet_parada b_hablandochica 
-    violet "No te entiendo ¿Por qué lo haces?"
+    show violet_parada b_hablandochica
+    violet "No te entiendo, ¿por qué lo haces?"
     show violet_parada b_none
 
     if obtener_stat1("violet") >= obtener_stat2("violet"):
@@ -162,14 +162,14 @@ label violet_quest06a_camino_amor:
     show mc_parado_base c_rbase_base o_base b_felizcerrada  at mc_izquierda
     with fade
 
-    piensa "No puedo creer que di el paso, fue un impulso y no se como va a reaccionar Violet"
+    piensa "No puedo creer que di el paso, fue un impulso y no sé cómo va a reaccionar Violet"
 
-    show violet_parada b_hablandochica o_abiertos 
+    show violet_parada b_hablandochica o_abiertos
     violet "Está bien... Voy a ir contigo a la Japicon"
     show violet_parada b_contenta
 
     show mc_parado_base b_abiertachica
-    mc "Bueno nos vemos luego"
+    mc "Bueno, nos vemos luego"
     show mc_parado_base b_none
 
     $ cambiar_stat1("violet", 4, reserva=True)
@@ -183,7 +183,7 @@ label violet_quest06a_camino_amor:
 label violet_quest06a_camino_deseo:
 
     show mc_parado_base b_hablando
-    mc "Hoy de nuevo en la casa, compartiendo momentos contigo, entendí que me equivoqué al enojarme cuando me fui y arruine la relación"
+    mc "Hoy de nuevo en la casa, compartiendo momentos contigo, entendí que me equivoqué al enojarme cuando me fui y arruiné la relación"
     show mc_parado_base b_abiertachica
     mc "No voy a dejar que pase eso otra vez"
     show mc_parado_base b_none
@@ -214,14 +214,14 @@ label violet_quest06a_camino_deseo:
     show mc_parado_base c_rbase_base o_base b_felizcerrada  at mc_izquierda
     with fade
 
-    piensa "No puedo creer que di el paso, fue un impulso y no se como va a reaccionar Violet"
+    piensa "No puedo creer que di el paso, fue un impulso y no sé cómo va a reaccionar Violet"
 
-    show violet_parada b_hablandochica o_abiertos 
+    show violet_parada b_hablandochica o_abiertos
     violet "Está bien... Voy a ir contigo a la Japicon"
     show violet_parada b_none
 
     show mc_parado_base b_abiertachica
-    mc "Bueno nos vemos luego"
+    mc "Bueno, nos vemos luego"
     show mc_parado_base b_none
 
     $ cambiar_stat2("violet", 4, reserva=True)
@@ -240,12 +240,12 @@ label violet_quest06a_cierre:
     # Mostrar la habitacion con el MC en el centro
     $ _bg_hmc = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
     scene expression _bg_hmc with fade
-    
+
     show mc_parado_base c_rbase_base at center with dissolve
     pause 0.5
-    show mc_parado_base c_rbase_facepalm o_abajonm b_seria with sprite_fast
+    show mc_parado_base c_rbase_facepalm o_abajonm b_seria with sprite_normal
     piensa "Soy un idiota, luego de darle un beso ¿mi mejor plan es huir?"
-    piensa "Ahora voy a estar a la espectativa de la reaccion de Violet"
+    piensa "Ahora voy a estar a la expectativa de la reacción de Violet"
 
     # Completar la quest
     $ completar_quest_actual("violet", quest_id="violet_questprincipal_06_a")

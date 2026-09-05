@@ -393,3 +393,107 @@ translate english dar_paquete_quest02_violet_b2_67a484c6:
 
     # violet "¿No me vas a molestar más verdad?"
     violet "You're not going to keep bothering me about this, right?"
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:38
+translate english usar_mangas_violet_4e5d88e4:
+
+    # piensa "Me da algo de curiosidad qué habrá comprado Violet"
+    piensa "I'm kind of curious what Violet ordered."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:39
+translate english usar_mangas_violet_85bbc2a5:
+
+    # piensa "Si sé qué le gusta, podría usarlo para mejorar la relación, es un buen plan... y una buena justificación"
+    piensa "If I know what she likes, I could use it to improve our relationship. That's a good plan... and a good excuse."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:68
+translate english usar_mangas_violet_17a8a86d:
+
+    # piensa "Esto es turbio..."
+    piensa "This is... something else..."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:79
+translate english usar_mangas_violet_c5365477:
+
+    # piensa "Dependerá de cómo reaccione cuando le dé sus cosas"
+    piensa "Depends on how she reacts when I give her the package."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:146
+translate english dar_paquete_quest02_violet_rechaza_9e69c80d:
+
+    # violet "¿Me lo podrás llevar después a mi habitación?"
+    violet "Can you bring it to my room later?"
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:181
+translate english dar_paquete_quest02_violet_a_58ce70d3:
+
+    # mc "Violet, aquí está tu paquete"
+    mc "Violet, here's your package."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:228
+translate english dar_paquete_quest02_violet_a_c4dd775d:
+
+    # violet "Gracias por traérmelo"
+    violet "Thanks for bringing it."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:268
+translate english dar_paquete_quest02_violet_b_58ce70d3:
+
+    # mc "Violet, aquí está tu paquete"
+    mc "Violet, here's your package."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:324
+translate english dar_paquete_quest02_violet_b_495a1916:
+
+    # mc "Lo dejaron en mi habitación y no sabía qué era"
+    mc "They left it in my room and I didn't know what it was."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:443
+translate english dar_paquete_quest02_violet_b2_ec519e34:
+
+    # mc "Creo que la línea sería algo como te odio oni-chan"
+    mc "I think the line goes something like 'I hate you, oni-chan.'"
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:449
+translate english dar_paquete_quest02_violet_b2_a4f3071f:
+
+    # violet "Creo que la línea es voy a matarte y a enterrarte"
+    violet "I think the line is 'I'm going to kill you and bury you.'"
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:455
+translate english dar_paquete_quest02_violet_b2_1016f24a:
+
+    # mc "No sería un buen final para la novela..."
+    mc "That'd be a rough ending for the novel..."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:461
+translate english dar_paquete_quest02_violet_b2_41084ed0:
+
+    # violet "Me cansé, me voy"
+    violet "I'm done. I'm leaving."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:467
+translate english dar_paquete_quest02_violet_b2_d08421be:
+
+    # mc "Espera... No voy a molestarte con esto, pero quiero que hagas algo por mí"
+    mc "Wait... I won't bring it up again, but I want you to do something for me."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:500
+translate english dar_paquete_quest02_violet_b2_32625584:
+
+    # violet "¿No me vas a molestar más, verdad?"
+    violet "You're not going to keep bothering me about this, right?"
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:512
+translate english dar_paquete_quest02_violet_b2_f4c326d6:
+
+    # mc "Oni..."
+    mc "Oni-..."
+
+# game/script/characters/violet/quests/violet_quest_01_b.rpy:531
+translate english dar_paquete_quest02_violet_b2_a9463d3a:
+
+    # piensa "Jajaja, eso fue divertido"
+    piensa "Hahaha, that was fun."
+

@@ -162,12 +162,49 @@ init python:
             return ""
         return u"{} {}".format(_h.icono, renpy.translate_string(_h.nombre))
 
+    def etiqueta_opcion_hito(texto, hito_id):
+        """
+        Etiqueta de una opcion de eleccion que pide un hito:
+
+            "Ya esta resuelto (Buena relación ❤️)"
+
+        CONVENCION DEL PROYECTO: toda opcion especial que pida un hito muestra
+        entre parentesis el NOMBRE del hito y su emoji (❤️ amor / 💋 deseo). La
+        opcion se ve siempre; sin el hito queda en gris. Asi el jugador sabe que
+        existe y exactamente que le falta, sin abrir el panel de Relaciones.
+
+        Es la version "hito" de las opciones por stat del MC, que ya usaban el
+        mismo criterio con otro formato ("Acercarse  🎯 (3 de destreza)").
+
+        El nombre sale del CATALOGO y no se escribe a mano: los hitos se
+        renombran seguido y asi la opcion sigue al nombre nuevo sola. Si el id
+        no existe devuelve el texto pelado, para que un id mal escrito no deje
+        la opcion sin etiqueta.
+        """
+        _t = renpy.translate_string(texto)
+        _h = obtener_hito(hito_id)
+        if not _h:
+            return _t
+        return u"{} ({} {})".format(_t, renpy.translate_string(_h.nombre),
+                                    _h.icono)
+
 
     # ── Consulta ─────────────────────────────────────────────────────────────
 
     def tiene_hito(npc_id, hito_id):
         """True si el jugador ya alcanzó ese hito con ese NPC."""
         return hito_id in store.hitos_alcanzados.get(npc_id, [])
+
+    def hito_alcanzado(hito_id):
+        """
+        tiene_hito() para quien solo conoce el id del hito.
+
+        El npc ya vive adentro del hito, asi que pedirlo de nuevo es una
+        oportunidad de escribirlo mal. Es el predicado que va en el `sensitive`
+        de las opciones etiquetadas con etiqueta_opcion_hito().
+        """
+        _h = obtener_hito(hito_id)
+        return bool(_h and tiene_hito(_h.npc_id, hito_id))
 
     def ventajas_activas(npc_id):
         """Set con los ids de todas las ventajas que el NPC tiene otorgadas."""

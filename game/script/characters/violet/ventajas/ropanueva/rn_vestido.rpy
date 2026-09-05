@@ -27,7 +27,7 @@ init 5 python:
     registrar_contenido_ventaja(
         "ropa_nueva", "vestido", "violet",
         "Vestido",
-        "Entrá a su habitación y elegí Ropa Nueva en su menú.",
+        "Elige Ropa Nueva en su menú y pídele el vestido.",
         vista=_rn_vestido_visto,
         orden=10,
     )

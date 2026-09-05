@@ -17,7 +17,7 @@ translate english strings:
     old "Agua"
     new "Water"
 
-    old "Bateria NT520"
+    old "Batería NT520"
     new "NT520 Battery"
 
     old "Bebida energética"
@@ -29,10 +29,10 @@ translate english strings:
     old "Coxplay Box"
     new "Coxplay Box"
 
-    old "Deberia hacer esto en mi habitacion"
+    old "Debería hacer esto en mi habitación"
     new "I should do this in my room"
 
-    old "Deberia revisarlo en mi habitacion"
+    old "Debería revisarlo en mi habitación"
     new "I should check it in my room"
 
     old "Debería darle esto a Violet"
@@ -44,10 +44,10 @@ translate english strings:
     old "Debería usar esto en mi habitación por la noche"
     new "I should use this in my room at night"
 
-    old "El regalo que le traje a Monica."
+    old "El regalo que le traje a Mónica."
     new "The gift I brought Monica."
 
-    old "El regalo que le traje a Monica. Debería agradecerle en persona cuando esté sola."
+    old "El regalo que le traje a Mónica. Debería agradecerle en persona cuando esté sola."
     new "The gift I brought Monica. I should thank her in person when she's alone."
 
     old "Elementos de Limpieza"
@@ -68,7 +68,7 @@ translate english strings:
     old "Heladera"
     new "Fridge"
 
-    old "La notebook de Monica. Dijo que no le anda, voy a ver si puedo arreglarla."
+    old "La notebook de Mónica. Dijo que no le anda, voy a ver si puedo arreglarla."
     new "Monica's laptop. She said it doesn't work, I'll see if I can fix it."
 
     old "La tanga de Violet"
@@ -101,7 +101,7 @@ translate english strings:
     old "No debo sacar esto acá"
     new "I shouldn't take this out here"
 
-    old "Notebook de Monica"
+    old "Notebook de Mónica"
     new "Monica's Laptop"
 
     old "Perfume"
@@ -152,7 +152,7 @@ translate english strings:
     old "Un regalo que le traje a Violet."
     new "A gift I brought Violet."
 
-    old "Una batería nueva para la notebook de Monica."
+    old "Una batería nueva para la notebook de Mónica."
     new "A new battery for Monica's laptop."
 
     old "Una bebida energética"

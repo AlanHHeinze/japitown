@@ -30,12 +30,14 @@ label usar_mangas_violet_mc:
     hide screen hud_navegacion
     window show
 
-    $ _horarios_bg_manga = ["manana", "tarde", "noche", "noche"]
-    $ _bg_h_manga = _horarios_bg_manga[horario_actual]
-    scene expression "images/bg/casa/bg_casa_" + _bg_h_manga + "_hmc.jpg" with fade
+    # El bg lo resuelve el sistema de locaciones, que ya sabe el horario
+    # (y respeta horario_visual_override). Antes se armaba con una lista a
+    # mano que estaba desalineada con la canonica de locationsystem_core.
+    $ _bg_h_manga = sistema_locaciones.obtener_locacion("casa_hmc").background
+    scene expression _bg_h_manga with fade
 
     if horario_actual == 3:
-        piensa "Es muy tarde para ponerme a leer, sera mejor hacerlo mañana"
+        piensa "Es muy tarde para ponerme a leer, será mejor hacerlo mañana"
         window hide
         $ mostrar_hud()
         jump game_loop
@@ -64,11 +66,11 @@ label usar_mangas_violet_mc:
         piensa "Se puso intenso, ya está metido de lleno en el mundo y encontró un grupo donde por fin pertenece"
 
     elif mangas_violet_lecturas == 3:
-        piensa "Bien llevado como el mundo lo absorve y convierte a media que va perdiendo cosas"
+        piensa "Bien llevado como el mundo lo absorbe y convierte a medida que va perdiendo cosas"
 
     elif mangas_violet_lecturas == 4:
-        piensa "Uff... duro...  El final duele pero se siente como la única forma posible de cerrar todo"
-        piensa "La verdad supero espectativas, ahora quiero hablar con Violet y seahogar algunas cosas"
+        piensa "Uff... duro... El final duele pero se siente como la única forma posible de cerrar todo"
+        piensa "La verdad superó expectativas, ahora quiero hablar con Violet y desahogar algunas cosas"
         $ mangas_violet_terminadas = True
         $ completar_quest_actual("violet", quest_id="violet_questprincipal_02_c")
 

@@ -252,9 +252,203 @@ translate english quest_violet_0_puerta_926b8567:
     # vozoff "En la cena Violet se sento en la punta de la mesa, lejos de mi y no me hablo en toda la noche"
     vozoff "At dinner Violet sat at the end of the table, far from me, and didn't speak to me all night"
 
-translate english strings:
+# TODO: Translation updated at 2026-09-03 16:15
 
-    # game/script/characters/violet/quests/violet_quest_0_b.rpy:124
-    old "Quizás darle su espacio funcione"
-    new "Maybe giving her space will work"
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:62
+translate english quest_violet_questprincipal_0_b_d7e82c20:
+
+    # piensa "Conozco a Violet como para saber que está molesta por algo"
+    piensa "I know Violet well enough to know she's upset about something."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:95
+translate english quest_violet_questprincipal_0_b_8930d5c2:
+
+    # mc "¿Y quién me respondió?"
+    mc "Then who just answered me?"
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:109
+translate english quest_violet_questprincipal_0_b_88c53d1d:
+
+    # mc "No seas caprichosa y ábreme la puerta"
+    mc "Don't be stubborn — open the door."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:121
+translate english quest_violet_questprincipal_0_b_87d01472:
+
+    # piensa "Está más terca de lo que la recuerdo"
+    piensa "She's more stubborn than I remember."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:132
+translate english tutorial_elecciones_violet_e8e739d1:
+
+    # tutorial "Estas elecciones afectan el desarrollo inmediato como también a largo plazo. Los personajes recordarán las elecciones elegidas y actuarán en relación a ello en ciertos momentos"
+    tutorial "These choices affect both the immediate and the long-term development. Characters will remember the choices made and act accordingly at certain moments"
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:179
+translate english elecciones_violet_continuar_2af84fb1:
+
+    # "Este contenido se agregará en futuras actualizaciones"
+    "This content will be added in future updates"
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:191
+translate english quest_violet_0_opcion_respeto_8f2fe32e:
+
+    # mc "En el momento que me quieras contar por qué y con quién estás enojada, voy a estar para escucharte"
+    mc "Whenever you want to tell me why you're upset and who it's with, I'll be here to listen."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:196
+translate english quest_violet_0_opcion_respeto_1a2f8256:
+
+    # mc "¿Desde cuándo soy un extraño?"
+    mc "Since when am I a stranger?"
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:219
+translate english quest_violet_0_opcion_respeto_62148f4c:
+
+    # mc "Bueno, me voy y no te molesto más"
+    mc "Alright, I'm leaving — I won't bother you anymore."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:225
+translate english quest_violet_0_opcion_respeto_7142d6d9:
+
+    # violet "Sí quiero"
+    violet "I do want that."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:227
+translate english quest_violet_0_opcion_respeto_456dc469:
+
+    # mc "Jajaja, ¿eso sí?"
+    mc "Hahaha — that you're fine with?"
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:248
+translate english quest_violet_0_opcion_respeto_2da24c47:
+
+    # mc "Por cierto, antes de que me olvide. El extraño que vive en tu casa te trajo un regalo"
+    mc "Oh, and before I forget — the stranger who lives in your house brought you a gift."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:263
+translate english quest_violet_0_opcion_respeto_1deaaffe:
+
+    # piensa "Debería ir a la cocina a prepararlas, Mónica me dijo que había todo lo necesario"
+    piensa "I should head to the kitchen. Monica said everything I'd need is there."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:303
+translate english quest_violet_0_opcion_entrar_3ffca5a8:
+
+    # mc "Violet, voy a entrar... No sé cuál es el problema, pero no quiero estar por la casa y que me estés esquivando"
+    mc "Violet, I'm coming in... I don't know what's going on, but I don't want to be living here while you avoid me."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:365
+translate english quest_violet_0_opcion_entrar_5f6986ef:
+
+    # violet "¡Si no te vas ahora, voy a llamar a Mónica!"
+    violet "If you don't leave right now, I'm calling Monica!"
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:371
+translate english quest_violet_0_opcion_entrar_e30c4028:
+
+    # mc "Jajaja, ¿qué le vas a decir?"
+    mc "Hahaha — what are you going to tell her?"
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:386
+translate english quest_violet_0_opcion_entrar_397a1cdd:
+
+    # mc "No seas chiquilina, sabes que Mónica no te va a creer eso"
+    mc "Don't be childish — you know Monica won't believe that."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:401
+translate english quest_violet_0_opcion_entrar_e67281ad:
+
+    # mc "Solo quiero saber, ¿qué te pasa?"
+    mc "I just want to know — what's going on with you?"
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:435
+translate english quest_violet_0_opcion_entrar_1a2f8256:
+
+    # mc "¿Desde cuándo soy un extraño?"
+    mc "Since when am I a stranger?"
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:467
+translate english quest_violet_0_opcion_entrar_8e7693ae:
+
+    # mc "Ahora estamos hablando, ya dejamos de ser extraños, entonces si te hablo me respondes"
+    mc "We're talking now, we stopped being strangers, so if I talk to you, you answer me"
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:491
+translate english quest_violet_0_opcion_entrar_0c0e3e0c:
+
+    # mc "¿Sí qué?"
+    mc "Yes what?"
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:497
+translate english quest_violet_0_opcion_entrar_8e1340b7:
+
+    # violet "Sí, señor"
+    violet "Yes, sir."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:519
+translate english quest_violet_0_opcion_entrar_7202cc9d:
+
+    # piensa "Tenía razón, hablando la gente se entiende y parece que cambió un poco su actitud"
+    piensa "I was right — talking things out works. And she does seem a little different now."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:530
+translate english quest_violet_0_opcion_entrar_5bda347a:
+
+    # mc "Me acordé de que te traje un regalo"
+    mc "Oh — I just remembered, I brought you something."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:566
+translate english quest_violet_0_opcion_entrar_e174eec1:
+
+    # violet "Eh, gracias... ¿Qué es?"
+    violet "Uh, thanks... What is it?"
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:584
+translate english quest_violet_0_opcion_entrar_27142f08:
+
+    # mc "Se me hizo tarde... Le dije a Mónica que iba a cocinar pizzas hoy"
+    mc "It got late on me... I told Monica I'd make pizza tonight."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:601
+translate english quest_violet_0_opcion_entrar_44f2a595:
+
+    # piensa "Cierto, Violet es fanática de la pizza"
+    piensa "Right, Violet's a massive pizza fan."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:689
+translate english quest_violet_0_cierre_72f10dde:
+
+    # piensa "Supongo que estaba cómoda con su vida y de la nada llega alguien a molestarme"
+    piensa "I guess she was comfortable with her life and then out of nowhere someone shows up and disrupts it."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:690
+translate english quest_violet_0_cierre_6c86ec07:
+
+    # piensa "Aunque no sea mi intención, en algún punto lo estoy haciendo"
+    piensa "Even if it's not my intention, I am doing exactly that."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:693
+translate english quest_violet_0_cierre_da2d0d02:
+
+    # piensa "Ya veré cómo resolverlo"
+    piensa "I'll figure it out."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:694
+translate english quest_violet_0_cierre_e90fc2db:
+
+    # piensa "No quiero involucrar a Mónica, ya debe tener los suficientes problemas"
+    piensa "I don't want to drag Monica into it — she's probably got enough going on."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:752
+translate english quest_violet_0_puerta_69072bf7:
+
+    # piensa "Me está ignorando de nuevo... Esta vez voy a entrar y decirle las cosas"
+    piensa "She's ignoring me again... This time I'm going in and telling it like it is."
+
+# game/script/characters/violet/quests/violet_quest_0_b.rpy:762
+translate english quest_violet_0_puerta_b9b072d3:
+
+    # vozoff "En la cena Violet se sentó en la punta de la mesa, lejos de mí y no me habló en toda la noche"
+    vozoff "At dinner Violet sat at the end of the table, far from me, and didn't speak to me all night"
 

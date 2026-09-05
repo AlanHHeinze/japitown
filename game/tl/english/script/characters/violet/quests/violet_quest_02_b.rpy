@@ -388,3 +388,191 @@ translate english strings:
     old "Todo esto me trajo recuerdo"
     new "All of this brought back memories"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:38
+translate english quest_violet_questprincipal_02_b_968eef8c:
+
+    # mc "¿Y ya elegiste cuál va a ser?"
+    mc "So, have you already picked which one it'll be?"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:42
+translate english quest_violet_questprincipal_02_b_cbb72516:
+
+    # violet "Sí... tengo elegidos algunos separados"
+    violet "Yeah... I've got a few set aside"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:58
+translate english quest_violet_questprincipal_02_b_e0a1f93b:
+
+    # violet "¿Pero buscas algún género en particular?"
+    violet "But are you looking for any particular genre?"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:62
+translate english quest_violet_questprincipal_02_b_ffeb7a74:
+
+    # mc "No, si tienes algo con una historia media intrincada estaría bien"
+    mc "No, if you've got something with a kind of intricate story that'd be good"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:66
+translate english quest_violet_questprincipal_02_b_e82e0303:
+
+    # violet "Ya sé cuáles podrían ser"
+    violet "I already know which ones they could be"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:74
+translate english quest_violet_questprincipal_02_b_13e1486c:
+
+    # piensa "Yo pensaba que eran esas calzas que usa, pero veo que no"
+    piensa "I thought it was those leggings she wears, but I guess not"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:83
+translate english quest_violet_questprincipal_02_b_ab0400bb:
+
+    # violet "Tengo este de un colegio donde compiten entre los estudiantes con pruebas para subir de clase..."
+    violet "I've got this one, a school where students compete in tests to move up a class..."
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:86
+translate english quest_violet_questprincipal_02_b_c7e62e8a:
+
+    # mc "Perdón, no te escuché. ¿Qué dijiste?"
+    mc "Sorry, I didn't hear you. What did you say?"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:97
+translate english quest_violet_questprincipal_02_b_fdc52878:
+
+    # mc "Suena como un poco genérico la verdad"
+    mc "Sounds a little generic, honestly"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:100
+translate english quest_violet_questprincipal_02_b_dc381908:
+
+    # violet "Sí, es algo genérico pero está bien llevado"
+    violet "Yeah, it's a bit generic but it's well done"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:113
+translate english quest_violet_questprincipal_02_b_6082f7f1:
+
+    # violet "Ya sé"
+    violet "I've got it"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:122
+translate english quest_violet_questprincipal_02_b_b016f39b:
+
+    # mc "¿Es bueno para las personas que no son fanáticas de los slime también?"
+    mc "Is it good for people who aren't fans of slimes too?"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:127
+translate english quest_violet_questprincipal_02_b_4acdc539:
+
+    # violet "Buen punto, no sé si te va a gustar ese"
+    violet "Good point, I don't know if you'll like that one"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:134
+translate english quest_violet_questprincipal_02_b_a62218cf:
+
+    # violet "Es estilo cyberpunk donde el prota quiere convertirse en el líder de la ciudad y es bastante crudo"
+    violet "It's cyberpunk style where the protagonist wants to become the leader of the city, and it's pretty raw"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:137
+translate english quest_violet_questprincipal_02_b_a82dbae2:
+
+    # mc "Ese sí suena interesante"
+    mc "That one does sound interesting"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:153
+translate english quest_violet_questprincipal_02_b_3d8a06a9:
+
+    # mc "Perdí la buena vista"
+    mc "I lost the nice view"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:169
+translate english quest_violet_questprincipal_02_b_cc1a00e5:
+
+    # violet "Ahora sí... ¿Qué dijiste?"
+    violet "Now then... What did you say?"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:179
+translate english quest_violet_questprincipal_02_b_b0304f85:
+
+    # violet "Te escuché, solo te estaba dando lugar a que me cuentes cuál es la buena vista que tenías"
+    violet "I heard you, I was just giving you a chance to tell me what nice view you had"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:187
+translate english quest_violet_questprincipal_02_b_74493886:
+
+    # violet "Yo sí"
+    violet "I do"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:191
+translate english quest_violet_questprincipal_02_b_cb43b679:
+
+    # mc "Me quedé impactado cuando te diste vuelta"
+    mc "I was stunned when you turned around"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:193
+translate english quest_violet_questprincipal_02_b_265b44da:
+
+    # mc "Perdón, me tomó desprevenido"
+    mc "Sorry, it caught me off guard"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:199
+translate english quest_violet_questprincipal_02_b_e206d3dd:
+
+    # violet "Es increíble que cada vez que intento no estar molesta contigo, terminas logrando que sí lo esté"
+    violet "It's unbelievable that every time I try not to be annoyed with you, you end up making me be annoyed"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:232
+translate english violet_quest02b_opcion_deseo_ff508d82:
+
+    # mc "Me pones las cosas difíciles"
+    mc "You're making things hard for me"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:236
+translate english violet_quest02b_opcion_deseo_d98d4b18:
+
+    # violet "¿Difíciles?"
+    violet "Hard?"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:240
+translate english violet_quest02b_opcion_deseo_da4b3c70:
+
+    # mc "Sí, difíciles... es todo lo que voy a decir"
+    mc "Yeah, hard... that's all I'm going to say"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:264
+translate english violet_quest02b_opcion_amor_3b614f89:
+
+    # violet "¿Y cuál es el problema?"
+    violet "And what's the problem?"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:272
+translate english violet_quest02b_opcion_amor_b542d38e:
+
+    # violet "Te estás poniendo raro"
+    violet "You're getting weird"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:282
+translate english violet_quest02b_opcion_amor_ad393448:
+
+    # violet "Que tuviste luego de estar mirándome un rato..."
+    violet "That you made after staring at me for a while..."
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:294
+translate english violet_quest02b_opcion_amor_cae007bb:
+
+    # mc "Te pusiste colorada jajaja"
+    mc "You turned red, hahaha"
+
+# game/script/characters/violet/quests/violet_quest_02_b.rpy:296
+translate english violet_quest02b_opcion_amor_519b62b0:
+
+    # mc "Gracias por los mangas, Violet"
+    mc "Thanks for the manga, Violet"
+
+translate english strings:
+
+    # game/script/characters/violet/quests/violet_quest_02_b.rpy:209
+    old "Todo esto me trajo recuerdos"
+    new "All of this brought back memories"
+

@@ -13,7 +13,7 @@ label quest_jasmine_questprincipal_0_a:
     # Ocultar HUD
     $ ocultar_hud()
     hide screen hud_navegacion
-    
+
     # Mostrar background: Patio/Gym
     # Fija el cuadro de dialogo en todo el tramo: sin esto cada `scene` lo
     # esconde y la linea siguiente lo reaparece. Ver la nota de config.window
@@ -21,16 +21,16 @@ label quest_jasmine_questprincipal_0_a:
     window show
 
     scene bg_casa_tarde_gym_zoom with dissolve
-    
+
     # Mostrar personajes: MC a la izquierda, Jasmine a la derecha con ropa deportiva
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
     show jasmine_parada c_rbase_base o_base b_none at right
-    
+
     # === CONVERSACIÓN ===
 
     # MC habla
     show mc_parado_base b_hablando
-    mc "Hola Jasmine... ¿interrumpo?"
+    mc "Hola, Jasmine... ¿interrumpo?"
     show mc_parado_base b_none
 
     # Jasmine habla
@@ -49,7 +49,7 @@ label quest_jasmine_questprincipal_0_a:
 
     # Jasmine habla
     show jasmine_parada b_hablando c_rbase_brazoscruzados with sprite_normal
-    jasmine "¿A qué te referís con recibirte bien?"
+    jasmine "¿A qué te refieres con recibirte bien?"
     show jasmine_parada b_enojada
     pause 0.3
     show jasmine_parada b_hablando o_arribanm
@@ -75,7 +75,7 @@ label quest_jasmine_questprincipal_0_a:
 
     # MC habla
     show mc_parado_base b_hablando c_rbase_avergonzado o_cerrados with sprite_normal
-    mc "Con riesgo a que te puedas enojar más, ¿Puedo saber por qué estás enojada?"
+    mc "Con riesgo a que te puedas enojar más, ¿puedo saber por qué estás enojada?"
     show mc_parado_base b_seria o_base
 
     # Jasmine habla
@@ -107,7 +107,7 @@ label quest_jasmine_questprincipal_0_a:
     show mc_parado_base b_seria
     pause 0.3
     show mc_parado_base b_hablando
-    mc "Y lo siento, para mi fue muy duro irme de un momento para el otro"
+    mc "Y lo siento, para mí fue muy duro irme de un momento para el otro"
     show mc_parado_base b_seria
 
     # Jasmine habla
@@ -123,8 +123,7 @@ label tutorial_elecciones_jasmine:
     # Como no se sabe qué quest hará primero el jugador, solo se muestra una vez.
     if not tutorial_elecciones_visto:
         tutorial "A lo largo del desarrollo de la historia de un personaje nos iremos encontrando varias veces con distintas opciones para elegir. Estas representan la manera en la que nuestro personaje va a actuar ante la situación"
-        tutorial "Estas elecciones afectan el desarrollo inmediato como también a largo plazo. Los personajes recordaran las elecciones elegidas y actuaran en relación a ello en ciertos momentos"
-        tutorial "Aparte de los cambios narrativos algunas elecciones podrian darnos recompensas especiales, como estadisticas, objetos, escenas, etc"
+        tutorial "Estas elecciones afectan el desarrollo inmediato como también a largo plazo. Los personajes recordarán las elecciones elegidas y actuarán en relación a ello en ciertos momentos"
         $ tutorial_elecciones_visto = True
 
     jump elecciones_jasmine_continuar
@@ -134,10 +133,10 @@ label elecciones_jasmine_continuar:
     menu:
         "Perdón, voy a trabajar para arreglar las cosas":
             jump quest_jasmine_0_opcion_perdon
-            
+
         "Gracias por ser siempre tan madura y comprensiva":
             jump quest_jasmine_0_opcion_deseo
-            
+
         "Yo también perdí mi vida y ustedes tampoco me buscaron":
             jump quest_jasmine_0_opcion_realidad
 
@@ -145,7 +144,7 @@ label elecciones_jasmine_continuar:
 # Opción 1: Perdón (+5 amor con Jasmine)
 # -----------------------------------------------------------------------------
 label quest_jasmine_0_opcion_perdon:
-    
+
     # MC habla
     show mc_parado_base b_hablando c_rbase_avergonzado o_base with sprite_normal
     mc "Tienes razón. Fui egoísta..."
@@ -154,16 +153,16 @@ label quest_jasmine_0_opcion_perdon:
     show mc_parado_base b_hablando
     mc "Me concentré en mi dolor y no pensé que para ustedes también fue duro."
     show mc_parado_base b_seria
-    
+
     # Jasmine habla
-    show jasmine_parada b_hablando 
+    show jasmine_parada b_hablando
     jasmine "Que lo entiendas ya es un buen primer paso."
     show jasmine_parada b_enojada
     pause 0.3
     show jasmine_parada b_hablando o_base
     jasmine "Ahora nos tenemos que esforzar todos para que las cosas vuelvan a ser como antes."
     show jasmine_parada b_enojada
-    
+
     # MC habla
     show mc_parado_base b_hablando c_rbase_confianza with sprite_normal
     mc "Lo haré, voy a esforzarme mucho."
@@ -187,7 +186,7 @@ label quest_jasmine_0_opcion_deseo:
     show jasmine_parada b_hablando o_base
     jasmine "¿Qué pasa que te quedas sin decir nada? ¿Y sonriendo?"
     show jasmine_parada b_enojada
-    
+
     # MC habla
     show mc_parado_base b_hablando o_base
     mc "Sigues siendo igual, siempre la más madura y directa."
@@ -196,7 +195,7 @@ label quest_jasmine_0_opcion_deseo:
     show mc_parado_base b_hablando
     mc "Me había olvidado lo cómodo que me sentía al hablar contigo."
     show mc_parado_base b_none
-    
+
     # Jasmine habla
     show jasmine_parada b_hablando c_rbase_dedolabio with sprite_normal
     jasmine "Idiota... No me intentes comprar ahora..."
@@ -204,7 +203,7 @@ label quest_jasmine_0_opcion_deseo:
 
     # MC habla
     show mc_parado_base b_hablando
-    mc "Es verdad, no lo dije con otra intencion."
+    mc "Es verdad, no lo dije con otra intención."
     show mc_parado_base b_none
     pause 0.3
     show mc_parado_base b_hablando c_rbase_pensando o_arribanm with sprite_normal
@@ -212,7 +211,7 @@ label quest_jasmine_0_opcion_deseo:
     show mc_parado_base b_none o_base c_rbase_base with sprite_normal
 
     # Jasmine habla
-    show jasmine_parada b_hablando 
+    show jasmine_parada b_hablando
     jasmine "¿No quieres que te perdone?"
     show jasmine_parada b_sexy
 
@@ -238,7 +237,7 @@ label quest_jasmine_0_opcion_deseo:
     show mc_parado_base b_hablando
     mc "Me alegra que así sea."
     show mc_parado_base b_none
-    
+
     $ _ruta_jq0 = "deseo"
     jump quest_jasmine_0_regalo
 
@@ -246,20 +245,20 @@ label quest_jasmine_0_opcion_deseo:
 # Opción 3: Realidad
 # -----------------------------------------------------------------------------
 label quest_jasmine_0_opcion_realidad:
-    
+
     # MC habla
     show mc_parado_base b_hablando o_base c_rbase_brazoscruzados with sprite_normal
     mc "Entiendo tu punto y tienes razón"
     show mc_parado_base b_molesta
     pause 0.3
     show mc_parado_base b_hablando
-    mc "Pero para mí no fue solo perdelas a ustedes"
+    mc "Pero para mí no fue solo perderlas a ustedes"
     show mc_parado_base b_molesta
     pause 0.3
     show mc_parado_base b_hablando o_molestos
     mc "Yo perdí mi casa, mis amigos, mi escuela, mi ciudad y mi vida."
     show mc_parado_base b_molesta
-    
+
     # Jasmine habla
     show jasmine_parada b_hablando o_sorprendidosnm
     jasmine "..."
@@ -268,13 +267,13 @@ label quest_jasmine_0_opcion_realidad:
     show jasmine_parada b_hablando o_tristesnm
     jasmine "Sé que fue así y sé que fue más duro para ti."
     show jasmine_parada b_enojada
-    
+
     # MC habla
     show mc_parado_base b_hablando o_base
     mc "Ustedes estaban juntas, yo estaba solo y nadie me llamó tampoco..."
     show mc_parado_base b_molesta
     pause 0.3
-    show mc_parado_base b_hablando 
+    show mc_parado_base b_hablando
     mc "En su momento estuve enojado yo también"
     show mc_parado_base b_molesta
 
@@ -289,7 +288,7 @@ label quest_jasmine_0_opcion_realidad:
 
     # MC habla
     show mc_parado_base b_hablando o_base
-    mc "Como dijiste, eramos chicos y fuimos idiotas."
+    mc "Como dijiste, éramos chicos y fuimos idiotas."
     show mc_parado_base b_molesta
     pause 0.3
     show mc_parado_base b_hablando
@@ -298,7 +297,7 @@ label quest_jasmine_0_opcion_realidad:
 
     # Jasmine habla
     show jasmine_parada b_hablando o_base
-    jasmine "Jajaja si."
+    jasmine "Jajaja, sí."
     show jasmine_parada b_none
     pause 0.3
     show jasmine_parada b_hablando
@@ -347,7 +346,7 @@ label quest_jasmine_0_regalo:
     $ quitar_del_inventario("regalo_jasmine")
 
 
-    
+
     show jasmine_parada c_rbase_regalo1 with sprite_normal
 
     #Jasmine habla
@@ -364,7 +363,7 @@ label quest_jasmine_0_regalo:
     pause 0.3
     show jasmine_parada c_rbase_regalo5 with sprite_normal
     pause 0.3
-    
+
     #Jasmine habla
     show jasmine_parada b_hablando
     jasmine "ME ENCANTA"
@@ -373,24 +372,24 @@ label quest_jasmine_0_regalo:
     show jasmine_parada b_hablando
     jasmine "¡Es el conjunto de 'Lion-Fit'! Me encanta, esa marca es muy complicada de conseguir aquí."
     show jasmine_parada b_none
-    
+
     # MC piensa
     show mc_parado_base o_arribanm c_rbase_victoria with sprite_normal
     piensa "¡Sí! Sabía que le gustaría."
     show mc_parado_base o_base c_rbase_base with sprite_normal
-    
+
     #Jasmine habla
     show jasmine_parada b_hablando o_base
     jasmine "¿Quieres que me lo pruebe ahora?"
     show jasmine_parada b_sexy
-    
+
     # MC habla
     show mc_parado_base b_hablando
     mc "Ehhhh..."
     show mc_parado_base b_none
-    
+
     # Jasmine Habla
-    show jasmine_parada b_hablando 
+    show jasmine_parada b_hablando
     jasmine "Jajaja, no te pongas nervioso."
     show jasmine_parada b_sexy
     pause 0.3
@@ -406,9 +405,9 @@ label quest_jasmine_0_regalo:
     show jasmine_parada b_hablando
     jasmine "Cierra los ojos."
     show jasmine_parada b_none
-    
+
     pause 0.5
-    
+
     scene black with fade
 
     jasmine "Jajaja, no te pongas nervioso."
@@ -417,7 +416,7 @@ label quest_jasmine_0_regalo:
     jasmine "Espera un momento que lo agarro..."
     jasmine "Listo"
     pause 0.5
-    
+
     scene bg_casa_tarde_gym_zoom with fade
     show jasmine_quest_0_beso with dissolve
     jasmine "Muaaaa"
@@ -425,7 +424,7 @@ label quest_jasmine_0_regalo:
     hide jasmine_quest_0_beso
     show mc_parado_base at mc_cerca
     show jasmine_parada at npc_cerca
-    
+
     # MC habla
     show mc_parado_base b_hablando c_rbase_asustado o_sorprendidos with sprite_normal
     mc "Yo... eh... mejor te dejo seguir entrenando. Nos vemos luego."
@@ -437,7 +436,7 @@ label quest_jasmine_0_regalo:
     show jasmine_parada b_hablando
     jasmine "Nos vemos, [mc_name]..."
     show jasmine_parada b_none
-    
+
     # Evaluar ruta elegida y aplicar stats
     if _ruta_jq0 == "perdon":
         $ obtener_npc("jasmine").modificar_stat1(2, reserva=True)

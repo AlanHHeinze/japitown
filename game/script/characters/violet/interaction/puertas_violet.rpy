@@ -43,6 +43,11 @@ init python:
     def _puerta_v_04b():
         return quest_lista_para_boton("violet_questprincipal_04_b")
 
+    def _puerta_v_favores_quest_id():
+        """Quest del tramo activo del arco, para el tag del boton."""
+        _q = violet_favores_cadena_activa()
+        return _q.id if _q else None
+
     def _puerta_v_favores_noche():
         # Cadena de los favores (04_d2 → 04_d6): de noche se le puede preguntar
         # desde la puerta, pero Violet solo contesta — no abre. La condicion
@@ -126,7 +131,8 @@ init 5 python:
                             "quest_violet_questprincipal_0_b", _puerta_v_0b,
                             ocultar_golpear=True)
     registrar_opcion_puerta("violet", "Dar paquete",
-                            "dar_paquete_quest02_violet", _puerta_v_dar_paquete)
+                            "dar_paquete_quest02_violet", _puerta_v_dar_paquete,
+                            quest_id="violet_questprincipal_01_b")
     registrar_opcion_puerta("violet", "Pedir mangas prestados",
                             "quest_violet_questprincipal_02_a", _puerta_v_02a,
                             ocultar_golpear=True)
@@ -138,41 +144,55 @@ init 5 python:
                             ocultar_golpear=True)
     registrar_opcion_puerta("violet", "Golpear la puerta",
                             "violet_quest04b_puerta", _puerta_v_04b,
-                            ocultar_golpear=True)
+                            ocultar_golpear=True,
+                            quest_id="violet_questprincipal_04_b")
     # Sin ocultar_golpear: contesta sin abrir, asi que "Golpear la puerta" sigue
     # teniendo sentido y queda disponible al lado.
+    # El quest_id va como FUNCION: el boton cubre toda la cadena de favores
+    # (04_d2 a 04_d6) y cual esta activa cambia con el tramo, asi que no se
+    # puede fijar acá, en init 5.
     registrar_opcion_puerta("violet", "Preguntarle si necesita algo",
-                            "violet_q4dfav_de_noche_puerta", _puerta_v_favores_noche)
+                            "violet_q4dfav_de_noche_puerta", _puerta_v_favores_noche,
+                            quest_id=_puerta_v_favores_quest_id)
     registrar_opcion_puerta("violet", "Ya está la comida",
                             "violet_q4d4_avisar", _puerta_v_04d4_avisar,
-                            ocultar_golpear=True)
+                            ocultar_golpear=True,
+                            quest_id="violet_questprincipal_04_d4")
     registrar_opcion_puerta("violet", "Ya terminé de limpiar",
                             "violet_q4d6_cierre", _puerta_v_04d6_cierre,
-                            ocultar_golpear=True)
+                            ocultar_golpear=True,
+                            quest_id="violet_questprincipal_04_d6")
     registrar_opcion_puerta("violet", "Llamarla",
                             "quest_violet_amor_01", _puerta_v_amor_01,
                             ocultar_golpear=True)
     registrar_opcion_puerta("violet", "Ya compré los cosplay",
                             "violet_quest05a_puerta", _puerta_v_05a,
-                            ocultar_golpear=True)
+                            ocultar_golpear=True,
+                            quest_id="violet_questprincipal_05_a")
     registrar_opcion_puerta("violet", "Llegaron los cosplay",
                             "violet_quest05b_puerta", _puerta_v_05b,
-                            ocultar_golpear=True)
+                            ocultar_golpear=True,
+                            quest_id="violet_questprincipal_05_b")
     registrar_opcion_puerta("violet", "Pedirle perdón",
                             "violet_quest05c_puerta", _puerta_v_05c,
-                            ocultar_golpear=True)
+                            ocultar_golpear=True,
+                            quest_id="violet_questprincipal_05_c")
     registrar_opcion_puerta("violet", "Tengo las entradas",
                             "violet_quest06a_puerta", _puerta_v_06a,
-                            ocultar_golpear=True)
+                            ocultar_golpear=True,
+                            quest_id="violet_questprincipal_06_a")
     registrar_opcion_puerta("violet", "Me pediste que pasara",
                             "violet_quest06b_puerta", _puerta_v_06b,
-                            ocultar_golpear=True)
+                            ocultar_golpear=True,
+                            quest_id="violet_questprincipal_06_b")
     registrar_opcion_puerta("violet", "Preguntar por el cosplay",
                             "violet_quest07a_puerta", _puerta_v_07a,
-                            ocultar_golpear=True)
+                            ocultar_golpear=True,
+                            quest_id="violet_questprincipal_07_a")
     registrar_opcion_puerta("violet", "Ya hablé con la tienda",
                             "violet_quest07b_puerta", _puerta_v_07b,
-                            ocultar_golpear=True)
+                            ocultar_golpear=True,
+                            quest_id="violet_questprincipal_07_b")
     registrar_opcion_puerta("violet", "Despertar a Violet para limpiar",
                             "evento03_violet", _puerta_v_evento03,
                             ocultar_golpear=True, tipo="evento")

@@ -91,7 +91,7 @@ label quest_monica_questprincipal_0_b:
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda with dissolve
 
     show mc_parado_base b_hablando
-    mc "Monica, ¿Está todo bien? Te escuché desde arriba"
+    mc "Mónica, ¿está todo bien? Te escuché desde arriba"
     show mc_parado_base b_none
 
     show monica_parada b_hablando o_aburridosnm
@@ -132,6 +132,10 @@ label quest_monica_questprincipal_0_b:
     # Mónica vuelve: entra desde la izquierda hasta right, flipeada, y gira al llegar
     show monica_parada o_base b_none at reentrar_izquierda_a_right
     pause 1.6
+    # Y se la planta en el destino. Si el jugador clickeo y corto el `pause`, el
+    # ease quedo a mitad y sin esto Monica se queda parada en el medio toda la
+    # escena que sigue.
+    show monica_parada at reentrar_izquierda_a_right_final
 
     #insertar sprite con la comunpatora y se la da, agregar al mc con la computadora y que la guarda en la mochila
 
@@ -156,11 +160,8 @@ label quest_monica_questprincipal_0_b:
     $ agregar_al_inventario("notebook_monica")
 
     # Tutorial de inventario / items
-    tutorial "Acabás de [colorear_quest('Recibir Objeto')]: la notebook de Monica. Los objetos que consigues se guardan en tu [colorear_quest('Inventario')]"
-    tutorial "Puedes abrir el inventario desde el [colorear_quest('Icono de la Mochila')] en la parte superiro derecha, desde ahí, revisar y usar los objetos que tengas [colorear_quest('Haciendo Click')] en ellos"
-    tutorial "Algunos objenos no se pueden usar desde el inventario, sirven para ser utilizados en algún momento especifico del juego"
-    tutorial "Mientras que otros si puedes usarlos desde el mismo. Al usarlos disparara su acción relacionada o te indicara si hay algún requisito adicional para hacer, como una locacion o horario"
-    tutorial "Prueba [colorear_item('Notebook de Monica')] desde el inventario cuando estés en [colorear_locacion('Tu Habitacion')]"
+    tutorial "Los objetos que consigues se guardan en tu inventario (el icono de la mochila en la parte superior derecha de la pantalla)"
+    tutorial "Para usar uno, solo tendrás que hacer click sobre su icono"
 
     window hide
 

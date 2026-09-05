@@ -67,3 +67,17 @@ translate english paqueterepartidor_quest01_violet_e11dcf90:
 
     # repartidor "Aquí tiene, que tenga un buen día."
     repartidor "Here you go. Have a good day."
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_01_a.rpy:161
+translate english paqueterepartidor_quest01_violet_492f310b:
+
+    # piensa "Debe ser de alguna de las chicas, yo no pedí nada"
+    piensa "Must be one of the girls'. I didn't order anything."
+
+# game/script/characters/violet/quests/violet_quest_01_a.rpy:217
+translate english paquetecama_quest01_violet_5e7723dd:
+
+    # piensa "Este debe ser el paquete que Mónica me dijo"
+    piensa "This must be the package Monica mentioned."
+

@@ -214,3 +214,125 @@ translate english strings:
     old "Quedarse con las golosinas"
     new "Keep the candy"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:45
+translate english violet_q4d3_pedido_762e8f43:
+
+    # violet "Veo que todavía estás con ganas de ser servicial"
+    violet "I see you're still in the mood to be helpful"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:49
+translate english violet_q4d3_pedido_e38c07d6:
+
+    # mc "¿Cuándo no lo soy?"
+    mc "When am I not?"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:114
+translate english violet_q4d3_pedido_dar_96df84f9:
+
+    # violet "¿Desde hace cuánto las tienes ahí?"
+    violet "How long have you been carrying those around?"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:122
+translate english violet_q4d3_pedido_dar_313d4ebb:
+
+    # violet "Bueno, está bien"
+    violet "Fine, okay"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:126
+translate english violet_q4d3_pedido_dar_bd148d0a:
+
+    # mc "¿Necesitas algo más?"
+    mc "Do you need anything else?"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:130
+translate english violet_q4d3_pedido_dar_2b3b7e50:
+
+    # violet "No, por ahora no, gracias"
+    violet "No, not for now, thanks"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:136
+translate english violet_q4d3_pedido_dar_e77b73c6:
+
+    # piensa "No creo que con esto sea suficiente, tendré que hacer más cosas por ella si quiero que me mande la otra foto"
+    piensa "I don't think this is going to be enough. I'll have to do more for her if I want her to send me the other photo"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:137
+translate english violet_q4d3_pedido_dar_f1ffa6bc:
+
+    # piensa "Mañana podría seguir intentándolo"
+    piensa "I could keep trying tomorrow"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:164
+translate english violet_q4d3_pedido_no_dar_b69ed1a0:
+
+    # violet "Está bien, espero que no te olvides"
+    violet "All right, I hope you don't forget"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:170
+translate english violet_q4d3_pedido_no_dar_b9b7381f:
+
+    # piensa "En algún momento le voy a tener que dar las golosinas si quiero progresar con esto"
+    piensa "Sooner or later I'll have to give her the candy if I want to get anywhere with this"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:188
+translate english violet_q4d3_pedido_sin_golosinas_b69ed1a0:
+
+    # violet "Está bien, espero que no te olvides"
+    violet "All right, I hope you don't forget"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:221
+translate english violet_q4d3_recordatorio_df5f4d84:
+
+    # mc "Cierto, las golosinas, me había olvidado"
+    mc "Right, the candy. I'd forgotten"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:225
+translate english violet_q4d3_recordatorio_5c181e4a:
+
+    # violet "Bueno, voy a estar esperándolas"
+    violet "Okay, I'll be waiting for it"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:231
+translate english violet_q4d3_recordatorio_b9b7381f:
+
+    # piensa "En algún momento le voy a tener que dar las golosinas si quiero progresar con esto"
+    piensa "Sooner or later I'll have to give her the candy if I want to get anywhere with this"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:299
+translate english violet_q4d3_entregar_96df84f9:
+
+    # violet "¿Desde hace cuánto las tienes ahí?"
+    violet "How long have you been carrying those around?"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:307
+translate english violet_q4d3_entregar_313d4ebb:
+
+    # violet "Bueno, está bien"
+    violet "Fine, okay"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:311
+translate english violet_q4d3_entregar_bd148d0a:
+
+    # mc "¿Necesitas algo más?"
+    mc "Do you need anything else?"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:315
+translate english violet_q4d3_entregar_2b3b7e50:
+
+    # violet "No, por ahora no, gracias"
+    violet "No, not for now, thanks"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:321
+translate english violet_q4d3_entregar_e77b73c6:
+
+    # piensa "No creo que con esto sea suficiente, tendré que hacer más cosas por ella si quiero que me mande la otra foto"
+    piensa "I don't think this is going to be enough. I'll have to do more for her if I want her to send me the other photo"
+
+# game/script/characters/violet/quests/violet_quest_04_d3.rpy:322
+translate english violet_q4d3_entregar_f1ffa6bc:
+
+    # piensa "Mañana podría seguir intentándolo"
+    piensa "I could keep trying tomorrow"
+

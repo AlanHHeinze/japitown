@@ -31,7 +31,7 @@ init 6 python:
         umbral=10,
         quest_id="violet_amor_02",          # la quest de umbral 10
         nombre="Buena relación",
-        descripcion="Violet me tiene confianza y se muestra mas abierta.",
+        descripcion="Violet me tiene confianza y se muestra más abierta.",
         icono="❤️",
         ventajas=[
             "puerta_sale_pasillo_tarde",    # sale al pasillo si golpeo de tarde
@@ -47,7 +47,7 @@ init 6 python:
         umbral=20,
         quest_id="violet_amor_04",          # la quest de umbral 20
         nombre="Jugando juntos",
-        descripcion="Volvimos a tener la relacion que teniamos.",
+        descripcion="Volvimos a tener la relación que teníamos.",
         icono="❤️",
         ventajas=[
             "puerta_dejar_pasar_tarde",     # ingresar a su habitacion de tarde
@@ -99,7 +99,7 @@ init 6 python:
         umbral=10,
         quest_id="violet_deseo_02",         # la quest de umbral 10
         nombre="Me calienta",
-        descripcion="Hay una tension distinta entre los dos.",
+        descripcion="Hay una tensión distinta entre los dos.",
         icono="💋",
         ventajas=[
             "puerta_sale_pasillo_noche",    # sale al pasillo si golpeo de noche
@@ -131,7 +131,7 @@ init 6 python:
         umbral=30,
         quest_id="violet_deseo_06",         # la quest de umbral 30
         nombre="Sinceridad",
-        descripcion="La relacion cambio de forma definitiva.",
+        descripcion="La relación cambió de forma definitiva.",
         icono="💋",
         ventajas=[
             # "Hot" (el estado que antes se llamaba "Caliente") estaba en el hito

@@ -126,3 +126,17 @@ translate english violet_quest05c_opcion_b_f542b696:
     # mc "Espero que me creas, nos vemos"
     mc "I hope you believe me, see you"
 
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/quests/violet_quest_05_c.rpy:207
+translate english violet_quest05c_opcion_b_2e0d45a2:
+
+    # mc "Si bien me encantaría verte con algo así puesto... No lo compré para eso, quería que lo usaras en el evento"
+    mc "While I'd love to see you wearing something like that... I didn't buy it for that, I wanted you to wear it at the event"
+
+# game/script/characters/violet/quests/violet_quest_05_c.rpy:211
+translate english violet_quest05c_opcion_b_9c6f7867:
+
+    # mc "No te compraría algo que te exponga y tampoco para que te mire todo el mundo"
+    mc "I wouldn't buy you something that exposes you, nor for everyone to stare at you"
+

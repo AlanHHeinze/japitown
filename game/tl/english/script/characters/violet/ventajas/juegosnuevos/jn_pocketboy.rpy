@@ -220,7 +220,7 @@ translate english jn_pocketboy_cierre_12ba5841:
 translate english jn_pocketboy_cierre_7ecda690:
 
     # "¡Zas... claf, pum, plaf!"
-    ""
+    "Zap... clack, boom, bam!"
 
 # game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:499
 translate english jn_pocketboy_cierre_6abac696:
@@ -313,4 +313,186 @@ translate english jn_pocketboy_charla_d2a3c18b:
 
     # piensa "..."
     piensa "..."
+
+# TODO: Translation updated at 2026-09-03 16:15
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:220
+translate english jn_pocketboy_pasillo_22e65f7b:
+
+    # violet "[mc_name], sube a ayudarme por favor"
+    violet "[mc_name], come up and help me, please"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:221
+translate english jn_pocketboy_pasillo_282ba6ad:
+
+    # violet "Hay un montón de cajas, no voy a terminar más"
+    violet "There are a ton of boxes, I'm never going to finish"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:280
+translate english jn_pocketboy_altillo_4a098888:
+
+    # violet "No te quedes ahí mirando y empieza a buscar"
+    violet "Don't just stand there staring, start looking"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:284
+translate english jn_pocketboy_altillo_fd89a5f7:
+
+    # violet "... no dije que me estés mirando a mí, dije que dejes de mirar"
+    violet "...I didn't say you were staring at me. I said stop staring"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:286
+translate english jn_pocketboy_altillo_119802b7:
+
+    # mc "Bueno, ¿tienes idea por dónde puede estar?"
+    mc "Okay, any idea where it might be?"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:288
+translate english jn_pocketboy_altillo_1a0416dd:
+
+    # violet "¿No te parece que si tendría idea no estaría hace una hora revisando cajas?"
+    violet "Don't you think if I had any idea I wouldn't have spent an hour digging through boxes?"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:290
+translate english jn_pocketboy_altillo_ffcfcb16:
+
+    # mc "Buen punto, habrá que revisar todo"
+    mc "Fair point. Guess we check everything"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:350
+translate english jn_pocketboy_molestar_dda83595:
+
+    # violet "Acá estoy buscando yo, busca por otro lado"
+    violet "I'm searching over here, look somewhere else"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:353
+translate english jn_pocketboy_molestar_3319558b:
+
+    # violet "No hay espacio para los dos acá"
+    violet "There's no room for both of us here"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:359
+translate english jn_pocketboy_molestar_764d7903:
+
+    # violet "¿Lo estás haciendo a propósito, no?"
+    violet "You're doing it on purpose, aren't you?"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:394
+translate english jn_pocketboy_charla_23c7b521:
+
+    # piensa "Sí, la hice enojar"
+    piensa "Yep, I made her mad"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:401
+translate english jn_pocketboy_charla_8e47a350:
+
+    # mc "Un poco sí"
+    mc "A little, yeah"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:404
+translate english jn_pocketboy_charla_fccaba83:
+
+    # violet "Esa fue la última advertencia, la próxima te pateo"
+    violet "That was your last warning. Next time I kick you"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:407
+translate english jn_pocketboy_charla_3e59c35e:
+
+    # mc "Prometo no molestarte más"
+    mc "I promise I'll stop bothering you"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:410
+translate english jn_pocketboy_charla_4a03ce7d:
+
+    # violet "Sigue buscando entonces"
+    violet "Keep looking then"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:415
+translate english jn_pocketboy_charla_e1242004:
+
+    # piensa "Debería concentrarme en buscar la consola"
+    piensa "I should focus on finding the console"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:416
+translate english jn_pocketboy_charla_f0d84b94:
+
+    # piensa "Un último disfrute a esta vista"
+    piensa "One last look at this view"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:490
+translate english jn_pocketboy_cierre_646e717b:
+
+    # mc "¿Ya está?"
+    mc "Any luck?"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:496
+translate english jn_pocketboy_cierre_6584f6ba:
+
+    # mc "Vamos un poco más"
+    mc "Let's keep at it a bit longer"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:499
+translate english jn_pocketboy_cierre_fc41c9ed:
+
+    # violet "No tenía tantas ganas de jugar a la Pocket Boy"
+    violet "I didn't want to play the Pocket Boy that badly"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:502
+translate english jn_pocketboy_cierre_476ca3ea:
+
+    # mc "Creo que está por acá"
+    mc "I think it's over here"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:512
+translate english jn_pocketboy_cierre_dc315792:
+
+    # violet "Ahí te ayudo"
+    violet "Here, I'll help"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:537
+translate english jn_pocketboy_cierre_c5e6a7c0:
+
+    # violet "¿Estás bien?"
+    violet "Are you okay?"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:541
+translate english jn_pocketboy_cierre_f0189d26:
+
+    # mc "Sí, solo que se me cayó algo pesado encima"
+    mc "Yeah, something heavy just landed on me"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:547
+translate english jn_pocketboy_cierre_731ff23a:
+
+    # violet "Ahora me voy a quedar así"
+    violet "Now I'm staying right here"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:551
+translate english jn_pocketboy_cierre_28e1c7fc:
+
+    # piensa "Así se debe sentir estar en el cielo"
+    piensa "So this is what heaven feels like"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:554
+translate english jn_pocketboy_cierre_ccb2895a:
+
+    # violet "¿Qué es esa cara de que lo estás disfrutando?"
+    violet "What's with that face? You're enjoying this"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:566
+translate english jn_pocketboy_cierre_d76c1563:
+
+    # mc "No lo niego, pero encontré la caja correcta"
+    mc "I won't deny it, but I did find the right box"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:574
+translate english jn_pocketboy_cierre_131f4701:
+
+    # mc "Pero tú sola, yo ya me cansé de esto"
+    mc "But on your own, I'm done with this"
+
+# game/script/characters/violet/ventajas/juegosnuevos/jn_pocketboy.rpy:586
+translate english jn_pocketboy_cierre_f0132f87:
+
+    # violet "Eres un idiota"
+    violet "You're an idiot..."
 

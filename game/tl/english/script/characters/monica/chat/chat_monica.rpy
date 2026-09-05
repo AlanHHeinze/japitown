@@ -6,19 +6,19 @@ translate english strings:
     ## Chat Monica — Quest 2 (limpieza del sábado)
     ############################################################################
 
-    old "[mc_name] con jasmine vamos a estar fuera de casa el próximo sábado durante la mañana"
+    old "[mc_name], con Jasmine vamos a estar fuera de casa el próximo sábado durante la mañana"
     new "[mc_name], Jasmine and I will be away from home next Saturday morning"
 
-    old "Te pido si con Violet pueden colaborar con la limpieza hasta que Raquel vuelva de sus vacaciones"
+    old "¿Podrían con Violet colaborar con la limpieza hasta que Raquel vuelva de sus vacaciones?"
     new "I'm asking if you and Violet can help with the cleaning until Raquel gets back from vacation"
 
-    old "Ok yo me encargo"
+    old "Ok, yo me encargo"
     new "Sure, I'll take care of it"
 
-    old "Quiero que Violet ayude, despertala temprano el sábado"
+    old "Quiero que Violet ayude, despiértala temprano el sábado"
     new "I want Violet to help too, wake her up early on Saturday"
 
-    old "Sí Monica, despreocupate"
+    old "Sí, Mónica, despreocúpate"
     new "Sure Monica, don't worry"
 
     ############################################################################

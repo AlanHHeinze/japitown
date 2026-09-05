@@ -17,6 +17,24 @@ define jasmine_susurro = Character("Jasmine", color=JASMINE_COLOR, what_prefix="
 define jasmine_piensa = Character("Jasmine", kind=piensa_base, color=JASMINE_COLOR)
 
 init python:
+
+    def _jasmine_puede_ducharse():
+        """
+        Condicion de su rutina especial de ducha.
+
+        Mientras Violet este enferma NO se baña: la ducha la mete en
+        casa_banioarriba, que es justo de donde el MC tiene que sacar la
+        toalla para uno de los pedidos. Con el baño ocupado esa tarea queda
+        sin forma de completarse y la quest se traba.
+
+        Funcion de MODULO: la RutinaEspecial se guarda en el save via el NPC,
+        y una lambda o una def anidada romperian el guardado.
+
+        Se pregunta por la quest y no por un flag propio para que no haya dos
+        estados que puedan quedar desincronizados.
+        """
+        _q = store.sistema_quests.obtener_quest("violet_questprincipal_09_a")
+        return not (_q and _q.activa and not _q.completada)
     
     # Diccionario para almacenar sprites y posiciones de rutina de Jasmine
     # Clave: (dia_semana, horario) -> {"sprite": path, "posicion": (x, y)}
@@ -239,6 +257,7 @@ init python:
             posicion=None,
             probabilidad=0.25,
             horarios=[2],
+            condicion=_jasmine_puede_ducharse,
             nombre="Jasmine en la ducha"
         ))
 
