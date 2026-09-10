@@ -362,14 +362,34 @@ init python:
                         valor, self.npc_id, descripcion
                     )
         
-        def resetear(self):
-            """Resetea el grupo para poder volver a jugarlo (si fuera necesario)."""
-            self.estado = "pendiente"
-            # Sin esto el trigger no lo volveria a disparar nunca.
-            self._disparado = False
+        def reiniciar_progreso(self):
+            """
+            Deja el grupo listo para jugarse desde el primer paso.
+
+            NO toca `estado` ni `_disparado`: eso es de resetear(), que es para
+            volver a DISPARARLO. Esto es para volver a JUGARLO, y lo llama
+            _entregar_grupo en cada entrega.
+
+            POR QUE EXISTE: los grupos se registran una vez y se reusan. Al
+            terminar una conversacion, avanzar_paso(-1) deja `paso_actual` en
+            len(pasos). Si el grupo se vuelve a entregar sin pasar por aca,
+            arranca ya terminado: obtener_paso_actual() devuelve None, no hay
+            opciones para contestar, y si el grupo bloquea algo (prioritario,
+            Mensajear) el jugador queda trabado sin salida. Paso con la
+            conversacion generica de Mensajear, que es repetible y volvia a
+            "pendiente" a mano sin reiniciar el paso (dos reportes de jugadores,
+            2026-09-10).
+            """
             self.paso_actual = 0
             self.puntos_acumulados = {}
             self.recompensas_otorgadas = []
+
+        def resetear(self):
+            """Resetea el grupo para poder volver a dispararlo y jugarlo."""
+            self.estado = "pendiente"
+            # Sin esto el trigger no lo volveria a disparar nunca.
+            self._disparado = False
+            self.reiniciar_progreso()
     
     
     class ChatNPC:
@@ -519,7 +539,18 @@ init python:
                 self._intentar_entrega(grupo)
                 return True
 
-            # Sin condiciones: entrega inmediata (comportamiento original)
+            # Sin condiciones de entrega — pero NO sin la etapa previa. Si hoy
+            # no se puede contestar, va a espera igual que los otros y se
+            # entrega cuando se pueda. Entregarlo igual dejaba el grupo activo
+            # y sin respuesta posible: con los prioritarios eso bloqueaba dormir
+            # y avanzar sin forma de destrabarlo.
+            if not self._puede_entregarse(grupo):
+                grupo.estado = "espera"
+                if not hasattr(self, '_grupos_en_espera'):
+                    self._grupos_en_espera = []
+                self._grupos_en_espera.append(grupo)
+                return True
+
             self._entregar_grupo(grupo, target_npc)
             return True
 
@@ -562,6 +593,13 @@ init python:
                     self._grupos_en_espera.remove(grupo)
                 return
 
+            # CADA ENTREGA ES UNA PARTIDA NUEVA del grupo: el objeto es el
+            # mismo de siempre (se registra una vez), asi que trae el paso y
+            # los puntos de la ultima vez que se jugo. Sin esto un grupo
+            # repetible arranca en el paso final, sin opciones — ver
+            # reiniciar_progreso.
+            grupo.reiniciar_progreso()
+
             # Agregar a pendientes del chat.
             #
             # El `not in` es una segunda red: seleccionar_grupo saca UNA sola
@@ -579,6 +617,43 @@ init python:
             if hasattr(self, '_grupos_en_espera') and grupo in self._grupos_en_espera:
                 self._grupos_en_espera.remove(grupo)
 
+        def _puede_entregarse(self, grupo):
+            """
+            LA ETAPA PREVIA A LA ENTREGA: ¿si este grupo se entrega ahora, el
+            jugador va a poder contestarlo?
+
+            Si la respuesta es no, el grupo NO se entrega — se queda en espera
+            y se reintenta en cada vuelta del game_loop. Es lo que impide que
+            un mensaje que bloquea el avance (prioritario, Mensajear) entre en
+            un estado del que el jugador no puede salir.
+
+            Va en un solo lugar y la consultan los DOS caminos de entrega: el
+            de los grupos con condiciones (_intentar_entrega) y el atajo de
+            los que no las tienen (disparar_por_trigger). Antes el atajo la
+            salteaba entera, asi que un grupo sin condiciones se entregaba
+            aunque el NPC estuviera fuera de juego, y despues no se podia
+            contestar.
+
+            Chequea lo mismo que ChatNPC.puede_responder(), que es el otro lado
+            del contrato: lo que se entrega tiene que poder responderse.
+            """
+            # NPC fuera de juego: no manda mensajes nuevos. El grupo se queda
+            # en espera y se entrega cuando vuelva
+            # (core/npcs/npc_disponibilidad.rpy).
+            if not npc_disponible(grupo.npc_id):
+                return False
+
+            if mensajes_estan_bloqueados():
+                return False
+
+            # Un grupo con pasos tiene que poder arrancar del primero. Con
+            # reiniciar_progreso() en la entrega esto no falla nunca; queda
+            # como cinturon por si alguien lo saltea.
+            if grupo.pasos and not grupo.pasos[0].opciones_jugador:
+                return False
+
+            return True
+
         def _intentar_entrega(self, grupo):
             """
             Verifica las condiciones de entrega para un grupo en espera.
@@ -592,13 +667,7 @@ init python:
 
             target_npc = grupo.npc_id
 
-            # NPC fuera de juego: no manda mensajes nuevos. El grupo se queda
-            # en espera y se entrega cuando vuelva
-            # (core/npcs/npc_disponibilidad.rpy).
-            if not npc_disponible(target_npc):
-                return False
-
-            if mensajes_estan_bloqueados():
+            if not self._puede_entregarse(grupo):
                 return False
 
             # Condición personalizada (horario laboral, saldo, etc.)
@@ -951,13 +1020,39 @@ init python:
         if chat:
             chat.bloqueado = False
 
+    # Grupos que ya avisaron por consola que no se pueden contestar. Es solo
+    # para no repetir el aviso en cada vuelta del loop.
+    _BLOQUEO_AVISADOS = set()
+
     def obtener_bloqueo_mensaje_prioritario():
         """
         Verifica si hay algun mensaje prioritario ya entregado esperando respuesta.
         Retorna el nombre del NPC remitente, o None si no hay bloqueo.
         Un mensaje prioritario bloquea avanzar tiempo y dormir hasta ser respondido.
+
+        REGLA: UN BLOQUEO SOLO LO PUEDE SOSTENER ALGO QUE EL JUGADOR PUEDA
+        RESOLVER. Si el chat no se puede contestar ahora (NPC fuera de juego,
+        grupo sin paso valido, horario de respuesta que no es este), el
+        mensaje no bloquea: el jugador sigue jugando y el bloqueo vuelve solo
+        cuando se pueda contestar. Es la red de seguridad de _puede_entregarse
+        — lo que se escape de la etapa previa no puede trabar la partida.
+
+        En desarrollo se avisa por consola, una vez por grupo, para que el
+        caso no quede escondido: que no trabe no significa que este bien.
         """
         for npc_id, chat in sistema_mensajes.chats.items():
+            if not chat.puede_responder():
+                _pend = [g.id for g in chat.grupos_pendientes
+                         if getattr(g, 'prioritario', False)]
+                if chat.grupo_activo and getattr(chat.grupo_activo, 'prioritario', False):
+                    _pend.append(chat.grupo_activo.id)
+                if _pend and config.developer:
+                    for _gid in _pend:
+                        if _gid not in _BLOQUEO_AVISADOS:
+                            _BLOQUEO_AVISADOS.add(_gid)
+                            print("[Mensajes] prioritario '%s' de %s no se puede "
+                                  "contestar ahora: no bloquea" % (_gid, npc_id))
+                continue
             if chat.grupo_activo and getattr(chat.grupo_activo, 'prioritario', False):
                 npc = obtener_npc(npc_id)
                 return npc.nombre if npc else npc_id.capitalize()

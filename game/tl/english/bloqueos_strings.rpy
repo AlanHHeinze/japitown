@@ -132,3 +132,12 @@ translate english strings:
 
     old "Violet no está en casa ahora"
     new "Violet isn't home right now"
+
+    # =========================================================================
+    # Talk bloqueado en bikini (TEMPORAL)
+    # =========================================================================
+    # Lo registran skins_monica.rpy y skins_jasmine.rpy mientras no exista arte
+    # de cuerpo para el talk en bikini. Se va cuando se vayan esos bloqueos.
+
+    old "Parece que está ocupada ahora"
+    new "She looks busy right now"

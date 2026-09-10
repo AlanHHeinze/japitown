@@ -65,7 +65,8 @@
 ## `init -50` que deriva la generacion. No cambia nada de como se edita.)
 define -100 JP_HISTORIAL_SAVES = [
     ("0.1.8.5", False),   # primera version con el sistema
-    ("0.1.9(test)", True),   # ROMPE: no carga partidas de ninguna version anterior
+    ("0.1.9",   True),    # ROMPE: no carga partidas de ninguna version anterior
+    ("0.1.9a",  False),   # soft lock de Mensajear, saneo al cargar, viaje rapido con recorrido; saves de 0.1.9 siguen
 ]
 
 ## Ejemplo de como se veria despues de unas cuantas versiones:

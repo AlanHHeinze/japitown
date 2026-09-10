@@ -62,10 +62,11 @@ label violet_rn_jean:
     $ ocultar_hud()
     window show
 
-    # La escena pasa SI O SI en su habitacion: o el jugador ya estaba ahi, o
-    # llego despues de la cita y la dispara el trigger de convocatoria. En los
-    # dos casos la locacion actual es la correcta.
-    $ _rnj_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
+    # La habitacion EXPLICITAMENTE, no locacion_actual: entrando por "Ver ropa"
+    # (el menu de la puerta) el MC se queda en el pasillo, asi que
+    # locacion_actual pintaria el pasillo de fondo. Mismo criterio que rn_vestido.
+    $ _rnj_loc = sistema_locaciones.obtener_locacion("casa_hviolet")
+    $ _rnj_bg = _rnj_loc.background if _rnj_loc else "#1a1a1a"
     scene expression _rnj_bg
 
     # (Mc cuerpo base ojos base boca neutral)

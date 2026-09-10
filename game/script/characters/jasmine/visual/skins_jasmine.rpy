@@ -106,3 +106,38 @@ init 10 python:
 # Inicializar skins de Jasmine al cargar el juego
 init 11 python:
     inicializar_skins_jasmine()
+
+
+################################################################################
+## Bloqueo TEMPORAL del talk en bikini
+################################################################################
+## El talk muestra el retrato del skin activo al abrir la conversacion, pero al
+## resolverla cambia al layeredimage del cuerpo para poner la expresion. Del
+## bikini todavia no hay arte de cuerpo, asi que `_TALK_SKIN_CUERPO`
+## (core/talk/talksystem_core.rpy) lo mapea a `c_rbase_base`: la escena arranca
+## con ella en bikini y termina con ella vestida.
+##
+## Hasta que existan esos sprites se corta el talk de una, con el MC pensando
+## que esta ocupada. Va por `registrar_bloqueo_accion`, o sea por el embudo
+## `accion_bloqueada` que `talk_iniciar` ya consulta en su primera linea: el
+## motor no se entera de que existe un bikini.
+##
+## ⚠️ PARA SACARLO cuando esten los sprites: borrar este bloque y apuntar la
+## fila del skin de bikini de `_TALK_SKIN_CUERPO` al cuerpo nuevo (hoy apunta
+## al vestido, que es de donde sale el problema).
+##
+## `_npc_id_temp` es de donde sale a quien se le esta hablando: lo setea el
+## boton del menu justo antes de saltar, y `talk_iniciar` es el unico que
+## consulta esta accion, asi que no puede quedar viejo.
+
+init 5 python:
+
+    def _jasmine_talk_bloqueado_bikini():
+        """True si se le esta por hablar a Jasmine y esta en bikini."""
+        if getattr(store, '_npc_id_temp', None) != "jasmine":
+            return False
+        _skin = obtener_skin_activo("jasmine")
+        return _skin is not None and _skin.grupo == "bikini"
+
+    registrar_bloqueo_accion("hablar", _jasmine_talk_bloqueado_bikini,
+                             "Parece que está ocupada ahora")

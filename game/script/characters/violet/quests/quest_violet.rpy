@@ -406,10 +406,11 @@ init 5 python:
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_CONDICIONES: ConfigEtapa(
-                pista="Tengo que mejorar mi relación con Violet para que me muestre más del cosplay",
-                que_hacer=_qc("vq04d_condiciones_quehacer", lambda: renpy.translate_string("Alcanzar {}").format(
-                    texto_hito_corto("violet_hito_deseo_01")
-                )),
+                # Funciones de modulo (arriba, en el init python de helpers) y
+                # no lambdas de _qc: la pista nombra el hito y el que_hacer
+                # dice el paso concreto que falta para conseguirlo.
+                pista=_pista_quest04d_condiciones,
+                que_hacer=_quehacer_quest04d_condiciones,
                 mensaje_despertar="Violet dijo que tenía más fotos, quizás pueda lograr que me las envíe",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
@@ -669,13 +670,14 @@ init 5 python:
         ],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
-            ETAPA_CONDICIONES: ConfigEtapa(
-                pista="Tengo que seguir mejorando mi relación con Violet para que me muestre más.",
-                que_hacer=_qc("vq04e_condiciones_quehacer", lambda: renpy.translate_string("Subir deseo 💋 con Violet ({}/{})").format(
-                    getattr(store, 'violet_deseo', 0), 15
-                )),
-                mensaje_despertar="Esto de mejorar mi relación con Violet está trayendo buenos resultados, me pregunto si podré conseguir algo más",
-            ),
+            # ETAPA_CONDICIONES quedo SIN TEXTOS a proposito. La quest no
+            # tiene requisitos ni dias de espera, asi que _procesar_avance_etapas
+            # la lleva de INICIALIZACION a BOTON_LISTO en un solo tick y esta
+            # etapa no se ve nunca. Lo que habia era el contador "Subir deseo
+            # (x/15)" del esquema viejo, cuando la 04_e colgaba de la 04_d y
+            # pedia 15 de deseo: hoy la llave es haber terminado el arco de los
+            # favores, asi que ese texto pedia algo que ya no se chequea.
+            # Si alguna vez vuelve a llevar requisitos, aca van sus textos.
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 # Misma corrección que en la 04_c y la 04_d: el chat llega de
                 # NOCHE, así que hasta que llegue la pista invita a esperar en vez
@@ -1312,6 +1314,47 @@ init python:
         if g1 and g1.estado in ["pendiente", "en_curso"]:
             return "Responder mensaje Violet"
         return "Responder mensaje Violet"
+
+    # ── 04_d: la unica quest del juego con un Requisito de hito ──────────────
+    # El hito no se alcanza subiendo el stat: hay que COMPLETAR la quest de la
+    # linea de deseo que lo otorga (el umbral solo la habilita). Por eso el
+    # "que hacer" tiene dos pasos, y el segundo nombra la quest.
+    #
+    # Todo sale del catalogo —umbral, nombre e icono del hito, nombre de la
+    # quest que lo da— asi que si se renombra el hito o se reordena la linea de
+    # deseo, estos textos siguen solos. Mismo criterio que texto_hito_corto.
+
+    VQ04D_HITO = "violet_hito_deseo_01"
+
+    def _pista_quest04d_condiciones():
+        """Pista de ETAPA_CONDICIONES: dice QUE hace falta, el hito."""
+        return renpy.translate_string(
+            "Violet no me va a mostrar más del cosplay hasta que no haya algo "
+            "más entre los dos: necesito llegar a {}"
+        ).format(texto_hito_corto(VQ04D_HITO))
+
+    def _quehacer_quest04d_condiciones():
+        """
+        Que hacer de ETAPA_CONDICIONES: el paso concreto que falta.
+
+        Primero el umbral, que es lo que habilita la quest del hito; una vez
+        alcanzado, completar esa quest. Si el hito no existe se cae al texto
+        generico en vez de romper la pista, igual que hace texto_hito_corto.
+        """
+        _h = obtener_hito(VQ04D_HITO)
+        if _h is None:
+            return renpy.translate_string("Avanzar en la línea de deseo con Violet")
+
+        _deseo = getattr(store, 'violet_deseo', 0)
+        if _deseo < _h.umbral:
+            return renpy.translate_string("Subir deseo 💋 con Violet ({}/{})").format(
+                _deseo, _h.umbral)
+
+        # No se nombra la quest: los nombres de la linea de deseo no estan
+        # traducidos, asi que interpolarlos meteria español en la version en
+        # ingles. El panel de pistas ya la muestra aparte, con su nombre y su
+        # propio "que hacer", asi que alcanza con mandar al jugador ahi.
+        return renpy.translate_string("Completar la quest de deseo de Violet")
 
     def _pista_quest07a_espera():
         eleccion = getattr(store, 'violet_06b_eleccion', None)

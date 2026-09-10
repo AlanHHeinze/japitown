@@ -102,12 +102,45 @@ default rn_convocatoria_violet = None
 
 init python:
 
+    def _rn_cita_vigente():
+        """
+        El label de la cita en pie, o None. Chequeo PURO, sin efectos.
+
+        Lo consultan las DOS vias de entrada: el trigger de game_loop (entrar a
+        su pieza) y la condicion del boton de puerta. Que no toque nada es
+        obligatorio por la segunda: esa condicion la evalua el armado del menu,
+        y una condicion de UI que muta estado se dispara sola cuando el
+        predictor corre el screen sin mostrarlo.
+
+        No mira donde esta el MC: el trigger lo pide adentro y el boton, en el
+        pasillo.
+        """
+        _cita = getattr(store, 'rn_convocatoria_violet', None)
+        if not _cita:
+            return None
+
+        if (_cita.get("dia") != store.dias_totales
+                or _cita.get("horario") != store.horario_actual):
+            return None
+
+        # Que ella tambien este: si algo la movio en el medio, la cita se cae.
+        if tracker_locacion_npc("violet") != "casa_hviolet":
+            return None
+
+        return _cita.get("label")
+
+    def _rn_puerta_ver_ropa():
+        """Condicion del boton 'Ver ropa' del menu de la puerta."""
+        return _rn_cita_vigente() is not None
+
     def _rn_trigger_convocatoria():
         """Trigger de game_loop: corre la prenda pendiente al llegar a su pieza."""
         _cita = getattr(store, 'rn_convocatoria_violet', None)
         if not _cita:
             return None
 
+        # La cita vencida se descarta ACA y en ningun otro lado: este trigger es
+        # lo unico que corre en cada vuelta del loop.
         if (_cita.get("dia") != store.dias_totales
                 or _cita.get("horario") != store.horario_actual):
             store.rn_convocatoria_violet = None
@@ -117,18 +150,54 @@ init python:
         if _loc is None or _loc.id != "casa_hviolet":
             return None
 
-        # Que ella tambien este: si algo la movio en el medio, la cita se cae.
-        if tracker_locacion_npc("violet") != "casa_hviolet":
+        _lbl = _rn_cita_vigente()
+        if not _lbl:
             return None
 
         store.rn_convocatoria_violet = None
-        return _cita.get("label")
+        return _lbl
 
 
 init 5 python:
 
     registrar_trigger_game_loop("rn_convocatoria_violet",
                                 _rn_trigger_convocatoria)
+
+
+################################################################################
+## La segunda via — "Ver ropa" en el menu de la puerta
+################################################################################
+## El trigger de arriba pide ENTRAR a su habitacion, y entrar puede no estar
+## disponible: los niveles de acceso del door_access dependen de los stats y del
+## horario, una quest puede tener la puerta tomada, o el jugador puede no llegar
+## a pasar. Si eso ocurre la cita se vence sin que la escena ocurra nunca.
+##
+## Esta opcion es la red: aparece en el menu de la puerta mientras la cita este
+## en pie y entra directo a la escena, sin depender del acceso.
+##
+## ⚠️ NO SE ENTRA A LA HABITACION, y es a proposito. El label salta a la escena
+## sin mover al MC, asi que cuando la escena cierra con `jump game_loop` el
+## jugador sigue en el pasillo, que es de donde vino. Si alguien "arregla" esto
+## agregando un mover_a_locacion("casa_hviolet"), lo deja adentro de un cuarto
+## en el que nunca entro y del que la puerta podria no dejarlo salir.
+##
+## La otra via no cambia: si el jugador SI puede entrar, entra, y el trigger
+## dispara la escena adentro. Ahi terminar en la habitacion es lo correcto.
+
+label violet_rn_puerta:
+
+    # Se lee y se consume antes de saltar: la escena termina en `jump
+    # game_loop` y no vuelve por aca, asi que no hay despues donde limpiarla.
+    $ _rnp_label = _rn_cita_vigente()
+    $ rn_convocatoria_violet = None
+
+    # Red de seguridad: la condicion del boton ya garantiza que hay cita, pero
+    # entre que se dibujo el menu y el click pudo cambiar el horario.
+    if not _rnp_label:
+        $ mostrar_hud()
+        jump game_loop
+
+    jump expression _rnp_label
 
 
 ################################################################################

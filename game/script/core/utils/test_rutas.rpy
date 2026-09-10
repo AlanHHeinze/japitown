@@ -221,6 +221,104 @@ init 999 python:
             return _jpt_fallo("; ".join(problemas[:8]))
         return _jpt_ok("todas las condiciones de entrega ejecutan sin excepcion")
 
+    def _jpt_mensajes_saltos():
+        """
+        Cada `saltar_a_paso` apunta a un paso que existe (o a -1, terminar).
+
+        Un salto fuera de rango deja `paso_actual` mas alla del final:
+        obtener_paso_actual() devuelve None, el grupo queda activo sin opciones
+        y nunca se completa. Si el grupo bloquea algo, la partida se traba.
+        """
+        problemas = []
+        for gid, g in store.sistema_mensajes._todos_grupos.items():
+            n = len(getattr(g, "pasos", None) or [])
+            for i, paso in enumerate(g.pasos or []):
+                for j, op in enumerate(getattr(paso, "opciones_jugador", None) or []):
+                    t = getattr(op, "saltar_a_paso", None)
+                    if t is None or t == -1:
+                        continue
+                    if not (0 <= t < n):
+                        problemas.append("{}: paso {} opcion {} salta a {} (hay {})".format(
+                            gid, i, j, t, n))
+        if problemas:
+            return _jpt_fallo("; ".join(problemas[:8]))
+        return _jpt_ok("todos los saltos de paso apuntan a pasos existentes")
+
+    def _jpt_mensajes_rejugables():
+        """
+        Un grupo se puede jugar DOS veces seguidas y las dos arranca del paso 0.
+
+        Simula lo que le pasa a un grupo repetible: se juega hasta el final
+        (paso_actual queda en len(pasos)) y se vuelve a entregar. Si la segunda
+        entrega no reinicia el progreso, el grupo arranca ya terminado y no se
+        puede contestar — el bug de la conversacion generica de Mensajear
+        (dos reportes en la 0.1.9).
+
+        Trabaja sobre COPIAS: no toca el estado real de la partida.
+        """
+        import copy as _cp
+        problemas = []
+        sm = store.sistema_mensajes
+        for gid, g in sm._todos_grupos.items():
+            if not getattr(g, "pasos", None):
+                continue
+            c = _cp.deepcopy(g)
+            # Primera partida, hasta el final.
+            c.paso_actual = 0
+            c.estado = "en_curso"
+            c.avanzar_paso(-1)
+            c.estado = "completado"
+            # Lo que hace un repetible al terminar, y lo que hace la entrega.
+            c.resetear()
+            c.reiniciar_progreso()
+            if c.obtener_paso_actual() is None:
+                problemas.append("{}: tras reentregar no tiene paso".format(gid))
+            if c.puntos_acumulados:
+                problemas.append("{}: puntos de la partida anterior".format(gid))
+        if problemas:
+            return _jpt_fallo("; ".join(problemas[:8]))
+        return _jpt_ok("todos los grupos arrancan de cero al reentregarse")
+
+    def _jpt_mensajes_bloqueo_respondible():
+        """
+        Un mensaje que no se puede contestar NO bloquea el avance.
+
+        Es la regla que evita la partida trabada: obtener_bloqueo_mensaje_
+        prioritario() tiene que devolver None para un chat cuyo
+        puede_responder() da False. Se prueba con un chat sintetico que
+        tiene un grupo prioritario activo y SIN paso valido — exactamente el
+        estado del bug.
+
+        Trabaja sobre un chat temporal que se saca al final.
+        """
+        sm = store.sistema_mensajes
+        _npc = "__jpt_fantasma"
+        if _npc in sm.chats:
+            return _jpt_fallo("el chat de prueba ya existia")
+        try:
+            sm.inicializar_chat(_npc)
+            chat = sm.chats[_npc]
+            g = GrupoMensajes(
+                id="__jpt_prio", npc_id=_npc, mensaje_inicial="x",
+                trigger_id="__jpt_prio", prioritario=True,
+                pasos=[PasoConversacion(opciones_jugador=[
+                    OpcionRespuesta(texto="a", respuesta_npc="b", saltar_a_paso=-1)])],
+            )
+            g.paso_actual = len(g.pasos)        # activo pero sin paso
+            g.estado = "en_curso"
+            chat.grupo_activo = g
+            if chat.puede_responder():
+                return _jpt_fallo("puede_responder() dio True sin paso valido")
+            if obtener_bloqueo_mensaje_prioritario() == _npc.capitalize():
+                return _jpt_fallo("un prioritario sin paso valido sigue bloqueando")
+            # Y con paso valido SI tiene que bloquear.
+            g.paso_actual = 0
+            if obtener_bloqueo_mensaje_prioritario() != _npc.capitalize():
+                return _jpt_fallo("un prioritario contestable no bloquea")
+        finally:
+            sm.chats.pop(_npc, None)
+        return _jpt_ok("el bloqueo prioritario solo lo sostiene lo contestable")
+
     # =========================================================================
     # RUTA: acciones — integridad del catalogo (no destructiva)
     # =========================================================================
@@ -430,10 +528,20 @@ init 999 python:
             if locaciones and not any(l.startswith(prefijo) for l in locaciones):
                 problemas.append("madre '{}': ninguna locacion con prefijo '{}'".format(
                     madre_id, prefijo))
-        for origen, destino in VIAJE_RAPIDO_PREVIA.items():
-            for loc_id in (origen, destino):
-                if store.sistema_locaciones.obtener_locacion(loc_id) is None:
-                    problemas.append("VIAJE_RAPIDO_PREVIA: '{}' no existe".format(loc_id))
+        # El viaje recorre la ruta, asi que lo que hay que validar es que el
+        # mapa este CONECTADO: un destino del menu al que no se llega caminando
+        # cae al salto directo y se pierde el recorrido (y los disparadores del
+        # camino). Se prueba contra la locacion destacada de cada madre.
+        for madre_id, cfg in LOCACIONES_MADRE.items():
+            _destacada = cfg.get("destacada")
+            if not _destacada or store.sistema_locaciones.obtener_locacion(_destacada) is None:
+                continue
+            for _loc in sublocaciones_de_madre(madre_id):
+                if _loc.id == _destacada:
+                    continue
+                if not calcular_ruta(_destacada, _loc.id):
+                    problemas.append("sin ruta de '{}' a '{}'".format(
+                        _destacada, _loc.id))
         for loc_id in VIAJE_RAPIDO_OCULTAS:
             if store.sistema_locaciones.obtener_locacion(loc_id) is None:
                 problemas.append("VIAJE_RAPIDO_OCULTAS: '{}' no existe".format(loc_id))
@@ -581,6 +689,9 @@ init 999 python:
                 ("grupos registrados", _jpt_mensajes_grupos),
                 ("estructura de pasos/opciones", _jpt_mensajes_estructura),
                 ("condiciones de entrega ejecutan", _jpt_mensajes_condiciones),
+                ("saltos de paso en rango", _jpt_mensajes_saltos),
+                ("grupos arrancan de cero al reentregarse", _jpt_mensajes_rejugables),
+                ("un mensaje no contestable no bloquea", _jpt_mensajes_bloqueo_respondible),
             ],
         },
         "acciones": {

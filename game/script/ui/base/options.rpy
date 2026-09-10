@@ -29,7 +29,7 @@ define gui.show_name = True
 ## ⚠️ Al cambiarla hay que agregarle su fila a JP_HISTORIAL_SAVES
 ## (core/utils/compatibilidad_saves.rpy), diciendo si rompe o no los saves de la
 ## version anterior. Si falta, el juego no arranca en desarrollo y te avisa.
-define config.version = "0.1.9(test)"
+define config.version = "0.1.9a"
 
 
 ## Text that is placed on the game's about screen. Place the text between the

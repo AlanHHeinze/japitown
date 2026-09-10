@@ -72,8 +72,26 @@ init python:
         Es la condicion de los DOS bloqueos: el de acciones (no se puede hacer
         nada mas) y el de salida del celular (no se puede cerrar). Se apaga
         sola en fase 2, cuando la conversacion termina.
+
+        REGLA: UN BLOQUEO SOLO LO SOSTIENE ALGO QUE EL JUGADOR PUEDA RESOLVER.
+        Si en este momento no se le puede escribir a Violet (fuera de juego, o
+        la entrega de mensajes cortada por una restriccion), el bloqueo se
+        levanta: la quest se queda esperando en fase 1 y vuelve a bloquear
+        cuando el boton "Hablar" vuelva a estar disponible. Sin esto, con la
+        conversacion imposible de arrancar y el celular sin poder cerrarse, la
+        partida quedaba trabada adentro del telefono.
         """
-        return getattr(store, 'vd20_fase', 0) == 1
+        if getattr(store, 'vd20_fase', 0) != 1:
+            return False
+
+        # Dos tramos de la fase 1, y en los dos tiene que haber salida:
+        #   - la conversacion YA arranco → que se pueda seguir contestando
+        #   - todavia no → que se pueda arrancar (el boton "Hablar" prendido)
+        _chat = store.sistema_mensajes.chats.get("violet")
+        if (_chat is not None and _chat.grupo_activo is not None
+                and _chat.grupo_activo.id == "violet_deseo04_chat"):
+            return _chat.puede_responder()
+        return mensajear_puede_hablar("violet")
 
     def _vd20_escena_en_curso():
         """

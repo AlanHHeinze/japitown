@@ -33,14 +33,18 @@ init 6 python:
         Devuelve el grupo a "pendiente" para que se pueda repetir.
 
         Funcion de MODULO: queda guardada en el save via el grupo de mensajes.
+
+        ⚠️ SIEMPRE resetear(), NUNCA tocar los campos a mano. Aca antes se
+        bajaban `estado` y `_disparado` uno por uno y quedaba `paso_actual`
+        en el final: la segunda vez que salia, la conversacion arrancaba ya
+        terminada, sin opciones, y como Mensajear bloquea todas las acciones
+        mientras hay una charla abierta, la partida quedaba trabada. Dos
+        jugadores lo reportaron en la 0.1.9. resetear() es el unico que sabe
+        cuales son TODOS los campos que hay que volver a cero.
         """
         _g = store.sistema_mensajes._grupos_registrados.get("violet_mv_generica")
         if _g is not None:
-            _g.estado = "pendiente"
-            # Los DOS: disparar_por_trigger mira una marca propia ademas del
-            # estado (messagesystem_core), asi que bajar solo el estado dejaria
-            # la conversacion sin poder repetirse.
-            _g._disparado = False
+            _g.resetear()
 
     # Sin momento_horario / momento_locacion / condicion_entrega: los grupos de
     # Mensajear no llevan condiciones de entrega (ver mensajear_violet.rpy).

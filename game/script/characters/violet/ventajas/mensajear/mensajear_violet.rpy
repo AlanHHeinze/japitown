@@ -164,6 +164,15 @@ init python:
         _chat = store.sistema_mensajes.chats.get("violet")
         if not _chat:
             return False
+
+        # MISMA REGLA QUE EL BLOQUEO PRIORITARIO: si no se puede contestar, no
+        # bloquea. Este es un bloqueo GLOBAL —corta todas las acciones y
+        # congela los triggers—, asi que sostenerlo con una conversacion que el
+        # jugador no puede cerrar es la partida trabada entera. Paso con la
+        # generica, que se re-entregaba con el paso en el final.
+        if not _chat.puede_responder():
+            return False
+
         _ids = _mv_ids_registrados()
         if _chat.grupo_activo is not None and _chat.grupo_activo.id in _ids:
             return True
@@ -216,6 +225,14 @@ init python:
         if _reg is None:
             return
         _gid = _reg[MV_GRUPO]
+
+        # El saludo del jugador se escribe ANTES de disparar el grupo, asi que
+        # si el grupo no pudiera entregarse quedaria un "Hola" colgado sin
+        # conversacion. Se pregunta primero. (El boton ya lo filtra por
+        # disponibilidad; esto cubre el resto de la etapa previa.)
+        _g_prev = store.sistema_mensajes._grupos_registrados.get(_gid)
+        if _g_prev is None or not store.sistema_mensajes._puede_entregarse(_g_prev):
+            return
 
         store.sistema_mensajes.inicializar_chat("violet")
         store.sistema_mensajes.chats["violet"].agregar_mensaje(

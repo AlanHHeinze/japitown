@@ -680,3 +680,20 @@ translate english strings:
 
     old "⚠️ Quest temporal activa ⚠️"
     new "⚠️ Temporary quest active ⚠️"
+
+    # =========================================================================
+    # Violet — Quest 04_d (que Violet mande el resto de las fotos)
+    # =========================================================================
+    # Es la unica quest del juego con un Requisito de hito. La pista nombra el
+    # hito y el "que hacer" da el paso concreto: primero el umbral de deseo,
+    # despues completar la quest de la linea que otorga el hito.
+    # El {} de la pista lo rellena texto_hito_corto ("💋 Me calienta").
+
+    old "Violet no me va a mostrar más del cosplay hasta que no haya algo más entre los dos: necesito llegar a {}"
+    new "Violet won't show me any more of the cosplay until there's something more between us: I need to reach {}"
+
+    old "Completar la quest de deseo de Violet"
+    new "Complete Violet's desire quest"
+
+    old "Avanzar en la línea de deseo con Violet"
+    new "Make progress on Violet's desire line"

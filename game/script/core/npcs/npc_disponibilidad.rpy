@@ -38,8 +38,11 @@
 ##   4. `obtener_locacion_rutina` (npcsystem_core)
 ##        → las rutinas de QUEST y de EVENTO no se aplican. La rutina base
 ##          sigue: el NPC tiene que estar en algun lado, simplemente no se lo ve.
-##   5. `ChatNPC.puede_responder` y `_intentar_entrega` (messagesystem_core)
-##        → ni contesta ni le llegan mensajes nuevos.
+##   5. `ChatNPC.puede_responder` y `_puede_entregarse` (messagesystem_core)
+##        → ni contesta ni le llegan mensajes nuevos. `_puede_entregarse` es la
+##          etapa previa de TODA entrega (con y sin condiciones); un grupo que
+##          no pasa se queda en espera. Y los bloqueos que dependen de
+##          contestar (prioritario, Mensajear) no aplican mientras no se pueda.
 ##   6. `mensajear_puede_hablar`  (mensajear_system)
 ##        → tampoco se le puede escribir primero.
 ##

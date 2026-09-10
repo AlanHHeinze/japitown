@@ -162,6 +162,12 @@ init 5 python:
                             "violet_q4d6_cierre", _puerta_v_04d6_cierre,
                             ocultar_golpear=True,
                             quest_id="violet_questprincipal_04_d6")
+    # Ropa Nueva: la red por si no puede entrar a su pieza. La condicion vive
+    # en ventajas/ropanueva/ropanueva_violet.rpy, al lado de la cita.
+    # Sin ocultar_golpear: golpear sigue teniendo sentido, y si puede entrar,
+    # que entre — la escena la dispara igual el trigger de game_loop.
+    registrar_opcion_puerta("violet", "Ver ropa",
+                            "violet_rn_puerta", _rn_puerta_ver_ropa)
     registrar_opcion_puerta("violet", "Llamarla",
                             "quest_violet_amor_01", _puerta_v_amor_01,
                             ocultar_golpear=True)

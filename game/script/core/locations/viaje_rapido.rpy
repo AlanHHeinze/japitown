@@ -9,6 +9,31 @@
 ##
 ## Extensible: cuando haya más zonas (ciudad, tienda, etc.) basta con agregar
 ## la locación madre a LOCACIONES_MADRE con su prefijo de ids.
+##
+################################################################################
+## EL VIAJE RECORRE LA RUTA, no teletransporta
+################################################################################
+## Antes el viaje armaba un hotspot con el destino y saltaba: el jugador
+## aparecía del otro lado de la casa sin pasar por ningún lado. El problema no
+## era estético — los disparadores que dependen de ENTRAR a una locación (los
+## TRIGGERS_GAME_LOOP, casi todos con un chequeo de `locacion_actual`) no se
+## enteraban, así que una quest que arranca en el living no arrancaba nunca por
+## esta vía y el jugador se salteaba contenido sin querer.
+##
+## Ahora se calcula la ruta (`calcular_ruta`, ruta_locaciones.rpy) y se recorre
+## paso a paso. En cada tramo se evalúa lo mismo que evalúa el game_loop, y lo
+## primero que devuelva un label CORTA el viaje ahí.
+##
+## EL ÚLTIMO PASO VA POR EL FLUJO DE SIEMPRE (hotspot sintético →
+## accion_hotspot_move). Eso es lo que mantiene funcionando door access, baños
+## ocupados y el handler de la quest 0 sin duplicar una sola línea: los tramos
+## intermedios son pasillos y cuartos comunes, y todo lo delicado pasa en el
+## destino.
+##
+## AL CORTARSE, EL VIAJE SE CANCELA: el jugador queda donde saltó el trigger. No
+## se guarda un destino pendiente a propósito — sería un flag más con reglas de
+## vencimiento (cambio de horario, dormir, otra quest) y ninguna forma obvia de
+## que el jugador sepa que sigue vigente.
 
 define LOCACIONES_MADRE = {
     "casa": {
@@ -19,17 +44,44 @@ define LOCACIONES_MADRE = {
     },
 }
 
-# Destinos con puerta/baño: antes de disparar la interacción, el viaje rápido
-# mueve al jugador al pasillo conectado — la puerta se "toca" desde ahí.
-define VIAJE_RAPIDO_PREVIA = {
-    "casa_hmonica":     "casa_pasilloabajo",
-    "casa_hviolet":     "casa_pasilloarriba",
-    "casa_hjasmine":    "casa_pasilloarriba",
-    "casa_banioarriba": "casa_pasilloarriba",
-}
-
 # Locaciones que no aparecen en el menú (solo accesibles desde adentro de otra)
 define VIAJE_RAPIDO_OCULTAS = ("casa_baniomonica",)
+
+# Se ve el recorrido: cada locación del camino se pinta con su fondo y se
+# sostiene un momento. Es lo que hace legible el corte — el jugador entiende
+# DÓNDE se interrumpió el viaje y no le aparece una escena de la nada.
+# En False el viaje sigue recorriendo la ruta (y disparando lo que haya en el
+# medio), pero sin dibujar los pasos.
+define VIAJE_MOSTRAR_RECORRIDO = True
+
+# Cuánto se sostiene cada tramo. El `pause` es salteable con un click, así que
+# quien ya conoce el camino puede apurarlo.
+define VIAJE_PAUSA_PASO = 0.4
+
+
+init python:
+
+    def _vr_interrupcion():
+        """
+        ¿Algo tiene que cortar el viaje en esta locación? Devuelve un label o None.
+
+        Es LO MISMO que evalúa el game_loop en cada vuelta, en el mismo orden.
+        No se inventa un registro nuevo de "disparadores de camino": si una
+        quest ya sabe arrancar cuando el jugador entra a una locación, arranca
+        igual pasando de largo, sin que su archivo se entere de que existe el
+        viaje rápido.
+
+        ⚠️ Esto corre los cuatro embudos una vez por TRAMO y no una por acción.
+        No es una clase de comportamiento nueva —el game_loop ya los corre
+        después de cada interacción— pero un trigger escrito asumiendo "una vez
+        por acción del jugador" ahora puede dispararse a mitad de viaje. Que es,
+        justamente, lo que se busca.
+        """
+        actualizar_quests()
+        if hasattr(store, 'sistema_mensajes'):
+            store.sistema_mensajes.verificar_mensajes_en_espera()
+        validar_eventos()
+        return ejecutar_triggers_game_loop()
 
 init python:
 
@@ -66,40 +118,94 @@ init python:
         return cfg.get("destacada") if cfg else None
 
 
-# Viaja reusando el flujo completo de un hotspot MOVE. El hotspot sintético
-# solo necesita destino: door access, baños ocupados, restricciones y el
-# handler de la quest 0 leen únicamente _hotspot_temp.destino.
 label accion_viaje_rapido:
-    if _locacion_temp:
 
-        # Destinos con puerta/baño: acercarse primero al pasillo conectado, así
-        # la interacción ocurre ahí.
-        if _locacion_temp in VIAJE_RAPIDO_PREVIA:
+    if not _locacion_temp:
+        return
 
-            # Si el destino está bloqueado por restricción, avisar sin moverse
-            $ _msg_restriccion_vr = accion_bloqueada_movimiento(_locacion_temp)
-            if _msg_restriccion_vr:
-                $ _blk_guardar_toque()
-                piensa "[_msg_restriccion_vr]"
-                return
+    $ _vr_origen = sistema_locaciones.locacion_actual.id if sistema_locaciones.locacion_actual else None
+    $ _vr_ruta = calcular_ruta(_vr_origen, _locacion_temp)
 
-            $ _vr_previa = VIAJE_RAPIDO_PREVIA[_locacion_temp]
-            $ _vr_actual_id = sistema_locaciones.locacion_actual.id if sistema_locaciones.locacion_actual else None
-            if _vr_actual_id != _vr_previa:
-                # El paso previo también respeta la restricción de movimiento
-                $ _msg_restriccion_vr = accion_bloqueada_movimiento(_vr_previa)
-                if _msg_restriccion_vr:
-                    $ _blk_guardar_toque()
-                    piensa "[_msg_restriccion_vr]"
-                    return
-                $ sistema_locaciones.mover_a_locacion(_vr_previa)
-                # Refrescar el fondo ya: la interacción de puerta/baño ocurre
-                # antes de volver al game_loop (que es quien normalmente lo hace)
-                $ actualizar_bg_master()
+    # Sin ruta, o el destino es vecino directo: no hay nada que recorrer y se
+    # va derecho por el flujo de siempre. El caso "sin ruta" también cae acá a
+    # propósito — antes de este sistema todo viaje era un salto, así que un
+    # mapa mal conectado degrada al comportamiento viejo en vez de dejar al
+    # jugador sin poder viajar.
+    if len(_vr_ruta) <= 1:
+        jump viaje_rapido_ultimo_paso
 
-        $ _hotspot_temp = Hotspot("viaje_rapido_" + _locacion_temp, "MOVE", 0, 0, 1, 1, destino=_locacion_temp, nombre="")
-        jump accion_hotspot_move
-    return
+    # EL HUD SE APAGA MIENTRAS SE CAMINA. Los `pause` de cada tramo son
+    # interacciones como cualquier otra: con el HUD arriba el jugador puede
+    # clickear un hotspot a mitad de viaje y arrancar un segundo movimiento
+    # encima del que ya esta corriendo. `ocultar_hud` deja los botones fuera de
+    # juego sin destruir el screen.
+    $ ocultar_hud()
+
+    # Los tramos del medio; el último se hace aparte, por el flujo completo.
+    $ _vr_intermedios = _vr_ruta[:-1]
+    $ _vr_i = 0
+    jump viaje_rapido_paso
+
+
+# Un label con índice y no un `for` de Python: adentro hay `pause` y `jump`, que
+# son statements de Ren'Py y no se pueden meter en un bloque python.
+label viaje_rapido_paso:
+
+    if _vr_i >= len(_vr_intermedios):
+        jump viaje_rapido_ultimo_paso
+
+    $ _vr_dest = _vr_intermedios[_vr_i]
+
+    # Restricción de quest: el camino pasa por una locación prohibida. Se corta
+    # acá, con el mensaje de la restricción, en vez de dejarlo llegar al destino
+    # y fallar recién ahí.
+    $ _vr_msg = accion_bloqueada_movimiento(_vr_dest)
+    if _vr_msg:
+        $ mostrar_hud()
+        $ _blk_guardar_toque()
+        piensa "[_vr_msg]"
+        return
+
+    $ sistema_locaciones.mover_a_locacion(_vr_dest)
+    $ actualizar_bg_master()
+
+    if VIAJE_MOSTRAR_RECORRIDO:
+        pause VIAJE_PAUSA_PASO
+
+    # Lo que corta el viaje. El label es de CONTENIDO y cierra con
+    # `jump game_loop`, así que no vuelve por acá: el viaje muere y el jugador
+    # queda en esta locación, que es donde lo interrumpieron.
+    $ _vr_label = _vr_interrupcion()
+    if _vr_label:
+        jump expression _vr_label
+
+    # Un mensaje prioritario recién entregado no devuelve label —bloquea desde
+    # el embudo de acciones— pero igual tiene que frenar el viaje: seguir
+    # caminando con el celular sonando es justo lo que el mensaje quiere evitar.
+    if obtener_bloqueo_mensaje_prioritario():
+        $ mostrar_hud()
+        return
+
+    $ _vr_i += 1
+    jump viaje_rapido_paso
+
+
+# El tramo final, con el flujo completo de un hotspot MOVE. El hotspot sintético
+# solo necesita destino: door access, baños ocupados, restricciones y el handler
+# de la quest 0 leen únicamente _hotspot_temp.destino.
+#
+# Acá ya no hace falta acercar al jugador al pasillo antes de tocar una puerta
+# (lo que hacía el viejo VIAJE_RAPIDO_PREVIA): la ruta a una habitación termina
+# sola en el pasillo que la conecta, porque es por donde se entra caminando.
+label viaje_rapido_ultimo_paso:
+
+    # Se termino de caminar: el HUD vuelve y de aca en mas manda el flujo de
+    # siempre, que ya sabe apagarlo si el destino abre una puerta o un baño.
+    # En una ruta corta nunca se apago, asi que esto no hace nada.
+    $ mostrar_hud()
+
+    $ _hotspot_temp = Hotspot("viaje_rapido_" + _locacion_temp, "MOVE", 0, 0, 1, 1, destino=_locacion_temp, nombre="")
+    jump accion_hotspot_move
 
 
 screen menu_viaje_rapido():

@@ -116,6 +116,10 @@ translate english strings:
     old "Ya terminé de limpiar"
     new "I'm done cleaning"
 
+    # Ventaja Ropa Nueva: la red por si no puede entrar a su habitacion.
+    old "Ver ropa"
+    new "See the outfit"
+
     # Opcion de puerta de la quest de amor 5 ("¿Mejor?")
     old "Llamarla"
     new "Call out to her"

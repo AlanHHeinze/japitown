@@ -169,6 +169,29 @@ init 999 python:
         except Exception:
             pass
 
+        # SANEO de partidas que ya venian trabadas. Un grupo ACTIVO sin paso
+        # valido es basura por definicion: no se puede contestar y nunca se va
+        # a completar (bug de la generica de Mensajear en la 0.1.9 — dos
+        # reportes). Con el fix del motor ya no bloquea, pero el chat quedaria
+        # muerto para siempre. Se lo devuelve a "pendiente" con resetear(): si
+        # es repetible vuelve a salir; si es de quest, al menos no estorba.
+        # Los pendientes se ponen en paso 0 por si los entrego el codigo viejo
+        # (que no reiniciaba el progreso).
+        try:
+            for _npc_c, _chat_c in store.sistema_mensajes.chats.items():
+                _ga = _chat_c.grupo_activo
+                if _ga is not None and _ga.pasos and _ga.obtener_paso_actual() is None:
+                    if config.developer:
+                        print("[Mensajes] saneo: '%s' de %s estaba activo sin paso; "
+                              "se resetea" % (_ga.id, _npc_c))
+                    _ga.resetear()
+                    _chat_c.grupo_activo = None
+                for _gp in list(_chat_c.grupos_pendientes):
+                    if _gp.pasos and _gp.obtener_paso_actual() is None:
+                        _gp.reiniciar_progreso()
+        except Exception:
+            pass
+
         # Talk: configs de NPCs nuevos + estados/opciones nuevos en configs existentes
         try:
             _fresco_talk = _SISTEMAS_FRESCOS["sistema_talk"]
