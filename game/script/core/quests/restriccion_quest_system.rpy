@@ -9,6 +9,19 @@
 
 init python:
 
+    # TODO LO QUE MUEVE EL HORARIO, en un solo lugar. `congelar_reloj=True`
+    # bloquea este set entero. Una accion nueva que llame a avanzar_horario()
+    # se agrega ACA y queda cubierta en todas las restricciones existentes.
+    #
+    #   avanzar_tiempo  el boton
+    #   dormir          cambia el dia
+    #   entrenar / trabajar   panel de la habitacion del MC (hud_stats)
+    #   ver_tv / cocinar      acciones de locacion (actions_catalog)
+    #   hablar          el talk termina con avanzar_horario()
+    #   usar_item       el casco VR gasta el horario
+    ACCIONES_RELOJ = ("avanzar_tiempo", "dormir", "entrenar", "trabajar",
+                      "ver_tv", "cocinar", "hablar", "usar_item")
+
     class RestriccionQuest:
         """
         Define las restricciones activas durante una quest o evento.
@@ -31,9 +44,21 @@ init python:
             mensaje_celular="No es momento de usar el celular",
             elementos_escena=None,
             mensajes_bloqueados=False,
-            mensaje_accion_default=None):
+            mensaje_accion_default=None,
+            duenio=None,
+            congelar_reloj=False):
             """
             Args:
+                duenio: Id del contenido que la activa ("violet_ev03",
+                        "mc_0_a"...). Otro contenido NO puede pisarla ni
+                        levantarla — ver activar_restriccion.
+                congelar_reloj: True = bloquea TODO lo que mueve el horario
+                        (ACCIONES_RELOJ), ademas de lo que venga en
+                        acciones_bloqueadas. Es la forma correcta de decir "el
+                        tiempo no avanza hasta que se resuelva esto": listar los
+                        ids a mano se olvida de alguno (ver TV, el talk...) y el
+                        jugador se escapa a otro horario donde la salida ya no
+                        existe.
                 locaciones_permitidas: Set/lista de IDs de locaciones permitidas (whitelist).
                                        None = todas permitidas.
                 acciones_bloqueadas: Set/lista de strings de acciones bloqueadas.
@@ -61,7 +86,13 @@ init python:
             
             # Acciones
             self.acciones_bloqueadas = set(acciones_bloqueadas) if acciones_bloqueadas else set()
+            self.congelar_reloj = bool(congelar_reloj)
+            if self.congelar_reloj:
+                self.acciones_bloqueadas |= set(ACCIONES_RELOJ)
             self.mensajes_acciones = mensajes_acciones or {}
+
+            # Quien la puso. None = anonima (codigo viejo): cualquiera la levanta.
+            self.duenio = duenio
             
             # NPCs
             self.npcs_ocultos = set(npcs_ocultos) if npcs_ocultos else set()
@@ -226,18 +257,49 @@ init python:
                 ]
             )
         """
+        # EL SLOT ES UNO SOLO, y eso fue bug de jugadores: un contenido activaba
+        # la suya encima de la de otro (o la levantaba con un desactivar_
+        # restriccion() suelto) y se llevaba puesta la maquina de estados
+        # ajena — los registrar_label_locacion, el recorrido acotado, todo. La
+        # otra quest quedaba muerta a mitad de camino.
+        #
+        # Regla: una restriccion CON dueño solo la LEVANTA su dueño (ver
+        # desactivar_restriccion). Activar encima de una ajena si se permite
+        # —con aviso en desarrollo— porque hay "gates blandos" que duran dias
+        # (Monica 0_b frenando dormir hasta ir al living, la 04_b con solo
+        # npcs_interactuables) y rechazar la activacion dejaria a la otra quest
+        # corriendo sin su recorrido. Lo que de verdad protege una cadena en
+        # curso es la regla de los triggers (triggers_contenido: adentro de una
+        # restriccion con dueño no salta ningun trigger ajeno) — por ahi entraba
+        # el contenido que pisaba. Auditoria 2026-09-10.
+        _actual = store.restriccion_quest_activa
+        _nuevo_duenio = kwargs.get("duenio")
+        if (config.developer and _actual is not None and _actual.activa
+                and getattr(_actual, "duenio", None) is not None
+                and _nuevo_duenio != _actual.duenio):
+            print("[Restriccion] %r activa encima de la de %r (se reemplaza)"
+                  % (_nuevo_duenio, _actual.duenio))
+
         store.restriccion_quest_activa = RestriccionQuest(**kwargs)
-        
-
-        
         return store.restriccion_quest_activa
-    
-    def desactivar_restriccion():
-        """Desactiva la restricción actual."""
-        store.restriccion_quest_activa = None
-        
 
-    
+    def desactivar_restriccion(duenio=None):
+        """
+        Desactiva la restricción actual.
+
+        `duenio` tiene que ser el mismo que la activo. "*" la levanta sea de
+        quien sea — es para labels de test y cheats, nunca para contenido.
+        """
+        _actual = store.restriccion_quest_activa
+        if (_actual is not None
+                and getattr(_actual, "duenio", None) is not None
+                and duenio != "*" and duenio != _actual.duenio):
+            if config.developer:
+                print("[Restriccion] %r intento levantar la de %r: se ignora"
+                      % (duenio, _actual.duenio))
+            return
+        store.restriccion_quest_activa = None
+
     def hay_restriccion_activa():
         """Verifica si hay una restricción activa."""
         r = store.restriccion_quest_activa

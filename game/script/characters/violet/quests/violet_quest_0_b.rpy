@@ -27,6 +27,15 @@ default tutorial_elecciones_visto = False
 # cierre, se perdía y crasheaba con NameError (E05). Antes era una temp `_`.
 default vq0b_ruta = ""
 
+# ⚠️ EL LISTENER DE "COCINAR" VIVE EN actions_catalog.rpy, EN INIT. Antes se
+# registraba aca, en runtime, dentro de los dos labels de eleccion.
+# `sistema_acciones` es `define` —no se guarda— asi que quien guardaba entre la
+# eleccion y el cocinar cargaba sin listener: "Cocinar" corria el generico, la
+# restriccion no se levantaba nunca y la partida quedaba trabada en la primera
+# quest de Violet. Su condicion se DERIVA de `vq0b_ruta` y del estado de la
+# quest (nada nuevo que guardar), asi que una partida que ya venia trabada se
+# destraba sola al cargar. Auditoria 2026-09-10.
+
 # Hito que habilita la tercera opcion de la decision ("Ya esta resuelto"): el
 # primer hito de amor de Violet. Va como constante y no suelto en el screen para
 # que el id se escriba UNA vez — la etiqueta y el `sensitive` tienen que mirar
@@ -262,7 +271,9 @@ label quest_violet_0_opcion_respeto:
     # =========================================================================
     piensa "Debería ir a la cocina a prepararlas, Mónica me dijo que había todo lo necesario"
 
+    # validar_bloqueos: reloj libre — la salida ES cocinar
     $ activar_restriccion(
+        duenio="violet_0_b",
         locaciones_permitidas=["casa_pasilloarriba", "casa_living", "casa_pasilloabajo", "casa_cocina"],
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar", "ver_tv"],
         mensaje_movimiento=_("Deberia ir a la cocina a preparar la pizza"),
@@ -274,14 +285,8 @@ label quest_violet_0_opcion_respeto:
         npcs_ocultos=["monica", "jasmine", "violet"],
     )
 
-    # Conectar la accion Cocinar a la quest para que sea el disparador
-    $ sistema_acciones.registrar_listener(ListenerAccion(
-        accion_id="cocinar",
-        label="quest_violet_0_cierre",
-        nombre_menu="Preparar las pizzas",
-        prioridad="quest",
-        unico=True,
-    ))
+    # El listener de "Cocinar" esta en init (actions_catalog.rpy) y se prende
+    # solo con vq0b_ruta puesta y la quest activa. Nada se registra acá.
 
     # Mover al jugador al pasillo arriba (donde esta la puerta de Violet)
     $ sistema_locaciones.mover_a_locacion("casa_pasilloarriba")
@@ -625,7 +630,9 @@ label quest_violet_0_opcion_entrar:
 
     piensa "Bueno, voy a ir a preparar la pizza"
 
+    # validar_bloqueos: reloj libre — la salida ES cocinar
     $ activar_restriccion(
+        duenio="violet_0_b",
         locaciones_permitidas=["casa_pasilloarriba", "casa_living", "casa_pasilloabajo", "casa_cocina"],
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar", "ver_tv"],
         mensaje_movimiento=_("Deberia ir a la cocina a preparar la pizza"),
@@ -637,14 +644,8 @@ label quest_violet_0_opcion_entrar:
         npcs_ocultos=["monica", "jasmine", "violet"],
     )
 
-    # Conectar la accion Cocinar a la quest para que sea el disparador
-    $ sistema_acciones.registrar_listener(ListenerAccion(
-        accion_id="cocinar",
-        label="quest_violet_0_cierre",
-        nombre_menu="Preparar las pizzas",
-        prioridad="quest",
-        unico=True,
-    ))
+    # El listener de "Cocinar" esta en init (actions_catalog.rpy) y se prende
+    # solo con vq0b_ruta puesta y la quest activa. Nada se registra acá.
 
     # Mover al jugador al pasillo arriba (donde esta la puerta de Violet)
     $ sistema_locaciones.mover_a_locacion("casa_pasilloarriba")
@@ -661,7 +662,7 @@ label quest_violet_0_opcion_entrar:
 # =============================================================================
 label quest_violet_0_cierre:
     # Desactivar restriccion
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="violet_0_b")
 
     # Ocultar HUD
     $ ocultar_hud()
@@ -702,6 +703,7 @@ label quest_violet_0_cierre:
     $ avanzar_horario()
 
     $ activar_restriccion(
+        duenio="violet_0_b",
         locaciones_permitidas=["casa_pasilloabajo", "casa_living", "casa_pasilloarriba", "casa_hviolet"],
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar", "cocinar", "ver_tv"],
         mensaje_movimiento=_("Debo avisarle a Violet que esta la comida"),
@@ -724,7 +726,7 @@ label quest_violet_0_cierre:
 # PUERTA: Se dispara al ir a la habitacion de Violet
 # =============================================================================
 label quest_violet_0_puerta:
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="violet_0_b")
 
     $ ocultar_hud()
     hide screen hud_navegacion

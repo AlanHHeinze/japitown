@@ -233,7 +233,7 @@ init python:
 init 5 python:
 
     registrar_trigger_game_loop("violet_deseo_30_fases",
-                                _gl_trigger_violet_deseo_30)
+                                _gl_trigger_violet_deseo_30, duenio="violet_deseo_30")
 
     registrar_trigger_dormir("violet_deseo_30_ignorar", "antes",
                              _vd30_trigger_dormir)
@@ -275,6 +275,8 @@ label violet_deseo_30_inicio:
     # la salida.
     $ _vd30_dentro = [_l for _l in sistema_locaciones.locaciones if _l != "casa_frente"]
     $ activar_restriccion(
+        duenio="violet_deseo_30",
+        congelar_reloj=True,
         locaciones_permitidas=_vd30_dentro,
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar",
                              "usar_item", "comprar", "cocinar", "ver_tv"],
@@ -299,7 +301,7 @@ label quest_violet_deseo_06:
 
     # Se levanta antes de la escena: si se cortara a la mitad, el jugador
     # quedaria con el recorrido acotado y sin forma de destrabarlo.
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="violet_deseo_30")
 
     $ ocultar_hud()
     window show

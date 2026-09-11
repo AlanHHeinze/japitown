@@ -48,9 +48,27 @@ init python:
     def _registrar_trigger(registro, trigger_id, funcion, prioridad):
         registro.append((prioridad, len(registro), trigger_id, funcion))
 
-    def registrar_trigger_game_loop(trigger_id, funcion, prioridad=0):
-        """Registra un trigger evaluado en cada vuelta del game_loop."""
+    # trigger_id -> duenio. Ver registrar_trigger_game_loop.
+    TRIGGER_DUENIO = {}
+
+    def registrar_trigger_game_loop(trigger_id, funcion, prioridad=0, duenio=None):
+        """
+        Registra un trigger evaluado en cada vuelta del game_loop.
+
+        `duenio` es el id del contenido (el mismo que usa en activar_restriccion,
+        si tiene una). MIENTRAS HAYA UNA RESTRICCION CON DUEÑO ACTIVA, SOLO
+        SALTAN LOS TRIGGERS DE ESE DUEÑO: los demas se evaluan igual (pueden
+        tener efectos python) pero el label que devuelvan se ignora.
+
+        Por que: una restriccion es una secuencia en curso — el jugador esta
+        adentro de una quest que le acoto el mundo. Que otra quest meta su
+        escena en el medio rompe las dos (paso con la 04_b de Violet pisando
+        la cadena de evento03). Un trigger sin duenio cuenta como ajeno: si
+        tiene que poder saltar adentro de su propia restriccion, declara el
+        duenio.
+        """
         _registrar_trigger(TRIGGERS_GAME_LOOP, trigger_id, funcion, prioridad)
+        TRIGGER_DUENIO[trigger_id] = duenio
 
     def registrar_trigger_dormir(trigger_id, fase, funcion, prioridad=0):
         """
@@ -79,17 +97,27 @@ init python:
         """
         _registrar_trigger(TRIGGERS_SALIR_CELULAR, trigger_id, funcion, prioridad)
 
-    def _ejecutar_triggers(registro, marcar_gl=False):
+    def _ejecutar_triggers(registro, marcar_gl=False, solo_duenio=None):
         """
         Evalua los triggers de un registro en orden de prioridad (mayor
         primero; a igual prioridad, orden de registro). Devuelve el label del
         primero que pida saltar, o None. Si marcar_gl, deja el id del trigger
         en _gl_ultimo_trigger (tag de Sentry para el diagnostico S11).
+
+        `solo_duenio`: si viene, el label de un trigger cuyo duenio no sea ese
+        se IGNORA (el trigger corre igual por sus efectos). Lo usa game_loop
+        mientras hay una restriccion con dueño activa.
         """
         for _prio, _orden, _tid, _fn in sorted(
                 registro, key=lambda t: (-t[0], t[1])):
             _lbl = _fn()
             if _lbl:
+                if (solo_duenio is not None
+                        and TRIGGER_DUENIO.get(_tid) != solo_duenio):
+                    if config.developer:
+                        print("[Triggers] '%s' quiso saltar a '%s' dentro de la "
+                              "restriccion de %r: se ignora" % (_tid, _lbl, solo_duenio))
+                    continue
                 if marcar_gl:
                     store._gl_ultimo_trigger = _tid
                 return _lbl
@@ -109,7 +137,12 @@ init python:
                     return None
             except Exception:
                 pass
-        return _ejecutar_triggers(TRIGGERS_GAME_LOOP, marcar_gl=True)
+        # Con una restriccion con dueño activa, solo sus propios triggers
+        # pueden saltar (ver registrar_trigger_game_loop).
+        _r = getattr(store, 'restriccion_quest_activa', None)
+        _duenio = getattr(_r, 'duenio', None) if (_r is not None and _r.activa) else None
+        return _ejecutar_triggers(TRIGGERS_GAME_LOOP, marcar_gl=True,
+                                  solo_duenio=_duenio)
 
     def ejecutar_triggers_dormir(fase):
         registro = TRIGGERS_DORMIR_ANTES if fase == "antes" else TRIGGERS_DORMIR_DESPUES

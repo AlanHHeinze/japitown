@@ -266,6 +266,7 @@ label vq03a_comun:
     hide mc_parado_base with dissolve
 
     $ activar_restriccion(
+        duenio="violet_03_a",
         locaciones_permitidas=["casa_hviolet"],
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar", "cocinar", "ver_tv"],
         mensaje_movimiento="Podría quedarme un momento más.",
@@ -498,7 +499,7 @@ label vq3a_final_escena:
     $ agregar_al_inventario("tanga_violet")
 
     $ vq3a_fase2_activa = False
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="violet_03_a")
     $ completar_quest_actual("violet", quest_id="violet_questprincipal_03_a")
     $ sistema_locaciones.mover_a_locacion("casa_hmc")
     $ avanzar_horario()

@@ -116,7 +116,9 @@ label violet_quest08a_despertar:
 # Parte 2 — Activa la restricción del dia y devuelve el control al loop
 # restringido. La quest sigue su curso cuando el jugador entra al living.
 label violet_quest08a_iniciar_loop:
+    # validar_bloqueos: reloj libre — la salida ES ver TV; cocinar no importa
     $ activar_restriccion(
+        duenio="violet_08_a",
         locaciones_permitidas=None,
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar"],
         mensaje_movimiento=None,
@@ -254,8 +256,10 @@ label violet_quest08a_ver_tv:
     window hide
 
     # Fase 2 — solo living, pasillo arriba y habitacion de Violet
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="violet_08_a")
     $ activar_restriccion(
+        duenio="violet_08_a",
+        congelar_reloj=True,
         locaciones_permitidas=["casa_living", "casa_pasilloarriba", "casa_hviolet"],
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar"],
         mensaje_movimiento="Tengo que buscar las cosas de Violet",
@@ -351,8 +355,9 @@ label violet_quest08a_ir_al_baño:
     window hide
 
     $ vq8a_acciones_activas = False
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="violet_08_a")
     $ activar_restriccion(
+        duenio="violet_08_a",
         locaciones_permitidas=["casa_pasilloarriba", "casa_banioarriba"],
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar"],
         mensaje_movimiento="Debo llevarle la ropa a Violet",
@@ -569,7 +574,7 @@ label violet_quest08a_cierre_desarrollo:
     window hide
 
     # Limpiar restricción y ocultar acciones de exploración
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="violet_08_a")
     $ vq8a_acciones_activas = False
     $ completar_quest_actual("violet", quest_id="violet_questprincipal_08_a")
 
@@ -613,7 +618,7 @@ label test_quest08a_violet:
         store.vq8a_bgs_originales = {}
 
     # Limpiar restricción, acciones y flags de un test previo
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="*")
     $ vq8a_acciones_activas = False
     $ vq8a_ropero_visto = False
     $ vq8a_cajonera_vista = False

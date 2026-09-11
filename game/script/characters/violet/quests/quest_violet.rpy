@@ -544,6 +544,22 @@ init 5 python:
         quest_anterior="violet_questprincipal_04_d3",
         requisitos=[],
         validacion_especial=[],
+        # La UNICA salida de la quest es la opcion de puerta "Ya está la
+        # comida", o sea que cuando la pizza esta lista Violet TIENE que estar
+        # en su cuarto — y de noche no siempre lo esta: el domingo la rutina
+        # base la manda al living, y cualquier noche puede tocarle la ducha
+        # (25%) o salir (20%). Con la puerta vacia y la restriccion de la pizza
+        # bloqueando dormir y avanzar, la partida quedaba trabada (reporte de
+        # un jugador, 2026-09-10). Mismo criterio que la deseo 25: la rutina de
+        # quest le gana a la base y a las especiales, asi que de noche esta en
+        # su pieza los siete dias mientras la quest este viva.
+        rutina_quest={
+            (dia, 2): RutinaQuest(
+                locacion="casa_hviolet",
+                sprite="images/characters/casa/idle/idle_violet_casa_hviolet_noche_rutinabase_grupopijama_skinbase.jpg",
+                posicion=(1537, 1020),
+            ) for dia in range(7)
+        },
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
@@ -1380,5 +1396,6 @@ init python:
         cambiar el comportamiento de interaccion con NPCs.
         """
         activar_restriccion(
+            duenio="violet_04_b",
             npcs_interactuables=["violet", "jasmine", "monica"],
         )

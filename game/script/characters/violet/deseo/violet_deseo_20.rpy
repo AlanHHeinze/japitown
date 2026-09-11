@@ -136,7 +136,7 @@ init python:
 init 5 python:
 
     registrar_trigger_game_loop("violet_deseo_20_inicio",
-                                _gl_trigger_violet_deseo_20)
+                                _gl_trigger_violet_deseo_20, duenio="violet_deseo_20")
 
     registrar_trigger_salir_celular("violet_deseo_20_cierre",
                                     _cel_trigger_violet_deseo_20)
@@ -438,6 +438,7 @@ label violet_deseo_20_inicio:
     # salida del celular, los bloqueos registrados en init 5 (que leen la fase).
     $ vd20_fase = 1
     $ activar_restriccion(
+        duenio="violet_deseo_20",
         locaciones_permitidas=["casa_hmc"],
         mensaje_movimiento="Deberia escribirle a Violet",
         mensaje_npc_bloqueado="Deberia escribirle a Violet",
@@ -470,7 +471,7 @@ label violet_deseo_20_cierre:
     hide mc_parado_base with dissolve
 
     $ vd20_fase = 3
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="violet_deseo_20")
     $ completar_quest_actual("violet", quest_id="violet_deseo_04")
 
     window hide

@@ -83,8 +83,8 @@ init python:
     #
     #     registrar_menu_exclusivo("violet", _va25_boton_matar_tiempo,
     #                              "violet_amor_25_matar_tiempo")
-    #     registrar_menu_exclusivo("violet", _va25_puerta_exclusiva,
-    #                              "violet_amor_25_puerta_entrar", ambito="puerta")
+    #     registrar_menu_exclusivo("violet", _mi_condicion,
+    #                              "mi_opcion_de_puerta", ambito="puerta")
     #
     # DOS AMBITOS porque son dos menus distintos con labels distintos:
     #
@@ -92,6 +92,10 @@ init python:
     #     "puerta"  el menu de la puerta. "Golpear" y "Volver" se quedan: sin
     #               ellos el jugador no tendria como salir ni como que le
     #               conteste el bloqueo de golpe que corresponda.
+    #               ⚠️ Un exclusivo de puerta NO garantiza que la opcion se vea:
+    #               el menu se arma DESPUES del chequeo de trasnoche y del nivel
+    #               de acceso. Si la opcion es la unica salida de una fase, va
+    #               como registrar_override_puerta (skill japitown-warnings, A8).
     #
     # VIVE ACA Y NO EN ui/menus/ para que la dependencia vaya en la direccion
     # correcta: lo define el core y lo consultan los dos menus.

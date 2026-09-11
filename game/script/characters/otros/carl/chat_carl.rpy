@@ -8,7 +8,7 @@ init 6 python:
         """Se ejecuta cuando se completa el chat con Carl en quest 0_b."""
         # Desactivar restricción
         if hasattr(store, 'desactivar_restriccion'):
-            store.desactivar_restriccion()
+            store.desactivar_restriccion(duenio="jasmine_0_b")
         # Completar la quest
         if hasattr(store, 'completar_quest_actual'):
             store.completar_quest_actual("jasmine", quest_id="jasmine_questprincipal_0_b")

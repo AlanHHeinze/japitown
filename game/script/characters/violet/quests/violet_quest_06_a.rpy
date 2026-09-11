@@ -275,7 +275,7 @@ label test_quest06a_violet:
         store.vq8a_bgs_originales = {}
 
     # Limpiar restricción de un test previo
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="*")
 
     # Forzar la 06_a como la ÚNICA quest activa de Violet, en ETAPA_BOTON_LISTO
     # (asi el cierre la completa correctamente con completar_quest_actual("violet", quest_id="violet_questprincipal_06_a"))

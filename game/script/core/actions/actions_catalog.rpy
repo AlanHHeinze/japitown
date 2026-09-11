@@ -160,6 +160,17 @@ init 5 python:
     # label. Eso se pierde al cargar la partida (sistema_acciones es `define`).
     # Acá va en init con condicion por flag, que es la regla del proyecto.
 
+    def _vq0b_cocinar_visible():
+        # Quest 0_b de Violet: entre aceptar preparar la pizza y cocinarla.
+        # Se DERIVA de estado que ya se guarda: `vq0b_ruta` se pone justo antes
+        # de la restriccion en las dos ramas, y la quest se completa al final
+        # del cierre. Sin flag nuevo, y una partida trabada con el codigo viejo
+        # (listener perdido al cargar) queda cubierta sola.
+        if getattr(store, 'vq0b_ruta', "") not in ("respeto", "confrontar"):
+            return False
+        _q = store.sistema_quests.obtener_quest("violet_questprincipal_0_b")
+        return bool(_q and _q.activa and not _q.completada)
+
     def _vq4d4_cocinar_visible():
         # Solo de noche: la pizza es para la cena.
         return (getattr(store, 'vq4d4_pedido_hecho', False)
@@ -177,6 +188,19 @@ init 5 python:
     def _vq4d5_limpiar_cocina_visible():
         return (getattr(store, 'vq4d5_pedido_hecho', False)
                 and not getattr(store, 'vq4d5_limpio_cocina', False))
+
+    # Quest 0_b de Violet: la primera pizza. Mismo esquema que la 04_d4 de
+    # abajo — unico=False y apagado por flag, porque una mutacion de la lista
+    # no sobrevive al save. Antes se registraba en runtime dentro de la quest y
+    # cargar una partida guardada en el medio la dejaba trabada.
+    sistema_acciones.registrar_listener(ListenerAccion(
+        accion_id="cocinar",
+        label="quest_violet_0_cierre",
+        nombre_menu="Preparar las pizzas",
+        prioridad="quest",
+        condicion=_vq0b_cocinar_visible,
+        unico=False,
+    ))
 
     # La pizza NO agrega boton: intercepta el de "Cocinar" que ya esta en la
     # cocina. unico=False a proposito — post_ejecutar() borraria el listener de

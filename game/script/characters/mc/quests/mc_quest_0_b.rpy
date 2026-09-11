@@ -46,7 +46,7 @@ init python:
         return None
 
 init 5 python:
-    registrar_trigger_game_loop("mc_q0b", _gl_trigger_mc_q0b, prioridad=10)
+    registrar_trigger_game_loop("mc_q0b", _gl_trigger_mc_q0b, prioridad=10, duenio="mc_0_b")
     registrar_trigger_salir_celular("mc_q0b_pistas", _cel_trigger_mc_q0b)
 
 
@@ -75,6 +75,7 @@ label mc_q0b_trigger:
 
     # Activar restricción: bloquear todo excepto el celular
     $ activar_restriccion(
+        duenio="mc_0_b",
         locaciones_permitidas=["__ninguna__"],
         acciones_bloqueadas=[
             "avanzar_tiempo", "dormir", "entrenar",
@@ -119,7 +120,7 @@ label mc_q0b_completar:
     window hide
 
     # Desactivar restricción
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="mc_0_b")
 
     # Completar la quest
     $ sistema_quests_mc.completar_activa()

@@ -11,7 +11,7 @@
 
 label quest_violet_questprincipal_04_b:
 
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="violet_04_b")
     $ ocultar_hud()
     window show
 
@@ -154,6 +154,14 @@ init python:
         if not loc or loc.id not in _VQ04B_LOCACIONES:
             return None
 
+        # Con Violet OCULTA por la restriccion de otro contenido no se dispara:
+        # el jugador no la ve, y ademas el label de esta quest arranca con
+        # desactivar_restriccion(duenio="violet_04_b") — dispararse en medio de la cadena de
+        # evento03 (que vive el mismo tramo del juego) le pisaba la maquina de
+        # estados y la dejaba trabada. Se mira la locacion cruda del NPC a
+        # proposito (no el tracker): la escena la pone en el lugar igual.
+        if npc_esta_oculto("violet"):
+            return None
         npc = store.obtener_npc("violet")
         if npc and npc.locacion_actual == loc.id:
             return "quest_violet_questprincipal_04_b"
@@ -161,7 +169,7 @@ init python:
 
 
 init 5 python:
-    registrar_trigger_game_loop("violet_04b", _gl_trigger_violet_04b)
+    registrar_trigger_game_loop("violet_04b", _gl_trigger_violet_04b, duenio="violet_04_b")
 
 
 ################################################################################

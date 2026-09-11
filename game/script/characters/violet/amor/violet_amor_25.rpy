@@ -166,6 +166,15 @@ init python:
         Va como bloqueo REGISTRADO y no dentro de `acciones_bloqueadas` de la
         restriccion porque depende del horario, y el set de la restriccion es
         estatico — habria que rearmar la restriccion cada vez que cambia la hora.
+
+        SE REGISTRA PARA TODAS LAS ACCIONES QUE GASTAN EL DIA, no solo para el
+        boton de avanzar. Ver TV, entrenar y trabajar llaman a avanzar_horario()
+        por su cuenta, sin pasar por el boton: con solo ese bloqueado, en la
+        fase 3 de noche el jugador podia ver TV, caer en TRASNOCHE, y recien ahi
+        cocinar. El corte de luz pasaba a las 3 de la mañana y la puerta de
+        Violet contestaba "debe estar durmiendo" — sin dormir, sin moverse y
+        sin entrar, la partida quedaba trabada. Reporte de un jugador en la
+        0.1.9a.
         """
         return _va25_activa() and getattr(store, 'va25_fase', 0) >= 2 \
             and store.horario_actual >= 2
@@ -202,22 +211,20 @@ init python:
     # ── Puerta de Violet ─────────────────────────────────────────────────────
 
     def _va25_puerta_entrar():
-        """Opcion "Entrar" de la puerta, solo durante el corte de luz."""
+        """
+        Condicion del OVERRIDE de puerta durante el corte de luz.
+
+        Es override y no opcion del menu a proposito. La opcion vive DESPUES
+        del chequeo de trasnoche de interaccion_puerta_npc: a horario 3, con
+        deseo < 50, la puerta contesta "debe estar durmiendo" y el menu con
+        "Entrar" no llega a dibujarse nunca. El override se evalua ANTES que
+        todo eso — es lo unico que garantiza que la puerta abra a la hora que
+        sea. Y a oscuras no hay menu que valga: se entra.
+
+        Tambien rescata a quien ya quedo trabado en trasnoche con la version
+        anterior: carga, va a la puerta, entra.
+        """
         return _va25_activa() and getattr(store, 'va25_fase', 0) == 4
-
-    def _va25_puerta_exclusiva():
-        """
-        Desde que arranca el domingo, su puerta es SOLO cosa de esta quest.
-
-        Sin esto, al subir en el corte de luz aparecia "Devolver mangas" al lado
-        de "Entrar": las opciones de puerta de las otras quests siguen vivas
-        mientras su quest lo este, y no saben nada del domingo.
-
-        Pide fase >= 1 y no solo que la quest este lista, por lo mismo que
-        _va25_bloquear_dormir: hasta que el domingo empieza, el resto del juego
-        sigue como siempre.
-        """
-        return _va25_activa() and getattr(store, 'va25_fase', 0) >= 1
 
     def _va25_puerta_durmiendo():
         """
@@ -235,19 +242,21 @@ init 5 python:
                              _va25_trigger_dormir)
 
     registrar_trigger_game_loop("violet_amor_25_fases",
-                                _gl_trigger_violet_amor_25)
+                                _gl_trigger_violet_amor_25, duenio="violet_amor_25")
 
-    registrar_bloqueo_accion("avanzar_tiempo", _va25_no_avanzar_de_noche,
-                             "Ya es de noche, el dia se termina acá")
+    # Un mismo bloqueo para todo lo que gasta el dia. Los ids son los de
+    # actions_catalog (ver_tv, cocinar se intercepta por listener y no entra
+    # aca) y los del panel de hmc (entrenar, trabajar).
+    for _va25_acc in ("avanzar_tiempo", "ver_tv", "entrenar", "trabajar"):
+        registrar_bloqueo_accion(_va25_acc, _va25_no_avanzar_de_noche,
+                                 "Ya es de noche, el dia se termina acá")
     registrar_bloqueo_accion("dormir", _va25_bloquear_dormir,
                              "Todavia no me voy a dormir")
 
     # Puerta de Violet. El resto de sus opciones vive en puertas_violet.rpy;
     # estas dos van acá porque son de esta quest y de ningun otro lado.
-    registrar_opcion_puerta("violet", "Entrar",
-                            "violet_amor_25_puerta_entrar", _va25_puerta_entrar,
-                            ocultar_golpear=True,
-                            quest_id="violet_amor_05")
+    registrar_override_puerta("violet", _va25_puerta_entrar,
+                              "violet_amor_25_puerta_entrar")
     registrar_bloqueo_golpe("violet", _va25_puerta_durmiendo,
                             "Violet esta durmiendo")
 
@@ -258,10 +267,9 @@ init 5 python:
     registrar_menu_exclusivo("violet", _va25_boton_matar_tiempo,
                              "violet_amor_25_matar_tiempo")
 
-    # Y su PUERTA es solo de esta quest mientras dure el domingo: sin esto, al
-    # subir en el corte de luz salia "Devolver mangas" junto a "Entrar".
-    registrar_menu_exclusivo("violet", _va25_puerta_exclusiva,
-                             "violet_amor_25_puerta_entrar", ambito="puerta")
+    # (El menu exclusivo de puerta que habia acá se fue con la opcion "Entrar":
+    # en fase 4 la puerta es un override y no dibuja menu, asi que ya no puede
+    # salir "Devolver mangas" al lado de nada.)
 
 
 ################################################################################
@@ -290,6 +298,7 @@ label violet_amor_25_despertar:
 
     # Hasta encontrarla no se hace otra cosa: solo el camino a el living.
     $ activar_restriccion(
+        duenio="violet_amor_25",
         locaciones_permitidas=["casa_pasilloarriba", "casa_living"],
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar",
                              "usar_item", "comprar", "cocinar", "ver_tv"],
@@ -396,6 +405,7 @@ label violet_amor_25_living:
     # golpe registrado ("Violet esta durmiendo"): la whitelist corta el
     # movimiento y el bloqueo de golpe le pone el mensaje que corresponde.
     $ activar_restriccion(
+        duenio="violet_amor_25",
         locaciones_permitidas=VA25_CASA_LIBRE,
         acciones_bloqueadas=[],
         mensaje_movimiento=_("Hoy me quedo en casa"),
@@ -568,6 +578,8 @@ label violet_amor_25_cocinar:
 
     # A oscuras solo se anda por el camino hasta la puerta de Violet.
     $ activar_restriccion(
+        duenio="violet_amor_25",
+        congelar_reloj=True,
         locaciones_permitidas=VA25_CORTE_LUZ,
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar",
                              "usar_item", "comprar", "cocinar", "ver_tv"],
@@ -587,12 +599,13 @@ label violet_amor_25_cocinar:
 
 
 ################################################################################
-## 7 · LA PUERTA — opcion "Entrar" durante el corte de luz
+## 7 · LA PUERTA — override durante el corte de luz
 ################################################################################
-## Opcion de puerta = SUBRUTINA: mueve al jugador adentro y devuelve el control.
-## La escena la dispara el trigger de game_loop al ver que ya esta en
-## casa_hviolet — asi el mismo camino sirve para el que entra por este boton y
-## para el que entra directo porque su relacion se lo permite.
+## Override de puerta = SUBRUTINA: mueve al jugador adentro y devuelve el
+## control. La escena la dispara el trigger de game_loop al ver que ya esta en
+## casa_hviolet. Es override y no opcion del menu para que la puerta abra a
+## CUALQUIER hora: la opcion vivia despues del chequeo de trasnoche del motor y
+## a horario 3 no se llegaba a ver (ver _va25_puerta_entrar).
 
 label violet_amor_25_puerta_entrar:
     $ sistema_locaciones.mover_a_locacion("casa_hviolet")
@@ -609,7 +622,7 @@ label quest_violet_amor_05:
     # cortara mas adelante, la casa quedaria a oscuras y el jugador encerrado.
     $ va25_fase = 5
     $ horario_visual_override = None
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="violet_amor_25")
 
     $ ocultar_hud()
     window show

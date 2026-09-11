@@ -116,6 +116,7 @@ label violet_deseo_10_despertar:
     # dejara a alguien parado en el living, la escena de Violet perderia todo
     # el efecto de aparecer de la nada.
     $ activar_restriccion(
+        duenio="violet_deseo_10",
         locaciones_permitidas=["casa_pasilloarriba", "casa_living",
                             "casa_pasilloabajo", "casa_cocina"],
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar",
@@ -144,7 +145,7 @@ label quest_violet_deseo_02:
     # mas adelante, el jugador quedaria encerrado en el recorrido de la cocina
     # sin forma de volver a dormir (mismo criterio que violet_q4d4_avisar).
     $ vd10_sed_activa = False
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="violet_deseo_10")
 
     $ ocultar_hud()
     window show

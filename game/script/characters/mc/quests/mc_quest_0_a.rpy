@@ -60,7 +60,7 @@ init python:
         # las ayudas visuales. Solo efectos python, el sueño sigue normal.
         if getattr(store, 'mc_q0_final_sleep', False):
             store.mc_q0_final_sleep = False
-            desactivar_restriccion()
+            desactivar_restriccion(duenio="mc_0_a")
             store.sistema_quests_mc.completar_activa()
             store.config_mostrar_accion_movimiento = False
             store.visualizador_hotspot_activo = False
@@ -150,6 +150,7 @@ label mc_q0_mudanza:
 
     # Restricción: solo puede ir a hmc, pasillo arriba, living, garage
     $ activar_restriccion(
+        duenio="mc_0_a",
         locaciones_permitidas=[
             "casa_hmc", "casa_pasilloarriba",
             "casa_living", "casa_garage",
@@ -295,6 +296,7 @@ label mc_q0_mudanza_completada:
 
     # Restricción Stage A: solo se puede avanzar el tiempo, sin salir de la habitacion
     $ activar_restriccion(
+        duenio="mc_0_a",
         locaciones_permitidas=["casa_hmc"],
         acciones_bloqueadas=[
             "dormir", "entrenar", "trabajar",
@@ -329,6 +331,7 @@ label mc_q0_stage_b:
 
     # Restricción Stage B: solo puede moverse a pasillo arriba, living y frente
     $ activar_restriccion(
+        duenio="mc_0_a",
         locaciones_permitidas=[
             "casa_pasilloarriba", "casa_living", "casa_frente",
         ],
@@ -349,7 +352,7 @@ label mc_q0_stage_b:
 
 
 label mc_q0_entrada_frente:
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="mc_0_a")
     $ mc_q0_limpiar_rutinas_npc()
     jump mc_q0_siguiente_etapa
 
@@ -420,7 +423,9 @@ label mc_q0_siguiente_etapa:
     $ mostrar_hud()
 
     # Restricción: solo se puede dormir
+    # validar_bloqueos: reloj libre — la salida es dormir; cocinar solo mueve el horario y no importa
     $ activar_restriccion(
+        duenio="mc_0_a",
         locaciones_permitidas=None,
         acciones_bloqueadas=[
             "avanzar_tiempo", "entrenar", "trabajar",

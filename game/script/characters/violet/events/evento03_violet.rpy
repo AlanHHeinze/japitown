@@ -235,6 +235,8 @@ label evento03_violet:
 
     # Activar restricción: solo living permitido
     $ activar_restriccion(
+        duenio="violet_ev03",
+        congelar_reloj=True,
         locaciones_permitidas=["casa_living"],
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar"],
         mensaje_movimiento=_("Debo encargarme de limpiar la planta baja"),
@@ -382,6 +384,8 @@ label violet_quest2_escena_pasillo:
     # =========================================================================
 
     $ activar_restriccion(
+        duenio="violet_ev03",
+        congelar_reloj=True,
         locaciones_permitidas=["casa_pasilloarriba", "casa_living", "casa_pasilloabajo", "casa_cocina"],
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar"],
         mensaje_movimiento=_("Debo buscar algo para limpiar"),
@@ -456,6 +460,7 @@ label violet_quest2_post_menu:
 
     # Activar restricción 3: solo baño arriba
     $ activar_restriccion(
+        duenio="violet_ev03",
         locaciones_permitidas=["casa_banioarriba"],
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar"],
         mensaje_movimiento=_("Debo ver como va Violet con el baño"),
@@ -830,7 +835,7 @@ label violet_quest2_opcion_c:
 label violet_quest2_cierre:
 
     # Desactivar restricción
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="violet_ev03")
 
     # Completar el evento
     $ _ev03 = obtener_event("violet_evento_03")
@@ -876,6 +881,7 @@ label ev03_accion_limpiar_living:
     piensa "Listo el Living. Voy a ver cómo va Violet."
 
     $ activar_restriccion(
+        duenio="violet_ev03",
         locaciones_permitidas=["casa_pasilloarriba"],
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar"],
         mensaje_movimiento=_("Debo ir a ver como va Violet con la limpieza"),
@@ -927,6 +933,8 @@ label ev03_accion_buscar_cocina:
     $ store.inventario["elementos_limpieza"] = store.inventario.get("elementos_limpieza", 0) + 1
 
     $ activar_restriccion(
+        duenio="violet_ev03",
+        congelar_reloj=True,
         locaciones_permitidas=["casa_cocina", "casa_pasilloabajo", "casa_living", "casa_pasilloarriba"],
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar"],
         mensaje_movimiento=_("Debo volver arriba a limpiar"),

@@ -10,6 +10,10 @@
 ##   3. accion "Cocinar" en la cocina, SOLO de noche → _cocinar
 ##      (prende vq4d4_pizza_cocinada y avanza el horario)
 ##   4. opcion de puerta "Ya está la comida" → _avisar (completa la quest)
+##      La quest trae una rutina nocturna (quest_violet.rpy) que deja a Violet
+##      en su cuarto de noche los siete dias: sin eso, el domingo o una noche
+##      de ducha la puerta no tenia a nadie atras y la restriccion de la pizza
+##      encerraba al jugador.
 ##
 ## La accion de cocinar NO agrega un boton propio: es un ListenerAccion sobre la
 ## accion generica "cocinar" (registrado en actions_catalog.rpy), igual que en la
@@ -21,6 +25,50 @@
 ## cargar la partida.
 ##
 ## LOS DIALOGOS ESTAN VACIOS A PROPOSITO: los escribe Alan.
+
+
+################################################################################
+## MIGRACION — la rutina nocturna llega a las partidas que ya iban por acá
+################################################################################
+## La rutina de quest se copia al NPC al ENTRAR a ETAPA_RUTINA
+## (_aplicar_rutina_quest → npc.rutinas_quest). El refresco del catalogo al
+## cargar (persistencia_sistemas) actualiza `rutina_quest` en el objeto Quest,
+## pero no vuelve a copiarla al NPC — asi que una partida guardada en etapa 4 o
+## 5 antes de que existiera esta rutina sigue con Violet en el living el
+## domingo, y trabada.
+##
+## No se hace un re-aplicado generico al cargar a proposito: hay quests que
+## LEVANTAN su rutina a mitad de camino (la 04_d5, la 04_b) y volver a
+## aplicarla las rompe. Esto es solo para esta quest, y solo cuando falta:
+## `_aplicar_rutina_quest` es idempotente y respeta prioridad_rutina.
+
+init python:
+
+    def _gl_trigger_vq4d4_rutina():
+        """
+        Trigger de game_loop: si la quest esta viva y a Violet le falta la
+        rutina nocturna, se la aplica. Nunca devuelve label — solo hace su
+        efecto y deja seguir.
+        """
+        _q = store.sistema_quests.obtener_quest("violet_questprincipal_04_d4")
+        if _q is None or not _q.activa or _q.etapa_actual < ETAPA_RUTINA:
+            return None
+        if not _q.rutina_quest:
+            return None
+        _v = obtener_npc("violet")
+        if _v is None:
+            return None
+        _faltan = [k for k in _q.rutina_quest
+                   if k not in getattr(_v, 'rutinas_quest', {})]
+        if _faltan:
+            _q._aplicar_rutina_quest()
+        return None
+
+
+init 5 python:
+
+    registrar_trigger_game_loop("vq4d4_rutina_migracion",
+                                _gl_trigger_vq4d4_rutina, prioridad=50)
 
 
 ################################################################################
@@ -167,6 +215,7 @@ label violet_q4d4_cocinar:
     # Los dos mensajes son los MISMOS que usa la 0_b en esta misma situacion:
     # ya estan registrados en core/quests/quest_strings.rpy y traducidos.
     $ activar_restriccion(
+        duenio="violet_04_d4",
         locaciones_permitidas=["casa_pasilloabajo", "casa_living", "casa_pasilloarriba", "casa_hviolet"],
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar", "cocinar", "ver_tv"],
         mensaje_movimiento=_("Debo avisarle a Violet que esta la comida"),
@@ -195,7 +244,7 @@ label violet_q4d4_avisar:
     # Se llega acá por la opcion de puerta "Ya está la comida". Levantar la
     # restriccion es lo PRIMERO: si la escena se cortara mas adelante, el
     # jugador quedaria encerrado en el recorrido de la pizza para siempre.
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="violet_04_d4")
 
     $ ocultar_hud()
     window show

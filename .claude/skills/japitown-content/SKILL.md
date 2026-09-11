@@ -359,7 +359,16 @@ presencia → menú (`Golpear` + **opciones registradas** + `Volver`) → al gol
 `acciones_bloqueadas` (+mensajes), `npcs_ocultos`/`npcs_interactuables` (whitelist),
 `celular_bloqueado`, `elementos_escena`, `labels_por_locacion`
 (`registrar_label_locacion` — el label entra por `call expression` y DEBE terminar en
-`return`). `activar_restriccion(**kwargs)` / `desactivar_restriccion()`.
+`return`). `activar_restriccion(duenio="<id>", ...)` /
+`desactivar_restriccion(duenio="<id>")` — **el `duenio` es obligatorio** y tiene que
+ser el mismo en las dos: otro contenido no puede pisar ni levantar una restricción
+ajena. Para frenar el tiempo va `congelar_reloj=True` (bloquea `ACCIONES_RELOJ`
+entero), nunca una lista a mano. Los triggers de game_loop de la misma quest llevan
+el mismo `duenio=` en `registrar_trigger_game_loop`. **Si la salida de la
+restricción necesita a un NPC en un lugar (una puerta, entrar a su cuarto), la quest
+declara la `rutina_quest` que lo pone ahí a esa hora los siete días** — regla
+obligatoria, sin excepciones. Todo esto lo vigila `tools/validar_bloqueos.py`; el
+porqué está en la skill `japitown-warnings`.
 El **embudo `accion_bloqueada`** vive acá (§4). Un bloqueo de horario/tiempo se hace
 con restricción (`acciones_bloqueadas=["avanzar_tiempo", ...]`), NUNCA con ifs en el
 motor de tiempo.

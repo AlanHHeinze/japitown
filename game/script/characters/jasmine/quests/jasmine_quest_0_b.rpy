@@ -20,7 +20,7 @@ init python:
         return None
 
 init 5 python:
-    registrar_trigger_game_loop("jasmine_0b", _gl_trigger_jasmine_0b, prioridad=30)
+    registrar_trigger_game_loop("jasmine_0b", _gl_trigger_jasmine_0b, prioridad=30, duenio="jasmine_0_b")
 
 
 label quest_jasmine_questprincipal_0_b:
@@ -42,6 +42,7 @@ label quest_jasmine_questprincipal_0_b:
     # Activar restricción que bloquea TODO movimiento
     # Pasamos una locacion ficticia que no existe para bloquear todos los movimientos
     $ activar_restriccion(
+        duenio="jasmine_0_b",
         locaciones_permitidas=["__ninguna__"],  # Locación ficticia bloquea todos los movimientos
         acciones_bloqueadas=["entrenar", "trabajar", "avanzar_tiempo", "dormir", "usar_item", "comprar",
                             "relaciones", "pistas", "stats", "galeria", "hot", "banco", "configuracion", "cheats"],

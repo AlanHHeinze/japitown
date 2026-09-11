@@ -16,7 +16,9 @@ init python:
         `r.registrar_label_locacion("casa_living", ...)` y eso era el bug —
         ver el comentario del trigger, abajo.
         """
+        # validar_bloqueos: reloj libre — gate blando: solo frena dormir/avanzar, el dia sigue libre y la salida (el living) no depende del horario
         activar_restriccion(
+            duenio="monica_0_b",
             acciones_bloqueadas=["avanzar_tiempo", "dormir"],
             mensajes_acciones={
                 "avanzar_tiempo": "Deberia ver que le pasa a Monica",
@@ -42,7 +44,7 @@ init python:
     ## quest quedaba muerta para siempre en el panel de pistas. Era facil de
     ## alcanzar: la restriccion bloquea dormir y avanzar tiempo pero NO el
     ## movimiento, asi que el jugador se iba a hacer contenido de Violet o
-    ## Jasmine y ese contenido terminaba con desactivar_restriccion(). Bug real
+    ## Jasmine y ese contenido terminaba con desactivar_restriccion(duenio="monica_0_b"). Bug real
     ## reportado por jugadores: a algunos la 0_b no les arrancaba nunca al dia
     ## siguiente de la 0_a.
     ##
@@ -67,7 +69,7 @@ init python:
 init 5 python:
     # 25: por encima del tutorial de exploracion (20), para que un gate que
     # bloquea dormir no quede postergado, y por debajo de jasmine_0b (30).
-    registrar_trigger_game_loop("monica_q0b", _gl_trigger_monica_q0b, prioridad=25)
+    registrar_trigger_game_loop("monica_q0b", _gl_trigger_monica_q0b, prioridad=25, duenio="monica_0_b")
 
 
 ################################################################################
@@ -77,7 +79,7 @@ init 5 python:
 label quest_monica_questprincipal_0_b:
 
     # Levantar la restricción que bloqueaba avanzar tiempo / dormir
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="monica_0_b")
     $ ocultar_hud()
     hide screen hud_navegacion
     window show

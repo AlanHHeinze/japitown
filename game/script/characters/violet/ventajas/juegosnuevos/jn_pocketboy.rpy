@@ -191,7 +191,7 @@ init 5 python:
     )
 
     registrar_trigger_game_loop("jn_pocketboy_escenas",
-                                _gl_trigger_jn_pocketboy)
+                                _gl_trigger_jn_pocketboy, duenio="jn_pocketboy")
 
     # (La accion "Buscar" del altillo NO se registra acá: TODAS las acciones del
     # juego viven en core/actions/actions_catalog.rpy. Su condicion sigue siendo
@@ -236,6 +236,7 @@ label jn_pocketboy_pasillo:
 
     # Quedo en ir a ayudarla: hasta subir al altillo no se hace otra cosa.
     $ activar_restriccion(
+        duenio="jn_pocketboy",
         locaciones_permitidas=["casa_altillo"],
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar",
                              "usar_item", "comprar", "cocinar", "ver_tv"],
@@ -302,6 +303,8 @@ label jn_pocketboy_altillo:
     # interactuable (npcs_interactuables): el click en su sprite es medio
     # disparador de la quest — lo atiende jn_pocketboy_molestar.
     $ activar_restriccion(
+        duenio="jn_pocketboy",
+        congelar_reloj=True,
         locaciones_permitidas=["casa_altillo"],
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar",
                              "usar_item", "comprar", "cocinar", "ver_tv"],
@@ -444,7 +447,7 @@ label jn_pocketboy_cierre:
     # Levantar la restriccion primero: si la escena se cortara mas adelante, el
     # jugador quedaria encerrado en el altillo para siempre.
     $ jnpb_fase = 3
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="jn_pocketboy")
 
     $ ocultar_hud()
     window show

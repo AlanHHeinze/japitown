@@ -96,6 +96,18 @@ prende tiene que apagarlo **en todas las ramas**, incluida la de fallo y la de
 `desactivar_restriccion()` / `marcar_npc_disponible()` de cada salida, y
 preguntarse: *¿qué pasa si el jugador guarda acá y carga mañana?*
 
+**Y toda restricción lleva `duenio="<id>"`** (el mismo en `activar` y en
+`desactivar`). Desde la auditoría 2026-09-10 el slot es **con dueño**: otro
+contenido no puede **levantarla** — la llamada se ignora y avisa en desarrollo.
+Activar encima sí se permite (con aviso), porque hay gates blandos que duran
+días y rechazarlo dejaría a la otra quest sin su recorrido; lo que protege una
+cadena en curso es A11. Antes, cualquier `desactivar_restriccion()` suelto de otra quest se
+llevaba puesta la cadena de `registrar_label_locacion` ajena. Los labels de
+test y cheats usan `duenio="*"`.
+
+**Cómo se detecta.** `python tools/validar_bloqueos.py`, chequeo "restricciones
+sin quien las levante".
+
 ### A6. Un mensaje prioritario con condiciones que pueden no cumplirse nunca
 
 **Por qué.** Un prioritario entregado bloquea dormir y avanzar. Si además solo se
@@ -107,6 +119,111 @@ contenido que dependa de esa red.
 **La regla.** Un prioritario se entrega cuando el jugador **ya puede**
 contestarlo, no antes. Las condiciones van en la entrega (`momento_horario`,
 `momento_locacion`, `condicion_entrega`), no en la respuesta.
+
+### A7. Bloquear un botón no es bloquear el efecto
+
+**Qué pasó (0.1.9a, un jugador).** La amor 25 bloqueaba `avanzar_tiempo` de
+noche para que el día terminara con la cena. Pero ver TV, entrenar y trabajar
+llaman a `avanzar_horario()` por su cuenta, sin pasar por ese botón. El jugador
+vio TV en fase 3, cayó en **trasnoche**, y recién ahí cocinó: el corte de luz
+pasó a las 3 de la mañana. A esa hora la puerta de Violet contesta "debe estar
+durmiendo" — y con dormir bloqueado por la quest y el movimiento acotado al
+pasillo, no quedaba nada que hacer.
+
+**Por qué.** Se bloqueó UNA de las entradas a un cambio de estado que tiene
+varias. El comentario del propio archivo lo sabía ("el horario también lo
+mueven cocinar, ver TV, entrenar, trabajar y el talk") y aun así solo se
+registró el botón.
+
+**La regla.** Antes de bloquear una acción para proteger un estado, listar
+**todo** lo que muta ese estado y bloquearlo entero. Para el horario ya está
+hecho: **`activar_restriccion(..., congelar_reloj=True)`** bloquea
+`ACCIONES_RELOJ` entero (avanzar, dormir, ver TV, cocinar, entrenar, trabajar,
+hablar, usar item — un solo set en `restriccion_quest_system.rpy`). Una acción
+nueva que llame a `avanzar_horario()` se agrega a ese set y queda cubierta en
+todas las restricciones. Si el reloj tiene que quedar libre a propósito (la
+salida ES dormir, o ES ver TV), va la línea
+`# validar_bloqueos: reloj libre — motivo` encima del `activar_restriccion`.
+
+**Cómo se detecta.** `python tools/validar_bloqueos.py`, chequeo "reloj que se
+escapa": mira qué acciones de reloj quedan **alcanzables** desde la whitelist
+de la restricción (cocinar solo cuenta con la cocina permitida, hablar solo
+con NPCs interactuables, etc.).
+
+### A8. Una opción de puerta puede no llegar a dibujarse nunca
+
+**Qué pasó.** Ver A7: la salida del corte de luz era la opción "Entrar" del
+menú de puerta. Pero `interaccion_puerta_npc` chequea **trasnoche antes de
+armar el menú**, y a horario 3 con deseo < 50 corta con "debe estar durmiendo".
+La opción existía, estaba registrada, tenía su condición en True — y no había
+forma de verla.
+
+**La regla.** Una opción de puerta es para *ofrecer* algo. Si es la **única
+salida** de una fase, no puede depender del menú: va como
+`registrar_override_puerta`, que se evalúa antes que todo el flujo (trasnoche,
+nivel de acceso, presencia). `violet_deseo_25`, `09_a` y ahora `amor_25` lo
+usan así.
+
+**Cómo se detecta.** `validar_bloqueos.py` lista toda `registrar_opcion_puerta`
+con `ocultar_golpear=True` en un archivo sin override, para revisar.
+
+### A9. Si la única salida es una puerta, el NPC tiene que estar detrás
+
+**Qué pasó (0.1.9, un jugador).** En "La pizza" (04_d4) la única forma de
+avisarle a Violet es la opción de puerta "Ya está la comida", de noche. Pero de
+noche Violet no siempre está en su cuarto: el domingo la rutina base la manda al
+living, y cualquier noche puede tocarle la ducha (25%) o salir (20%). Con la
+puerta vacía y la restricción de la pizza bloqueando dormir y avanzar, no
+quedaba nada que hacer. El diseño lo había decidido a propósito ("tener también
+el genérico sería ofrecer dos caminos para lo mismo") — sin mirar dónde iba a
+estar ella.
+
+**La regla (obligatoria desde 2026-09-10).** Toda restricción que congela el
+reloj y cuya salida necesita a un NPC en un lugar a una hora **lleva en la
+misma quest la `rutina_quest` que lo pone ahí**, los siete días, con su sprite
+y posición. La rutina de quest le gana a la base (el living del domingo) y a
+las especiales (ducha, salida). Sin eso, "esperar a mañana" no existe: el reloj
+está congelado. Modelo: deseo 25, deseo 30, amor 25, 04_d4.
+
+**Cómo se detecta.** `validar_bloqueos.py`, chequeo "salidas por puerta de NPC
+sin rutina": restricción con `congelar_reloj` + override/opción de puerta en el
+archivo + quest sin `rutina_quest` en su catálogo.
+
+### A10. `registrar_listener` / `registrar_accion` NUNCA dentro de un label
+
+**Qué pasó (auditoría 2026-09-10).** La quest 0_b de Violet —la primera de
+todas— registraba el listener de "Cocinar" en runtime, dentro de los labels de
+elección. `sistema_acciones` es `define`: quien guardaba entre la elección y el
+cocinar cargaba **sin listener**. "Cocinar" corría el genérico, la restricción
+(sin dormir, sin avanzar, celular bloqueado, NPCs ocultos) no se levantaba
+nunca. Ya había pasado con la 3_a y la 8_a, y el header de la 04_d4 lo decía
+en voz alta: *"a diferencia de la 0_b, el listener se registra en init"*.
+
+**La regla.** Ya estaba en `japitown-content`: acciones y listeners **siempre en
+`actions_catalog.rpy`, en init**, con `condicion=` que lea estado guardado. Y
+mejor si la condición se **deriva** de lo que ya se guarda (la quest activa, la
+ruta elegida) en vez de un flag nuevo: así una partida que ya venía trabada se
+destraba sola al cargar.
+
+**Cómo se detecta.** `validar_bloqueos.py`, chequeo "registros en runtime".
+
+### A11. Un trigger de game_loop no salta adentro de la restricción de otro
+
+**Qué pasó.** El trigger de la 04_b mira la locación cruda de Violet (no si
+está oculta) y su label arranca con `desactivar_restriccion()`. La 04_b y
+evento03 viven el mismo tramo del juego: con evento03 en medio de su cadena
+(NPCs ocultos, recorrido acotado), la 04_b se disparaba igual y se llevaba la
+cadena puesta.
+
+**La regla.** `registrar_trigger_game_loop(..., duenio="<id>")` — el mismo id
+que la restricción de la quest. **Mientras hay una restricción con dueño
+activa, el motor ignora el label de cualquier trigger de otro dueño** (el
+trigger corre igual por sus efectos python). Un trigger sin dueño cuenta como
+ajeno. Los triggers que tienen que poder saltar adentro de su propia
+restricción (las fases de amor 25, deseo 30, mc 0_b...) declaran el suyo.
+
+**Cómo se detecta.** `validar_bloqueos.py`, chequeo "triggers que pisan
+restricciones ajenas".
 
 ---
 
@@ -138,6 +255,16 @@ igual". Los sistemas con estado (`sistema_quests`, `sistema_mensajes`,
 (`persistencia_sistemas.rpy`) al cargar. Si un campo nuevo es catálogo y no
 progreso, agregarlo a `_CAMPOS`. Y al probar un fix de catálogo: **cargar** la
 partida, no seguir la sesión abierta.
+
+**Ojo con las rutinas de quest.** El refresco actualiza `rutina_quest` en el
+objeto Quest, y de ahí sale el **sprite** (lo lee directo). Pero la
+**locación** sale de `npc.rutinas_quest`, una copia que se hace al entrar a
+ETAPA_RUTINA y que el refresco no vuelve a copiar. Una partida guardada en
+etapa 4 o 5 no ve una rutina agregada después. No hay re-aplicado genérico al
+cargar a propósito (la 04_d5 y la 04_b levantan su rutina a mitad de camino y
+volver a aplicarla las rompe): si una quest necesita que su rutina nueva llegue
+a partidas ya empezadas, lo hace ella con un trigger de game_loop que la
+re-aplica solo cuando falta — ver `_gl_trigger_vq4d4_rutina`.
 
 ### B3. `_ps_merge_dict` solo AGREGA lo que falta
 
@@ -263,6 +390,20 @@ se lleva el disparo. Para "cuando llegue a X arrancá la quest" va
 `registrar_trigger_game_loop`.
 
 ---
+
+## Los detectores
+
+Tres scripts, uno por familia, todos con la misma idea: cubrir lo que el lint
+no ve. Correr los tres antes de commitear contenido.
+
+```
+python tools/validar_traducciones.py   # old rotos, new vacíos, %, sin traducir
+python tools/validar_sprites.py        # atributos de layeredimage
+python tools/validar_bloqueos.py       # reloj, runtime, puerta, triggers, dueño
+```
+
+Más el harness in-game (`jp_test_correr("mensajes")`, `"registros"`,
+`"guardado"`) para lo que solo se puede probar con el motor corriendo.
 
 ## Cómo se agrega una entrada
 

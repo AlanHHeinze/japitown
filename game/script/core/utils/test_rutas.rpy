@@ -363,6 +363,7 @@ init 999 python:
 
     def _jpt_restriccion_activar():
         activar_restriccion(
+            duenio="test",
             locaciones_permitidas=["casa_hmc"],
             acciones_bloqueadas=["dormir"],
             mensaje_movimiento="TEST: movimiento bloqueado",
@@ -396,7 +397,7 @@ init 999 python:
         return _jpt_ok("registro y lookup de label por locacion funciona")
 
     def _jpt_restriccion_desactivar():
-        desactivar_restriccion()
+        desactivar_restriccion(duenio="test")
         if hay_restriccion_activa():
             return _jpt_fallo("desactivar_restriccion no libero la restriccion")
         if accion_bloqueada("dormir"):

@@ -131,6 +131,8 @@ label violet_deseo_25_sotano:
     $ vd25_fase = 1
     $ _vd25_dentro = [_l for _l in sistema_locaciones.locaciones if _l != "casa_frente"]
     $ activar_restriccion(
+        duenio="violet_deseo_25",
+        congelar_reloj=True,
         locaciones_permitidas=_vd25_dentro,
         acciones_bloqueadas=["avanzar_tiempo", "dormir"],
         mensaje_movimiento="Primero voy a ver que paso con Violet",
@@ -341,7 +343,7 @@ label quest_violet_deseo_05:
     show violet_parada b_none
 
     $ vd25_fase = 2
-    $ desactivar_restriccion()
+    $ desactivar_restriccion(duenio="violet_deseo_25")
     $ completar_quest_actual("violet", quest_id="violet_deseo_05")
 
     # Sale de la habitacion y se le fue la noche: pasillo y horario +1.

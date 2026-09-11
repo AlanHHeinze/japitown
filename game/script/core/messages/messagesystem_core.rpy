@@ -438,12 +438,23 @@ init python:
             return getattr(store, 'horario_actual', 0) in hr
 
         def puede_responder(self):
-            """Verifica si el jugador puede responder algo."""
+            """
+            Verifica si el jugador puede responder algo.
+
+            Es tambien la condicion de los bloqueos que dependen de contestar
+            (prioritario, Mensajear): si esto da False, no bloquean. Por eso
+            mira TODO lo que impide llegar a la respuesta, incluido el celular:
+            un mensaje que no se puede abrir no puede exigir que se conteste.
+            """
             if getattr(self, 'bloqueado', False):
                 return False
             # NPC fuera de juego: no contesta nada
             # (core/npcs/npc_disponibilidad.rpy).
             if not npc_disponible(self.npc_id):
+                return False
+            # Celular bloqueado por una restriccion: no hay forma de llegar al
+            # chat, asi que tampoco hay forma de que el mensaje bloquee.
+            if celular_esta_bloqueado():
                 return False
             # Tiene grupo activo con paso disponible y horario válido
             if self.grupo_activo and self.grupo_activo.obtener_paso_actual():
