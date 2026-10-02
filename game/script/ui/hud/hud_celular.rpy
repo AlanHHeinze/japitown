@@ -31,6 +31,15 @@ screen menu_celular():
             ("comprar", "🛒", "Tienda", Show("panel_tienda"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
             ("mensajes", "💬", "Chat", [Function(sistema_mensajes.verificar_mensajes_en_espera), Show("lista_contactos_mensajes")], "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
             ("galeria", "🖼️", "Galería", Show("panel_galeria"), "#1e1e3aCC", "#2a2a50CC", "#ffffff"),
+            # XGram — la red social. La app todavia no tiene pantalla propia,
+            # pero EXISTE en el mundo: la quest de amor 40 arranca con una
+            # solicitud de amistad que llega por aca. Va con la paleta apagada
+            # de "en desarrollo" (como Hot y Banco) para que el jugador no
+            # espere contenido al tocarla.
+            # El texto lo decide xgra_texto_app() (violet_amor_40.rpy): despues
+            # de aceptar la solicitud de Zowie, seguir diciendo "Contenido en
+            # desarrollo" le contradice al jugador algo que acaba de hacer.
+            ("xgra", "📷", "XGram", Call("narrar_mensaje", xgra_texto_app()), "#2a1a10CC", "#3d2a1aCC", "#888888"),
             # Sin app Tracker: la ubicacion de cada NPC ya la muestra su fila en
             # Relaciones, asi que era una segunda pantalla para el mismo dato.
             ("hot", "🔥", "Hot", Call("narrar_mensaje", "Contenido en desarrollo"), "#2a1a10CC", "#3d2a1aCC", "#888888"),

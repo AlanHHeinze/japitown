@@ -6,6 +6,15 @@
 ################################################################################
 default MODO_DEV = False
 
+# Perfiles de tester: clave que se escribe en el ingreso de nombre -> nombre
+# que va a tener el MC en el juego. Cualquiera de estos prende MODO_DEV
+# (herramientas de desarrollo: app Cheats, panel del controlador, F1, P...).
+define PERFILES_DEV = {
+    "alanhhdev": "Dev",
+    "lucastest": "Lucas",
+    "marcetest": "Marcelo",
+}
+
 
 ################################################################################
 ## ENLACES EXTERNOS
@@ -20,6 +29,7 @@ default MODO_DEV = False
 ## esto apunte a un redirect propio (itch, dominio corto) en vez de a discord.gg
 ## directo — asi se actualiza el destino sin sacar build nuevo.
 define JP_URL_DISCORD = "https://discord.gg/XHeUH3FXqf"
+define JP_URL_PATREON = "https://www.patreon.com/cw/Japitown"
 
 default mc_name = ""
 
@@ -105,7 +115,14 @@ define -10 piensa_base = Character(
     what_italic=True,
     what_prefix="«",
     what_suffix="»",
+    # "(Pensamiento)" al lado del nombre, a 3/4 de su tamaño. Va DENTRO del
+    # nombre (who_suffix) y no como texto aparte en la screen, para que herede
+    # el color del personaje (el color se aplica al displayable "who" entero).
+    # `!t` traduce la marca (old/new en tl/english/script/ui/base/screens.rpy).
+    who_suffix=" {size=*0.75}[PENSAMIENTO_MARCA!t]{/size}",
 )
+
+define PENSAMIENTO_MARCA = "(Pensamiento)"
 
 
 ################################################################################
@@ -301,8 +318,11 @@ label choose_name:
 
         $ mc_name = _nc_nombre if _nc_nombre else u"Mc"
 
-        if mc_name == "alanhhdev":
+        # Perfiles de tester: escribir la clave como nombre prende MODO_DEV
+        # (cheats, panel del controlador, herramientas) y el MC pasa a
+        # llamarse como el perfil. Ver PERFILES_DEV.
+        if mc_name in PERFILES_DEV:
             $ MODO_DEV = True
-            $ mc_name = "Dev"
+            $ mc_name = PERFILES_DEV[mc_name]
 
     return

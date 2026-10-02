@@ -1,4 +1,4 @@
-# Traducciones de mensaje_despertar / pista / que_hacer (renpy.translate_string)
+﻿# Traducciones de mensaje_despertar / pista / que_hacer (renpy.translate_string)
 
 translate english strings:
 
@@ -45,17 +45,14 @@ translate english strings:
     old "Completar las quests principales de Mónica, Violet y Jasmine"
     new "Complete the main quests of Monica, Violet and Jasmine"
 
-    old "Comprar dos entradas para la Japicon"
-    new "Buy two tickets for the Japicon"
+    old "Comprar dos entradas para la Japicon en la Tienda del celular"
+    new "Buy two Japicon tickets from the Shop on the phone"
 
     old "Contarle a Violet de las entradas por la noche en su habitación"
     new "Tell Violet about the tickets at night in her room"
 
     old "Contarle a Violet sobre el cambio"
     new "Tell Violet about the replacement"
-
-    old "Darle un día"
-    new "Give it a day"
 
     old "Debería agradecerle cuando esté a solas con ella"
     new "I should thank her when I'm alone with her"
@@ -72,11 +69,11 @@ translate english strings:
     old "Debería pedirle perdón a Violet... Otra vez"
     new "I should apologize to Violet... Again"
 
-    old "Entrar a la App Chat y responder los mensajes de Carl"
-    new "Go into the Chat App and reply to Carl's messages"
+    old "Responder los mensajes de Carl en el chat del celular"
+    new "Reply to Carl's messages in the phone's chat"
 
-    old "Enviar mensaje a Tienda CoXplay"
-    new "Send a message to the Coxplay Store"
+    old "Escribirle a Tienda CoXplay desde el celular"
+    new "Text Tienda CoXplay from the phone"
 
     old "Escucho a Mónica quejarse desde aquí"
     new "I can hear Monica complaining from here"
@@ -212,7 +209,7 @@ translate english strings:
     old "Revisar el celular y la app de pistas"
     new "Check the phone and the hints app"
 
-    old "Revisar la notebook de Monica en mi habitación"
+    old "Revisar la notebook de Mónica en mi habitación"
     new "Check Monica's laptop in my room"
 
     # Evento 01 (Casco VR) — pista y que_hacer dinámicas: comprar -> esperar la
@@ -321,13 +318,13 @@ translate english strings:
     # otros archivos: los contadores en textos_compuestos_strings.rpy y
     # "Hablar con Violet" en quest_strings.rpy.
 
-    old "Puedo seguir acercandome a Violet."
+    old "Puedo seguir acercándome a Violet."
     new "I can keep getting closer to Violet."
 
     old "Es buen momento para hablar con Violet."
     new "It's a good moment to talk to Violet."
 
-    old "Todavia hay margen para que esto avance."
+    old "Todavía hay margen para que esto avance."
     new "There's still room for this to go further."
 
     old "Es momento de hablar con Violet."
@@ -421,8 +418,8 @@ translate english strings:
     old "Violet se veía bastante molesta, podría hablar con ella para saber qué le pasa"
     new "Violet seemed pretty upset, I could talk to her to find out what's wrong"
 
-    old "Violet te mandó un mensaje"
-    new "Violet sent you a message"
+    old "Violet me mandó un mensaje"
+    new "Violet sent me a message"
 
     old "Ya tengo los cosplay, debería dárselos a Violet"
     new "I have the cosplays now, I should give them to Violet"
@@ -491,19 +488,17 @@ translate english strings:
 
     # Violet — Amor 5 ("¿Mejor?"). Se dispara desde el menu de PUERTA, por la
     # tarde y con ella adentro, asi que la pista tiene que decir donde y cuando.
-    old "Podria pasar por su habitacion a la tarde."
+    old "Podría pasar por su habitación a la tarde."
     new "I could stop by her room in the afternoon."
 
     old "Llamarla desde la puerta de su habitacion por la tarde"
     new "Call her from her bedroom door in the afternoon"
 
     # Violet — Amor 15 ("La visita"). La escena salta sola con el MC en su
-    # propia habitacion por la tarde, asi que la pista dice donde quedarse.
-    old "Podria pasar un rato en mi habitacion a la tarde."
-    new "I could spend some time in my room in the afternoon."
-
-    old "Estar en mi habitacion por la tarde"
-    new "Be in my room in the afternoon"
+    # propia habitacion por la noche. Sus dos textos son IGUALES a los de amor
+    # 40 ("Podría pasar un rato en mi habitación esta noche." / "Estar en mi
+    # habitación por la noche"): la traduccion esta una sola vez, en la seccion
+    # de amor 40. Un `old` repetido no deja arrancar el juego.
 
     # =========================================================================
     # Violet — Deseo 10 ("Encuentro nocturno")
@@ -513,7 +508,7 @@ translate english strings:
     # misma, pero lo que hay que hacer ya no es dormir sino ir por el agua.
     # ("Dormir" ya tiene su `old` en script/core/time/timesystem_core.rpy.)
 
-    old "Deberia descansar bien"
+    old "Debería descansar bien"
     new "I should get a good night's sleep"
 
     old "Ir a la cocina"
@@ -528,7 +523,7 @@ translate english strings:
     # La dispara la accion "Ver TV" del sotano, asi que el "que hacer" nombra
     # la accion y la locacion.
 
-    old "Podria usar el sotano para ver el nuevo anime"
+    old "Podría usar el sótano para ver el nuevo anime"
     new "I could use the basement to watch the new anime"
 
     old "Hacer la accion ver tv en el sotano"
@@ -547,8 +542,8 @@ translate english strings:
     old "Violet me recomendó un juego, tendría que conseguirlo"
     new "Violet recommended me a game, I should get it"
 
-    old "Comprar el juego en mi habitación"
-    new "Buy the game in my room"
+    old "Usar la acción «Comprar juego» en tu habitación"
+    new "Use the action \"Buy game\" in your room"
 
     old "Ya tengo el juego, ahora falta jugarlo con ella"
     new "I have the game now, all that's left is playing it with her"
@@ -567,16 +562,38 @@ translate english strings:
     new "After dinner"
 
     # violet_amor_10.rpy, el corte entre el living y la cocina (la limpieza).
-    old "Un tiempo después"
-    new "Some time later"
+    old "Una limpieza más tarde"
+    new "One cleanup later"
+
+    # Cartel de amor 15 (despues del altillo) y de amor 50 (la ducha del MC).
+    old "Un tiempo más tarde"
+    new "A while later"
 
     # violet_quest_09_minijuego.rpy, el cierre del arco de Violet enferma: hasta
     # ahi llega el contenido por ahora.
     old "Continuará en la siguiente actualización"
     new "To be continued in the next update"
 
-    old "Jugar de noche en mi habitación"
-    new "Play at night in my room"
+    old "Usar la acción «Jugar» en tu habitación por la noche"
+    new "Use the action \"Play\" in your room at night"
+
+    old "Usar la opción «Algo para jugar» con Violet"
+    new "Use the option \"Something to play\" with Violet"
+
+    old "Usar la opción «Hablar del juego» con Violet"
+    new "Use the option \"Talk about the game\" with Violet"
+
+    old "Violet vino a verme a mi habitación."
+    new "Violet came to see me in my room."
+
+    old "Por ahora solo queda descansar"
+    new "For now, all that's left is to rest"
+
+    old "Mejor le doy un poco de espacio a Violet"
+    new "I'd better give Violet some space"
+
+    old "Algo está pasando con Violet y Mónica en el living"
+    new "Something's going on with Violet and Mónica in the living room"
 
     # =========================================================================
     # Violet — Deseo 20 ("Pensando en Violet")
@@ -585,8 +602,8 @@ translate english strings:
     # la quest pasa adentro del celular, asi que el "que hacer" manda al cuarto
     # y no al chat.
 
-    old "Estoy pensando mucho en Violet ultimamente podria escribirle"
-    new "I've been thinking about Violet a lot lately, I could write to her"
+    old "Estoy pensando mucho en Violet últimamente"
+    new "I've been thinking a lot about Violet lately"
 
     old "Ir de noche a mi habitacion"
     new "Go to my room at night"
@@ -612,7 +629,7 @@ translate english strings:
     # amor con el domingo ya empezado: la etapa avanza igual y hay que
     # esperar al domingo siguiente. Por eso la pista habla del domingo y no
     # de ir a hablar con ella.
-    old "El domingo no voy a tener nada que hacer, es un buen dia para estar con Violet"
+    old "El domingo no voy a tener nada que hacer, es un buen día para estar con Violet"
     new "I have nothing to do on Sunday, it is a good day to spend with Violet"
 
     # =========================================================================
@@ -621,7 +638,7 @@ translate english strings:
     # Disparador unico: la accion "Ver TV" del sotano, de noche. El "que hacer"
     # nombra las tres cosas porque las tres hacen falta y ninguna es obvia.
 
-    old "Podria ver un capitulo de anime con Violet"
+    old "Podría ver un capítulo de anime con Violet"
     new "I could watch an anime episode with Violet"
 
     old "Ver TV en el sotano por la noche"
@@ -666,7 +683,7 @@ translate english strings:
 
 
 
-    old "Violet quiere mi opinion sobre algo"
+    old "Violet quiere mi opinión sobre algo"
     new "Violet wants my opinion on something"
 
     old "Pasar por el pasillo de arriba por la tarde"
@@ -697,3 +714,321 @@ translate english strings:
 
     old "Avanzar en la línea de deseo con Violet"
     new "Make progress on Violet's desire line"
+
+    # =========================================================================
+    # Planificador (core/quests/planificador.rpy) — lo que escribe en el
+    # "que hacer" cuando otra quest frena a esta, y el texto de las reservas.
+    # "No puedo ir ahí ahora" ya existe en script/core/quests/quest_strings.rpy.
+    # =========================================================================
+    old "Terminar «{quest}» primero"
+    new "Finish \"{quest}\" first"
+
+    old "Terminar lo que está pasando primero"
+    new "Finish what's going on first"
+
+    old "{npc} no está"
+    new "{npc} isn't around"
+
+    old "{npc} no está donde hace falta"
+    new "{npc} isn't where she needs to be"
+
+    old "No es el momento"
+    new "It's not the moment"
+
+    old "No puedo usar el celular ahora"
+    new "I can't use my phone right now"
+
+    old "Le dije a {npc} que iba {momento}"
+    new "I told {npc} I'd come by {momento}"
+
+    # Reserva del MC: la noche ya es de una quest.
+    old "Tengo algo pendiente {momento}"
+    new "I have something on {momento}"
+
+    old "hoy"
+    new "today"
+
+    old "mañana"
+    new "tomorrow"
+
+    old "esta mañana"
+    new "this morning"
+
+    old "esta tarde"
+    new "this afternoon"
+
+    old "esta noche"
+    new "tonight"
+
+    old "esta madrugada"
+    new "late tonight"
+
+    old "mañana a la mañana"
+    new "tomorrow morning"
+
+    old "mañana a la tarde"
+    new "tomorrow afternoon"
+
+    old "mañana a la noche"
+    new "tomorrow night"
+
+    old "mañana a la madrugada"
+    new "late tomorrow night"
+
+    old "Mejor no molestar a {npc} ahora"
+    new "Better not to bother {npc} right now"
+
+    old "{npc} está ocupada"
+    new "{npc} is busy"
+
+    old "{npc} no está como hace falta"
+    new "{npc} isn't the way she needs to be"
+
+    old "No estoy donde hace falta"
+    new "I'm not where I need to be"
+
+    # =========================================================================
+    # Guia: "que hacer" generado por el controlador (planificador_que_hacer)
+    # y estado de la quest (planificador_estado_guia).
+    # =========================================================================
+    old "Usar la opción «{opcion}» con {npc}"
+    new "Use the option \"{opcion}\" with {npc}"
+
+    old "Usar la opción «{opcion}» en la puerta de {npc}"
+    new "Use the option \"{opcion}\" at {npc}'s door"
+
+    old "mientras esté en la casa"
+    new "while she's in the house"
+
+    old "mientras esté adentro"
+    new "while she's inside"
+
+    old "Ir a la locación"
+    new "Go to the location"
+
+    old "Cruzarte con {npc}"
+    new "Run into {npc}"
+
+    old "Ir a dormir"
+    new "Go to sleep"
+
+    old "Usar la acción «{opcion}»"
+    new "Use the action \"{opcion}\""
+
+    old "Usar {item}"
+    new "Use {item}"
+
+    old "Responder el mensaje de {npc}"
+    new "Reply to {npc}'s message"
+
+    old "Atender al repartidor"
+    new "Answer the delivery guy"
+
+    old "Se activa sola"
+    new "It starts on its own"
+
+    old "por la mañana"
+    new "in the morning"
+
+    old "por la tarde"
+    new "in the afternoon"
+
+    old "por la noche"
+    new "at night"
+
+    old "de madrugada"
+    new "late at night"
+
+    old "el {dia}"
+    new "on {dia}"
+
+    # Varios dias posibles: "el viernes o el sábado" / "on Friday or Saturday".
+    old "el {dias} o el {ultimo}"
+    new "on {dias} or {ultimo}"
+
+    old "en tu habitación"
+    new "in your room"
+
+    old "en {articulo} {lugar}"
+    new "in the {lugar}"
+
+    old "{npc} no está en la casa"
+    new "{npc} isn't in the house"
+
+    # El "que hacer" nuevo: [accion] [donde] [cuando] (condiciones). Las
+    # condiciones agrupan a los NPCs ("mientras Violet y Mónica estén en la
+    # casa"); sin nombre cuando la accion ya nombro al NPC ("mientras esté...").
+    old "Entrar a tu habitación"
+    new "Go into your room"
+
+    old "Entrar {articulo} {lugar}"
+    new "Go into the {lugar}"
+
+    old "{a} y {b}"
+    new "{a} and {b}"
+
+    old "en su habitación"
+    new "in her room"
+
+    old "mientras esté afuera"
+    new "while she's out"
+
+    old "mientras esté en su habitación"
+    new "while she's in her room"
+
+    old "mientras esté {lugar}"
+    new "while she's {lugar}"
+
+    old "mientras {npcs} esté en la casa"
+    new "while {npcs} is in the house"
+
+    old "mientras {npcs} estén en la casa"
+    new "while {npcs} are in the house"
+
+    old "mientras {npcs} esté afuera"
+    new "while {npcs} is out"
+
+    old "mientras {npcs} estén afuera"
+    new "while {npcs} are out"
+
+    old "mientras {npcs} esté en su habitación"
+    new "while {npcs} is in her room"
+
+    old "mientras {npcs} estén en sus habitaciones"
+    new "while {npcs} are in their rooms"
+
+    old "mientras {npcs} esté {lugar}"
+    new "while {npcs} is {lugar}"
+
+    old "mientras {npcs} estén {lugar}"
+    new "while {npcs} are {lugar}"
+
+    old "Disponible"
+    new "Available"
+
+    old "Interrumpida ({motivo})"
+    new "Interrupted ({motivo})"
+
+    old "después de responder su mensaje"
+    new "after replying to her message"
+
+    old "después de comprarlos por el celular"
+    new "after buying them on the phone"
+
+    old "después de hablar con la tienda por el celular"
+    new "after talking to the store on the phone"
+
+    old "a solas con ella"
+    new "alone with her"
+
+    old "la notebook de Mónica"
+    new "Mónica's laptop"
+
+    # Notas de disparador de la tanda de amor 35-50 (planificacion_violet.rpy).
+    # El "que hacer" se arma por partes y cada una se traduce sola: una nota
+    # sin su entrada aca queda en castellano en el medio de la frase en ingles.
+
+    old "después de que Violet te escriba"
+    new "after Violet texts you"
+
+
+    # =========================================================================
+    # Violet - Amor 35 ("Las amigas")
+    # =========================================================================
+    # Los dos textos cambian con la fase: antes de la escena mandan al sotano y
+    # despues piden lo contrario, dejarlas tranquilas hasta el dia siguiente.
+    # Son la red de la quest: el chat avisa una sola vez y no se reenvia.
+
+    old "Violet está en el sótano con sus amigas."
+    new "Violet is in the basement with her friends."
+
+    old "Violet sigue en el sótano con sus amigas."
+    new "Violet is still in the basement with her friends."
+
+    old "Bajar al sótano el viernes o el sábado por la noche"
+    new "Go down to the basement on Friday or Saturday night"
+
+    old "Dejarlas tranquilas hasta mañana"
+    new "Leave them alone until tomorrow"
+
+    # =========================================================================
+    # Violet - Amor 40 ("La solicitud")
+    # =========================================================================
+    # Un par de textos por fase: esperar la solicitud, hablar con ella, y
+    # escribirle despues de que se vaya (violet_amor_40.rpy).
+
+    old "Podría pasar un rato en mi habitación esta noche."
+    new "I could spend some time in my room tonight."
+
+    old "Violet se fue sin terminar de decirme lo que venía a decirme."
+    new "Violet left without finishing what she came to tell me."
+
+    old "Está encerrada mandando mensajes."
+    new "She's locked in her room texting."
+
+    old "Quedamos en algo."
+    new "We settled on something."
+
+    old "Estar en mi habitación por la noche"
+    new "Be in my room at night"
+
+    # ("Ir a la habitación de Violet" ya está traducido más abajo, para la
+    # quest de 50: un segundo `old` con el mismo texto rompe el arranque.)
+
+    old "Salir del celular"
+    new "Put the phone away"
+
+    # ("Esperar" ya esta traducido en script/core/quests/quest_strings.rpy:
+    # un segundo `old` con el mismo texto rompe el arranque del juego.)
+
+    old "Escribirle a Violet desde el celular"
+    new "Text Violet from your phone"
+
+    # =========================================================================
+    # Violet - Amor 45 ("La regla de la casa")
+    # =========================================================================
+    # Un solo pedido: la quest no tiene fases. La pista no spoilea que Monica
+    # llega con un paquete — la gracia es cruzarsela.
+
+    old "Escuché el auto de Mónica en la entrada."
+    new "I heard Mónica's car pulling in."
+
+    old "Salir al frente de la casa"
+    new "Go out to the front of the house"
+
+    # =========================================================================
+    # Violet - Amor 50 ("El domingo solos")
+    # =========================================================================
+    # Cinco fases, cinco pedidos: los textos salen de un dict por fase
+    # (violet_amor_50.rpy). La pista de la fase 0 no spoilea que Violet se
+    # queda — la gracia es enterarse en el living.
+
+    old "Este domingo se van todas a lo de la tía de Violet."
+    new "This Sunday they're all going to Violet's aunt's place."
+
+    old "Todavía no se fueron, puedo despedirme."
+    new "They haven't left yet, I can say goodbye."
+
+    old "Violet se quedó en casa y está en la ducha."
+    new "Violet stayed home and she's in the shower."
+
+    old "Me dijo que me duche yo también."
+    new "She told me to take a shower too."
+
+    old "Me está esperando en su habitación."
+    new "She's waiting for me in her room."
+
+    old "Esperar al domingo"
+    new "Wait for Sunday"
+
+    old "Ir al living a despedirlas"
+    new "Go to the living room to see them off"
+
+    old "Buscar a Violet"
+    new "Look for Violet"
+
+    old "Darme una ducha en el baño de arriba"
+    new "Take a shower in the upstairs bathroom"
+
+    old "Tocar la puerta de Violet"
+    new "Knock on Violet's door"

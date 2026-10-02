@@ -11,9 +11,7 @@
 # lo está, el inventario muestra "Deberia revisarlo en mi habitacion".
 
 label revisar_notebook_monica:
-    $ _q_m0c = sistema_quests.obtener_quest("monica_questprincipal_0_c")
-    if _q_m0c and _q_m0c.activa and not _q_m0c.completada:
-        $ _q_m0c.etapa_actual = ETAPA_DESARROLLO
+    if quest_lista_para_boton("monica_questprincipal_0_c"):
         jump quest_monica_questprincipal_0_c
 
     # Ya se revisó la notebook: recordatorio

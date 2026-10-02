@@ -409,6 +409,28 @@ init python:
 
             store.talk_memoria[npc_id] = store.talk_memoria[npc_id][:limite]
 
+        def recuerdo_por_ventaja(self, npc_id, estado_id, opcion_id):
+            """
+            True si ese recuerdo se ve SOLO gracias a "talk_memoria_total".
+
+            La memoria normal guarda las max(1, mc_inteligencia) combinaciones
+            mas recientes (actualizar_memoria_mc inserta adelante). Las que
+            quedan mas atras de ese tope existen porque la ventaja salteo el
+            recorte: esas son las que se etiquetan. Las de adentro del tope se
+            verian igual sin la ventaja, y etiquetarlas seria mentirle al
+            jugador sobre por que las ve.
+            """
+            try:
+                if not npc_tiene_ventaja(npc_id, "talk_memoria_total"):
+                    return False
+            except Exception:
+                return False
+            limite = max(1, getattr(store, 'mc_inteligencia', 1))
+            for _i, e in enumerate(getattr(store, 'talk_memoria', {}).get(npc_id, [])):
+                if e["estado"] == estado_id and e["opcion"] == opcion_id:
+                    return _i >= limite
+            return False
+
         def consultar_memoria_mc(self, npc_id, estado_id, opcion_id):
             """Retorna el resultado_id recordado para (npc, estado, opción) o None."""
             if not hasattr(store, 'talk_memoria'):
@@ -431,6 +453,28 @@ default talk_memoria = {}
 
 
 init python:
+
+    def talk_info_ventaja(npc_id, ventaja_id):
+        """
+        (etiqueta, texto del popup) para una opcion del talk que se ve gracias
+        a una ventaja, o None si no corresponde. La etiqueta va al lado de la
+        opcion; el popup explica que hace la ventaja y de que hito viene.
+        """
+        _v = obtener_ventaja(ventaja_id)
+        if not _v:
+            return None
+        _npc = obtener_npc(npc_id)
+        _nombre_npc = _npc.nombre if _npc else u""
+        _tag = renpy.translate_string(_("(Ventaja: {})")).format(
+            renpy.translate_string(_v["nombre"]))
+        # El nombre de la ventaja va al principio del popup: es el unico lugar
+        # donde aparece (la opcion muestra solo el resultado).
+        _pop = _tag + u"\n" + renpy.translate_string(_v["descripcion"]).replace(u"{npc}", _nombre_npc)
+        _h = hito_que_otorga(npc_id, ventaja_id)
+        if _h:
+            _pop += u" " + renpy.translate_string(_("Corresponde al hito «{}».")).format(
+                renpy.translate_string(_h.nombre))
+        return (_tag, _pop)
 
     def activar_estado_especial_npc(npc_id, estado_id, dias_duracion=None):
         """Helper accesible desde quests, eventos, items, o cualquier label."""

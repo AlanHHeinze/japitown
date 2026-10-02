@@ -79,7 +79,8 @@ init python:
 
 init 5 python:
     registrar_trigger_dormir(
-        "violet_08a_despertar", "despues", _dormir_trigger_violet_08a, prioridad=30)
+        "violet_08a_despertar", "despues", _dormir_trigger_violet_08a, prioridad=30,
+        quest_id="violet_questprincipal_08_a")
 
 ################################################################################
 ## LABELS

@@ -89,6 +89,49 @@ define _IDLE_MOV_FLECHAS = {
 
 
 init python:
+    def hud_resolver_sprites_npcs(npcs_aqui):
+        """
+        Resuelve qué sprite y en qué posición se dibuja cada NPC presente.
+        Solo lectura (corre dentro de un screen).
+
+        Prioridad por NPC: sprite de quest activa → rutina visual
+        (obtener_sprite_rutina_<npc>, si existe) → npc.sprite. La posición
+        acompaña al sprite elegido; sin posición propia se reparte con
+        obtener_posiciones_npcs. `detras_hotspots` sale de la RutinaQuest y
+        decide en qué pasada lo dibuja el HUD (ver hud_sprites_npcs).
+
+        Devuelve una lista de dicts: npc_id, sprite, x, y, detras_hotspots.
+        """
+        entradas = []
+        posiciones = obtener_posiciones_npcs(len(npcs_aqui))
+        visibles = [n for n in npcs_aqui if not npc_esta_oculto(n.id)]
+        for i, npc in enumerate(visibles):
+            sprite = None
+            posicion = None
+            detras = False
+            f_rutina = getattr(store, "obtener_sprite_rutina_" + npc.id, None)
+            if f_rutina is not None:
+                sprite = obtener_sprite_quest_npc(npc.id)
+                posicion = obtener_posicion_quest_npc(npc.id)
+                detras = sprite_quest_npc_detras_hotspots(npc.id)
+                if not sprite:
+                    sprite = f_rutina()
+                    posicion = getattr(store, "obtener_posicion_rutina_" + npc.id)()
+                    detras = False
+            if not sprite:
+                sprite = npc.sprite
+            if not sprite:
+                continue
+            if posicion:
+                x, y = posicion[0], posicion[1]
+            elif i < len(posiciones):
+                x, y = int(posiciones[i][0] * 1920), 1080
+            else:
+                x, y = 960, 1080
+            entradas.append({"npc_id": npc.id, "sprite": sprite, "x": x, "y": y,
+                             "detras_hotspots": detras})
+        return entradas
+
     def ocultar_hud():
         """
         Oculta el contenido visual del HUD sin destruir el screen.
@@ -654,6 +697,33 @@ screen animacion_dormir():
             text _("Durmiendo...") size 40 color "#ffffff" xalign 0.5
             text "Zzz..." size 30 color "#888888" xalign 0.5
 
+screen animacion_dormir_capa():
+    """
+    La misma pantalla de dormir, pero SIN timer: la muestra y la esconde
+    accion_dormir con show/hide, para que el recorrido de horarios, el cambio
+    de dia y el repintado del fondo pasen DEBAJO del negro. Asi, al despertar
+    (por la mañana o porque algo lo desperto antes), el fondo que aparece ya es
+    el del horario real y no se ve la transicion desde el de anoche.
+    Nunca queda en un checkpoint: se esconde antes del autosave.
+    """
+    modal True
+    zorder 250
+
+    add Solid("#000000")
+
+    frame:
+        xalign 0.5
+        yalign 0.5
+        background None
+
+        vbox:
+            spacing 20
+            xalign 0.5
+
+            text "💤" size 80 xalign 0.5
+            text _("Durmiendo...") size 40 color "#ffffff" xalign 0.5
+            text "Zzz..." size 30 color "#888888" xalign 0.5
+
 ################################################################################
 ## Estilos para el HUD
 ################################################################################
@@ -716,7 +786,20 @@ screen navegacion_locaciones_con_hud():
 
         # Obtener NPCs presentes (necesario antes de hotspots y sprites)
         $ npcs_aqui = npcs_en_locacion_actual()
-        
+
+        # Sprite y posición de cada NPC, resueltos una sola vez; se dibujan en
+        # dos pasadas según RutinaQuest.detras_hotspots (ver CAPA 0.5 y 2).
+        # Timer que revela los NPCs al terminar la transicion del bg.
+        if hud_npc_delay_horario:
+            timer 1.5 action SetVariable("hud_npc_delay_horario", False)
+        $ _hud_sprites = hud_resolver_sprites_npcs(npcs_aqui) if (npcs_aqui and not hud_npc_delay_horario) else []
+
+        # =====================================================================
+        # CAPA 0.5: Sprites de NPC marcados detras_hotspots (quedan DEBAJO de
+        # los hotspots: un idle que se superpone con uno no le tapa el hover)
+        # =====================================================================
+        use hud_sprites_npcs([_e for _e in _hud_sprites if _e["detras_hotspots"]])
+
         # =====================================================================
         # CAPA 1: Hotspots interactivos (se renderizan primero, quedan detras)
         # =====================================================================
@@ -932,126 +1015,8 @@ screen navegacion_locaciones_con_hud():
         # =====================================================================
         # CAPA 2: Sprites de NPCs (se renderizan despues, quedan arriba)
         # =====================================================================
+        use hud_sprites_npcs([_e for _e in _hud_sprites if not _e["detras_hotspots"]])
 
-        # Timer que revela los NPCs al terminar la transicion del bg
-        if hud_npc_delay_horario:
-            timer 1.5 action SetVariable("hud_npc_delay_horario", False)
-
-        if npcs_aqui and not hud_npc_delay_horario:
-            # Obtener posiciones para los NPCs
-            $ posiciones = obtener_posiciones_npcs(len(npcs_aqui))
-            
-            # Modo normal: sprites estáticos
-            # Filtrar NPCs ocultos por restricción de quest/evento
-            $ _npcs_visibles = [n for n in npcs_aqui if not npc_esta_oculto(n.id)]
-            for i, npc in enumerate(_npcs_visibles):
-                # Determinar sprite y posición (rutina específica o default)
-                if npc.id == "monica":
-                    # Prioridad 1: Sprite de quest activa
-                    $ sprite_actual = obtener_sprite_quest_npc("monica")
-                    $ posicion_rutina = obtener_posicion_quest_npc("monica")
-                    
-                    # Prioridad 2: Sprite de rutina visual
-                    if not sprite_actual:
-                        $ sprite_actual = obtener_sprite_rutina_monica()
-                        $ posicion_rutina = obtener_posicion_rutina_monica()
-                    
-                    # Fallback al sprite default si no hay rutina visual
-                    if not sprite_actual:
-                        $ sprite_actual = npc.sprite
-                    
-                    # Usar posición de rutina o calcular posición default
-                    if posicion_rutina:
-                        $ pos_x = posicion_rutina[0]
-                        $ pos_y = posicion_rutina[1]
-                    elif i < len(posiciones):
-                        $ pos = posiciones[i]
-                        $ pos_x = int(pos[0] * 1920)
-                        $ pos_y = 1080
-                    else:
-                        $ pos_x = 960
-                        $ pos_y = 1080
-                elif npc.id == "violet":
-                    # Prioridad 1: Sprite de quest activa
-                    $ sprite_actual = obtener_sprite_quest_npc("violet")
-                    $ posicion_rutina = obtener_posicion_quest_npc("violet")
-                    
-                    # Prioridad 2: Sprite de rutina visual
-                    if not sprite_actual:
-                        $ sprite_actual = obtener_sprite_rutina_violet()
-                        $ posicion_rutina = obtener_posicion_rutina_violet()
-                    
-                    # Fallback al sprite default si no hay rutina visual
-                    if not sprite_actual:
-                        $ sprite_actual = npc.sprite
-                    
-                    # Usar posición de rutina o calcular posición default
-                    if posicion_rutina:
-                        $ pos_x = posicion_rutina[0]
-                        $ pos_y = posicion_rutina[1]
-                    elif i < len(posiciones):
-                        $ pos = posiciones[i]
-                        $ pos_x = int(pos[0] * 1920)
-                        $ pos_y = 1080
-                    else:
-                        $ pos_x = 960
-                        $ pos_y = 1080
-                elif npc.id == "jasmine":
-                    # Prioridad 1: Sprite de quest activa
-                    $ sprite_actual = obtener_sprite_quest_npc("jasmine")
-                    $ posicion_rutina = obtener_posicion_quest_npc("jasmine")
-                    
-                    # Prioridad 2: Sprite de rutina visual
-                    if not sprite_actual:
-                        $ sprite_actual = obtener_sprite_rutina_jasmine()
-                        $ posicion_rutina = obtener_posicion_rutina_jasmine()
-                    
-                    # Fallback al sprite default si no hay rutina visual
-                    if not sprite_actual:
-                        $ sprite_actual = npc.sprite
-                    
-                    # Usar posición de rutina o calcular posición default
-                    if posicion_rutina:
-                        $ pos_x = posicion_rutina[0]
-                        $ pos_y = posicion_rutina[1]
-                    elif i < len(posiciones):
-                        $ pos = posiciones[i]
-                        $ pos_x = int(pos[0] * 1920)
-                        $ pos_y = 1080
-                    else:
-                        $ pos_x = 960
-                        $ pos_y = 1080
-                else:
-                    # NPCs sin rutina visual: usar sprite y posición default
-                    $ sprite_actual = npc.sprite
-                    if i < len(posiciones):
-                        $ pos = posiciones[i]
-                        $ pos_x = int(pos[0] * 1920)
-                        $ pos_y = 1080
-                    else:
-                        $ pos_x = 960
-                        $ pos_y = 1080
-                
-                if sprite_actual:
-                    # Imagebutton: el área clickeable coincide con el tamaño del sprite
-                    imagebutton:
-                        idle sprite_actual
-                        hover sprite_actual
-                        xpos pos_x
-                        ypos pos_y
-                        xanchor 0.5  # Centrar horizontalmente
-                        yanchor 1.0  # Alinear desde la parte inferior
-                        mouse "hand"
-                        # Bloquear interacción mientras la herramienta de posicionamiento esté activa
-                        if modo_posicionamiento:
-                            action NullAction()
-                        elif npc_interactuable(npc.id):
-                            action Call("interaccion_" + npc.id)
-                        else:
-                            # Se pasa el npc_id para que el mensaje distinga
-                            # "esta durmiendo" de un bloqueo de quest.
-                            action Call("pensar_mensaje", mensaje_npc_bloqueado(npc.id))
-        
         # =====================================================================
         # CAPA 2.5: Elementos dinámicos de quest/evento
         # =====================================================================
@@ -1141,6 +1106,32 @@ screen navegacion_locaciones_con_hud():
         use hud_navegacion
 
 ################################################################################
+## Sprites de NPC del HUD: una pasada. Lo llama navegacion_locaciones_con_hud
+## dos veces (los marcados detras_hotspots antes de los hotspots, el resto
+## después). Las entradas vienen de hud_resolver_sprites_npcs.
+screen hud_sprites_npcs(entradas):
+
+    for _e in entradas:
+        # Imagebutton: el área clickeable coincide con el tamaño del sprite
+        imagebutton:
+            idle _e["sprite"]
+            hover _e["sprite"]
+            xpos _e["x"]
+            ypos _e["y"]
+            xanchor 0.5  # Centrar horizontalmente
+            yanchor 1.0  # Alinear desde la parte inferior
+            mouse "hand"
+            # Bloquear interacción mientras la herramienta de posicionamiento esté activa
+            if modo_posicionamiento:
+                action NullAction()
+            elif npc_interactuable(_e["npc_id"]):
+                action Call("interaccion_" + _e["npc_id"])
+            else:
+                # Se pasa el npc_id para que el mensaje distinga
+                # "esta durmiendo" de un bloqueo de quest.
+                action Call("pensar_mensaje", mensaje_npc_bloqueado(_e["npc_id"]))
+
+
 ## Labels de control actualizados
 ################################################################################
 

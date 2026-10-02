@@ -1,7 +1,8 @@
 # Tinte de personajes por horario — propuesta
 
-> **Estado: NO implementado.** Es un relevamiento hecho el 2026-09-04, guardado
-> para el día que se encare. Nada de lo que hay acá está en el código todavía.
+> **Estado: implementado (2026-09-12)** en `game/script/core/utils/tinte_horario.rpy`.
+> Lo de abajo es el relevamiento original (2026-09-04); al final está lo que
+> se construyó y en qué difiere.
 >
 > Todo lo que se afirma del motor está verificado contra el SDK instalado
 > (`C:/Renpy/renpy-8.4.1-sdk`, Ren'Py 8.5.2) y se cita el archivo y la línea.
@@ -179,3 +180,28 @@ fuerza del tinte solo.
 - La charla (`talksystem`), la 09_b y el Pocket Boy: son los `show expression`.
 - Guardar y cargar: los transforms de capa no se guardan, así que hay que
   confirmar que el tinte se re-aplica al cargar y no queda la capa sin teñir.
+
+---
+
+## Lo que se construyó (2026-09-12)
+
+`game/script/core/utils/tinte_horario.rpy`, siguiendo el orden sugerido:
+
+| Pieza | Cómo quedó |
+|---|---|
+| Capa `personajes` | `config.layers.insert(index("master")+1, "personajes")` en `init -20`. |
+| `scene` limpia las dos capas | **`config.scene_callbacks`** (no hizo falta reemplazar `config.scene`): un callback que, cuando se limpia `master`, limpia `personajes` **y reaplica el tinte** — limpiar una capa le borra el at-list (`config.scene_clears_layer_at_list`, `scenelists.py:617`), y sin eso cada `scene` de una escena dejaba la capa sin teñir (bug encontrado en la primera prueba). `actualizar_bg_master` pasa por ahí. |
+| Ruteo por tag | `init 999`: todo tag con prefijo de personaje (`violet_`, `monica_`, `jasmine_`, `mc_`, `repartidor_`, `padre_`, `beso_`) que sea un **layeredimage** o una `image` **webp/png** (con alfa). Los CG jpg con prefijo (`violet_quest08_livingnublado`) quedan en master: teñirlos es lo que no se quiere. `monica_evento_01` se excluye a mano (trae un jpg de fondo adentro). 532 tags ruteados, 27 layeredimages. |
+| `show expression` | `onlayer personajes` en los 5 sitios de personaje (talk, 09_b x2, Pocket Boy x2). Las cajas de la intro quedan en master. |
+| Tinte de la capa | `aplicar_tinte_personajes()` → `renpy.show_layer_at([Transform(matrixcolor=…)], layer="personajes")`. Se llama en `actualizar_bg_master` (cada cambio de horario o locación), al final de `dormir()` y en el after_load. `show_layer_at` vive en las scene lists (se guarda y rollbackea), la reaplicación es por seguridad. |
+| HUD | **Sin tinte, por decisión (2026-09-12)**: los idles de la casa son ilustraciones ya pintadas con la luz de esa hora, teñirlas se veía mal. El tinte es solo para los sprites de las secuencias de diálogo (layeredimages en la capa). `tinte_transform_actual()` queda para cualquier sprite de personaje que se dibuje en una screen y sí lo pida. |
+| La fuerza | `TinteAmbiente(color, fuerza, modo)` (subclase de `ColorMatrix`). Modo **multiplicar** (el que quedó, `TINTE_MODO`): `out = pixel · ((1-f) + f·color)` — matriz diagonal, como la capa Multiply de Photoshop con opacidad `f`: oscurece y colorea según lo que hay debajo. Modo "normal" (`out = (1-f)·pixel + f·color`, corrimiento en la 4ta columna): fue el primero y aplastaba a color plano. Un PNG exportado desde Photoshop no sirve: el PNG no guarda modos de fusión, Ren'Py lo compondría en normal. |
+
+Colores: mañana ninguno · tarde `#df7f4e` · noche `#b78a73` · trasnoche `#303b4b`
+(`TINTE_HORARIO_COLORES`). Fuerza **0.25** (opacidad de la capa multiplicar) (`TINTE_HORARIO_FUERZA`): es
+el único botón para ajustar a ojo; con 1.0 el sprite entero pasa al color.
+
+Regla para contenido nuevo: un sprite de personaje se muestra con `show <tag>`
+y un tag con prefijo de personaje (va solo a la capa); si se muestra con
+`show expression`, lleva `onlayer personajes`. Los idles del HUD no se tiñen.
+

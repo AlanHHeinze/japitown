@@ -342,6 +342,16 @@ init python:
     # nueva queda cubierta sin tocar nada.
     BLOQUEOS_GLOBALES = []  # [(condicion, mensaje)]
 
+    # Bloqueos de UNA locacion, con su propio mensaje.
+    #
+    # La restriccion de quest ya sabe acotar el movimiento, pero al reves: dice
+    # a donde SI se puede ir, y tiene un unico `mensaje_movimiento` para todos
+    # los destinos prohibidos. Para "todo abierto menos el sotano, y porque
+    # Violet sigue con las amigas" eso no alcanza: habria que listar las 17
+    # locaciones restantes (y actualizar la lista cada vez que se agrega una) y
+    # el texto quedaria generico.
+    BLOQUEOS_LOCACION_REGISTRO = {}  # {locacion_id: [(condicion, mensaje)]}
+
     MENSAJES_BLOQUEO_EVENTS = {
         "avanzar_tiempo": "No puedes avanzar el tiempo ahora.",
     }
@@ -371,6 +381,33 @@ init python:
         """
         BLOQUEOS_GLOBALES.append((condicion, mensaje))
 
+    def registrar_bloqueo_locacion(locacion_id, condicion, mensaje):
+        """
+        Cierra UNA locacion mientras `condicion()` sea verdadera, con su propio
+        mensaje. Lo consulta accion_bloqueada_movimiento() ANTES de la
+        restriccion de quest, asi que vale con restriccion activa o sin ella.
+
+        `condicion` es una funcion de modulo sin argumentos; `mensaje` se
+        muestra como pensamiento (se traduce aca, el `old` va en
+        tl/english/bloqueos_strings.rpy).
+
+            registrar_bloqueo_locacion(
+                "casa_sotano", _va35_sotano_cerrado,
+                "Violet sigue con las amigas, mejor no molestarlas")
+
+        Cuando lo que hay que acotar es a donde PUEDE ir el jugador durante una
+        escena (unas pocas locaciones habilitadas), eso sigue siendo
+        `activar_restriccion(locaciones_permitidas=[...])`. Esto es para lo
+        contrario: el mundo abierto con una puerta cerrada.
+
+        OJO: como todo bloqueo, solo lo puede sostener algo que el jugador
+        pueda resolver — una condicion que se apaga al completar la quest, al
+        dormir o al cambiar el horario. Una que dependa de entrar a la locacion
+        bloqueada es un soft lock.
+        """
+        BLOQUEOS_LOCACION_REGISTRO.setdefault(locacion_id, []).append(
+            (condicion, mensaje))
+
     def accion_bloqueada(accion_id, incluir_globales=True):
         """
         Verifica si una accion esta bloqueada. Consulta EN ORDEN:
@@ -386,6 +423,13 @@ init python:
         Returns:
             str: Mensaje de bloqueo (ya traducido), o None si esta permitida.
         """
+        # 0. Reserva del planificador: durante el slot reservado por una quest
+        #    de corrido el reloj no pasa de largo (core/quests/planificador.rpy).
+        if accion_id in ACCIONES_RELOJ:
+            _msg_res = planificador_bloqueo_reloj()
+            if _msg_res:
+                return _msg_res
+
         # 1. Restriccion de quest activa
         r = store.restriccion_quest_activa
         if r is not None and r.activa:
@@ -441,11 +485,24 @@ init python:
 
     def accion_bloqueada_movimiento(destino_id):
         """
-        Verifica si el movimiento a una locación está bloqueado.
+        Verifica si el movimiento a una locación está bloqueado. Consulta EN
+        ORDEN:
+        1. los bloqueos de locacion registrados por contenido,
+        2. la restriccion de quest activa (whitelist + mensaje_movimiento).
+
+        Los registrados van primero porque son mas especificos: nombran UNA
+        locacion y traen su propio texto, mientras que la restriccion tiene un
+        solo mensaje para todo lo que deja afuera.
 
         Returns:
             str: Mensaje de bloqueo, o None si el movimiento está permitido.
         """
+        # 1. Bloqueos de locacion registrados por el contenido
+        for _cond, _msg in BLOQUEOS_LOCACION_REGISTRO.get(destino_id, []):
+            if _cond():
+                return renpy.translate_string(_msg)
+
+        # 2. Restriccion de quest activa
         r = store.restriccion_quest_activa
         if r is None or not r.activa:
             return None

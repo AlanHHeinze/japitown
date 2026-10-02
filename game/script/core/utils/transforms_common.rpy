@@ -36,18 +36,102 @@ transform grupo3_izq:
     xanchor 0.5
     yanchor 1.0
     ypos 1.0
+    xzoom 1.0
 
 transform grupo3_centro:
     xpos 0.70
     xanchor 0.5
     yanchor 1.0
     ypos 1.0
+    xzoom 1.0
 
 transform grupo3_der:
     xpos 0.82
     xanchor 0.5
     yanchor 1.0
     ypos 1.0
+    xzoom 1.0
+
+# El `xzoom 1.0` de los tres de arriba NO es redundante: al cambiar de transform
+# Ren'Py le pasa al nuevo las propiedades que este no define. Sin el, un sprite
+# que estaba en la version `_flip` volvia a su lugar SEGUIA espejado.
+#
+# Los mismos tres lugares ESPEJADOS: el sprite queda en el mismo punto (el
+# anclaje es el centro) pero mira a la derecha. Sirven para que una del grupo
+# mire a la que tiene al costado derecho. Van como transforms propios y no como
+# `at grupo3_izq, personaje_flip` por lo mismo que right_flip (mas abajo).
+transform grupo3_izq_flip:
+    xpos 0.58
+    xanchor 0.5
+    yanchor 1.0
+    ypos 1.0
+    xzoom -1.0
+
+transform grupo3_centro_flip:
+    xpos 0.70
+    xanchor 0.5
+    yanchor 1.0
+    ypos 1.0
+    xzoom -1.0
+
+transform grupo3_der_flip:
+    xpos 0.82
+    xanchor 0.5
+    yanchor 1.0
+    ypos 1.0
+    xzoom -1.0
+
+# DOS personajes ademas del MC: uno en `right` y otro aca, en el centro. Las
+# posiciones grupo3_* son para TRES y con dos quedan montadas sin necesidad.
+#
+# Es el `center` de Ren'Py pero con la orientacion EXPLICITA (xzoom), para que
+# el que se gira pueda volver: con el `center` pelado el espejado de la version
+# _flip se heredaba y el sprite quedaba dado vuelta (ver grupo3_izq).
+transform centro_npc:
+    xpos 0.5
+    xanchor 0.5
+    yanchor 1.0
+    ypos 1.0
+    xzoom 1.0
+
+# El del centro mirando a la derecha (al que esta en `right`).
+transform centro_npc_flip:
+    xpos 0.5
+    xanchor 0.5
+    yanchor 1.0
+    ypos 1.0
+    xzoom -1.0
+
+# La de la IZQUIERDA del grupo se APARTA: da unos pasos hacia la izquierda y
+# recien ahi se da vuelta a mirar a las otras. Separada no se enciman los
+# sprites al girar (en grupo3_izq, espejada, se monta sobre la del centro).
+#
+# 0.47 sale de medir el sprite de Violet: el dibujo ocupa ~455 de los 680 px del
+# lienzo, y espejado en 0.47 su borde derecho queda justo antes del de la que
+# esta en grupo3_centro. Y a la izquierda le queda lugar al MC en mc_izquierda.
+transform grupo3_izq_apartarse:
+    xpos 0.58
+    xanchor 0.5
+    yanchor 1.0
+    ypos 1.0
+    xzoom 1.0
+    ease 0.6 xpos 0.47
+    xzoom -1.0
+
+# Ya apartada: mirando a la izquierda (al MC) o espejada (al grupo).
+transform grupo3_izq_aparte:
+    xpos 0.47
+    xanchor 0.5
+    yanchor 1.0
+    ypos 1.0
+    xzoom 1.0
+
+transform grupo3_izq_aparte_flip:
+    xpos 0.47
+    xanchor 0.5
+    yanchor 1.0
+    ypos 1.0
+    xzoom -1.0
 
 # Los mismos dos lugares, pero LLEGANDO: parten de mc_izquierda / right y se
 # acercan hasta quedar frente a frente. Terminan EXACTAMENTE en mc_cerca y
@@ -212,11 +296,35 @@ transform personaje_salir_derecha:
     xalign 0.0 yalign 1.0
     linear 1.5 xalign 1.5
 
-# MC sale hacia la izquierda (más rapido)
+# Se da vuelta y sale por la derecha DESDE DONDE ESTA. A diferencia de
+# personaje_salir_derecha (que arranca en xalign 0.0, o sea que el sprite salta
+# al borde izquierdo y cruza toda la pantalla), este no fija el punto de
+# partida: el `ease` parte de la posicion que el sprite ya tenia. El xzoom -1
+# lo deja mirando hacia donde camina (los sprites base miran a la izquierda).
+transform salir_derecha_mirando:
+    xzoom -1.0
+    ease 1.5 xalign 1.6
+
+# MC sale hacia la izquierda (más rapido). El xzoom 1.0 lo ENDEREZA primero: en
+# mc_izquierda está espejado mirando a la derecha, así que al irse se da vuelta
+# y camina mirando hacia donde va.
 transform mc_salir_izquierda:
     xzoom 1.0
     yzoom 1.0
     ease 0.8 xpos -0.2
+
+# El PAR de mc_salir_izquierda: vuelve a entrar por el mismo borde y termina
+# exactamente en el estado de mc_izquierda (misma xpos, mismo anchor, mismo
+# espejo), así que se puede encadenar con él sin que el sprite salte.
+#
+# xpos en FRACCIÓN en los dos extremos (-0.2 → 0.15) por lo que explica
+# mc_acercarse: Ren'Py no interpola entre una fracción y un entero, y el sprite
+# pega un salto en el primer frame.
+transform mc_entrar_izquierda:
+    xpos -0.2
+    xanchor 0.5
+    xzoom -1.0
+    ease 0.8 xpos 0.15
 
 # Flip + salida hacia la izquierda (para sprites de quest)
 transform flip_y_salir_izquierda:

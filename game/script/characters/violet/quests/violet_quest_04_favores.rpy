@@ -195,7 +195,7 @@ label violet_favores_boton:
         # despachador necesita SIEMPRE un destino: un jump a None crashea.
         _fav_destino = "violet_q4d_nada_por_hoy"
 
-        if _q_fav is not None and _q_fav.etapa_actual == ETAPA_BOTON_LISTO:
+        if _q_fav is not None and quest_lista_para_boton(_q_fav.id):
             if _q_fav.id == "violet_questprincipal_04_d3":
                 _fav_destino = ("violet_q4d3_recordatorio"
                                 if store.vq4d3_pedido_hecho

@@ -210,6 +210,9 @@ layeredimage violet_parada:
             "images/characters/casa/violet/violet_parada_cuerpo_pijama_cajacoxplay.webp"
         attribute c_pijama_bolsamadera:
             "images/characters/casa/violet/violet_parada_cuerpo_pijama_bolsamadera.webp"
+        # En pijama con el LIVE en la mano: amor 15, que es de noche.
+        attribute c_pijama_live:
+            "images/characters/casa/violet/violet_parada_cuerpo_pijama_live.webp"
 
         # (Acá vivía el placeholder `c_tanga_base`, que apuntaba al cuerpo base.
         # La tanga pasó a ser su propio layeredimage `violet_tanga`, al final de
@@ -300,6 +303,81 @@ layeredimage violet_mojada:
             "images/characters/casa/violet/violet_parada_boca_sonrisaleve.webp"
         attribute b_sorprendida:
             "images/characters/casa/violet/violet_parada_boca_abiertachica.webp"
+
+
+################################################################################
+## Layeredimage: violet_toalla
+################################################################################
+## Violet envuelta en una toalla, recien salida de la ducha. El arte estaba en
+## disco desde hace tiempo (los archivos `violet_parada_*_toalla_*`) pero no
+## habia ningun layeredimage que lo usara: se declara acá para la quest de amor
+## 50, donde sale del baño y lo manda a ducharse.
+##
+## Grupos en orden de dibujo: cuerpo, ojos, boca — la boca va ultima para que
+## quede encima. Es el mismo esquema que `violet_parada` y `violet_mojada`.
+##
+## Los assets tienen su propio juego de ojos y bocas (`*_toalla_*`) porque la
+## pose tiene la cabeza en otro lugar: una boca de `violet_parada` sobre este
+## cuerpo cae al costado de la cara. No mezclar.
+
+layeredimage violet_toalla:
+    group cuerpo:
+        attribute c_toalla default:
+            "images/characters/casa/violet/violet_parada_cuerpo_toalla_base.webp"
+        attribute c_toalla_brazoscruzados:
+            "images/characters/casa/violet/violet_parada_cuerpo_toalla_brazoscruzados.webp"
+
+    group ojos:
+        attribute o_base default:
+            "images/characters/casa/violet/violet_parada_ojos_toalla_base.webp"
+        attribute o_enojada:
+            "images/characters/casa/violet/violet_parada_ojos_toalla_enojada.webp"
+        attribute o_mirandoarriba:
+            "images/characters/casa/violet/violet_parada_ojos_toalla_mirandoarriba.webp"
+
+    group boca:
+        attribute b_none default:
+            Null()
+        attribute b_hablando:
+            "images/characters/casa/violet/violet_parada_boca_toalla_hablando.webp"
+        attribute b_hablandochica:
+            "images/characters/casa/violet/violet_parada_boca_toalla_hablandochica.webp"
+        attribute b_molesta:
+            "images/characters/casa/violet/violet_parada_boca_toalla_molesta.webp"
+        attribute b_mordiendo:
+            "images/characters/casa/violet/violet_parada_boca_toalla_mordiendo.webp"
+
+
+################################################################################
+## Layeredimage: violet_ropainterior
+################################################################################
+## Violet en ropa interior para la habitacion de amor 50. Es distinto de
+## `violet_tanga` (otro dibujo, otra pose).
+##
+## NO tiene grupo de ojos: el cuerpo ya los trae dibujados. La boca y el rubor
+## son los MISMOS archivos que `violet_parada` —el lienzo es el mismo, 680x1080,
+## y la cabeza cae en el mismo lugar—, asi que se reusan sin copiar nada. El
+## orden de los grupos es el orden de las capas: cuerpo, boca, y el rubor arriba.
+
+layeredimage violet_ropainterior:
+
+    group cuerpo:
+        attribute c_ropainterior default:
+            "images/characters/casa/violet/violet_parada_ropainterior_cuerpo_base.webp"
+
+    group boca:
+        attribute b_none default:
+            Null()
+        attribute b_hablando:
+            "images/characters/casa/violet/violet_parada_boca_hablando.webp"
+        attribute b_hablandochica:
+            "images/characters/casa/violet/violet_parada_boca_hablandochica.webp"
+
+    group otros:
+        attribute ot_none default:
+            Null()
+        attribute ot_avergonzada:
+            "images/characters/casa/violet/violet_parada_otros_avergonzada.webp"
 
 
 ################################################################################

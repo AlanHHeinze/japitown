@@ -43,9 +43,6 @@ default _ruta_mq0 = ""
 label monica_q0_agradecer:
     # El MC le entrega el perfume a Mónica durante la quest: consumirlo del inventario.
     $ inventario["perfume"] = max(0, inventario.get("perfume", 0) - 1)
-    $ _q_mon0 = sistema_quests.obtener_quest("monica_questprincipal_0")
-    if _q_mon0:
-        $ _q_mon0.etapa_actual = ETAPA_DESARROLLO
     jump quest_monica_questprincipal_0
 
 

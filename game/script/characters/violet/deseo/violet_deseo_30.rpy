@@ -1,15 +1,22 @@
 ################################################################################
-## Violet — Deseo 30 · "Sinceridad"
+## Violet — Deseo 30 · "Sinceridad" + "Distancia"
 ################################################################################
 ##     archivo   violet_deseo_30.rpy
-##     quest     violet_deseo_06           (quests_deseo_violet.rpy)
-##     label     quest_violet_deseo_06     (lo fija el motor: "quest_" + id)
+##     quests    violet_deseo_06 "Sinceridad"  — la noche de la charla
+##               violet_deseo_07 "Distancia"   — los tres dias y la visita
+##               (las dos en quests_deseo_violet.rpy; la 07 nace al completar
+##               la 06 y pide el mismo umbral, 30)
+##     labels    quest_violet_deseo_06     (lo fija el motor: "quest_" + id)
+##               violet_deseo_30_visita    (cierre de la 07)
 ##
-## ⚠️ EL DIALOGO YA ESTA ESCRITO PERO NO TRADUCIDO. El archivo de
-## tl/english todavia tiene los bloques viejos de cuando el texto era
-## marcadores "...", asi que estan todos huerfanos: hay que rehacerlo entero.
+## POR QUE SON DOS QUESTS (planificador, punto 2): la noche de la charla es
+## DE CORRIDO —congela el reloj, acota el recorrido, necesita a Violet en su
+## pieza— y los tres dias de ignorarla no consumen nada: son juego libre con
+## un contador. Una sola quest obligaba a declarar la conflictiva por tres
+## dias y a que nada naciera mientras tanto. Partida, la 06 pide y protege
+## solo esa noche, y la 07 es tolerante.
 ##
-## DE QUE VA LA QUEST:
+## DE QUE VA LA HISTORIA (las dos quests seguidas):
 ##
 ##   1. El MC intenta intimar un poco mas con Violet y ella se hace la dificil.
 ##      (Es la charla en su pieza — quest_violet_deseo_06.)
@@ -32,19 +39,24 @@
 ## calentarlo — dejar la puerta del baño entornada y demas. La quest tiene que
 ## dejar eso plantado en el dialogo, o la ventaja aparece sin explicacion.
 ##
-## DOS ETAPAS bien distintas, encadenadas por `vd30_fase`:
+## DOS QUESTS, y `vd30_fase` marca en cual se esta:
 ##
-##   ETAPA 1 — la charla en su pieza
+##   QUEST 06 "Sinceridad" — la charla en su pieza
 ##     0  esperando       → trigger de game_loop: de noche, el MC en SU pieza y
 ##                          Violet libre en la suya
 ##     1  yendo a verla   → recorrido acotado; entrar a casa_hviolet dispara la
-##                          escena. Al salir queda en el pasillo, en modo libre
+##                          escena. Al salir queda en el pasillo, en modo libre,
+##                          la 06 se completa y NACE la 07
 ##
-##   ETAPA 2 — ignorarla tres dias
+##   QUEST 07 "Distancia" — ignorarla tres dias
 ##     2  contando        → hay que dormir 3 noches SIN hacer nada con ella
 ##     3  terminada
 ##
-## LA ETAPA 2 SE MIDE AL REVES QUE TODO EL RESTO DEL JUEGO: no se pide hacer
+## MIGRACION de partidas de 0.1.9a que estaban contando (fase >= 2 con la 06
+## todavia activa): _gl_trigger_vd30_migracion completa la 06 en silencio y
+## deja nacer la 07 con el contador como estaba.
+##
+## LA QUEST 07 SE MIDE AL REVES QUE TODO EL RESTO DEL JUEGO: no se pide hacer
 ## algo, se pide NO hacerlo. El contador lo lleva `vd30_dias_ignorada` y lo mueve
 ## un trigger de dormir que lee `hubo_contacto_npc("violet")`.
 ##
@@ -78,12 +90,10 @@ init python:
     VD30_DIAS_PARA_VISITA = 3
 
     # ── Los textos de la guia, que cambian con la fase ───────────────────────
-    # La quest se queda en ETAPA_BOTON_LISTO de punta a punta —recien sale al
-    # completarse— pero por el medio lo que hay que hacer cambia tres veces. Con
-    # textos fijos la guia seguia diciendo "Estar de noche en mi habitacion"
-    # durante los tres dias de ignorarla, justo en la etapa donde el jugador mas
-    # necesita que le expliquen la regla: es la unica del juego que pide NO
-    # hacer algo.
+    # La 06 se queda en ETAPA_BOTON_LISTO de punta a punta, pero por el medio
+    # lo que hay que hacer cambia (esperar la noche / ir a su pieza). La 07
+    # muestra el contador: es la unica quest del juego que pide NO hacer algo,
+    # y ver el numero es la unica forma de entender la regla.
     #
     # Van como funciones de MODULO y no como lambdas: la ConfigEtapa vive dentro
     # del Quest, y el Quest se guarda (regla anti-PicklingError del proyecto).
@@ -91,12 +101,9 @@ init python:
     # translate_string no molesta, un string sin traduccion vuelve igual.
 
     def vd30_pista_listo():
-        """Pista de ETAPA_BOTON_LISTO."""
-        _f = getattr(store, 'vd30_fase', 0)
-        if _f == 1:
+        """Pista de ETAPA_BOTON_LISTO de la 06."""
+        if getattr(store, 'vd30_fase', 0) == 1:
             return renpy.translate_string("Quiero hablar con Violet ahora")
-        if _f >= 2:
-            return renpy.translate_string("Prefiero no cruzarmela por unos dias")
         return renpy.translate_string("Hay algo que quiero hablar con Violet")
 
     def _vd30_dias_a_mostrar():
@@ -118,13 +125,18 @@ init python:
         return getattr(store, 'vd30_dias_ignorada', 0)
 
     def vd30_que_hacer_listo():
-        """
-        Que hacer de ETAPA_BOTON_LISTO.
+        """Que hacer de ETAPA_BOTON_LISTO de la 06."""
+        if getattr(store, 'vd30_fase', 0) == 1:
+            return renpy.translate_string("Ir a la habitacion de Violet")
+        return renpy.translate_string("Estar de noche en mi habitacion")
 
-        En la fase 2 lleva el contador de dias. Se muestra aunque este en 0 —y
-        sobre todo cuando VUELVE a 0—: cualquier contacto con Violet lo
-        reinicia, y verlo caer es la unica forma que tiene el jugador de
-        entender por que la cuenta no avanza.
+    def vd30b_que_hacer_listo():
+        """
+        Que hacer de ETAPA_BOTON_LISTO de la 07: el contador de dias.
+
+        Se muestra aunque este en 0 —y sobre todo cuando VUELVE a 0—: cualquier
+        contacto con Violet lo reinicia, y verlo caer es la unica forma que
+        tiene el jugador de entender por que la cuenta no avanza.
 
         NO NOMBRA EL DORMIR a proposito, aunque dormir sea lo que mueve el
         contador: decirlo invita a pasar los tres dias durmiendo de corrido y
@@ -135,40 +147,24 @@ init python:
         el resultado ya armado haria falta una entrada por cada valor del
         contador. Mismo criterio que el "Esperar {} dias" de la amor 25.
         """
-        _f = getattr(store, 'vd30_fase', 0)
-        if _f == 1:
-            return renpy.translate_string("Ir a la habitacion de Violet")
-        if _f >= 2:
-            return renpy.translate_string(
-                "Pasar {} dias ignorando a Violet ({}/{})").format(
-                    VD30_DIAS_PARA_VISITA,
-                    _vd30_dias_a_mostrar(),
-                    VD30_DIAS_PARA_VISITA)
-        return renpy.translate_string("Estar de noche en mi habitacion")
+        return renpy.translate_string(
+            "Pasar {} dias ignorando a Violet ({}/{})").format(
+                VD30_DIAS_PARA_VISITA,
+                _vd30_dias_a_mostrar(),
+                VD30_DIAS_PARA_VISITA)
 
     def _vd30_activa():
+        """La 06 (la noche de la charla) lista y sin completar."""
         return quest_lista_para_boton("violet_deseo_06")
 
-    def _vd30_violet_libre():
-        """
-        Violet en su habitacion y sin nada encima.
-
-        La locacion ya descarta casi todo (si se baña esta en el baño, si salio
-        esta afuera), pero se chequean igual la rutina especial y los bloqueos:
-        una rutina de quest puede tenerla en su pieza metida en otra cosa.
-        """
-        if tracker_locacion_npc("violet") != "casa_hviolet":
-            return False
-
-        _v30 = obtener_npc("violet")
-        if _v30 is None or _v30.obtener_rutina_especial_actual() is not None:
-            return False
-
-        return not npc_esta_oculto("violet") and npc_interactuable("violet")
+    def _vd30b_activa():
+        """La 07 (los tres dias) lista y sin completar."""
+        return quest_lista_para_boton("violet_deseo_07")
 
     def _gl_trigger_violet_deseo_30():
         """
-        Trigger de game_loop. Las tres entradas de la quest, cada una en su fase.
+        Trigger de game_loop de la 06: las dos entradas de la noche de la
+        charla, cada una en su fase.
 
         Va por game_loop y no por registrar_trigger_avanzar porque el horario
         tambien lo mueven las acciones y el talk, que llaman a avanzar_horario()
@@ -180,9 +176,9 @@ init python:
         _loc = store.sistema_locaciones.locacion_actual
         _loc_id = _loc.id if _loc else None
 
-        # Fase 0 → arranque: de noche, el MC en su pieza y ella disponible.
-        if (store.vd30_fase == 0 and store.horario_actual == 2
-                and _loc_id == "casa_hmc" and _vd30_violet_libre()):
+        # Fase 0 → arranque. De noche, el MC en su pieza y ella en la suya y
+        # libre: son las demandas de la quest (capa 2, adentro de _vd30_activa).
+        if store.vd30_fase == 0:
             return "violet_deseo_30_inicio"
 
         # Fase 1 → llegar a su habitacion. Va por game_loop y no por un override
@@ -192,13 +188,50 @@ init python:
         if store.vd30_fase == 1 and _loc_id == "casa_hviolet":
             return "quest_violet_deseo_06"
 
-        # Fase 2 → la red del cierre: ya cumplio los dias y esta de noche en su
-        # pieza. El camino normal es el trigger de dormir.
-        if (store.vd30_fase == 2 and store.horario_actual == 2
-                and _loc_id == "casa_hmc"
+        return None
+
+    def _gl_trigger_violet_deseo_30b():
+        """
+        Trigger de game_loop de la 07: la red del cierre. Ya cumplio los dias
+        y esta de noche en su pieza — el camino normal es el trigger de dormir;
+        este cubre al que llego a 3 y no vio la escena (cargo una partida
+        vieja, o el contador subio por otro camino).
+        """
+        if not _vd30b_activa():
+            return None
+        _loc = store.sistema_locaciones.locacion_actual
+        if (store.horario_actual == 2 and _loc is not None and _loc.id == "casa_hmc"
                 and store.vd30_dias_ignorada >= VD30_DIAS_PARA_VISITA):
             return "violet_deseo_30_visita"
+        return None
 
+    def _gl_trigger_vd30_migracion():
+        """
+        Migracion de partidas de 0.1.9a: la version de una sola quest dejaba la
+        06 activa durante los tres dias (fase 2). Con la 06 partida, esa
+        partida tiene que completar la 06 en silencio para que nazca la 07 y
+        siga contando con el contador que ya tenia. Solo efectos python; nunca
+        devuelve label. Una partida nueva nunca entra: la 06 se completa en la
+        charla antes de que la fase pase a 2.
+        """
+        _q06 = store.sistema_quests.obtener_quest("violet_deseo_06")
+        if (getattr(store, 'vd30_fase', 0) >= 2 and _q06 is not None
+                and _q06.activa and not _q06.completada):
+            if config.developer:
+                print("[Deseo 30] migracion: partida contando dias con la 06 "
+                      "activa; se completa para que nazca la 07")
+            completar_quest_actual("violet", quest_id="violet_deseo_06")
+        # Segunda red: hasta el 2026-09-15 la visita cerraba la 06 en vez de
+        # la 07, asi que una partida que ya vio la visita (fase 3) quedo con
+        # "Distancia" activa para siempre y sin el hito de deseo 30. Se cierra
+        # aca; el hito lo otorga actualizar_hitos en esta misma vuelta.
+        _q07 = store.sistema_quests.obtener_quest("violet_deseo_07")
+        if (getattr(store, 'vd30_fase', 0) >= 3 and _q07 is not None
+                and _q07.activa and not _q07.completada):
+            if config.developer:
+                print("[Deseo 30] migracion: la visita ya paso y la 07 sigue "
+                      "activa; se completa")
+            completar_quest_actual("violet", quest_id="violet_deseo_07")
         return None
 
     def _vd30_trigger_dormir():
@@ -216,7 +249,7 @@ init python:
         el MC se despierte ESA MISMA NOCHE: dormir() no llega a correr, el dia
         no cambia y la escena mueve el horario a mano.
         """
-        if not _vd30_activa() or store.vd30_fase != 2:
+        if not _vd30b_activa():
             return None
 
         if hubo_contacto_npc("violet"):
@@ -233,10 +266,20 @@ init python:
 init 5 python:
 
     registrar_trigger_game_loop("violet_deseo_30_fases",
-                                _gl_trigger_violet_deseo_30, duenio="violet_deseo_30")
+                                _gl_trigger_violet_deseo_30, duenio="violet_deseo_30",
+                                quest_id="violet_deseo_06")
+
+    registrar_trigger_game_loop("violet_deseo_30_visita_red",
+                                _gl_trigger_violet_deseo_30b,
+                                quest_id="violet_deseo_07")
+
+    # Prioridad alta: tiene que correr antes que el trigger de la 07 en la
+    # misma vuelta, para que la 07 ya exista cuando este la mire.
+    registrar_trigger_game_loop("violet_deseo_30_migracion",
+                                _gl_trigger_vd30_migracion, prioridad=50)
 
     registrar_trigger_dormir("violet_deseo_30_ignorar", "antes",
-                             _vd30_trigger_dormir)
+                             _vd30_trigger_dormir, quest_id="violet_deseo_07")
 
 
 ################################################################################
@@ -295,7 +338,8 @@ label violet_deseo_30_inicio:
 ################################################################################
 ## 2 · LA CHARLA — al entrar a su habitacion
 ################################################################################
-## Cierra la ETAPA 1, no la quest: de acá arranca la cuenta de los tres dias.
+## Cierra la 06. Al completarla nace la 07 y de acá arranca la cuenta de los
+## tres dias.
 
 label quest_violet_deseo_06:
 
@@ -385,13 +429,17 @@ label quest_violet_deseo_06:
     $ vd30_dias_ignorada = 0
     $ sistema_locaciones.mover_a_locacion("casa_pasilloarriba")
 
+    # Se completa la 06 y nace la 07 ("Distancia"): la noche de corrido
+    # termino, lo que sigue es juego libre con un contador.
+    $ completar_quest_actual("violet", quest_id="violet_deseo_06")
+
     window hide
     $ mostrar_hud()
     jump game_loop
 
 
 ################################################################################
-## 3 · LA VISITA — cierre de la quest
+## 3 · LA VISITA — cierre de la 07
 ################################################################################
 ## DOS ENTRADAS, un solo label:
 ##   - el trigger de DORMIR, cuando la tercera noche completa la cuenta. La
@@ -550,7 +598,9 @@ label violet_deseo_30_visita:
     hide mc_parado_base
     with dissolve
 
-    $ completar_quest_actual("violet", quest_id="violet_deseo_06")
+    # Cierra la 07 ("Distancia"): es la quest del hito de deseo 30, asi que
+    # aca se gana el hito y su ventaja `provocacion`.
+    $ completar_quest_actual("violet", quest_id="violet_deseo_07")
 
     window hide
     $ mostrar_hud()

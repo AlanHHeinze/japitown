@@ -33,10 +33,16 @@ translate english strings:
 # (Los bloqueos de dormir ahora los compone accion_bloqueada() —
 #  ver tl/english/bloqueos_strings.rpy.)
 
-# game/script/core/time/timesystem_core.rpy:257
-translate english accion_dormir_3ea5b06c:
+# HUERFANO BORRADO (2026-09-24): `accion_dormir_3ea5b06c` traducia esta misma
+# linea cuando vivia en accion_dormir directamente. Al quedar DENTRO del label
+# local `.menu_cama` (timesystem_core.rpy:404) su id paso a llevar ese nombre, y
+# el bloque viejo quedo sin fuente. Es el bloque de abajo el que rige.
+
+# TODO: Translation updated at 2026-09-16 12:23
+
+# game/script/core/time/timesystem_core.rpy:450
+translate english accion_dormir_menu_cama_3ea5b06c:
 
     # piensa "Me despertó un mensaje"
     piensa "A message woke me up"
-
 

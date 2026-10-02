@@ -10,8 +10,10 @@ define ETAPA_ESPERA = 2
 define ETAPA_CONDICIONES = 3
 define ETAPA_RUTINA = 4
 define ETAPA_BOTON_LISTO = 5
-define ETAPA_VALIDACION = 6
-define ETAPA_DESARROLLO = 7
+# 6 (VALIDACION) y 7 (DESARROLLO) ya no existen: eran la "validacion especial"
+# y el "en desarrollo" que ninguna quest recorria. La quest se queda en
+# BOTON_LISTO mientras se juega; "esta jugandose" es el flag narrativa_activa
+# (ver activar_quest). Los numeros 8 y 9 se conservan por los saves.
 define ETAPA_MEMORIAS = 8
 define ETAPA_FINALIZACION = 9
 
@@ -120,7 +122,7 @@ init python:
         Clase que representa un requisito para una quest.
         Cada requisito tiene un tipo, parámetros y un mensaje personalizado para pistas.
         """
-        
+
         def __init__(self, tipo, mensaje, **params):
             """
             Args:
@@ -146,11 +148,11 @@ init python:
             self.tipo = tipo
             self.mensaje = mensaje
             self.params = params
-        
+
         def verificar(self):
             """
             Verifica si el requisito se cumple.
-            
+
             Returns:
                 bool: True si el requisito se cumple
             """
@@ -180,44 +182,44 @@ init python:
                 valor_requerido = self.params.get("valor", 0)
                 stat_actual = getattr(store, f"mc_{stat_id}", 0)
                 return stat_actual >= valor_requerido
-            
+
             elif self.tipo == "item":
                 item_id = self.params.get("item_id")
                 cantidad = self.params.get("cantidad", 1)
                 inventario = getattr(store, "inventario", {})
                 return inventario.get(item_id, 0) >= cantidad
-            
+
             elif self.tipo == "dinero":
                 valor_requerido = self.params.get("valor", 0)
                 dinero_actual = getattr(store, "dinero", 0)
                 return dinero_actual >= valor_requerido
-            
+
             elif self.tipo == "memoria":
                 categoria = self.params.get("categoria")
                 clave = self.params.get("clave")
                 valor = self.params.get("valor")
                 return tiene_memoria(categoria, clave, valor)
-            
+
             elif self.tipo == "locacion":
                 locacion_id = self.params.get("locacion_id")
                 if hasattr(store, 'sistema_locaciones') and store.sistema_locaciones.locacion_actual:
                     return store.sistema_locaciones.locacion_actual.id == locacion_id
                 return False
-            
+
             elif self.tipo == "horario":
                 horario_id = self.params.get("horario_id")
                 return getattr(store, 'horario_actual', -1) == horario_id
-            
+
             elif self.tipo == "dia":
                 dia_id = self.params.get("dia_id")
                 return getattr(store, 'dia_semana_actual', -1) == dia_id
-            
+
             elif self.tipo == "mensaje":
                 grupo_id = self.params.get("grupo_id")
                 if hasattr(store, 'sistema_mensajes'):
                     return store.sistema_mensajes.grupo_completado(grupo_id)
                 return False
-            
+
             elif self.tipo == "npc_presente":
                 npc_id = self.params.get("npc_id")
                 locacion_id = self.params.get("locacion_id")
@@ -255,31 +257,37 @@ init python:
             if config.developer:
                 print("[Quests] Requisito de tipo desconocido: '{}' — se toma como NO cumplido".format(self.tipo))
             return False
-    
+
     
     class RutinaQuest:
         """
         Clase que representa una rutina modificada durante una quest.
         Incluye locación y sprite personalizado.
         """
-        
-        def __init__(self, locacion, sprite=None, posicion=None):
+
+        def __init__(self, locacion, sprite=None, posicion=None, detras_hotspots=False):
             """
             Args:
                 locacion: ID de la locación donde estará el NPC
                 sprite: Ruta del sprite personalizado (opcional)
                 posicion: Tupla (x, y) para posición del sprite (opcional)
+                detras_hotspots: True para que el HUD dibuje este sprite
+                    DEBAJO de los hotspots (por defecto los sprites van
+                    encima). Para idles que se superponen con un hotspot y
+                    le taparian el hover/la flecha (Violet enferma en la
+                    cama sobre la "Salida" de su pieza).
             """
             self.locacion = locacion
             self.sprite = sprite
             self.posicion = posicion
-    
+            self.detras_hotspots = detras_hotspots
+
     
     class ConfiguracionRetorno:
         """
         Configuración para retornar al jugador despues de completar una quest.
         """
-        
+
         def __init__(self, locacion=None, horario=None, dia_semana=None, avanzar_dia=False):
             """
             Args:
@@ -292,7 +300,7 @@ init python:
             self.horario = horario
             self.dia_semana = dia_semana
             self.avanzar_dia = avanzar_dia
-    
+
     
     class ConfigEtapa:
         """
@@ -302,7 +310,7 @@ init python:
         - str: texto fijo
         - callable: función que retorna str (para contenido dinámico)
         """
-        
+
         def __init__(self, pista="", que_hacer="", mensaje_despertar="",
                     trigger_mensaje=None, accion_al_entrar=None):
             """
@@ -318,7 +326,7 @@ init python:
             self.mensaje_despertar = mensaje_despertar
             self.trigger_mensaje = trigger_mensaje
             self.accion_al_entrar = accion_al_entrar
-        
+
         def _resolver(self, campo):
             """Resuelve un campo que puede ser str o callable."""
             valor = getattr(self, campo, "")
@@ -336,16 +344,16 @@ init python:
                 except Exception:
                     pass
             return resultado
-        
+
         def obtener_pista(self):
             return self._resolver("pista")
-        
+
         def obtener_que_hacer(self):
             return self._resolver("que_hacer")
-        
+
         def obtener_mensaje_despertar(self):
             return self._resolver("mensaje_despertar")
-    
+
     
     class ConfigFallo:
         """
@@ -354,7 +362,7 @@ init python:
         cambia los mensajes de pista/que_hacer.
         El fallo puede repetirse (ej: cada sábado que no se complete la quest).
         """
-        
+
         def __init__(self, condicion, trigger_mensaje=None,
                     cambio_relacion=None, pista="", que_hacer=""):
             """
@@ -370,7 +378,7 @@ init python:
             self.cambio_relacion = cambio_relacion
             self.pista = pista
             self.que_hacer = que_hacer
-        
+
         def obtener_pista(self):
             if callable(self.pista):
                 try:
@@ -378,7 +386,7 @@ init python:
                 except Exception:
                     return ""
             return self.pista
-        
+
         def obtener_que_hacer(self):
             if callable(self.que_hacer):
                 try:
@@ -386,12 +394,12 @@ init python:
                 except Exception:
                     return ""
             return self.que_hacer
-    
+
     
     class Quest:
         """
         Clase que representa una quest del juego con sistema de etapas.
-        
+
         Etapas:
         1. INICIALIZACION - Requiere quest anterior completada
         2. ESPERA - Dias que deben pasar
@@ -403,9 +411,9 @@ init python:
         8. MEMORIAS - Guardado de decisiones
         9. FINALIZACION - Completar y retornar jugador
         """
-        
+
         def __init__(self, id, npc_id, nombre, descripcion, numero_quest,
-                    dias_espera=0, condicion_espera=None, requisitos=None, validacion_especial=None,
+                    dias_espera=0, condicion_espera=None, requisitos=None,
                     rutina_quest=None, rutinas_adicionales=None, prioridad_rutina=0,
                     mensaje_pista="", retorno=None,
                     mostrar_en_menu=True, quest_anterior=None, mensaje_despertar="",
@@ -420,7 +428,6 @@ init python:
                 dias_espera: Dias a esperar antes de avanzar de etapa 2
                 condicion_espera: Callable extra que debe retornar True para salir de espera
                 requisitos: Lista de objetos Requisito para etapa 3
-                validacion_especial: Lista de objetos Requisito para etapa 6
                 rutina_quest: Dict {(dia, horario): RutinaQuest} para etapa 4
                 rutinas_adicionales: Dict {npc_id: {(dia, horario): RutinaQuest}} para otros NPCs
                 prioridad_rutina: Int, prioridad de rutina (mayor gana si hay conflicto)
@@ -448,73 +455,95 @@ init python:
             self.mostrar_en_menu = mostrar_en_menu
             self.quest_anterior = quest_anterior
             self.linea = linea
-            
+
             # Configuración de etapas
             self.dias_espera = dias_espera
             self.condicion_espera = condicion_espera
             self.requisitos = requisitos or []
-            self.validacion_especial = validacion_especial or []
             self.rutina_quest = rutina_quest or {}
             self.rutinas_adicionales = rutinas_adicionales or {}
             self.prioridad_rutina = prioridad_rutina
             self.mensaje_pista = mensaje_pista
             self.mensaje_despertar = mensaje_despertar
             self.retorno = retorno or ConfiguracionRetorno()
-            
+
             # Configuración de etapas y fallo
             self.config_etapas = config_etapas or {}
             self.config_fallo = config_fallo
-            
+
             # Estado de la quest
             self.etapa_actual = 0  # 0 = No iniciada
             self.activa = False
             self.completada = False
             self.dia_inicio = None  # Dia del juego cuando inició
-            
+
+            # Narrativa en curso: lo prende activar_quest() cuando un disparador
+            # salta al label de la quest, y lo apaga completar(). Es el estado
+            # que el planificador va a leer para saber que quest esta JUGANDOSE
+            # (distinto de `activa`, que es "nacio y espera al jugador").
+            # Leer siempre con getattr(q, "narrativa_activa", False): los saves
+            # anteriores no tienen el campo.
+            self.narrativa_activa = False
+            self.activada_dia = None       # dias_totales del disparo
+            self.activada_horario = None   # horario_actual del disparo
+
+            # Planificador (core/quests/planificador.rpy). Lo declarado lo
+            # carga declarar_planificacion() en init 6; lo de estado lo mueve
+            # el motor. Leer siempre con getattr: los saves viejos no lo tienen.
+            self.planificada = False       # tiene declaracion
+            self.de_corrido = False
+            self.demandas = []             # [Rec]
+            self.consumos = []             # [Rec]
+            self.duenio = None             # id de activar_restriccion(duenio=)
+            self.disparador = None         # Disp: como se dispara (para la guia)
+            self.esperando_desde = None    # turno en que la capa 1 la freno
+            self.bloqueada_por = None      # quest que la frena en la capa 1
+            self.bloqueo_activacion = None # motivo (texto) de la capa 2
+
             # Estado de fallo
             self.fallo_ocurrido = False
             self.ultimo_fallo_dia = 0
-            
+
             # Label de la quest
             self.label_quest = f"quest_{self.id}"
-            
+
             # Recuerdos/variables de la quest (compatibilidad con sistema anterior)
             self.recuerdos = {}
-        
+
         def puede_iniciar(self):
             """
             Verifica si la quest puede iniciarse (pasar a etapa 1).
-            
+
             Returns:
                 bool: True si puede iniciarse
             """
             if self.activa or self.completada:
                 return False
-            
+
             # Verificar quest anterior completada
             if self.quest_anterior:
                 quest_prev = sistema_quests.obtener_quest(self.quest_anterior)
                 if not quest_prev or not quest_prev.completada:
                     return False
-            
+
             return True
-        
+
         def iniciar(self):
             """Inicia la quest (etapa 1 -> avanza automáticamente)"""
             if not self.puede_iniciar():
                 return False
-            
+
             self.activa = True
             self.etapa_actual = ETAPA_INICIALIZACION
             self.dia_inicio = getattr(store, 'dias_totales', 1)
-            
 
-            
+
+
             # Avanzar automáticamente según configuración
             self._procesar_avance_etapas()
-            
+
             return True
-        
+
         def _procesar_avance_etapas(self):
             """
             Procesa el avance automático de etapas.
@@ -523,34 +552,46 @@ init python:
             """
             while True:
                 etapa_anterior = self.etapa_actual
-                
+
                 # Etapa 1 -> 2: Siempre avanza (inicialización completa)
                 if self.etapa_actual == ETAPA_INICIALIZACION:
                     self.etapa_actual = ETAPA_ESPERA
-                
+
                 # Etapa 2 -> 3: Verificar dias de espera
                 elif self.etapa_actual == ETAPA_ESPERA:
                     if self._verificar_espera():
                         self.etapa_actual = ETAPA_CONDICIONES
-                
-                # Etapa 3 -> 4: Verificar requisitos
+
+                # Etapa 3 -> 4: Verificar requisitos, y despues la CAPA 1 del
+                # planificador: ¿mi entrada le rompe algo a lo que corre?
                 elif self.etapa_actual == ETAPA_CONDICIONES:
                     requisitos_faltantes = self.obtener_requisitos_faltantes()
                     if not requisitos_faltantes:
-                        self.etapa_actual = ETAPA_RUTINA
-                        self._aplicar_rutina_quest()
-                
+                        _ok_nacer, _por = planificador_puede_nacer(self)
+                        if _ok_nacer:
+                            self.esperando_desde = None
+                            self.bloqueada_por = None
+                            self.etapa_actual = ETAPA_RUTINA
+                            self._aplicar_rutina_quest()
+                        else:
+                            if getattr(self, "esperando_desde", None) is None:
+                                store._planificador_turno += 1
+                                self.esperando_desde = store._planificador_turno
+                                if config.developer:
+                                    print("[Planificador] %s espera para nacer (detras de %r)" % (self.id, _por))
+                            self.bloqueada_por = _por
+
                 # Etapa 4 -> 5: La rutina está aplicada, botón listo
                 elif self.etapa_actual == ETAPA_RUTINA:
                     self.etapa_actual = ETAPA_BOTON_LISTO
-                
+
                 # Si hubo cambio de etapa, ejecutar acciones de entrada
                 if self.etapa_actual != etapa_anterior:
                     self._ejecutar_entrada_etapa(self.etapa_actual)
                 else:
                     # No hubo cambio, terminar el loop
                     break
-        
+
         def _ejecutar_entrada_etapa(self, etapa):
             """
             Ejecuta acciones automáticas al entrar a una nueva etapa.
@@ -559,21 +600,28 @@ init python:
             cfg_etapa = self.config_etapas.get(etapa)
             if not cfg_etapa:
                 return
-            
+
             # Disparar mensaje si hay trigger configurado
             if cfg_etapa.trigger_mensaje:
                 trigger_id, npc_id = cfg_etapa.trigger_mensaje
                 if hasattr(store, 'sistema_mensajes'):
-                    store.sistema_mensajes.disparar_por_trigger("quest_etapa", trigger_id, npc_id)
+                    # Sin quest_id a proposito: el chat de etapa es un AVISO
+                    # ("vení esta noche"), no el disparo. La activacion la hace
+                    # el disparador que viene despues (boton, puerta), y hasta
+                    # entonces la capa 2 gobierna cuando y donde. (Las quests
+                    # que son solo un chat se completan desde el chat y no
+                    # necesitan activarse.)
+                    store.sistema_mensajes.disparar_por_trigger(
+                        "quest_etapa", trigger_id, npc_id)
 
-            
+
             # Ejecutar accion de entrada si existe
             if cfg_etapa.accion_al_entrar:
                 try:
                     cfg_etapa.accion_al_entrar()
                 except Exception as e:
                     pass
-        
+
         def _verificar_espera(self):
             """Verifica si pasaron los días de espera y condiciones extra."""
             if self.dias_espera <= 0 and not self.condicion_espera:
@@ -589,11 +637,11 @@ init python:
                 return False
 
             return True
-        
+
         def obtener_requisitos_faltantes(self):
             """
             Obtiene la lista de requisitos que no se cumplen.
-            
+
             Returns:
                 Lista de objetos Requisito que no se cumplen
             """
@@ -602,53 +650,71 @@ init python:
                 if not req.verificar():
                     faltantes.append(req)
             return faltantes
-        
-        def obtener_validacion_faltante(self):
+
+        def activar(self):
             """
-            Obtiene la lista de validaciones especiales que no se cumplen.
-            
-            Returns:
-                Lista de objetos Requisito de validación que no se cumplen
+            Marca la quest como "narrativa en curso". La llama activar_quest()
+            —el punto de activacion del motor— en el instante en que un
+            disparador salta al label. Idempotente: una quest con varios
+            botones/pasos (05_c, 09_a, favores) se activa la primera vez y
+            las siguientes llamadas no cambian nada.
+
+            No mueve etapa_actual: los disparadores de varios pasos siguen
+            mirando ETAPA_BOTON_LISTO para dibujar sus botones, y moverla a
+            DESARROLLO los escondia. La etapa dice "esta lista"; este flag
+            dice "esta jugandose".
             """
-            faltantes = []
-            for req in self.validacion_especial:
-                if not req.verificar():
-                    faltantes.append(req)
-            return faltantes
-        
-        def intentar_ejecutar(self):
-            """
-            Intenta ejecutar la quest (cuando el jugador presiona el botón).
-            
-            Returns:
-                tuple: (exito: bool, mensajes: list)
-                    - exito: True si puede ejecutarse
-                    - mensajes: Lista de mensajes de requisitos faltantes
-            """
-            if self.etapa_actual != ETAPA_BOTON_LISTO:
-                return (False, ["La quest no está lista para iniciarse."])
-            
-            # Verificar validación especial (etapa 6)
-            validacion_faltante = self.obtener_validacion_faltante()
-            if validacion_faltante:
-                mensajes = [req.mensaje for req in validacion_faltante]
-                return (False, mensajes)
-            
-            # Validación exitosa, pasar a etapa de desarrollo
-            self.etapa_actual = ETAPA_DESARROLLO
-            return (True, [])
-        
+            if getattr(self, "narrativa_activa", False):
+                return False
+            self.narrativa_activa = True
+            self.activada_dia = getattr(store, "dias_totales", None)
+            self.activada_horario = getattr(store, "horario_actual", None)
+            return True
+
         def obtener_mensajes(self):
+            """
+            Mensajes de la guia para la etapa actual, con lo que el
+            planificador tenga que decir encima: si la capa 1 la tiene
+            esperando o la capa 2 la frena por un conflicto con otro
+            contenido, el "que hacer" es ESO — el mismo sistema que esconde
+            el disparador escribe por que.
+
+            Returns:
+                dict: {"pista": str, "que_hacer": str}
+            """
+            _m = self._obtener_mensajes_base()
+            if self.etapa_actual == ETAPA_CONDICIONES and getattr(self, "esperando_desde", None) is not None:
+                _por = getattr(self, "bloqueada_por", None)
+                _q_por = store.sistema_quests.obtener_quest(_por) if _por else None
+                if _q_por is not None:
+                    _m["que_hacer"] = _pl_texto_terminar_primero(_q_por)
+                else:
+                    _m["que_hacer"] = renpy.translate_string("Terminar lo que está pasando primero")
+            elif self.etapa_actual == ETAPA_BOTON_LISTO and getattr(self, "bloqueo_activacion", None):
+                _m["que_hacer"] = self.bloqueo_activacion
+            elif (self.etapa_actual == ETAPA_BOTON_LISTO
+                    and not getattr(self, "narrativa_activa", False)
+                    and getattr(self, "disparador", None) is not None):
+                # Antes de activarse, el "que hacer" lo escribe el controlador
+                # a partir del disparador y las demandas: que opcion usar, con
+                # quien, donde y cuando. En narrativa vuelve el texto propio
+                # (las fases).
+                _gen = planificador_que_hacer(self)
+                if _gen:
+                    _m["que_hacer"] = _gen
+            return _m
+
+        def _obtener_mensajes_base(self):
             """
             Obtiene los mensajes según la etapa actual.
             Prioridad: config_fallo (si fallo) > config_etapas > lógica genérica.
-            
+
             Returns:
                 dict: {"pista": str, "que_hacer": str}
             """
             pista = ""
             que_hacer = ""
-            
+
             # 1. Si hubo fallo y hay config_fallo con mensajes, usar esos
             if self.fallo_ocurrido and self.config_fallo:
                 pista_fallo = self.config_fallo.obtener_pista()
@@ -659,7 +725,7 @@ init python:
                     que_hacer = que_hacer_fallo
                 if pista and que_hacer:
                     return {"pista": pista, "que_hacer": que_hacer}
-            
+
             # 2. Buscar override en config_etapas
             cfg_etapa = self.config_etapas.get(self.etapa_actual)
             if cfg_etapa:
@@ -672,12 +738,12 @@ init python:
                 # Si ambos estan definidos, retornar sin genéricos
                 if pista and que_hacer:
                     return {"pista": pista, "que_hacer": que_hacer}
-            
+
             # 3. Lógica genérica (fallback para campos no definidos en config)
             if not pista or not que_hacer:
                 pista_gen = ""
                 que_hacer_gen = ""
-                
+
                 if self.etapa_actual == ETAPA_ESPERA:
                     dias_restantes = self.dias_espera - (getattr(store, 'dias_totales', 1) - self.dia_inicio)
                     partes_que_hacer = []
@@ -713,48 +779,44 @@ init python:
                     pista_gen = self.mensaje_pista or _q_habla_con(self.npc_id)
                     que_hacer_gen = self._generar_que_hacer_validacion()
 
-                elif self.etapa_actual == ETAPA_DESARROLLO:
-                    pista_gen = renpy.translate_string("Quest en progreso...")
-                    que_hacer_gen = renpy.translate_string("Continuar la quest.")
-                
                 # Usar genéricos solo para campos que no tienen override
                 if not pista:
                     pista = pista_gen
                 if not que_hacer:
                     que_hacer = que_hacer_gen
-            
+
             # Fallback final
             if not pista:
                 pista = self.descripcion
             if not que_hacer:
                 que_hacer = pista
-            
+
             # Traducir antes de retornar
             try:
                 pista = renpy.translate_string(pista) if pista else pista
                 que_hacer = renpy.translate_string(que_hacer) if que_hacer else que_hacer
             except Exception:
                 pass
-            
+
             return {"pista": pista, "que_hacer": que_hacer}
-        
+
         def obtener_mensaje_pista(self):
             """
             Obtiene el mensaje de pista según la etapa actual.
             Método de compatibilidad que llama a obtener_mensajes().
-            
+
             Returns:
                 str: Mensaje para mostrar en el panel de pistas
             """
             return self.obtener_mensajes()["pista"]
-        
+
         def _requisito_a_instruccion(self, req):
             """
             Convierte un requisito a instrucción directa para que_hacer.
-            
+
             Args:
                 req: Objeto Requisito
-            
+
             Returns:
                 str: Instrucción directa
             """
@@ -821,14 +883,14 @@ init python:
                 return renpy.translate_string(req.mensaje)
 
             return renpy.translate_string(req.mensaje)  # Fallback al mensaje original
-        
+
         def _obtener_nombre_locacion(self, loc_id):
             """
             Obtiene el nombre legible de una locación.
-            
+
             Args:
                 loc_id: ID de la locación
-            
+
             Returns:
                 str: Nombre legible
             """
@@ -845,70 +907,57 @@ init python:
                 nombre = partes[-1].capitalize()
                 return renpy.translate_string("el {lugar}").format(lugar=nombre)
             return loc_id.capitalize()
-        
+
         def _obtener_nombre_locacion_con_articulo(self, loc_id):
             """
             Obtiene el nombre de una locación con el artículo correcto (al/a la).
-            
+
             Args:
                 loc_id: ID de la locación
-            
+
             Returns:
                 tuple: (nombre, articulo) - ej: ("Living", "al") o ("Cocina", "a la")
             """
             # Locaciones que usan "al" (masculinas o con artículo contracto)
             locaciones_al = ["frente", "living", "baño", "pasillo", "garage", "sotano", 
                             "patio", "gym", "comedor"]
-            
+
             # Locaciones que usan "a la" (femeninas)
             locaciones_a_la = ["cocina", "habitacion", "hmonica", "hjasmine", "hviolet", "hmc"]
-            
+
             # Obtener nombre legible
             nombre = self._obtener_nombre_locacion(loc_id)
-            
+
             # Determinar artículo basado en el ID
             loc_id_lower = loc_id.lower()
             for loc in locaciones_a_la:
                 if loc in loc_id_lower:
                     return (nombre, "a la")
-            
+
             for loc in locaciones_al:
                 if loc in loc_id_lower:
                     return (nombre, "al")
-            
+
             # Default: usar "al"
             return (nombre, "al")
-        
+
         def _generar_que_hacer_validacion(self):
             """
             Genera mensaje que_hacer para etapa BOTON_LISTO.
             Siempre muestra la locación y horario de la quest, sin importar si ya estan cumplidos.
             Formato: "Ve al [lugar] durante [horario]" + " y " + otros requisitos
-            
+
             Returns:
                 str: Instrucciones combinadas
             """
             locacion_texto = None
             horario_texto = None
             otros_requisitos = []
-            
-            # Procesar validación especial primero
-            for req in self.validacion_especial:
-                if req.tipo == "locacion":
-                    loc_id = req.params.get("locacion_id", "")
-                    nombre_loc, articulo = self._obtener_nombre_locacion_con_articulo(loc_id)
-                    locacion_texto = _q_ir_a(nombre_loc, articulo)
-                elif req.tipo == "horario":
-                    horario_id = req.params.get("horario_id", 0)
-                    horario_texto = renpy.translate_string("durante {horario}").format(
-                        horario=_q_nombre_horario(horario_id)
-                    )
-                elif req.tipo == "dia":
-                    otros_requisitos.append(self._requisito_a_instruccion(req))
-                elif not req.verificar():
-                    otros_requisitos.append(self._requisito_a_instruccion(req))
 
-            # Si no hay en validación especial, buscar en requisitos normales
+            # Locacion y horario salen de los requisitos normales. (Antes se
+            # miraba primero `validacion_especial`; se elimino: era la "etapa
+            # 6" que nunca corrio, y sus condiciones pasan a ser las demandas
+            # del planificador.)
             if not locacion_texto or not horario_texto:
                 for req in self.requisitos:
                     if req.tipo == "locacion" and not locacion_texto:
@@ -941,22 +990,22 @@ init python:
 
             # Si no hay nada definido, indicar que hable con el NPC
             return _q_habla_con(self.npc_id)
-        
+
         def _aplicar_rutina_quest(self):
             """Aplica la rutina especial de la quest al NPC principal y NPCs adicionales."""
             # Aplicar rutina al NPC principal
             if self.rutina_quest:
                 self._aplicar_rutina_a_npc(self.npc_id, self.rutina_quest)
-            
+
             # Aplicar rutinas adicionales a otros NPCs
             for npc_id_adicional, rutinas in self.rutinas_adicionales.items():
                 self._aplicar_rutina_a_npc(npc_id_adicional, rutinas)
-        
+
         def _aplicar_rutina_a_npc(self, npc_id, rutinas):
             """
             Aplica rutinas de quest a un NPC específico, respetando prioridades.
             Solo aplica si no hay otra quest con mayor prioridad afectando al mismo NPC.
-            
+
             Args:
                 npc_id: ID del NPC a modificar
                 rutinas: Dict {(dia, horario): RutinaQuest o str}
@@ -964,11 +1013,11 @@ init python:
             npc = obtener_npc(npc_id)
             if not npc:
                 return
-            
+
             # Verificar si otra quest activa tiene mayor prioridad sobre este NPC
             if self._hay_prioridad_mayor(npc_id):
                 return
-            
+
             # Aplicar rutina de quest en el dict dedicado (prioridad sobre especiales)
             if not hasattr(npc, 'rutinas_quest'):
                 npc.rutinas_quest = {}
@@ -980,14 +1029,14 @@ init python:
                     npc.rutinas_quest[(dia, horario)] = rutina
 
             npc.actualizar_ubicacion()
-        
+
         def _hay_prioridad_mayor(self, npc_id):
             """
             Verifica si hay otra quest activa con mayor prioridad que afecte al mismo NPC.
-            
+
             Args:
                 npc_id: ID del NPC a verificar
-            
+
             Returns:
                 bool: True si hay otra quest con mayor prioridad
             """
@@ -1002,7 +1051,7 @@ init python:
                 if npc_id in quest.rutinas_adicionales:
                     return True
             return False
-        
+
         def _rutina_quest_vigente(self, npc_id=None):
             """
             Devuelve la RutinaQuest de este momento para `npc_id` SOLO si esta
@@ -1071,16 +1120,16 @@ init python:
             """
             rutina = self._rutina_quest_vigente(npc_id)
             return rutina.posicion if rutina else None
-        
+
         def _restaurar_rutina_normal(self):
             """Restaura la rutina normal del NPC principal y NPCs adicionales."""
             # Restaurar NPC principal
             self._restaurar_rutina_npc(self.npc_id)
-            
+
             # Restaurar NPCs adicionales
             for npc_id_adicional in self.rutinas_adicionales:
                 self._restaurar_rutina_npc(npc_id_adicional)
-        
+
         def _restaurar_rutina_npc(self, npc_id):
             """Restaura la rutina normal de un NPC eliminando las entradas de esta quest."""
             npc = obtener_npc(npc_id)
@@ -1100,40 +1149,42 @@ init python:
                 delattr(npc, 'rutina_original')
 
             npc.actualizar_ubicacion()
-        
+
         def completar(self, recuerdos_finales=None):
             """
             Completa la quest (etapa 8-9).
-            
+
             Args:
                 recuerdos_finales: Dict con recuerdos a guardar
             """
             self.etapa_actual = ETAPA_MEMORIAS
-            
+
             # Guardar recuerdos
             if recuerdos_finales:
                 self.recuerdos.update(recuerdos_finales)
                 # Tambien guardar en el sistema de memorias global
                 for clave, valor in recuerdos_finales.items():
                     guardar_memoria(self.npc_id, clave, valor)
-            
+
             self.etapa_actual = ETAPA_FINALIZACION
-            
+
             # Restaurar rutina normal del NPC
             self._restaurar_rutina_normal()
-            
+
             # Aplicar configuración de retorno
             self._aplicar_retorno()
-            
+
             # Marcar como completada
             self.activa = False
             self.completada = True
-            
+            self.narrativa_activa = False
+            planificador_liberar(self.id)
+
             # Incrementar progreso del NPC
             npc = obtener_npc(self.npc_id)
             if npc:
                 npc.modificar_progreso(1)
-            
+
             # Avanzar numero de quest global
             store.quest_actual += 1
 
@@ -1146,31 +1197,31 @@ init python:
             # Disparar mensaje de chat si existe
             if hasattr(store, 'sistema_mensajes'):
                 store.sistema_mensajes.disparar_por_trigger("quest", self.id, self.npc_id)
-            
+
             # Buscar e iniciar la siguiente quest del mismo NPC
             self._iniciar_siguiente_quest()
-        
+
         def _aplicar_retorno(self):
             """Aplica la configuración de retorno al completar la quest."""
             if not self.retorno:
                 return
-            
+
             if self.retorno.avanzar_dia:
                 # Avanzar al siguiente dia
                 if hasattr(store, 'avanzar_dia'):
                     avanzar_dia()
-            
+
             if self.retorno.horario is not None:
                 store.horario_actual = self.retorno.horario
-            
+
             if self.retorno.dia_semana is not None:
                 store.dia_semana_actual = self.retorno.dia_semana
-            
+
             if self.retorno.locacion:
                 # Ir a la locación especificada (mover_a_locacion es el método
                 # real del sistema; ir_a_locacion no existe en la clase)
                 sistema_locaciones.mover_a_locacion(self.retorno.locacion)
-        
+
         def _iniciar_siguiente_quest(self):
             """
             Inicia TODAS las quests del mismo NPC que declaran esta como anterior.
@@ -1187,13 +1238,13 @@ init python:
                 if quest.npc_id == self.npc_id and quest.quest_anterior == self.id:
                     if quest.puede_iniciar():
                         quest.iniciar()
-        
+
         def obtener_mensaje_despertar_actual(self):
             """
             Obtiene el mensaje de despertar según la etapa actual.
             A diferencia del mensaje_despertar estático, este puede cambiar
             según la etapa y usar callables para contenido dinámico.
-            
+
             Returns:
                 str: Mensaje para mostrar al despertar, o "" si no hay
             """
@@ -1203,7 +1254,7 @@ init python:
                 msg = cfg_etapa.obtener_mensaje_despertar()
                 if msg:
                     return msg
-            
+
             # Fallback al mensaje estático
             msg = self.mensaje_despertar or ""
             if msg:
@@ -1212,13 +1263,13 @@ init python:
                 except Exception:
                     pass
             return msg
-        
+
         def verificar_fallo(self):
             """
             Verifica si se produce un fallo en la quest.
             Solo se puede fallar una vez por dia (evita repetir el mismo dia).
             Si se detecta fallo, dispara acciones y marca fallo_ocurrido.
-            
+
             Returns:
                 bool: True si se produjo un fallo en esta llamada
             """
@@ -1226,44 +1277,44 @@ init python:
                 return False
             if not self.activa or self.completada:
                 return False
-            
+
             # Solo verificar en etapas donde tiene sentido fallar (BOTON_LISTO)
             if self.etapa_actual not in [ETAPA_BOTON_LISTO, ETAPA_RUTINA]:
                 return False
-            
+
             # Evitar fallar dos veces el mismo dia
             dia_actual = getattr(store, 'dias_totales', 1)
             if self.ultimo_fallo_dia == dia_actual:
                 return False
-            
+
             # Verificar condición de fallo
             try:
                 if not self.config_fallo.condicion():
                     return False
             except Exception:
                 return False
-            
+
             # ¡Fallo detectado!
             self.fallo_ocurrido = True
             self.ultimo_fallo_dia = dia_actual
-            
+
             # Disparar chat de fallo
             if self.config_fallo.trigger_mensaje:
                 trigger_id, npc_id = self.config_fallo.trigger_mensaje
                 if hasattr(store, 'sistema_mensajes'):
                     store.sistema_mensajes.disparar_por_trigger("quest_fallo", trigger_id, npc_id)
-            
+
             # Aplicar cambio de stat1
             if self.config_fallo.cambio_relacion:
                 npc_id, cantidad = self.config_fallo.cambio_relacion
                 npc = obtener_npc(npc_id)
                 if npc:
                     npc.modificar_stat1(cantidad)
-            
 
-            
+
+
             return True
-        
+
         def actualizar(self):
             """
             Actualiza el estado de la quest.
@@ -1271,39 +1322,42 @@ init python:
             """
             if not self.activa or self.completada:
                 return
-            
+
             self._procesar_avance_etapas()
-            
+
             # Verificar condición de fallo
             self.verificar_fallo()
-        
+
         # Métodos de compatibilidad con sistema anterior
         def guardar_recuerdo(self, clave, valor):
             """Guarda un recuerdo de la quest"""
             self.recuerdos[clave] = valor
             guardar_memoria(self.npc_id, clave, valor)
-        
+
         def obtener_recuerdo(self, clave, default=None):
             """Obtiene un recuerdo de la quest"""
             return self.recuerdos.get(clave, default)
-        
+
         # Alias para compatibilidad
         def puede_activarse(self):
             """Alias de puede_iniciar para compatibilidad"""
             # Verificar tambien que estemos en las condiciones correctas
             if not self.puede_iniciar():
                 return False
-            
+
             # Verificar condiciones adicionales del sistema anterior
             return True
-        
-        def activar(self):
-            """Alias de iniciar para compatibilidad"""
-            return self.iniciar()
-        
+
         def resetear(self):
             """Resetea el estado de la quest a su estado inicial"""
             self.activa = False
+            self.narrativa_activa = False
+            self.activada_dia = None
+            self.activada_horario = None
+            self.esperando_desde = None
+            self.bloqueada_por = None
+            self.bloqueo_activacion = None
+            planificador_liberar(self.id)
             self.completada = False
             self.etapa_actual = 0
             self.dia_inicio = 0
@@ -1314,33 +1368,33 @@ init python:
         """
         Gestor central del sistema de quests.
         """
-        
+
         def __init__(self):
             self.quests = {}  # Dict de todas las quests por ID
             self.quests_por_npc = {}  # Dict de quests agrupadas por NPC
-        
+
         def registrar_quest(self, quest):
             """Registra una quest en el sistema"""
             self.quests[quest.id] = quest
-            
+
             # Agrupar por NPC
             if quest.npc_id not in self.quests_por_npc:
                 self.quests_por_npc[quest.npc_id] = []
             self.quests_por_npc[quest.npc_id].append(quest)
-        
+
         def obtener_quest(self, quest_id):
             """Obtiene una quest por su ID"""
             return self.quests.get(quest_id)
-        
+
         def obtener_quests_npc(self, npc_id):
             """Obtiene todas las quests de un NPC"""
             return self.quests_por_npc.get(npc_id, [])
-        
+
         def obtener_quests_disponibles(self, npc_id):
             """Obtiene quests disponibles para activar de un NPC que deben mostrarse en el menú"""
             quests_npc = self.obtener_quests_npc(npc_id)
             return [q for q in quests_npc if q.puede_activarse() and q.mostrar_en_menu]
-        
+
         def obtener_quest_activa(self, npc_id=None):
             """
             Obtiene la quest activa, PRIORIZANDO la de la linea principal.
@@ -1382,7 +1436,7 @@ init python:
                     fallback = quest
 
             return fallback
-        
+
         def obtener_quests_activas(self):
             """
             Obtiene todas las quests activas.
@@ -1419,27 +1473,27 @@ init python:
                     continue
                 rv.append(q)
             return rv
-        
+
         def hay_quest_activa(self):
             """Verifica si hay alguna quest activa"""
             return self.obtener_quest_activa() is not None
-        
+
         def verificar_recuerdo(self, npc_id, recuerdo_key, valor_esperado):
             """
             Verifica un recuerdo de quests anteriores.
-            
+
             Args:
                 npc_id: ID del NPC
                 recuerdo_key: Clave del recuerdo
                 valor_esperado: Valor esperado
-            
+
             Returns:
                 bool: True si el recuerdo coincide
             """
             # Primero verificar en el sistema de memorias global
             if tiene_memoria(npc_id, recuerdo_key, valor_esperado):
                 return True
-            
+
             # Fallback: verificar en recuerdos de quests completadas
             quests_npc = self.obtener_quests_npc(npc_id)
             for quest in quests_npc:
@@ -1448,11 +1502,11 @@ init python:
                     if valor_actual == valor_esperado:
                         return True
             return False
-        
+
         def obtener_pista_actual(self):
             """
             Obtiene la pista para la quest actual según el numero de quest.
-            
+
             Returns:
                 Dict con informacion de la pista o None
             """
@@ -1469,15 +1523,15 @@ init python:
                         "descripcion": quest_activa.descripcion,
                         "mensaje": quest_activa.obtener_mensaje_pista()
                     }
-            
+
             return None
-        
+
         def actualizar_todas(self):
             """Actualiza el estado de todas las quests activas"""
             for quest in self.quests.values():
                 if quest.activa:
                     quest.actualizar()
-        
+
         def resetear_todas(self):
             """Resetea el estado de todas las quests (para nuevo juego)"""
             for quest in self.quests.values():
@@ -1494,6 +1548,10 @@ init 4 python:
 # el contenido registrado. Ver _ps_copia_fresca en persistencia_sistemas.rpy.
 default sistema_quests = _ps_copia_fresca("sistema_quests")
 
+# Ultima quest por la que paso activar_quest (tag `quest_activada` de Sentry):
+# si algo revienta adentro de una escena, dice de que quest era.
+default _quest_activada_ultima = ""
+
 # Variable global para el numero de quest actual
 default quest_actual = 0
 
@@ -1502,14 +1560,14 @@ default quest_actual = 0
 ################################################################################
 
 init python:
-    
+
     def iniciar_quest(quest_id):
         """
         Inicia una quest específica.
-        
+
         Args:
             quest_id: ID de la quest a iniciar
-        
+
         Returns:
             bool: True si se pudo iniciar
         """
@@ -1517,7 +1575,7 @@ init python:
         if quest and quest.puede_iniciar():
             return quest.iniciar()
         return False
-    
+
     def completar_quest_actual(npc_id=None, recuerdos=None, quest_id=None):
         """
         Completa una quest activa.
@@ -1565,11 +1623,11 @@ init python:
             # hay quests que no mueven ninguno.
             if hasattr(store, 'marcar_contacto_npc'):
                 store.marcar_contacto_npc(quest_a_completar.npc_id)
-    
+
     def guardar_recuerdo_quest(clave, valor):
         """
         Guarda un recuerdo en la quest activa.
-        
+
         Args:
             clave: Clave del recuerdo
             valor: Valor a guardar
@@ -1577,23 +1635,11 @@ init python:
         quest_activa = sistema_quests.obtener_quest_activa()
         if quest_activa:
             quest_activa.guardar_recuerdo(clave, valor)
-    
+
     def obtener_pista_quest():
         """Obtiene la pista de la quest actual"""
         return sistema_quests.obtener_pista_actual()
-    
-    def intentar_iniciar_quest_actual():
-        """
-        Intenta iniciar la quest activa (cuando el jugador presiona el botón).
-        
-        Returns:
-            tuple: (exito, mensajes)
-        """
-        quest_activa = sistema_quests.obtener_quest_activa()
-        if quest_activa:
-            return quest_activa.intentar_ejecutar()
-        return (False, ["No hay quest activa."])
-    
+
     def _buscar_rutina_quest_vigente(npc_id):
         """
         Busca entre las quests activas la RutinaQuest vigente para este NPC.
@@ -1656,20 +1702,27 @@ init python:
         """
         rutina = _buscar_rutina_quest_vigente(npc_id)
         return rutina.sprite if rutina else None
-    
+
     def obtener_posicion_quest_npc(npc_id):
         """
         Obtiene la posición del sprite de quest para un NPC.
-        
+
         Args:
             npc_id: ID del NPC
-        
+
         Returns:
             tuple o None: (x, y) o None
         """
         rutina = _buscar_rutina_quest_vigente(npc_id)
         return rutina.posicion if rutina else None
-    
+
+    def sprite_quest_npc_detras_hotspots(npc_id):
+        """True si el sprite de quest vigente del NPC va debajo de los hotspots
+        (RutinaQuest.detras_hotspots). getattr por los saves anteriores al
+        atributo."""
+        rutina = _buscar_rutina_quest_vigente(npc_id)
+        return bool(getattr(rutina, "detras_hotspots", False)) if rutina else False
+
     def quest_lista_para_boton(quest_id):
         """
         True si la quest esta activa, sin completar y en ETAPA_BOTON_LISTO.
@@ -1688,7 +1741,107 @@ init python:
         # (core/npcs/npc_disponibilidad.rpy). Acá alcanza para TODAS: este es
         # el predicado que usan los botones, las opciones de puerta y los
         # triggers de dormir/game_loop.
-        return npc_disponible(q.npc_id)
+        if not npc_disponible(q.npc_id):
+            return False
+
+        # CAPA 2 del planificador: reserva ajena, consumos de otras activas,
+        # restriccion ajena y el mundo tal como la quest lo pide. Una quest ya
+        # en narrativa pasa siempre (core/quests/planificador.rpy).
+        return planificador_puede_activarse(q)[0]
+
+    # ==========================================================================
+    # PUNTO DE ACTIVACION
+    # ==========================================================================
+    # Hasta acá el motor no sabia CUANDO una quest pasaba de "esperando al
+    # jugador" a "narrativa en curso": los disparadores saltaban derecho al
+    # label. intentar_ejecutar()/validacion_especial eran codigo muerto (los
+    # dos se eliminaron) y ETAPA_DESARROLLO se seteaba a mano en dos quests.
+    # Este es el unico lugar
+    # por el que pasa ese instante — y sobre el que se apoya el planificador
+    # (docs/arquitectura/planificador.md) para consumir y reservar.
+    #
+    # Lo llaman los CUATRO despachadores del motor, nunca el contenido:
+    #   - menu del NPC (interaccion_<npc> -> despachar_opcion_quest)
+    #   - menu de puerta y entrada directa a la habitacion (door_access)
+    #   - override de puerta (door_access)
+    #   - triggers de game_loop/dormir/avanzar con quest_id (triggers_contenido)
+
+    def resolver_quest_id_opcion(label, quest_id=None):
+        """
+        Quest a la que pertenece un boton/opcion. Mismo criterio que
+        tag_opcion_quest: primero `quest_id` (puede ser callable — las opciones
+        de puerta se registran en init con un valor fijo y el arco de favores
+        cambia de quest por tramo), si no, el prefijo `quest_<id>` del label.
+        None si la opcion no es de quest (ventajas, eventos, contenido suelto).
+        """
+        _qid = quest_id
+        if callable(_qid):
+            try:
+                _qid = _qid()
+            except Exception:
+                _qid = None
+        if not _qid and label and label.startswith("quest_"):
+            _qid = label[len("quest_"):]
+        return _qid or None
+
+    def activar_quest(quest_id, origen=None):
+        """
+        Registra que un disparador esta por saltar al label de `quest_id`.
+
+        Prende `narrativa_activa` (ver Quest.activar) y deja el id en
+        _quest_activada_ultima (tag `quest_activada` de Sentry). Con un id que
+        no es quest, o una quest que no esta lista, no hace nada mas que avisar
+        en desarrollo: el salto ocurre igual, porque hoy los disparadores ya
+        validan lo suyo con quest_lista_para_boton y la intencion es no
+        cambiar el juego hasta que el planificador tome la decision.
+
+        No evalua condiciones: las que tenia la vieja `validacion_especial`
+        (eliminada — nunca corrio y estaba desactualizada) van a ser las
+        demandas del planificador, y este es el lugar donde las va a leer.
+        Devuelve True si la quest quedo en narrativa por esta llamada, False
+        si ya lo estaba o no aplica.
+        """
+        if not quest_id:
+            return False
+        q = store.sistema_quests.obtener_quest(quest_id)
+        if q is None:
+            return False
+        if q.completada:
+            # Contenido que sigue disponible despues de la quest (revisar la
+            # notebook, las acciones de la habitacion): no es error, no avisa.
+            return False
+        if not q.activa:
+            if config.developer:
+                print("[Activacion] %r disparo %r pero la quest no nacio "
+                      "(etapa=%r)" % (origen, quest_id, q.etapa_actual))
+            return False
+        store._quest_activada_ultima = quest_id
+        _nueva = q.activar()
+        if _nueva:
+            # Una de corrido toma su momento: ver planificador_reservar.
+            planificador_reservar(q)
+            if config.developer:
+                print("[Activacion] %s -> %s (dia %r, horario %r)" % (
+                    origen or "?", quest_id, q.activada_dia, q.activada_horario))
+        return _nueva
+
+    def quest_en_narrativa(quest_id):
+        """True si la quest ya paso por activar_quest y no se completo."""
+        q = store.sistema_quests.obtener_quest(quest_id)
+        return bool(q and q.activa and not q.completada
+                    and getattr(q, "narrativa_activa", False))
+
+    def despachar_opcion_quest(resultado, origen=None):
+        """
+        Helper de los despachadores de menu. `resultado` es lo que devuelve la
+        screen (menu_interaccion_npc_completo / menu_puerta_npc):
+        ("opcion_especial", label, quest_id). Activa la quest si corresponde y
+        devuelve el label al que hay que saltar.
+        """
+        _label = resultado[1]
+        _qid = resultado[2] if len(resultado) > 2 else None
+        activar_quest(resolver_quest_id_opcion(_label, _qid), origen=origen)
+        return _label
 
     # Icono por linea, para los tags de los botones. Mismos emojis que usa el
     # panel de Pistas en sus pestañas, asi el jugador los asocia.
@@ -1730,14 +1883,7 @@ init python:
         # registran en init 5 con un valor fijo, y el arco de los favores cambia
         # de quest segun el tramo, asi que necesita resolverse al mostrar el
         # menu y no al registrarse.
-        _qid_tag = quest_id
-        if callable(_qid_tag):
-            try:
-                _qid_tag = _qid_tag()
-            except Exception:
-                _qid_tag = None
-        if not _qid_tag and label and label.startswith("quest_"):
-            _qid_tag = label[len("quest_"):]
+        _qid_tag = resolver_quest_id_opcion(label, quest_id)
 
         _linea = None
         if _qid_tag:
@@ -1756,8 +1902,9 @@ init python:
         Se llama al dormir para verificar tiempos de espera y avanzar etapas.
         Tambien verifica condiciones de fallo.
         """
+        planificador_limpiar_reservas()
         sistema_quests.actualizar_todas()
-    
+
     def verificar_fallos_quests():
         """
         Verifica condiciones de fallo para todas las quests activas.
@@ -1766,7 +1913,7 @@ init python:
         for quest in sistema_quests.quests.values():
             if quest.activa and not quest.completada:
                 quest.verificar_fallo()
-    
+
     def inicializar_todas_las_quests():
         """
         Arranca la primera quest de CADA linea de cada NPC.
@@ -1798,11 +1945,11 @@ init python:
 label ejecutar_quest_activa:
     # Obtener el NPC temporalmente almacenado
     $ npc_actual = obtener_npc(_npc_id_temp)
-    
+
     if npc_actual:
         # Obtener la quest activa para este NPC
         $ quest = sistema_quests.obtener_quest_activa(npc_actual.id)
-        
+
         if quest:
             # Construir el nombre del label de la quest
             $ label_quest = "quest_" + quest.id
@@ -1826,8 +1973,8 @@ label ejecutar_quest_activa:
 # Label para iniciar una quest desde el menú
 label iniciar_quest_menu:
     $ quest = sistema_quests.obtener_quest(_quest_id_temp)
-    
+
     if quest and quest.puede_iniciar():
         $ quest.iniciar()
-    
+
     jump game_loop

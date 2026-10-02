@@ -53,16 +53,9 @@ init python:
         if getattr(store, 'vd20_fase', 0) != 0:
             return None
 
+        # Noche y MC en su habitacion: demanda de locacion de la quest (capa 2).
         if not quest_lista_para_boton("violet_deseo_04"):
             return None
-
-        if store.horario_actual != 2:          # Noche
-            return None
-
-        _loc_d20 = store.sistema_locaciones.locacion_actual
-        if _loc_d20 is None or _loc_d20.id != "casa_hmc":
-            return None
-
         return "violet_deseo_20_inicio"
 
     def _vd20_esperando_mensaje():
@@ -136,10 +129,12 @@ init python:
 init 5 python:
 
     registrar_trigger_game_loop("violet_deseo_20_inicio",
-                                _gl_trigger_violet_deseo_20, duenio="violet_deseo_20")
+                                _gl_trigger_violet_deseo_20, duenio="violet_deseo_20",
+                                quest_id="violet_deseo_04")
 
     registrar_trigger_salir_celular("violet_deseo_20_cierre",
-                                    _cel_trigger_violet_deseo_20)
+                                    _cel_trigger_violet_deseo_20,
+                                    quest_id="violet_deseo_04")
 
     # Los dos lados del encierro de la fase 1. El jugador SIEMPRE puede salir
     # por su cuenta —le escribe y listo—, que es la condicion para poder usar

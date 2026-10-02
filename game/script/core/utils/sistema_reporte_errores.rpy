@@ -4,11 +4,10 @@
 ## Cuando ocurre un error no controlado, muestra una pantalla propia con un
 ## botón "Reportar" que envía el error a un webhook de Discord.
 ##
-## CONFIGURACIÓN (obligatoria para que envíe):
-##   1. En tu servidor de Discord: Ajustes del canal → Integraciones →
-##      Webhooks → Nuevo webhook → Copiar URL.
-##   2. Pegá esa URL en JP_WEBHOOK_URL abajo.
-## Mientras no se configure, el botón avisa "webhook no configurado".
+## CONFIGURACIÓN: el reporte va al proxy (Cloudflare Worker japitown-reporter),
+## que lo reenvía al webhook de Discord guardado como secreto del Worker.
+## El código del Worker está en proxy-reportes/, excluido del build en
+## options.rpy (estar fuera de game/ NO alcanza: la raíz también se empaqueta).
 ##
 ## Nota: el reporte incluye versión, locación/horario actual y el traceback
 ## (puede contener texto de diálogo). Lo envía SOLO cuando el jugador toca
@@ -20,11 +19,9 @@ init python:
     import sys
 
     # >>> URL a la que se envía el reporte <<<
-    # RECOMENDADO: apuntar al proxy (Cloudflare Worker) para OCULTAR el webhook.
-    # El webhook de Discord real queda solo en el Worker, no en el juego público.
-    # Mientras no haya proxy, se puede dejar el webhook de Discord directo (CORS OK).
-    #   Con proxy:  "https://japitown-reporter.TU-SUBDOMINIO.workers.dev"
-    JP_WEBHOOK_URL = "https://discord.com/api/webhooks/1521657313490894938/4Hl8ZGQPyzbstBBUk8U88tQ6ir_-66UpTYy5En_Bc52EsPqO9_wZbOdVWcCuCbEQYUEv"
+    # Proxy (Cloudflare Worker): el webhook de Discord real queda solo en el
+    # Worker como secreto, nunca en el juego público.
+    JP_WEBHOOK_URL = "https://japitown-reporter.risita022.workers.dev/error"
 
     def jp_es_web():
         """True si el juego corre en el navegador (Ren'Py Web / emscripten)."""
@@ -45,6 +42,37 @@ init python:
     store._jp_full = ""
     store._jp_status = None   # None | "ok" | "fail" | "sin_config"
     store._jp_es_descarga = False   # True si el error es un fallo de descarga web (E04)
+
+    def jp_jugador_actual():
+        """
+        Quien manda el reporte: el nombre que eligio el jugador. Lo usan los
+        tres canales (error, feedback, Sentry) para no tener que adivinar de
+        quien es cada reporte. Marca "(tester)" cuando la partida corre con
+        MODO_DEV — normalmente un perfil de PERFILES_DEV.
+        """
+        try:
+            nombre = (getattr(store, "mc_name", u"") or u"").strip()
+        except Exception:
+            nombre = u""
+        if not nombre:
+            nombre = u"(sin nombre)"
+        try:
+            if getattr(store, "MODO_DEV", False):
+                nombre += u" (tester)"
+        except Exception:
+            pass
+        return nombre
+
+    def jp_controlador_actual(max_lineas=12):
+        """
+        Lo que esta procesando el controlador de quests (planificador). Con
+        guarda propia: si el controlador no existe todavia (crash muy temprano)
+        el reporte sale igual.
+        """
+        try:
+            return store.planificador_reporte(max_lineas)
+        except Exception:
+            return u"(no disponible)"
 
     def _jp_contexto_actual():
         """Arma una línea con la ubicación/tiempo del juego al momento del error."""
@@ -80,18 +108,30 @@ init python:
         cabecera = (
             "**[Japitown %s] Reporte de error**\n" % ver +
             "Fecha: %s\n" % time.strftime("%Y-%m-%d %H:%M:%S") +
+            "Jugador: %s\n" % jp_jugador_actual() +
+            # El MISMO id que va a Sentry como user.id: con los dos lados
+            # etiquetados igual, un feedback que llega por Discord se cruza con
+            # los crashes que esa instalacion mando (ver jp_instalacion_id).
+            "Instalación: %s\n" % jp_instalacion_id() +
             "Contexto: %s\n" % _jp_contexto_actual() +
             "Excepción: %s\n" % (excepcion or "(desconocida)") +
             "Error: %s\n" % ((short[:300] + u"…" if len(short) > 300 else short) or "(sin resumen)")
         )
+        # Que estaba haciendo el controlador: restriccion puesta, reservas y
+        # como veia a cada quest viva. Va ANTES del traceback y con tope
+        # propio — el traceback se recorta contra lo que quede libre.
+        _ctrl = jp_controlador_actual(8)
+        if len(_ctrl) > 600:
+            _ctrl = _ctrl[:600] + u"…"
+        controlador = "Controlador:\n%s\n" % _ctrl
         # Discord: límite de 2000 chars en content. Dejamos margen y mandamos
         # la COLA del traceback (donde está el error real) dentro de un bloque.
-        margen = 1900 - len(cabecera) - 10
+        margen = 1900 - len(cabecera) - len(controlador) - 10
         if margen < 200:
             margen = 200
         cola = full[-margen:] if len(full) > margen else full
         cuerpo = ("```\n%s\n```" % cola) if cola else ""
-        return (cabecera + cuerpo)[:1990]
+        return (cabecera + controlador + cuerpo)[:1990]
 
     def jp_enviar_reporte():
         """Envía el reporte al webhook. Devuelve 'ok' | 'fail' | 'sin_config'."""

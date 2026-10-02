@@ -56,20 +56,17 @@ init python:
     ## salir y volver a entrar.
 
     def _gl_trigger_monica_q0b():
-        q = store.sistema_quests.obtener_quest("monica_questprincipal_0_b")
-        if not (q and q.activa and not q.completada
-                and q.etapa_actual == ETAPA_BOTON_LISTO):
+        # El living es la demanda de locacion de la quest (capa 2).
+        if not quest_lista_para_boton("monica_questprincipal_0_b"):
             return None
-        loc = store.sistema_locaciones.locacion_actual
-        if loc and loc.id == "casa_living":
-            return "quest_monica_questprincipal_0_b"
-        return None
+        return "quest_monica_questprincipal_0_b"
 
 
 init 5 python:
     # 25: por encima del tutorial de exploracion (20), para que un gate que
     # bloquea dormir no quede postergado, y por debajo de jasmine_0b (30).
-    registrar_trigger_game_loop("monica_q0b", _gl_trigger_monica_q0b, prioridad=25, duenio="monica_0_b")
+    registrar_trigger_game_loop("monica_q0b", _gl_trigger_monica_q0b, prioridad=25, duenio="monica_0_b",
+                                quest_id="monica_questprincipal_0_b")
 
 
 ################################################################################

@@ -171,7 +171,7 @@ init python:
             
             return True, ""
         
-        def mover_a_locacion(self, destino_id):
+        def mover_a_locacion(self, destino_id, escena=False):
             """
             Ejecuta el flujo completo de movimiento entre locaciones:
             1. Validar movimiento
@@ -180,10 +180,30 @@ init python:
             4. Ejecutar lógica de entrada
             5. Renderizar background
             6. Activar hotspots
+
+            `escena=True`: lo mueve una ESCENA, no el jugador. Saltea la
+            restriccion y los bloqueos de locacion — esos acotan adonde puede
+            CAMINAR el jugador, no adonde lo lleva el contenido. Sin esto, una
+            escena que pasa a una locacion fuera de su propia restriccion
+            fallaba EN SILENCIO: el MC se quedaba donde estaba y el fondo que se
+            pedia despues era el viejo (bug real, amor 45: la cocina mostraba
+            el fondo del frente).
             """
-            # 1. Validar movimiento
-            valido, mensaje = self.validar_movimiento(destino_id)
+            # 1. Validar movimiento. validar_movimiento esta reemplazada por
+            # validar_movimiento_extendido (movesystem_validation.rpy), que
+            # consulta la restriccion.
+            if escena:
+                valido = destino_id in self.locaciones
+                mensaje = "" if valido else "Locación no existe"
+            else:
+                valido, mensaje = self.validar_movimiento(destino_id)
             if not valido:
+                # Que no vuelva a fallar callado: un movimiento rechazado se
+                # avisa en la consola de desarrollo.
+                if config.developer:
+                    print("[locaciones] mover_a_locacion(%r) rechazado: %s%s" % (
+                        destino_id, mensaje,
+                        "" if escena else " — si lo mueve una escena, usar escena=True"))
                 return False
             
             destino = self.locaciones[destino_id]

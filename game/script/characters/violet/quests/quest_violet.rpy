@@ -6,6 +6,29 @@
 
 init 5 python:
 
+    def _pista_quest_en_curso(quest_id, en_curso, antes):
+        """
+        Pista de una quest que arranca AL DORMIR: hasta que arranca, el "que
+        hacer" (generado) dice "Ir a dormir", y la pista de lo que pasa al
+        despertar no tiene sentido todavia. `en_curso` va cuando la quest ya
+        esta en narrativa, `antes` mientras tanto.
+        """
+        q = sistema_quests.obtener_quest(quest_id)
+        if q is not None and getattr(q, "narrativa_activa", False):
+            return renpy.translate_string(en_curso)
+        return renpy.translate_string(antes)
+
+    # Funciones de MODULO: quedan guardadas dentro del ConfigEtapa de la quest.
+    def _pista_vq08a_listo():
+        return _pista_quest_en_curso("violet_questprincipal_08_a",
+            "Hoy las chicas salieron. Podría ver la TV en el Living",
+            "Por ahora solo queda descansar")
+
+    def _pista_vq09a_listo():
+        return _pista_quest_en_curso("violet_questprincipal_09_a",
+            "Podría ver si Violet necesita algo mientras está enferma.",
+            "Por ahora solo queda descansar")
+
     def vq_esperar_texto(quest_id, total_dias):
         """Texto dinámico de cuenta regresiva para una etapa de espera.
         Calcula los dias restantes según el dia_inicio de la quest, asi el
@@ -32,7 +55,6 @@ init 5 python:
         numero_quest=0,
         dias_espera=0,
         requisitos=[],
-        validacion_especial=[],
         mensaje_pista="Tengo que romper el hielo con Violet",
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
@@ -58,17 +80,20 @@ init 5 python:
         dias_espera=0,
         quest_anterior="violet_questprincipal_0_a",
         requisitos=[],
-        validacion_especial=[
-            Requisito("npc_presente", "Violet debe estar en su habitación", npc_id="violet", locacion_id="casa_hviolet"),
-            Requisito("horario", "Debe ser por la tarde", horario_id=1)
-        ],
-        rutina_quest={
-            (dia, 1): RutinaQuest(
+        # Tarde (el disparador) y noche (la fase 2, avisarle que esta la
+        # comida) en su pieza, los siete dias: el domingo su rutina base la
+        # pone en el living de noche y la fase 2 la busca en la habitacion.
+        rutina_quest=dict(
+            [((dia, 1), RutinaQuest(
                 locacion="casa_hviolet",
                 sprite="images/characters/casa/idle/idle_violet_casa_hviolet_tarde_rutinabase_grupobase_skinbase.jpg",
-            )
-            for dia in range(7)
-        },
+            )) for dia in range(7)] +
+            [((dia, 2), RutinaQuest(
+                locacion="casa_hviolet",
+                sprite="images/characters/casa/idle/idle_violet_casa_hviolet_noche_rutinabase_grupopijama_skinbase.jpg",
+                posicion=(1537, 1020),
+            )) for dia in range(7)]
+        ),
         mensaje_pista="Tengo que hablar con Violet, podría aprovechar cuando está en su habitación por la tarde.",
         mensaje_despertar="Tengo que encontrar algún momento para acercarme a Violet y ver qué le pasa.",
         retorno=ConfiguracionRetorno(avanzar_dia=False),
@@ -102,7 +127,6 @@ init 5 python:
             Requisito("quest_mc", "Tengo que terminar de reconectar con todas primero", quest_id="mc_quest_1"),
             Requisito("condicion", "El paquete debería llegar mañana por la mañana", condicion=_vq01a_entrega_lista),
         ],
-        validacion_especial=[],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
@@ -144,7 +168,6 @@ init 5 python:
         dias_espera=0,
         quest_anterior="violet_questprincipal_01_a",
         requisitos=[],
-        validacion_especial=[],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_BOTON_LISTO: ConfigEtapa(
@@ -168,12 +191,11 @@ init 5 python:
         dias_espera=1,
         quest_anterior="violet_questprincipal_01_b",
         requisitos=[],
-        validacion_especial=[],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
                 pista="Podría hablar con Violet a ver si me presta algún manga",
-                que_hacer="Darle un día",
+                que_hacer="Esperar 1 día",
                 mensaje_despertar="Podría usar el anime para conectarme más con Violet, le voy a hablar para que me preste algún manga y luego hablar de él",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
@@ -206,7 +228,6 @@ init 5 python:
         dias_espera=0,
         quest_anterior="violet_questprincipal_02_a",
         requisitos=[],
-        validacion_especial=[],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_BOTON_LISTO: ConfigEtapa(
@@ -230,7 +251,6 @@ init 5 python:
         dias_espera=0,
         quest_anterior="violet_questprincipal_02_b",
         requisitos=[],
-        validacion_especial=[],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_BOTON_LISTO: ConfigEtapa(
@@ -261,7 +281,6 @@ init 5 python:
         dias_espera=0,
         quest_anterior="violet_questprincipal_02_c",
         requisitos=[],
-        validacion_especial=[],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_BOTON_LISTO: ConfigEtapa(
@@ -286,10 +305,6 @@ init 5 python:
         dias_espera=3,
         quest_anterior="violet_questprincipal_03_a",
         requisitos=[],
-        validacion_especial=[
-            Requisito("horario", "Debe ser por la mañana", horario_id=0),
-            Requisito("locacion", "Deben estar en la cocina", locacion_id="casa_cocina"),
-        ],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
@@ -322,7 +337,6 @@ init 5 python:
         dias_espera=2,
         quest_anterior="violet_questprincipal_04_a",
         requisitos=[],
-        validacion_especial=[],
         rutina_quest={
             (dia, 0): RutinaQuest(
                 locacion="casa_pasilloarriba",
@@ -334,6 +348,7 @@ init 5 python:
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
+                pista="Mejor le doy un poco de espacio a Violet",
                 que_hacer=_qc("vq04b_espera_quehacer", lambda: vq_esperar_texto("violet_questprincipal_04_b", 2)),
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
@@ -359,14 +374,11 @@ init 5 python:
         dias_espera=1,
         quest_anterior="violet_questprincipal_04_b",
         requisitos=[],
-        validacion_especial=[
-            Requisito("mensaje", "Responder el mensaje de Violet", grupo_id="violet_quest04c_chat"),
-        ],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
                 pista="Esperar a que Violet me hable del cosplay",
-                que_hacer="Darle un día",
+                que_hacer="Esperar 1 día",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 # Rama "todavía no llegó el mensaje": el chat de Violet llega de
@@ -399,9 +411,6 @@ init 5 python:
             # que le falta, en vez de perseguir un numero.
             Requisito("hito", "Necesitas avanzar en la línea de deseo con Violet",
                 npc_id="violet", hito_id="violet_hito_deseo_01"),
-        ],
-        validacion_especial=[
-            Requisito("mensaje", "Responder el mensaje de Violet", grupo_id="violet_quest04d_chat"),
         ],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
@@ -448,12 +457,11 @@ init 5 python:
         dias_espera=1,
         quest_anterior="violet_questprincipal_04_d",
         requisitos=[],
-        validacion_especial=[],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
                 pista="Violet dijo que tenía más fotos, tengo que pensar cómo conseguirlas",
-                que_hacer="Darle un día",
+                que_hacer="Esperar 1 día",
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista="Violet dijo que tenía más fotos, debería haber alguna forma para que me las mande",
@@ -500,7 +508,6 @@ init 5 python:
         dias_espera=1,
         quest_anterior="violet_questprincipal_04_d2",
         requisitos=[],
-        validacion_especial=[],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
@@ -543,7 +550,6 @@ init 5 python:
         dias_espera=1,
         quest_anterior="violet_questprincipal_04_d3",
         requisitos=[],
-        validacion_especial=[],
         # La UNICA salida de la quest es la opcion de puerta "Ya está la
         # comida", o sea que cuando la pizza esta lista Violet TIENE que estar
         # en su cuarto — y de noche no siempre lo esta: el domingo la rutina
@@ -600,7 +606,6 @@ init 5 python:
         dias_espera=2,
         quest_anterior="violet_questprincipal_04_d4",
         requisitos=[],
-        validacion_especial=[],
         # Rutina especial: el dia que se cumple la espera, Violet pasa la TARDE
         # en el pasillo de arriba en vez de su lugar habitual — es su forma de
         # cruzarse con el MC. Va para los 7 dias porque no sabemos en cual cae.
@@ -650,7 +655,6 @@ init 5 python:
         dias_espera=0,
         quest_anterior="violet_questprincipal_04_d5",
         requisitos=[],
-        validacion_especial=[],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             # Sin ETAPA_ESPERA: con dias_espera=0 la quest la atraviesa sin
@@ -681,9 +685,6 @@ init 5 python:
         # colgaba directo de la 04_d y no existia la cadena de favores; dejarlo
         # sumaba una segunda condicion que ya no representa nada.
         requisitos=[],
-        validacion_especial=[
-            Requisito("mensaje", "Responder el mensaje de Violet", grupo_id="violet_quest04e_chat"),
-        ],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             # ETAPA_CONDICIONES quedo SIN TEXTOS a proposito. La quest no
@@ -725,9 +726,6 @@ init 5 python:
         dias_espera=0,
         quest_anterior="violet_questprincipal_04_e",
         requisitos=[],
-        validacion_especial=[
-            Requisito("mensaje", "Completar la conversación con la tienda", grupo_id="coxplay_q5a_g4"),
-        ],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_BOTON_LISTO: ConfigEtapa(
@@ -784,9 +782,6 @@ init 5 python:
         requisitos=[
             Requisito("mensaje", "Responder el mensaje de Violet", grupo_id="violet_q5c_g1"),
         ],
-        validacion_especial=[
-            Requisito("npc_presente", "Violet debe estar en su habitación", npc_id="violet", locacion_id="casa_hviolet"),
-        ],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_ESPERA: ConfigEtapa(
@@ -795,7 +790,7 @@ init 5 python:
             ),
             ETAPA_CONDICIONES: ConfigEtapa(
                 pista=_pista_quest05c_condiciones,
-                que_hacer="Esperar",
+                que_hacer="Responder el mensaje de Violet",
                 trigger_mensaje=("violet_q5c_g1", "violet"),
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
@@ -820,11 +815,7 @@ init 5 python:
         dias_espera=1,
         quest_anterior="violet_questprincipal_05_c",
         requisitos=[
-            Requisito("item", "Comprar dos entradas para la Japicon", item_id="entrada_japicon", cantidad=2),
-        ],
-        validacion_especial=[
-            Requisito("npc_presente", "Violet debe estar en su habitación", npc_id="violet", locacion_id="casa_hviolet"),
-            Requisito("horario", "Debe ser de noche", horario_id=2),
+            Requisito("item", "Comprar dos entradas para la Japicon en la Tienda del celular", item_id="entrada_japicon", cantidad=2),
         ],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
@@ -867,10 +858,6 @@ init 5 python:
         quest_anterior="violet_questprincipal_06_a",
         requisitos=[
             Requisito("mensaje", "Responder el mensaje de Violet", grupo_id="violet_q6b_g1"),
-        ],
-        validacion_especial=[
-            Requisito("npc_presente", "Violet debe estar en su habitación", npc_id="violet", locacion_id="casa_hviolet"),
-            Requisito("horario", "Debe ser de noche", horario_id=2),
         ],
         # Rutina de quest: al responder el mensaje (CONDICIONES -> RUTINA) Violet se
         # queda en su habitacion TODAS las noches hasta completar la quest. Sin esto,
@@ -946,13 +933,13 @@ init 5 python:
         dias_espera=0,
         quest_anterior="violet_questprincipal_07_a",
         requisitos=[
-            Requisito("mensaje", "Enviar mensaje a Tienda CoXplay", grupo_id="tienda_coxplay_q7b_g1"),
+            Requisito("mensaje", "Escribirle a Tienda CoXplay desde el celular", grupo_id="tienda_coxplay_q7b_g1"),
         ],
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_CONDICIONES: ConfigEtapa(
                 pista="Hablar con la tienda para pedir el cambio.",
-                que_hacer="Enviar mensaje a Tienda CoXplay",
+                que_hacer="Escribirle a Tienda CoXplay desde el celular",
                 trigger_mensaje=("tienda_coxplay_q7b_g1", "tienda_coxplay"),
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
@@ -985,8 +972,8 @@ init 5 python:
                 que_hacer=_qc("vq07c_espera_quehacer", lambda: vq_esperar_texto("violet_questprincipal_07_c", 1)),
             ),
             ETAPA_CONDICIONES: ConfigEtapa(
-                pista="Violet te mandó un mensaje",
-                que_hacer="Responder mensaje de Violet",
+                pista="Violet me mandó un mensaje",
+                que_hacer="Responder el mensaje de Violet",
                 trigger_mensaje=("violet_q7c_g1", "violet"),
             ),
             # Sin ETAPA_BOTON_LISTO: la quest se cierra con el propio chat
@@ -1016,7 +1003,7 @@ init 5 python:
                 que_hacer=_qc("vq08a_espera_quehacer", lambda: vq_esperar_texto("violet_questprincipal_08_a", 3)),
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista="Hoy las chicas salieron. Podría ver la TV en el Living",
+                pista=_pista_vq08a_listo,
                 que_hacer="Ver TV en el Living",
             ),
         },
@@ -1062,13 +1049,16 @@ init 5 python:
     # Los tres horarios del living comparten el mismo sprite porque no hay
     # arte de ella en el living de noche — solo existen el de mañana y el de
     # tarde. Se usa el de mañana, que es el que la quest ya venia usando.
+    # De noche va a la COCINA y no al living: en el living de noche esta el
+    # idle de Jasmine y los dos se pisaban. El sprite y la posicion son los de
+    # su rutina base del sabado a la noche en la cocina (definition_monica).
     _vq9a_sprites_monica = {
         0: "images/characters/casa/idle/idle_monica_casa_living_manana_rutinabase_grupobase_skinbase.webp",
         1: "images/characters/casa/idle/idle_monica_casa_living_manana_rutinabase_grupobase_skinbase.webp",
-        2: "images/characters/casa/idle/idle_monica_casa_living_manana_rutinabase_grupobase_skinbase.webp",
+        2: "images/characters/casa/idle/idle_monica_casa_cocina_noche_rutinabase_grupobase_skinbae.jpg",
         3: "images/characters/casa/idle/idle_monica_casa_hmonica_trasnoche_rutinabase_grupobase_skinbase.jpg",
     }
-    _vq9a_locs_monica = {0: "casa_living", 1: "casa_living", 2: "casa_living", 3: "casa_hmonica"}
+    _vq9a_locs_monica = {0: "casa_living", 1: "casa_living", 2: "casa_cocina", 3: "casa_hmonica"}
 
     # LA POSICION HAY QUE DARLA. Sin `posicion`, obtener_posicion_quest_npc
     # devuelve None y el HUD cae a la posicion generica repartida
@@ -1081,7 +1071,7 @@ init 5 python:
     _vq9a_pos_monica = {
         0: (1299, 1067),   # living  — el mismo punto que su rutina de la tarde
         1: (1299, 1067),   # living
-        2: (1299, 1067),   # living
+        2: (637, 1062),    # cocina  — el mismo punto que su rutina del sabado a la noche
         3: (953, 766),     # h. monica, trasnoche
     }
 
@@ -1105,6 +1095,9 @@ init 5 python:
                 locacion="casa_hviolet",
                 sprite=_vq9a_sprites_violet[horario],
                 posicion=_vq9a_pos_violet[horario],
+                # El arte de la cama se superpone con el hotspot "Salida" de
+                # la pieza: va debajo para no taparle el hover ni la flecha.
+                detras_hotspots=True,
             )
             for dia in range(7) for horario in range(4)
         },
@@ -1129,8 +1122,9 @@ init 5 python:
                 que_hacer=_qc("vq09a_espera_quehacer", lambda: vq_esperar_texto("violet_questprincipal_09_a", 1)),
             ),
             ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista="Podría ver si Violet necesita algo mientras está enferma.",
-                que_hacer=_qc("vq09a_botonlisto_quehacer", lambda: renpy.translate_string("Ayudar a Violet ({}/3)").format(getattr(store, 'violet_enferma_atencion', 0))),
+                pista=_pista_vq09a_listo,
+                # Contador + el pedido del día y dónde está (violet_quest_09_a.rpy).
+                que_hacer=_qc("vq09a_botonlisto_quehacer", vq9a_que_hacer_texto),
             ),
         },
     )
@@ -1307,7 +1301,7 @@ init python:
     def _quehacer_quest06a_condiciones():
         if _vq06a_entradas_en_camino():
             return "Esperar que lleguen las entradas"
-        return "Comprar dos entradas para la Japicon"
+        return "Comprar dos entradas para la Japicon en la Tienda del celular"
 
     def _pista_quest06b_condiciones():
         msgs = getattr(store, 'sistema_mensajes', None)
@@ -1323,13 +1317,13 @@ init python:
     def _quehacer_quest06b_condiciones():
         msgs = getattr(store, 'sistema_mensajes', None)
         if not msgs:
-            return "Responder mensaje Violet"
+            return "Responder el mensaje de Violet"
         g1 = msgs._todos_grupos.get("violet_q6b_g1")
         if g1 and g1.estado == "completado":
             return "Ir a la habitación de Violet por la noche"
         if g1 and g1.estado in ["pendiente", "en_curso"]:
-            return "Responder mensaje Violet"
-        return "Responder mensaje Violet"
+            return "Responder el mensaje de Violet"
+        return "Responder el mensaje de Violet"
 
     # ── 04_d: la unica quest del juego con un Requisito de hito ──────────────
     # El hito no se alcanza subiendo el stat: hay que COMPLETAR la quest de la
@@ -1399,3 +1393,11 @@ init python:
             duenio="violet_04_b",
             npcs_interactuables=["violet", "jasmine", "monica"],
         )
+
+# Ultima quest publicada de la historia principal, cierre por donde cierre (la
+# visita, lo planto, o las ramas que se cierran solas). La pantalla de fin de
+# contenido (ui/menus/fin_contenido.rpy) sale cuando las tres ramas tienen la
+# suya completa. Al publicar
+# una quest nueva despues de esta, se mueve aca.
+init 5 python:
+    registrar_fin_de_rama("violet_questprincipal_09_a", _("Historia principal de Violet"))

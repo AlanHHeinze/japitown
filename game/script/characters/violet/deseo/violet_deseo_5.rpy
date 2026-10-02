@@ -35,26 +35,18 @@ init python:
         afuera o si una restriccion de quest la escondio, asi que cubre las dos
         cosas de una.
         """
+        # Tarde, MC en el pasillo de arriba, Violet en casa: son las demandas
+        # de la quest, las aplica la capa 2 adentro de quest_lista_para_boton.
         if not quest_lista_para_boton("violet_deseo_01"):
             return None
-
-        if store.horario_actual != 1:
-            return None
-
-        _loc_d5 = store.sistema_locaciones.locacion_actual
-        if _loc_d5 is None or _loc_d5.id != "casa_pasilloarriba":
-            return None
-
-        if tracker_locacion_npc("violet") is None:
-            return None
-
         return "quest_violet_deseo_01"
 
 
 init 5 python:
 
     registrar_trigger_game_loop("violet_deseo_5_encuentro",
-                                _gl_trigger_violet_deseo_5)
+                                _gl_trigger_violet_deseo_5,
+                                quest_id="violet_deseo_01")
 
 
 label quest_violet_deseo_01:

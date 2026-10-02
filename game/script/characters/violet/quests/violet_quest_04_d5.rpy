@@ -53,12 +53,10 @@ init python:
         if _loc_gl is None:
             return None
 
-        # esta_en_locacion + el chequeo de oculto: si una restriccion la
-        # escondio, no corresponde que aparezca de la nada.
+        # Violet en el MISMO lugar que el MC: es lo unico que ninguna demanda
+        # expresa (que no este oculta ya lo mira la capa 2).
         _v_gl = obtener_npc("violet")
         if not _v_gl or not _v_gl.esta_en_locacion(_loc_gl.id):
-            return None
-        if npc_esta_oculto("violet"):
             return None
 
         if _loc_gl.id == "casa_pasilloarriba":
@@ -69,7 +67,8 @@ init python:
 init 5 python:
 
     registrar_trigger_game_loop("violet_04d5_encuentro",
-                                _gl_trigger_violet_04d5_encuentro)
+                                _gl_trigger_violet_04d5_encuentro,
+                                quest_id="violet_questprincipal_04_d5")
 
 
 ################################################################################

@@ -49,6 +49,31 @@ init python:
             return None
         return loc.id
 
+    def npc_a_solas(npc_id):
+        """
+        True si el MC y ese NPC estan SIN NADIE MAS en la locacion actual.
+
+        Es la condicion de "no delante de otras personas": la usan las dos
+        ventajas de beso de Violet y, desde la quest de amor 45, es la regla que
+        ella misma enuncia. Estaba escrita dos veces, identica, en
+        beso_violet.rpy y beso_deseo_violet.rpy; vive acá para que cuando la
+        regla cambie, cambie en un solo lugar.
+
+        Pregunta por tracker_locacion_npc y no por obtener_npcs_en_locacion:
+        esa ultima devuelve tambien a los que una restriccion de quest escondio,
+        y al jugador no le estan delante. Por eso vive en este archivo, pegada a
+        la fuente de verdad de "se puede ubicar al NPC".
+        """
+        _loc = store.sistema_locaciones.locacion_actual
+        if _loc is None:
+            return False
+        for _nid in store.sistema_npcs.npcs:
+            if _nid == npc_id:
+                continue
+            if tracker_locacion_npc(_nid) == _loc.id:
+                return False
+        return True
+
     def tracker_npcs_en_locacion(loc_id):
         """NPCs visibles que están en esa locación, en el orden de TRACKER_NPCS."""
         return [n for n in TRACKER_NPCS if tracker_locacion_npc(n) == loc_id]

@@ -45,14 +45,26 @@ optimización registrada en `docs/arquitectura/optimizacion.md`).
    Strings compuestos: traducir las partes antes de concatenar. Diálogo literal en el
    .rpy no necesita nada (lo cubre la traducción por id); `text _var` en un screen
    tampoco.
-7. **Modo posicionamiento:** TODO botón/imagebutton interactivo lleva
+7. **Dos líneas seguidas del mismo personaje = cambio de boca en el medio.**
+   Si no, el sprite se queda con la boca congelada mientras el jugador avanza
+   el texto y la escena parece trabada. Se alterna entre sus dos bocas de
+   hablar: **Violet** `b_hablando` ↔ `b_hablandochica`, **el MC** `b_hablando`
+   ↔ `b_abiertachica`. Con tres líneas o más se sigue alternando. (Zowie y
+   Leah tienen UNA sola boca de hablar: hasta que exista la segunda, sus
+   parlamentos largos van cortados por una línea de otro personaje.)
+8. **Modo posicionamiento:** TODO botón/imagebutton interactivo lleva
    `if modo_posicionamiento: action NullAction()` / `else: action ...`.
-8. **IDs únicos** en todo el proyecto. Convención: `{npc}_{tipo}_{numero}` /
+9. **IDs únicos** en todo el proyecto. Convención: `{npc}_{tipo}_{numero}` /
    `{locacion}_{elemento}_{variante}`.
-9. **Assets nuevos:** fondos/CG sin alpha → JPG (calidad 90); con alpha → WebP.
+10. **Assets nuevos:** fondos/CG sin alpha → JPG (calidad 90); con alpha → WebP.
    Nombres de archivo SIEMPRE ASCII (`mañana→manana`, `baño→banio`). Los nombres de
    atributo de layered image conservan la ñ (son identificadores, no archivos).
-10. **Cada disparador es ÚNICO:** una quest tiene UN solo disparador previsto (botón,
+11. **Sprites de personaje van a la capa `personajes`** (tinte por horario,
+    `core/utils/tinte_horario.rpy`): `show <tag>` con un tag de prefijo de
+    personaje (`violet_`, `monica_`, `jasmine_`, `mc_`, …) va solo; un
+    `show expression` lleva `onlayer personajes`. Los idles del HUD NO se
+    tiñen (decisión: ya vienen pintados con la luz). `scene` limpia las dos capas.
+12. **Cada disparador es ÚNICO:** una quest tiene UN solo disparador previsto (botón,
     puerta, locación, dormir, game_loop, item o chat). Nunca dos (un botón +
     trigger de locación deja el botón inalcanzable — caso real Violet 04_b).
 
@@ -157,18 +169,20 @@ funciones de módulo). El motor itera los registros; jamás se edita un archivo 
 | Qué enganchás | Registro | Se registra en | Motor que lo consume |
 |---|---|---|---|
 | Botón del menú del NPC | lista `_opciones_extra_<npc>` (inline) | `characters/<npc>/interaction/interactions_<npc>.rpy` | `menu_interaccion_npc_completo` |
-| Opción del menú de puerta | `registrar_opcion_puerta(npc, texto, label, condicion, ocultar_golpear, tipo)` | `characters/<npc>/interaction/puertas_<npc>.rpy` | `interaccion_puerta_npc` |
-| Reemplazo TOTAL del flujo de puerta | `registrar_override_puerta(npc, condicion, label)` | idem | idem |
+| Opción del menú de puerta | `registrar_opcion_puerta(npc, texto, label, condicion, ocultar_golpear, tipo, quest_id)` | `characters/<npc>/interaction/puertas_<npc>.rpy` | `interaccion_puerta_npc` |
+| Reemplazo TOTAL del flujo de puerta | `registrar_override_puerta(npc, condicion, label, quest_id)` | idem | idem |
 | Bloqueo del golpe de puerta | `registrar_bloqueo_golpe(npc, condicion, mensaje)` | idem | idem |
-| Trigger en cada vuelta del loop | `registrar_trigger_game_loop(id, funcion, prioridad)` | archivo de la quest/evento | `game_loop` |
-| Trigger al dormir | `registrar_trigger_dormir(id, "antes"/"despues", funcion, prioridad)` | idem | `accion_dormir` |
-| Trigger al avanzar horario | `registrar_trigger_avanzar(id, funcion)` | idem | `accion_avanzar_tiempo` |
+| Trigger en cada vuelta del loop | `registrar_trigger_game_loop(id, funcion, prioridad, duenio, quest_id)` | archivo de la quest/evento | `game_loop` |
+| Trigger al dormir | `registrar_trigger_dormir(id, "antes"/"despues", funcion, prioridad, quest_id)` | idem | `accion_dormir` |
+| Trigger al avanzar horario | `registrar_trigger_avanzar(id, funcion, prioridad, quest_id)` | idem | `accion_avanzar_tiempo` |
 | Bloqueo de una acción | `registrar_bloqueo_accion(accion_id, condicion, mensaje)` | idem | embudo `accion_bloqueada` |
+| Cierre de UNA locación, con su propio mensaje | `registrar_bloqueo_locacion(locacion_id, condicion, mensaje)` | idem | `accion_bloqueada_movimiento` |
 | Excepción al bloqueo de trasnoche | `registrar_excepcion_trasnoche(funcion)` — `fn(npc_id) → bool` | archivo de la quest/evento | `npc_durmiendo` → `npc_interactuable` |
 | Label al entrar a una locación, **solo dentro de una secuencia ya en curso** (⚠ nunca como disparador de quest — ver abajo) | `restriccion_quest_activa.registrar_label_locacion(loc, label)` | label de la quest (runtime, vive en la restricción) | `accion_hotspot_move` |
 | Aviso "repartidor se fue sin atender" | `REPARTIDOR_AL_IRSE.append(funcion)` | archivo de la quest | `avanzar_horario` |
-| Acción de locación / interceptor | `sistema_acciones.registrar_accion` / `registrar_listener` | **`core/actions/actions_catalog.rpy`, SIEMPRE — ver abajo** | `accion_locacion_ejecutar` |
+| Acción de locación / interceptor | `sistema_acciones.registrar_accion(AccionLocacion(..., quest_id))` / `registrar_listener(ListenerAccion(..., quest_id))` | **`core/actions/actions_catalog.rpy`, SIEMPRE — ver abajo** | `accion_locacion_ejecutar` |
 | Quest / Evento / Skin / Chat / Pensamiento | `registrar_quest` / `registrar_event` / `registrar_skin` / `registrar_grupo` / `registrar_pensamiento` | archivos del NPC | sus sistemas |
+| Demandas / consumos de una quest (planificador) | `declarar_planificacion(quest_id, de_corrido, demandas, consumos, duenio)` — ver abajo | `characters/<npc>/quests/planificacion_<npc>.rpy` (`init 6`) | `planificador_puede_nacer` / `planificador_puede_activarse` |
 
 > ### ⚠️ El disparador de una quest NUNCA va en `registrar_label_locacion`
 >
@@ -239,9 +253,131 @@ mensajes del embudo viven en `tl/english/bloqueos_strings.rpy`.
 
 ### Helper estándar
 
-`quest_lista_para_boton(quest_id)` → True si la quest está activa, sin completar y en
-`ETAPA_BOTON_LISTO`. Es EL predicado de todo disparador manual; no repetir la cadena
-a mano.
+`quest_lista_para_boton(quest_id)` → True si la quest está activa, sin completar, en
+`ETAPA_BOTON_LISTO`, su NPC disponible **y la capa 2 del planificador la deja**
+(sin reserva ajena sobre su NPC, sin consumos de otra quest que le pisen una
+demanda, y el mundo como sus demandas piden: hora, lugar del NPC, lugar del MC).
+Es EL predicado de todo disparador; no repetir la cadena a mano ni chequear hora
+o lugar al lado — eso son demandas (ver "El planificador").
+
+### El punto de activación — todo disparador de quest declara `quest_id`
+
+`activar_quest(quest_id, origen)` (`questsystem_core.rpy`) es el instante en que el
+motor registra que una quest pasó de "esperando al jugador" a "narrativa en curso"
+(`narrativa_activa`, `activada_dia`, tag `quest_activada` de Sentry). **Lo llama el
+motor, nunca el contenido**, en todos los despachadores: menú del NPC, menú de puerta
+y entrada directa, override de puerta, triggers, acciones/listeners, items y chats.
+Lo único que el contenido hace es **decir de qué quest es cada disparador**:
+
+- Botón del menú del NPC: `"quest_id": "<id>"` en el dict de `_opciones_extra_<npc>`.
+- Opción/override de puerta, trigger, `AccionLocacion`, `ListenerAccion`: el kwarg
+  `quest_id=`. Item: la clave `"quest_id"` en `CATALOGO_ITEMS`.
+- Chat de etapa (`ConfigEtapa(trigger_mensaje=...)` en `BOTON_LISTO`): nada — el
+  motor le pasa el id al grupo y activa cuando el jugador lo abre.
+
+Si el label se llama `quest_<id>` se deduce solo (mismo criterio que el tag
+" (⭐ Quest)"). Un trigger que solo hace efectos python, o que salta a una escena de
+ventaja/evento, no lo declara. Es idempotente: los pasos siguientes de una quest de
+varios pasos pueden declararlo también (sirve para el diagnóstico) sin efecto.
+
+Sobre esto se para el planificador: sin `quest_id` la quest nunca se "activa" y
+la capa 2 no la ve. El harness (ruta `registros`, "punto de activacion: ids")
+verifica que todo id declarado exista.
+
+### El planificador — toda quest nueva declara qué necesita y qué toma
+
+`core/quests/planificador.rpy` (diseño completo en
+`docs/arquitectura/planificador.md`). Cada quest lleva, en
+`characters/<npc>/quests/planificacion_<npc>.rpy` (`init 6`):
+
+```python
+declarar_planificacion("violet_deseo_06",
+    de_corrido=True, duenio="violet_deseo_30",
+    demandas=[Rec("locacion", en="casa_hmc"), Rec("puerta", "violet"),
+              Rec("npc", "violet", horario=2, en="casa_hviolet", reserva=True)],
+    consumos=[Rec("npc", "violet", horario=2, en="casa_hviolet")])
+```
+
+- **Toda quest demanda a su propio NPC**: `Rec("npc", "<npc>")` siempre va
+  (una reserva sobre el NPC tiene que frenarla aunque su disparador sea una
+  acción o una locación). El validador lo exige.
+- **`demandas`** = lo que necesita LIBRE para jugarse. **`consumos`** = lo que
+  TOMA del mundo toda su vida (sus rutinas como `Rec("npc", …, en=…)`, un menú o
+  una puerta que se queda). Lo que impone una restricción mientras está activa
+  (reloj, locaciones, celular, acciones) NO se declara: se lee de la restricción.
+- **`de_corrido`** es narrativo: "esta noche", "ese domingo", "está enferma
+  ahora". Decide si las demás la respetan al nacer (capa 1). Una quest que
+  tolera esperar días y después no tolera interrupciones se **parte en dos**
+  (deseo 30 → 06 + 07).
+- **`duenio`** = el id de `activar_restriccion(duenio=...)` de la quest, si
+  tiene una.
+- **`disparador=Disp(tipo, texto, nota)`**: cómo se dispara (`boton`, `puerta`,
+  `locacion`, `encuentro`, `dormir`, `accion`, `item`, `chat`, `repartidor`,
+  `auto`). Con él, **el "qué hacer" de BOTON_LISTO lo escribe el controlador**
+  (`planificador_que_hacer`): opción, con quién, dónde y cuándo, a partir de las
+  demandas — "Usar la opción «Preguntar por el cosplay» con Violet estando en la
+  Cocina por la mañana con Jasmine en la casa". El texto propio de la quest
+  queda para las fases en narrativa; una quest con texto dinámico propio (deseo
+  07, amor 20) no declara `Disp`. La guía muestra además el **estado**
+  (`planificador_estado_guia`): verde "Se puede hacer ahora", rojo con el
+  motivo cuando algo EXTERNO la frena (reserva, otra quest, NPC fuera de la
+  casa / no disponible / oculto / ocupado, celular); nada si solo falta ir al
+  lugar o esperar el horario.
+- **`Rec("mc", dia=…, horario=…, reserva=True)`** reserva **al jugador**: con
+  eso, ninguna otra quest se activa en ese slot y ningún mensaje prioritario
+  ajeno se entrega (y el reloj queda congelado, como toda reserva de slot). Es
+  para las quests que se ganan una noche entera. Se consulta con
+  `planificador_mc_reservado_por()`. No confundir con `Rec("npc", "mc")`: el MC
+  no es un NPC del sistema.
+- **`reserva=True`** en el `Rec("npc")` de una de corrido cuyo momento es
+  concreto: al activarse toma el slot y el reloj no pasa. **`reserva="vida"`**:
+  el NPC es de la quest hasta completarla (09_a: Violet y Mónica), el reloj
+  corre. Con cualquiera de las dos, el NPC solo ofrece las interacciones de esa
+  quest: en su menú y su puerta quedan las opciones con ese `quest_id` y nada
+  más (ni Hablar, ni eventos, ni ventajas). **Golpear solo lo bloquea la
+  reserva de vida**: con reserva de slot el golpe sigue su flujo normal, porque
+  la secuencia que la puso puede entrar por ahí (Sinceridad; soft lock real
+  E10).
+- **Una quest con `Disp("dormir")` declara `Rec("accion", accion="dormir")`**:
+  es su disparador, y así una restricción ajena que bloquee dormir (la 0_b de
+  Mónica) la hace esperar en vez de arrancar encima. Y **la dueña de la
+  restricción activa nunca queda frenada por la capa de conflicto**
+  (`_pl_duenia_de_la_restriccion`): su salida es lo único que levanta la
+  restricción, así que una reserva ajena no puede esconderla (deadlock E11).
+- **Las demandas son LA fuente del "cuándo y dónde"** (paso A): el disparador
+  no chequea hora ni lugar a mano — `quest_lista_para_boton` ya lo hace con
+  las demandas, estricto (`Rec("npc", …, horario=, en=, libre=)`,
+  `Rec("locacion", en=|locaciones=, horario=)`; `en="casa"` = adentro en
+  cualquier lado; `libre=True` = sin ducha/salida e interactuable). En el
+  disparador queda solo lo narrativo (flags, fases, chats) y lo que ninguna
+  demanda expresa ("Violet en el mismo lugar que el MC", "a solas"). Un `Rec
+  npc` con `en` va solo si TODOS los disparadores de la quest coinciden; las
+  fases posteriores a la activación no pasan por la capa 2 y mantienen sus
+  condiciones en el código.
+- **El chat de etapa no activa**: es un aviso; activa el botón/puerta que viene
+  después, y hasta entonces la capa 2 gatea.
+- **Personajes prestados**: si en la escena habla o se muestra otro NPC, la
+  quest lo demanda con `Rec("npc", "<otro>", en="casa")` como mínimo (en la
+  casa y no reservado); `en=<locación>` si la escena lo necesita en un lugar
+  puntual. `en` acepta una locación madre (`LOCACIONES_MADRE`, hoy "casa") y
+  `"fuera"`, que es su propia madre — **no es parte de la casa**
+  (`madre_de_locacion` en `viaje_rapido.rpy`).
+  El validador (chequeo 8) cruza los labels con la declaración.
+- Tipos: `npc` (`en`, `skin`, `animo`, `disponible`), `interaccion` (`accion=`
+  opcional), `puerta`, `locacion` (demanda) / `locaciones` (consumo), `reloj`,
+  `accion`, `celular`, `mensajes`. Cobertura en `rec_cubre`.
+
+Qué pasa con eso: la capa 1 frena el nacimiento de una quest cuyos consumos le
+pisen una demanda a una de corrido activa (pista "Terminar «X» primero"); la
+capa 2, adentro de `quest_lista_para_boton`, esconde el disparador si otra
+activa consume lo que esta demanda o el mundo no está como pide (y escribe el
+motivo en el "qué hacer" cuando es un conflicto). Una quest en narrativa no se
+mide. `tools/validar_bloqueos.py` (chequeo 7) avisa de quests sin declaración y
+rutinas sin consumo; el harness (ruta `planificador`) prueba cobertura, capas y
+reserva; `planificador_estado()` en consola dice qué espera y qué reserva, y
+`jp_panel_controlador()` (`tools/controlador/panel_controlador.rpy`, también en el
+menú de cheats) lo muestra en vivo por quest: capa 1, capa 2, y el mundo en dos
+partes —tiempo y lugar— con OK o el motivo de cada una.
 
 ---
 
@@ -262,11 +398,18 @@ Horarios 0-3 (Mañana/Tarde/Noche/Trasnoche), días de semana 0-6, `dias_totales
 (`repartidor_presente`) → resets de acciones → estados de talk nuevos.
 
 **Label `accion_dormir`** (todo lo de contenido va por registros, §4):
-embudo de bloqueos → despertar anticipado por mensaje prioritario (flujo alternativo,
-vive en el label) → paquete bloqueando → entrega de hoy → menú de Pensamientos →
-animación → `ejecutar_triggers_dormir("antes")` → `dormir()` →
-`autoguardar_partida()` (checkpoint + autosave; SOLO se autoguarda al dormir) →
-`ejecutar_triggers_dormir("despues")` → `mensajes_al_despertar`.
+embudo de bloqueos → paquete bloqueando → entrega de hoy → menú de Pensamientos →
+animación → **recorrido de los horarios que faltan hasta la trasnoche**, de a uno
+y sin que se vea (`avanzar_horario(silencioso=True)` + `_vr_interrupcion()`, lo
+mismo que evalúa el game_loop: quests, mensajes en espera, eventos, triggers) —
+un mensaje prioritario lo despierta en el horario en que llega ("Me despertó un
+mensaje") y un trigger de game_loop que devuelve label lo despierta con esa
+escena (el día no cambia) → `ejecutar_triggers_dormir("antes")` (ya en la
+trasnoche) → `dormir()` → `autoguardar_partida()` (checkpoint + autosave; SOLO
+se autoguarda al dormir) → `ejecutar_triggers_dormir("despues")` →
+`mensajes_al_despertar`. Consecuencia para el contenido: dormir de mañana
+**pasa por la tarde y la noche**; un trigger que asuma "el MC está en su pieza
+a la tarde" se dispara también mientras duerme — que es lo buscado.
 
 ### 5.2 NPCs — `npcsystem_core.rpy`
 
@@ -284,10 +427,15 @@ pasillo (door access) → skin de quest/evento → rutina especial → rutina vi
 ### 5.3 Quests — `questsystem_core.rpy`
 
 Etapas: `1 INICIALIZACION → 2 ESPERA (dias_espera) → 3 CONDICIONES (requisitos) →
-4 RUTINA (aplica rutina_quest) → 5 BOTON_LISTO → 6 VALIDACION (validacion_especial)
-→ 7 DESARROLLO (label) → 8-9 completar()`. El avance corre en `actualizar_quests()`
-(game_loop, avanzar, dormir) y `_procesar_avance_etapas` avanza TODAS las etapas
-posibles en un tick (una quest sin espera ni requisitos llega a BOTON_LISTO al toque).
+4 RUTINA (aplica rutina_quest) → 5 BOTON_LISTO → 8-9 completar()`. El avance corre en
+`actualizar_quests()` (game_loop, avanzar, dormir) y `_procesar_avance_etapas` avanza
+TODAS las etapas posibles en un tick (una quest sin espera ni requisitos llega a
+BOTON_LISTO al toque). **La quest se queda en BOTON_LISTO mientras se juega**: el
+"está jugándose" es el flag `narrativa_activa` que prende `activar_quest` (§4, punto
+de activación), no una etapa. Las etapas 6 (VALIDACION) y 7 (DESARROLLO) y el
+parámetro `validacion_especial` de `Quest` **ya no existen** (2026-09-11): nunca
+corrieron. Las condiciones de disparo ("de noche, en su cuarto") hoy van en la
+condición del disparador; van a ser las demandas del planificador.
 
 `completar_quest_actual(npc)`: restaura rutina, aplica `retorno`, progreso +1,
 dispara chat (trigger `"quest"`), inicia la siguiente (`quest_anterior == este_id`).
@@ -303,7 +451,10 @@ arranque, se picklea solo la clave).
 
 Rutinas de quest: `rutina_quest={(dia,horario): RutinaQuest(locacion, sprite,
 posicion)}` + `rutinas_adicionales={npc: {...}}` + `prioridad_rutina`. Vigencia
-validada por locación real del NPC (fix E07).
+validada por locación real del NPC (fix E07). Al cargar un save, las rutinas de
+toda quest viva se **reaplican** (`persistencia_sistemas`): cambiar una rutina en el
+catálogo alcanza a las partidas en curso (antes la copia en `npc.rutinas_quest`
+quedaba vieja).
 
 ### 5.4 Eventos — `eventsystem_core.rpy`
 
@@ -372,6 +523,15 @@ porqué está en la skill `japitown-warnings`.
 El **embudo `accion_bloqueada`** vive acá (§4). Un bloqueo de horario/tiempo se hace
 con restricción (`acciones_bloqueadas=["avanzar_tiempo", ...]`), NUNCA con ifs en el
 motor de tiempo.
+
+**Acotar el movimiento — cuál de los dos.** La restricción dice a dónde **sí** se
+puede ir (`locaciones_permitidas`) con un único `mensaje_movimiento` para todo lo
+demás: es lo correcto mientras dura una escena, donde el mundo se achica a unas
+pocas locaciones. Para lo contrario —el mundo abierto con **una** puerta cerrada y
+un motivo propio— va `registrar_bloqueo_locacion(locacion_id, condicion, mensaje)`
+(§4), que `accion_bloqueada_movimiento` consulta **antes** de la restricción y vale
+con restricción activa o sin ella. Listar las 17 locaciones restantes para cerrar
+una sola es una lista que se desactualiza en cuanto se agrega una locación.
 
 También vive acá el bloqueo de **trasnoche** (`npc_durmiendo`,
 `registrar_excepcion_trasnoche`), que es la otra regla general sobre los NPCs y no
@@ -479,7 +639,6 @@ init 5 python:
         numero_quest=X, dias_espera=4,
         quest_anterior="<npc>_questprincipal_Y",   # se inicia sola al completar la previa
         requisitos=[Requisito("mensaje", "Esperar el chat", grupo_id="<grupo>")],
-        validacion_especial=[Requisito("horario", "Por la noche", horario_id=2)],
         rutina_quest={(5,0): RutinaQuest(locacion="casa_h<npc>", sprite="...", posicion=(800,700))},
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
@@ -499,8 +658,27 @@ Label narrativo: `$ ocultar_hud()` + `window show` → escena → al final
 + `window hide` + `$ mostrar_hud()` + `jump game_loop`.
 
 **Disparador (elegir UNO, §4):** botón del menú NPC (6.4) · opción de puerta (6.5) ·
-trigger de dormir/game_loop/avanzar (6.6) · label de locación de la restricción ·
-item (`label_uso`) · chat (`accion_al_completar`).
+trigger de dormir/game_loop/avanzar (6.6) · item (`label_uso`) · chat
+(`accion_al_completar`). El disparador declara `quest_id` (§4, punto de activación)
+y NO chequea hora ni lugar: eso va en la declaración de abajo.
+
+**Declaración del planificador (obligatoria)** en
+`characters/<npc>/quests/planificacion_<npc>.rpy`, `init 6`:
+
+```renpy
+declarar_planificacion("<npc>_questprincipal_X",
+    de_corrido=False,                       # True si fija un momento ("esta noche")
+    duenio="<id de activar_restriccion>",   # si la quest activa una restricción
+    disparador=Disp("boton", "Texto del boton"),   # cómo se dispara → "qué hacer" generado
+    demandas=[Rec("npc", "<npc>", horario=2, en="casa_h<npc>"),   # siempre a su NPC
+              Rec("puerta", "<npc>"),
+              Rec("npc", "<otro>", en="casa")],                   # personaje prestado
+    consumos=[Rec("npc", "<npc>", horario=2, en="casa_h<npc>")])  # = su rutina_quest
+```
+
+`tools/validar_bloqueos.py` (chequeos 7 y 8) y la ruta `planificador` del harness
+avisan si falta la declaración, si no demanda a su NPC, si la rutina y el consumo no
+coinciden o si otro NPC aparece en la escena sin estar demandado.
 
 ### 6.2 Evento
 
@@ -542,11 +720,12 @@ centro-inferior; ajustar con la herramienta P). Rutinas especiales:
 En `interactions_<npc>.rpy`, dentro de `label interaccion_<npc>`:
 
 ```renpy
-if quest_lista_para_boton("<npc>_questprincipal_X") and horario_actual == 1:
+if quest_lista_para_boton("<npc>_questprincipal_X"):      # la hora y el lugar son demandas
     $ _opciones_extra_<npc>.append({
         "texto": "Saludar",              # → old/new en botones_interaccion_strings.rpy
-        "label": "quest_<npc>_questprincipal_X",
+        "label": "mi_label_propio",
         "condicion": True,
+        "quest_id": "<npc>_questprincipal_X",   # punto de activación (se deduce si el label es quest_<id>)
         # "tipo": "evento",              # solo si dispara un evento (tag "(Evento)")
     })
 ```
@@ -562,19 +741,21 @@ En `characters/<npc>/interaction/puertas_<npc>.rpy` (crear si no existe; ver
 ```renpy
 init python:
     def _puerta_<npc>_qX():
-        return (quest_lista_para_boton("<npc>_questprincipal_X")
-                and store.horario_actual == 2)
+        return quest_lista_para_boton("<npc>_questprincipal_X")   # "de noche" es demanda
 
 init 5 python:
     registrar_opcion_puerta("<npc>", "Texto del boton",
                             "label_destino", _puerta_<npc>_qX,
-                            ocultar_golpear=True)          # oculta "Golpear"
+                            ocultar_golpear=True,          # oculta "Golpear"
+                            quest_id="<npc>_questprincipal_X")
     # tipo="evento" para eventos. El ORDEN de registro es el orden del menú.
 ```
 
-Override total (`registrar_override_puerta`) para quests que manejan la puerta
-entera; bloqueo de golpe (`registrar_bloqueo_golpe`) para "está dormida/ocupada" —
-su mensaje necesita `old/new` (patrón en el tl de door_access_system).
+Override total (`registrar_override_puerta(npc, condicion, label, quest_id=)`) para
+quests que manejan la puerta entera; bloqueo de golpe (`registrar_bloqueo_golpe`)
+para "está dormida/ocupada" — su mensaje necesita `old/new` (patrón en el tl de
+door_access_system). Con el NPC reservado por una quest, la puerta solo ofrece las
+opciones de esa quest y golpear no responde (lo hace el motor).
 
 ### 6.6 Trigger de motor (dormir / game_loop / avanzar)
 
@@ -583,18 +764,25 @@ En el archivo de la quest/evento:
 ```renpy
 init python:
     def _dormir_trigger_mi_quest():
-        if quest_lista_para_boton("<npc>_questprincipal_X"):
+        if quest_lista_para_boton("<npc>_questprincipal_X"):   # hora/lugar: demandas
             return "mi_label_al_despertar"      # el motor hace jump
         return None                              # o efectos python y seguir
 
 init 5 python:
     registrar_trigger_dormir("mi_quest_despertar", "despues",
-                             _dormir_trigger_mi_quest, prioridad=0)
+                             _dormir_trigger_mi_quest, prioridad=0,
+                             quest_id="<npc>_questprincipal_X")
 ```
 
-Igual con `registrar_trigger_game_loop` / `registrar_trigger_avanzar`. El label
-destino es CONTENIDO → termina en `jump game_loop`. Usar prioridad solo si el orden
-contra otros triggers importa (mayor = primero).
+Igual con `registrar_trigger_game_loop(..., duenio=, quest_id=)` /
+`registrar_trigger_avanzar` / `registrar_trigger_salir_celular`. El label destino es
+CONTENIDO → termina en `jump game_loop`. `quest_id` es el punto de activación: con
+él el motor no evalúa el trigger si la quest no está viva o la frena un conflicto.
+`duenio` si la quest tiene restricción. Usar prioridad solo si el orden contra otros
+triggers importa (mayor = primero). Lo que queda en la función es lo narrativo (flags,
+fases) y lo que ninguna demanda expresa ("Violet en el mismo lugar que el MC").
+Dormir recorre los horarios hasta la trasnoche: un trigger de game_loop que pide "el
+MC en su pieza a la noche" se dispara también mientras duerme.
 
 ### 6.7 Skin
 

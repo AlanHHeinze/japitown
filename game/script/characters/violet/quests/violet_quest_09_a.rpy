@@ -91,6 +91,42 @@ init python:
         donde = VQ9A_PEDIDOS_DONDE.get(pedido)
         return renpy.translate_string(donde) if donde else ""
 
+    def vq9a_que_hacer_texto():
+        """
+        "Qué hacer" de la etapa BOTON_LISTO (config_etapas en quest_violet.rpy).
+
+        Primera línea: el contador de siempre. Debajo, según el día:
+          - hay pedido y todavía no se agarró nada → qué pidió y dónde está
+            (VQ9A_PEDIDOS_DONDE; para "Dile a Monica que venga", dónde está
+            Mónica ahora mismo);
+          - ya se tiene lo pedido → llevárselo a su habitación;
+          - ya se entregó → listo por hoy.
+        Sin pedido (antes de verla ese día) queda el contador solo.
+        """
+        lineas = [renpy.translate_string("Ayudar a Violet ({}/3)").format(
+            getattr(store, 'violet_enferma_atencion', 0))]
+        pedido = getattr(store, 'violet_9a_pedido_actual', None)
+        if pedido:
+            if getattr(store, 'violet_9a_entrega_completada', False):
+                lineas.append(renpy.translate_string("Ya la ayudaste por hoy"))
+            elif getattr(store, 'violet_9a_tiene_entregable', False):
+                lineas.append(renpy.translate_string("Llevárselo a Violet, en su habitación"))
+            else:
+                lineas.append(renpy.translate_string("Te pidió: {}").format(
+                    renpy.translate_string(pedido)))
+                if pedido == "Dile a Monica que venga":
+                    _m = obtener_npc("monica")
+                    _loc = (sistema_locaciones.obtener_locacion(_m.locacion_actual)
+                            if _m and _m.locacion_actual else None)
+                    if _loc:
+                        lineas.append(renpy.translate_string("Mónica está en: {}").format(
+                            renpy.translate_string(_loc.nombre)))
+                else:
+                    donde = VQ9A_PEDIDOS_DONDE.get(pedido)
+                    if donde:
+                        lineas.append(renpy.translate_string(donde))
+        return "\n".join(lineas)
+
     # --- Triggers de motor (registros de triggers_contenido) -----------------
 
     def _dormir_trigger_violet_09a_inicio():
@@ -164,7 +200,7 @@ init 5 python:
     # estrena tiene que salir la escena, no la cuenta de la enfermedad.
     registrar_trigger_dormir(
         "violet_09a_inicio", "despues", _dormir_trigger_violet_09a_inicio,
-        prioridad=40)
+        prioridad=40, quest_id="violet_questprincipal_09_a")
     registrar_trigger_dormir(
         "violet_09a_diaria", "despues", _dormir_trigger_violet_09a, prioridad=20)
 
@@ -263,16 +299,14 @@ label violet_quest09a_manejo_puerta:
         jump expression _v9b_destino
 
     if not getattr(store, 'mc_sabe_violet_enferma', False):
-        # MC todavía no sabe que Violet está enferma
-        if store.horario_actual in (0, 1):
-            # Mañana / tarde: nadie responde
-            window show
-            piensa "Violet no está... debe estar en su habitación."
-            window hide
-            return
-
-        elif store.horario_actual == 2:
-            # Noche: Violet responde y el MC descubre que está enferma
+        # MC todavía no sabe que Violet está enferma. Los horarios son los
+        # mismos que cuando ya lo sabe (rama de abajo): de tarde y de noche
+        # Violet responde desde la cama y el MC descubre que está enferma; de
+        # mañana y de trasnoche duerme (y no tiene idle a esas horas, ver
+        # _vq9a_sprites_violet). Antes de mañana y de tarde salía "no está,
+        # debe estar en su habitación" golpeando justamente su habitación.
+        if store.horario_actual in (1, 2):
+            # Tarde / noche: Violet responde y el MC descubre que está enferma
             $ ocultar_hud()
             hide screen hud_navegacion
             window show
@@ -286,7 +320,7 @@ label violet_quest09a_manejo_puerta:
             return
 
         else:
-            # Trasnoche
+            # Mañana / trasnoche: durmiendo
             window show
             piensa "Debe estar durmiendo, no voy a molestar."
             window hide
@@ -600,7 +634,7 @@ label accion_violet_toalla:
 
 
 ################################################################################
-## LABEL DE QUEST (ETAPA_DESARROLLO) — seguridad
+## LABEL DE QUEST — seguridad
 ################################################################################
 
 label quest_violet_questprincipal_09_a:

@@ -1,7 +1,10 @@
 ################################################################################
 ## Violet — LINEA DE DESEO
 ################################################################################
-## Una quest cada 5 puntos de deseo: 5, 10, 15, 20, 25, 30.
+## Una quest cada 5 puntos de deseo: 5, 10, 15, 20, 25, 30 — y la de 30 son
+## dos encadenadas con el mismo umbral (06 la noche de la charla, 07 los tres
+## dias de ignorarla), porque solo la primera es de corrido: ver
+## violet_deseo_30.rpy y docs/arquitectura/planificador.md.
 ## Misma maquinaria que la linea de Amor (ver amor/quests_amor_violet.rpy); lo
 ## unico que cambia es el stat que mide el Requisito y la linea declarada.
 ##
@@ -46,8 +49,7 @@ init python:
         restaura solas al completar.
 
         requisitos_extra: requisitos ADEMAS del umbral de deseo. Van en
-        `requisitos` y no en `validacion_especial` porque tienen que frenar el
-        avance de etapa, no el disparo del boton.
+        `requisitos`: frenan el avance de etapa, no el disparo del boton.
 
         pista_condiciones / que_hacer_condiciones: overrides de los textos de
         ETAPA_CONDICIONES, para las quests que esperan algo mas que el umbral.
@@ -68,11 +70,10 @@ init python:
                           "Necesitas {} 💋 con Violet".format(umbral),
                           npc_id="violet", valor=umbral),
             ] + list(requisitos_extra or []),
-            validacion_especial=[],
             retorno=ConfiguracionRetorno(avanzar_dia=False),
             config_etapas={
                 ETAPA_CONDICIONES: ConfigEtapa(
-                    pista=pista_condiciones or "Todavia hay margen para que esto avance.",
+                    pista=pista_condiciones or "Todavía hay margen para que esto avance.",
                     que_hacer=que_hacer_condiciones or _qc(
                         "vd{:02d}_qh".format(numero),
                         lambda u=umbral: _quehacer_deseo_violet(u)),
@@ -93,12 +94,13 @@ init 5 python:
     # (numero, umbral, nombre, descripcion, quest_anterior)
     # Las de umbral 10, 20 y 30 son las que otorgan hito.
     _VIOLET_DESEO_QUESTS = [
-        (1,  5,  "Atracción",          "Algo cambio en como Violet me mira.",      None),
-        (2,  10, "Encuentro nocturno", "Hay una tension distinta entre los dos.",  "violet_deseo_01"),
-        (3,  15, "Anime en estreno",   "Estrenan el anime que los dos queriamos ver.", "violet_deseo_02"),
+        (1,  5,  "Atracción",          "Algo cambió en cómo Violet me mira.",      None),
+        (2,  10, "Encuentro nocturno", "Hay una tensión distinta entre los dos.",  "violet_deseo_01"),
+        (3,  15, "Anime en estreno",   "Estrenan el anime que los dos queríamos ver.", "violet_deseo_02"),
         (4,  20, "Pensando en Violet",  "No me la puedo sacar de la cabeza.",       "violet_deseo_03"),
-        (5,  25, "En su habitacion",   "Un capitulo de anime en la pieza de Violet.", "violet_deseo_04"),
+        (5,  25, "En su habitación",   "Un capítulo de anime en la pieza de Violet.", "violet_deseo_04"),
         (6,  30, "Sinceridad",         "Le dije lo que me pasa y se hizo la desinteresada.", "violet_deseo_05"),
+        (7,  30, "Distancia",          "Decidí ignorarla unos días, a ver qué hace.", "violet_deseo_06"),
     ]
 
     # Textos de ETAPA_BOTON_LISTO para las quests que NO se disparan con el
@@ -118,7 +120,7 @@ init 5 python:
             "que_hacer_listo": vd10_que_hacer_listo,
         },
         3: {
-            "pista_listo": "Podria usar el sotano para ver el nuevo anime",
+            "pista_listo": "Podría usar el sótano para ver el nuevo anime",
             "que_hacer_listo": "Hacer la accion ver tv en el sotano",
         },
         4: {
@@ -126,11 +128,11 @@ init 5 python:
             # (trigger de game_loop en violet_deseo_20.rpy) y de ahi en mas la
             # quest pasa adentro del celular. NO lleva trigger_mensaje: el chat
             # no se entrega, lo abre el jugador con el boton "Hablar".
-            "pista_listo": "Estoy pensando mucho en Violet ultimamente podria escribirle",
+            "pista_listo": "Estoy pensando mucho en Violet últimamente",
             "que_hacer_listo": "Ir de noche a mi habitacion",
         },
         5: {
-            "pista_listo": "Podria ver un capitulo de anime con Violet",
+            "pista_listo": "Podría ver un capítulo de anime con Violet",
             "que_hacer_listo": "Ver TV en el sotano por la noche",
             # Mientras la quest esta activa Violet pasa la noche en su pieza.
             # De lunes a sabado ya lo hacia por rutina base; el unico dia que
@@ -146,10 +148,9 @@ init 5 python:
         },
         6: {
             # TEXTOS DINAMICOS, como los de la 2: la quest no cambia de etapa
-            # pero pasa por tres cosas distintas —ir a hablarle, ignorarla tres
-            # dias, esperar la visita—, y la fase 2 ademas muestra el contador.
-            # Las funciones viven en violet_deseo_30.rpy, al lado de las
-            # variables que miran.
+            # pero pasa por dos cosas —esperar la noche, ir a hablarle—. Las
+            # funciones viven en violet_deseo_30.rpy, al lado de la fase que
+            # miran.
             "pista_listo": vd30_pista_listo,
             "que_hacer_listo": vd30_que_hacer_listo,
             # Mientras la quest esta activa Violet pasa la noche en su pieza,
@@ -165,6 +166,13 @@ init 5 python:
                 ) for dia in range(7)
             },
         },
+        7: {
+            # La cuenta de los tres dias. El que hacer lleva el contador
+            # (violet_deseo_30.rpy). Sin rutina: es juego libre, Violet va y
+            # viene como siempre — la visita la trae ella a la pieza del MC.
+            "pista_listo": "Prefiero no cruzarmela por unos dias",
+            "que_hacer_listo": vd30b_que_hacer_listo,
+        },
     }
 
     # Hasta donde llega el contenido de la linea. La proxima quest de la cadena
@@ -176,3 +184,11 @@ init 5 python:
     for _n, _u, _nom, _desc, _ant in _VIOLET_DESEO_QUESTS:
         _crear_quest_deseo_violet(_n, _u, _nom, _desc, _ant,
             **_VIOLET_DESEO_TEXTOS.get(_n, {}))
+
+
+# Ultima quest publicada de la rama. La pantalla de fin de contenido
+# (ui/menus/fin_contenido.rpy) sale cuando las tres ramas tienen la suya completa. Al publicar una quest nueva
+# despues de esta, se mueve aca. Es la 07 y no la 06: la 06 se completa a mitad
+# de la escena de deseo 30, la 07 la cierra.
+init 5 python:
+    registrar_fin_de_rama("violet_deseo_07", _("Rama de deseo de Violet"))

@@ -237,10 +237,10 @@ translate english quest_violet_amor_02_f5a7a106:
     mc "Haha, fine, let's go"
 
 # game/script/characters/violet/amor/violet_amor_10.rpy:214
-translate english quest_violet_amor_02_c84591b3:
+translate english quest_violet_amor_02_ba2703c0:
 
-    # mc "No puedo creer el desastre que había... ¿Qué hiciste?"
-    mc "I can't believe the mess that was in there... What did you do?"
+    # mc "No puedo creer el desastre que hay... ¿Qué hiciste?"
+    mc "I can't believe this mess... What did you do?"
 
 # game/script/characters/violet/amor/violet_amor_10.rpy:218
 translate english quest_violet_amor_02_cc6af0ae:

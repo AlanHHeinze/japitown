@@ -2,40 +2,6 @@
 ## Menú de Cheats
 ################################################################################
 
-init python:
-    def cheat_violet_al_bano():
-        """Fuerza a Violet al baño para testear el minijuego de espiar."""
-        # Guardar rutina original si no está guardada
-        if not hasattr(store, '_cheat_violet_rutina_original'):
-            store._cheat_violet_rutina_original = {}
-
-        violet = obtener_npc("violet")
-        horario = store.horario_actual
-
-        # Guardar rutina actual de este horario si no la tenemos
-        if horario not in store._cheat_violet_rutina_original:
-            store._cheat_violet_rutina_original[horario] = violet.locacion_actual
-
-        # Forzar a Violet al baño
-        violet.locacion_actual = "casa_banioarriba"
-
-        # Mensaje de confirmación
-        renpy.show_screen("say", who=None, what="Violet está en el baño ahora (cheat activado).")
-
-    def cheat_violet_restaurar():
-        """Restaura la rutina original de Violet."""
-        if hasattr(store, '_cheat_violet_rutina_original'):
-            violet = obtener_npc("violet")
-            horario = store.horario_actual
-
-            if horario in store._cheat_violet_rutina_original:
-                violet.locacion_actual = store._cheat_violet_rutina_original[horario]
-                # Limpiar el registro para este horario
-                del store._cheat_violet_rutina_original[horario]
-                renpy.show_screen("say", who=None, what="Rutina de Violet restaurada.")
-            else:
-                renpy.show_screen("say", who=None, what="No hay rutina original guardada para este horario.")
-
 screen menu_cheats():
     """Menú de cheats — App Cheats"""
 
@@ -85,133 +51,70 @@ screen menu_cheats():
                         spacing int(12 * _k)
                         xfill True
 
-                        # ── Tests de quests (saltar directo al contenido) ──
-                        text "TESTEO DE QUESTS" size int(12 * _k) color "#4FC3F7" bold True
+                        # ── Controlador (tools/controlador/) ──
+                        text "CONTROLADOR" size int(12 * _k) color "#4FC3F7" bold True
 
                         button:
                             xfill True
-                            background "#4a1e3aCC"
-                            hover_background "#6a2a50CC"
+                            background "#1e3a4aCC"
+                            hover_background "#2a506aCC"
                             padding (int(12 * _k), int(10 * _k))
-                            action [
-                                Hide("menu_cheats"),
-                                SetVariable("menu_celular_abierto", False),
-                                Hide("menu_celular"),
-                                Jump("test_quest06a_violet")
-                            ]
-
-                            text "🧪 Quest 06_a Violet" size int(14 * _k) color "#FFD54F" bold True
+                            action Show("escenarios_controlador")
+                            text "🧪 Escenarios del controlador" size int(14 * _k) color "#FFD54F" bold True
 
                         button:
                             xfill True
-                            background "#4a1e3aCC"
-                            hover_background "#6a2a50CC"
+                            background "#1e3a4aCC"
+                            hover_background "#2a506aCC"
                             padding (int(12 * _k), int(10 * _k))
-                            action [
-                                Hide("menu_cheats"),
-                                SetVariable("menu_celular_abierto", False),
-                                Hide("menu_celular"),
-                                Jump("test_quest08a_violet")
-                            ]
-
-                            text "🧪 Quest 08_a Violet" size int(14 * _k) color "#FFD54F" bold True
+                            action Show("control_fixes")
+                            text "🔧 Control de fixes (escenas a verificar)" size int(14 * _k) color "#FFD54F" bold True
 
                         button:
                             xfill True
-                            background "#4a1e3aCC"
-                            hover_background "#6a2a50CC"
+                            background "#1e3a4aCC"
+                            hover_background "#2a506aCC"
                             padding (int(12 * _k), int(10 * _k))
-                            action [
-                                Hide("menu_cheats"),
-                                SetVariable("menu_celular_abierto", False),
-                                Hide("menu_celular"),
-                                Jump("test_vq9_minijuego")
-                            ]
+                            action [Hide("menu_cheats"),
+                                    SetVariable("menu_celular_abierto", False),
+                                    Hide("menu_celular"),
+                                    Function(jp_panel_controlador)]
+                            text "📋 Panel del controlador (en vivo)" size int(14 * _k) color "#FFD54F" bold True
 
-                            text "🧪 Minijuego 09 Violet" size int(14 * _k) color "#FFD54F" bold True
-
-                        # El cuidado decide si Violet lo deja sacarle la tanga
-                        # (VQ9_CUIDADO_PARA_TANGA). Los dos botones sirven para
-                        # ver las dos respuestas sin jugar los tres dias.
-                        hbox:
-                            xfill True
-                            spacing int(6 * _k)
-
-                            button:
-                                xsize int(150 * _k)
-                                background "#2a4a3aCC"
-                                hover_background "#3a6a50CC"
-                                padding (int(8 * _k), int(10 * _k))
-                                action Function(_vq9_cheat_cuidado, 3)
-                                text "💚 Cuidado 3" size int(13 * _k) color "#A5D6A7" bold True xalign 0.5
-
-                            button:
-                                xsize int(150 * _k)
-                                background "#4a2a2aCC"
-                                hover_background "#6a3a3aCC"
-                                padding (int(8 * _k), int(10 * _k))
-                                action Function(_vq9_cheat_cuidado, 0)
-                                text "💔 Cuidado 0" size int(13 * _k) color "#EF9A9A" bold True xalign 0.5
-
-                        # ── Test de sistema: forzar un error para probar Sentry ──
-                        text "TESTEO DE SISTEMA" size int(12 * _k) color "#4FC3F7" bold True
+                        # ── Minijuegos (pruebas de animacion) ──
+                        text "MINIJUEGOS" size int(12 * _k) color "#4FC3F7" bold True
 
                         button:
                             xfill True
-                            background "#5a1e1eCC"
-                            hover_background "#7a2a2aCC"
+                            background "#1e3a4aCC"
+                            hover_background "#2a506aCC"
                             padding (int(12 * _k), int(10 * _k))
-                            action [
-                                Hide("menu_cheats"),
-                                SetVariable("menu_celular_abierto", False),
-                                Hide("menu_celular"),
-                                Function(jp_forzar_error_prueba)
-                            ]
+                            # El label baja el celular y el HUD solo, y vuelve
+                            # al game_loop al cerrar la prueba.
+                            action [Hide("menu_cheats"),
+                                    SetVariable("menu_celular_abierto", False),
+                                    Hide("menu_celular"),
+                                    Jump("minijuego_misionero_test")]
+                            text "🎬 Prueba: animación misionero" size int(14 * _k) color "#FFD54F" bold True
 
-                            text "💥 Forzar error (test Sentry)" size int(14 * _k) color "#ff8888" bold True
-
-                        # Testeo del minijuego de espiar
-                        button:
-                            xfill True
-                            background "#3a2a5aCC"
-                            hover_background "#5a3a7aCC"
-                            padding (int(12 * _k), int(10 * _k))
-                            action Function(cheat_violet_al_bano)
-
-                            text "🚿 Violet al baño (minijuego)" size int(14 * _k) color "#FFB74D" bold True
+                        # ── Pantallas ──
+                        text "PANTALLAS" size int(12 * _k) color "#4FC3F7" bold True
 
                         button:
                             xfill True
-                            background "#3a2a5aCC"
-                            hover_background "#5a3a7aCC"
+                            background "#1e3a4aCC"
+                            hover_background "#2a506aCC"
                             padding (int(12 * _k), int(10 * _k))
-                            action Function(cheat_violet_restaurar)
+                            # Muestra la pantalla de fin de contenido SIN
+                            # marcarla como vista: no cambia nada de la partida.
+                            action [Hide("menu_cheats"),
+                                    SetVariable("menu_celular_abierto", False),
+                                    Hide("menu_celular"),
+                                    Jump("fin_contenido_test")]
+                            text "🏁 Prueba: fin de contenido" size int(14 * _k) color "#FFD54F" bold True
 
-                            text "↩️ Restaurar rutina Violet" size int(14 * _k) color "#FFB74D" bold True
-
-                        # Diagnóstico de "cannot pickle X" al guardar: lista los
-                        # objetos del estado que no se pueden serializar y por
-                        # qué camino se llega a ellos (diagnostico_guardado.rpy).
-                        button:
-                            xfill True
-                            background "#1e3a5aCC"
-                            hover_background "#2a4a7aCC"
-                            padding (int(12 * _k), int(10 * _k))
-                            action Function(jp_reportar_no_picklables)
-
-                            text "🔍 Revisar guardado (no picklables)" size int(14 * _k) color "#88ccff" bold True
-
-                        # Repara una partida donde una variable del store tapó un
-                        # builtin (ej. escribir `int = 5` en la consola), que hace
-                        # crashear el HUD entero. Ver builtins_pisados.rpy.
-                        button:
-                            xfill True
-                            background "#1e3a5aCC"
-                            hover_background "#2a4a7aCC"
-                            padding (int(12 * _k), int(10 * _k))
-                            action Function(jp_limpiar_builtins_pisados)
-
-                            text "🧹 Limpiar builtins pisados" size int(14 * _k) color "#88ccff" bold True
+                        # ── Talk ──
+                        text "TALK" size int(12 * _k) color "#4FC3F7" bold True
 
                         # Toggle de recompensas
                         frame:
@@ -233,29 +136,6 @@ screen menu_cheats():
                                 else:
                                     textbutton "OFF":
                                         action ToggleField(persistent, "mostrar_recompensa", True, False)
-                                        style "cheat_button"
-                                        xalign 1.0
-
-                        # Toggle de botones de movimiento visibles
-                        frame:
-                            xfill True
-                            background "#1e1e3aCC"
-                            padding (int(12 * _k), int(10 * _k))
-
-                            hbox:
-                                spacing int(10 * _k)
-                                yalign 0.5
-                                xfill True
-                                text "Botones de movimiento:" size int(13 * _k) color "#ffffff" bold True yalign 0.5
-
-                                if getattr(persistent, "hotspots_visibles", True):
-                                    textbutton "ON":
-                                        action ToggleField(persistent, "hotspots_visibles", True, False)
-                                        style "cheat_button"
-                                        xalign 1.0
-                                else:
-                                    textbutton "OFF":
-                                        action ToggleField(persistent, "hotspots_visibles", True, False)
                                         style "cheat_button"
                                         xalign 1.0
 

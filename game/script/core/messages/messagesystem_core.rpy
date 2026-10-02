@@ -496,7 +496,7 @@ init python:
             if grupo.trigger_id:
                 self._grupos_registrados[grupo.trigger_id] = grupo
         
-        def disparar_por_trigger(self, tipo_trigger, trigger_id, npc_id):
+        def disparar_por_trigger(self, tipo_trigger, trigger_id, npc_id, quest_id=None):
             """
             Busca y activa un GrupoMensajes asociado a un trigger.
             Si el grupo tiene condiciones de entrega, lo pone en espera.
@@ -505,10 +505,17 @@ init python:
                 tipo_trigger: "quest" o "event" (informativo)
                 trigger_id: ID del trigger (quest_id o event_id)
                 npc_id: ID del NPC (fallback si no está en el grupo)
+                quest_id: quest cuyo DISPARADOR es este chat (lo pasa
+                    Quest._ejecutar_entrada_etapa). Queda en el grupo y, cuando
+                    el jugador lo abre, seleccionar_grupo pasa por
+                    activar_quest — el punto de activacion, igual que apretar
+                    el boton de esa quest.
             """
             grupo = self._grupos_registrados.get(trigger_id)
             if not grupo:
                 return False
+            if quest_id:
+                grupo.quest_id = quest_id
 
             # Verificar que no esté ya disparado.
             #
@@ -657,6 +664,19 @@ init python:
             if mensajes_estan_bloqueados():
                 return False
 
+            # MC reservado por una quest (planificador): un PRIORITARIO ajeno
+            # no entra en el medio — un prioritario bloquea dormir y avanzar,
+            # o sea que le pisa la noche a la quest que la reservo. El grupo se
+            # queda en espera y se reintenta cuando la reserva vence.
+            #
+            # Solo los prioritarios: uno normal no traba nada, y cuanto mas
+            # chico el radio del bloqueo, mejor (ver S15/E10 — un bloqueo que
+            # tapa de mas es como se hacen los soft locks).
+            if getattr(grupo, "prioritario", False):
+                _res_mc = planificador_mc_reservado_por()
+                if _res_mc is not None and getattr(grupo, "quest_id", None) != _res_mc:
+                    return False
+
             # Un grupo con pasos tiene que poder arrancar del primero. Con
             # reiniciar_progreso() en la entrega esto no falla nunca; queda
             # como cinturon por si alguien lo saltea.
@@ -802,6 +822,10 @@ init python:
             chat.grupos_pendientes.remove(grupo)
             chat.grupo_activo = grupo
             grupo.estado = "en_curso"
+
+            # Punto de activacion: abrir el chat que dispara una quest es
+            # "apretar el boton" de esa quest (ver disparar_por_trigger).
+            activar_quest(getattr(grupo, "quest_id", None), origen="chat:" + grupo.id)
             
             # Si el primer paso tiene mensaje_npc, agregarlo al historial
             paso = grupo.obtener_paso_actual()

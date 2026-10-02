@@ -45,6 +45,10 @@ init python:
             return
         renpy.scene(layer="master")
         renpy.show("_hud_bg", what=renpy.displayable(bg_path), layer="master")
+        # Tinte de personajes segun el horario (core/utils/tinte_horario.rpy):
+        # se refresca cada vez que se repinta el fondo, que es cuando cambia
+        # el horario o la locacion.
+        aplicar_tinte_personajes()
         if con_fade:
             renpy.transition(Dissolve(1.5), layer="master")
 
@@ -68,10 +72,14 @@ init python:
     # Los autoguardados evaluan esto al guardar (loadsave.py:253).
     config.auto_save_extra_info = jp_nombre_guardado
 
-    def avanzar_horario():
+    def avanzar_horario(silencioso=False):
         """
         Avanza el horario al siguiente estado.
         Si está en Trasnoche, no avanza más.
+
+        `silencioso`: sin repintar el fondo ni esconder los sprites del HUD.
+        Lo usa accion_dormir para recorrer los horarios que faltan hasta la
+        trasnoche sin que el jugador vea cada paso.
 
         NOTA (refactor C2): acá había un if que congelaba el horario mientras
         la quest 0_b de Jasmine estuviera activa. Se eliminó porque era peso
@@ -92,14 +100,16 @@ init python:
                 store.repartidor_presente = False
             
             store.horario_actual += 1
-            actualizar_bg_master(con_fade=True)
+            if not silencioso:
+                actualizar_bg_master(con_fade=True)
 
             # Actualizar ubicaciones de NPCs (desaparecen de inmediato)
             if hasattr(store, 'actualizar_rutinas_npcs'):
                 store.actualizar_rutinas_npcs()
 
             # Ocultar sprites NPC durante la transicion del bg (se revelan al terminar)
-            store.hud_npc_delay_horario = True
+            if not silencioso:
+                store.hud_npc_delay_horario = True
             
             # Verificar fallos de quests
             if hasattr(store, 'verificar_fallos_quests'):
@@ -212,6 +222,7 @@ init python:
 
         # Usar store directamente en lugar de global
         store.horario_actual = 0
+        aplicar_tinte_personajes()
         
         # Avanzar dia de la semana
         store.dia_semana_actual = (store.dia_semana_actual + 1) % 7
@@ -372,16 +383,8 @@ label accion_dormir:
         piensa "[_msg_restriccion]"
         return
 
-    # Mensaje prioritario que llega mientras el jugador duerme — despertar
-    # anticipado. Es un flujo alternativo, no un bloqueo: por eso vive aca y
-    # no en el embudo.
-    $ _horario_despertar = obtener_horario_despertar_prioritario()
-    if _horario_despertar is not None:
-        call screen animacion_dormir with dissolve
-        $ avanzar_horario_multiple(_horario_despertar - horario_actual)
-        $ _blk_guardar_toque()
-        piensa "Me despertó un mensaje"
-        return
+    # (El despertar anticipado por un mensaje prioritario ya no se precalcula:
+    # el recorrido de horarios de mas abajo lo encuentra donde llegue.)
 
     # Verificar si hay paquete bloqueando
     if paquete_en_habitacion:
@@ -412,18 +415,73 @@ label accion_dormir:
             "Volver":
                 return
 
-    # Llamar al screen como modal (espera a que el timer del screen haga Return())
-    call screen animacion_dormir with dissolve
+    # La pantalla de dormir se MUESTRA (no se llama): todo lo que sigue —el
+    # recorrido de horarios, el cambio de dia, el repintado del fondo— pasa
+    # debajo del negro, y al esconderla el fondo ya es el del horario real.
+    # Tiempo total en negro ~2s, como el timer que tenia la version llamada.
+    # Las pausas van con modal=False: la pantalla es modal, y una pausa con
+    # tiempo no termina mientras hay una screen modal (config.modal_blocks_pause).
+    show screen animacion_dormir_capa
+    with dissolve
+    $ renpy.pause(1.0, hard=True, modal=False)
+
+    # RECORRER los horarios que faltan hasta la trasnoche, de a uno y sin que
+    # se vea (avanzar_horario silencioso). En cada paso corre lo mismo que el
+    # game_loop (quests, mensajes en espera, eventos, triggers): asi un
+    # mensaje prioritario de la tarde lo despierta a la tarde, y un NPC que
+    # entra a la habitacion a la noche lo encuentra durmiendo a la noche. Sin
+    # el recorrido, dormir de mañana saltaba derecho a la trasnoche y nada de
+    # lo que pasa en el medio existia (la deseo 10 solo arrancaba durmiendo
+    # de noche). Lo que los triggers de dormir "antes" evaluan, lo evaluan
+    # ya en la trasnoche.
+    $ _dormir_label = None
+    while horario_actual < 3 and _dormir_label is None:
+        $ avanzar_horario(silencioso=True)
+        $ _dormir_label = _vr_interrupcion()
+        if _dormir_label is None and obtener_bloqueo_mensaje_prioritario():
+            # Un mensaje prioritario llego en este horario: lo despierta. El
+            # fondo se repinta debajo del negro y recien despues se levanta.
+            $ actualizar_bg_master()
+            $ renpy.pause(1.0, hard=True, modal=False)
+            hide screen animacion_dormir_capa
+            with dissolve
+            $ _blk_guardar_toque()
+            $ renpy.restart_interaction()
+            piensa "Me despertó un mensaje"
+            return
+    if _dormir_label:
+        # Algo del mundo lo despierta (trigger de game_loop): la escena
+        # sigue, el dia no cambio. El label es contenido: termina en game_loop.
+        $ actualizar_bg_master()
+        $ renpy.pause(0.5, hard=True, modal=False)
+        hide screen animacion_dormir_capa
+        with dissolve
+        jump expression _dormir_label
 
     # Triggers de contenido ANTES de avanzar el dia (registro
     # TRIGGERS_DORMIR fase "antes"; ej. eventos nocturnos como el evento 2
     # de Violet). El motor no conoce quests ni eventos por nombre.
     $ _trigger_dormir = ejecutar_triggers_dormir("antes")
     if _trigger_dormir:
+        # El fondo ya es el de la trasnoche (el recorrido movio el horario):
+        # se repinta debajo del negro antes de levantarlo, si no la escena
+        # arranca sobre el fondo del momento en que se acosto.
+        $ actualizar_bg_master()
+        $ renpy.pause(0.5, hard=True, modal=False)
+        hide screen animacion_dormir_capa
+        with dissolve
         jump expression _trigger_dormir
 
     # Ejecutar lógica de cambio de dia
     $ dormir()
+
+    # El fondo del dia nuevo se pinta debajo del negro; recien despues se
+    # levanta la pantalla. ANTES del autosave: una screen mostrada queda en el
+    # checkpoint, y al cargar volveria a aparecer sin nadie que la esconda.
+    $ actualizar_bg_master()
+    $ renpy.pause(1.0, hard=True, modal=False)
+    hide screen animacion_dormir_capa
+    with dissolve
 
     # Autoguardado del nuevo dia. Va justo despues de dormir() a proposito: los
     # bloqueos de "no podes dormir" ya retornaron antes, y TODO el contenido del

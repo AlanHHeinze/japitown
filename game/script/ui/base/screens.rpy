@@ -118,13 +118,12 @@ screen say(who, what):
             window:
                 id "namebox"
                 style "namebox"
-                if renpy.variant("small"):
-                    # Con las fuentes agrandadas en táctil, el nombre queda muy
-                    # pegado al texto de diálogo. Se lo sube a la mitad: la
-                    # mitad de la caja del nombre queda arriba del borde del
-                    # cuadro de texto, y la otra mitad adentro.
-                    yanchor 0.5
-                    ypos 0
+                # La caja del nombre va a caballo del borde superior del cuadro:
+                # la mitad afuera, la mitad adentro (en todas las variantes).
+                yanchor 0.5
+                ypos 0
+                # La marca "(Pensamiento)" de piensa_base viene DENTRO de `who`
+                # (who_suffix): asi toma el color del personaje como el nombre.
                 text who id "who"
 
         text what id "what"
@@ -233,9 +232,80 @@ style input:
 screen choice(items):
     style_prefix "choice"
 
+    # Texto del popup de ventaja que se esta mostrando, o None.
+    default _vent_desc = None
+
     vbox:
         for i in items:
-            textbutton i.caption action i.action
+
+            # OPCION CON VENTAJA (hoy solo las del talk: ver talk_info_ventaja
+            # en core/talk/talksystem_core.rpy). El texto ya trae "(Ventaja:
+            # X)"; al costado va un boton "?" que, al pasar el mouse o tocarlo,
+            # abre un popup que explica que hace la ventaja y de que hito viene.
+            #
+            # El "?" es el UNICO que abre el popup: la opcion no lo hace al
+            # hoverearla, para no tener la misma informacion por dos lados. Y
+            # tiene que ser un boton aparte porque tocar la opcion la elige —
+            # en tactil no habria otra forma de abrirlo.
+            #
+            # Va en un `fixed` del tamaño de la opcion (fit_first) y se sale por
+            # la derecha: asi el menu sigue centrado sobre las opciones.
+            if i.kwargs.get("ventaja_popup"):
+                fixed:
+                    fit_first True
+
+                    textbutton i.caption action i.action
+
+                    textbutton "?":
+                        style "choice_ventaja_button"
+                        xpos gui.choice_button_width + 10
+                        yalign 0.5
+                        action [SetScreenVariable("_vent_desc", i.kwargs["ventaja_popup"]), CaptureFocus("talk_vent_pop")]
+                        hovered [SetScreenVariable("_vent_desc", i.kwargs["ventaja_popup"]), CaptureFocus("talk_vent_pop")]
+                        unhovered SetScreenVariable("_vent_desc", None)
+
+            else:
+                textbutton i.caption action i.action
+
+    # El popup, como el del panel de Desbloqueos (ui/hud/hud_desbloqueos.rpy):
+    # en PC pegado a lo que se hovereo (nearrect + CaptureFocus), y como
+    # `frame` pelado para no robarle el hover; en tactil centrado y como boton,
+    # para cerrarlo tocandolo.
+    if _vent_desc:
+        if renpy.variant("small"):
+            button:
+                xalign 0.5
+                yalign 0.5
+                xmaximum 900
+                background DESB_POPUP_FONDO
+                padding (24, 20)
+                action SetScreenVariable("_vent_desc", None)
+                text _vent_desc size 26 color "#ffffff"
+        else:
+            nearrect:
+                focus "talk_vent_pop"
+                preferred_side "top"
+
+                frame:
+                    xalign 0.5
+                    xmaximum 520
+                    background DESB_POPUP_FONDO
+                    padding (18, 14)
+                    text _vent_desc size 20 color "#ffffff"
+
+
+style choice_ventaja_button is button:
+    xysize (40, 40)
+    background "#2e4a8cCC"
+    hover_background "#3d5fb0EE"
+
+style choice_ventaja_button_text is button_text:
+    size 24
+    bold True
+    color "#FFF176"
+    hover_color "#FFFFFF"
+    xalign 0.5
+    yalign 0.5
 
 
 style choice_vbox is vbox
@@ -326,7 +396,14 @@ screen navigation():
         style_prefix "navigation"
 
         xpos gui.navigation_xpos
-        yalign (0.2 if renpy.variant("small") else 0.5)
+        # Pantalla chica: arriba. Pantalla grande: centrado, salvo en el menu
+        # principal, donde sube para despegarse de los enlaces de abajo.
+        if renpy.variant("small"):
+            yalign 0.2
+        elif main_menu:
+            yalign 0.4
+        else:
+            yalign 0.5
 
         spacing gui.navigation_spacing
 
@@ -461,30 +538,43 @@ screen main_menu():
         yoffset -130
         spacing 10
 
-        hbox:
-            spacing 12
-            imagebutton:
-                idle Transform("images/hud/discord_logo.png", fit="contain", xysize=(int(52 * _soc_k), int(52 * _soc_k)), alpha=0.85)
-                hover Transform("images/hud/discord_logo.png", fit="contain", xysize=(int(52 * _soc_k), int(52 * _soc_k)), alpha=1.0)
-                action OpenURL(JP_URL_DISCORD)
-            text "Discord" yalign 0.5 size 28 color "#ffffff" outlines [ (2, "#000000aa", 0, 0) ]
+        use enlace_social("discord", "images/hud/discord_logo.png", "Discord", JP_URL_DISCORD, _soc_k)
+        use enlace_social("patreon", "images/hud/patreon_logo.png", "Patreon", JP_URL_PATREON, _soc_k)
+        use enlace_social("itch", "images/hud/itch_logo.png", "itch.io", "https://ahhgames.itch.io/japitown", _soc_k)
+
+
+## Una fila "icono + nombre" que abre una URL. En pantalla grande la fila
+## entera es el botón (el texto también linkea) y se aclara al pasar el mouse;
+## en pantalla chica solo el icono es botón, como siempre.
+screen enlace_social(clave, imagen, texto, url, k):
+
+    # Variable local al sub-screen (un `use` con parámetros tiene scope
+    # propio; SetScreenVariable escribiría en el screen padre y acá no se ve).
+    default hover = False
+
+    $ _es_lado = int(52 * k)
+
+    if renpy.variant("small"):
 
         hbox:
             spacing 12
             imagebutton:
-                idle Transform("images/hud/patreon_logo.png", fit="contain", xysize=(int(52 * _soc_k), int(52 * _soc_k)), alpha=0.85)
-                hover Transform("images/hud/patreon_logo.png", fit="contain", xysize=(int(52 * _soc_k), int(52 * _soc_k)), alpha=1.0)
-                action OpenURL("https://www.patreon.com/cw/Japitown")
-            text "Patreon" yalign 0.5 size 28 color "#ffffff" outlines [ (2, "#000000aa", 0, 0) ]
+                idle Transform(imagen, fit="contain", xysize=(_es_lado, _es_lado), alpha=0.85)
+                hover Transform(imagen, fit="contain", xysize=(_es_lado, _es_lado), alpha=1.0)
+                action OpenURL(url)
+            text texto yalign 0.5 size 28 color "#ffffff" outlines [ (2, "#000000aa", 0, 0) ]
 
-        hbox:
-            spacing 12
-            imagebutton:
-                idle Transform("images/hud/itch_logo.png", fit="contain", xysize=(int(52 * _soc_k), int(52 * _soc_k)), alpha=0.85)
-                hover Transform("images/hud/itch_logo.png", fit="contain", xysize=(int(52 * _soc_k), int(52 * _soc_k)), alpha=1.0)
-                action OpenURL("https://ahhgames.itch.io/japitown")
-            text "itch.io" yalign 0.5 size 28 color "#ffffff" outlines [ (2, "#000000aa", 0, 0) ]
+    else:
 
+        button:
+            action OpenURL(url)
+            hovered SetLocalVariable("hover", True)
+            unhovered SetLocalVariable("hover", False)
+            hbox:
+                spacing 12
+                at Transform(alpha=(1.0 if hover else 0.85))
+                add Transform(imagen, fit="contain", xysize=(_es_lado, _es_lado))
+                text texto yalign 0.5 size 28 color "#ffffff" outlines [ (2, "#000000aa", 0, 0) ]
 
 
 style main_menu_frame is empty

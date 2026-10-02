@@ -89,7 +89,7 @@ translate english strings:
     new "Idiot"
 
     old "Solo un poco jajaja"
-    new "Just a little hahaha"
+    new "Just a bit of one hahaha"
 
     old "No digo que lo uses, solo que si quieres lo puedes usar"
     new "I'm not saying wear it, just that you can if you want"
@@ -101,7 +101,7 @@ translate english strings:
     new "You're pretty, whatever you wear you'll draw attention"
 
     old "Jajajaja un poco sí"
-    new "Hahaha yeah a little"
+    new "Hahaha yeah, a bit of one"
 
     old "Me sentiría un poco celoso con todos mirándote"
     new "I'd feel a little jealous with everyone looking at you"

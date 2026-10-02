@@ -70,9 +70,65 @@ init python:
         except Exception:
             pass
 
-    def _jp_sentry_entorno():
-        """Distingue web de escritorio para taggear el evento."""
+    # Largo del id de instalacion, en caracteres hex. 12 = 48 bits: con miles
+    # de jugadores la probabilidad de que dos coincidan es despreciable, y
+    # entra legible en el reporte de Discord (donde tiene que poder leerse y
+    # buscarse a mano).
+    _JP_INSTALACION_LARGO = 12
+
+    def jp_instalacion_id():
+        """
+        Id ANONIMO y estable de esta instalacion del juego.
+
+        PARA QUE: sin un `user.id`, Sentry no puede contar personas — todos los
+        issues decian "Users Impacted: 0" y habia que adivinar por pais y
+        navegador si 46 eventos eran un jugador insistiendo o cuarenta y seis
+        jugadores distintos (revision del 2026-09-23: eran uno). Con esto, el
+        dashboard dice cuanta gente toca cada error, que es lo unico que
+        permite priorizar de verdad.
+
+        QUE ES Y QUE NO ES: un uuid4 al azar, generado en la maquina del
+        jugador la primera vez y guardado en `persistent`. No sale de ningun
+        dato de la persona, no viaja con nada mas, y no sirve para reconocerlo
+        en ningun otro lado. Borrar los datos del navegador (en web) o el
+        persistent (en escritorio) lo cambia por otro — es a proposito: el id
+        identifica UNA instalacion, no a alguien.
+
+        VA TAMBIEN EN EL REPORTE DE DISCORD (sistema_reporte_errores.rpy), y
+        ese es medio punto del asunto: con el mismo id en los dos lados, un
+        feedback que llega por Discord se puede cruzar con los crashes que esa
+        misma instalacion mando a Sentry.
+        """
         try:
+            _id = getattr(persistent, "jp_instalacion_id", None)
+            if not _id:
+                _id = _sentry_uuid.uuid4().hex[:_JP_INSTALACION_LARGO]
+                persistent.jp_instalacion_id = _id
+            return str(_id)
+        except Exception:
+            # Sin persistent (caso raro, y en web puede fallar la primera
+            # escritura): uno de sesion, asi el evento igual trae algo con que
+            # agrupar. El prefijo avisa que no sobrevive al reinicio.
+            try:
+                _id = renpy.session.get("jp_instalacion_id")
+                if not _id:
+                    _id = "sesion_" + _sentry_uuid.uuid4().hex[:8]
+                    renpy.session["jp_instalacion_id"] = _id
+                return _id
+            except Exception:
+                return "desconocido"
+
+    def _jp_sentry_entorno():
+        """
+        Distingue web de escritorio para taggear el evento — y "dev" cuando
+        corre desde el SDK (config.developer, que en un build es False): lo que
+        revienta en la maquina de desarrollo, incluidos los archivos temporales
+        de un lint, llegaba a Sentry mezclado con lo de los jugadores (evento
+        1d2daf07, 2026-09-17). Con environment=dev se filtra de un click.
+        """
+        try:
+            if config.developer:
+                return "dev"
             return "web" if jp_es_web() else "desktop"
         except Exception:
             return "desconocido"
@@ -126,6 +182,22 @@ init python:
             _glt = getattr(store, "_gl_ultimo_trigger", "")
             if _glt:
                 tags["gl_trigger"] = str(_glt)
+        except Exception:
+            pass
+
+        # Quien juega esta partida (mismo helper que el reporte de Discord).
+        # Va como TAG y no dentro del fingerprint: identifica al que reporta
+        # sin partir en dos el agrupamiento de un mismo error.
+        try:
+            tags["jugador"] = jp_jugador_actual()[:60]
+        except Exception:
+            pass
+
+        # Ultima quest activada (ver activar_quest en questsystem_core).
+        try:
+            _qa = getattr(store, "_quest_activada_ultima", "")
+            if _qa:
+                tags["quest_activada"] = str(_qa)
         except Exception:
             pass
 
@@ -208,13 +280,35 @@ init python:
                 pass
         return frames
 
-    def _jp_sentry_fingerprint(tipo, valor):
+    def _jp_sentry_archivo_juego(full):
+        """
+        El ultimo archivo del JUEGO (game/...) que aparece en el traceback, sin
+        ruta ni extension, o "". Es donde estaba parado el script cuando salto
+        el error — para los errores cuyo mensaje no dice nada del lugar.
+        """
+        try:
+            _archivos = _sentry_re.findall(r'File "(?://)?game/([^"]+?)\.rpyc?"', full or "")
+            return _archivos[-1].rsplit("/", 1)[-1] if _archivos else ""
+        except Exception:
+            return ""
+
+    def _jp_sentry_fingerprint(tipo, valor, full=""):
         """Agrupa por tipo + mensaje normalizado. Normaliza direcciones de memoria
         y números largos para que la misma clase de error caiga en un solo issue
-        aunque los frames acumulados varíen (los stacks vienen inflados)."""
+        aunque los frames acumulados varíen (los stacks vienen inflados).
+
+        "Possible infinite loop." lleva ademas el archivo del juego donde salto:
+        el mensaje es el mismo para cualquier bucle, y con eso la variante de la
+        precarga (pantalla_carga) y la del game_loop (intro_main), que son dos
+        problemas distintos, caian en el mismo issue (S11)."""
         norm = _sentry_re.sub(r'0x[0-9a-fA-F]+', '0xADDR', valor or "")
         norm = _sentry_re.sub(r'\b\d{4,}\b', '#', norm)
-        return [tipo, norm]
+        fp = [tipo, norm]
+        if norm.startswith("Possible infinite loop"):
+            _arch = _jp_sentry_archivo_juego(full)
+            if _arch:
+                fp.append(_arch)
+        return fp
 
     def jp_sentry_capturar(short, full):
         """
@@ -226,7 +320,7 @@ init python:
             return
         try:
             tipo, valor = _jp_sentry_parse(full, short)
-            fp = _jp_sentry_fingerprint(tipo, valor)
+            fp = _jp_sentry_fingerprint(tipo, valor, full)
             clave = "|".join(fp)
             if _jp_sentry_ya_enviado(clave):
                 return
@@ -240,6 +334,9 @@ init python:
                 "logger": "renpy",
                 "release": str(getattr(config, "version", "?")),
                 "environment": _jp_sentry_entorno(),
+                # Sin esto Sentry cuenta eventos pero no personas. El id es
+                # anonimo y por instalacion — ver jp_instalacion_id().
+                "user": {"id": jp_instalacion_id()},
                 "tags": _jp_sentry_tags(),
                 "fingerprint": fp,
                 "exception": {"values": [{
@@ -252,6 +349,11 @@ init python:
                     # donde está el error real).
                     "traceback_full": (full or "")[-8000:],
                     "traceback_short": (short or "")[:2000],
+                    # Que estaba procesando el controlador de quests: la
+                    # restriccion puesta, las reservas y el estado de cada
+                    # quest viva. Es extra y no tag: es multilinea y no tiene
+                    # que influir en el agrupamiento.
+                    "controlador": jp_controlador_actual(12)[:4000],
                 },
             }
 

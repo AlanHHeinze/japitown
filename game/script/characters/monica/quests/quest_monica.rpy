@@ -20,7 +20,6 @@ init 5 python:
         requisitos=[],
         # El disparo lo controla el botón "Agradecerle" del menú de Mónica
         # (visible solo a solas con ella), no la validación especial de la quest.
-        validacion_especial=[],
         mensaje_pista="Debería agradecerle cuando esté a solas con ella",
         mensaje_despertar="Podría agradecerle a Mónica si la encuentro a solas",
         retorno=ConfiguracionRetorno(avanzar_dia=False),
@@ -47,7 +46,6 @@ init 5 python:
         dias_espera=1,
         quest_anterior="monica_questprincipal_0",
         requisitos=[],
-        validacion_especial=[],
         mensaje_pista="Ver qué le pasa a Mónica",
         mensaje_despertar="Escucho que Mónica se está peleando con alguien, debería ver si todo está bien",
         retorno=ConfiguracionRetorno(avanzar_dia=False),
@@ -75,17 +73,16 @@ init 5 python:
         id="monica_questprincipal_0_c",
         npc_id="monica",
         nombre="Servicio Técnico",
-        descripcion="Tengo la notebook de Monica, debería revisarla en mi habitación",
+        descripcion="Tengo la notebook de Mónica, debería revisarla en mi habitación",
         numero_quest=2,
         dias_espera=0,
         quest_anterior="monica_questprincipal_0_b",
         requisitos=[],
-        validacion_especial=[],
-        mensaje_pista="Revisar la notebook de Monica en mi habitación",
+        mensaje_pista="Revisar la notebook de Mónica en mi habitación",
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_BOTON_LISTO: ConfigEtapa(
-                pista="Revisar la notebook de Monica en mi habitación",
+                pista="Revisar la notebook de Mónica en mi habitación",
                 que_hacer="Usar el objeto Notebook de Monica desde el inventario, en tu habitación",
             ),
         },

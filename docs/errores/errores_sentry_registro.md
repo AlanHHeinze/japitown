@@ -12,7 +12,7 @@
 
 | Errores procesados | Corregidos | En observación |
 |---|---|---|
-| 11 | 5 (S01, S02, S03, S05, S08) | 6 (familia GL: S04/S06/S07/S09 · S10 sync · **S11 bucle: sin localizar, prioridad alta**) |
+| 15 | 9 (S01, S02, S03, S05, S08, S12, S13, S14, S15) | 6 (familia GL: S04/S06/S07/S09 · S10 sync · **S11 game_loop: sin localizar** — la variante precarga de S11 quedó cerrada el 2026-09-17) |
 
 > ⚠️ **Importante (S02):** todos los fixes de esta sesión están **sin commitear**
 > (working tree). Si el build parte de un checkout limpio de git, no los incluye.
@@ -58,6 +58,84 @@ Los dos eventos de S04 ahora **agrupan juntos**; antes eran dos issues separados
 **Consecuencia para leer el histórico:** todos los conteos anteriores a esta
 fecha están inflados en cantidad de *issues* (no de eventos). Los conteos de este
 documento son correctos porque se agruparon a mano.
+
+**Reverificado el 2026-09-16** contra un traceback real de Ren'Py web con su
+bloque de metadata: `_jp_sentry_parse` devuelve `('TypeError', "'int' object is
+not callable")` y el mismo error con otra fecha da el **mismo** fingerprint. El
+arreglo sigue en pie; el agrupamiento por issue separado no vuelve a pasar por
+esta causa. (Si un mismo error se ve todavía en dos issues, mirar el *mensaje*:
+un valor variable adentro del texto de la excepción —una ruta, un id— sí parte
+el grupo, y para eso está la normalización de `_jp_sentry_fingerprint`, que hoy
+sólo aplana direcciones de memoria y números de 4+ dígitos.)
+
+---
+
+## 🔧 Nota de herramienta — jugador y controlador en los reportes (2026-09-16)
+
+Los tres canales (Discord de errores, Discord de feedback y Sentry) mandan ahora
+dos datos más:
+
+- **Jugador** — `jp_jugador_actual()` (sistema_reporte_errores.rpy): el nombre
+  que eligió el jugador, con `(tester)` cuando la partida corre en `MODO_DEV`.
+  Sirve para saber de quién es cada reporte sin preguntarlo. En Sentry va como
+  **tag** `jugador`, nunca en el fingerprint: identifica al que reporta sin
+  partir en dos el agrupamiento de un mismo error.
+- **Controlador** — `planificador_reporte()` (core/quests/planificador.rpy), vía
+  `jp_controlador_actual()`: la restricción activa (dueño, reloj, acciones
+  bloqueadas, locaciones permitidas, NPCs ocultos, celular), las reservas
+  vigentes y, por cada quest viva, cómo la ve el controlador (`espera para
+  nacer (detrás de X)` / `en narrativa` / `disponible` / `interrumpida
+  (motivo)`). Es lo que hacía falta para reconstruir una traba como E10 o E11
+  sin tener la partida. En Sentry va como **extra** (`controlador`), no como
+  tag: es multilínea y no debe influir en el agrupamiento.
+
+Las dos funciones son a prueba de fallos (corren dentro del handler de errores) y
+tienen tope de líneas; en el reporte de Discord el bloque del controlador se
+recorta a 600 caracteres y el traceback se ajusta a lo que queda libre.
+
+## 🔧 Nota de herramienta — id de instalación: Sentry ya puede contar personas (2026-09-23)
+
+Hasta ahora **todos los issues decían "Users Impacted: 0"**: el evento no
+llevaba ningún `user`, así que Sentry contaba eventos pero no gente. En la
+revisión del 2026-09-23 eso costó trabajo real — 46 eventos de tres issues
+había que cruzarlos por país y navegador para descubrir que eran **un solo
+jugador** insistiendo, no cuarenta y seis personas.
+
+**`jp_instalacion_id()`** (sistema_sentry.rpy) devuelve un `uuid4` de 12
+caracteres hex, generado en la máquina del jugador la primera vez y guardado en
+`persistent`. Va como `user.id` en el evento de Sentry y como línea
+**Instalación** en los dos reportes de Discord (error y feedback) — con el mismo
+id en los tres canales, un feedback se puede cruzar con los crashes que esa
+misma instalación mandó.
+
+Qué es y qué no es: un número al azar. No sale de ningún dato de la persona, no
+viaja con nada más y no sirve para reconocerla en otro lado. Borrar los datos
+del navegador (web) o el persistent (escritorio) lo cambia por otro, y está
+bien: identifica **una instalación**, no a alguien.
+
+Si `persistent` no está disponible (puede pasar en web en la primera escritura)
+cae a un id de sesión con prefijo `sesion_`, que avisa de un vistazo que ese no
+sobrevive al reinicio.
+
+---
+
+## 📋 Revisión del 2026-09-23 (Sentry conectado por MCP)
+
+25 issues sin resolver, que son tres cosas:
+
+| Issue | Qué | Estado |
+|---|---|---|
+| `PYTHON-4R0` + `PYTHON-4QZ` + `PYTHON-4R1` | 46 eventos, **un jugador** (El Cairo, Chrome 152, web 0.1.9.1) con `renderer: ?`. Cascada: `Could not set video mode` → display en None → revienta el `pause` → y al entrar al menú, el `take_screenshot`. Es S04/S07/S09. | **El cartel de WebGL ya existe** (patch del `index.html` del SDK, 18/09) pero la build publicada es anterior. Se cierra al republicar. |
+| `PYTHON-4QY` | 8 eventos, otro jugador (Canadá, Chrome 153, `renderer: gles2` — este sí tiene WebGL). `Possible infinite loop` en la precarga: es **S11**. | Arreglado en el working tree (el bucle en un solo bloque `python:`), sin publicar. |
+| 20 issues del 28/08 con título de timestamp (`Error: Fri Aug 28 15:51:07 2026`) | El agrupamiento roto de antes del fix de fingerprint: un mismo error partido en veinte. | Ruido histórico. |
+
+`PYTHON-4R8` (traducción duplicada de "Esperar") era de una corrida de lint en
+la máquina de desarrollo: llegó con `environment: dev`, que es exactamente para
+lo que se puso ese tag.
+
+**La conclusión de la revisión:** los dos problemas que están tocando a
+jugadores ya tienen el arreglo escrito. Lo que los cierra no es más
+diagnóstico — es publicar una build.
 
 ## S01 — TypeError: not all arguments converted during string formatting (screenshot)
 - **Estado:** ✅ **CORREGIDO en código (2026-07-26)** — pero el build 0.1.8b
@@ -231,6 +309,11 @@ todos los cambios finales) evita esto.
   mató el renderer durante un `on_resize`. Este AttributeError es el síntoma
   posterior: el loop de interacción encontró `renpy.display.draw` en `None`.
   La "hipótesis 1" de abajo quedó **confirmada**.
+- **Reincidencia 2026-09-18:** `Fri Sep 18 07:24:47` (0.1.9.1, Trois-Rivières,
+  CA, Chrome 151 con `Norton/1`), en `pantalla_carga.rpy:153` (el `pause 2.0`
+  del logo) tras tocar "Ignore" al S07 de dos segundos antes. Misma sesión que
+  el S09 de las 07:26:25: S07 → S04 → S09, un dispositivo, tres firmas.
+  Cubierto por el cartel sin WebGL del 18/09 (ver S09).
 - **Clave:** `AttributeError|'NoneType' object has no attribute 'update'`
 - **Contexto:** durante el **splashscreen**, en el `pause` del busy-wait que
   espera la decodificación de cada lote de la precarga
@@ -515,8 +598,17 @@ Ren'Py (traducción y formato de párrafos); borrarlos rompería el juego.
 ## S06 — ShaderError: falla al compilar un shader tras un resize (web)
 
 - **Estado:** 📋 **DOCUMENTADO — NO se aplica fix (ver daño colateral)**
-- **Veces:** 1 — `Thu Jul 30 17:17:38 2026`
-- **Versión:** 0.1.8f · **Web (Emscripten)**
+- **Veces:** 2 — `Thu Jul 30 17:17:38 2026` (0.1.8f, escritorio) ·
+  `Fri Sep 18 09:59:28 2026` (0.1.9.1, **Firefox 156 en Android 15**, Omaha,
+  US, jugador "Mc", **día 11, en partida** — `renderer=gles2`, o sea que el
+  renderer había andado once días; murió al recompilar los shaders en un
+  `on_resize`). Es el subgrupo que el cartel sin WebGL del 18/09 **no cubre**.
+  Hipótesis a vigilar: en móvil el `height: 100dvh` del patch hace que cada
+  aparición/desaparición de la barra del navegador redimensione el canvas, y
+  cada resize recompila shaders — más oportunidades de fallo que en escritorio.
+  Si aparece un tercero en móvil, medir antes de tocar el patch (el dvh arregla
+  un problema real en 3 de 4 teléfonos).
+- **Versión:** 0.1.8f, 0.1.9.1 · **Web (Emscripten)**
 - **Clave:** `ShaderError|gl2shader.Program.load_shader`
 - **Traceback (cola):**
 ```
@@ -578,10 +670,19 @@ escritorio). Si aparece en muchos equipos, ahí sí revisar el renderer.
 
 ## S07 — Exception: Could not set video mode (web)
 
-- **Estado:** 📋 **DOCUMENTADO — mismo incidente que S06/S04, sin fix**
-- **Veces:** 2 — `17:17:57` (incidente A) y `14:45:20` (incidente C, Miami).
-  En C fue el **primer** error de la sesión, en `pantalla_carga.rpy:152`.
-- **Versión:** 0.1.8f · **Web (Emscripten)**
+- **Estado:** 📋 **DOCUMENTADO — mismo incidente que S06/S04, sin fix.**
+  Reincidió el 2026-09-17; decisión de ese día para toda la familia GL:
+  **ignorar** (ver S09).
+- **Veces:** 3 — `17:17:57` (incidente A) y `14:45:20` (incidente C, Miami),
+  ambos 0.1.8f; en C fue el **primer** error de la sesión, en
+  `pantalla_carga.rpy:152`. Y `Thu Sep 17 20:59:20 2026` (0.1.9.1, Santana do
+  Livramento, BR, Chrome 152, jugador nuevo, `renderer=?`), otra vez en
+  `pantalla_carga.rpy:152` — el `with dissolve` del logo, la primera línea que
+  dibuja. Y `Fri Sep 18 07:24:45 2026` (Trois-Rivières, CA, Chrome 151 con
+  `Norton/1`): **la misma sesión** que el S09 de las 07:26:25 — primero este
+  al dibujar el logo, después el `screenshot` al entrar al menú tras "Ignore".
+  Un dispositivo, dos firmas. Cubierto por el cartel sin WebGL del 18/09 (S09).
+- **Versión:** 0.1.8f, 0.1.9.1 · **Web (Emscripten)**
 - **Clave:** `Exception|Could not set video mode`
 - **Traceback (cola):**
 ```
@@ -710,8 +811,16 @@ al continuar. El jugador puede llegar a jugar aunque el arranque haya fallado.
 
 ## S09 — AttributeError: 'NoneType' object has no attribute 'screenshot'
 
-- **Estado:** 📋 **DOCUMENTADO — misma familia que S04/S06/S07, sin fix**
-- **Veces:** 1 — `Thu Jul 30 14:58:07 2026` · Geo: Estados Unidos
+- **Estado:** 📋 **DOCUMENTADO — misma familia que S04/S06/S07, sin fix.**
+  Reincidió el 2026-09-17 y se decidió **ignorarlo** (ver abajo).
+- **Veces:** 3 — `Thu Jul 30 14:58:07 2026` (0.1.8f, Estados Unidos) ·
+  `Thu Sep 17 18:55:51 2026` (0.1.9.1, Helsinki, Chrome 152, jugador nuevo sin
+  nombre, `renderer=?`) · `Fri Sep 18 07:26:25 2026` (0.1.9.1, Trois-Rivières,
+  CA, Chrome 151 con `Norton/1` en el user-agent, jugador nuevo, `renderer=?`).
+  Con el S07 de Brasil del 17, son **tres dispositivos distintos sin WebGL en
+  36 horas**, todos Chrome actual — el umbral que se había fijado para
+  reabrir el chequeo de WebGL en el `index.html`. **Aplicado el 2026-09-18**
+  (ver abajo).
 - **Versión:** 0.1.8f · **Web (Emscripten)**
 - **Clave:** `AttributeError|'NoneType' object has no attribute 'screenshot'`
 - **Traceback (cola):**
@@ -757,6 +866,40 @@ Un contexto WebGL muerto → 4 errores de 3 firmas distintas en 72 segundos.
 el cuadro de opciones evaluadas en **S06** — todas descartadas por daño
 colateral. Los `default` de S08 ya evitan los errores *derivados*; este es
 directo del motor y no hay dónde intervenir.
+
+#### 🔁 Reincidencia (2026-09-17) y decisión
+
+Segundo evento, en 0.1.9.1: Helsinki, Chrome 152 (navegador actual, o sea
+dispositivo o configuración — típicamente Chrome con la aceleración por hardware
+apagada), jugador nuevo en su primera entrada al menú. El tag `renderer=?`
+confirma que ningún renderer llegó a inicializar en esa sesión (Ren'Py lo
+escribe recién cuando `draw.init()` tiene éxito, `core.py:1266`).
+
+Se evaluaron dos cosas que no tocan el motor: un tag `familia=gl_dispositivo`
+para archivar los cuatro fingerprints juntos en Sentry, y un chequeo de WebGL
+en el `index.html` del SDK (dentro de `web/patch_index_movil.py`) que muestre
+un cartel HTML antes de cargar el juego. La decisión del 17 fue ignorarlo; al
+día siguiente, con el tercer dispositivo en 36 h, se aplicó el cartel.
+
+#### 🔨 Cartel sin WebGL (2026-09-18) — `web/patch_index_movil.py`, patch 4
+
+El `<script async src="renpy.js">` del template pasa a un script inline que:
+(1) espera a que `document.visibilityState` no sea `hidden` (un arranque en
+una pestaña restaurada en segundo plano puede no recibir contexto de GL — la
+hipótesis de Alan sobre S07 de Brasil); (2) prueba `getContext('webgl2' /
+'webgl' / 'experimental-webgl')` en un canvas **aparte** (probar sobre
+`#canvas` le robaría el contexto al motor: un canvas admite un solo tipo de
+contexto); (3) si hay, inyecta `renpy.js`; si no, esconde el presplash y
+muestra un cartel HTML bilingüe (activar aceleración por hardware, desactivar
+extensiones/modos de privacidad, otro navegador, versión de escritorio) con
+"Reintentar" e "Intentar igual". Es lo único que puede llegarle a ese jugador:
+pasa antes de que Ren'Py exista. Cubre el subgrupo "sin WebGL" (S07, S09); no
+cubre "murió al redimensionar" (S04, S06), que sigue sin fix.
+
+Aplicado al template del SDK (idempotente, se reaplica con el mismo comando al
+actualizar Ren'Py). **Hace falta rebuildear web** para que salga. Si el
+chequeo se equivocara, lo peor es el cartel a alguien que sí tenía WebGL, y
+para eso está "Intentar igual".
 
 ## S10 — AttributeError: Can't get attribute '_lookup_girl' (save de OTRO juego, vía Ren'Py Sync)
 
@@ -864,7 +1007,10 @@ triagear.
 ## S11 — Exception: Possible infinite loop (en partida real)
 
 - **Estado:** ⚠️ **DOS PROBLEMAS DISTINTOS con la misma firma** — el de la
-  precarga está **CORREGIDO**; el del `game_loop` sigue **sin localizar**
+  precarga está **CORREGIDO (de verdad) el 2026-09-17**, ver abajo; el del
+  `game_loop` sigue **sin localizar**. Desde el 2026-09-17 el fingerprint de
+  esta excepción lleva el archivo del juego, así que en Sentry ya salen como
+  dos issues (`pantalla_carga` / `intro_main`).
 - **Veces:** 2 eventos, en **dos lugares completamente distintos**:
   - `Thu Jul 30 20:14:34` — `intro_main.rpy:590` (**game_loop**), partida real:
     `loc=casa_pasilloabajo`, día 9, de noche. Geo: Marseille, Francia.
@@ -923,7 +1069,34 @@ También descartado:
 - **`validar_eventos()`**: solo cambia estados y llama callbacks de Python; no
   ejecuta labels ni salta.
 
-#### ❓ Qué falta para localizarlo
+#### 🔁 Reincidencia de la variante precarga (2026-09-17) y arreglo definitivo
+
+`Thu Sep 17 07:16:07 2026`, 0.1.9.1 web, España, `dias_totales=1`,
+`jugador=(sin nombre)`: un jugador nuevo en su primera carga,
+`pantalla_carga.rpyc:192` (la `pause 0.01` del busy-wait). **Con el
+`not_infinite_loop(30)` de julio puesto.** Y otra vez `Sun Sep 20 19:30:11`
+(Opera 135, Lima, PE), mismo archivo, misma línea, mismo perfil: jugador nuevo,
+primera carga. **Tres eventos en total de esta variante** (0.1.8f, y dos en
+0.1.9.1) — no es una rareza de un dispositivo, le pasa a cualquiera que deje la
+pestaña quieta mientras carga.
+
+Por qué no alcanzó: cada `pause` del bucle vuelve a fijar el plazo del watchdog
+en 50 s — `il_time = time.time() + delay` es una asignación, no un máximo — así
+que el plazo real era siempre "50 s desde el último frame". Y la ventana que
+quedaba: el navegador **congela** la pestaña (segundo plano largo, minimizar, la
+máquina que se duerme); al volver, la `pause` en curso termina con el plazo ya
+vencido, y los **tres statements** que van hasta la siguiente `pause` corren sin
+refresco. Si el contador cruza el 1000 justo ahí, salta. Lotería de ~0,3 % por
+congelamiento: dos eventos en dos meses.
+
+**Arreglo:** el bucle entero pasó a **un solo bloque `python:`** con
+`renpy.pause(0.01)` adentro. El watchdog cuenta statements de Ren'Py; un bloque
+Python es UN statement, dé las vueltas que dé, así que el contador no se mueve y
+no hay 1000 que cruzar. Misma precarga, mismo orden, mismo contador en pantalla.
+Regla: **un bucle largo de script va en Python, no en statements de Ren'Py** —
+`not_infinite_loop` es un parche que cualquier interacción pisa.
+
+#### ❓ Qué falta para localizarlo (la variante del game_loop)
 
 No se puede ubicar el bucle con un solo traceback: el guard reporta dónde cayó el
 contador, no el ciclo. Datos que lo resolverían:
@@ -1018,3 +1191,285 @@ condición ni flujo.
 **Prioridad: ALTA.** Es el único error activo que le pega a jugadores con
 partidas en curso (día 9 y día 36) — no a dispositivos que no pueden correr el
 juego de ninguna forma.
+
+---
+
+## S12 — AttributeError: Can't get attribute 'condicion_aparicion_evento01_violet' (no abre un save viejo)
+
+- **Estado:** ✅ **CORREGIDO (2026-09-16)**
+- **Veces:** 1 — `Tue Sep 15 18:51:54 2026`, jugador real (Rawalpindi, PK), Windows 11
+- **Release:** 0.1.9.1 · **loc:** casa_cocina · día 2, mañana · `quest_activada`: violet_questprincipal_0_a
+- **Fingerprint:** `AttributeError | Can't get attribute 'condicion_aparicion_evento01_violet' on <StoreModule object at 0xADDR>` (agrupó bien, con la dirección normalizada)
+
+```
+File "renpy/loadsave.py", line 636, in load
+    roots, log = loads(log_data)
+File "renpy/compat/pickle.py", line 280, in find_class
+    return super().find_class(module, name)
+AttributeError: Can't get attribute 'condicion_aparicion_evento01_violet' on <StoreModule object>
+```
+
+#### 🔎 Diagnóstico
+
+El jugador estaba **jugando** (el frame de arriba es el `pause` del game_loop),
+abrió Cargar y tocó un slot: `FileLoad.__call__` → `renpy.load` → el unpickle
+del save falló.
+
+Un save guarda por **referencia** las funciones de módulo que quedan dentro de
+objetos guardados: `Event.condicion_aparicion/activacion`, los textos callables
+de `ConfigEtapa`, `ConfigFallo.condicion`, `EstadoTalk.condicion`,
+`Skin.condicion_desbloqueo`, `GrupoMensajes.condicion/accion_al_completar`. El
+pickle no guarda el código: guarda `store` + el **nombre**. Al cargar, el
+unpickler hace `getattr(store, nombre)`.
+
+`condicion_aparicion_evento01_violet` era la condición del evento del casco de
+realidad virtual, **borrado en 0.1.8.6** (commit 309f03b, 2026-08-20). Cualquier
+save que tenga ese evento en `sistema_events` —o en su log de rollback— pide ese
+nombre al abrirse, no lo encuentra y revienta.
+
+**Por qué el control de generaciones no lo frenó:** `compatibilidad_saves.rpy`
+decide si una partida se puede *seguir jugando*, y corre en `after_load`, o sea
+**después** de cargarla. El unpickle pasa antes que cualquier código nuestro, así
+que un nombre faltante se lleva puesto el juego incluso cuando esa partida se iba
+a rechazar igual.
+
+#### 🔨 Arreglo
+
+`game/script/core/utils/compat_nombres_muertos.rpy` (nuevo): una lista de los
+nombres borrados o renombrados desde la 0.1.8f, declarados en `init -100` como
+un stub inerte que devuelve `""` (sirve de condición —falsy, el contenido muerto
+no aparece— y de texto —no dibuja nada—). Solo se declara lo que hoy no existe,
+así que un nombre que volvió al código sigue mandando.
+
+Con eso el save **abre siempre**: si es de una generación vieja, el rechazo sale
+prolijo por `after_load` → `jp_save_incompatible`; si es de la generación actual
+(0.1.9 / 0.1.9a, que sí referencian varias funciones borradas después), se sigue
+jugando normal.
+
+La lista salió de comparar los `def` de cada release publicada contra los de hoy:
+
+```
+git ls-tree -r --name-only <rev> game/script/   → defs de esa rev
+menos las defs de hoy                            → candidatas a stub
+```
+
+54 nombres, entre ellos los del sistema de espiar, los helpers de las líneas de
+amor/deseo previas al rediseño, el tutorial de exploración del MC y las piezas
+del motor que retiró el controlador de quests.
+
+#### 💡 Regla
+
+**Al borrar o renombrar una función de módulo que pueda haber quedado guardada,
+su nombre viejo va a `JP_NOMBRES_MUERTOS`.** Es la contracara de la regla
+anti-PicklingError: esa dice que los callables guardados deben ser funciones de
+módulo; ésta dice que esas funciones no se pueden borrar sin dejar el nombre
+atendido.
+
+---
+
+## S13 — Exception: TransitionAnimation.render() must return a Render (ducha de la 08_a)
+
+- **Estado:** ✅ **CORREGIDO (2026-09-17)** — causa raíz encontrada el 18/09
+  con el segundo evento (ver abajo); el fix la cubre.
+- **Veces:** 3, **tres jugadores distintos en 40 horas** — `Thu Sep 17 15:26:16`
+  (web, Chrome 109, Kharkiv UA, "Oleg", día 95) · `Fri Sep 18 09:48:17` (web
+  **móvil**, Android 10 + Chrome 153, Leechburg US, "Mc", día 82) ·
+  `Sat Sep 19 01:36:51` (web, Opera 135, US, "Mc", día 92). Los tres en
+  `loc=casa_pasilloarriba`, `quest_activada=violet_questprincipal_08_a`, y los
+  tres en las **dos primeras líneas** de `violet_quest08a_entrar_baño` (fuente
+  396 y 397): los primeros `piensa` después de los `show` de las capas de agua
+  — o sea, **los primeros frames** de la animación. Navegadores y dispositivos
+  todos distintos: no es de dispositivo, es del código.
+- **Controlador (extra):** restricción de la 08_a (solo baño y pasillo, NPCs
+  ocultos, celular bloqueado), reserva de Violet día 95 h0, 08_a en narrativa.
+  → **La escena de la ducha de la noche de la tormenta.**
+- **Fingerprint:** `Exception | <renpy.display.anim.TransitionAnimation object at 0xADDR>.render() must return a Render.`
+
+```
+File "//game/tl/english/script/characters/violet/quests/violet_quest_08_a.rpyc", line 397, in script
+  ... display_say → render_screen → layout → transform → image → transform →
+File "renpy/display/render.pyx", line 274, in renpy.display.render.render
+Exception: <renpy.display.anim.TransitionAnimation object at 0x3e24620>.render() must return a Render.
+```
+
+#### 🔎 Diagnóstico
+
+La línea 397 es del archivo de **traducción**: `piensa "I don't know if coming
+in like this was the best option"`, el primer pensamiento de
+`violet_quest08a_entrar_baño`, justo después de `show` de las cuatro capas de
+agua. El árbol de render (`ImageReference → Transform → TransitionAnimation`)
+es exactamente la definición de esas capas en `core/events/generics.rpy`:
+`image ducha_agua_* = Transform(Animation(9 frames × 0.05), alpha=0.3)`.
+
+`Animation()` es la API legacy de Ren'Py: por debajo construye un
+`TransitionAnimation`, cuyo `render()` hace `t = at % sum(delays)` y después
+recorre los frames restando el tiempo de cada uno; si ninguno "atrapa" a `t`,
+**se cae del bucle y devuelve None**.
+
+**Causa raíz (encontrada con el segundo evento, 2026-09-18).** El primer
+diagnóstico decía que solo un tiempo NaN/infinito podía provocarlo — era
+incompleto. Los dos eventos cayeron en **el primer frame** de la animación, y
+eso apuntaba a un valor determinístico, no a un reloj roto. Es este:
+
+```
+at = -1e-17                      # animación recién mostrada: un epsilon NEGATIVO
+t  = at % 0.44999999999999996    # Python redondea: t == sum(delays) EXACTO
+t - 9 × 0.05 = 1.4e-17  →  ningún frame lo atrapa  →  return None
+```
+
+Un `at` negativo minúsculo en el primer render (el tiempo de animación sale de
+`frame_time - show_time`, y en web el reloj puede leerse un instante antes de
+la marca del `show`) hace que el módulo devuelva `sum(delays)` mismo, y el
+bucle no está preparado para `t == sum`. Verificado con una traza: `-1e-17`
+cae; `-1e-16`, `-0.0` y `-1e-12` no. Por eso pasa solo en algunos navegadores
+y solo al mostrar: depende de que el reloj dé justo ese valor.
+
+ATL no tiene el problema: con `st` negativo (o NaN) su `pause` simplemente no
+se cumple y dibuja el primer frame.
+
+#### 🔨 Arreglo
+
+Las **ocho** animaciones hechas con `Animation()` / `anim.TransitionAnimation`
+pasaron a **ATL**: las cuatro capas de agua (generics.rpy), las tres lluvias y
+la Violet enjabonándose del minijuego de espiar (espiar_system.rpy). ATL siempre
+dibuja el frame actual. Mismos frames, mismos tiempos, misma opacidad y
+desfase; en la de Violet, el mismo ciclo de 26 frames con `Dissolve(0.5)` entre
+cada uno y de vuelta al primero (verificado por script contra la lista vieja).
+De paso se fue el `loop=True` que se le pasaba a `Animation()` como si fuera
+una propiedad: no lo era, se ignoraba en silencio.
+
+#### 💡 Regla
+
+**Animaciones por frames, en ATL.** `Animation()` y `anim.TransitionAnimation`
+no se usan más: tienen un camino de render que devuelve None y no hay forma de
+defenderlo desde afuera.
+
+---
+
+## S14 — Exception: A translation for "Desbloqueos" already exists (instalación encima de una vieja)
+
+- **Estado:** ✅ **CORREGIDO (2026-09-18)** — para este y para toda la clase
+- **Veces:** 2, **dos jugadores distintos** — `Thu Sep 17 18:31:53 2026`
+  (Windows 11, Saratoga, US) · `Sat Sep 19 21:28:46 2026` (Windows 11,
+  Illkirch-Graffenstaden, FR). Los dos en 0.1.9.1, escritorio, mismo archivo
+  viejo. Falla en init: **el juego no arranca**. Confirma que no es un caso
+  aislado sino la forma normal en que la gente actualiza: descomprimir encima.
+- **Fingerprint:** `Exception | A translation for "Desbloqueos" already exists at game/tl/english/relaciones_strings.rpy:<int>.`
+
+```
+File "game/tl/english/script/ui/hud/hud_relaciones.rpy", line 6, in script
+    old "Desbloqueos"
+File "renpy/translation/__init__.py", line 539, in add
+Exception: A translation for "Desbloqueos" already exists at game/tl/english/relaciones_strings.rpy:39.
+```
+
+#### 🔎 Diagnóstico
+
+`game/tl/english/script/ui/hud/hud_relaciones.rpy` **no existe en la 0.1.9.1**:
+se borró en agosto (`d64faec`, 2026-08-13) cuando el panel de Relaciones pasó a
+Hitos y sus strings se mudaron a `relaciones_strings.rpy`. Que el jugador lo
+tenga en disco significa una sola cosa: **descomprimió la 0.1.9.1 encima de
+una instalación de 0.1.8.x**. Los archivos nuevos pisan a los que siguen
+existiendo; los que ya no vienen en el zip quedan ahí, y Ren'Py los carga como
+parte del juego. Dos `translate strings` con el mismo `old` → excepción durante
+init → pantalla de error antes del menú.
+
+Es una **clase**, no un caso: cada versión que borra un archivo deja este
+agujero para todo jugador de escritorio que instale encima. Hay 42 `.rpy`
+borrados en la historia del repo; cualquiera de ellos en disco puede dar esto
+(si traduce strings) o algo peor y silencioso (un `.rpy` viejo suelto registra
+labels, screens, quests o triggers que ya no existen).
+
+#### 🔨 Arreglo
+
+`game/script/core/utils/limpieza_instalacion.rpy` (nuevo), en `init -999` —
+antes de cualquier init del juego, y los `translate strings` corren en 0:
+recorre la lista `JP_ARCHIVOS_VERSIONES_VIEJAS` (los 42, sacados de
+`git log --diff-filter=D`), borra los que encuentre en disco (con su `.rpyc`) y,
+si borró alguno, hace `renpy.utter_restart()`: bootstrap.py atrapa la
+excepción y recarga Ren'Py entero, ya sin el archivo. El jugador ve un
+parpadeo en el arranque. Solo se reinicia si se borró algo, así que no puede
+quedar en bucle; si un borrado falla por permisos, se saltea y el juego sigue
+como pudo.
+
+Solo en escritorio Windows/Linux y **nunca con `config.developer`** (jamás
+borrar del working tree). Web, mac, android e iOS reemplazan el paquete
+entero y no aplican. Verificado headless con un archivo viejo simulado: en
+developer no borra; sin developer borra `.rpy` y `.rpyc`.
+
+#### 💡 Regla
+
+**Al borrar un `.rpy` del proyecto, su ruta va a `JP_ARCHIVOS_VERSIONES_VIEJAS`.**
+Y en las notas de itch, la línea de siempre: *borrá la carpeta anterior antes de
+descomprimir* — el arreglo cubre lo que ya despachamos, la nota evita el resto.
+
+---
+
+## S15 — KeyError: 'size=+8' (el aviso de "Partida incompatible" nunca se pudo mostrar)
+
+- **Estado:** ✅ **CORREGIDO (2026-09-20)**
+- **Veces:** 1 — `Sat Sep 19 02:35:23 2026`, web (Edge 153), Curitiba, BR,
+  jugador "Stark", día 19, `loc=casa_hmc`. Con su derivado (`NameError:
+  _jp_aviso`, 02:35:35, fingerprint aparte) son 2 eventos de la misma sesión.
+- **Fingerprint:** `KeyError | 'size=+<int>'`
+
+```
+File "//game/script/core/time/despertar_system.rpyc", line 112, in script call
+File "//game/script/core/utils/compatibilidad_saves.rpyc", line 219, in script
+File "game/script/core/utils/compatibilidad_saves.rpy", line 226, in <module>
+    ).format(version=config.version)
+KeyError: 'size=+8'
+```
+
+#### 🔎 Diagnóstico
+
+El jugador cargó una partida de otra generación de guardado, el control de
+compatibilidad hizo lo suyo (`after_load` → `jump jp_save_incompatible`) y…
+**el aviso reventó al armarse**. El texto empieza con el tag de Ren'Py
+`{size=+8}`, y `str.format()` lee `{size=+8}` como un campo: `KeyError`.
+
+O sea: **ese mensaje nunca se mostró, en ningún idioma, desde que existe**
+(0.1.8.5). Todo jugador que cargó una partida incompatible vio la pantalla roja
+de error en vez de "Partida incompatible · volvé a instalar la versión con la
+que la creaste". La ironía es que el control funcionaba perfecto; lo que
+fallaba era el cartel que lo explica.
+
+El frame de `despertar_system` es la pila de llamadas restaurada del save (la
+partida se había guardado dentro del flujo de despertar), no la causa.
+
+#### 🔨 Arreglo
+
+`.format(version=...)` → `.replace(u"{version}", ...)`. Escapar las llaves
+(`{{size=+8}}`) habría obligado a tocar el `old` de la traducción; `replace` no
+le pide nada al texto y no puede confundirse con un tag.
+
+#### 🔁 Detector
+
+Chequeo 7 nuevo en `tools/validar_traducciones.py`: recorre las 51 llamadas
+`translate_string(...).format(...)` del proyecto y, para **cada una en los dos
+idiomas**, parsea el texto con `string.Formatter` y avisa si algún campo tiene
+`=` o empieza con `/` — o sea, si es un tag de Ren'Py. El doble idioma importa:
+una traducción puede traer un tag que el original no tenía, y ahí el crash
+saldría **solo en inglés**. Corrido sobre el proyecto: era el único caso, en
+los dos idiomas.
+
+#### 🔁 El error derivado (mismo jugador, 12 segundos después)
+
+`Sat Sep 19 02:35:35` — `NameError: name '_jp_aviso' is not defined`
+(fingerprint propio, evento `6147d11c`). El jugador tocó "Ignore" al KeyError,
+la ejecución siguió en la línea de abajo (`centered "[_jp_aviso]"`) y la
+variable nunca se había asignado. Es el mismo patrón que S08 (`_nc_nombre` /
+`_jugar_intro` tras "Ignore"), y la respuesta es la misma: **`default
+_jp_aviso`** con un texto plano de respaldo — sin tags y sin placeholder, o sea
+que no puede fallar al mostrarse. Así, si algún día el bloque que arma el aviso
+completo vuelve a romperse, el jugador ve el mensaje corto en vez de un segundo
+error. Traducido al inglés.
+
+#### 💡 Regla
+
+Es la hermana de la del `%` (ver `japitown-warnings` D2): **texto con tags de
+Ren'Py no pasa por `.format()` ni por `%`**. Si hay que interpolar, `replace`.
+Y, como en S08: **toda variable que un `python:` asigna y la línea siguiente
+muestra lleva `default`** — "Ignore" hace que la ejecución siga, y sin el
+`default` el error se duplica.
+

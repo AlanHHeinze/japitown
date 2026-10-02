@@ -98,7 +98,7 @@ init python:
         dia se cumple al toque, la etapa avanza —las etapas nunca vuelven
         atras— y la escena recien puede correr el domingo siguiente.
         """
-        return "El domingo no voy a tener nada que hacer, es un buen dia para estar con Violet"
+        return "El domingo no voy a tener nada que hacer, es un buen día para estar con Violet"
 
     def _quehacer_va25_listo():
         """Que hacer en ETAPA_BOTON_LISTO: el mismo contador, no un boton."""
@@ -120,9 +120,9 @@ init python:
         amor un domingo a la tarde, la quest quedaria en BOTON_LISTO y sin este
         chequeo la escena saltaria el lunes al despertar.
         """
+        # Que sea domingo lo dicen sus demandas (todas con dia=6): un lunes
+        # con la quest todavia en BOTON_LISTO, la capa 2 da "no es el momento".
         if not _va25_activa() or store.va25_fase != 0:
-            return None
-        if store.dia_semana_actual != 6:
             return None
         return "violet_amor_25_despertar"
 
@@ -239,10 +239,11 @@ init python:
 init 5 python:
 
     registrar_trigger_dormir("violet_amor_25_domingo", "despues",
-                             _va25_trigger_dormir)
+                             _va25_trigger_dormir, quest_id="violet_amor_05")
 
     registrar_trigger_game_loop("violet_amor_25_fases",
-                                _gl_trigger_violet_amor_25, duenio="violet_amor_25")
+                                _gl_trigger_violet_amor_25, duenio="violet_amor_25",
+                                quest_id="violet_amor_05")
 
     # Un mismo bloqueo para todo lo que gasta el dia. Los ids son los de
     # actions_catalog (ver_tv, cocinar se intercepta por listener y no entra
@@ -256,7 +257,8 @@ init 5 python:
     # Puerta de Violet. El resto de sus opciones vive en puertas_violet.rpy;
     # estas dos van acá porque son de esta quest y de ningun otro lado.
     registrar_override_puerta("violet", _va25_puerta_entrar,
-                              "violet_amor_25_puerta_entrar")
+                              "violet_amor_25_puerta_entrar",
+                              quest_id="violet_amor_05")
     registrar_bloqueo_golpe("violet", _va25_puerta_durmiendo,
                             "Violet esta durmiendo")
 
@@ -892,6 +894,9 @@ label quest_violet_amor_05:
 
     show monica_parada b_hablando
     monica "No es tan grave, compramos algo de comida en el camino para cenar todos juntos"
+    # Monica le pregunta a ella: Violet se gira a mirarla, y sigue asi con lo de
+    # Jasmine (las dos le quedan a la derecha).
+    show violet_parada at grupo3_izq_flip
     show monica_parada b_hablandochica
     monica "¿Violet, estás bien?"
     show monica_parada b_none
@@ -904,6 +909,8 @@ label quest_violet_amor_05:
     jasmine "Estás roja, ¿no estarás con fiebre?"
     show jasmine_parada b_none
 
+    # El MC sale a cubrirla: Violet lo mira a el.
+    show violet_parada at grupo3_izq
     show mc_parado_base b_hablando
     mc "Debe ser que se asustó con los ruidos"
     show mc_parado_base b_none

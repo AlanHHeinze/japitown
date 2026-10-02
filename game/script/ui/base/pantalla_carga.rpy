@@ -156,48 +156,55 @@ label splashscreen:
     scene carga_loading
     with dissolve
 
+    $ store._carga_pct = 0
+
+    show screen pantalla_carga
+
+    # TODO EL BUCLE EN UN SOLO BLOQUE PYTHON, a proposito.
+    #
+    # El watchdog de Ren'Py ("Exception: Possible infinite loop",
+    # execution.py:check_infinite_loop) cuenta STATEMENTS de Ren'Py: cada 1000
+    # revienta si pasaron mas de 50 s (en un build) desde el ultimo frame de
+    # interaccion. Un bloque `python:` es UN statement, de vueltas que de
+    # adentro — asi que acá adentro el contador no se mueve y el watchdog no
+    # tiene donde saltar.
+    #
+    # La version anterior era un `while` de Ren'Py con `pause 0.01` adentro
+    # (~15.000 statements) y un `renpy.not_infinite_loop(30)` por lote. No
+    # alcanzaba: cada `pause` vuelve a fijar el plazo en 50 s (es una
+    # asignacion, no un maximo), y cuando el navegador CONGELA la pestaña
+    # (segundo plano largo, minimizar, la maquina que se duerme) la `pause` en
+    # curso vuelve con el plazo vencido; si el contador cruzaba el 1000 en los
+    # tres statements que iban hasta la siguiente `pause`, saltaba. Un jugador
+    # nuevo, en su primera carga, con la pantalla roja. Sentry S11 (variante
+    # precarga): 0.1.8f y 0.1.9.1.
+    #
+    # `renpy.pause` desde Python es la misma interaccion que el statement,
+    # asi que el contador de la screen se sigue redibujando igual.
     python:
         _carga_archivos = carga_lista_archivos()
         _carga_total = len(_carga_archivos)
         _carga_idx = 0
-        store._carga_pct = 0
 
-    show screen pantalla_carga
-
-    if _carga_total > 0:
         while _carga_idx < _carga_total:
-
-            # Avisarle a Ren'Py que este bucle largo es INTENCIONAL.
-            #
-            # Sin esto salta "Exception: Possible infinite loop": el guard
-            # (execution.py:45) cuenta statements y revienta cuando se acumulan
-            # 1000 Y ademas pasaron ~50 s desde el ultimo frame de interaccion.
-            # La precarga cumple las dos: son ~115 lotes x hasta 40 vueltas del
-            # busy-wait = casi 10.000 statements, y en web basta con que el
-            # jugador cambie de pestaña mientras carga (el navegador congela los
-            # frames) para que se cumpla la parte del tiempo.
-            # El contador `il_statements` NO se resetea con las interacciones,
-            # solo al llegar a 1000 — por eso no alcanza con los `pause 0.01`.
-            $ renpy.not_infinite_loop(30)
-
             # Cortar si el cache llego al tope: seguir solo descartaria la cola
             if carga_cache_lleno():
-                $ _carga_idx = _carga_total
+                _carga_idx = _carga_total
             else:
-                $ _carga_idx = carga_encolar_lote(_carga_archivos, _carga_idx)
+                _carga_idx = carga_encolar_lote(_carga_archivos, _carga_idx)
 
                 # Esperar a que el lote se decodifique antes de seguir, asi el
                 # contador refleja carga real y no solo el encolado.
-                $ _carga_espera = 0
+                _carga_espera = 0
                 while not carga_lote_terminado() and _carga_espera < 40:
-                    $ _carga_espera += 1
-                    pause 0.01
+                    _carga_espera += 1
+                    renpy.pause(0.01)
 
-            $ store._carga_pct = min(100, int(_carga_idx * 100 / _carga_total))
-            pause 0.01
+            store._carga_pct = min(100, int(_carga_idx * 100 / _carga_total))
+            renpy.pause(0.01)
 
-    $ store._carga_pct = 100
-    pause 0.3
+        store._carga_pct = 100
+        renpy.pause(0.3)
 
     hide screen pantalla_carga
     scene black

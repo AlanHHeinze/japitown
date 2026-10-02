@@ -289,3 +289,9 @@ default violet_deseo = 0
 default violet_progreso = 0
 default violet_interacciones = {"hablar": False, "coquetear": False}
 default violet_quest2_trajesexy = False
+
+# Ya tuvo sexo con Violet. La prende CADA escena donde lo tienen (hoy solo la
+# cama de amor 50) y la leen las que cambian si es la primera vez o no. Es UNA
+# variable para todas a proposito: cualquier quest nueva con sexo solo tiene que
+# prenderla, sin que las demas tengan que enterarse de que existe.
+default violet_tuvo_sexo = False

@@ -267,6 +267,7 @@ init 1 python:
         ("cheats", "Boton Cheats"),
         ("mensajes", "Boton Mensajes"),
         ("galeria", "Boton Galeria"),
+        ("xgra", "Boton XGram"),
         ("hot", "Boton Hot"),
         ("banco", "Boton Banco"),
     ]

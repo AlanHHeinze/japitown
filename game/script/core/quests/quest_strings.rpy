@@ -30,8 +30,6 @@ init python:
         "Esperar algunos días",
         "Verificando condiciones...",
         "Verificando...",
-        "Quest en progreso...",
-        "Continuar la quest.",
         " y ",
 
         ## Requisitos Genéricos
@@ -126,7 +124,7 @@ init python:
         "Violet me envió un mensaje, debería responderle",
         "Violet ya me contestó, debería ir a hablar con ella.",
         "Ir a ver a Violet a su habitación.",
-        "Responder mensaje de Violet",
+        "Responder el mensaje de Violet",
         "Tengo que ir a ver a Violet por lo de su cosplay.",
 
         ## Pistas — Quest Violet 11

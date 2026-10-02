@@ -1,4 +1,4 @@
-# Traducciones faltantes de quests: nombres, pistas "qué hacer", props e items.
+﻿# Traducciones faltantes de quests: nombres, pistas "qué hacer", props e items.
 # Se muestran vía renpy.translate_string() en el diario de misiones / HUD / tooltips.
 
 translate english strings:
@@ -10,8 +10,8 @@ translate english strings:
     old "Tengo un mensaje de mi amigo Carl"
     new "I have a message from my friend Carl."
 
-    old "Jasmine quiere mostrarme como el conjunto deportivo que le traje"
-    new "Jasmine wants to show me how the sportswear set I brought her looks."
+    old "Jasmine quiere mostrarme cómo le queda el conjunto deportivo que le traje"
+    new "Jasmine wants to show me how the sportswear I brought her looks on her"
 
     old "Tengo que hablar con Mónica para agradecerle la oportunidad"
     new "I have to talk to Monica to thank her for the opportunity."
@@ -19,7 +19,7 @@ translate english strings:
     old "Parece que Mónica tiene un problema, ¿qué será?"
     new "It looks like Monica has a problem. What could it be?"
 
-    old "Tengo la notebook de Monica, debería revisarla en mi habitación"
+    old "Tengo la notebook de Mónica, debería revisarla en mi habitación"
     new "I have Monica's laptop, I should check it in my room."
 
     old "Parece que Violet no quiere hablarme"
@@ -120,6 +120,18 @@ translate english strings:
     # --- Quest 05_a (flujo CoXplay) y 09_a: pista / qué hacer sin traducir ---
     old "Ayudar a Violet ({}/3)"
     new "Help Violet ({}/3)"
+
+    old "Te pidió: {}"
+    new "She asked for: {}"
+
+    old "Mónica está en: {}"
+    new "Mónica is in: {}"
+
+    old "Llevárselo a Violet, en su habitación"
+    new "Bring it to Violet, in her room"
+
+    old "Ya la ayudaste por hoy"
+    new "You already helped her today"
 
     old "Podría averiguar para comprar un nuevo cosplay para Violet."
     new "I could look into buying a new cosplay for Violet."

@@ -145,22 +145,16 @@ init python:
                          "casa_living", "casa_gym"]
 
     def _gl_trigger_violet_04b():
-        q = store.sistema_quests.obtener_quest("violet_questprincipal_04_b")
-        if not (q and q.activa and not q.completada
-                and q.etapa_actual == ETAPA_BOTON_LISTO):
+        if not quest_lista_para_boton("violet_questprincipal_04_b"):
             return None
 
+        # Que el MC este en una de _VQ04B_LOCACIONES y que Violet no este
+        # oculta lo decide la capa 2 (demandas de la quest). Lo que queda es
+        # lo que ninguna demanda expresa: Violet en el MISMO lugar que el MC.
+        # Se mira la locacion cruda del NPC a proposito (no el tracker): la
+        # escena la pone en el lugar igual.
         loc = store.sistema_locaciones.locacion_actual
-        if not loc or loc.id not in _VQ04B_LOCACIONES:
-            return None
-
-        # Con Violet OCULTA por la restriccion de otro contenido no se dispara:
-        # el jugador no la ve, y ademas el label de esta quest arranca con
-        # desactivar_restriccion(duenio="violet_04_b") — dispararse en medio de la cadena de
-        # evento03 (que vive el mismo tramo del juego) le pisaba la maquina de
-        # estados y la dejaba trabada. Se mira la locacion cruda del NPC a
-        # proposito (no el tracker): la escena la pone en el lugar igual.
-        if npc_esta_oculto("violet"):
+        if not loc:
             return None
         npc = store.obtener_npc("violet")
         if npc and npc.locacion_actual == loc.id:
@@ -169,7 +163,8 @@ init python:
 
 
 init 5 python:
-    registrar_trigger_game_loop("violet_04b", _gl_trigger_violet_04b, duenio="violet_04_b")
+    registrar_trigger_game_loop("violet_04b", _gl_trigger_violet_04b, duenio="violet_04_b",
+                                quest_id="violet_questprincipal_04_b")
 
 
 ################################################################################

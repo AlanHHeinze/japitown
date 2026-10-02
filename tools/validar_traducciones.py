@@ -233,12 +233,62 @@ for base, _, fs in os.walk("game/tl"):
             if normalizar(mo.group(1)) == normalizar(txt):
                 igual.append((ruta, i + 2, txt))
 
+# ── 7. translate_string(...).format() con tags de Ren'Py (CRASH) ────────────
+# str.format lee {size=+8} / {color=#fff} como un campo y tira KeyError. Pasa
+# con el texto original Y con su traduccion: una traduccion puede traer un tag
+# que el original no tenia, y ahi solo crashea en ingles. Bug real: el aviso de
+# "Partida incompatible" nunca se pudo mostrar (Sentry S15).
+import string as _string
+
+_fmt = _string.Formatter()
+
+_pares_tl = {}
+for base, _, fs in os.walk("game/tl/english"):
+    for f in sorted(fs):
+        if not f.endswith(".rpy"):
+            continue
+        ruta = os.path.join(base, f).replace("\\", "/")
+        txt = io.open(ruta, encoding="utf-8-sig").read()
+        for m in re.finditer(r'^\s*old\s+"((?:[^"\\]|\\.)*)"\s*\n\s*new\s+"((?:[^"\\]|\\.)*)"',
+                             txt, re.M):
+            _pares_tl[m.group(1)] = m.group(2)
+
+_RE_TS_FMT = re.compile(
+    r'translate_string\(\s*\n?\s*((?:u?"(?:[^"\\]|\\.)*"\s*\n?\s*)+)\)\s*\.?\s*\n?\s*\.format\(', re.S)
+_RE_LIT = re.compile(r'u?"((?:[^"\\]|\\.)*)"')
+
+fmt_tags = []
+for base, _, fs in os.walk("game/script"):
+    for f in sorted(fs):
+        if not f.endswith(".rpy"):
+            continue
+        ruta = os.path.join(base, f).replace("\\", "/")
+        txt = io.open(ruta, encoding="utf-8").read()
+        for m in _RE_TS_FMT.finditer(txt):
+            fuente = "".join(_RE_LIT.findall(m.group(1)))
+            n = txt[:m.start()].count("\n") + 1
+            for etiqueta, s in (("ES", fuente), ("EN", _pares_tl.get(fuente))):
+                if s is None:
+                    continue
+                try:
+                    campos = [c for (_l, c, _sp, _cv) in _fmt.parse(s) if c is not None]
+                except Exception as e:
+                    fmt_tags.append((ruta, n, etiqueta, "%s: %s" % (type(e).__name__, e), s))
+                    continue
+                for c in campos:
+                    if "=" in c or c.startswith("/"):
+                        fmt_tags.append((ruta, n, etiqueta, "tag {%s} leido como campo" % c, s))
+
 print("`old` rotos por edicion del texto: {}".format(len(rotos)))
 print("`new` vacios (sin traducir):       {}".format(len(vacios)))
 print("dialogos con traduccion VACIA:     {}".format(len(vacios_dialogo)))
 print("`%` sueltos en dialogo (CRASH):    {}".format(len(pct)))
 print("dialogos que quedaron en español:  {}".format(len(sin_traducir)))
 print("old/new sin traducir (new==old):   {}".format(len(igual)))
+print("format() sobre tags de Ren'Py:     {}".format(len(fmt_tags)))
+for ruta, n, etiqueta, err, s in fmt_tags:
+    print(u"{}:{}  [{}] CRASH AL FORMATEAR — {}".format(ruta, n, etiqueta, err))
+    print(u"    {}".format(s[:95]))
 for ruta, n, txt in igual:
     print(u"{}:{}  `new` IGUAL AL ESPAÑOL".format(
         ruta.replace("game/tl/english/", ""), n))

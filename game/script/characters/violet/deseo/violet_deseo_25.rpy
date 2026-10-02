@@ -1,5 +1,5 @@
 ################################################################################
-## Violet — Deseo 25 · "En su habitacion"
+## Violet — Deseo 25 · "En su habitación"
 ################################################################################
 ##     archivo   violet_deseo_25.rpy
 ##     quest     violet_deseo_05          (quests_deseo_violet.rpy)
@@ -67,19 +67,9 @@ init python:
         if getattr(store, 'vd25_fase', 0) != 0:
             return False
 
-        if not quest_lista_para_boton("violet_deseo_05"):
-            return False
-
-        if store.horario_actual != 2:          # Noche
-            return False
-
-        # En la casa. tracker_locacion_npc devuelve None si esta afuera o si
-        # una restriccion la escondio, asi que cubre las dos cosas de una.
-        if tracker_locacion_npc("violet") is None:
-            return False
-
-        # Y que no la este tapando otro contenido.
-        return not npc_esta_oculto("violet") and npc_interactuable("violet")
+        # Noche, Violet en su pieza, libre y no oculta: demandas de la quest,
+        # las aplica la capa 2 adentro de quest_lista_para_boton.
+        return quest_lista_para_boton("violet_deseo_05")
 
     def _vd25_override_puerta():
         """
@@ -94,7 +84,8 @@ init python:
 init 5 python:
 
     registrar_override_puerta("violet", _vd25_override_puerta,
-                              "violet_deseo_25_puerta")
+                              "violet_deseo_25_puerta",
+                              quest_id="violet_deseo_05")
 
 
 ################################################################################

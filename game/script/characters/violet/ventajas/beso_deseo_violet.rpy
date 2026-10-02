@@ -16,6 +16,8 @@
 ## TRES CORTES ANTES DE LA ESCENA, en este orden:
 ##   1. no es su habitacion de noche → la pista de donde y cuando
 ##   2. hay otro NPC delante         → no adelante de otras personas
+##      (la condicion es `npc_a_solas`, en ui/hud/hud_tracker.rpy: la
+##      comparten los dos besos y la regla que Violet enuncia en amor 45)
 ##   3. ya la beso hoy               → una por dia
 ## El de lugar/horario va primero porque es el que define toda la escena: los
 ## otros dos recien tienen sentido una vez que estan en el sitio correcto. Y el
@@ -61,24 +63,6 @@ init python:
             return False
         return store.horario_actual == 2          # Noche
 
-    def _violet_beso_deseo_hay_companiia():
-        """
-        True si hay OTRO NPC en la locacion, ademas de Violet.
-
-        Se recorren los NPCs y se pregunta por tracker_locacion_npc en vez de
-        usar obtener_npcs_en_locacion(): esa devuelve tambien a los que una
-        restriccion de quest escondio, y el jugador no los ve. tracker_ es la
-        fuente de verdad del proyecto para "se puede ubicar al NPC".
-        """
-        _loc = store.sistema_locaciones.locacion_actual
-        if _loc is None:
-            return False
-        for _nid in store.sistema_npcs.npcs:
-            if _nid == "violet":
-                continue
-            if tracker_locacion_npc(_nid) == _loc.id:
-                return True
-        return False
 
 
 ################################################################################
@@ -133,7 +117,7 @@ label violet_beso_deseo:
         violet "Si quieres un beso, sabes dónde y cuándo te lo puedo dar"
         jump deseo_beso_salir
 
-    if _violet_beso_deseo_hay_companiia():
+    if not npc_a_solas("violet"):
         show violet_parada b_hablando
         violet "Acá no, no delante de otras personas"
         jump deseo_beso_salir

@@ -36,12 +36,13 @@ Cada ruta se **corta en el primer paso que falla** y reporta el paso exacto: eso
 | `eventos` | catálogo → condiciones → labels → validar_eventos() | No |
 | `mensajes` | grupos → estructura de pasos/opciones → condiciones de entrega | No |
 | `acciones` | catálogo → labels genéricos → disponibilidad | No |
-| `restriccion` | activar → bloqueo de acción → bloqueo de movimiento → label por locación → liberar | Sí (reversible) |
+| `restriccion` | activar → bloqueo de acción → bloqueo de movimiento → label por locación → liberar → bloqueo de locación registrado | Sí (reversible) |
 | `shopping` | elegir item → fondos → orden → dormir hasta entrega → paquete → inventario | Sí |
 | `talk` | reasignación diaria de estados → estado activo por NPC | Sí (reasigna el día) |
 | `mapa` | puertas/tabla de acceso → viaje rápido vs locaciones reales | No |
 | `guardado` | picklabilidad de TODO el estado guardable (anti-PicklingError) | No |
-| `registros` | registros declarativos post-optimización: opciones/overrides/bloqueos de puerta, bloqueos del embudo, triggers de motor (labels existen, condiciones ejecutan, ids únicos) | No |
+| `registros` | registros declarativos post-optimización: opciones/overrides/bloqueos de puerta, bloqueos del embudo, triggers de motor (labels existen, condiciones ejecutan, ids únicos) + punto de activación (todo `quest_id` declarado existe; `activar()` marca una vez y no mueve la etapa) | No |
+| `planificador` | tabla de cobertura de `Rec`, declaraciones del catálogo (toda quest declarada y demandando a su NPC), capa 1 (nacer), capa 2 (activar, conflictos y "cuándo y dónde"), reserva (slot y de vida) — todo sobre copias | No |
 
 **"Destructiva"** = muta la partida (avanza días, compra, activa restricciones). Correrlas
 solo en partidas descartables. Las no destructivas son de solo lectura (o repiten cosas que
@@ -195,3 +196,14 @@ Plantilla mental para diseñar la ruta de una quest nueva: seguir §2.1 punto po
 escribir un paso por transición (registrada → puede iniciar → etapa avanza al dormir →
 disparador visible → …). Todo lo que sea estado (etapas, flags, inventario, locación del
 NPC) es automatizable; solo el diálogo en pantalla queda manual.
+
+## Panel del controlador (en vivo)
+
+`tools/controlador/panel_controlador.rpy` (solo `config.developer`, también desde
+el menú de cheats): `jp_panel_controlador()` muestra, por quest activa, en qué capa
+está y por qué — capa 1 (espera detrás de X), capa 2 (el conflicto), o el mundo en
+dos partes, tiempo y lugar, con OK o el motivo de cada una — más las reservas
+vigentes y la restricción activa. Solo lee estado; se puede dejar abierto jugando.
+El menú de cheats quedó reducido a lo que se usa: este panel, "Ver resultados
+Talk", stats de NPCs, stats del MC y dinero (y la app "Completar Quests").
+

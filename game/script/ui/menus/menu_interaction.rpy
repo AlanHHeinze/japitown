@@ -99,11 +99,19 @@ screen menu_interaccion_npc_completo(npc, opciones_extra=None):
                 $ _opciones_visibles = [o for o in _opciones_visibles
                                         if o.get("label") == _mi_exclusivo]
 
+            # Reserva del planificador: con el NPC reservado para una quest,
+            # solo quedan las opciones de ESA quest — ni eventos, ni ventajas,
+            # ni Hablar (core/quests/planificador.rpy).
+            $ _mi_reserva = planificador_npc_reservado_por(npc.id)
+            if _mi_reserva:
+                $ _opciones_visibles = [o for o in _opciones_visibles
+                                        if planificador_opcion_permitida(npc.id, o.get("label"), o.get("quest_id"))]
+
             $ _opciones_quest = [o for o in _opciones_visibles if o.get("tipo") not in ("evento", "ventaja")]
             $ _opciones_evento = [o for o in _opciones_visibles if o.get("tipo") == "evento"]
             $ _opciones_ventaja = [o for o in _opciones_visibles if o.get("tipo") == "ventaja"]
             $ _opciones_ordenadas = _opciones_quest + _opciones_evento + _opciones_ventaja
-            $ hablar_desbloqueado_aqui = hablar_desbloqueado and not _mi_exclusivo
+            $ hablar_desbloqueado_aqui = hablar_desbloqueado and not _mi_exclusivo and not _mi_reserva
             $ puede_hablar = npc.puede_interactuar("hablar") if hablar_desbloqueado_aqui else False
 
             vbox:
@@ -123,7 +131,7 @@ screen menu_interaccion_npc_completo(npc, opciones_extra=None):
                         hover_background "#4DB6AC"
                         padding (int(15 * _mi_k), int(10 * _mi_k))
                         action [Hide("menu_interaccion_npc_completo"),
-                                Return(("opcion_especial", opcion.get("label", "game_loop")))]
+                                Return(("opcion_especial", opcion.get("label", "game_loop"), opcion.get("quest_id")))]
 
                         text "[_texto_extra]" size int(18 * _mi_k) color "#ffffff"
 

@@ -33,3 +33,7 @@ translate english strings:
 
     old "Jugar"
     new "Play"
+
+    # Violet Amor 50: la ducha del MC. Existe solo durante esa fase de la quest.
+    old "Bañarse"
+    new "Take a shower"

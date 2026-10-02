@@ -56,7 +56,11 @@ define VIAJE_MOSTRAR_RECORRIDO = True
 
 # Cuánto se sostiene cada tramo. El `pause` es salteable con un click, así que
 # quien ya conoce el camino puede apurarlo.
-define VIAJE_PAUSA_PASO = 0.4
+define VIAJE_PAUSA_PASO = 0.2
+
+# Fundido entre un fondo y el siguiente en cada tramo (segundos). Sin esto el
+# corte seco se siente raro; con mas de ~0.2 el viaje se vuelve lento.
+define VIAJE_FADE_PASO = 0.15
 
 
 init python:
@@ -83,17 +87,33 @@ init python:
         validar_eventos()
         return ejecutar_triggers_game_loop()
 
+# "fuera" NO es una locacion de la casa ni de ninguna madre: es donde esta un
+# NPC que salio (RUTINA_LOC_FUERA en npcsystem_core). Para el planificador y
+# para todo el que pregunte "¿en que madre esta?", es su propia madre — asi
+# `en="casa"` la excluye y `en="fuera"` la nombra.
+define LOCACION_FUERA = "fuera"
+
 init python:
+
+    def madre_de_locacion(loc_id):
+        """
+        Id de la locacion madre a la que pertenece `loc_id`: "casa" para toda
+        `casa_*`, "fuera" para el sentinel de salida, None si no pertenece a
+        ninguna (o no hay locacion).
+        """
+        if not loc_id:
+            return None
+        if loc_id == LOCACION_FUERA:
+            return LOCACION_FUERA
+        for _mid, _cfg in LOCACIONES_MADRE.items():
+            if loc_id.startswith(_cfg["prefijo"]):
+                return _mid
+        return None
 
     def locacion_madre_actual():
         """Devuelve el id de la locación madre de la locación actual, o None."""
         loc = sistema_locaciones.locacion_actual
-        if not loc:
-            return None
-        for _mid, _cfg in LOCACIONES_MADRE.items():
-            if loc.id.startswith(_cfg["prefijo"]):
-                return _mid
-        return None
+        return madre_de_locacion(loc.id) if loc else None
 
     def sublocaciones_de_madre(madre_id):
         """
@@ -170,6 +190,8 @@ label viaje_rapido_paso:
     $ actualizar_bg_master()
 
     if VIAJE_MOSTRAR_RECORRIDO:
+        # Fundido corto solo sobre el fondo; corre en el `pause` que sigue.
+        $ renpy.transition(Dissolve(VIAJE_FADE_PASO), layer="master")
         pause VIAJE_PAUSA_PASO
 
     # Lo que corta el viaje. El label es de CONTENIDO y cierra con

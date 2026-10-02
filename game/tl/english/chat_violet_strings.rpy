@@ -54,7 +54,7 @@ translate english strings:
     new "Drawing attention isn't my thing"
 
     old "Mientras llames la mía yo estoy conforme"
-    new "As long as you draw mine, I'm happy"
+    new "As long as you draw my attention, I'm happy"
 
     old "¿En serio te molestaría?"
     new "Would it really bother you?"
@@ -556,3 +556,106 @@ translate english strings:
 
     old "Voy para allá"
     new "On my way"
+
+    # =========================================================================
+    # AMOR 35 ("Las amigas") - el llamado al sotano
+    # =========================================================================
+    # Aviso de un solo paso: no es prioritario y no traba nada, el disparador
+    # de verdad es bajar al sotano.
+
+    old "¿Estás en casa? Baja al sótano, no podemos hacer andar el proyector"
+    new "Are you home? Come down to the basement, we can't get the projector to work"
+
+    old "Bajo en un rato"
+    new "I'll be down in a bit"
+
+    # =========================================================================
+    # AMOR 40 ("La solicitud") - la charla que sigue por chat
+    # =========================================================================
+    # El dialogo final (violet_amor_40.rpy). Los textos que ya estaban
+    # traducidos en otro lado (ej. "Sí", "¿Pero...?") no se repiten aca: un
+    # `old` duplicado no deja arrancar el juego.
+
+    old "Bueno, entonces por acá podemos hablar"
+    new "Okay, then we can talk here"
+
+    old "¿De qué?"
+    new "About what?"
+
+    old "No sé, viniste a pedirme perdón por algo y te fuiste"
+    new "I don't know, you came to apologize for something and then left"
+
+    old "No te preocupes, cambié de opinión"
+    new "Don't worry, I changed my mind"
+
+    old "¿Respecto a pedirme perdón?"
+    new "About apologizing to me?"
+
+    old "Igual no tenías que pedirme perdón por eso"
+    new "You didn't have to apologize for that anyway"
+
+    old "Era una noche de amigas y yo no tenía nada que hacer ahí"
+    new "It was a girls' night and I had no business being there"
+
+    old "Listo, asunto solucionado"
+    new "Okay, problem solved"
+
+    old "Pero sí por lo otro"
+    new "But you do for the other thing"
+
+    old "¿Por qué otro?"
+    new "What other thing?"
+
+    old "Por la manera en que dijiste las cosas"
+    new "For the way you said things"
+
+    old "No dije nada de mala manera"
+    new "I didn't say anything in a bad way"
+
+    old "Sí, cuando tu amiga me invitó cambiaste la actitud, igual que ahora cuando me agregó"
+    new "Yes, when your friend invited me your attitude changed, just like now when she added me"
+
+    old "¿Celos?"
+    new "Jealous?"
+
+    old "¿De qué? No somos nada como para tener celos"
+    new "Of what? We're nothing to each other to be jealous"
+
+    old "Eso lo decides tú"
+    new "That's for you to decide"
+
+    old "¿Qué cosa decido yo?"
+    new "What do I decide?"
+
+    old "Qué relación tenemos"
+    new "What kind of relationship we have"
+
+    old "Ahhh"
+    new "Ahhh"
+
+    old "Es algo muy difícil, no niego que están pasando cosas"
+    new "It's really complicated, I won't deny things are happening"
+
+    old "¿Pero...?"
+    new "But...?"
+
+    old "Pero vivimos juntos, hay más gente en la casa y es todo muy raro"
+    new "But we live together, there are more people in the house and it's all really weird"
+
+    old "No le veo nada de raro"
+    new "I don't see anything weird about it"
+
+    old "Sé que estás buscando todo el tiempo un poco más, no es que no quiera, es que tengo otros tiempos"
+    new "I know you're always looking for a little more, it's not that I don't want to, I just go at a different pace"
+
+    old "Si te estás sintiendo presionada no es la intención"
+    new "If you're feeling pressured, that's not my intention"
+
+    old "Gracias por entenderme y perdón por lo otro"
+    new "Thanks for understanding me, and sorry about the other thing"
+
+    old "No hay problema"
+    new "No problem"
+
+    old "Es la quest de 40 ❤️. Después de que Violet se vaya de tu habitación, escríbele."
+    new "It's the 40 ❤️ quest. After Violet leaves your room, text her."

@@ -1,4 +1,4 @@
-# TODO: Translation updated at 2026-04-23
+﻿# TODO: Translation updated at 2026-04-23
 
 translate english strings:
 
@@ -58,7 +58,7 @@ translate english strings:
     old "Empiezo a llevarme mejor con Violet."
     new "I'm starting to get along better with Violet."
 
-    old "La relacion con Violet se afianza."
+    old "La relación con Violet se afianza."
     new "Things with Violet are settling in."
 
     # Amor 15. "Portatil Boy" se adapta ("Portable Boy"): es un nombre parodia
@@ -85,7 +85,7 @@ translate english strings:
     old "Solos en casa"
     new "Alone in the house"
 
-    old "Un domingo entero con Violet y nadie mas."
+    old "Un domingo entero con Violet y nadie más."
     new "A whole Sunday with Violet and nobody else."
 
     # Deseo 30 (las de umbral 30 se intercambiaron entre lineas).
@@ -102,18 +102,26 @@ translate english strings:
     old "Le dije lo que me pasa y se hizo la desinteresada."
     new "I told her how I feel and she acted like she didn't care."
 
+    # Deseo 30, segunda mitad: los tres dias de ignorarla (la quest esta
+    # partida en dos desde el planificador; ver violet_deseo_30.rpy).
+    old "Distancia"
+    new "Distance"
+
+    old "Decidí ignorarla unos días, a ver qué hace."
+    new "I decided to ignore her for a few days, to see what she does."
+
     # Deseo
     old "Atracción"
     new "Attraction"
 
-    old "Algo cambio en como Violet me mira."
+    old "Algo cambió en cómo Violet me mira."
     new "Something changed in the way Violet looks at me."
 
     # Deseo 15
     old "Anime en estreno"
     new "Anime premiere"
 
-    old "Estrenan el anime que los dos queriamos ver."
+    old "Estrenan el anime que los dos queríamos ver."
     new "The anime we both wanted to watch is premiering."
 
     # Deseo 20. Igual que en amor 20, el nombre ya no coincide con el del hito
@@ -125,17 +133,17 @@ translate english strings:
     new "I can't get her out of my head."
 
     # Amor 30.
-    old "¿Que me pongo?"
+    old "¿Qué me pongo?"
     new "What should I wear?"
 
-    old "Violet quiere mi opinion sobre como se ve."
+    old "Violet quiere mi opinión sobre cómo se ve."
     new "Violet wants my opinion on how she looks."
 
     # Deseo 25
-    old "En su habitacion"
+    old "En su habitación"
     new "In her room"
 
-    old "Un capitulo de anime en la pieza de Violet."
+    old "Un capítulo de anime en la pieza de Violet."
     new "An anime episode in Violet's room."
 
     # Arco de los favores — nombres y descripciones de las 4 quests.
@@ -214,12 +222,6 @@ translate english strings:
 
     old "Verificando..."
     new "Checking..."
-
-    old "Quest en progreso..."
-    new "Quest in progress..."
-
-    old "Continuar la quest."
-    new "Continue the quest."
 
     old " y "
     new " and "
@@ -463,9 +465,6 @@ translate english strings:
     old "Ir a ver a Violet a su habitación."
     new "Go see Violet in her room."
 
-    old "Responder mensaje de Violet"
-    new "Reply to Violet's message"
-
     ############################################################################
     ## Pistas y qué hacer — Quest Violet 11 (Los ruidos nocturnos)
     ############################################################################
@@ -549,9 +548,6 @@ translate english strings:
     old "Contestar el mensaje de Monica"
     new "Reply to Monica's message"
 
-    old "Responder el mensaje de Violet"
-    new "Reply to Violet's message"
-
     old "Monica debe estar en su habitación"
     new "Monica must be in her room"
 
@@ -606,3 +602,34 @@ translate english strings:
 
     old "Jasmine me dijo que hoy la vea en el gym por la tarde."
     new "Jasmine told me to meet her at the gym in the afternoon."
+
+    # Amor 35 ("Las amigas"): la noche de pelicula en el sotano con Zowie y
+    # Leah. El nombre es como las llama el MC, no un titulo.
+    old "Las amigas"
+    new "Her friends"
+
+    old "Violet bajó al sótano con sus amigas."
+    new "Violet went down to the basement with her friends."
+
+    # Amor 40 ("La solicitud"). PROVISORIOS: se ven en el panel de Pistas y hay
+    # que revisarlos al escribir el dialogo.
+    old "La solicitud"
+    new "The friend request"
+
+    old "Una amiga de Violet me agregó en XGram."
+    new "A friend of Violet's added me on XGram."
+
+    # Amor 45 ("La regla de la casa"). PROVISORIOS: se ven en el panel de
+    # Pistas y hay que revisarlos al escribir el dialogo.
+    old "La regla de la casa"
+    new "The house rule"
+
+    old "Lo que hagamos, lo hacemos a solas."
+    new "Whatever we do, we do it alone."
+
+    # Amor 50 ("El domingo solos"). PROVISORIOS: se ven en el panel de Pistas.
+    old "El domingo solos"
+    new "Sunday alone"
+
+    old "Violet se quedó en casa conmigo."
+    new "Violet stayed home with me."

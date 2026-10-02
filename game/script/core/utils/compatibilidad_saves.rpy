@@ -67,6 +67,7 @@ define -100 JP_HISTORIAL_SAVES = [
     ("0.1.8.5", False),   # primera version con el sistema
     ("0.1.9",   True),    # ROMPE: no carga partidas de ninguna version anterior
     ("0.1.9a",  False),   # soft lock de Mensajear, saneo al cargar, viaje rapido con recorrido; saves de 0.1.9 siguen
+    ("0.1.9.1", False),   # controlador de quests, punto de activacion, deseo 30 partida (migra sola), tinte por horario, dormir recorre horarios; todo se lee con getattr y las quests nuevas entran por merge
 ]
 
 ## Ejemplo de como se veria despues de unas cuantas versiones:
@@ -151,6 +152,16 @@ init -50 python:
 default jp_gen_partida = 1
 
 
+# Texto del aviso de partida incompatible. Con `default` por la misma razon que
+# `_nc_nombre` (S08): si el bloque python que lo arma fallara, el jugador toca
+# "Ignore", la ejecucion sigue en la linea de abajo y el `centered "[_jp_aviso]"`
+# reventaria con NameError — un segundo error encima del primero. Paso de
+# verdad: el KeyError de S15 dejo la variable sin asignar y el NameError llego
+# 12 segundos despues (S15, evento 6147d11c). El valor de aca es un fallback
+# plano: sin tags y sin placeholder, o sea que no puede fallar al mostrarse.
+default _jp_aviso = u"Partida incompatible: fue creada con una versión anterior de Japitown."
+
+
 init python:
 
     def _jp_stamp_save(d):
@@ -215,14 +226,21 @@ label jp_save_incompatible:
     # (mismo caso que los mensajes de despertar_system.rpy). El `old`/`new` de
     # la plantilla vive en tl/english/compatibilidad_saves_strings.rpy y debe
     # conservar el {version}.
+    #
+    # ⚠️ .replace() Y NO .format(): el texto lleva tags de Ren'Py ({size=+8},
+    # {/size}) y str.format los lee como campos → KeyError: 'size=+8', en los
+    # dos idiomas. O sea que este aviso NUNCA se mostro: el jugador que caia
+    # aca veia la pantalla de error en vez del mensaje (Sentry S15, 2026-09-19).
+    # Escapar las llaves obligaria a tocar el `old` de la traduccion; replace
+    # no le pide nada al texto.
     python:
         _jp_aviso = renpy.translate_string(
             u"{size=+8}Partida incompatible{/size}\n\nEsta partida fue creada "
             u"con una versión anterior de Japitown y no se puede continuar en "
             u"la versión actual ({version}).\n\nTus partidas anteriores siguen "
-            u"en el disco: si querés retomarlas, podés volver a instalar la "
+            u"en el disco: si quieres retomarlas, puedes volver a instalar la "
             u"versión con la que las creaste."
-        ).format(version=config.version)
+        ).replace(u"{version}", unicode(config.version) if str is bytes else str(config.version))
 
     centered "[_jp_aviso]"
 

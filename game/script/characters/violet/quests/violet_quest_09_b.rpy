@@ -164,9 +164,10 @@ init python:
 init 5 python:
 
     registrar_trigger_game_loop("vq9b_noche", _gl_trigger_vq9b_noche,
-                                prioridad=30)
+                                prioridad=30, quest_id="violet_questprincipal_09_a")
     registrar_trigger_dormir("vq9b_cierre", "despues",
-                             _dormir_trigger_vq9b_cierre, prioridad=45)
+                             _dormir_trigger_vq9b_cierre, prioridad=45,
+                             quest_id="violet_questprincipal_09_a")
 
 
 init 6 python:
@@ -334,7 +335,7 @@ label violet_quest09b_visita:
     # center` la dejaba en el medio de la pantalla, lejos de la cama.
     $ _vq9b_idle = "images/characters/casa/idle/idle_violet_casa_hviolet_noche_enferma.jpg"
     $ _vq9b_pos = _vq9a_pos_violet[2]
-    show expression _vq9b_idle as violet_cama:
+    show expression _vq9b_idle as violet_cama onlayer personajes:
         xpos _vq9b_pos[0] ypos _vq9b_pos[1] xanchor 0.5 yanchor 1.0
     # (Mc cuerpo base ojos base boca neutral)
     show mc_parado_base c_rbase_base o_base b_none at right
@@ -387,7 +388,7 @@ label violet_quest09b_toalla:
     # center` la dejaba en el medio de la pantalla, lejos de la cama.
     $ _vq9b_idle = "images/characters/casa/idle/idle_violet_casa_hviolet_noche_enferma.jpg"
     $ _vq9b_pos = _vq9a_pos_violet[2]
-    show expression _vq9b_idle as violet_cama:
+    show expression _vq9b_idle as violet_cama onlayer personajes:
         xpos _vq9b_pos[0] ypos _vq9b_pos[1] xanchor 0.5 yanchor 1.0
     # (Mc cuerpo base ojos base boca neutral)
     show mc_parado_base c_rbase_base o_base b_none at right

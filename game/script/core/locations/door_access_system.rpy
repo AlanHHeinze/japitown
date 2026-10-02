@@ -122,13 +122,20 @@ init python:
                 continue
         return None
 
-    def registrar_override_puerta(npc_id, condicion, label):
+    def registrar_override_puerta(npc_id, condicion, label, quest_id=None):
         """
         Registra un label que reemplaza el flujo completo de la puerta cuando
         su condicion da True (se chequea antes del menu; el primero que matchea
         gana). El label recibe el control con jump.
+
+        `quest_id`: quest a la que pertenece, para el punto de activacion
+        (activar_quest). Si el label se llama `quest_<id>` se deduce solo.
         """
-        OVERRIDES_PUERTA_REGISTRO.setdefault(npc_id, []).append((condicion, label))
+        OVERRIDES_PUERTA_REGISTRO.setdefault(npc_id, []).append({
+            "condicion": condicion,
+            "label": label,
+            "quest_id": quest_id,
+        })
 
     def registrar_bloqueo_golpe(npc_id, condicion, mensaje):
         """
@@ -138,14 +145,21 @@ init python:
         BLOQUEOS_GOLPE_REGISTRO.setdefault(npc_id, []).append((condicion, mensaje))
 
     def obtener_override_puerta(npc_id):
-        """Primer override cuya condicion da True, o None."""
-        for _condicion, _label in OVERRIDES_PUERTA_REGISTRO.get(npc_id, []):
-            if _condicion():
-                return _label
+        """Primer override (dict label/quest_id) cuya condicion da True, o None."""
+        for _ov in OVERRIDES_PUERTA_REGISTRO.get(npc_id, []):
+            if _ov["condicion"]():
+                return _ov
         return None
 
     def obtener_bloqueo_golpe(npc_id):
         """Mensaje (ya traducido) del primer bloqueo de golpe activo, o None."""
+        # NPC con reserva de VIDA (planificador, ej. 09_a): golpear no es de
+        # esa quest, asi que no responde; sus opciones propias siguen en el
+        # menu. La reserva de slot NO pasa por aca: la secuencia que la puso
+        # puede entrar golpeando (ver planificador_texto_reserva).
+        _txt_res = planificador_texto_reserva(npc_id)
+        if _txt_res:
+            return _txt_res
         for _condicion, _mensaje in BLOQUEOS_GOLPE_REGISTRO.get(npc_id, []):
             if _condicion():
                 return renpy.translate_string(_mensaje)
@@ -213,6 +227,9 @@ init python:
         for _reg in OPCIONES_PUERTA_REGISTRO.get(npc_id, []):
             if _excl and _reg["label"] != _excl:
                 continue
+            # NPC reservado por una quest (planificador): solo sus opciones.
+            if not planificador_opcion_permitida(npc_id, _reg["label"], _reg["quest_id"]):
+                continue
             if _reg["condicion"] is not None and not _reg["condicion"]():
                 continue
             _op = {
@@ -238,16 +255,18 @@ init python:
         La prueba del cosplay) no se disparaba nunca. Reusa obtener_opciones_puerta
         para respetar EXACTAMENTE las mismas condiciones (etapa, horario, ítems).
 
-        Devuelve el label de la primera opcion de quest disponible, o None. Se
-        ignoran las opciones de tipo "evento" (esas no son triggers de quest a
-        habitacion; se manejan por su cuenta).
+        Devuelve ("opcion_especial", label, quest_id) de la primera opcion de
+        quest disponible —la misma tupla que devuelve el menu, para que el
+        despachador la trate igual—, o None. Se ignoran las opciones de tipo
+        "evento" (esas no son triggers de quest a habitacion; se manejan por
+        su cuenta).
         """
         for op in obtener_opciones_puerta(npc_id):
             if op.get("tipo") == "evento":
                 continue
             lbl = op.get("label")
             if lbl:
-                return lbl
+                return ("opcion_especial", lbl, op.get("quest_id"))
         return None
 
     def obtener_npc_en_banio(banio_id):
@@ -303,7 +322,7 @@ screen menu_puerta_npc(npc_id, opciones_especiales, bg_path=None):
             textbutton (renpy.translate_string(opcion.get("texto", "Opcion")) + _tag_opcion):
                 style "choice_button"
                 action [Hide("menu_puerta_npc"),
-                        Return(("opcion_especial", opcion.get("label", "game_loop")))]
+                        Return(("opcion_especial", opcion.get("label", "game_loop"), opcion.get("quest_id")))]
 
         # Volver — siempre al final
         textbutton "Volver":
@@ -385,6 +404,7 @@ label interaccion_puerta_npc:
     # cuya condicion da True gana.
     $ _override_puerta = obtener_override_puerta(_npc_habitacion)
     if _override_puerta:
+        $ _override_puerta = despachar_opcion_quest(("opcion_especial", _override_puerta["label"], _override_puerta.get("quest_id")), origen="override_puerta:" + _npc_habitacion)
         jump expression _override_puerta
 
     # Trasnoche: ingreso_noche requiere que el NPC esté presente
@@ -396,6 +416,7 @@ label interaccion_puerta_npc:
             # puerta, así que con relación alta quedaba sin trigger).
             $ _trigger_dir = obtener_trigger_habitacion_directo(_npc_habitacion)
             if _trigger_dir:
+                $ _trigger_dir = despachar_opcion_quest(_trigger_dir, origen="habitacion_directo:" + _npc_habitacion)
                 jump expression _trigger_dir
             $ sistema_locaciones.mover_a_locacion(_destino_puerta)
             $ mostrar_hud()
@@ -418,6 +439,7 @@ label interaccion_puerta_npc:
         # Si no está, se entra normal a la habitación vacía.
         $ _trigger_dir = obtener_trigger_habitacion_directo(_npc_habitacion) if _npc_presente else None
         if _trigger_dir:
+            $ _trigger_dir = despachar_opcion_quest(_trigger_dir, origen="habitacion_directo:" + _npc_habitacion)
             jump expression _trigger_dir
         $ sistema_locaciones.mover_a_locacion(_destino_puerta)
         $ mostrar_hud()
@@ -457,8 +479,9 @@ label interaccion_puerta_npc:
 
     # Procesar resultado del menu
     if isinstance(_return, tuple) and _return[0] == "opcion_especial":
-        # Opcion especial: ejecutar el label correspondiente limpiando el HUD
-        $ _label_opcion = _return[1]
+        # Opcion especial: ejecutar el label correspondiente limpiando el HUD.
+        # Pasa por el punto de activacion (questsystem_core.activar_quest).
+        $ _label_opcion = despachar_opcion_quest(_return, origen="puerta:" + _npc_habitacion)
         $ mostrar_hud()
         jump expression _label_opcion
 

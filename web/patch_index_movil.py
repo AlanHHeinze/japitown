@@ -23,6 +23,20 @@ Aplica 3 arreglos:
    `dvh` (dynamic viewport height) usa el alto REAL visible.
    El `height: 100%` se conserva arriba como fallback para navegadores viejos.
 
+4. Arranque -> cartel si no hay WebGL, y espera a que la pestaña este visible
+   Sin WebGL, Ren'Py no consigue ningun renderer y muere con "Could not set
+   video mode" / "'NoneType' has no attribute 'screenshot'" ANTES de poder
+   dibujar nada: el jugador ve la pantalla de error de Ren'Py sin saber por
+   que (Sentry S04/S06/S07/S09; tres dispositivos distintos en 36 h el
+   17-18/09/2026, Chrome actual — aceleracion por hardware apagada, GPU en
+   lista negra, navegadores "con privacidad" como Norton que bloquean WebGL).
+   El arranque de renpy.js pasa a un script inline que primero prueba
+   getContext('webgl2'/'webgl') en un canvas APARTE (probar en #canvas le
+   robaria el contexto al motor) y, si no hay, muestra un cartel HTML
+   bilingue con "Reintentar" e "Intentar igual". Ademas espera a que
+   document.visibilityState no sea "hidden" antes de lanzar: un arranque en
+   una pestaña restaurada en segundo plano puede no recibir contexto de GL.
+
 USO — MODO ACTIVO: EL TEMPLATE DEL SDK (automatico)
 ---------------------------------------------------
 El patch YA ESTA APLICADO al template del SDK, asi que TODO build web sale
@@ -61,6 +75,63 @@ import sys
 import zipfile
 
 
+# Reemplazo del arranque de renpy.js: el cartel y el script que decide si
+# lanzar. Va como constante aparte porque es largo. Los textos van en español
+# e ingles, con entidades HTML para no depender del charset del template.
+CARTEL_WEBGL = (
+    '  <script src="renpy-pre.js"></script>\n'
+    '\n'
+    '  <!-- Japitown: cartel si el navegador no tiene WebGL (ver web/patch_index_movil.py). -->\n'
+    '  <div id="jpSinWebGL" style="display:none; position:fixed; inset:0; z-index:9999; background:#0d0d1e; color:#fff; font-family:sans-serif; align-items:center; justify-content:center; text-align:center; padding:24px; box-sizing:border-box;">\n'
+    '    <div style="max-width:640px;">\n'
+    '      <div style="font-size:28px; font-weight:bold; margin-bottom:16px;">Este navegador no tiene WebGL activado</div>\n'
+    '      <div style="font-size:16px; line-height:1.5; color:#ccc; margin-bottom:12px;">Japitown necesita WebGL para dibujar. Activ&aacute; la <b>aceleraci&oacute;n por hardware</b> en la configuraci&oacute;n del navegador, desactiv&aacute; extensiones o modos de privacidad que bloqueen WebGL, o prob&aacute; con otro navegador (Chrome, Firefox, Edge). Tambi&eacute;n pod&eacute;s descargar la versi&oacute;n de escritorio.</div>\n'
+    '      <div style="font-size:14px; line-height:1.5; color:#999; margin-bottom:24px;"><b>This browser doesn\'t have WebGL enabled.</b> Japitown needs WebGL to draw. Turn on <b>hardware acceleration</b> in your browser settings, disable extensions or privacy modes that block WebGL, or try another browser (Chrome, Firefox, Edge). You can also download the desktop version.</div>\n'
+    '      <button onclick="location.reload()" style="font-size:16px; padding:10px 22px; margin:6px; cursor:pointer; background:#4FC3F7; color:#000; border:0; border-radius:6px;">Reintentar / Retry</button>\n'
+    '      <button onclick="jpLanzarIgual()" style="font-size:16px; padding:10px 22px; margin:6px; cursor:pointer; background:#333; color:#fff; border:0; border-radius:6px;">Intentar igual / Try anyway</button>\n'
+    '    </div>\n'
+    '  </div>\n'
+    '  <script>\n'
+    '    (function () {\n'
+    '      function jpTieneWebGL() {\n'
+    '        try {\n'
+    "          var c = document.createElement('canvas');   // canvas APARTE: no tocar #canvas\n"
+    "          return !!(c.getContext('webgl2') || c.getContext('webgl') || c.getContext('experimental-webgl'));\n"
+    '        } catch (e) { return false; }\n'
+    '      }\n'
+    '      var lanzado = false;\n'
+    '      function jpLanzar() {\n'
+    '        if (lanzado) { return; }\n'
+    '        lanzado = true;\n'
+    "        var s = document.createElement('script');\n"
+    '        s.async = true;\n'
+    "        s.type = 'text/javascript';\n"
+    "        s.src = 'renpy.js';\n"
+    '        document.body.appendChild(s);\n'
+    '      }\n'
+    '      window.jpLanzarIgual = function () {\n'
+    "        document.getElementById('jpSinWebGL').style.display = 'none';\n"
+    '        jpLanzar();\n'
+    '      };\n'
+    '      function jpCuandoVisible(fn) {\n'
+    "        if (document.visibilityState !== 'hidden') { fn(); return; }\n"
+    "        document.addEventListener('visibilitychange', function h() {\n"
+    "          if (document.visibilityState !== 'hidden') {\n"
+    "            document.removeEventListener('visibilitychange', h);\n"
+    '            fn();\n'
+    '          }\n'
+    '        });\n'
+    '      }\n'
+    '      jpCuandoVisible(function () {\n'
+    '        if (jpTieneWebGL()) { jpLanzar(); return; }\n'
+    "        var p = document.getElementById('presplash');\n"
+    "        if (p) { p.style.display = 'none'; }\n"
+    "        document.getElementById('jpSinWebGL').style.display = 'flex';\n"
+    '      });\n'
+    '    })();\n'
+    '  </script>\n'
+)
+
 # (nombre, texto_a_buscar, texto_de_reemplazo, marca_de_ya_aplicado)
 PATCHES = [
     (
@@ -97,6 +168,13 @@ PATCHES = [
         "\n"
         "      border: 0 none;",
         "height: 100dvh;",
+    ),
+    (
+        "arranque: cartel sin WebGL + espera a pestaña visible",
+        '  <script src="renpy-pre.js"></script>\n'
+        '  <script async type="text/javascript" src="renpy.js"></script>\n',
+        CARTEL_WEBGL,
+        "jpSinWebGL",
     ),
 ]
 

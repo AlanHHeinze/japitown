@@ -25,13 +25,15 @@
 
 init python:
 
-    # Webhook propio del canal de feedback (separado del de crashes del
-    # auto-reporter, que usa JP_WEBHOOK_URL en sistema_reporte_errores.rpy)
-    JP_WEBHOOK_FEEDBACK_URL = "https://discord.com/api/webhooks/1525879364217077842/_0MQISIXjxmpfa4HQXsTqXaUYMChGy_PPxr53L0t1AHZenCGoOOTXvBNfHOFclDtoJGZ"
+    # Ruta /feedback del proxy (Cloudflare Worker), que reenvía al canal de
+    # feedback; los crashes van a /error (JP_WEBHOOK_URL en sistema_reporte_errores.rpy)
+    JP_WEBHOOK_FEEDBACK_URL = "https://japitown-reporter.risita022.workers.dev/feedback"
 
     # Estado interno. No son `default`: la captura son bytes y no deben ir al save.
     store._jp_fb_captura = None
-    store._jp_fb_status = None   # None|"ok"|"ok_sin_captura"|"fail"|"vacio"|"captura_fail"
+    # None|"ok"|"ok_sin_captura"|"fail"|"captura_fail" y los tres motivos por
+    # los que un reporte no se manda: "vacio"|"corto"|"sin_sentido".
+    store._jp_fb_status = None
     store._jp_fb_titulo = u""    # el texto vive acá para sobrevivir al ocultar/mostrar
     store._jp_fb_texto = u""
 
@@ -98,6 +100,18 @@ init python:
     def jp_fb_estado_juego():
         """Lista prolija con el estado del juego. Cada dato con su guarda."""
         L = []
+        # Quién lo manda (mismo helper que usan el reporte de error y Sentry)
+        try:
+            L.append(u"• Jugador: %s" % jp_jugador_actual())
+        except Exception:
+            pass
+        # El id anónimo de la instalación, el MISMO que Sentry recibe como
+        # user.id: con los dos lados etiquetados igual, un feedback se cruza
+        # con los crashes que esa instalación mandó (ver jp_instalacion_id).
+        try:
+            L.append(u"• Instalación: %s" % jp_instalacion_id())
+        except Exception:
+            pass
         # Día y horario
         try:
             _dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
@@ -163,6 +177,13 @@ init python:
                 len(_comps), u", ".join(_comps) if _comps else u"(ninguna)"))
         except Exception:
             pass
+        # Controlador de quests: qué estaba procesando en ese momento.
+        try:
+            _ctrl = jp_controlador_actual(10)
+            L.append(u"• Controlador:\n" + u"\n".join(
+                u"   - " + _l for _l in _ctrl.splitlines()))
+        except Exception:
+            pass
         # Plataforma
         try:
             L.append(u"• Plataforma: %s — Japitown %s" % (
@@ -170,6 +191,86 @@ init python:
         except Exception:
             pass
         return u"\n".join(L)
+
+    # ── ¿Se puede entender este reporte? ────────────────────────────────────
+    # Llegaban reportes vacios, con dos palabras sueltas o con teclazos
+    # ("asdasd", "1234", "aaaaa"): imposible saber que le pasaba al jugador, y
+    # sin forma de volver a preguntarle. La validacion corre ANTES de enviar y
+    # explica que falta, en vez de mandar algo que no sirve.
+    #
+    # SE VALIDA TITULO + DESCRIPCION JUNTOS, no la descripcion sola: quien
+    # escribio todo arriba ya dijo algo entendible y no tiene por que copiarlo
+    # abajo. Lo que se mide es si el conjunto alcanza.
+
+    JP_FB_MINIMO_CHARS = 20      # caracteres del conjunto, sin contar espacios
+    JP_FB_MINIMO_PALABRAS = 3
+
+    # Teclazos tipicos: filas del teclado y la serie de numeros. Solo se miran
+    # en textos CORTOS (ver abajo), asi que no pueden ensuciar un reporte largo
+    # que de casualidad contenga una de estas cadenas.
+    _JP_FB_SECUENCIAS = ("qwerty", "asdfgh", "zxcvbn", "asdf", "qwer", "zxcv",
+                         "1234", "abcd")
+    _JP_FB_VOCALES = u"aeiouáéíóúàèìòùâêîôûäëïöüãõy"
+
+    def _jp_fb_normalizar(titulo, texto):
+        """El conjunto en minusculas y con los espacios colapsados."""
+        _todo = u"%s %s" % (titulo or u"", texto or u"")
+        return u" ".join(_todo.lower().split())
+
+    def jp_fb_motivo_invalido(titulo, texto):
+        """
+        None si el reporte se puede interpretar; si no, el motivo:
+        "vacio" | "corto" | "sin_sentido".
+
+        Las reglas van de la mas dura a la mas blanda, y las dos ultimas SOLO
+        se aplican a textos cortos (< 60 caracteres). Un reporte largo se acepta
+        siempre: mejor tragarse un falso negativo que rechazarle el reporte a
+        alguien que se tomo el trabajo de escribirlo.
+        """
+        _t = _jp_fb_normalizar(titulo, texto)
+        if not _t:
+            return "vacio"
+
+        _letras = [c for c in _t if c.isalpha()]
+        _sin_espacios = _t.replace(u" ", u"")
+
+        # Sin una sola letra: "1234", "!!!!", ":)"
+        if not _letras:
+            return "sin_sentido"
+        # Un unico caracter repetido: "aaaaaaa", "ja ja ja ja" no (tiene dos)
+        if len(_sin_espacios) > 3 and len(set(_sin_espacios)) <= 2:
+            return "sin_sentido"
+
+        # ── Blandas: solo en textos cortos ──────────────────────────────────
+        # VAN ANTES DEL LARGO a proposito: "asdasdasd" tambien es corto, pero
+        # decirle "escribi un poco mas" a alguien que tecleo al azar no sirve
+        # de nada. El motivo correcto es el que le explica que le falta.
+        if len(_sin_espacios) < 60:
+            # Casi sin vocales = tecleo al azar. El umbral es bajisimo a
+            # proposito (el español y el ingles rondan el 40%), asi que solo
+            # cae algo que de verdad no es lenguaje.
+            _vocales = sum(1 for c in _letras if c in _JP_FB_VOCALES)
+            if _vocales * 100 < len(_letras) * 15:
+                return "sin_sentido"
+            # Filas del teclado
+            for _seq in _JP_FB_SECUENCIAS:
+                if _seq in _sin_espacios:
+                    return "sin_sentido"
+            # Muy pocos caracteres DISTINTOS para lo que dura: es el mismo
+            # puñado repetido ("asdasdasdasd", "hola hola hola"). Una frase de
+            # verdad de este largo usa el triple de letras distintas — probado
+            # contra reportes reales en español y en ingles.
+            if len(_sin_espacios) >= 8 and \
+                    len(set(_sin_espacios)) * 100 < len(_sin_espacios) * 30:
+                return "sin_sentido"
+
+        # ── Largo: lo ultimo, cuando ya se sabe que son palabras de verdad ──
+        if len(_sin_espacios) < JP_FB_MINIMO_CHARS:
+            return "corto"
+        if len(_t.split()) < JP_FB_MINIMO_PALABRAS:
+            return "corto"
+
+        return None
 
     def jp_fb_construir(titulo, texto):
         """Arma el mensaje para Discord (límite 2000 chars)."""
@@ -217,8 +318,12 @@ init python:
         """Botón Enviar: manda el texto + el estado del juego, y la captura si hay."""
         titulo = (titulo or u"").strip()
         texto = (texto or u"").strip()
-        if not titulo and not texto:
-            store._jp_fb_status = "vacio"
+
+        # Nada se manda sin poder entenderse: el aviso dice QUE falta, que es
+        # lo unico que puede arreglar el jugador (ver jp_fb_motivo_invalido).
+        _motivo = jp_fb_motivo_invalido(titulo, texto)
+        if _motivo:
+            store._jp_fb_status = _motivo
             renpy.restart_interaction()
             return
 
@@ -276,7 +381,12 @@ screen jp_feedback_screen():
 
             text _("Errores y Feedback") size 32 color "#4FC3F7" bold True
 
-            text _("Contanos el problema o dejá tu comentario. Se envía junto al estado del juego.") size 19 color "#dddddd"
+            text _("Cuéntanos el problema o deja tu comentario. Se envía junto al estado del juego.") size 19 color "#dddddd"
+
+            # EL AVISO PREVENTIVO, y no solo el error al enviar: la mayoría de
+            # los reportes inservibles no eran mala voluntad, era no saber qué
+            # hacía falta. Decirlo antes evita el rechazo después.
+            text _("Hace falta una descripción concreta: qué estabas haciendo, qué pasó y qué esperabas que pasara. Un reporte vacío, incompleto o con texto sin sentido no se puede interpretar y no sirve para arreglar nada.") size 17 color "#ffcc88"
 
             null height 4
 
@@ -330,9 +440,13 @@ screen jp_feedback_screen():
             elif _jp_fb_status == "ok_sin_captura":
                 text _("✅ Enviado (la captura no se pudo adjuntar).") size 19 color "#7CFC8A" bold True
             elif _jp_fb_status == "fail":
-                text _("❌ No se pudo enviar. Revisá tu conexión e intentá de nuevo.") size 19 color "#ff6b6b" bold True
+                text _("❌ No se pudo enviar. Revisa tu conexión e intenta de nuevo.") size 19 color "#ff6b6b" bold True
             elif _jp_fb_status == "vacio":
-                text _("⚠️ Escribí un título o una descripción antes de enviar.") size 19 color "#ffcc88" bold True
+                text _("⚠️ El reporte está vacío. Sin una descripción no hay forma de saber qué pasó.") size 19 color "#ffcc88" bold True
+            elif _jp_fb_status == "corto":
+                text _("⚠️ Con eso no alcanza. Hacen falta al menos unas palabras que expliquen qué estabas haciendo y qué pasó.") size 19 color "#ffcc88" bold True
+            elif _jp_fb_status == "sin_sentido":
+                text _("⚠️ Así no se entiende nada. El reporte tiene que estar escrito en palabras para poder interpretarlo.") size 19 color "#ffcc88" bold True
             elif _jp_fb_status == "captura_fail":
                 text _("❌ No se pudo tomar la captura.") size 19 color "#ff6b6b" bold True
 

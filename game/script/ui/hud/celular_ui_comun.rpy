@@ -195,25 +195,29 @@ screen _celular_app_header(titulo, icono="", accion_volver=None, screen_actual=N
             background "#12122aFF"
             padding (10, 0)
 
-            hbox:
-                yalign 0.5
+            # Mismo layout que la variante tactil: el titulo se centra en el
+            # ancho del header (fixed + xalign 0.5), no despues del boton
+            # volver — con el hbox de antes quedaba corrido a la derecha.
+            fixed:
                 xfill True
-                spacing 10
+                yfill True
 
                 # Boton volver
                 if accion_volver:
                     textbutton "◀":
+                        xalign 0.0
+                        yalign 0.5
                         action accion_volver
                         text_size 44
                         text_color "#4FC3F7"
                         text_hover_color "#81D4FA"
-                        yalign 0.5
                         padding (8, 5)
 
-                # Icono + titulo
+                # Icono + titulo, centrados
                 hbox:
-                    spacing 8
+                    xalign 0.5
                     yalign 0.5
+                    spacing 8
                     if icono:
                         text icono size 20 yalign 0.5
                     text titulo size 18 color "#ffffff" bold True yalign 0.5

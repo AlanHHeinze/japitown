@@ -17,9 +17,23 @@
 ## fondo— pero hace que el mundo sea coherente: si el jugador pasa antes por la
 ## cocina, no las encuentra ahi para despues verlas aparecer en el living.
 ##
-## PUESTA EN ESCENA: Monica en right, Violet en center mirando hacia ella
-## (flip), el MC en su posicion de siempre. Cuando Monica se va, Violet se corre
-## a right y se da vuelta para hablar de frente con el MC.
+## PUESTA EN ESCENA: Monica en right, Violet en el centro, el MC en su posicion
+## de siempre. Monica nunca se gira (los dos le quedan a la izquierda). Violet
+## mira a Monica (centro_npc_flip) cuando le habla o la discute, y al MC
+## (centro_npc) cuando el toma la conversacion. Cuando Monica se va, Violet se
+## corre a right y se da vuelta para hablar de frente con el MC.
+##
+## LA COCINA ES UNA ESCENA (imagenes de pantalla completa), no sprites: al
+## llegar se ve el desastre con Violet sola (`base`), el MC habla desde afuera
+## del cuadro, y cuando ella lo mira (`mirando`) contesta con la boca de la
+## escena. Despues de "Una limpieza mas tarde" vuelven los sprites, ya de tarde.
+
+
+# La escena de la cocina. Por RUTA EXPLICITA y con nombre propio (ver amor 5).
+# Van en master sin prefijo de personaje: una escena no se tiñe por horario.
+image va10_cocina_base = "images/quest/violet/amor10/escena_cocina_amor10_base.jpg"
+image va10_cocina_mirando = "images/quest/violet/amor10/escena_cocina_amor10_mirando.jpg"
+image va10_cocina_boca = "images/quest/violet/amor10/escena_cocina_amor10_boca.webp"
 
 
 init python:
@@ -33,29 +47,18 @@ init python:
         ya las pone ahi, asi que si alguna falta es porque algo la saco (una
         restriccion, otra quest) y en ese caso la escena no deberia dispararse.
         """
+        # Mañana, MC en el living, Violet y Monica en el living y no ocultas:
+        # demandas de la quest, las aplica la capa 2.
         if not quest_lista_para_boton("violet_amor_02"):
             return None
-        if store.horario_actual != 0:
-            return None
-
-        _loc_a10 = store.sistema_locaciones.locacion_actual
-        if _loc_a10 is None or _loc_a10.id != "casa_living":
-            return None
-
-        for _npc_id_a10 in ("violet", "monica"):
-            _npc_a10 = obtener_npc(_npc_id_a10)
-            if not _npc_a10 or not _npc_a10.esta_en_locacion("casa_living"):
-                return None
-            if npc_esta_oculto(_npc_id_a10):
-                return None
-
         return "quest_violet_amor_02"
 
 
 init 5 python:
 
     registrar_trigger_game_loop("violet_amor_10_encuentro",
-                                _gl_trigger_violet_amor_10)
+                                _gl_trigger_violet_amor_10,
+                                quest_id="violet_amor_02")
 
 
 label quest_violet_amor_02:
@@ -70,9 +73,10 @@ label quest_violet_amor_02:
     # Las dos ya estaban charlando cuando el MC sube: entran sin transicion.
     show monica_parada c_rbase_base o_base b_none at right
 
-    # Violet al centro, espejada para quedar mirando hacia Monica.
-    show violet_parada c_rbase_brazoscruzados ca_base o_base b_none at center:
-        xzoom -1.0
+    # Violet al centro, mirando a Monica: estaban discutiendo. centro_npc_flip
+    # y no un `xzoom` suelto, para que al volver a centro_npc no le quede el
+    # espejado heredado.
+    show violet_parada c_rbase_brazoscruzados ca_base o_base b_none at centro_npc_flip
 
     # `with None` cierra acá el fondo y las dos chicas, sin transicion.
     #
@@ -89,6 +93,8 @@ label quest_violet_amor_02:
     violet "Te dije que yo no fui esta vez..."
     show violet_parada b_none
 
+    # El MC toma la conversacion: Violet se da vuelta a mirarlo.
+    show violet_parada at centro_npc
     show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
     mc "¿Qué pasó?"
     show mc_parado_base b_none c_rbase_base with sprite_normal
@@ -103,6 +109,8 @@ label quest_violet_amor_02:
     mc "No, solo bajé por un vaso de agua"
     show mc_parado_base b_none c_rbase_base with sprite_normal
 
+    # Le contesta a Monica (la excusa de Jasmine): la vuelve a mirar.
+    show violet_parada at centro_npc_flip
     show violet_parada b_hablando c_rbase_pensando with sprite_normal
     violet "Ayer Jasmine entrenó mucho y eso le suele dar mucho hambre"
     show violet_parada b_none c_rbase_base with sprite_normal
@@ -121,12 +129,16 @@ label quest_violet_amor_02:
     monica "¿En serio?"
     show monica_parada b_none
 
+    # El MC se mete a defenderla: Violet lo mira.
+    show violet_parada at centro_npc
     show mc_parado_base b_hablando c_rbase_idea with sprite_normal
     mc "Cuando yo subía ella estaba bajando y se la veía bastante dormida"
     show mc_parado_base b_abiertachica c_rbase_base with sprite_normal
     mc "Pero no te preocupes ahora nos encargamos de ordenar todo nosotros"
     show mc_parado_base b_none
 
+    # Se suma, hablandole a Monica: la vuelve a mirar hasta que se va.
+    show violet_parada at centro_npc_flip
     show violet_parada b_hablando c_rbase_idea with sprite_normal
     violet "Sí, Jasmine siempre hace todo por nosotros"
     show violet_parada b_hablandochica
@@ -170,20 +182,47 @@ label quest_violet_amor_02:
     mc "Jajaja, dale, vamos"
     show mc_parado_base b_none
 
-    # ── UN TIEMPO DESPUES ────────────────────────────────────────────────────
+    # ── LA COCINA: la escena ─────────────────────────────────────────────────
     #
-    # El corte se come toda la limpieza: no hay escena de los dos ordenando, se
-    # los vuelve a ver ya terminando, en la cocina.
-    #
-    # El cartel espera el CLICK y no un `pause` con segundos: es un corte de
-    # tiempo, no un efecto — el jugador decide cuando sigue.
+    # No caminan hasta la cocina: fundido a la escena. Sigue siendo la mañana.
+    # La locacion se cambia ACA (escena=True: lo mueve la escena, no el
+    # jugador) para que todo lo que sigue ya este en la cocina.
 
     hide violet_parada
     hide mc_parado_base
     with dissolve
 
+    window hide
+    $ sistema_locaciones.mover_a_locacion("casa_cocina", escena=True)
+    scene va10_cocina_base with fade
+    window show
+
+    # El MC no se ve: habla desde afuera del cuadro.
+    mc "No puedo creer el desastre que hay... ¿Qué hiciste?"
+
+    # Violet lo mira y le contesta.
+    scene va10_cocina_mirando with dissolve
+
+    show va10_cocina_boca
+    violet "Una receta que vi en Tok Tok, decía que era fácil y no resultó"
+    hide va10_cocina_boca
+
+    mc "¿Y limpiarlo en el momento tampoco funcionó?"
+
+    show va10_cocina_boca
+    violet "No, quedé estresada y de mal humor, me fui a dormir y dije me levanto temprano para limpiar todo"
+    violet "Pero no me pude despertar"
+    hide va10_cocina_boca
+
+    # ── UNA LIMPIEZA MAS TARDE ───────────────────────────────────────────────
+    #
+    # El corte se come toda la limpieza. El cartel espera el CLICK y no un
+    # `pause` con segundos: es un corte de tiempo, no un efecto — el jugador
+    # decide cuando sigue.
+
+    window hide
     scene black with fade
-    show text Text(renpy.translate_string("Un tiempo después"),
+    show text Text(renpy.translate_string("Una limpieza más tarde"),
                    size=50, color="#FFFFFF",
                    outlines=[(2, "#000000", 0, 0)]) at truecenter
     pause
@@ -195,38 +234,18 @@ label quest_violet_amor_02:
     # juego en la tarde: no hay forma de que caiga en trasnoche ni de que se
     # tope con el tope de avanzar_horario.
     $ avanzar_horario()
-    $ sistema_locaciones.mover_a_locacion("casa_cocina")
 
-    # El fondo se pide DESPUES de mover y de avanzar: `background` resuelve el
-    # path con la locacion y el horario del momento, asi que pedirlo antes
-    # traeria el living por la mañana.
+    # El fondo se pide DESPUES de avanzar: `background` resuelve el path con la
+    # locacion y el horario del momento.
     $ _va10_bg_final = sistema_locaciones.locacion_actual.background
     scene expression _va10_bg_final
 
-    # Los dos vuelven en la misma posicion en la que quedaron en el living. El
-    # `with fade` de abajo los trae JUNTO con el fondo: si el fade fuera del
-    # `scene` solo, se veria la cocina vacia un frame antes que los sprites.
+    # Los sprites vuelven JUNTO con el fondo: si el fade fuera del `scene` solo,
+    # se veria la cocina vacia un frame antes que los sprites.
     show violet_parada c_rbase_base ca_base o_base b_none at right
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
     with fade
-
-    show mc_parado_base b_hablando c_rbase_brazoscruzados with sprite_normal
-    mc "No puedo creer el desastre que había... ¿Qué hiciste?"
-    show mc_parado_base b_none
-
-    show violet_parada b_hablando c_rbase_pensando with sprite_normal
-    violet "Una receta que vi en Tok Tok, decía que era fácil y no resultó"
-    show violet_parada b_none c_rbase_brazoscruzados with sprite_normal
-
-    show mc_parado_base b_hablando
-    mc "¿Y limpiarlo en el momento tampoco funcionó?"
-    show mc_parado_base b_none
-
-    show violet_parada b_hablando c_rbase_base with sprite_normal
-    violet "No, quedé estresada y de mal humor, me fui a dormir y dije me levanto temprano para limpiar todo"
-    show violet_parada b_hablandochica
-    violet "Pero no me pude despertar"
-    show violet_parada b_none
+    window show
 
     show mc_parado_base b_hablando c_rbase_avergonzado with sprite_normal
     mc "Ahora el que se quiere ir a dormir después de todo esto soy yo"

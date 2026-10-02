@@ -69,7 +69,7 @@ init python:
         """Pista de ETAPA_BOTON_LISTO."""
         if getattr(store, 'vd10_sed_activa', False):
             return "Ir a la cocina"
-        return "Deberia descansar bien"
+        return "Debería descansar bien"
 
     def vd10_que_hacer_listo():
         """Que hacer de ETAPA_BOTON_LISTO."""
@@ -81,7 +81,7 @@ init python:
 init 5 python:
 
     registrar_trigger_dormir("violet_deseo_10_sed", "antes",
-                            _vd10_trigger_dormir)
+                            _vd10_trigger_dormir, quest_id="violet_deseo_02")
 
 
 ################################################################################

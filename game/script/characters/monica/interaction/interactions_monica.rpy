@@ -17,9 +17,6 @@ label interaccion_monica:
     # "(Evento)" del menú (más abajo, en las opciones extra).
     $ _event_monica = obtener_event("monica_event_01")
 
-    # Verificar si hay quest lista para ejecutar
-    $ _quest_activa = sistema_quests.obtener_quest_activa("monica")
-
     # NOTA DE ARQUITECTURA (2026-07-31): acá había un gate que auto-ejecutaba la
     # quest activa y saltaba SIN abrir el menú. Se eliminó.
     #
@@ -39,9 +36,7 @@ label interaccion_monica:
 
     # Quest 0: botón "Agradecerle" — solo cuando la quest está lista y el MC
     # está a solas con Mónica (ningun otro NPC en la locación).
-    $ _quest_m0 = sistema_quests.obtener_quest("monica_questprincipal_0")
-    if (_quest_m0 and _quest_m0.activa and not _quest_m0.completada and
-            _quest_m0.etapa_actual == ETAPA_BOTON_LISTO):
+    if quest_lista_para_boton("monica_questprincipal_0"):
         $ _m0_presentes = npcs_en_locacion_actual()
         if len(_m0_presentes) == 1 and _m0_presentes[0].id == "monica":
             $ _opciones_extra_monica.append({
@@ -71,9 +66,7 @@ label interaccion_monica:
         })
 
     # Quest 09_a: opciones relacionadas con la enfermedad de Violet
-    $ _quest_v09a_mon = sistema_quests.obtener_quest("violet_questprincipal_09_a")
-    if (_quest_v09a_mon and _quest_v09a_mon.activa and not _quest_v09a_mon.completada and
-            _quest_v09a_mon.etapa_actual == ETAPA_BOTON_LISTO):
+    if quest_lista_para_boton("violet_questprincipal_09_a"):
         # "Preguntar por Violet" mientras el MC no sabe que está enferma
         if not getattr(store, 'mc_sabe_violet_enferma', False):
             $ _opciones_extra_monica.append({
@@ -95,7 +88,7 @@ label interaccion_monica:
     call screen menu_interaccion_npc_completo(_npc_actual, opciones_extra=_opciones_extra_monica)
 
     if isinstance(_return, tuple) and _return[0] == "opcion_especial":
-        $ _label_opcion_monica = _return[1]
+        $ _label_opcion_monica = despachar_opcion_quest(_return, origen="menu:monica")
         jump expression _label_opcion_monica
 
     return

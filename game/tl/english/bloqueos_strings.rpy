@@ -141,3 +141,23 @@ translate english strings:
 
     old "Parece que está ocupada ahora"
     new "She looks busy right now"
+
+    # =========================================================================
+    # Violet - Amor 35 ("Las amigas")
+    # =========================================================================
+    # Cierra el sotano la noche de la juntada, despues de la escena y hasta que
+    # el jugador duerma (registrar_bloqueo_locacion, violet_amor_35.rpy).
+
+    old "Violet sigue con las amigas, mejor no molestarlas"
+    new "Violet is still with her friends, better not to bother them"
+
+    # =========================================================================
+    # Violet - Amor 40 ("La solicitud")
+    # =========================================================================
+    # Restriccion de la fase 1 (hasta su puerta) y de la fase 2 (escribirle).
+
+    old "Mejor voy a ver qué le pasa a Violet"
+    new "I'd better go see what's going on with Violet"
+
+    old "Le voy a escribir a Violet"
+    new "I'm going to text Violet"

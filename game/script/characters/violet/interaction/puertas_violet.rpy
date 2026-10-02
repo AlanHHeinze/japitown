@@ -18,10 +18,10 @@ init python:
     # --- Condiciones de opciones de puerta -----------------------------------
 
     def _puerta_v_0b():
-        # Caso especial: la 0_b ofrece "Intentar hablar" durante TODA la quest
-        # (sin exigir BOTON_LISTO), solo por la tarde.
-        q = store.sistema_quests.obtener_quest("violet_questprincipal_0_b")
-        return bool(q and q.activa and not q.completada and store.horario_actual == 1)
+        # "Intentar hablar" durante toda la quest, solo por la tarde. La 0_b no
+        # tiene espera ni requisitos, asi que esta en BOTON_LISTO desde que
+        # nace: el predicado estandar cubre "toda la quest".
+        return quest_lista_para_boton("violet_questprincipal_0_b") and store.horario_actual == 1
 
     def _puerta_v_dar_paquete():
         return store.inventario.get("mangas_violet", 0) > 0
@@ -37,8 +37,8 @@ init python:
                 and store.inventario.get("mangas_violet_mc", 0) > 0)
 
     def _puerta_v_02b():
-        return (quest_lista_para_boton("violet_questprincipal_02_b")
-                and store.horario_actual == 2)
+        # De noche: lo dice la demanda de la quest (capa 2).
+        return quest_lista_para_boton("violet_questprincipal_02_b")
 
     def _puerta_v_04b():
         return quest_lista_para_boton("violet_questprincipal_04_b")
@@ -58,12 +58,8 @@ init python:
         # "¿Mejor?" — unico disparador de la quest de amor 5. Solo por la tarde
         # y con Violet en su habitacion: el MC la llama desde el pasillo y ella
         # sale, asi que si no esta adentro no hay a quien llamar.
-        if not quest_lista_para_boton("violet_amor_01"):
-            return False
-        if store.horario_actual != 1:
-            return False
-        _v = obtener_npc("violet")
-        return bool(_v and _v.esta_en_locacion("casa_hviolet"))
+        # La tarde y "Violet adentro" son la demanda de la quest (capa 2).
+        return quest_lista_para_boton("violet_amor_01")
 
     def _puerta_v_04d6_cierre():
         # Cierre del arco de los favores: avisarle que ya limpio todo. Va
@@ -88,12 +84,11 @@ init python:
         return quest_lista_para_boton("violet_questprincipal_05_c")
 
     def _puerta_v_06a():
-        return (quest_lista_para_boton("violet_questprincipal_06_a")
-                and store.horario_actual == 2)
+        # De noche: lo dice la demanda de la quest (capa 2).
+        return quest_lista_para_boton("violet_questprincipal_06_a")
 
     def _puerta_v_06b():
-        return (quest_lista_para_boton("violet_questprincipal_06_b")
-                and store.horario_actual == 2)
+        return quest_lista_para_boton("violet_questprincipal_06_b")
 
     def _puerta_v_07a():
         return quest_lista_para_boton("violet_questprincipal_07_a")
@@ -205,7 +200,8 @@ init 5 python:
 
     # Override: la 09_a reemplaza el flujo completo de la puerta.
     registrar_override_puerta("violet", _puerta_v_09a_override,
-                              "violet_quest09a_manejo_puerta")
+                              "violet_quest09a_manejo_puerta",
+                              quest_id="violet_questprincipal_09_a")
 
     # Bloqueo de golpe: sabado a la mañana esta dormida.
     registrar_bloqueo_golpe("violet", _puerta_v_sabado_dormida,

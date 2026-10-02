@@ -20,7 +20,8 @@ init python:
         return None
 
 init 5 python:
-    registrar_trigger_game_loop("jasmine_0b", _gl_trigger_jasmine_0b, prioridad=30, duenio="jasmine_0_b")
+    registrar_trigger_game_loop("jasmine_0b", _gl_trigger_jasmine_0b, prioridad=30, duenio="jasmine_0_b",
+                                quest_id="jasmine_questprincipal_0_b")
 
 
 label quest_jasmine_questprincipal_0_b:
@@ -45,7 +46,8 @@ label quest_jasmine_questprincipal_0_b:
         duenio="jasmine_0_b",
         locaciones_permitidas=["__ninguna__"],  # Locación ficticia bloquea todos los movimientos
         acciones_bloqueadas=["entrenar", "trabajar", "avanzar_tiempo", "dormir", "usar_item", "comprar",
-                            "relaciones", "pistas", "stats", "galeria", "hot", "banco", "configuracion", "cheats"],
+                            "relaciones", "pistas", "stats", "galeria", "xgra", "hot", "banco",
+                            "configuracion", "cheats"],
         mensaje_movimiento="Me llego un mensaje debo responderlo",
         mensaje_npc_bloqueado="Me llego un mensaje debo responderlo",
         mensaje_accion_default="Me llego un mensaje debo responderlo",

@@ -206,7 +206,7 @@ label quest_violet_questprincipal_02_b:
     menu:
         "No puedo creer lo mucho que creciste":
             jump violet_quest02b_opcion_deseo
-        "Todo esto me trajo recuerdos":
+        "Sigues siendo la misma de siempre":
             jump violet_quest02b_opcion_amor
 
 

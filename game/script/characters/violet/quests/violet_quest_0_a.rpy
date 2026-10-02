@@ -84,9 +84,10 @@ label quest_violet_questprincipal_0_a:
     # dispara el sistema talk especial (violet_q0a_talk_sistema) en vez del talk común.
     $ violet_q0a_esperando_talk = True
 
-    # intentar_ejecutar() dejó la quest en ETAPA_DESARROLLO. La devolvemos a
-    # ETAPA_BOTON_LISTO (estado de espera estable) para que reaparezca el botón
-    # de quest "Hablar" y se use la pista dinámica.
+    # La quest queda en ETAPA_BOTON_LISTO (estado de espera estable) para que
+    # reaparezca el botón de quest "Hablar" y se use la pista dinámica. (Antes
+    # un intentar_ejecutar() la movia a DESARROLLO; ya no existe — el punto de
+    # activacion no toca la etapa.)
     $ _q0a_reset = sistema_quests.obtener_quest("violet_questprincipal_0_a")
     if _q0a_reset:
         $ _q0a_reset.etapa_actual = ETAPA_BOTON_LISTO

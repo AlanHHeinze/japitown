@@ -476,9 +476,11 @@ init python:
                 if store.inventario[item_id] <= 0:
                     del store.inventario[item_id]
         
-        # Saltar al label de uso
+        # Saltar al label de uso. Si el item dispara una quest ("quest_id" en
+        # el catalogo), pasa por el punto de activacion (questsystem_core).
         label_uso = item_info.get("label_uso")
         if label_uso:
+            activar_quest(resolver_quest_id_opcion(label_uso, item_info.get("quest_id")), origen="item:" + item_id)
             renpy.jump(label_uso)
 
 

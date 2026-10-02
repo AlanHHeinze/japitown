@@ -225,6 +225,109 @@ restricción (las fases de amor 25, deseo 30, mc 0_b...) declaran el suyo.
 **Cómo se detecta.** `validar_bloqueos.py`, chequeo "triggers que pisan
 restricciones ajenas".
 
+### A12. Una demanda del planificador esconde el disparador: declarar solo lo que TODOS los disparadores cumplen
+
+**Qué pasó.** Al construir el planificador (2026-09-11) casi entra
+`Rec("puerta", "violet")` como consumo *de vida* de deseo 25 — el override de
+puerta es de su fase 1, no de toda la quest. Declarado así, `quest_lista_para_boton`
+escondía todas las opciones de puerta de Violet (01_b, 02_a, 03_a, 05_b…) los
+días que deseo 25 esperaba al jugador. Y una demanda `npc:violet en=casa_hviolet`
+en una quest con botón "en cualquier lado" + opción de puerta esconde el botón
+cada vez que Violet no está en su cuarto.
+
+**La regla.** La capa 2 evalúa las demandas adentro de `quest_lista_para_boton`,
+o sea en **todos** los disparadores de la quest. Un `Rec("npc", …, en=…)` va
+solo si todos coinciden con ese lugar y hora. Un consumo se declara *de vida*
+solo si dura toda la quest; lo que impone una restricción (reloj, locaciones,
+celular, acciones, override de puerta de una fase) no se declara — el
+planificador lo lee de la restricción activa. Y `duenio=` siempre que la quest
+tenga restricción: sin él se mide contra la suya.
+
+**Cómo se detecta.** `validar_bloqueos.py`, chequeo "planificador desalineado"
+(sin declaración, rutina sin consumo, consumo con `en` sin rutina) y la ruta
+`planificador` del harness. En consola: `planificador_estado()` muestra qué
+quest está "bloqueada (capa 2)" y por qué.
+
+---
+
+### A13. Una reserva del planificador no puede cerrarle la puerta a su propia secuencia
+
+**Qué pasó.** (0.1.9.1, reporte de jugador, 2026-09-15.) Sinceridad (deseo 30,
+`violet_deseo_06`) reserva a Violet esa noche (`Rec("npc", "violet", horario=2,
+reserva=True)`) y entra a su pieza **golpeando la puerta común** (ventaja
+`puerta_dejar_pasar_noche` del hito de deseo 20; no tiene opción ni override de
+puerta propios). `obtener_bloqueo_golpe` contestaba con el texto de cualquier
+reserva vigente, también la de la quest en curso. Resultado: reloj congelado
+por la reserva, restricción de la fase 1 cerrando todo lo demás
+(`npcs_interactuables=["violet"]`, sin dormir ni avanzar) y en la única puerta
+que quedaba, "Le dije a Violet que iba esta noche". Ninguna capa lo vio porque
+cada pieza hacía lo suyo: el bloqueo era la suma.
+
+**La regla.** Un efecto que impone una quest en curso (reserva, restricción,
+bloqueo) **nunca puede cerrar el camino que esa misma quest necesita**. Para la
+reserva: la de slot no bloquea el golpe (la secuencia puede entrar por ahí);
+solo la de vida lo hace, y las quests de vida traen su propio override de
+puerta (09_a). Al declarar `reserva=True` en una quest cuya secuencia pasa por
+una puerta, mirar cómo entra: si es por el flujo común, no puede haber nada
+que lo tape en ese slot.
+
+**Cómo se detecta.** Paso "reserva" de la ruta `planificador` del harness
+(`obtener_bloqueo_golpe` tiene que dar None con reserva de slot y texto con
+reserva de vida). En juego: los escenarios del controlador
+(`jp_escenario(...)`) y el panel en vivo, que muestra las reservas vigentes.
+
+---
+
+### A14. Dos quests que se sostienen el bloqueo mutuamente (deadlock)
+
+**Qué pasó.** (Auditoría 2026-09-15, potencial, no reportado.) La 0_b de Mónica
+pone su restricción al entrar a BOTON_LISTO (`accion_al_entrar`): bloquea
+dormir y avanzar hasta que el MC vaya al living, y ese disparador pasa por
+`quest_lista_para_boton` → capa 2. La 09_a de Violet arranca al dormir y
+reserva a Mónica **de vida**. Si la 0_b llega a BOTON_LISTO la misma mañana en
+que arranca la 09_a (Mónica 0_a completada el día anterior), la reserva escondía
+el disparador de la 0_b y la restricción de la 0_b bloqueaba el dormir que la
+09_a necesita para avanzar sus tres días. Ninguna de las dos podía terminar.
+
+**La regla.** Un bloqueo que una quest sostiene **hasta que pase X** exige que X
+no dependa de otra quest que a su vez espere ese bloqueo. En el motor: (1) la
+dueña de la restricción activa salta la capa de conflicto
+(`_pl_duenia_de_la_restriccion`): su salida no la esconde nadie; (2) toda quest
+con `Disp("dormir")` declara `Rec("accion", accion="dormir")`, así una
+restricción ajena que bloquea dormir la hace esperar en vez de arrancar encima.
+Al agregar una restricción desde `accion_al_entrar`, preguntarse qué otra quest
+puede nacer o activarse mientras dura, y qué le pasa a su salida.
+
+**Cómo se detecta.** Paso "reserva" de la ruta `planificador` del harness (0_b
+de Mónica con su restricción puesta no queda frenada por la reserva de vida; la
+09_a con esa restricción ajena sí espera).
+
+---
+
+### A15. Cerrar una locación es un bloqueo: la abre una flag, y esa flag la apaga alguien
+
+**Qué pasa.** (Capacidad nueva del 2026-09-22, preventivo: todavía no la usó
+ninguna quest.) El contenido puede cerrar **una** locación con
+`registrar_bloqueo_locacion(locacion_id, condicion, mensaje)` (lo consulta
+`accion_bloqueada_movimiento` antes de la restricción). Es la herramienta
+correcta para "el mundo abierto menos el sótano, porque Violet sigue con las
+amigas" — mucho mejor que una restricción con las otras 17 locaciones en la
+whitelist. Pero **no tiene un `desactivar_` que avise**: la salida es que la
+condición deje de ser verdadera, y si nadie apaga esa flag la locación queda
+cerrada para el resto de la partida. Es la versión por locación de A5.
+
+**La regla.** La condición de un bloqueo de locación se apaga **sí o sí** por un
+camino que el jugador va a recorrer igual: al completar la quest, al dormir, al
+cambiar el horario. Nunca por entrar a la locación bloqueada (eso es un soft
+lock puro), y nunca por una acción opcional. Y como cualquier bloqueo, el
+mensaje tiene que decir por qué no se puede, no solo que no se puede.
+
+**Cómo se detecta.** `tools/validar_bloqueos.py`, chequeo 9: lista las
+condiciones de `registrar_bloqueo_locacion` cuyas flags no se apagan en ningún
+lado. En el harness, el paso "bloqueo de locación registrado" de la ruta
+`restriccion` verifica que cierre solo la suya y que se suelte al apagar la
+condición.
+
 ---
 
 ## B. Estado que vive en el save
@@ -271,6 +374,47 @@ re-aplica solo cuando falta — ver `_gl_trigger_vq4d4_rutina`.
 **Por qué.** Mergea contenido nuevo hacia saves viejos por id. No pisa lo que ya
 existe. Un fix a un objeto que el save ya tiene no llega por acá — llega por
 B2.
+
+### B5. Borrar una función de módulo que quedó guardada impide ABRIR el save
+
+**Qué pasó.** (Sentry S12, jugador real, 0.1.9.1, 2026-09-15.) Un save guarda los
+callables por **referencia**: el pickle anota `store` + el nombre, no el código.
+`condicion_aparicion_evento01_violet` (el evento del casco VR) se borró en
+0.1.8.6, y al abrir un save que lo tenía, `getattr(store, nombre)` falló:
+`AttributeError` adentro de `renpy.load` → pantalla de error, sin poder cargar.
+
+**La regla.** Al **borrar o renombrar** una función de módulo que pueda haber
+quedado en un objeto guardado (condición de Event/Skin/EstadoTalk/GrupoMensajes,
+texto callable de ConfigEtapa, `ConfigFallo.condicion`), su nombre viejo va a
+`JP_NOMBRES_MUERTOS` (`core/utils/compat_nombres_muertos.rpy`), que lo declara
+como stub inerte. El control de generaciones **no** cubre esto: corre en
+`after_load`, o sea después del unpickle.
+
+**Cómo se detecta.** Comparar los `def` de la última versión publicada contra los
+de hoy (`git ls-tree -r --name-only <rev> game/script/` menos los actuales) y
+stubbear lo que desapareció. En juego: cargar un save de la versión publicada.
+
+---
+
+### B6. Borrar un `.rpy` deja una bomba en las instalaciones viejas
+
+**Qué pasó.** (Sentry S14, escritorio, 2026-09-17.) Un jugador descomprimió la
+0.1.9.1 encima de su carpeta de 0.1.8.x. `tl/english/script/ui/hud/hud_relaciones.rpy`,
+borrado en agosto, seguía en su disco; Ren'Py lo cargó, tradujo "Desbloqueos"
+dos veces y el juego no arrancó. Cualquier `.rpy` viejo suelto puede hacer
+esto, o peor: registrar labels, screens o quests que ya no existen.
+
+**La regla.** **Al borrar un `.rpy` del proyecto, su ruta (sin extensión) va a
+`JP_ARCHIVOS_VERSIONES_VIEJAS`** en `core/utils/limpieza_instalacion.rpy`. Esa
+lista es lo que el juego borra del disco al arrancar (`init -999`, escritorio,
+nunca en developer) antes de reiniciarse limpio. Renombrar un archivo es
+borrar uno: la ruta vieja también va.
+
+**Cómo se detecta.** `git log --diff-filter=D --name-only --format="" --
+"game/**/*.rpy" | sort -u` contra la lista: todo lo que salga ahí y no exista
+hoy tiene que estar listado.
+
+---
 
 ### B4. Callables en objetos guardados: solo funciones de módulo
 
@@ -333,6 +477,28 @@ seis chequeos existen porque cada uno fue un bug.
 `renpy.exports.say` hace `what % tag_quoting_dict` en toda línea. El lint no lo
 ve. Va `%%`.
 
+### D5. Texto con tags de Ren'Py no pasa por `.format()`
+
+**Qué pasó.** (Sentry S15, 2026-09-19.) El aviso de "Partida incompatible" se
+armaba con `renpy.translate_string("{size=+8}Partida incompatible{/size}…
+({version})").format(version=config.version)`. `str.format` lee `{size=+8}`
+como un campo → `KeyError: 'size=+8'`. El mensaje **nunca se pudo mostrar desde
+que existe**, en ningún idioma: el jugador veía la pantalla de error en vez del
+aviso.
+
+**La regla.** Un texto que lleva tags de Ren'Py (`{size=…}`, `{color=…}`,
+`{b}`, `{/i}`) **no se pasa por `.format()` ni por `%`**. Para interpolar, va
+`.replace("{placeholder}", valor)`, que no le pide nada al texto. Escapar las
+llaves (`{{size=+8}}`) funciona pero obliga a que el `old` de la traducción
+lleve el escape, y se rompe al primer retoque.
+
+**Cómo se detecta.** `tools/validar_traducciones.py`, chequeo "format() sobre
+tags de Ren'Py": parsea cada `translate_string(...).format(...)` **en los dos
+idiomas** — una traducción puede traer un tag que el original no tenía, y ahí
+el crash sale solo en inglés.
+
+---
+
 ### D3. Un bloque de traducción vacío deja el cuadro de diálogo EN BLANCO
 
 Peor que verlo en español. Al regenerar desde Ren'Py los bloques nuevos salen
@@ -361,6 +527,26 @@ Ponerlo a propósito, no por accidente.
 `show violet_parada ot_verguenza` con un atributo que no existe pasa el lint y
 revienta en runtime. `python tools/validar_sprites.py` después de tocar sprites.
 
+### E4. `Animation()` / `anim.TransitionAnimation` no se usan: animaciones por frames en ATL
+
+**Qué pasó.** (Sentry S13, web, 2026-09-17.) Las capas de agua de la ducha de la
+08_a estaban hechas con `Animation(...)`, la API legacy de Ren'Py, que por
+debajo arma un `TransitionAnimation`. Su `render()` recorre los frames y, si el
+tiempo que le llega no cae en ninguno (un reloj NaN/inf del navegador), **se cae
+del bucle y devuelve None**: "`TransitionAnimation.render() must return a
+Render`", pantalla de error en medio de la escena.
+
+**La regla.** Toda animación por frames se escribe en **ATL** (`image x:
+"f1" pause 0.05 "f2" ... repeat`, con `alpha`/`xoffset` como propiedades y `with
+Dissolve(...)` si hace falta fundido entre frames). ATL siempre dibuja el frame
+actual, pase lo que pase con el reloj. `Animation()` y `TransitionAnimation`
+quedan prohibidos.
+
+**Cómo se detecta.** `grep -rn "Animation(" game/script` tiene que dar cero
+fuera de comentarios.
+
+---
+
 ### E3. Dos poses con la cabeza en otro lugar necesitan dos grupos de boca
 
 `violet_tanga` tiene `boca` (para los cuerpos de la deseo 10) y `boca_qd30`
@@ -382,6 +568,30 @@ Antes corrían una vez por acción. Un trigger escrito asumiendo "una vez por
 acción del jugador" ahora puede dispararse a mitad de viaje — que es lo que se
 busca, pero hay que saberlo al escribir uno.
 
+### F4. Un bucle largo de script dispara el watchdog de Ren'Py: va en Python
+
+**Qué pasó.** (Sentry S11, variante precarga: 0.1.8f y otra vez 0.1.9.1, un
+jugador nuevo en su primera carga.) El bucle de precarga del splash era un
+`while` de Ren'Py con `pause 0.01` adentro, ~15.000 statements. El watchdog
+(`check_infinite_loop`) revienta cada 1000 statements si pasaron >50 s desde el
+último frame. Con la pestaña congelada por el navegador, la `pause` en curso
+volvía con el plazo vencido y los tres statements hasta la siguiente `pause`
+corrían sin refresco: si el contador cruzaba el 1000 ahí, pantalla roja.
+`renpy.not_infinite_loop(30)` por lote no lo cubría: cada `pause` vuelve a fijar
+el plazo en 50 s (asignación, no máximo).
+
+**La regla.** Un bucle de cientos de vueltas **no se escribe en statements de
+Ren'Py**: va en un solo bloque `python:` con `renpy.pause(...)` adentro. Un
+bloque Python es UN statement para el watchdog, dé las vueltas que dé.
+`not_infinite_loop` queda para bucles cortos que no pueden moverse a Python.
+
+**Cómo se detecta.** En Sentry, el fingerprint de "Possible infinite loop" lleva
+ahora el archivo del juego: un issue nuevo con ese mensaje dice dónde está el
+bucle. En código: un `while` de Ren'Py con `pause` adentro es sospechoso por
+definición.
+
+---
+
 ### F3. `registrar_label_locacion` no es un disparador de quest
 
 Ya está en `japitown-content` (§4). Se repite porque fue bug de jugadores: el
@@ -399,11 +609,14 @@ no ve. Correr los tres antes de commitear contenido.
 ```
 python tools/validar_traducciones.py   # old rotos, new vacíos, %, sin traducir
 python tools/validar_sprites.py        # atributos de layeredimage
-python tools/validar_bloqueos.py       # reloj, runtime, puerta, triggers, dueño
+python tools/validar_bloqueos.py       # reloj, runtime, puerta, triggers, dueño, rutina, planificador, prestados
 ```
 
-Más el harness in-game (`jp_test_correr("mensajes")`, `"registros"`,
-`"guardado"`) para lo que solo se puede probar con el motor corriendo.
+Más el harness in-game (`jp_test_correr("mensajes")`, `"registros"`, `"planificador"`,
+`"guardado"`) para lo que solo se puede probar con el motor corriendo, y el panel
+del controlador en vivo (`jp_panel_controlador()`,
+`tools/controlador/panel_controlador.rpy`) para VER por qué una quest está
+bloqueada, reservada o esperando.
 
 ## Cómo se agrega una entrada
 

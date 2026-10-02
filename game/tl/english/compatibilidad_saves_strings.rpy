@@ -11,9 +11,15 @@
 translate english strings:
 
     # Aviso al intentar cargar una partida de otra generacion de guardado
-    old "{size=+8}Partida incompatible{/size}\n\nEsta partida fue creada con una versión anterior de Japitown y no se puede continuar en la versión actual ({version}).\n\nTus partidas anteriores siguen en el disco: si querés retomarlas, podés volver a instalar la versión con la que las creaste."
+    old "{size=+8}Partida incompatible{/size}\n\nEsta partida fue creada con una versión anterior de Japitown y no se puede continuar en la versión actual ({version}).\n\nTus partidas anteriores siguen en el disco: si quieres retomarlas, puedes volver a instalar la versión con la que las creaste."
     new "{size=+8}Incompatible save{/size}\n\nThis save was created with an earlier version of Japitown and can't be continued on the current version ({version}).\n\nYour older saves are still on disk: if you want to go back to them, you can reinstall the version they were made with."
 
     # Marca del slot en las pantallas de Guardar y Cargar
     old "v[_jp_slot_ver] · incompatible"
     new "v[_jp_slot_ver] · incompatible"
+
+    # Fallback del `default` de _jp_aviso (compatibilidad_saves.rpy): solo se ve
+    # si el bloque que arma el aviso completo llegara a fallar.
+    old "Partida incompatible: fue creada con una versión anterior de Japitown."
+    new "Incompatible save: it was created with an earlier version of Japitown."
+

@@ -70,6 +70,13 @@ init python:
         except Exception:
             pass
 
+        # Tinte de personajes por horario: se reaplica a la capa por si el
+        # save no lo trae (core/utils/tinte_horario.rpy).
+        try:
+            aplicar_tinte_personajes()
+        except Exception:
+            pass
+
         # Sincronizar variables default con objetos NPC
         try:
             store.sincronizar_relaciones_npcs()
@@ -574,11 +581,16 @@ label intro_llegada_casa:
 
     show monica_parada b_hablandochica
     monica "A la noche vamos a salir a cenar a algún restaurante"
+    # Le habla a Jasmine por su nombre: Jasmine la mira.
+    show jasmine_parada at grupo3_centro_flip
     show monica_parada b_hablando
     monica "Pero ahora encárgate tranquilo de tus cosas, Jasmine, dejemos que [mc_name] se acomode. Cualquier cosa me avisas"
     show monica_parada b_none
 
     hide monica_parada with dissolve
+
+    # Se fue Monica: Jasmine vuelve a mirar al MC.
+    show jasmine_parada at grupo3_centro
 
     show jasmine_parada b_sorprendida
     jasmine "Voy a estar en mi habitación por si me necesitas"

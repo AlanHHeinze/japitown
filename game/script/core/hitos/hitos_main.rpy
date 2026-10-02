@@ -215,6 +215,18 @@ init python:
                 rv.update(_h.ventajas)
         return rv
 
+    def hito_que_otorga(npc_id, ventaja_id):
+        """
+        El hito YA ALCANZADO con ese NPC que otorga esa ventaja, o None. Si
+        varios la dan, el de menor umbral: es el que la desbloqueo primero.
+        Lo usa la UI para decir de donde viene una ventaja.
+        """
+        _alcanzados = store.hitos_alcanzados.get(npc_id, [])
+        for _h in obtener_hitos_npc(npc_id):
+            if _h.id in _alcanzados and ventaja_id in _h.ventajas:
+                return _h
+        return None
+
     def npc_tiene_ventaja(npc_id, ventaja_id):
         """
         LA API que consultan los sistemas. True si algun hito ya alcanzado con

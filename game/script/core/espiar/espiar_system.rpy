@@ -81,66 +81,115 @@ layeredimage ducha_mg_lluvia_frente:
         attribute f3:
             "images/minijuegos/ducha/ducha_lluvia_frente_3.webp"
 
-# Animación de lluvia: 75% de transparencia en las tres capas. Cada una va a
-# un x distinto y arranca en un frame distinto para que no caigan en bloque.
-image ducha_mg_lluvia_fondo_animado = Transform(
-    Animation(
-        "images/minijuegos/ducha/ducha_lluvia_fondo_1.webp", 0.16,
-        "images/minijuegos/ducha/ducha_lluvia_fondo_2.webp", 0.16,
-        "images/minijuegos/ducha/ducha_lluvia_fondo_3.webp", 0.16,
-        loop=True
-    ),
-    alpha=0.75, xoffset=-50
-)
+# Animacion de lluvia: 75% de opacidad en las tres capas. Cada una va a un x
+# distinto y arranca en un frame distinto para que no caigan en bloque.
+# EN ATL y no con Animation(): ver la nota de las capas de agua en
+# core/events/generics.rpy (render() que devuelve None, Sentry S13).
+image ducha_mg_lluvia_fondo_animado:
+    alpha 0.75
+    xoffset -50
+    "images/minijuegos/ducha/ducha_lluvia_fondo_1.webp"
+    pause 0.16
+    "images/minijuegos/ducha/ducha_lluvia_fondo_2.webp"
+    pause 0.16
+    "images/minijuegos/ducha/ducha_lluvia_fondo_3.webp"
+    pause 0.16
+    repeat
 
 # Columna mas lejana: copia de la de fondo, 50px a la derecha de esta (o sea
 # centrada en 0) y arrancando en el frame 3 para no caer sincronizada con ella.
-image ducha_mg_lluvia_fondo_animado_alt = Transform(
-    Animation(
-        "images/minijuegos/ducha/ducha_lluvia_fondo_3.webp", 0.16,
-        "images/minijuegos/ducha/ducha_lluvia_fondo_1.webp", 0.16,
-        "images/minijuegos/ducha/ducha_lluvia_fondo_2.webp", 0.16,
-        loop=True
-    ),
-    alpha=0.75, xoffset=0
-)
+image ducha_mg_lluvia_fondo_animado_alt:
+    alpha 0.75
+    xoffset 0
+    "images/minijuegos/ducha/ducha_lluvia_fondo_3.webp"
+    pause 0.16
+    "images/minijuegos/ducha/ducha_lluvia_fondo_1.webp"
+    pause 0.16
+    "images/minijuegos/ducha/ducha_lluvia_fondo_2.webp"
+    pause 0.16
+    repeat
 
-# Lluvia frente comienza en imagen 2 (desincronizada)
-image ducha_mg_lluvia_frente_animado = Transform(
-    Animation(
-        "images/minijuegos/ducha/ducha_lluvia_frente_2.webp", 0.11,
-        "images/minijuegos/ducha/ducha_lluvia_frente_3.webp", 0.11,
-        "images/minijuegos/ducha/ducha_lluvia_frente_1.webp", 0.11,
-        loop=True
-    ),
-    alpha=0.75
-)
+# Lluvia frente comienza en imagen 2 (desincronizada).
+image ducha_mg_lluvia_frente_animado:
+    alpha 0.75
+    "images/minijuegos/ducha/ducha_lluvia_frente_2.webp"
+    pause 0.11
+    "images/minijuegos/ducha/ducha_lluvia_frente_3.webp"
+    pause 0.11
+    "images/minijuegos/ducha/ducha_lluvia_frente_1.webp"
+    pause 0.11
+    repeat
 
-# Violet en la ducha: el orden de frames NO es lineal (se eligió a mano) y la
-# vuelta es en espejo. Cada cambio pasa por un dissolve, asi que se arma con
-# anim.TransitionAnimation — Animation() solo hace cortes secos.
+
+# Violet en la ducha: el orden de frames NO es lineal (se eligio a mano) y la
+# vuelta es en espejo, salteando los dos extremos: el pivote (4) y el frame
+# inicial (5) quedarian el doble de tiempo en pantalla si se repitieran.
+# Cada cambio pasa por un dissolve de 0.5 s (el de sprite_normal), que corre
+# DENTRO del segundo de cada frame, no se le suma.
 #
-# Va en `init 5` y no como `image` suelto porque usa sprite_normal, que define
-# options.rpy en init 0: este archivo se carga antes (script/core/ < script/ui/),
-# asi que a init 0 esa variable todavia no existe.
-init 5 python:
-
-    # Ida, y vuelta en espejo salteando los dos extremos: el pivote (4) y el
-    # frame inicial (5) quedarian el doble de tiempo en pantalla si se repitieran.
-    _ESP_VIOLET_IDA = [5, 8, 12, 9, 2, 14, 3, 1, 7, 10, 11, 13, 15, 4]
-    _ESP_VIOLET_CICLO = _ESP_VIOLET_IDA + _ESP_VIOLET_IDA[::-1][1:-1]
-
-    # TransitionAnimation toma (imagen, tiempo, transicion) repetido. La
-    # transicion que sigue a cada imagen es la que lleva A LA SIGUIENTE, y la
-    # ultima cierra el loop volviendo al primer frame — por eso van todas.
-    # El dissolve corre DENTRO del segundo de cada frame, no se le suma.
-    _esp_violet_args = []
-    for _esp_frame in _ESP_VIOLET_CICLO:
-        _esp_violet_args.append("images/minijuegos/ducha/ducha_violet_jabon_%d.webp" % _esp_frame)
-        _esp_violet_args.append(1.0)
-        _esp_violet_args.append(sprite_normal)
-
-    renpy.image("ducha_mg_violet_animado", anim.TransitionAnimation(*_esp_violet_args))
+# EN ATL y no con anim.TransitionAnimation: ver la nota de las capas de agua
+# en core/events/generics.rpy (render() que devuelve None, Sentry S13).
+# El primer frame entra seco una sola vez; el `block: ... repeat` de adentro
+# es el ciclo entero, con el dissolve de vuelta al primer frame incluido.
+#
+# Ciclo: 5 8 12 9 2 14 3 1 7 10 11 13 15 4 15 13 11 10 7 1 3 14 2 9 12 8
+image ducha_mg_violet_animado:
+    "images/minijuegos/ducha/ducha_violet_jabon_5.webp"
+    pause 1.0
+    block:
+        "images/minijuegos/ducha/ducha_violet_jabon_8.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_12.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_9.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_2.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_14.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_3.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_1.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_7.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_10.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_11.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_13.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_15.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_4.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_15.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_13.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_11.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_10.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_7.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_1.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_3.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_14.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_2.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_9.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_12.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_8.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        "images/minijuegos/ducha/ducha_violet_jabon_5.webp" with Dissolve(0.5, alpha=True)
+        pause 1.0
+        repeat
 
 # Layeredimage para compatibilidad con atributos (j1-j15)
 layeredimage ducha_mg_violet:

@@ -75,13 +75,33 @@ init 6 python:
         ],
     ))
 
-    # Marcador de que la linea sigue. NUNCA se otorga (proximamente=True), asi
-    # que el panel lo muestra siempre en gris. Sin ventajas y sin quest_id.
     registrar_hito(Hito(
         id="violet_hito_amor_04",
         npc_id="violet",
         stat="amor",
         umbral=40,
+        quest_id="violet_amor_08",          # la quest de umbral 40
+        nombre="A su tiempo",
+        descripcion="Quedó dicho en qué punto estamos y a qué ritmo vamos.",
+        icono="❤️",
+        ventajas=[
+            # LA UNICA QUE FUNCIONA HOY sin contenido nuevo: las ventajas de
+            # acceso son CONSULTABLES (door_relation_system las pregunta al
+            # golpear o al entrar). Las otras candidatas del plan —Hablar en
+            # serio, Su ritmo, Salidas, XGram— se PRESENTAN en el dialogo del
+            # cierre y NO se registran: una ventaja en el panel sin ninguna
+            # escena detras le promete al jugador algo que no existe.
+            "puerta_ingreso_diurno",        # entrar a su habitacion de dia
+        ],
+    ))
+
+    # Marcador de que la linea sigue. NUNCA se otorga (proximamente=True), asi
+    # que el panel lo muestra siempre en gris. Sin ventajas y sin quest_id.
+    registrar_hito(Hito(
+        id="violet_hito_amor_05",
+        npc_id="violet",
+        stat="amor",
+        umbral=50,
         nombre="Próximamente",
         descripcion="Nuevo contenido en futuras actualizaciones.",
         icono="❤️",
@@ -129,7 +149,8 @@ init 6 python:
         npc_id="violet",
         stat="deseo",
         umbral=30,
-        quest_id="violet_deseo_06",         # la quest de umbral 30
+        quest_id="violet_deseo_07",         # la SEGUNDA de umbral 30: el hito
+                                            # se gana en la visita, no en la charla
         nombre="Sinceridad",
         descripcion="La relación cambió de forma definitiva.",
         icono="💋",

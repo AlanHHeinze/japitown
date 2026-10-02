@@ -6,12 +6,6 @@ translate english violet_quest09a_piensa_avisarle_30bf3a4c:
     # piensa "Debería avisarle a Violet."
     piensa "I should let Violet know."
 
-# game/script/characters/violet/quests/violet_quest_09_a.rpy:38
-translate english violet_quest09a_manejo_puerta_79abd95e:
-
-    # piensa "Violet no está... debe estar en su habitación."
-    piensa "Violet's not here... she must be in her room."
-
 # game/script/characters/violet/quests/violet_quest_09_a.rpy:49
 translate english violet_quest09a_manejo_puerta_d183be2d:
 

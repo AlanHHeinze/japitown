@@ -29,7 +29,7 @@ define gui.show_name = True
 ## ⚠️ Al cambiarla hay que agregarle su fila a JP_HISTORIAL_SAVES
 ## (core/utils/compatibilidad_saves.rpy), diciendo si rompe o no los saves de la
 ## version anterior. Si falta, el juego no arranca en desarrollo y te avisa.
-define config.version = "0.1.9a"
+define config.version = "0.1.9.1"
 
 
 ## Text that is placed on the game's about screen. Place the text between the
@@ -277,6 +277,21 @@ init python:
     ## NOTA: script/tools/ NO se puede excluir — el HUD referencia nombres
     ## definidos ahí (sistema_pos, modo_posicionamiento, sistema_ajuste_cel).
     build.classify('game/images/test/**', None)      # sprites de prueba
+
+    ## Carpetas de DESARROLLO en la raiz del proyecto. Sin estas reglas viajan
+    ## en el zip: la ultima regla por defecto de Ren'Py es ("**", "all")
+    ## (renpy/common/00build.rpy), y su exclusion de "*.py" solo mira la raiz,
+    ## no las subcarpetas.
+    ##
+    ## Fue la causa probable de una alerta de antivirus que reporto un jugador
+    ## (Trojan:Script/Wacatac.C!ml, Windows Defender, 2026-09-29): `web/` tiene
+    ## un script de Python que abre archivos, les inyecta JavaScript y reescribe
+    ## zips — el perfil exacto que un clasificador de scripts lee como troyano.
+    ## `docs/` ademas llevaba notas internas y spoilers de la narrativa.
+    build.classify('docs/**', None)       # documentacion interna
+    build.classify('tools/**', None)      # validadores y scripts de mantenimiento
+    build.classify('web/**', None)        # parche del index.html del SDK
+    build.classify('proxy-reportes/**', None)  # Cloudflare Worker de los reportes
 
     ## Archivar imágenes en .rpa. En el build web reduce cientos de requests
     ## HTTP sueltos (uno por imagen, on-demand) a unos pocos → muchos menos

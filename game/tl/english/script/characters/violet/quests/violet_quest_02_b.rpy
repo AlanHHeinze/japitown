@@ -384,10 +384,6 @@ translate english strings:
     old "No puedo creer lo mucho que creciste"
     new "I can't believe how much you've grown"
 
-    # game/script/characters/violet/quests/violet_quest_02_b.rpy:209
-    old "Todo esto me trajo recuerdo"
-    new "All of this brought back memories"
-
 # TODO: Translation updated at 2026-09-03 16:15
 
 # game/script/characters/violet/quests/violet_quest_02_b.rpy:38
@@ -573,6 +569,6 @@ translate english violet_quest02b_opcion_amor_519b62b0:
 translate english strings:
 
     # game/script/characters/violet/quests/violet_quest_02_b.rpy:209
-    old "Todo esto me trajo recuerdos"
-    new "All of this brought back memories"
+    old "Sigues siendo la misma de siempre"
+    new "You're still the same as always"
 

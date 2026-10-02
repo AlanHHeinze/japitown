@@ -81,7 +81,7 @@ label mc_q0b_trigger:
             "avanzar_tiempo", "dormir", "entrenar",
             "trabajar", "comprar", "ver_tv", "usar_item",
             "relaciones", "stats", "mensajes", "galeria",
-            "hot", "banco", "configuracion", "cheats",
+            "xgra", "hot", "banco", "configuracion", "cheats",
         ],
         mensaje_movimiento="Primero vamos a revisar el celular y revisar la app de pistas.",
         mensaje_accion_default="Primero vamos a revisar el celular y revisar la app de pistas.",

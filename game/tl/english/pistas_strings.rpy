@@ -1,4 +1,4 @@
-# Textos del panel de PISTAS y QUÉ HACER que faltaban o quedaron rotos.
+﻿# Textos del panel de PISTAS y QUÉ HACER que faltaban o quedaron rotos.
 #
 # La mayoría se rompió porque se CAMBIÓ el texto en el código y el `old` viejo
 # quedó apuntando a una frase que ya no existe: Ren'Py no avisa, simplemente
@@ -147,7 +147,7 @@ translate english strings:
     old "Responder a Violet"
     new "Reply to Violet"
 
-    old "Responder mensaje Violet"
+    old "Responder el mensaje de Violet"
     new "Reply to Violet's message"
 
     old "Violet se lo probó, debería ir a hablar con ella"

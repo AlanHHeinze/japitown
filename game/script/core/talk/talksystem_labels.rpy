@@ -50,7 +50,9 @@ label talk_iniciar:
     show mc_parado_base c_rbase_base o_base b_none at mc_izquierda
 
     $ _t_sprite = obtener_sprite_menu_npc(_npc_id_temp)
-    show expression _t_sprite as talk_npc_sprite at right
+    # onlayer a mano: `show expression` no pasa por config.tag_layer y el
+    # sprite tiene que ir a la capa de personajes para llevar el tinte.
+    show expression _t_sprite as talk_npc_sprite onlayer personajes at right
 
     window show
 
@@ -70,6 +72,7 @@ label talk_iniciar:
         # El cheat de dev y la Poción de Conquista muestran lo mismo, con tag distinto
         _t_cheat_tag = u"(Cheat)" if _t_cheat_dev else renpy.translate_string(u"(Poción)")
         for opcion_id in OPCIONES_BASE_IDS:
+            _t_info_v = None
             texto = renpy.translate_string(OPCIONES_BASE_TEXTO[opcion_id])
             if _t_cheat and _t_estado:
                 _t_res_id = _t_estado.obtener_resultado(opcion_id)
@@ -80,12 +83,30 @@ label talk_iniciar:
                 if recordado:
                     resultado_texto = renpy.translate_string(RESULTADO_TEXTO[recordado])
                     caption = u"{} {{color=#A5D6A7}}{}{{/color}}".format(texto, resultado_texto)
+                    if sistema_talk.recuerdo_por_ventaja(_npc_id_temp, _t_estado.id, opcion_id):
+                        _t_info_v = talk_info_ventaja(_npc_id_temp, "talk_memoria_total")
                 elif opcion_id == _t_preview_opcion:
                     resultado_texto = renpy.translate_string(RESULTADO_TEXTO[_t_preview_resultado])
-                    caption = u"{} {{color=#FFF176}}{}?{{/color}}".format(texto, resultado_texto)
+                    # Solo el resultado, sin signos: lo que lo distingue de un
+                    # recuerdo es el color (amarillo adelanto, verde recuerdo).
+                    caption = u"{} {{color=#FFF176}}{}{{/color}}".format(texto, resultado_texto)
+                    # El preview lo puede dar el carisma o la ventaja: se
+                    # etiqueta solo si la tiene. Con las dos, la etiqueta igual
+                    # ayuda a entender de donde sale.
+                    if npc_tiene_ventaja(_npc_id_temp, "talk_preview_resultado"):
+                        _t_info_v = talk_info_ventaja(_npc_id_temp, "talk_preview_resultado")
                 else:
                     caption = texto
-            _t_items.append((caption, opcion_id))
+            # Una opcion que se ve gracias a una ventaja lleva el texto del
+            # popup como argumento de la screen `choice` (renpy.Choice →
+            # i.kwargs), que le agrega al costado el boton "?". El texto de la
+            # opcion no cambia: solo el resultado. Lo que devuelve el menu
+            # tampoco.
+            if _t_info_v:
+                _t_items.append((caption, renpy.Choice(
+                    opcion_id, ventaja_popup=_t_info_v[1])))
+            else:
+                _t_items.append((caption, opcion_id))
 
         for oesp in _t_especiales:
             _t_items.append((renpy.translate_string(oesp.texto), ("especial", oesp)))

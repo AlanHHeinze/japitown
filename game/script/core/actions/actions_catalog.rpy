@@ -35,9 +35,10 @@ init 5 python:
     ))
 
     def _vq9a_accion_activa():
-        q = store.sistema_quests.obtener_quest("violet_questprincipal_09_a")
-        return (q is not None and q.activa and not q.completada and
-                q.etapa_actual == ETAPA_BOTON_LISTO and
+        # _vq9b_quest_viva y no quest_lista_para_boton: el desenlace (09_b)
+        # deja a Violet no disponible y las acciones de cuidarla tienen que
+        # seguir existiendo igual. Ver violet_quest_09_b.rpy.
+        return (_vq9b_quest_viva() and
                 getattr(store, 'violet_9a_pedido_actual', None) is not None and
                 not getattr(store, 'violet_9a_entrega_completada', False))
 
@@ -58,6 +59,7 @@ init 5 python:
 
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vq9a_heladera",
+        quest_id="violet_questprincipal_09_a",
         nombre="Heladera",
         icono=u"🧊",
         locacion_id="casa_cocina",
@@ -68,6 +70,7 @@ init 5 python:
 
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vq9a_agua",
+        quest_id="violet_questprincipal_09_a",
         nombre="Agua",
         icono=u"💧",
         locacion_id="casa_cocina",
@@ -78,6 +81,7 @@ init 5 python:
 
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vq9a_medicina",
+        quest_id="violet_questprincipal_09_a",
         nombre="Medicina",
         icono=u"💊",
         locacion_id="casa_banioabajo",
@@ -88,6 +92,7 @@ init 5 python:
 
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vq9a_toalla",
+        quest_id="violet_questprincipal_09_a",
         nombre="Toalla",
         icono=u"🛁",
         locacion_id="casa_banioarriba",
@@ -196,6 +201,7 @@ init 5 python:
     sistema_acciones.registrar_listener(ListenerAccion(
         accion_id="cocinar",
         label="quest_violet_0_cierre",
+        quest_id="violet_questprincipal_0_b",
         nombre_menu="Preparar las pizzas",
         prioridad="quest",
         condicion=_vq0b_cocinar_visible,
@@ -209,6 +215,7 @@ init 5 python:
     sistema_acciones.registrar_listener(ListenerAccion(
         accion_id="cocinar",
         label="violet_q4d4_cocinar",
+        quest_id="violet_questprincipal_04_d4",
         nombre_menu="Preparar las pizzas",
         prioridad="quest",
         condicion=_vq4d4_cocinar_visible,
@@ -217,6 +224,7 @@ init 5 python:
 
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vq4d5_limpiar_living",
+        quest_id="violet_questprincipal_04_d5",
         nombre="Limpiar",
         icono=u"🧹",
         locacion_id="casa_living",
@@ -227,6 +235,7 @@ init 5 python:
 
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vq4d5_limpiar_comedor",
+        quest_id="violet_questprincipal_04_d5",
         nombre="Limpiar",
         icono=u"🧹",
         locacion_id="casa_comedor",
@@ -237,6 +246,7 @@ init 5 python:
 
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vq4d5_limpiar_cocina",
+        quest_id="violet_questprincipal_04_d5",
         nombre="Limpiar",
         icono=u"🧹",
         locacion_id="casa_cocina",
@@ -256,6 +266,7 @@ init 5 python:
     sistema_acciones.registrar_listener(ListenerAccion(
         accion_id="cocinar",
         label="violet_amor_25_pasar_cocina",
+        quest_id="violet_amor_05",
         nombre_menu="Comer algo",
         prioridad="quest",
         condicion=_va25_listener_pasatiempo,
@@ -264,6 +275,7 @@ init 5 python:
     sistema_acciones.registrar_listener(ListenerAccion(
         accion_id="ver_tv",
         label="violet_amor_25_pasar_tv",
+        quest_id="violet_amor_05",
         nombre_menu="Ver algo",
         prioridad="quest",
         condicion=_va25_listener_pasatiempo,
@@ -272,6 +284,7 @@ init 5 python:
     sistema_acciones.registrar_listener(ListenerAccion(
         accion_id="cocinar",
         label="violet_amor_25_cocinar",
+        quest_id="violet_amor_05",
         nombre_menu="Hacer la cena",
         prioridad="quest",
         condicion=_va25_listener_cena,
@@ -283,6 +296,7 @@ init 5 python:
     # panel. Las condiciones viven en violet_amor_20.rpy y leen va20_fase.
     sistema_acciones.registrar_accion(AccionLocacion(
         id="va20_comprar_juego",
+        quest_id="violet_amor_04",
         nombre="Comprar juego",          # lo pisa nombre_dinamico (lleva el precio)
         nombre_dinamico=_va20_nombre_comprar,
         icono=u"🎮",
@@ -298,6 +312,7 @@ init 5 python:
     # molestan porque usarla con exito la completa.
     sistema_acciones.registrar_accion(AccionLocacion(
         id="va20_jugar",
+        quest_id="violet_amor_04",
         nombre="Jugar",
         icono=u"🎮",
         locacion_id="casa_hmc",
@@ -313,6 +328,7 @@ init 5 python:
     # esta lista (la condicion vive en violet_deseo_15.rpy).
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vd15_ver_tv_sotano",
+        quest_id="violet_deseo_03",
         nombre="Ver TV",
         icono=u"📺",
         locacion_id="casa_sotano",
@@ -339,6 +355,7 @@ init 5 python:
     sistema_acciones.registrar_listener(ListenerAccion(
         accion_id="vd15_ver_tv_sotano",
         label="violet_deseo_25_sotano",
+        quest_id="violet_deseo_05",
         nombre_menu="Ver TV",
         prioridad="quest",
         condicion=_vd25_listener_sotano,
@@ -428,42 +445,49 @@ init 5 python:
 
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vq3a_peluches", nombre="Peluches", icono=u"🧸",
+        quest_id="violet_questprincipal_03_a",
         locacion_id="casa_hviolet", label_generico="vq3a_accion_peluches",
         reseteo=None, color="#8E24AA", color_hover="#AB47BC",
         condicion=_vq3a_peluches_visible,
     ))
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vq3a_pc", nombre="PC", icono=u"💻",
+        quest_id="violet_questprincipal_03_a",
         locacion_id="casa_hviolet", label_generico="vq3a_accion_pc",
         reseteo=None, color="#1565C0", color_hover="#1E88E5",
         condicion=_vq3a_pc_visible,
     ))
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vq3a_manga", nombre="Manga", icono=u"📚",
+        quest_id="violet_questprincipal_03_a",
         locacion_id="casa_hviolet", label_generico="vq3a_accion_manga",
         reseteo=None, color="#C62828", color_hover="#EF5350",
         condicion=_vq3a_manga_visible,
     ))
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vq3a_muñecos", nombre="Muñecos", icono=u"🎎",
+        quest_id="violet_questprincipal_03_a",
         locacion_id="casa_hviolet", label_generico="vq3a_accion_muñecos",
         reseteo=None, color="#00695C", color_hover="#00897B",
         condicion=_vq3a_muñecos_visible,
     ))
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vq3a_mochila", nombre="Mochila", icono=u"🎒",
+        quest_id="violet_questprincipal_03_a",
         locacion_id="casa_hviolet", label_generico="vq3a_accion_mochila",
         reseteo=None, color="#E65100", color_hover="#FB8C00",
         condicion=_vq3a_mochila_visible,
     ))
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vq3a_ropero", nombre="Ropero", icono=u"🚪",
+        quest_id="violet_questprincipal_03_a",
         locacion_id="casa_hviolet", label_generico="vq3a_accion_ropero",
         reseteo=None, color="#4527A0", color_hover="#7E57C2",
         condicion=_vq3a_ropero_visible,
     ))
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vq3a_cajonera", nombre="Cajonera", icono=u"🗂️",
+        quest_id="violet_questprincipal_03_a",
         locacion_id="casa_hviolet", label_generico="vq3a_accion_cajonera",
         reseteo=None, color="#2E7D32", color_hover="#43A047",
         condicion=_vq3a_cajonera_visible,
@@ -477,14 +501,33 @@ init 5 python:
     def _vq8a_cajonera_visible():
         return getattr(store, 'vq8a_acciones_activas', False) and not store.vq8a_cajonera_vista
 
+    def _vq8a_ver_tv_listener():
+        """Ver TV con la 08_a lista dispara la escena de la tormenta."""
+        return quest_lista_para_boton("violet_questprincipal_08_a")
+
+    # Intercepta el "Ver TV" generico mientras la quest esta lista. unico=False
+    # por la misma razon que la pizza 04_d4: la mutacion de la lista no
+    # sobrevive al save; lo apaga la condicion.
+    sistema_acciones.registrar_listener(ListenerAccion(
+        accion_id="ver_tv",
+        label="violet_quest08a_ver_tv",
+        quest_id="violet_questprincipal_08_a",
+        nombre_menu="Ver TV",
+        prioridad="quest",
+        condicion=_vq8a_ver_tv_listener,
+        unico=False,
+    ))
+
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vq8a_ropero", nombre="Ropero", icono=u"🚪",
+        quest_id="violet_questprincipal_08_a",
         locacion_id="casa_hviolet", label_generico="violet_quest08a_accion_ropero",
         reseteo=None, color="#4527A0", color_hover="#7E57C2",
         condicion=_vq8a_ropero_visible,
     ))
     sistema_acciones.registrar_accion(AccionLocacion(
         id="vq8a_cajonera", nombre="Cajonera", icono=u"🗂️",
+        quest_id="violet_questprincipal_08_a",
         locacion_id="casa_hviolet", label_generico="violet_quest08a_accion_cajonera",
         reseteo=None, color="#2E7D32", color_hover="#43A047",
         condicion=_vq8a_cajonera_visible,
@@ -531,11 +574,9 @@ label accion_cocinar:
 
 label accion_ver_tv:
 
-    # Quest 08_a de Violet: la accion Ver TV es el disparador de la escena de la
-    # tormenta. Se chequea antes que cualquier restricción horaria.
-    $ _q8a_vertv = sistema_quests.obtener_quest("violet_questprincipal_08_a")
-    if _q8a_vertv and _q8a_vertv.activa and not _q8a_vertv.completada and _q8a_vertv.etapa_actual == ETAPA_BOTON_LISTO:
-        jump violet_quest08a_ver_tv
+    # (La 08_a de Violet intercepta esta accion con un ListenerAccion — ver el
+    # bloque "Violet Quest 08_a" mas arriba. Antes era un if acá adentro, que
+    # se salteaba el registro y el punto de activacion.)
 
     # Restricción: solo de noche
     if horario_actual < 2:

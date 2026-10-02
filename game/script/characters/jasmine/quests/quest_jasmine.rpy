@@ -21,10 +21,6 @@ init 5 python:
         numero_quest=0,
         dias_espera=0,
         requisitos=[],
-        validacion_especial=[
-            Requisito("locacion", "Debes estar en el gym", locacion_id="casa_gym"),
-            Requisito("horario", "Debe ser por la tarde", horario_id=1)
-        ],
         mensaje_pista="Me gustaría ponerme al día con Jasmine, podría hablar con ella cuando está sola en el Gym",
         mensaje_despertar="Jasmine suele entrenar en el Gym por la tarde, podría ir a verla y aprovechar el momento para hablar",
         retorno=ConfiguracionRetorno(avanzar_dia=False),
@@ -51,13 +47,12 @@ init 5 python:
         dias_espera=0,
         quest_anterior="jasmine_questprincipal_0_a",
         requisitos=[],
-        validacion_especial=[],
         mensaje_pista="Responder el mensaje de Carl.",
         retorno=ConfiguracionRetorno(avanzar_dia=False),
         config_etapas={
             ETAPA_BOTON_LISTO: ConfigEtapa(
                 pista="Responder el mensaje de Carl",
-                que_hacer="Entrar a la App Chat y responder los mensajes de Carl",
+                que_hacer="Responder los mensajes de Carl en el chat del celular",
             ),
         },
     )
@@ -71,12 +66,11 @@ init 5 python:
         id="jasmine_questprincipal_0_c",
         npc_id="jasmine",
         nombre="El regalo de Jasmine",
-        descripcion="Jasmine quiere mostrarme como el conjunto deportivo que le traje",
+        descripcion="Jasmine quiere mostrarme cómo le queda el conjunto deportivo que le traje",
         numero_quest=0,
         dias_espera=0,
         quest_anterior="jasmine_questprincipal_0_b",
         requisitos=[],
-        validacion_especial=[],
         mensaje_pista="Jasmine quiere mostrar su nueva ropa deportiva.",
         mensaje_despertar="Jasmine quiere que vea cómo le queda el conjunto deportivo que le regalé, podría pasar a la tarde por el Gym",
         retorno=ConfiguracionRetorno(avanzar_dia=False),

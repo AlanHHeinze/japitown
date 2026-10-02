@@ -86,6 +86,8 @@ layeredimage monica_parada:
     group cuerpo:
         attribute c_rbase_base default:
             "images/characters/casa/monica/monica_parada_cuerpo_rbase_base.webp"
+        attribute c_rbase_bolsa:
+            "images/characters/casa/monica/monica_parada_cuerpo_rbase_bolsa.webp"
         attribute c_rbase_celu:
             "images/characters/casa/monica/monica_parada_cuerpo_rbase_celu.webp"
         attribute c_rbase_avergonzada:

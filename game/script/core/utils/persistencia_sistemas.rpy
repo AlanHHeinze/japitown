@@ -93,8 +93,17 @@ init 999 python:
         `locaciones_pendientes` de QuestMC, que parece catalogo pero es
         progreso: se va vaciando a medida que el jugador recorre.
         """
-        _CAMPOS = ("config_etapas", "mensaje_pista", "_pista", "_que_hacer_fn",
-                   "rutina_quest", "rutinas_adicionales", "prioridad_rutina")
+        # nombre / descripcion / requisitos: textos de catalogo. Si no se
+        # refrescaran, una correccion de texto (una tilde) dejaria al save con
+        # el texto viejo — y como la traduccion se busca por el texto nuevo, en
+        # ingles ese texto viejo se veria en castellano. `requisitos` es seguro
+        # de pisar: un Requisito no guarda estado (tipo, mensaje, params).
+        _CAMPOS = ("nombre", "descripcion", "requisitos",
+                   "config_etapas", "mensaje_pista", "_pista", "_que_hacer_fn",
+                   "rutina_quest", "rutinas_adicionales", "prioridad_rutina",
+                   # planificador: lo declarado (no el estado)
+                   "planificada", "de_corrido", "demandas", "consumos", "duenio",
+                   "disparador")
         for _k, _fresca in fresco_dict.items():
             _cargada = cargado_dict.get(_k)
             if _cargada is None:
@@ -129,6 +138,45 @@ init 999 python:
             for _q_idx in store.sistema_quests.quests.values():
                 _ps_idx_npc.setdefault(_q_idx.npc_id, []).append(_q_idx)
             store.sistema_quests.quests_por_npc = _ps_idx_npc
+        except Exception:
+            pass
+
+        # Rutinas de quest: lo que el catalogo fresco declara se copio arriba
+        # (_CAMPOS), pero la copia que vive en npc.rutinas_quest se hizo al
+        # entrar a ETAPA_RUTINA y quedo con la version vieja. Se reaplica para
+        # toda quest viva: el NPC va a donde la quest dice HOY (Monica a la
+        # cocina de noche en la 09_a). Respeta prioridad_rutina como siempre.
+        try:
+            for _q_rt in store.sistema_quests.quests.values():
+                if (_q_rt.activa and not _q_rt.completada
+                        and _q_rt.etapa_actual >= ETAPA_RUTINA
+                        and (_q_rt.rutina_quest or _q_rt.rutinas_adicionales)):
+                    _q_rt._aplicar_rutina_quest()
+        except Exception as _e_rt:
+            if config.developer:
+                print("[Persistencia] reaplicar rutinas de quest: %r" % (_e_rt,))
+
+        # Planificador — migracion de saves anteriores al punto de activacion
+        # (0.1.9a y antes): una quest que ya esta jugandose no tiene
+        # narrativa_activa, y la capa 2 la mediria como si estuviera por
+        # empezar (con su propia restriccion en contra, p.ej. la pizza). La
+        # unica señal segura es la restriccion activa con SU dueño: esa quest
+        # esta adentro. Idempotente: activar() no repite.
+        try:
+            _r_pl = getattr(store, "restriccion_quest_activa", None)
+            _duenio_pl = getattr(_r_pl, "duenio", None) if _r_pl is not None else None
+            if _duenio_pl:
+                for _q_pl in store.sistema_quests.quests.values():
+                    if (_q_pl.activa and not _q_pl.completada
+                            and _q_pl.etapa_actual == ETAPA_BOTON_LISTO
+                            and getattr(_q_pl, "duenio", None) == _duenio_pl
+                            and not getattr(_q_pl, "narrativa_activa", False)):
+                        _q_pl.activar()
+                        if config.developer:
+                            print("[Planificador] migracion: %s marcada en narrativa (restriccion propia activa)" % _q_pl.id)
+            # Reservas de quests que ya no estan: fuera.
+            if not hasattr(store, "planificador_reservas"):
+                store.planificador_reservas = []
         except Exception:
             pass
 

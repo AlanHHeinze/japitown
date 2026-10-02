@@ -12,9 +12,6 @@ label interaccion_violet:
     if not _npc_actual:
         return
 
-    # Verificar si hay quest lista para ejecutar
-    $ _quest_activa = sistema_quests.obtener_quest_activa("violet")
-
     # NOTA DE ARQUITECTURA (2026-07-31): acá había un gate que auto-ejecutaba la
     # quest activa y saltaba SIN abrir el menú. Se eliminó — ver la explicación
     # completa en interactions_monica.rpy.
@@ -30,9 +27,7 @@ label interaccion_violet:
     # cómo reponerlo está en la cabecera de ese archivo.)
 
     # Quest 09_a: interacción especial cuando Violet está enferma en su habitacion
-    $ _quest_v09a_int = sistema_quests.obtener_quest("violet_questprincipal_09_a")
-    if (_quest_v09a_int and _quest_v09a_int.activa and not _quest_v09a_int.completada and
-            _quest_v09a_int.etapa_actual == ETAPA_BOTON_LISTO and
+    if (quest_lista_para_boton("violet_questprincipal_09_a") and
             _npc_actual.esta_en_locacion("casa_hviolet")):
         jump violet_quest09a_interaccion
 
@@ -40,72 +35,64 @@ label interaccion_violet:
     $ _opciones_extra_v = []
 
     # Quest 0_a: Botón de interacción para romper el hielo (solo antes del intro).
-    $ _quest_v0a = sistema_quests.obtener_quest("violet_questprincipal_0_a")
-    if _quest_v0a and _quest_v0a.activa and not _quest_v0a.completada and _quest_v0a.etapa_actual == ETAPA_BOTON_LISTO and not getattr(store, "violet_q0a_esperando_talk", False):
+    $ _v0a_lista = quest_lista_para_boton("violet_questprincipal_0_a")
+    if _v0a_lista and not getattr(store, "violet_q0a_esperando_talk", False):
         $ _opciones_extra_v.append({"texto": "Saludar", "label": "quest_violet_questprincipal_0_a", "condicion": True})
 
     # Quest 0_a: tras el intro, botón de quest "Hablar" que dispara el talk especial.
     # El botón real del sistema talk está oculto hasta completar esta quest, asi que
     # este botón de quest es el que permite avanzar (y al completar se desbloquea el real).
-    if _quest_v0a and _quest_v0a.activa and not _quest_v0a.completada and _quest_v0a.etapa_actual == ETAPA_BOTON_LISTO and getattr(store, "violet_q0a_esperando_talk", False):
+    if _v0a_lista and getattr(store, "violet_q0a_esperando_talk", False):
         $ _opciones_extra_v.append({"texto": "Hablar", "label": "violet_q0a_talk_sistema", "condicion": True, "quest_id": "violet_questprincipal_0_a"})
 
-    # Quest 04_a: Preguntar por el cosplay — solo en cocina por la mañana
-    if _quest_activa and _quest_activa.id == "violet_questprincipal_04_a" and _quest_activa.etapa_actual == 5:
-        $ _vq04a_cond = (horario_actual == 0 and sistema_locaciones.locacion_actual and sistema_locaciones.locacion_actual.id == "casa_cocina")
-        $ _opciones_extra_v.append({"texto": "Preguntar por el cosplay", "label": "quest_violet_questprincipal_04_a", "condicion": _vq04a_cond})
+    # Quest 04_a: Preguntar por el cosplay — en la cocina por la mañana (lo
+    # dice su demanda de locacion; la capa 2 lo esconde en cualquier otro lado).
+    if quest_lista_para_boton("violet_questprincipal_04_a"):
+        $ _opciones_extra_v.append({"texto": "Preguntar por el cosplay", "label": "quest_violet_questprincipal_04_a", "condicion": True})
 
     # Quest 2 nueva: Dar paquete a Violet
     if "mangas_violet" in inventario and inventario.get("mangas_violet", 0) > 0:
         $ _opciones_extra_v.append({"texto": "Dar paquete", "label": "dar_paquete_quest02_violet", "condicion": True, "quest_id": "violet_questprincipal_01_b"})
 
     # Quest 02_a: Pedir mangas
-    $ _quest_v02a = sistema_quests.obtener_quest("violet_questprincipal_02_a")
-    if _quest_v02a and _quest_v02a.activa and not _quest_v02a.completada and _quest_v02a.etapa_actual == ETAPA_BOTON_LISTO:
+    if quest_lista_para_boton("violet_questprincipal_02_a"):
         # Tras el primer intento el boton vuelve solo cuando ya se tiene el hito
         # que habilita el prestamo (mismo criterio que el router de la quest).
         if not getattr(store, 'violet_quest02a_primer_intento_hecho', False) or violet_presta_mangas():
             $ _opciones_extra_v.append({"texto": "Pedir mangas", "label": "quest_violet_questprincipal_02_a", "condicion": True})
 
     # Quest 03_a: Devolver mangas (fuera de la habitacion — solo da pista)
-    $ _quest_v03a = sistema_quests.obtener_quest("violet_questprincipal_03_a")
-    if _quest_v03a and _quest_v03a.activa and not _quest_v03a.completada and _quest_v03a.etapa_actual == ETAPA_BOTON_LISTO:
+    if quest_lista_para_boton("violet_questprincipal_03_a"):
         if "mangas_violet_mc" in inventario and inventario.get("mangas_violet_mc", 0) > 0:
             $ _opciones_extra_v.append({"texto": "Devolver mangas", "label": "vq3a_devolver_fuera", "condicion": True, "quest_id": "violet_questprincipal_03_a"})
 
     # Quest 05_a: Hablar con Violet sobre los cosplays
-    $ _quest_v05a = sistema_quests.obtener_quest("violet_questprincipal_05_a")
-    if _quest_v05a and _quest_v05a.activa and not _quest_v05a.completada and _quest_v05a.etapa_actual == ETAPA_BOTON_LISTO:
+    if quest_lista_para_boton("violet_questprincipal_05_a"):
         if sistema_mensajes.grupo_completado("coxplay_q5a_g4"):
             $ _opciones_extra_v.append({"texto": "Ya compré los cosplay", "label": "violet_quest05a_hablar", "condicion": True, "quest_id": "violet_questprincipal_05_a"})
 
     # Quest 05_b: Dar la Coxplay Box a Violet
-    $ _quest_v05b = sistema_quests.obtener_quest("violet_questprincipal_05_b")
-    if _quest_v05b and _quest_v05b.activa and not _quest_v05b.completada and _quest_v05b.etapa_actual == ETAPA_BOTON_LISTO:
+    if quest_lista_para_boton("violet_questprincipal_05_b"):
         $ _opciones_extra_v.append({"texto": "Llegaron los cosplay", "label": "violet_quest05b_hablar", "condicion": True, "quest_id": "violet_questprincipal_05_b"})
 
     # Quest 05_c: Pedirle perdón a Violet
-    $ _quest_v05c = sistema_quests.obtener_quest("violet_questprincipal_05_c")
-    if _quest_v05c and _quest_v05c.activa and not _quest_v05c.completada and _quest_v05c.etapa_actual == ETAPA_BOTON_LISTO:
+    if quest_lista_para_boton("violet_questprincipal_05_c"):
         if _npc_actual.esta_en_locacion("casa_hviolet"):
             $ _opciones_extra_v.append({"texto": "Pedirle perdón", "label": "violet_quest05c_habitacion", "condicion": True, "quest_id": "violet_questprincipal_05_c"})
         else:
             $ _opciones_extra_v.append({"texto": "Pedirle perdón", "label": "violet_quest05c_perdon_fuera", "condicion": True, "quest_id": "violet_questprincipal_05_c"})
 
-    # Quest 06_a: Contarle de las entradas (de noche, dentro de la habitacion)
-    $ _quest_v06a = sistema_quests.obtener_quest("violet_questprincipal_06_a")
-    if _quest_v06a and _quest_v06a.activa and not _quest_v06a.completada and _quest_v06a.etapa_actual == ETAPA_BOTON_LISTO:
-        if _npc_actual.esta_en_locacion("casa_hviolet") and horario_actual == 2:
-            $ _opciones_extra_v.append({"texto": "Tengo las entradas", "label": "violet_quest06a_hablar", "condicion": True, "quest_id": "violet_questprincipal_06_a"})
+    # Quest 06_a: Contarle de las entradas. De noche y dentro de su habitacion:
+    # lo dice la demanda (npc violet, noche, casa_hviolet), la capa 2 lo aplica.
+    if quest_lista_para_boton("violet_questprincipal_06_a"):
+        $ _opciones_extra_v.append({"texto": "Tengo las entradas", "label": "violet_quest06a_hablar", "condicion": True, "quest_id": "violet_questprincipal_06_a"})
 
     # Quest 07_a: Preguntar por el cosplay
-    $ _quest_v07a = sistema_quests.obtener_quest("violet_questprincipal_07_a")
-    if _quest_v07a and _quest_v07a.activa and not _quest_v07a.completada and _quest_v07a.etapa_actual == ETAPA_BOTON_LISTO:
+    if quest_lista_para_boton("violet_questprincipal_07_a"):
         $ _opciones_extra_v.append({"texto": "Preguntar por el cosplay", "label": "violet_quest07a_hablar", "condicion": True, "quest_id": "violet_questprincipal_07_a"})
 
     # Quest 07_b: Ya hablé con la tienda
-    $ _quest_v07b = sistema_quests.obtener_quest("violet_questprincipal_07_b")
-    if _quest_v07b and _quest_v07b.activa and not _quest_v07b.completada and _quest_v07b.etapa_actual == ETAPA_BOTON_LISTO:
+    if quest_lista_para_boton("violet_questprincipal_07_b"):
         $ _opciones_extra_v.append({"texto": "Ya hablé con la tienda", "label": "violet_quest07b_hablar", "condicion": True, "quest_id": "violet_questprincipal_07_b"})
 
     # -------------------------------------------------------------------------
@@ -118,9 +105,7 @@ label interaccion_violet:
 
     # Quest 0_b: ¿Qué le pasa a Violet? — en su habitación, por la tarde.
     # (También se puede disparar desde el door access con "Intentar hablar".)
-    $ _quest_v0b = sistema_quests.obtener_quest("violet_questprincipal_0_b")
-    if (_quest_v0b and _quest_v0b.activa and not _quest_v0b.completada and
-            _quest_v0b.etapa_actual == ETAPA_BOTON_LISTO and
+    if (quest_lista_para_boton("violet_questprincipal_0_b") and
             _npc_actual.esta_en_locacion("casa_hviolet") and horario_actual == 1):
         $ _opciones_extra_v.append({"texto": "Preguntarle qué le pasa", "label": "quest_violet_questprincipal_0_b", "condicion": True})
 
@@ -131,15 +116,11 @@ label interaccion_violet:
 
     # Quests 04_c / 04_d / 04_e: solo tras responder el chat nocturno de Violet
     # (antes de eso la pista dice "esperar el mensaje").
-    $ _quest_v04c = sistema_quests.obtener_quest("violet_questprincipal_04_c")
-    if (_quest_v04c and _quest_v04c.activa and not _quest_v04c.completada and
-            _quest_v04c.etapa_actual == ETAPA_BOTON_LISTO and
+    if (quest_lista_para_boton("violet_questprincipal_04_c") and
             sistema_mensajes.grupo_completado("violet_quest04c_chat")):
         $ _opciones_extra_v.append({"texto": "Preguntarle por el cosplay", "label": "quest_violet_questprincipal_04_c", "condicion": True})
 
-    $ _quest_v04d = sistema_quests.obtener_quest("violet_questprincipal_04_d")
-    if (_quest_v04d and _quest_v04d.activa and not _quest_v04d.completada and
-            _quest_v04d.etapa_actual == ETAPA_BOTON_LISTO and
+    if (quest_lista_para_boton("violet_questprincipal_04_d") and
             sistema_mensajes.grupo_completado("violet_quest04d_chat")):
         $ _opciones_extra_v.append({"texto": "Preguntarle por las fotos", "label": "quest_violet_questprincipal_04_d", "condicion": True})
 
@@ -176,9 +157,7 @@ label interaccion_violet:
             and sistema_locaciones.locacion_actual.id == "casa_hviolet"):
         $ _opciones_extra_v.append({"texto": "Ya terminé de limpiar", "label": "violet_q4d6_cierre", "condicion": True, "quest_id": "violet_questprincipal_04_d6"})
 
-    $ _quest_v04e = sistema_quests.obtener_quest("violet_questprincipal_04_e")
-    if (_quest_v04e and _quest_v04e.activa and not _quest_v04e.completada and
-            _quest_v04e.etapa_actual == ETAPA_BOTON_LISTO and
+    if (quest_lista_para_boton("violet_questprincipal_04_e") and
             sistema_mensajes.grupo_completado("violet_quest04e_chat")):
         $ _opciones_extra_v.append({"texto": "Preguntarle por las fotos", "label": "quest_violet_questprincipal_04_e", "condicion": True})
 
@@ -198,13 +177,19 @@ label interaccion_violet:
     if _va25_boton_matar_tiempo():
         $ _opciones_extra_v.append({"texto": "Matar el tiempo", "label": "violet_amor_25_matar_tiempo", "condicion": True, "quest_id": "violet_amor_05"})
 
-    # (Deseo 25 "En su habitacion" NO tiene boton acá. Se dispara sola con la
+    # (Deseo 25 "En su habitación" NO tiene boton acá. Se dispara sola con la
     # accion "Ver TV" del sotano y sigue por un override de su puerta, los dos
     # registrados desde violet_deseo_25.rpy.)
 
-    # Amor 30 ("¿Que me pongo?"): mismo momento que la opcion de su puerta,
+    # Amor 30 ("¿Qué me pongo?"): mismo momento que la opcion de su puerta,
     # pero visto desde adentro de la habitacion. Nunca conviven: si estas en el
     # pasillo ves la de la puerta, si ya entraste ves esta.
+
+    # (Amor 40 "La solicitud" NO tiene boton acá. Arranca sola con un trigger
+    # en la habitacion del MC y sigue por un override de la puerta de Violet y
+    # el chat, todo registrado desde violet_amor_40.rpy. La version vieja tenia
+    # un boton "Preguntarle por Zowie" en este menu: se borro con la narrativa
+    # final, y su llamada quedo colgada acá hasta el reporte del 2026-10-01.)
 
     # ── LINEAS DE RELACION (amor / deseo) ────────────────────────────────────
     # Un boton por quest de linea (disparador unico, regla 10 del skill).
@@ -214,7 +199,10 @@ label interaccion_violet:
     # todas, o la cadena se muere en la primera sin boton (bug real: las 03-06
     # llegaban a BOTON_LISTO y no habia forma de dispararlas).
     python:
-        for _vq_rel_n in range(1, 7):
+        # Hasta 7: la de deseo es una mas que la de amor (la 30 esta partida en
+        # 06 + 07). Un numero sin quest no rompe nada: quest_lista_para_boton
+        # devuelve False.
+        for _vq_rel_n in range(1, 8):
             _vq_rel_id = "violet_amor_{:02d}".format(_vq_rel_n)
             # NINGUNA de las 6 usa este boton: todas tienen disparador propio
             # (trigger de locacion, de dormir, accion, boton con texto propio).
@@ -223,7 +211,9 @@ label interaccion_violet:
             # una quest asi llegaria a BOTON_LISTO sin forma de dispararse (bug
             # real de las 03-06 antes de escribirlas).
             _VA_SIN_BOTON = ("violet_amor_01", "violet_amor_02", "violet_amor_03",
-                             "violet_amor_04", "violet_amor_05", "violet_amor_06")
+                             "violet_amor_04", "violet_amor_05", "violet_amor_06",
+                             "violet_amor_07", "violet_amor_08",
+                             "violet_amor_09", "violet_amor_10")
             if _vq_rel_id not in _VA_SIN_BOTON and quest_lista_para_boton(_vq_rel_id):
                 _opciones_extra_v.append({"texto": "Charlar un rato", "label": "quest_" + _vq_rel_id, "condicion": True})
 
@@ -235,7 +225,8 @@ label interaccion_violet:
             # El bucle se deja igual como respaldo para una quest futura sin
             # disparador — sin el llegaria a BOTON_LISTO sin forma de dispararse.
             _VD_SIN_BOTON = ("violet_deseo_01", "violet_deseo_02", "violet_deseo_03",
-                             "violet_deseo_04", "violet_deseo_05", "violet_deseo_06")
+                             "violet_deseo_04", "violet_deseo_05", "violet_deseo_06",
+                             "violet_deseo_07")
             if _vq_rel_id not in _VD_SIN_BOTON and quest_lista_para_boton(_vq_rel_id):
                 _opciones_extra_v.append({"texto": "Buscar un momento a solas", "label": "quest_" + _vq_rel_id, "condicion": True})
 
@@ -272,7 +263,7 @@ label interaccion_violet:
     call screen menu_interaccion_npc_completo(_npc_actual, opciones_extra=_opciones_extra_v if _opciones_extra_v else None)
 
     if isinstance(_return, tuple) and _return[0] == "opcion_especial":
-        $ _label_opcion_v = _return[1]
+        $ _label_opcion_v = despachar_opcion_quest(_return, origen="menu:violet")
         jump expression _label_opcion_v
 
     return

@@ -42,6 +42,14 @@ default vq0b_ruta = ""
 # al mismo hito o la opcion queda gris con el nombre puesto, o al reves.
 define VQ0B_HITO_RESUELTO = "violet_hito_amor_01"
 
+# ⚠️ LA TERCERA OPCION ESTA ESCONDIDA hasta que su rama tenga contenido. Hoy
+# elegirla solo mostraba "Este contenido se agregará en futuras
+# actualizaciones" y volvia a la decision: con el hito ya ganado, el jugador la
+# veia habilitada y no entendia por que no pasaba nada. Al escribir la rama,
+# poner esto en True y la opcion vuelve tal cual (etiqueta con el hito, gris
+# sin el hito).
+define VQ0B_RESUELTO_DISPONIBLE = False
+
 
 # QUEST 0 - El Muro de Cristal (Violet)
 # =============================================================================
@@ -167,10 +175,13 @@ screen vq0b_menu_elecciones():
 
         # Pide el primer hito de amor. La etiqueta se arma desde el catalogo de
         # hitos, asi que si el hito se renombra la opcion lo sigue sola.
-        textbutton etiqueta_opcion_hito("Ya esta resuelto", VQ0B_HITO_RESUELTO):
-            style "choice_button"
-            action Return("resuelto")
-            sensitive hito_alcanzado(VQ0B_HITO_RESUELTO)
+        # Escondida mientras la rama no tenga contenido (ver
+        # VQ0B_RESUELTO_DISPONIBLE, arriba).
+        if VQ0B_RESUELTO_DISPONIBLE:
+            textbutton etiqueta_opcion_hito("Ya esta resuelto", VQ0B_HITO_RESUELTO):
+                style "choice_button"
+                action Return("resuelto")
+                sensitive hito_alcanzado(VQ0B_HITO_RESUELTO)
 
 
 label elecciones_violet_continuar:
@@ -183,8 +194,9 @@ label elecciones_violet_continuar:
     elif _return == "confrontar":
         jump quest_violet_0_opcion_entrar
 
-    # "Ya esta resuelto": la opcion ya se puede elegir, pero la rama todavia no
-    # esta escrita. Se avisa y se vuelve a elegir — no se consume la decision.
+    # "Ya esta resuelto": la rama todavia no esta escrita. Hoy no se llega
+    # porque la opcion esta escondida (VQ0B_RESUELTO_DISPONIBLE); el aviso queda
+    # como red si alguien la prende antes de escribirla.
     "Este contenido se agregará en futuras actualizaciones"
 
     jump elecciones_violet_continuar
@@ -282,7 +294,11 @@ label quest_violet_0_opcion_respeto:
         },
         celular_bloqueado=True,
         mensaje_celular=_("Tengo que encargarme de las pizzas antes de hacer otra cosa"),
-        npcs_ocultos=["monica", "jasmine", "violet"],
+        # Nadie se esconde: Monica y Jasmine siguen su rutina (se las ve, se
+        # las cruza) pero estan RESERVADAS para esta quest — clickearlas
+        # devuelve este mensaje. Violet esta en su pieza por la rutina de la
+        # quest, fuera del recorrido permitido.
+        mensaje_npc_bloqueado=_("Tengo que encargarme de las pizzas antes de hacer otra cosa"),
     )
 
     # El listener de "Cocinar" esta en init (actions_catalog.rpy) y se prende
@@ -641,7 +657,8 @@ label quest_violet_0_opcion_entrar:
         },
         celular_bloqueado=True,
         mensaje_celular=_("Tengo que cocinar primero"),
-        npcs_ocultos=["monica", "jasmine", "violet"],
+        # Idem rama "respeto": nadie oculto, Monica y Jasmine reservadas.
+        mensaje_npc_bloqueado=_("Tengo que cocinar primero"),
     )
 
     # El listener de "Cocinar" esta en init (actions_catalog.rpy) y se prende
@@ -708,7 +725,9 @@ label quest_violet_0_cierre:
         acciones_bloqueadas=["avanzar_tiempo", "dormir", "entrenar", "trabajar", "usar_item", "comprar", "cocinar", "ver_tv"],
         mensaje_movimiento=_("Debo avisarle a Violet que esta la comida"),
         celular_bloqueado=True,
-        npcs_ocultos=["monica", "jasmine", "violet"],
+        # Monica y Jasmine visibles y reservadas; Violet en su pieza (rutina
+        # de la quest de noche), a donde hay que ir.
+        mensaje_npc_bloqueado=_("Debo avisarle a Violet que esta la comida"),
     )
 
     # Al entrar a la habitacion de Violet se dispara la escena

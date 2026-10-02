@@ -15,9 +15,14 @@ init python:
             label_generico=None, reseteo="diario",
             condicion=None, mensaje_reintento=None,
             color="#0288D1", color_hover="#4FC3F7",
-            nombre_dinamico=None, condicion_habilitada=None):
+            nombre_dinamico=None, condicion_habilitada=None,
+            quest_id=None):
             self.id = id
             self.nombre = nombre
+            # Quest que esta accion dispara (o de cuya secuencia es un paso):
+            # al ejecutarla, accion_locacion_ejecutar pasa por activar_quest.
+            # None para las acciones genericas (Cocinar, Ver TV) y de ventajas.
+            self.quest_id = quest_id
             # callable → str YA TRADUCIDO. Si está, reemplaza a `nombre` en el
             # panel (ej: mostrar un % que cambia en runtime). Debe ser funcion
             # de modulo, nunca lambda (anti-PicklingError).
@@ -70,9 +75,10 @@ init python:
         Cuando la accion se ejecuta y el listener es válido, llama a su label.
         """
         def __init__(self, accion_id, label, nombre_menu,
-            prioridad="quest", condicion=None, unico=True):
+            prioridad="quest", condicion=None, unico=True, quest_id=None):
             self.accion_id = accion_id      # Qué accion intercepta
             self.label = label              # Label a ejecutar
+            self.quest_id = quest_id        # Quest que dispara (punto de activacion)
             self.nombre_menu = nombre_menu  # Texto en el menú de elección (si hay conflicto)
             self.prioridad = prioridad      # "quest" | "evento" | "generico"
             self._condicion = condicion     # callable → bool adicional

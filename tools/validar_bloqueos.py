@@ -46,6 +46,31 @@ en que este proyecto ya rompio esa regla, cada una con un jugador detras
      quest lleva la rutina que lo pone ahi (como deseo 25, deseo 30, amor 25 y
      04_d4).
 
+  7. PLANIFICADOR DESALINEADO — el planificador (core/quests/planificador.rpy)
+     decide con lo que cada quest DECLARA en planificacion_<npc>.rpy. Si una
+     quest no declara nada, no la ve (nace y se activa como antes); si declara
+     una rutina que no tiene, o tiene una rutina que no declara, la capa 1 se
+     equivoca en silencio. Se listan: quests del catalogo sin
+     declarar_planificacion, quests que no demandan a su propio NPC (toda
+     quest lo hace: una reserva sobre el NPC tiene que frenarla), quests con
+     rutina_quest sin consumo `npc` declarado, y consumos `npc` con `en` en
+     quests sin rutina_quest.
+
+  8. PERSONAJE PRESTADO SIN DEMANDA — en los labels de una quest habla o se
+     muestra un NPC que no es el suyo (Jasmine en la 04_a de Violet) y la
+     declaracion no lo pide con Rec("npc", "<otro>", ...). Sin la demanda la
+     capa 2 no mira si esta en la casa ni si esta reservado por otra quest, y
+     aparece en la escena aunque este afuera o enferma. Se cruzan los
+     archivos de la quest (los que nombran su id) con planificacion_<npc>.rpy;
+     los labels de test (`label test_`) no cuentan.
+
+  9. LOCACION CERRADA SIN QUIEN LA ABRA — registrar_bloqueo_locacion() cierra
+     una locacion mientras su condicion sea verdadera. Si ninguna de las flags
+     que lee esa condicion se apaga en ningun lado (no hay `flag = False` fuera
+     de la propia condicion), la locacion queda cerrada para siempre. Es la
+     version por locacion del caso 5, y mas facil de dejar colgada porque no
+     hay un desactivar_ explicito: la salida es apagar la flag.
+
 USO
     python tools/validar_bloqueos.py
 
@@ -299,6 +324,118 @@ for r in archivos:
             sin_rutina.append((r, ", ".join(sorted(puertas)), qid))
 
 
+# ── 7. Planificador desalineado ─────────────────────────────────────────────
+# Quests del catalogo (Quest(id=...) directo y las tablas de deseo/amor).
+quests_catalogo = set(re.findall(r'\n\s+id="((?:violet|monica|jasmine)_\w+)",', cat_txt))
+for c in CATALOGOS:
+    if c.endswith(("quests_deseo_violet.rpy", "quests_amor_violet.rpy")):
+        linea = "deseo" if "deseo" in c else "amor"
+        tc = io.open(c, encoding="utf-8").read()
+        mt = re.search(r'_VIOLET_%s_QUESTS\s*=\s*\[(.*?)\n    \]' % linea.upper(), tc, re.S)
+        if mt:
+            for n in re.findall(r'\(\s*(\d+),\s*\d+,\s*"', mt.group(1)):
+                quests_catalogo.add("violet_%s_%02d" % (linea, int(n)))
+
+# Declaraciones: planificacion_<npc>.rpy
+decl = {}
+for r in archivos:
+    if not r.endswith(("planificacion_violet.rpy", "planificacion_monica.rpy",
+                       "planificacion_jasmine.rpy")):
+        continue
+    t = io.open(r, encoding="utf-8").read()
+    for m in re.finditer(r'declarar_planificacion\("(\w+)"(.*?)\n\n', t + "\n\n", re.S):
+        decl[m.group(1)] = m.group(2)
+
+planif = []
+for qid in sorted(quests_catalogo):
+    if qid not in decl:
+        planif.append((qid, "sin declarar_planificacion"))
+        continue
+    cuerpo = decl[qid]
+    npc = qid.split("_")[0]
+    md = re.search(r'demandas=\[(.*?)\]', cuerpo, re.S)
+    if not (md and re.search(r'Rec\("npc",\s*"%s"' % npc, md.group(1))):
+        planif.append((qid, "no demanda a su propio NPC (Rec(\"npc\", \"%s\"))" % npc))
+    mc = re.search(r'consumos=\[(.*?)\]', cuerpo, re.S)
+    consumos = mc.group(1) if mc else ""
+    consume_npc = bool(re.search(r'Rec\("npc"', consumos))
+    if _quest_con_rutina(qid) and not consume_npc:
+        planif.append((qid, "tiene rutina_quest pero no declara consumo npc"))
+    if consume_npc and re.search(r'Rec\("npc"[^)]*en=', consumos) and not _quest_con_rutina(qid):
+        planif.append((qid, "declara consumo npc con `en` pero no tiene rutina_quest"))
+
+
+# ── 8. Personaje prestado sin demanda ───────────────────────────────────────
+NPCS = ("violet", "monica", "jasmine")
+_PAT_APARECE = {n: re.compile(
+    r'^\s*(%s|%s_susurro|%s_piensa)\s+"|^\s*show\s+%s\b|^\s*show\s+\w*%s\w*\s' % (n, n, n, n, n), re.M)
+    for n in NPCS}
+
+
+def _sin_labels_de_test(t):
+    """Corta lo que cuelga de un `label test_...` hasta el siguiente label."""
+    return re.sub(r'^label test_\w+:.*?(?=^label |\Z)', '', t, flags=re.M | re.S)
+
+
+prestados = []
+for qid in sorted(quests_catalogo):
+    if qid not in decl:
+        continue
+    npc = qid.split("_")[0]
+    md = re.search(r'demandas=\[(.*?)\]', decl[qid], re.S)
+    demandados = set(re.findall(r'Rec\("npc",\s*"(\w+)"', md.group(1))) if md else set()
+    # Archivos de la quest: los que la nombran y NO son catalogos ni menus.
+    for r in archivos:
+        if not r.startswith("game/script/characters/%s/" % npc):
+            continue
+        if r.endswith(("quest_%s.rpy" % npc, "quests_deseo_violet.rpy", "quests_amor_violet.rpy",
+                       "planificacion_%s.rpy" % npc)) or "/interaction/" in r:
+            continue
+        t = io.open(r, encoding="utf-8").read()
+        if ('"%s"' % qid) not in t:
+            continue
+        t = _sin_labels_de_test(t)
+        for otro in NPCS:
+            if otro == npc or otro in demandados:
+                continue
+            if _PAT_APARECE[otro].search(t):
+                prestados.append((qid, otro, _corto(r)))
+
+
+# ── 9. Locacion cerrada sin quien la abra ───────────────────────────────────
+_PAT_BLOQ_LOC = re.compile(
+    r'registrar_bloqueo_locacion\(\s*"(\w+)"\s*,\s*([\w.]+)\s*,')
+# Nombres que no son flags de contenido (builtins, helpers del motor).
+_NO_FLAG = {"self", "store", "renpy", "config", "True", "False", "None",
+            "return", "and", "or", "not", "if", "in", "is", "def"}
+
+_todo_el_codigo = None
+loc_cerradas = []
+for r in archivos:
+    t = io.open(r, encoding="utf-8").read()
+    if "def registrar_bloqueo_locacion(" in t:
+        continue  # el motor: lo que hay ahi es el ejemplo del docstring
+    for loc, fn in _PAT_BLOQ_LOC.findall(t):
+        cuerpo = re.search(
+            r'\n(\s*)def %s\(\s*\):\n(.*?)(?=\n\1def |\n\1[^\s#\n]|\n\S|\Z)'
+            % re.escape(fn.split(".")[-1]), t, re.S)
+        if cuerpo is None:
+            loc_cerradas.append((_corto(r), loc, "no encuentro la condicion %s()" % fn))
+            continue
+        flags = set(re.findall(r'\b([a-z_]\w*)\b', cuerpo.group(2))) - _NO_FLAG
+        if _todo_el_codigo is None:
+            _todo_el_codigo = "".join(
+                io.open(a, encoding="utf-8").read() for a in archivos)
+        # ¿Alguna de las flags se apaga en algun lado, fuera de la condicion?
+        apagable = any(
+            re.search(r'\b%s\s*=\s*(False|0|None)\b' % re.escape(f), _todo_el_codigo)
+            for f in flags)
+        if not apagable:
+            loc_cerradas.append((
+                _corto(r), loc,
+                "nada apaga la condicion %s() (%s)" % (fn, ", ".join(sorted(flags)) or "sin flags")))
+
+
 # ── Informe ─────────────────────────────────────────────────────────────────
 print("reloj que se escapa (restricciones):     %d" % len(reloj))
 print("registros en runtime (listeners/acciones): %d" % len(runtime))
@@ -306,6 +443,9 @@ print("salidas por menu de puerta sin override:  %d  (revisar)" % len(puerta))
 print("triggers que pisan restricciones ajenas:  %d" % len(pisa))
 print("restricciones sin quien las levante:      %d" % len(huerfanas))
 print("salidas por puerta de NPC sin rutina:     %d" % len(sin_rutina))
+print("planificador desalineado:                 %d" % len(planif))
+print("personajes prestados sin demanda:         %d" % len(prestados))
+print("locaciones cerradas sin quien las abra:   %d" % len(loc_cerradas))
 print("")
 for r, n, faltan in reloj:
     print("%s:%d  RELOJ: bloquea avanzar/dormir pero deja %s" % (_corto(r), n, ", ".join(faltan)))
@@ -319,5 +459,12 @@ for d in huerfanas:
     print("%s  SIN DESACTIVAR: la activan %s y nadie la levanta" % (d, ", ".join(sorted(activan[d]))))
 for r, npcs, qid in sin_rutina:
     print("%s  SIN RUTINA: congela el reloj y sale por la puerta de %s, pero la quest %s no declara rutina_quest" % (_corto(r), npcs, qid))
-if not (reloj or runtime or puerta or pisa or huerfanas or sin_rutina):
+for qid, motivo in planif:
+    print("%s  PLANIFICADOR: %s" % (qid, motivo))
+for qid, otro, r in prestados:
+    print("%s  PRESTADO: %s aparece en %s y la quest no lo demanda" % (qid, otro, r))
+for r, loc, motivo in loc_cerradas:
+    print("%s  LOCACION CERRADA: %s queda bloqueada y %s" % (r, loc, motivo))
+if not (reloj or runtime or puerta or pisa or huerfanas or sin_rutina or planif
+        or prestados or loc_cerradas):
     print("Sin bloqueos sin salida.")

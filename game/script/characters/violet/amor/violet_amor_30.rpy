@@ -1,5 +1,5 @@
 ################################################################################
-## Violet — Amor 30 · "¿Que me pongo?"
+## Violet — Amor 30 · "¿Qué me pongo?"
 ################################################################################
 ##     archivo   violet_amor_30.rpy
 ##     quest     violet_amor_06          (quests_amor_violet.rpy)
@@ -35,29 +35,12 @@ init python:
     # ── Textos de ETAPA_CONDICIONES ──────────────────────────────────────────
 
     def _pista_va30_condiciones():
-        return renpy.translate_string("Puedo seguir acercandome a Violet.")
+        return renpy.translate_string("Puedo seguir acercándome a Violet.")
 
     def _quehacer_va30_condiciones():
         return _quehacer_amor_violet(30)
 
     # ── Disparador ───────────────────────────────────────────────────────────
-
-    def _va30_violet_libre():
-        """
-        Violet en su habitacion y sin nada encima.
-
-        La locacion ya descarta casi todo (si se baña esta en el baño, si salio
-        esta afuera), pero se chequean igual la rutina especial y los bloqueos:
-        una rutina de quest puede tenerla en su pieza metida en otra cosa.
-        """
-        if tracker_locacion_npc("violet") != "casa_hviolet":
-            return False
-
-        _v30 = obtener_npc("violet")
-        if _v30 is None or _v30.obtener_rutina_especial_actual() is not None:
-            return False
-
-        return not npc_esta_oculto("violet") and npc_interactuable("violet")
 
     def _gl_trigger_violet_amor_30():
         """
@@ -67,26 +50,18 @@ init python:
         Las condiciones van de la mas barata a la mas cara: los dos enteros
         primero y las consultas al sistema de NPCs al final.
         """
+        # Tarde, MC en el pasillo de arriba, Violet en su pieza y libre:
+        # demandas de la quest, las aplica la capa 2 adentro de _va30_activa.
         if not _va30_activa():
             return None
-
-        if store.horario_actual != 1:          # Tarde
-            return None
-
-        _loc = store.sistema_locaciones.locacion_actual
-        if _loc is None or _loc.id != "casa_pasilloarriba":
-            return None
-
-        if not _va30_violet_libre():
-            return None
-
         return "quest_violet_amor_06"
 
 
 init 5 python:
 
     registrar_trigger_game_loop("violet_amor_30_llamado",
-                                _gl_trigger_violet_amor_30)
+                                _gl_trigger_violet_amor_30,
+                                quest_id="violet_amor_06")
 
 
 ################################################################################

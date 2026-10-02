@@ -17,7 +17,7 @@
 
 | Reportes de bug (reales) | Clases únicas | Estado |
 |---|---|---|
-| ~84 | 9 (E01–E09) | E01–E07 y E09 corregidos · **E08 en observación** |
+| ~85 | 12 (E01–E12) | E01–E07, E09–E12 corregidos · **E08 en observación** (E11 y E12 salieron de la auditoría del 2026-09-15, no de reportes) |
 
 > **Reconciliación (2026-07-25):** fuentes procesadas: pastes manuales +
 > `errores.txt` (60) + `errores2.txt` (86). Se solapan (todos del 25-07), así
@@ -564,3 +564,99 @@ Si una quest tiene un label `quest_<id>` **y además** otro disparador (item con
 que agregarla a la tupla de exclusión de su NPC. Si no, el click en el NPC le
 gana al disparador previsto — y si la quest no tiene `validacion_especial`, gana
 **siempre**.
+
+---
+
+### E10 — Soft lock en la noche de Sinceridad (deseo 30): "Le dije a Violet que iba esta noche" en su propia puerta
+
+- **Estado:** ✅ **CORREGIDO (2026-09-15)**
+- **Tipo:** bug de gameplay (no crashea) — reporte manual del jugador
+- **Contexto:** 0.1.9.1 · día 51, martes, noche · `casa_hmc` · deseo 30/30,
+  amor 23 · activas: Solos en casa [3], Sinceridad [5], Las golosinas [5]
+- **Síntoma:** "stuck outside Violet's bedroom with the dialogue *I told Violet
+  I'd come by tonight*; can't sleep or do anything; talking to Mónica does
+  nothing".
+
+#### 🔎 Diagnóstico
+
+Sinceridad (`violet_deseo_06`, la noche de la charla del hito de deseo 30) es
+`de_corrido` y declara `Rec("npc", "violet", horario=2, en="casa_hviolet",
+reserva=True)`. Al activarse (trigger de game_loop: de noche, el MC en su
+pieza) el planificador **reserva a Violet esa noche** y la fase 1 pone la
+restricción "Tengo que hablar con Violet" (reloj congelado, solo Violet
+interactuable). Para entrar a su pieza la quest usa **la puerta común**: golpear
+→ `dejar_pasar` por la ventaja `puerta_dejar_pasar_noche` del hito de deseo 20
+→ el trigger de game_loop en `casa_hviolet` lanza la charla. No tiene opción ni
+override de puerta propios.
+
+Pero `obtener_bloqueo_golpe` consultaba `planificador_texto_reserva`, que
+devolvía el texto de **cualquier** reserva vigente — también la de la quest en
+curso. El golpe contestaba "Le dije a Violet que iba esta noche" y no pasaba
+nada más. Con el reloj congelado por la misma reserva y la restricción cerrando
+todo lo demás, no quedaba ninguna acción posible. Mónica "no hacía nada" porque
+la restricción solo deja interactuar con Violet.
+
+Deseo 25 (`violet_deseo_05`), la otra quest con reserva de slot que entra por
+la puerta, no lo sufre porque tiene su override de puerta con `quest_id`, que
+corre antes del golpe. 08_a y deseo 02 reservan pero no pasan por una puerta.
+
+#### 🔨 Arreglo
+
+`planificador_texto_reserva` (core/quests/planificador.rpy) solo bloquea el
+golpe con reserva **de vida** ("Mejor no molestar a X ahora", 09_a); con reserva
+de slot devuelve None y el golpe sigue su flujo normal. El menú del NPC sigue
+filtrando por quest en los dos tipos. Los saves trabados se destraban solos:
+la reserva sigue vigente, el jugador golpea, entra y la charla arranca.
+
+#### 🔁 Detección
+
+Paso "reserva" de la ruta `planificador` del harness: `obtener_bloqueo_golpe`
+tiene que dar None con reserva de slot y texto con reserva de vida. Regla A13
+del skill `japitown-warnings`: un efecto que impone una quest en curso nunca
+puede cerrar el camino que esa misma quest necesita.
+
+---
+
+### E11 — Deadlock potencial: 0_b de Mónica (bloquea dormir) ↔ 09_a de Violet (reserva de vida sobre Mónica)
+
+- **Estado:** ✅ **CORREGIDO (2026-09-15)** — encontrado en la auditoría de bloqueos, sin reporte
+- **Tipo:** diseño (dos bloqueos que se sostienen mutuamente)
+- **Cómo se llega:** completar la 0_a de Mónica ("Agradecerle") el día anterior
+  a la mañana en que arranca "Violet enferma" (09_a). Al dormir: `dormir()` →
+  `actualizar_quests` pasa la 0_b a BOTON_LISTO y su `accion_al_entrar` pone la
+  restricción (dormir y avanzar bloqueados hasta ir al living) → los triggers
+  "despues" arrancan la 09_a, que reserva a Mónica de vida → el disparador de
+  la 0_b (`quest_lista_para_boton` → capa 2) queda escondido por la reserva
+  durante tres días → pero esos tres días avanzan durmiendo, y dormir lo
+  bloquea la 0_b. Raro (la 0_a se hace normalmente el día 2), pero posible.
+
+#### 🔨 Arreglo
+
+Dos reglas en el planificador: (1) la dueña de la restricción activa
+(`_pl_duenia_de_la_restriccion`) salta la capa de conflicto en
+`planificador_puede_activarse`, `planificador_trigger_permitido` y
+`planificador_estado_guia` — su salida no la esconde nadie; (2) las cuatro
+quests con `Disp("dormir")` (08_a, 09_a, deseo 02, amor 05) declaran
+`Rec("accion", accion="dormir")`: con una restricción ajena que bloquee dormir,
+esperan un día. Regla A14 del skill `japitown-warnings`; paso "reserva" del
+harness.
+
+---
+
+### E12 — Deseo 30 partida: la charla cerraba la 07 y la visita cerraba la 06 (ids cruzados)
+
+- **Estado:** ✅ **CORREGIDO (2026-09-15)** — encontrado en la auditoría, sin reporte
+- **Tipo:** bug de contenido, introducido al partir deseo 30 en 06 + 07 (0.1.9.1, no publicado)
+- **Síntoma que habría tenido:** la 06 se cerraba igual (la red de migración
+  `_gl_trigger_vd30_migracion` la completaba en la vuelta siguiente), pero la
+  **07 "Distancia" no se cerraba nunca** después de la visita: quedaba activa en
+  Pistas para siempre, el hito de deseo 30 (que es de la 07) no se otorgaba, la
+  ventaja `provocacion` no llegaba y el tope de stat dejaba el deseo clavado en
+  30.
+
+#### 🔨 Arreglo
+
+Ids corregidos en `violet_deseo_30.rpy` (charla → `violet_deseo_06`, visita →
+`violet_deseo_07`) y segunda red en `_gl_trigger_vd30_migracion`: con
+`vd30_fase >= 3` y la 07 activa, se completa sola (cubre partidas de test que
+ya vieron la visita).

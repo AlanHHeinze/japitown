@@ -66,12 +66,12 @@ init python:
         """Que hacer en ETAPA_BOTON_LISTO — idem."""
         _f = getattr(store, 'va20_fase', 0)
         if _f == 0:
-            return renpy.translate_string("Hablar con Violet")
+            return renpy.translate_string("Usar la opción «Algo para jugar» con Violet")
         if _f == 1:
-            return renpy.translate_string("Comprar el juego en mi habitación")
+            return renpy.translate_string("Usar la acción «Comprar juego» en tu habitación")
         if _f == 2:
-            return renpy.translate_string("Jugar de noche en mi habitación")
-        return renpy.translate_string("Hablar con Violet")
+            return renpy.translate_string("Usar la acción «Jugar» en tu habitación por la noche")
+        return renpy.translate_string("Usar la opción «Hablar del juego» con Violet")
 
     # ── Condiciones de los disparadores ──────────────────────────────────────
 

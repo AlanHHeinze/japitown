@@ -1,0 +1,10 @@
+# Config del Worker para desplegar desde la terminal (opcional; el panel web
+# de Cloudflare hace lo mismo). Las URLs de Discord NO van acá: son secretos.
+#   npx wrangler login
+#   npx wrangler secret put DISCORD_WEBHOOK_ERRORES
+#   npx wrangler secret put DISCORD_WEBHOOK_FEEDBACK
+#   npx wrangler deploy
+name = "japitown-reporter"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+workers_dev = true

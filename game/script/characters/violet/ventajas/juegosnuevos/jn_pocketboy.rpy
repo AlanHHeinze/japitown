@@ -69,7 +69,7 @@ init python:
     def _jnpb_pista_condiciones():
         """Pista de ETAPA_CONDICIONES — cambia segun el tramo."""
         if obtener_stat1("violet") < 15:
-            return renpy.translate_string("Puedo seguir acercandome a Violet.")
+            return renpy.translate_string("Puedo seguir acercándome a Violet.")
         # NO repetir acá la descripcion de la quest: dos `old` con el mismo
         # texto en el tl rompen el lint.
         return renpy.translate_string("Tengo que ver si aparece la Portatil Boy.")
@@ -272,7 +272,7 @@ label jn_pocketboy_altillo:
     # Las constantes salen de quests_amor_violet.rpy. El anclaje se replica a
     # mano porque aca es un `show` comun y no el imagebutton del HUD: centro
     # abajo, igual que dibuja el motor los sprites de NPC.
-    show expression JNPB_ALTILLO_SPRITE as violet_altillo:
+    show expression JNPB_ALTILLO_SPRITE as violet_altillo onlayer personajes:
         xanchor 0.5
         yanchor 1.0
         xpos JNPB_ALTILLO_POS[0]
@@ -458,7 +458,7 @@ label jn_pocketboy_cierre:
     $ _jnpb_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
     scene expression _jnpb_bg
 
-    show expression JNPB_ALTILLO_SPRITE as violet_altillo:
+    show expression JNPB_ALTILLO_SPRITE as violet_altillo onlayer personajes:
         xanchor 0.5
         yanchor 1.0
         xpos JNPB_ALTILLO_POS[0]

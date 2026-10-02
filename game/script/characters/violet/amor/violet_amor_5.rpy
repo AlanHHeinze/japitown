@@ -15,8 +15,20 @@
 ## menu de interaccion: la escena asume el pasillo de arriba, y desde el menu se
 ## podria disparar en cualquier locacion.
 ##
-## La escena entera pasa en el pasillo, en el horario actual: el MC la llama
-## desde afuera, piensa un momento y ella sale.
+## La escena pasa en el pasillo, en el horario actual: el MC la llama desde
+## afuera, piensa un momento y ella sale. Cuando ella corta la discusion y se
+## va, la escena pasa con un fundido a un MOMENTO (imagen de pantalla completa):
+## el MC, sin sprite, la frena con un "Espera" y el final de la charla es sobre
+## esa imagen. Los pensamientos de cierre ya son en la habitacion del MC.
+
+
+# El momento: el fondo y la boca de Violet, que se superpone mientras habla
+# (es de 1920x1080 y cae sola en su lugar). Por RUTA EXPLICITA y con nombre
+# propio: Ren'Py define las imagenes de images/ por nombre de archivo, y un
+# `scene` con ese nombre automatico se rompe en silencio si se renombra.
+# Van en master sin prefijo de personaje: el momento no se tiñe por horario.
+image va5_momento = "images/quest/violet/amor5/momento_violet_amor5.jpg"
+image va5_momento_boca = "images/quest/violet/amor5/momento_violet_amor5_boca.webp"
 
 
 label quest_violet_amor_01:
@@ -104,17 +116,37 @@ label quest_violet_amor_01:
     violet "La verdad es que no tengo ganas de discutir esto ahora"
     show violet_parada b_none
 
-    # Descruza los brazos: los tomo en la discusion (mas arriba) y sin esto se
-    # los quedaba puestos hasta el final, incluso en los pensamientos de cierre.
-    show mc_parado_base b_hablando c_rbase_base with sprite_normal
-    mc "Bueno, voy a vivir por un largo tiempo en la casa, en algún momento se va a tener que hablar"
-    show mc_parado_base b_none
-
-    show violet_parada b_hablando
-    violet "Adiós"
-    show violet_parada b_none
-
+    # Corta la discusion y se va.
     hide violet_parada with dissolve
+
+    # EL MOMENTO: fundido a la imagen. El MC no se ve: habla desde afuera del
+    # cuadro, y Violet contesta con la boca del momento.
+    window hide
+    hide mc_parado_base
+    scene va5_momento with fade
+    window show
+
+    mc "Espera"
+
+    show va5_momento_boca
+    violet "¿Qué?"
+    hide va5_momento_boca
+
+    mc "Bueno, voy a vivir por un largo tiempo en la casa, en algún momento se va a tener que hablar"
+
+    show va5_momento_boca
+    violet "Adiós"
+    hide va5_momento_boca
+
+    # Los pensamientos de cierre ya son en su habitacion. `escena=True`: lo
+    # mueve la escena, no el jugador (ver mover_a_locacion).
+    window hide
+    $ sistema_locaciones.mover_a_locacion("casa_hmc", escena=True)
+    $ _va5_bg = sistema_locaciones.locacion_actual.background if sistema_locaciones.locacion_actual else "#1a1a1a"
+    scene expression _va5_bg
+    show mc_parado_base c_rbase_pensando o_base b_none at center
+    with fade
+    window show
 
     piensa "Bueno, al menos el problema está plantado, es el primer paso a resolverlo"
     piensa "Será cosa de seguir insistiendo y esperar a que ella esté lista"

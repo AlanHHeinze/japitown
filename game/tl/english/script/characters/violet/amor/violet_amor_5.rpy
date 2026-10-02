@@ -278,3 +278,13 @@ translate english quest_violet_amor_01_4dc6791f:
     # piensa "Será cosa de seguir insistiendo y esperar a que ella esté lista"
     piensa "I'll just have to keep at it and wait until she's ready"
 
+# game/script/characters/violet/amor/violet_amor_5.rpy (el momento del final)
+translate english quest_violet_amor_01_4376214b:
+
+    # mc "Espera"
+    mc "Wait"
+
+translate english quest_violet_amor_01_0aa2db3d:
+
+    # violet "¿Qué?"
+    violet "What?"

@@ -259,5 +259,10 @@ translate english strings:
     old "Menú"
     new "Menu"
 
+    # Marca al lado del nombre cuando el personaje piensa (screen say,
+    # pensamiento=True via piensa_base).
+    old "(Pensamiento)"
+    new "(Thought)"
+
 # TODO: Translation updated at 2026-06-25 23:12
 

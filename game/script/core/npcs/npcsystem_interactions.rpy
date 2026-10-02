@@ -173,9 +173,11 @@ label accion_locacion_ejecutar:
                 piensa "[_ale_msg_ch]"
             return
 
-        # 4. Sin listeners → ejecutar label genérico
+        # 4. Sin listeners → ejecutar label genérico. Si la accion es de una
+        #    quest, pasa por el punto de activacion (questsystem_core).
         $ _ale_accion = sistema_acciones.acciones.get(_accion_locacion_temp_id)
         if _ale_accion and _ale_accion.label_generico:
+            $ activar_quest(resolver_quest_id_opcion(_ale_accion.label_generico, getattr(_ale_accion, "quest_id", None)), origen="accion:" + _accion_locacion_temp_id)
             call expression _ale_accion.label_generico from _call_ale_generico
         else:
             $ _blk_guardar_toque()
@@ -185,6 +187,7 @@ label accion_locacion_ejecutar:
     # 5. Un solo listener → ejecutar directamente
     if len(_ale_listeners) == 1:
         $ sistema_acciones.post_ejecutar(_accion_locacion_temp_id, _ale_listeners[0])
+        $ activar_quest(resolver_quest_id_opcion(_ale_listeners[0].label, getattr(_ale_listeners[0], "quest_id", None)), origen="listener:" + _accion_locacion_temp_id)
         call expression _ale_listeners[0].label from _call_ale_listener_unico
         return
 
@@ -196,6 +199,7 @@ label accion_locacion_ejecutar:
     $ _ale_opciones = [(renpy.translate_string(_ale_l.nombre_menu), _ale_l) for _ale_l in _ale_listeners]
     $ _ale_elegido = renpy.display_menu(_ale_opciones)
     $ sistema_acciones.post_ejecutar(_accion_locacion_temp_id, _ale_elegido)
+    $ activar_quest(resolver_quest_id_opcion(_ale_elegido.label, getattr(_ale_elegido, "quest_id", None)), origen="listener:" + _accion_locacion_temp_id)
     call expression _ale_elegido.label from _call_ale_listener_menu
 
     return

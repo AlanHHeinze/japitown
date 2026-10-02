@@ -50,10 +50,19 @@ init python:
 
     # trigger_id -> duenio. Ver registrar_trigger_game_loop.
     TRIGGER_DUENIO = {}
+    # trigger_id -> quest_id. Ver registrar_trigger_game_loop.
+    TRIGGER_QUEST = {}
 
-    def registrar_trigger_game_loop(trigger_id, funcion, prioridad=0, duenio=None):
+    def registrar_trigger_game_loop(trigger_id, funcion, prioridad=0, duenio=None,
+                                    quest_id=None):
         """
         Registra un trigger evaluado en cada vuelta del game_loop.
+
+        `quest_id`: la quest que este trigger DISPARA. Cuando devuelve label,
+        el motor pasa por activar_quest(quest_id) antes de saltar — es el
+        punto de activacion (questsystem_core). Un trigger que solo hace
+        efectos python, o que salta a una escena que no es de quest, no lo
+        declara.
 
         `duenio` es el id del contenido (el mismo que usa en activar_restriccion,
         si tiene una). MIENTRAS HAYA UNA RESTRICCION CON DUEÑO ACTIVA, SOLO
@@ -69,8 +78,9 @@ init python:
         """
         _registrar_trigger(TRIGGERS_GAME_LOOP, trigger_id, funcion, prioridad)
         TRIGGER_DUENIO[trigger_id] = duenio
+        TRIGGER_QUEST[trigger_id] = quest_id
 
-    def registrar_trigger_dormir(trigger_id, fase, funcion, prioridad=0):
+    def registrar_trigger_dormir(trigger_id, fase, funcion, prioridad=0, quest_id=None):
         """
         Registra un trigger de la accion dormir. `fase` es "antes" (corre antes
         de avanzar el dia; ej. eventos nocturnos) o "despues" (corre despues
@@ -82,12 +92,14 @@ init python:
             _registrar_trigger(TRIGGERS_DORMIR_ANTES, trigger_id, funcion, prioridad)
         else:
             _registrar_trigger(TRIGGERS_DORMIR_DESPUES, trigger_id, funcion, prioridad)
+        TRIGGER_QUEST[trigger_id] = quest_id
 
-    def registrar_trigger_avanzar(trigger_id, funcion, prioridad=0):
+    def registrar_trigger_avanzar(trigger_id, funcion, prioridad=0, quest_id=None):
         """Registra un trigger evaluado tras avanzar el horario con el boton."""
         _registrar_trigger(TRIGGERS_AVANZAR, trigger_id, funcion, prioridad)
+        TRIGGER_QUEST[trigger_id] = quest_id
 
-    def registrar_trigger_salir_celular(trigger_id, funcion, prioridad=0):
+    def registrar_trigger_salir_celular(trigger_id, funcion, prioridad=0, quest_id=None):
         """
         Registra un trigger evaluado al CERRAR el celular.
 
@@ -96,6 +108,7 @@ init python:
         sale. El label destino es CONTENIDO: termina en `jump game_loop`.
         """
         _registrar_trigger(TRIGGERS_SALIR_CELULAR, trigger_id, funcion, prioridad)
+        TRIGGER_QUEST[trigger_id] = quest_id
 
     def _ejecutar_triggers(registro, marcar_gl=False, solo_duenio=None):
         """
@@ -110,6 +123,11 @@ init python:
         """
         for _prio, _orden, _tid, _fn in sorted(
                 registro, key=lambda t: (-t[0], t[1])):
+            # Autodisparos: un trigger de quest no se evalua si su quest no
+            # esta viva o la frena un conflicto (planificador, capa 2).
+            _qid_t = TRIGGER_QUEST.get(_tid)
+            if _qid_t and not planificador_trigger_permitido(_qid_t):
+                continue
             _lbl = _fn()
             if _lbl:
                 if (solo_duenio is not None
@@ -120,6 +138,8 @@ init python:
                     continue
                 if marcar_gl:
                     store._gl_ultimo_trigger = _tid
+                # Punto de activacion: el motor salta a una quest, la registra.
+                activar_quest(TRIGGER_QUEST.get(_tid), origen="trigger:" + _tid)
                 return _lbl
         if marcar_gl:
             store._gl_ultimo_trigger = ""
